@@ -24,3 +24,13 @@ curl http://localhost:8080/api/health
 curl http://localhost:8080/api/services
 ```
 
+## Docker Checks
+
+```bash
+cp config/oiab.env.example config/oiab.env
+docker compose --env-file config/oiab.env config >/tmp/oiab-compose.yml
+docker compose --env-file config/oiab.env build oiab-core
+docker compose --env-file config/oiab.env up -d oiab-core
+curl http://127.0.0.1/api/health
+docker compose --env-file config/oiab.env down
+```

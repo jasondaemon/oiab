@@ -14,8 +14,9 @@
 - Add real upload UI/backend for music, GPX, books, and content packs.
 - Improve map sprites and POI symbol loading.
 - Validate PMTiles range-serving behavior on Raspberry Pi deployment.
+- Add a TLS reverse-proxy container once the standalone certificate flow is finalized.
+- Add optional in-container gpsd/device-passthrough override for users who do not want host gpsd.
 - Add map-pack download/import workflow.
 - Deepen Kiwix/Wikipedia integration.
 - Add production HTTPS reverse proxy/unit integration.
 - Add sync/backup strategy for family game data and waypoints.
-

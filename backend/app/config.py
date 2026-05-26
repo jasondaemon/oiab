@@ -28,6 +28,8 @@ class Settings:
     enable_optional_services: bool = env_bool("OIAB_ENABLE_OPTIONAL_SERVICES", False)
     default_map_app: str = os.environ.get("OIAB_DEFAULT_MAP_APP", "maps_v2")
     cert_mode: str = os.environ.get("OIAB_CERT_MODE", "existing")
+    gpsd_host: str = os.environ.get("OIAB_GPSD_HOST", "127.0.0.1")
+    gpsd_port: int = int(os.environ.get("OIAB_GPSD_PORT", "2947"))
 
     def __post_init__(self) -> None:
         registry = os.environ.get("OIAB_MAP_PACK_REGISTRY")

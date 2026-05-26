@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 from time import time
 from typing import Any
 
+from ..config import SETTINGS
 from .stabilizer import STABILIZER
 
 
@@ -20,7 +21,7 @@ def parse_iso(value: str | None) -> float | None:
 
 def read_gpsd(timeout: float = 1.1) -> dict[str, Any]:
     try:
-        with socket.create_connection(("127.0.0.1", 2947), timeout=timeout) as sock:
+        with socket.create_connection((SETTINGS.gpsd_host, SETTINGS.gpsd_port), timeout=timeout) as sock:
             sock.settimeout(timeout)
             sock.sendall(b'?WATCH={"enable":true,"json":true};\n?POLL;\n')
             chunks: list[bytes] = []
@@ -36,7 +37,14 @@ def read_gpsd(timeout: float = 1.1) -> dict[str, Any]:
                 if b"\n" in chunk and b'"class":"POLL"' in b"".join(chunks):
                     break
     except OSError:
-        return {"source": "usb_gps", "available": False, "valid": False, "reason": "gpsd_unavailable"}
+        return {
+            "source": "usb_gps",
+            "available": False,
+            "valid": False,
+            "reason": "gpsd_unavailable",
+            "gpsd_host": SETTINGS.gpsd_host,
+            "gpsd_port": SETTINGS.gpsd_port,
+        }
 
     payload = b"".join(chunks).decode("utf-8", errors="replace")
     tpv: dict[str, Any] = {}
@@ -96,4 +104,3 @@ def read_gpsd(timeout: float = 1.1) -> dict[str, Any]:
     if raw["lat"] is None or raw["lon"] is None:
         return {"source": "usb_gps", "available": True, "valid": False, "reason": "no_fix", "raw": raw}
     return STABILIZER.update(raw, "usb_gps")
-

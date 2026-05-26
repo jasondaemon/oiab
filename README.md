@@ -18,6 +18,8 @@ Optional services such as Jellyfin, Komga, Kiwix/Wikipedia, and Minecraft are re
 
 ## Quick Start
 
+### Local Python Runtime
+
 ```bash
 cd /path/to/oiab_src
 cp config/oiab.env.example config/oiab.env
@@ -29,6 +31,24 @@ Then open:
 ```text
 http://localhost:8080/
 ```
+
+### Docker Runtime
+
+Docker is the preferred deployment path for Raspberry Pi installs:
+
+```bash
+cd /opt/oiab
+cp config/oiab.env.example config/oiab.env
+docker compose --env-file config/oiab.env up -d --build oiab-core
+```
+
+Open:
+
+```text
+http://overland.daemonadventures.net/
+```
+
+or the Pi LAN address while DNS is being configured.
 
 The default production hostname is configurable and defaults to:
 
@@ -51,6 +71,8 @@ export OIAB_DATA_DIR="$PWD/data"
 scripts/dev.sh
 ```
 
+In Docker, the host path from `OIAB_DATA_DIR` is bind-mounted to `/data/oiab` inside the container. Certs, PMTiles, music, uploads, waypoints, tracks, games, and optional service data all remain under that one directory.
+
 ## Map Packs
 
 Maps are core to OIAB, but map data is not committed to git.
@@ -69,6 +91,113 @@ The registry is configurable through `OIAB_MAP_PACK_REGISTRY` and defaults to:
 
 If no PMTiles pack is present, `/maps-v2/` shows a friendly missing-pack state instead of crashing.
 
+## Raspberry Pi + External SSD Docker Install
+
+1. Install Raspberry Pi OS 64-bit and connect the external SSD.
+2. Install Docker:
+
+```bash
+curl -fsSL https://get.docker.com | sh
+sudo usermod -aG docker "$USER"
+newgrp docker
+```
+
+3. Mount the SSD at `/data`. Use your actual device/UUID from `lsblk` and `blkid`; do not format a disk that already contains data you need.
+
+```bash
+lsblk
+sudo mkdir -p /data
+sudo blkid
+```
+
+Example `/etc/fstab` entry:
+
+```text
+UUID=YOUR-SSD-UUID /data ext4 defaults,noatime 0 2
+```
+
+Then:
+
+```bash
+sudo mount -a
+sudo mkdir -p /data/oiab
+sudo chown -R "$USER:$USER" /data/oiab
+```
+
+4. Clone and configure OIAB:
+
+```bash
+sudo mkdir -p /opt
+sudo chown "$USER:$USER" /opt
+git clone https://github.com/jasondaemon/oiab.git /opt/oiab
+cd /opt/oiab
+cp config/oiab.env.example config/oiab.env
+```
+
+Edit `config/oiab.env` for hostname, published ports, GPS, and optional service settings.
+
+5. Put map packs and certs under the SSD-backed data directory:
+
+```text
+/data/oiab/maps/packs/protomaps-conus.pmtiles
+/data/oiab/certs/
+```
+
+6. Start the base platform:
+
+```bash
+docker compose --env-file config/oiab.env up -d --build oiab-core
+docker compose --env-file config/oiab.env ps
+```
+
+7. Start optional services only when wanted:
+
+```bash
+docker compose --env-file config/oiab.env --profile jellyfin up -d
+docker compose --env-file config/oiab.env --profile komga up -d
+docker compose --env-file config/oiab.env --profile kiwix up -d
+docker compose --env-file config/oiab.env --profile minecraft up -d
+```
+
+## GPS With Docker
+
+The Docker-first path expects `gpsd` to run on the Pi host. OIAB reads it from inside the container using:
+
+```text
+OIAB_GPSD_HOST=host.docker.internal
+OIAB_GPSD_PORT=2947
+```
+
+The compose file maps `host.docker.internal` to Docker's host gateway. On the Pi, configure `gpsd` to accept host-gateway connections, then verify:
+
+```bash
+gpspipe -w -n 5
+docker compose --env-file config/oiab.env exec oiab-core python - <<'PY'
+from backend.app.gps.gpsd import read_gpsd
+print(read_gpsd())
+PY
+```
+
+If you later want in-container `gpsd`, pass the USB GPS device through with a compose override and point `OIAB_GPSD_HOST` at that gpsd container. The base install does not require that mode.
+
+## Docker Compose Profiles
+
+The base install starts only `oiab-core`.
+
+Optional profiles:
+
+- `jellyfin`
+- `komga`
+- `kiwix`
+- `minecraft`
+- grouped aliases: `media`, `reading`, `wiki`, `games`, `optional`
+
+Example:
+
+```bash
+docker compose --env-file config/oiab.env --profile media up -d
+```
+
 ## Current Status
 
 This is the first standalone extraction pass. It is runnable, but intentionally preserves several compatibility aliases while we migrate individual apps away from legacy naming and API shapes.
@@ -78,6 +207,6 @@ See:
 - [Architecture](ARCHITECTURE.md)
 - [Migration Notes](MIGRATION.md)
 - [Data Layout](DATA_LAYOUT.md)
+- [Docker Deployment](docs/DOCKER_DEPLOYMENT.md)
 - [TODO](TODO.md)
 - [Third Party Notices](THIRD_PARTY_NOTICES.md)
-

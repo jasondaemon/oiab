@@ -9,6 +9,8 @@ node_modules/
 config/oiab.env
 data/
 logs/
+.tmp-docker-data/
+tmp/
 *.pem
 *.key
 *.crt
@@ -16,4 +18,3 @@ logs/
 *.mbtiles
 *.sqlite
 *.sqlite3
-

@@ -1,0 +1,89 @@
+name: oiab
+
+services:
+  oiab-core:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${OIAB_CORE_IMAGE:-oiab-core:latest}
+    container_name: ${OIAB_CORE_CONTAINER:-oiab-core}
+    restart: unless-stopped
+    user: "${OIAB_UID:-1000}:${OIAB_GID:-1000}"
+    environment:
+      OIAB_HOSTNAME: ${OIAB_HOSTNAME:-overland.daemonadventures.net}
+      OIAB_BIND_HOST: 0.0.0.0
+      OIAB_PORT_HTTP: 8080
+      OIAB_PORT_HTTPS: ${OIAB_PORT_HTTPS:-8443}
+      OIAB_DATA_DIR: /data/oiab
+      OIAB_DEV_MODE: ${OIAB_DEV_MODE:-false}
+      OIAB_MAP_PACK_REGISTRY: /data/oiab/maps/registry.json
+      OIAB_ENABLE_OPTIONAL_SERVICES: ${OIAB_ENABLE_OPTIONAL_SERVICES:-false}
+      OIAB_DEFAULT_MAP_APP: ${OIAB_DEFAULT_MAP_APP:-maps_v2}
+      OIAB_CERT_MODE: ${OIAB_CERT_MODE:-existing}
+      OIAB_GPSD_HOST: ${OIAB_GPSD_HOST:-host.docker.internal}
+      OIAB_GPSD_PORT: ${OIAB_GPSD_PORT:-2947}
+    ports:
+      - "${OIAB_HTTP_PUBLISHED_PORT:-80}:8080"
+    volumes:
+      # All durable OIAB data lives under this single bind mount.
+      - "${OIAB_DATA_DIR:-/data/oiab}:/data/oiab"
+      # Important subpaths under the bind mount:
+      #   certs: /data/oiab/certs
+      #   PMTiles/map packs: /data/oiab/maps/packs
+      #   music/uploads: /data/oiab/media
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/api/health', timeout=3).read()"]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    profiles: ["jellyfin", "media", "optional"]
+    restart: unless-stopped
+    ports:
+      - "${JELLYFIN_PORT:-8096}:8096"
+    volumes:
+      - "${OIAB_DATA_DIR:-/data/oiab}/services/jellyfin/config:/config"
+      - "${OIAB_DATA_DIR:-/data/oiab}/services/jellyfin/cache:/cache"
+      - "${OIAB_DATA_DIR:-/data/oiab}/media:/media"
+
+  komga:
+    image: gotson/komga:latest
+    profiles: ["komga", "reading", "optional"]
+    restart: unless-stopped
+    ports:
+      - "${KOMGA_PORT:-25600}:25600"
+    volumes:
+      - "${OIAB_DATA_DIR:-/data/oiab}/services/komga/config:/config"
+      - "${OIAB_DATA_DIR:-/data/oiab}/media/books:/books"
+      - "${OIAB_DATA_DIR:-/data/oiab}/media/comics:/comics"
+
+  kiwix:
+    image: ghcr.io/kiwix/kiwix-serve:latest
+    profiles: ["kiwix", "wiki", "optional"]
+    restart: unless-stopped
+    ports:
+      - "${KIWIX_PORT:-8081}:8080"
+    volumes:
+      - "${OIAB_DATA_DIR:-/data/oiab}/content/zim:/data:ro"
+    command: ["--library", "/data/library.xml"]
+
+  minecraft:
+    image: itzg/minecraft-server:latest
+    profiles: ["minecraft", "games", "optional"]
+    restart: "no"
+    ports:
+      - "${MINECRAFT_JAVA_PORT:-25565}:25565"
+      - "${MINECRAFT_BEDROCK_PORT:-19132}:19132/udp"
+    environment:
+      EULA: "TRUE"
+      TYPE: ${MINECRAFT_TYPE:-PAPER}
+      MEMORY: ${MINECRAFT_MEMORY:-2G}
+      ENABLE_RCON: "true"
+      RCON_PASSWORD: ${MINECRAFT_RCON_PASSWORD:-change-me}
+    volumes:
+      - "${OIAB_DATA_DIR:-/data/oiab}/services/minecraft:/data"
