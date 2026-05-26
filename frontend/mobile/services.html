@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Optional Services | OIAB</title>
+  <style>
+    :root { color-scheme: dark; --bg:#07180f; --panel:rgba(22,58,34,.92); --line:rgba(187,255,198,.22); --text:#f4f7ed; --muted:rgba(244,247,237,.72); --accent:#7df18b; --warn:#ffd34d; --bad:#ff706a; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; color:var(--text); font:500 16px/1.35 "Avenir Next","Trebuchet MS",sans-serif; background:radial-gradient(circle at 20% 15%, rgba(125,241,139,.22), transparent 28rem), linear-gradient(135deg,#123822,var(--bg)); }
+    main { width:min(1120px,calc(100vw - 24px)); margin:0 auto; padding:20px 0 48px; }
+    h1 { margin:10px 0 6px; font-size:clamp(2.6rem,9vw,5rem); line-height:.9; letter-spacing:-.06em; }
+    p { margin:6px 0 16px; color:var(--muted); }
+    .toolbar,.actions { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    .panel,.service { border:1px solid var(--line); border-radius:24px; background:linear-gradient(145deg,rgba(39,82,50,.92),rgba(8,29,18,.95)); box-shadow:0 18px 48px rgba(0,0,0,.24); }
+    .panel { padding:18px; margin:14px 0; }
+    .service { padding:16px; display:grid; grid-template-columns:1fr auto; gap:14px; margin:10px 0; }
+    .service.is-running { border-color:var(--accent); }
+    .service h2 { margin:0; }
+    .kicker { display:block; color:var(--accent); font-size:.76rem; font-weight:900; letter-spacing:.16em; text-transform:uppercase; }
+    button,.button { min-height:48px; border:0; border-radius:999px; padding:0 18px; color:#06170f; background:var(--accent); font-weight:900; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
+    button.secondary,.button.secondary { color:var(--text); border:1px solid var(--line); background:rgba(255,255,255,.08); }
+    button.danger { background:var(--bad); color:#fff; }
+    button:disabled { opacity:.45; cursor:not-allowed; }
+    .meta { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; color:var(--muted); }
+    .pill { border:1px solid var(--line); border-radius:999px; padding:5px 10px; background:rgba(255,255,255,.07); }
+    .pill.good { color:#06170f; background:var(--accent); border-color:transparent; font-weight:900; }
+    .pill.bad { color:#fff; background:var(--bad); border-color:transparent; font-weight:900; }
+    .message { min-height:24px; color:var(--warn); font-weight:900; }
+    .path { overflow-wrap:anywhere; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.88rem; }
+    @media (max-width:760px) { main { width:min(100vw - 14px,560px); padding-top:12px; } .service { grid-template-columns:1fr; } button,.button { flex:1 1 44%; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="toolbar">
+      <a class="button secondary" href="/mobile/">Back</a>
+      <button id="refresh" class="secondary" type="button">Refresh</button>
+    </div>
+    <h1>Optional Services</h1>
+    <p>These are not part of the lean base install. Docker control is disabled unless the host sets <strong>OIAB_ALLOW_DOCKER_CONTROL=true</strong>.</p>
+    <section class="panel">
+      <span class="kicker">Managed services</span>
+      <p id="message" class="message"></p>
+      <div id="services"></div>
+    </section>
+  </main>
+  <script>
+    const servicesNode = document.getElementById("services");
+    const message = document.getElementById("message");
+    function setMessage(text, error = false) {
+      message.textContent = text || "";
+      message.style.color = error ? "var(--bad)" : "var(--warn)";
+    }
+    async function load() {
+      const response = await fetch("/api/services", {cache:"no-store"});
+      const data = await response.json();
+      if (!response.ok || data.ok === false) throw new Error(data.error || `Load failed: ${response.status}`);
+      const services = data.services || [];
+      servicesNode.innerHTML = services.map(service => {
+        const running = Boolean(service.running || service.active || service.state === "active");
+        const installed = Boolean(service.installed);
+        return `
+          <article class="service ${running ? "is-running" : ""}">
+            <div>
+              <span class="kicker">${service.category || "optional"}</span>
+              <h2>${service.name || service.label || service.id}</h2>
+              <p>${service.description || service.notes || ""}</p>
+              <div class="meta">
+                <span class="pill ${installed ? "good" : ""}">${installed ? "Installed" : "Available"}</span>
+                <span class="pill ${running ? "good" : "bad"}">${running ? "Running" : "Stopped"}</span>
+                <span class="pill">${service.runtime || "manual"}</span>
+                <span class="pill">Ports: ${(service.ports || []).join(", ") || "--"}</span>
+              </div>
+              <p class="path">${service.data_path || ""}</p>
+            </div>
+            <div class="actions">
+              <button type="button" data-service="${service.id}" data-action="install">Install</button>
+              <button type="button" data-service="${service.id}" data-action="start" ${running ? "disabled" : ""}>Start</button>
+              <button type="button" data-service="${service.id}" data-action="stop" ${running ? "" : "disabled"}>Stop</button>
+              <button type="button" data-service="${service.id}" data-action="restart" ${running ? "" : "disabled"}>Restart</button>
+              <button class="danger" type="button" data-service="${service.id}" data-action="remove">Remove</button>
+              ${service.launcher_url ? `<a class="button secondary" href="${service.launcher_url}">Open</a>` : ""}
+            </div>
+          </article>
+        `;
+      }).join("") || "<p>No optional service manifests found.</p>";
+      servicesNode.querySelectorAll("[data-service][data-action]").forEach(button => {
+        button.addEventListener("click", async () => {
+          setMessage(`${button.dataset.action} ${button.dataset.service}...`);
+          try {
+            const response = await fetch(`/api/services/${button.dataset.service}/${button.dataset.action}`, {method:"POST"});
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok || data.ok === false) throw new Error(data.error || `Action failed: ${response.status}`);
+            setMessage(`${button.dataset.service} ${button.dataset.action} complete.`);
+            await load();
+          } catch (error) {
+            setMessage(error.message, true);
+          }
+        });
+      });
+    }
+    document.getElementById("refresh").addEventListener("click", () => load().catch(error => setMessage(error.message, true)));
+    load().catch(error => setMessage(error.message, true));
+  </script>
+</body>
+</html>

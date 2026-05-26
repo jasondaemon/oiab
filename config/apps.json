@@ -68,8 +68,16 @@
       "id": "service-manager",
       "title": "Optional Services",
       "description": "Manage optional Kiwix, Jellyfin, Komga, and Minecraft services.",
-      "url": "/api/services",
+      "url": "/mobile/services.html",
       "icon": "/maps/overland/overland-folder-settings.svg",
+      "category": "Admin"
+    },
+    {
+      "id": "map-packs",
+      "title": "Map Packs",
+      "description": "Rescan, validate, and activate local PMTiles map packs.",
+      "url": "/mobile/map-packs.html",
+      "icon": "/maps-v2/icons/folder.svg",
       "category": "Admin"
     },
     {

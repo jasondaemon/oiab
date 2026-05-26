@@ -8,7 +8,8 @@ OIAB
 │   ├── main.py              # HTTP server, static routes, JSON APIs
 │   ├── config.py            # env/config and data-dir layout
 │   ├── gps/                 # gpsd reader and stabilization logic
-│   ├── storage.py           # current JSON/GeoJSON persistence helpers
+│   ├── app_db.py            # SQLite map/user/settings storage
+│   ├── storage.py           # compatibility helpers over SQLite storage
 │   └── services.py          # optional service manifest/status reader
 ├── frontend
 │   ├── shell/               # responsive parent shell
@@ -42,9 +43,19 @@ Important routes:
 - `/api/maps-v2/map-packs` - installed map-pack registry
 - `/api/services` - optional service status
 
+## Data Storage
+
+OIAB uses SQLite for durable appliance state that multiple local clients read and update:
+
+- `/data/oiab/db/oiab.sqlite` for map/user/settings data
+- `/data/oiab/games/oiab-games.sqlite3` for the game platform
+
+The map/user database stores waypoints, folders, saved tracks, track points, map packs, map settings, app settings, and sync placeholders. Legacy GeoJSON/JSON files are imported on startup when present and backed up before import.
+
+SQLite is appropriate here because OIAB is a single-node local appliance. WAL mode keeps concurrent browser reads responsive while short writes are serialized safely.
+
 ## Compatibility Aliases
 
 Several frontend modules still expect legacy endpoint names. The backend serves aliases such as `/maps-location-current`, `/maps-v2-map-packs`, `/maps-data`, `/maps-quick-save`, `/mobile-games`, and `/game-stats` during migration.
 
 These aliases are temporary compatibility shims, not IIAB dependencies.
-

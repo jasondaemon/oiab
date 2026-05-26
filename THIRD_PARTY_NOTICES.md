@@ -20,6 +20,37 @@ Maps v2 includes PMTiles protocol support under `frontend/maps/vendor/`.
 
 Maps v2 was prototyped from the direction of maps.black / MapLibre / Protomaps-style rendering concepts. Any copied code/assets must retain their upstream license. Current OIAB work should prefer original code/assets and documented third-party library use.
 
+- Upstream repository inspected locally: `maps-black-upstream`
+- Upstream license file: MIT License
+- Copied notice: `licenses/maps-black-MIT-LICENSE.md`
+- Raster Natural Earth assets in that upstream include separate CC0 license files.
+
+## Legacy IIAB / maps.black Visual Assets
+
+OIAB may temporarily incorporate license-compatible map styling ideas, sprites, CSS, or symbols from the earlier IIAB/maps.black-derived map runtime while Maps v2 matures. Keep these assets segregated under legacy map asset folders and document exact provenance before public release.
+
+Current original OIAB map icons live under:
+
+```text
+frontend/maps/icons
+```
+
+Future legacy imports, if any, should live under:
+
+```text
+frontend/maps/icons/legacy
+frontend/maps/sprites/legacy
+frontend/maps/styles/legacy
+```
+
+Future original replacements should live under:
+
+```text
+frontend/maps/icons/oiab
+frontend/maps/sprites/oiab
+frontend/maps/styles/oiab
+```
+
 ## OpenStreetMap Data
 
 Map packs based on OpenStreetMap data must preserve appropriate attribution:
@@ -35,6 +66,28 @@ Maps v2 includes local glyph PBF files for Noto Sans Regular/Bold. Noto fonts ar
 ## chess.js
 
 The mobile chess game includes `frontend/mobile/vendor/chess.js` and its license file.
+
+## Particula-Inspired Visualizer
+
+The music visualizer includes an original local canvas mode inspired by the MIT-licensed Particula project:
+
+- Project: https://github.com/Humprt/particula
+- License: MIT
+
+No third-party runtime dependency is loaded at playback time.
+
+## audioMotion-analyzer-Inspired Visualizer
+
+Some local canvas spectrum visualizer modes are inspired by audioMotion-analyzer concepts:
+
+- Project: https://github.com/hvianna/audioMotion-analyzer
+- License: AGPL-3.0-or-later
+
+No audioMotion-analyzer source code is bundled, copied, imported, or linked.
+
+## EmulatorJS
+
+The optional emulator shell is designed to use a locally cached EmulatorJS runtime installed outside this repository. Emulator runtime files, libretro cores, and ROMs are not committed.
 
 ## Jellyfin
 
@@ -63,4 +116,3 @@ Some copied frontend game/audio assets came from prior local OIAB/Overland work.
 - `frontend/mobile/blockfall-sounds/*`
 - `frontend/shared/overland/drums/*`
 - game SVG icons under `frontend/shared/overland/`
-

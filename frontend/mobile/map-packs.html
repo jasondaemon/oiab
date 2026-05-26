@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Map Packs | OIAB</title>
+  <style>
+    :root { color-scheme: dark; --bg:#07180f; --panel:rgba(22,58,34,.92); --line:rgba(187,255,198,.22); --text:#f4f7ed; --muted:rgba(244,247,237,.72); --accent:#7df18b; --warn:#ffd34d; --bad:#ff706a; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; color:var(--text); font:500 16px/1.35 "Avenir Next","Trebuchet MS",sans-serif; background:radial-gradient(circle at 20% 15%, rgba(125,241,139,.22), transparent 28rem), linear-gradient(135deg,#123822,var(--bg)); }
+    main { width:min(1120px,calc(100vw - 24px)); margin:0 auto; padding:20px 0 48px; }
+    h1 { margin:10px 0 6px; font-size:clamp(2.6rem,9vw,5rem); line-height:.9; letter-spacing:-.06em; }
+    p { margin:6px 0 16px; color:var(--muted); }
+    .toolbar,.actions { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    .panel,.pack,.hint { border:1px solid var(--line); border-radius:24px; background:linear-gradient(145deg,rgba(39,82,50,.92),rgba(8,29,18,.95)); box-shadow:0 18px 48px rgba(0,0,0,.24); }
+    .panel { padding:18px; margin:14px 0; }
+    .pack { padding:16px; display:grid; gap:12px; grid-template-columns:1fr auto; align-items:center; margin:10px 0; }
+    .pack.is-active { border-color:var(--accent); box-shadow:0 0 0 2px rgba(125,241,139,.18), 0 18px 48px rgba(0,0,0,.24); }
+    .kicker { display:block; color:var(--accent); font-size:.76rem; font-weight:900; letter-spacing:.16em; text-transform:uppercase; }
+    button,.button { min-height:52px; border:0; border-radius:999px; padding:0 20px; color:#06170f; background:var(--accent); font-weight:900; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
+    button.secondary,.button.secondary { color:var(--text); border:1px solid var(--line); background:rgba(255,255,255,.08); }
+    button.warn { background:var(--warn); }
+    button:disabled { opacity:.45; cursor:not-allowed; }
+    input { width:100%; min-height:52px; border:1px solid var(--line); border-radius:16px; padding:0 14px; color:var(--text); background:rgba(0,0,0,.22); font:inherit; }
+    .grid { display:grid; gap:10px; grid-template-columns:1fr auto; }
+    .meta { display:grid; gap:4px; color:var(--muted); font-size:.92rem; overflow:hidden; }
+    .meta strong { color:var(--text); font-size:1.2rem; }
+    .badge { width:max-content; border-radius:999px; padding:5px 10px; color:#06170f; background:var(--accent); font-weight:900; font-size:.8rem; }
+    .badge.missing { background:var(--bad); color:#fff; }
+    .message { min-height:24px; color:var(--warn); font-weight:900; }
+    .path { overflow-wrap:anywhere; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+    @media (max-width:680px) { main { width:min(100vw - 14px,560px); padding-top:12px; } .pack,.grid { grid-template-columns:1fr; } button,.button { width:100%; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="toolbar">
+      <a class="button secondary" href="/mobile/">Back</a>
+      <button id="refresh" class="secondary" type="button">Refresh</button>
+    </div>
+    <h1>Map Packs</h1>
+    <p>PMTiles live under <strong>/data/oiab/maps/packs</strong>. Rescan after copying a pack to the Pi or external SSD.</p>
+
+    <section class="panel">
+      <span class="kicker">Installed PMTiles</span>
+      <div class="actions">
+        <button id="rescan" type="button">Rescan Map Packs</button>
+        <a class="button secondary" href="/maps-v2/">Open Maps v2</a>
+      </div>
+      <p id="message" class="message"></p>
+      <div id="packs"></div>
+    </section>
+
+    <section class="panel">
+      <span class="kicker">Import host path</span>
+      <p>Use this when the PMTiles file already exists on the OIAB host. Browser upload is intentionally not used for huge map packs.</p>
+      <div class="grid">
+        <input id="importPath" placeholder="/mnt/ssd/maps/protomaps-conus.pmtiles">
+        <button id="importButton" class="warn" type="button">Import Path</button>
+      </div>
+    </section>
+  </main>
+  <script>
+    const packsNode = document.getElementById("packs");
+    const message = document.getElementById("message");
+    const fmt = new Intl.NumberFormat();
+    function setMessage(text, error = false) {
+      message.textContent = text || "";
+      message.style.color = error ? "var(--bad)" : "var(--warn)";
+    }
+    function size(bytes) {
+      const n = Number(bytes || 0);
+      if (n > 1024 ** 3) return `${(n / 1024 ** 3).toFixed(1)} GB`;
+      if (n > 1024 ** 2) return `${(n / 1024 ** 2).toFixed(1)} MB`;
+      if (n > 1024) return `${fmt.format(Math.round(n / 1024))} KB`;
+      return `${fmt.format(n)} B`;
+    }
+    async function api(action, body = {}) {
+      const response = await fetch("/api/maps-v2/map-packs", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({action, ...body})
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data.ok === false) throw new Error(data.error || `Request failed: ${response.status}`);
+      return data;
+    }
+    async function load() {
+      const response = await fetch("/api/maps-v2/map-packs", {cache:"no-store"});
+      const data = await response.json();
+      if (!response.ok || data.ok === false) throw new Error(data.error || `Load failed: ${response.status}`);
+      const packs = data.basemaps || [];
+      packsNode.innerHTML = packs.length ? packs.map(pack => `
+        <article class="pack ${pack.active ? "is-active" : ""}">
+          <div class="meta">
+            <span class="badge ${pack.exists ? "" : "missing"}">${pack.active ? "Active" : pack.exists ? "Installed" : "Missing"}</span>
+            <strong>${pack.name || pack.id}</strong>
+            <span>${pack.type || "pmtiles"} · ${size(pack.size_bytes)} · ${pack.attribution || ""}</span>
+            <span class="path">${pack.path || pack.url || ""}</span>
+          </div>
+          <div class="actions">
+            <button type="button" data-active="${pack.id}" ${pack.exists && !pack.active ? "" : "disabled"}>Set Active</button>
+          </div>
+        </article>
+      `).join("") : '<div class="hint panel"><strong>No map packs found.</strong><p>Copy a .pmtiles file into /data/oiab/maps/packs, then rescan.</p></div>';
+      packsNode.querySelectorAll("[data-active]").forEach(button => {
+        button.addEventListener("click", async () => {
+          setMessage("Setting active map pack...");
+          try { await api("set-active", {id: button.dataset.active}); setMessage("Active map pack updated."); await load(); }
+          catch (error) { setMessage(error.message, true); }
+        });
+      });
+    }
+    document.getElementById("refresh").addEventListener("click", () => load().catch(error => setMessage(error.message, true)));
+    document.getElementById("rescan").addEventListener("click", async () => {
+      setMessage("Scanning /data/oiab/maps/packs...");
+      try { await api("rescan"); setMessage("Map packs rescanned."); await load(); }
+      catch (error) { setMessage(error.message, true); }
+    });
+    document.getElementById("importButton").addEventListener("click", async () => {
+      const path = document.getElementById("importPath").value.trim();
+      if (!path) return;
+      setMessage("Importing PMTiles path...");
+      try { await api("import-path", {path}); setMessage("PMTiles path imported."); await load(); }
+      catch (error) { setMessage(error.message, true); }
+    });
+    load().catch(error => setMessage(error.message, true));
+  </script>
+</body>
+</html>

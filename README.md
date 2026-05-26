@@ -79,6 +79,14 @@ Game platform state is stored in:
 /data/oiab/games/oiab-games.sqlite3
 ```
 
+Map/user/settings state is stored in:
+
+```text
+/data/oiab/db/oiab.sqlite
+```
+
+On first startup, compatible legacy GeoJSON/JSON map data is backed up and imported into SQLite without deleting the source files.
+
 Trail Trivia reads category packs from:
 
 ```text
@@ -104,6 +112,12 @@ The registry is configurable through `OIAB_MAP_PACK_REGISTRY` and defaults to:
 ```
 
 If no PMTiles pack is present, `/maps-v2/` shows a friendly missing-pack state instead of crashing.
+
+Manage installed packs from:
+
+```text
+/mobile/map-packs.html
+```
 
 ## Raspberry Pi + External SSD Docker Install
 

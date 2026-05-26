@@ -38,4 +38,33 @@ Grouped profile aliases:
 - `games`
 - `optional`
 
-The first standalone backend can list manifests and basic systemd state. Install/start/stop/remove actions are intentionally stubbed until the service manager workflow is hardened.
+The service manager UI is available at:
+
+```text
+/mobile/services.html
+/service-manager
+```
+
+The backend lists manifests and checks Docker Compose state. Install/start/stop/restart/remove actions are disabled by default because they require host-level Docker control.
+
+To enable those actions on a trusted local appliance:
+
+```text
+OIAB_ALLOW_DOCKER_CONTROL=true
+```
+
+Current implementation runs `docker compose` from the OIAB repo directory. This is safer than blindly exposing Docker control in the UI by default, but it is still a privileged host operation. Leave it disabled for public or untrusted networks.
+
+## Content Paths
+
+```text
+/data/oiab/content/zim
+/data/oiab/media
+/data/oiab/media/books
+/data/oiab/media/comics
+/data/oiab/services/jellyfin
+/data/oiab/services/komga
+/data/oiab/services/minecraft
+```
+
+Kiwix expects ZIM content under `/data/oiab/content/zim`. The first compose profile uses `kiwix-serve --library /data/library.xml`; a future ZIM manager should generate or update that library file.

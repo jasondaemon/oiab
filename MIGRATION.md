@@ -9,7 +9,7 @@ This repository is a product extraction from prior IIAB Overland work.
 - local MapLibre, PMTiles, icon, and font assets
 - GPS status frontend
 - gpsd current-location backend and stabilization layer
-- waypoint GeoJSON storage and quick-save endpoint
+- SQLite-backed waypoint/folder/track/map-pack storage with legacy GeoJSON import
 - music shell/player frontend and local music library scanner
 - mobile launcher and game frontends
 - optional service manifests for Jellyfin, Komga, Kiwix, and Minecraft
@@ -46,6 +46,15 @@ It does not yet perform every conversion.
 6. Confirm `/api/maps-v2/map-packs` reports the file.
 7. Confirm `/api/location/current` returns JSON even without gpsd.
 8. Confirm `/api/services` lists optional services as not installed.
-9. Add a quick waypoint and confirm it appears in `OIAB_DATA_DIR/waypoints/trailer-places.geojson`.
+9. Add a quick waypoint and confirm it appears through `/api/map-data` and in `OIAB_DATA_DIR/db/oiab.sqlite`.
 10. Put MP3 files in `OIAB_DATA_DIR/media/music`, open Music, and run Scan Library.
 
+## Legacy Data Import
+
+On startup, OIAB imports compatible legacy files into `/data/oiab/db/oiab.sqlite`:
+
+- `/data/oiab/waypoints/trailer-places.geojson`
+- `/data/oiab/tracks/current.geojson`
+- `/data/oiab/maps/registry.json`
+
+The source files are backed up under `/data/oiab/backups/migrations` and are not deleted. If an import fails, the failure is logged and the source files remain untouched.

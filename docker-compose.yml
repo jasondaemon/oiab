@@ -15,11 +15,13 @@ services:
       OIAB_PORT_HTTP: 8080
       OIAB_PORT_HTTPS: ${OIAB_PORT_HTTPS:-8443}
       OIAB_DATA_DIR: /data/oiab
+      OIAB_DB_PATH: /data/oiab/db/oiab.sqlite
       OIAB_DEV_MODE: ${OIAB_DEV_MODE:-false}
       OIAB_MAP_PACK_REGISTRY: /data/oiab/maps/registry.json
       OIAB_ENABLE_OPTIONAL_SERVICES: ${OIAB_ENABLE_OPTIONAL_SERVICES:-false}
       OIAB_DEFAULT_MAP_APP: ${OIAB_DEFAULT_MAP_APP:-maps_v2}
       OIAB_CERT_MODE: ${OIAB_CERT_MODE:-existing}
+      OIAB_ALLOW_DOCKER_CONTROL: ${OIAB_ALLOW_DOCKER_CONTROL:-false}
       OIAB_GPSD_HOST: ${OIAB_GPSD_HOST:-host.docker.internal}
       OIAB_GPSD_PORT: ${OIAB_GPSD_PORT:-2947}
     ports:

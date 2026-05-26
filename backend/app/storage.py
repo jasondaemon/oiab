@@ -30,40 +30,15 @@ def places_file(settings: Settings) -> Path:
 
 
 def read_places(settings: Settings) -> dict[str, Any]:
-    data = read_json(places_file(settings), EMPTY_FEATURE_COLLECTION)
-    if data.get("type") != "FeatureCollection" or not isinstance(data.get("features"), list):
-        return EMPTY_FEATURE_COLLECTION.copy()
-    return data
+    from .app_db import AppDB
+
+    return AppDB(settings).places_geojson()
 
 
 def save_waypoint(settings: Settings, payload: dict[str, Any]) -> dict[str, Any]:
-    lat = float(payload["lat"])
-    lon = float(payload["lon"])
-    category = str(payload.get("category") or payload.get("type") or "waypoint")
-    folder = str(payload.get("folder") or "Quick Save")
-    name = str(payload.get("name") or f"{category.title()} - {datetime.now().strftime('%Y-%m-%d %H:%M')}")
-    feature = {
-        "type": "Feature",
-        "geometry": {"type": "Point", "coordinates": [lon, lat]},
-        "properties": {
-            "id": payload.get("id") or f"wp-{datetime.now().strftime('%Y%m%d%H%M%S%f')}",
-            "name": name,
-            "category": category,
-            "folder": folder,
-            "notes": payload.get("notes") or "",
-            "source": payload.get("source") or "oiab",
-            "timestamp": payload.get("timestamp") or datetime.now().isoformat(),
-            "accuracy_m": payload.get("accuracy_m"),
-            "hdop": payload.get("hdop"),
-            "stabilized": payload.get("stabilized", False),
-            "raw_lat": payload.get("raw_lat"),
-            "raw_lon": payload.get("raw_lon"),
-        },
-    }
-    places = read_places(settings)
-    places.setdefault("features", []).append(feature)
-    write_json(places_file(settings), places)
-    return feature
+    from .app_db import AppDB
+
+    return AppDB(settings).save_waypoint(payload)
 
 
 def folders_from_places(places: dict[str, Any]) -> list[dict[str, Any]]:
@@ -73,4 +48,3 @@ def folders_from_places(places: dict[str, Any]) -> list[dict[str, Any]]:
         folder = str(props.get("folder") or "Unfiled")
         counts[folder] = counts.get(folder, 0) + 1
     return [{"name": name, "count": count, "shown": True} for name, count in sorted(counts.items())]
-

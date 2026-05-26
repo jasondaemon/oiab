@@ -10,6 +10,7 @@ Subdirectories:
 
 ```text
 /data/oiab/config
+/data/oiab/db
 /data/oiab/maps/packs
 /data/oiab/maps/styles
 /data/oiab/maps/sprites
@@ -29,12 +30,36 @@ Subdirectories:
 /data/oiab/backups
 ```
 
-Current first-pass persistence is SQLite for game platform data and JSON/GeoJSON for map/user content:
+Primary durable state is SQLite:
 
-- waypoints: `/data/oiab/waypoints/trailer-places.geojson`
-- current track: `/data/oiab/tracks/current.geojson`
+- OIAB map/user/settings database: `/data/oiab/db/oiab.sqlite`
 - active games, score history, player identity merges, and license plates: `/data/oiab/games/oiab-games.sqlite3`
 - trivia question packs: `/data/oiab/trivia/questions/*.json`
 - music cache: `/data/oiab/media/music-library.json`
 
-The game database runs in SQLite WAL mode so multiple local clients can read while short writes are committed safely. Future hardening target: migrate waypoints, folders, tracks, settings, and sync metadata behind the same style of storage modules.
+The OIAB database stores:
+
+- waypoint folders/categories and visibility
+- waypoints
+- saved/current tracks
+- track points
+- map-pack registry metadata
+- map settings and layer visibility
+- app settings
+- sync metadata placeholders
+
+Legacy JSON/GeoJSON files are imported on first startup when present:
+
+- `/data/oiab/waypoints/trailer-places.geojson`
+- `/data/oiab/tracks/current.geojson`
+- `/data/oiab/maps/registry.json`
+
+Before import, source files are copied to:
+
+```text
+/data/oiab/backups/migrations
+```
+
+The import is transactional at the database layer and does not delete legacy files.
+
+SQLite runs in WAL mode so multiple local clients can read while short writes are committed safely. The deployment is still a single-node appliance; do not place the database on a network filesystem.

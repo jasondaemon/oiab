@@ -23,6 +23,7 @@ class Settings:
     http_port: int = int(os.environ.get("OIAB_PORT_HTTP", "8080"))
     https_port: int = int(os.environ.get("OIAB_PORT_HTTPS", "8443"))
     data_dir: Path = Path(os.environ.get("OIAB_DATA_DIR", "/data/oiab"))
+    db_path: Path | None = None
     dev_mode: bool = env_bool("OIAB_DEV_MODE", True)
     map_pack_registry: Path | None = None
     enable_optional_services: bool = env_bool("OIAB_ENABLE_OPTIONAL_SERVICES", False)
@@ -30,10 +31,13 @@ class Settings:
     cert_mode: str = os.environ.get("OIAB_CERT_MODE", "existing")
     gpsd_host: str = os.environ.get("OIAB_GPSD_HOST", "127.0.0.1")
     gpsd_port: int = int(os.environ.get("OIAB_GPSD_PORT", "2947"))
+    allow_docker_control: bool = env_bool("OIAB_ALLOW_DOCKER_CONTROL", False)
 
     def __post_init__(self) -> None:
         registry = os.environ.get("OIAB_MAP_PACK_REGISTRY")
         object.__setattr__(self, "map_pack_registry", Path(registry) if registry else self.data_dir / "maps" / "registry.json")
+        db_path = os.environ.get("OIAB_DB_PATH")
+        object.__setattr__(self, "db_path", Path(db_path) if db_path else self.data_dir / "db" / "oiab.sqlite")
 
     @property
     def cert_dir(self) -> Path:
@@ -50,6 +54,7 @@ class Settings:
 
 DATA_SUBDIRS = [
     "config",
+    "db",
     "maps/packs",
     "maps/styles",
     "maps/sprites",

@@ -11,10 +11,11 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlparse
 
+from .app_db import AppDB
 from .config import REPO_ROOT, SETTINGS, Settings, ensure_data_layout
 from .games_db import GamesDB
 from .gps.gpsd import read_gpsd
-from .services import list_services
+from .services import list_services, service_action
 from .storage import folders_from_places, read_json, read_places, save_waypoint
 
 
@@ -46,11 +47,12 @@ class OIABHandler(BaseHTTPRequestHandler):
             return self.send_json(self.map_packs())
         if path in {"/api/map-data", "/maps-data"}:
             places = read_places(self.settings)
-            return self.send_json({"ok": True, "places": places, "folders": folders_from_places(places)})
+            folders = self.app_db().folders() or folders_from_places(places)
+            return self.send_json({"ok": True, "places": places, "folders": folders})
         if path in {"/api/tracks/current", "/maps-tracks-current"}:
             return self.send_json(self.current_track())
         if path in {"/api/services", "/services-status"}:
-            return self.send_json({"ok": True, "services": list_services()})
+            return self.send_json({"ok": True, "services": list_services(self.settings), "allow_docker_control": self.settings.allow_docker_control})
         if path in {"/music-api/library", "/api/music/library"}:
             refresh = "refresh=1" in parsed.query
             return self.send_json(self.music_library(refresh=refresh))
@@ -85,10 +87,28 @@ class OIABHandler(BaseHTTPRequestHandler):
         if static and static.exists() and static.is_file():
             file_size = static.stat().st_size
             content_type = mimetypes.guess_type(str(static))[0] or "application/octet-stream"
-            self.send_response(HTTPStatus.OK)
+            range_header = self.headers.get("Range")
+            start, end = 0, file_size - 1
+            status = HTTPStatus.OK
+            if range_header and range_header.startswith("bytes="):
+                try:
+                    range_value = range_header.split("=", 1)[1]
+                    start_s, end_s = range_value.split("-", 1)
+                    start = int(start_s) if start_s else 0
+                    end = int(end_s) if end_s else file_size - 1
+                    end = min(end, file_size - 1)
+                    if start > end:
+                        raise ValueError
+                    status = HTTPStatus.PARTIAL_CONTENT
+                except ValueError:
+                    self.send_error(HTTPStatus.REQUESTED_RANGE_NOT_SATISFIABLE)
+                    return
+            self.send_response(status)
             self.send_header("Content-Type", content_type)
             self.send_header("Accept-Ranges", "bytes")
-            self.send_header("Content-Length", str(file_size))
+            self.send_header("Content-Length", str(end - start + 1))
+            if status == HTTPStatus.PARTIAL_CONTENT:
+                self.send_header("Content-Range", f"bytes {start}-{end}/{file_size}")
             self.end_headers()
             return
         if path in {"/api/health", "/health"}:
@@ -109,7 +129,12 @@ class OIABHandler(BaseHTTPRequestHandler):
             except Exception as exc:  # noqa: BLE001 - HTTP boundary
                 return self.send_json({"ok": False, "error": str(exc)}, status=400)
         if path.startswith("/api/services/"):
-            return self.send_json({"ok": False, "error": "Optional service actions are stubbed in this base extraction."}, status=501)
+            parts = [part for part in path.split("/") if part]
+            service_id = parts[2] if len(parts) > 2 else ""
+            action = parts[3] if len(parts) > 3 else str(self.read_body().get("action") or "")
+            result = service_action(self.settings, service_id, action)
+            status = 200 if result.get("ok") else 400
+            return self.send_json({**result, "services": list_services(self.settings)}, status=status)
         if path in {"/mobile-games", "/api/mobile-games"}:
             return self.handle_mobile_games()
         if path in {"/game-stats", "/api/game-stats"}:
@@ -118,6 +143,8 @@ class OIABHandler(BaseHTTPRequestHandler):
             return self.handle_license_plates()
         if path in {"/api/uploads/trivia-question", "/api/trivia/questions/upload"}:
             return self.handle_trivia_question_upload()
+        if path in {"/api/maps-v2/map-packs", "/maps-v2-map-packs"}:
+            return self.handle_map_packs()
         self.send_error(HTTPStatus.NOT_FOUND, "Not found")
 
     def do_OPTIONS(self) -> None:
@@ -214,6 +241,10 @@ class OIABHandler(BaseHTTPRequestHandler):
             return REPO_ROOT / "frontend" / "mobile" / "admin.html"
         if path in {"/files", "/files/", "/upload", "/upload/", "/file-uploads", "/file-uploads/"}:
             return REPO_ROOT / "frontend" / "mobile" / "file-uploads.html"
+        if path in {"/map-packs", "/map-packs/", "/maps-settings", "/maps-settings/"}:
+            return REPO_ROOT / "frontend" / "mobile" / "map-packs.html"
+        if path in {"/services", "/services/", "/service-manager", "/service-manager/"}:
+            return REPO_ROOT / "frontend" / "mobile" / "services.html"
         if path in {"/gps-status", "/gps-status/"}:
             return REPO_ROOT / "frontend" / "mobile" / "gps-status.html"
         if path.startswith("/maps/overland/trivia/questions/") or path.startswith("/trivia/questions/"):
@@ -246,30 +277,32 @@ class OIABHandler(BaseHTTPRequestHandler):
             "default_map_app": self.settings.default_map_app,
             "optional_services_enabled": self.settings.enable_optional_services,
             "cert_mode": self.settings.cert_mode,
+            "db_path": str(self.settings.db_path),
         }
 
+    def app_db(self) -> AppDB:
+        return AppDB(self.settings)
+
     def map_packs(self) -> dict:
-        registry = read_json(self.settings.map_pack_registry, None) if self.settings.map_pack_registry else None
-        if not registry:
-            registry = read_json(REPO_ROOT / "config" / "map-packs.json", {"active_basemap": "protomaps_conus", "basemaps": []})
-        basemaps = []
-        for pack in registry.get("basemaps", []):
-            item = dict(pack)
-            url = str(item.get("url") or "")
-            if url.startswith("/maps/packs/"):
-                file_path = self.settings.data_dir / "maps" / "packs" / url.removeprefix("/maps/packs/")
-                item["exists"] = file_path.exists()
-                item["size_bytes"] = file_path.stat().st_size if file_path.exists() else 0
-            else:
-                item.setdefault("exists", False)
-                item.setdefault("size_bytes", 0)
-            basemaps.append(item)
-        return {"ok": True, "active": registry.get("active_basemap") or registry.get("active"), "basemaps": basemaps}
+        return self.app_db().map_pack_registry()
+
+    def handle_map_packs(self) -> None:
+        payload = self.read_body()
+        action = str(payload.get("action") or "rescan")
+        try:
+            if action == "set-active":
+                return self.send_json(self.app_db().set_active_map_pack(str(payload.get("id") or "")))
+            if action == "import-path":
+                return self.send_json(self.app_db().import_pmtiles_path(str(payload.get("path") or ""), payload.get("name")))
+            if action == "rescan":
+                self.app_db().rescan_map_packs()
+                return self.send_json(self.map_packs())
+            return self.send_json({"ok": False, "error": f"Unknown map pack action: {action}"}, status=400)
+        except Exception as exc:  # noqa: BLE001 - HTTP boundary
+            return self.send_json({"ok": False, "error": str(exc)}, status=400)
 
     def current_track(self) -> dict:
-        track_file = self.settings.data_dir / "tracks" / "current.geojson"
-        track = read_json(track_file, {"type": "FeatureCollection", "features": []})
-        return {"ok": True, "recording": False, "status": "inactive", "track": track}
+        return self.app_db().current_track()
 
     def music_library(self, refresh: bool = False) -> dict:
         cache = self.settings.data_dir / "media" / "music-library.json"
@@ -499,7 +532,7 @@ class OIABHandler(BaseHTTPRequestHandler):
             "folders": [
                 {"id": "games", "title": "Games", "icon": "/maps/overland/overland-folder-games.svg", "protected": False, "appIds": ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "drums", "trivia", "tic-tac-toe", "license-plates"]},
                 {"id": "reading", "title": "Reading", "icon": "/maps/overland/overland-folder-reading.svg", "protected": False, "appIds": ["wikipedia", "books", "komga"]},
-                {"id": "settings", "title": "Settings", "icon": "/maps/overland/overland-folder-settings.svg", "protected": True, "appIds": ["overland-settings", "gps-status", "system-monitor", "file-uploads", "service-manager"]},
+                {"id": "settings", "title": "Settings", "icon": "/maps/overland/overland-folder-settings.svg", "protected": True, "appIds": ["overland-settings", "gps-status", "system-monitor", "file-uploads", "map-packs", "service-manager"]},
             ],
         }
 

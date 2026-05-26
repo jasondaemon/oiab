@@ -46,9 +46,11 @@ Common values:
 ```text
 OIAB_HOSTNAME=overland.daemonadventures.net
 OIAB_DATA_DIR=/data/oiab
+OIAB_DB_PATH=/data/oiab/db/oiab.sqlite
 OIAB_HTTP_PUBLISHED_PORT=80
 OIAB_GPSD_HOST=host.docker.internal
 OIAB_GPSD_PORT=2947
+OIAB_ALLOW_DOCKER_CONTROL=false
 ```
 
 ## Map Packs
@@ -113,6 +115,14 @@ services/compose/
 ```
 
 These fragments mirror the profile services in the root compose file and are kept for service-manager and future install workflow integration.
+
+The in-app service manager can run compose actions only when explicitly enabled:
+
+```text
+OIAB_ALLOW_DOCKER_CONTROL=true
+```
+
+Keep this disabled unless the OIAB UI is on a trusted local network and you are comfortable allowing it to start/stop optional containers.
 
 ## Raspberry Pi + External SSD Checklist
 
