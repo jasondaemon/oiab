@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123822">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="OIAB Legacy">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>OIAB Legacy Shell</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/mobile/overland-touch-icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
+  <link rel="manifest" href="/mobile/manifest.webmanifest">
+  <link rel="stylesheet" href="overland-shell.css">
+</head>
+<body>
+  <main class="shell" aria-label="Overland In A Box Legacy">
+    <iframe id="mapFrame" class="map-frame" allow="geolocation; fullscreen" title="Overland map"></iframe>
+
+    <button id="restoreDock" class="restore-dock" type="button" aria-label="Show quick dock" hidden>
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <rect x="7" y="28" width="34" height="10" rx="5"></rect>
+        <circle cx="16" cy="33" r="2"></circle>
+        <circle cx="24" cy="33" r="2"></circle>
+        <circle cx="32" cy="33" r="2"></circle>
+      </svg>
+    </button>
+
+    <section id="dock" class="dock" aria-label="Quick access dock">
+      <div class="dock-main">
+        <button id="minimizeDock" class="dock-control" type="button" aria-label="Minimize dock">
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M12 22h24v4H12z"></path>
+          </svg>
+        </button>
+        <button id="appsButton" class="dock-control primary" type="button" aria-label="Open apps">
+          <svg viewBox="0 0 48 48" aria-hidden="true" class="apps-folder-icon">
+            <path class="folder-shape" d="M6 14c0-2.2 1.8-4 4-4h11l4 5h13c2.2 0 4 1.8 4 4v15c0 2.2-1.8 4-4 4H10c-2.2 0-4-1.8-4-4V14z"></path>
+            <rect x="16" y="22" width="5" height="5" rx="1"></rect>
+            <rect x="23" y="22" width="5" height="5" rx="1"></rect>
+            <rect x="30" y="22" width="5" height="5" rx="1"></rect>
+            <rect x="16" y="29" width="5" height="5" rx="1"></rect>
+            <rect x="23" y="29" width="5" height="5" rx="1"></rect>
+            <rect x="30" y="29" width="5" height="5" rx="1"></rect>
+          </svg>
+        </button>
+        <div id="dockApps" class="dock-apps" aria-label="Pinned apps"></div>
+        <button id="settingsButton" class="dock-control" type="button" aria-label="Open settings">
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M27.9 6l1.3 5.1c1.1.4 2.1.8 3 1.4l4.6-2.7 4 6.9-4 3.4c.1.6.2 1.2.2 1.9s-.1 1.3-.2 1.9l4 3.4-4 6.9-4.6-2.7c-.9.6-1.9 1-3 1.4L27.9 42h-7.8l-1.3-5.1c-1.1-.4-2.1-.8-3-1.4l-4.6 2.7-4-6.9 4-3.4c-.1-.6-.2-1.2-.2-1.9s.1-1.3.2-1.9l-4-3.4 4-6.9 4.6 2.7c.9-.6 1.9-1 3-1.4L20.1 6h7.8zM24 17a7 7 0 100 14 7 7 0 000-14z"></path>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <dialog id="appsDialog" class="panel wide-panel">
+      <form method="dialog">
+        <button class="panel-close" aria-label="Close apps">x</button>
+      </form>
+      <header class="panel-header">
+        <p class="eyebrow">Overland In A Box</p>
+        <h1>Applications</h1>
+        <p>Maps stay primary. Everything else is one tap away.</p>
+      </header>
+      <label class="search-label">
+        <span>Search apps</span>
+        <input id="appSearch" type="search" placeholder="Wikipedia, media, Minecraft, admin">
+      </label>
+      <div id="appsGrid" class="apps-grid"></div>
+    </dialog>
+
+    <dialog id="settingsDialog" class="panel settings-panel">
+      <form method="dialog">
+        <button class="panel-close" aria-label="Close settings">x</button>
+      </form>
+      <header class="panel-header">
+        <p class="eyebrow">Settings</p>
+        <h1>Quick Dock</h1>
+        <p>Choose which apps appear on the bottom dock. Full app access stays in the apps menu.</p>
+      </header>
+      <div id="dockSettings" class="dock-settings"></div>
+      <div class="settings-actions">
+        <button id="resetDock" class="soft-button" type="button">Reset Dock</button>
+      </div>
+      <section class="fallback-links" aria-label="Fallback links">
+        <h2>Fallback Tools</h2>
+        <a href="/api/config">Runtime Config</a>
+        <a href="/api/services">Optional Services</a>
+        <a href="/maps/">Direct Maps</a>
+      </section>
+    </dialog>
+  </main>
+  <script src="overland-shell.js"></script>
+</body>
+</html>

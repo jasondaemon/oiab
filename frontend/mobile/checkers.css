@@ -1,0 +1,119 @@
+@import url("chess.css");
+
+:root {
+  --red-piece: #e75d55;
+  --black-piece: #101813;
+}
+
+.checkers-rule {
+  margin-top: 10px;
+}
+
+.checkers-board {
+  border-color: rgba(128, 240, 138, 0.5);
+}
+
+.square.playable {
+  cursor: pointer;
+}
+
+.square.empty-light {
+  background: #d9c99d;
+}
+
+.checker-piece {
+  display: grid;
+  width: 74%;
+  height: 74%;
+  place-items: center;
+  color: rgba(245, 251, 239, 0.92);
+  border-radius: 999px;
+  box-shadow:
+    inset 0 7px 12px rgba(255, 255, 255, 0.18),
+    inset 0 -8px 14px rgba(0, 0, 0, 0.32),
+    0 8px 18px rgba(0, 0, 0, 0.28);
+  font-family: "Avenir Next", "Helvetica Neue", Helvetica, sans-serif;
+  font-size: clamp(1rem, 4.5vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.checker-piece.red {
+  background: linear-gradient(145deg, #ff867e, var(--red-piece));
+  border: 2px solid rgba(255, 205, 198, 0.45);
+}
+
+.checker-piece.black {
+  background: linear-gradient(145deg, #2c4738, var(--black-piece));
+  border: 2px solid rgba(128, 240, 138, 0.28);
+}
+
+.checker-piece.king::before {
+  content: "K";
+}
+
+.square.selected .checker-piece {
+  box-shadow:
+    inset 0 7px 12px rgba(255, 255, 255, 0.2),
+    inset 0 -8px 14px rgba(0, 0, 0, 0.32),
+    0 0 0 5px rgba(255, 211, 78, 0.55),
+    0 10px 22px rgba(0, 0, 0, 0.3);
+}
+
+.square.required-jumper .checker-piece {
+  animation: requiredJumpPulse 1.1s ease-in-out infinite;
+  box-shadow:
+    inset 0 7px 12px rgba(255, 255, 255, 0.22),
+    inset 0 -8px 14px rgba(0, 0, 0, 0.32),
+    0 0 0 5px rgba(255, 211, 78, 0.68),
+    0 0 22px rgba(255, 211, 78, 0.5),
+    0 10px 22px rgba(0, 0, 0, 0.3);
+}
+
+.square.legal::after {
+  width: 32%;
+  height: 32%;
+}
+
+.square.required-target::after {
+  width: 42%;
+  height: 42%;
+  background: rgba(255, 211, 78, 0.9);
+  box-shadow: 0 0 18px rgba(255, 211, 78, 0.6);
+}
+
+.square.capture::after {
+  width: 46%;
+  height: 46%;
+  background: rgba(255, 117, 111, 0.86);
+}
+
+.square.capture.required-target::after {
+  width: 54%;
+  height: 54%;
+  background: radial-gradient(circle, rgba(255, 211, 78, 0.96) 0 44%, rgba(255, 117, 111, 0.92) 48% 100%);
+  box-shadow:
+    0 0 0 3px rgba(255, 211, 78, 0.45),
+    0 0 20px rgba(255, 117, 111, 0.55);
+}
+
+.square.last {
+  box-shadow: inset 0 0 0 4px rgba(128, 240, 138, 0.58);
+}
+
+@keyframes requiredJumpPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .square.required-jumper .checker-piece {
+    animation: none;
+  }
+}

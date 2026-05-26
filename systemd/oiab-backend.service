@@ -1,0 +1,17 @@
+[Unit]
+Description=Overland In A Box backend
+After=network-online.target gpsd.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/oiab
+EnvironmentFile=-/opt/oiab/config/oiab.env
+Environment=PYTHONPATH=/opt/oiab
+ExecStart=/usr/bin/python3 -m backend.app.main --host ${OIAB_BIND_HOST} --port ${OIAB_PORT_HTTP}
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,14 @@
+id: minecraft
+name: Minecraft Server
+description: Optional managed Minecraft server for local play.
+category: games
+install_default: false
+runtime: docker
+compose_file: services/compose/minecraft.yml
+systemd_unit: oiab-minecraft.service
+launcher_url: /apps/minecraft/
+installed_marker: /data/oiab/services/minecraft
+ports:
+  - 25565
+  - 19132
+

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Blank Slate">
+  <defs>
+    <linearGradient id="bg" x1="40" y1="22" x2="216" y2="234" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#173b27"/>
+      <stop offset="1" stop-color="#07130d"/>
+    </linearGradient>
+    <linearGradient id="slate" x1="58" y1="57" x2="198" y2="199" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f5fbef"/>
+      <stop offset="1" stop-color="#c9d8c8"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="56" fill="url(#bg)"/>
+  <path d="M38 74c0-18 15-33 33-33h114c18 0 33 15 33 33v93c0 18-15 33-33 33H71c-18 0-33-15-33-33V74Z" fill="rgba(128,240,138,.14)" stroke="#80f08a" stroke-opacity=".35" stroke-width="5"/>
+  <rect x="58" y="63" width="140" height="108" rx="19" fill="url(#slate)"/>
+  <path d="M83 104h90M83 132h70" stroke="#173b27" stroke-width="14" stroke-linecap="round"/>
+  <path d="M78 193h101" stroke="#ffd34e" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="77" cy="193" r="15" fill="#ff756f"/>
+  <circle cx="179" cy="193" r="15" fill="#80f08a"/>
+  <path d="M113 193h30" stroke="#07130d" stroke-opacity=".48" stroke-width="8" stroke-linecap="round"/>
+</svg>

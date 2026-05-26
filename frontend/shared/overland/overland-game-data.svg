@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Game Data">
+  <rect width="128" height="128" rx="24" fill="#102018"/>
+  <path d="M30 34h68a10 10 0 0 1 10 10v40a10 10 0 0 1-10 10H30a10 10 0 0 1-10-10V44a10 10 0 0 1 10-10z" fill="#2d4b38" stroke="#82ee91" stroke-width="4"/>
+  <path d="M39 53v28M53 61v20M67 45v36M81 58v23M95 50v31" stroke="#ffd45a" stroke-width="7" stroke-linecap="round"/>
+  <path d="M38 101h52" stroke="#35e5e8" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="39" cy="53" r="5" fill="#d9ecdb"/>
+  <circle cx="67" cy="45" r="5" fill="#d9ecdb"/>
+  <circle cx="95" cy="50" r="5" fill="#d9ecdb"/>
+</svg>

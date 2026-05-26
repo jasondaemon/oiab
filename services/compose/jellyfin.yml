@@ -1,0 +1,11 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    restart: unless-stopped
+    ports:
+      - "8096:8096"
+    volumes:
+      - "${OIAB_DATA_DIR:-/data/oiab}/services/jellyfin/config:/config"
+      - "${OIAB_DATA_DIR:-/data/oiab}/services/jellyfin/cache:/cache"
+      - "${OIAB_DATA_DIR:-/data/oiab}/media:/media"
+

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#123822">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="IIAB Overland">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Tic-Tac-Toe | IIAB Overland</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/mobile/overland-touch-icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
+  <link rel="manifest" href="/mobile/manifest.webmanifest">
+  <link rel="stylesheet" href="tic-tac-toe.css">
+</head>
+<body>
+  <main class="game-shell">
+    <header class="game-header">
+      <a class="icon-button" href="/mobile/" aria-label="Back to mobile launcher">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 5.2 8 12l6.8 6.8-1.8 1.8L5.4 13a1.4 1.4 0 0 1 0-2L13 3.4l1.8 1.8z"></path></svg>
+      </a>
+      <div>
+        <p>IIAB Overland</p>
+        <h1>Tic-Tac-Toe</h1>
+      </div>
+      <button id="refreshGame" class="icon-button" type="button" aria-label="Refresh">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.7 6.3A8 8 0 0 0 4.3 10H2l3.6 4.1L9.2 10H6.4a6 6 0 0 1 10.2-2.2 6 6 0 0 1 .1 8.4 5.9 5.9 0 0 1-4.2 1.8 6 6 0 0 1-4.4-2l-1.5 1.4A8 8 0 1 0 17.7 6.3z"></path></svg>
+      </button>
+    </header>
+
+    <section id="lobby" class="panel">
+      <div class="profile-chip">Playing as <strong id="playerNameLabel">Player</strong></div>
+      <div class="mode-grid" role="group" aria-label="Game mode">
+        <label class="mode-choice">
+          <input type="radio" name="gameMode" value="pvp" checked>
+          <span>Two Player</span>
+        </label>
+        <label class="mode-choice">
+          <input type="radio" name="gameMode" value="cpu">
+          <span>Vs Computer</span>
+        </label>
+      </div>
+      <label id="difficultyLabel" class="difficulty-label" hidden>
+        Computer Difficulty
+        <select id="difficulty">
+          <option value="easy">Easy</option>
+          <option value="medium" selected>Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </label>
+      <div class="actions">
+        <button id="createGame" type="button" class="primary">Create Game</button>
+      </div>
+      <h2>Open Games</h2>
+      <div id="openGames" class="open-games"></div>
+    </section>
+
+    <section id="gamePanel" class="panel game-panel" hidden>
+      <div class="status-row">
+        <div>
+          <span id="gameState">Waiting</span>
+          <strong id="gameStatus">Create or join a game.</strong>
+        </div>
+        <button id="leaveGame" class="small-pill" type="button">Leave</button>
+      </div>
+      <div id="players" class="players"></div>
+      <div id="board" class="board" aria-label="Tic-tac-toe board"></div>
+      <div class="actions">
+        <button id="resetGame" type="button">Reset Board</button>
+        <button id="closeGame" type="button" class="danger">Close Game</button>
+      </div>
+    </section>
+
+    <p id="message" class="message" role="status"></p>
+  </main>
+  <script src="tic-tac-toe.js"></script>
+</body>
+</html>

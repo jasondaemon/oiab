@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Dots and Boxes">
+  <defs>
+    <linearGradient id="bg" x1="18" y1="10" x2="112" y2="120" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1a3a27"/>
+      <stop offset="1" stop-color="#07140e"/>
+    </linearGradient>
+    <linearGradient id="line" x1="22" y1="22" x2="104" y2="104" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffd34e"/>
+      <stop offset="1" stop-color="#80f08a"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <g fill="none" stroke="url(#line)" stroke-linecap="round" stroke-width="9">
+    <path d="M34 34h30M64 34h30M34 64h30M64 64h30M34 94h30"/>
+    <path d="M34 34v30M64 34v30M94 34v30M34 64v30M64 64v30"/>
+  </g>
+  <g fill="#f5fbef">
+    <circle cx="34" cy="34" r="8"/>
+    <circle cx="64" cy="34" r="8"/>
+    <circle cx="94" cy="34" r="8"/>
+    <circle cx="34" cy="64" r="8"/>
+    <circle cx="64" cy="64" r="8"/>
+    <circle cx="94" cy="64" r="8"/>
+    <circle cx="34" cy="94" r="8"/>
+    <circle cx="64" cy="94" r="8"/>
+    <circle cx="94" cy="94" r="8"/>
+  </g>
+  <rect x="70" y="70" width="24" height="24" rx="7" fill="#ffd34e" opacity=".9"/>
+</svg>

@@ -1,0 +1,148 @@
+@import url("tic-tac-toe.css");
+
+.dots-shell {
+  width: min(100%, 760px);
+}
+
+.dots-game-panel {
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+}
+
+.dots-board-viewport {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  display: grid;
+  place-items: center;
+  padding: 4px;
+  border-radius: 20px;
+  touch-action: pan-x pan-y;
+}
+
+.dots-board {
+  --dots-pad: clamp(8px, 2vw, 14px);
+  --dots-board-size: clamp(340px, calc(100dvh - 260px), 520px);
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  gap: 0;
+  width: var(--dots-board-size);
+  height: var(--dots-board-size);
+  aspect-ratio: 1;
+  justify-self: center;
+  align-self: center;
+  padding: var(--dots-pad);
+  background:
+    radial-gradient(circle at 22% 20%, rgba(128, 240, 138, 0.18), transparent 42%),
+    rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 22px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.dots-board[data-size="3"] {
+  --dots-board-size: clamp(310px, calc(100dvh - 260px), 430px);
+}
+
+.dots-board[data-size="5"] {
+  --dots-board-size: clamp(410px, calc(100dvh - 260px), 560px);
+}
+
+.dots-board[data-size="6"] {
+  --dots-board-size: clamp(470px, calc(100dvh - 260px), 620px);
+}
+
+.dot {
+  z-index: 4;
+  width: clamp(10px, 2.8vw, 18px);
+  height: clamp(10px, 2.8vw, 18px);
+  place-self: center;
+  background: #f5fbef;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.22), 0 0 18px rgba(245, 251, 239, 0.22);
+}
+
+.edge {
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow: none;
+}
+
+.edge:not(:disabled):hover,
+.edge:not(:disabled):focus-visible {
+  background: rgba(255, 211, 78, 0.55);
+  outline: 2px solid rgba(255, 211, 78, 0.45);
+}
+
+.edge.h {
+  width: 100%;
+  height: clamp(10px, 2.1vw, 16px);
+  place-self: center stretch;
+}
+
+.edge.v {
+  width: clamp(10px, 2.1vw, 16px);
+  height: 100%;
+  place-self: stretch center;
+}
+
+.edge.owner-a {
+  background: var(--gold);
+}
+
+.edge.owner-b {
+  background: var(--green);
+}
+
+.edge.last {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.26), 0 0 18px rgba(255, 255, 255, 0.18);
+}
+
+.box {
+  display: grid;
+  place-items: center;
+  margin: 4px;
+  color: rgba(6, 16, 11, 0.86);
+  border-radius: 12px;
+  font-size: clamp(0.85rem, 4vw, 2.2rem);
+  font-weight: 850;
+  line-height: 1;
+}
+
+.box.owner-a {
+  background: rgba(255, 211, 78, 0.78);
+}
+
+.box.owner-b {
+  background: rgba(128, 240, 138, 0.72);
+}
+
+@media (max-width: 380px), (max-height: 720px) {
+  .dots-board {
+    --dots-board-size: clamp(330px, calc(100dvh - 228px), 500px);
+    border-radius: 18px;
+    padding: 8px;
+  }
+
+  .dots-board[data-size="3"] {
+    --dots-board-size: clamp(300px, calc(100dvh - 228px), 400px);
+  }
+
+  .dots-board[data-size="5"] {
+    --dots-board-size: clamp(390px, calc(100dvh - 228px), 540px);
+  }
+
+  .dots-board[data-size="6"] {
+    --dots-board-size: clamp(450px, calc(100dvh - 228px), 600px);
+  }
+
+  .box {
+    margin: 3px;
+    border-radius: 9px;
+  }
+}

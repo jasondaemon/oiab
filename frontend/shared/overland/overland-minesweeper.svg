@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Minesweeper">
+  <defs>
+    <linearGradient id="bg" x1="16" y1="12" x2="112" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#365b3f"/>
+      <stop offset="1" stop-color="#102519"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="32" y1="24" x2="102" y2="104" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffe078"/>
+      <stop offset="1" stop-color="#d09f23"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <path d="M28 30h72v72H28z" fill="#183524" stroke="#80f08a" stroke-width="4"/>
+  <path d="M52 30v72M76 30v72M28 54h72M28 78h72" stroke="#80f08a" stroke-opacity=".42" stroke-width="4"/>
+  <circle cx="64" cy="66" r="18" fill="#0c1610" stroke="url(#gold)" stroke-width="5"/>
+  <path d="M64 35v11M64 86v11M33 66h11M84 66h11M42 44l8 8M78 80l8 8M86 44l-8 8M50 80l-8 8" stroke="#ffd34e" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="70" cy="58" r="4" fill="#f5fbef" opacity=".9"/>
+  <path d="M82 35h13v25H82z" fill="#ff756f"/>
+  <path d="M82 35v43" stroke="#f5fbef" stroke-width="5" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#123822">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="IIAB Overland">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Word Tile Arena | IIAB Overland</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/mobile/overland-touch-icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
+  <link rel="manifest" href="/mobile/manifest.webmanifest">
+  <link rel="stylesheet" href="word-tile-arena.css">
+</head>
+<body>
+  <main class="tile-shell">
+    <header class="tile-header">
+      <a class="icon-button" href="/mobile/" aria-label="Back to mobile launcher">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 5.2 8 12l6.8 6.8-1.8 1.8L5.4 13a1.4 1.4 0 0 1 0-2L13 3.4l1.8 1.8z"></path></svg>
+      </a>
+      <h1>Word Tile Arena</h1>
+      <button id="refreshGame" class="icon-button" type="button" aria-label="Refresh">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.7 6.3A8 8 0 0 0 4.3 10H2l3.6 4.1L9.2 10H6.4a6 6 0 0 1 10.2-2.2 6 6 0 0 1 .1 8.4 5.9 5.9 0 0 1-4.2 1.8 6 6 0 0 1-4.4-2l-1.5 1.4A8 8 0 1 0 17.7 6.3z"></path></svg>
+      </button>
+    </header>
+
+    <section id="lobby" class="panel lobby">
+      <div class="profile-chip">Playing as <strong id="playerNameLabel">Player</strong></div>
+      <button id="createGame" class="primary wide" type="button">Create Word Game</button>
+      <h2>Open Word Games</h2>
+      <div id="openGames" class="open-games"></div>
+      <p class="hint">2 to 4 players. The server owns the tile bag, racks, dictionary checks, and scoring.</p>
+    </section>
+
+    <section id="gamePanel" class="game-panel" hidden>
+      <div class="status-strip panel">
+        <div>
+          <span id="gameState">Waiting</span>
+          <strong id="gameStatus">Join a game.</strong>
+        </div>
+        <div class="bag">Bag <strong id="bagCount">0</strong></div>
+      </div>
+
+      <div id="scoreboard" class="scoreboard"></div>
+
+      <div class="board-tools">
+        <button id="zoomOut" type="button">-</button>
+        <button id="centerBoard" type="button">Center</button>
+        <button id="latestMove" type="button">Latest</button>
+        <button id="zoomIn" type="button">+</button>
+      </div>
+
+      <div id="boardViewport" class="board-viewport">
+        <div id="board" class="board" aria-label="Word Tile Arena board"></div>
+      </div>
+
+      <div id="movePreview" class="move-preview">Select a rack tile, then tap a board square.</div>
+
+      <div class="rack-wrap">
+        <div id="rack" class="rack" aria-label="Your rack"></div>
+      </div>
+
+      <div class="actions">
+        <button id="submitMove" class="primary" type="button">Submit</button>
+        <button id="recallTiles" type="button">Recall</button>
+        <button id="exchangeTiles" type="button">Exchange</button>
+        <button id="passTurn" type="button">Pass</button>
+      </div>
+      <div class="actions lower">
+        <button id="startGame" class="primary" type="button">Start</button>
+        <button id="leaveGame" type="button">Leave</button>
+        <button id="closeGame" class="danger" type="button">Close</button>
+      </div>
+    </section>
+
+    <dialog id="blankDialog" class="blank-dialog">
+      <form method="dialog">
+        <h2>Blank Tile</h2>
+        <label>Choose letter <input id="blankLetter" maxlength="1" autocomplete="off" inputmode="text"></label>
+        <menu>
+          <button value="cancel" type="submit">Cancel</button>
+          <button id="blankConfirm" value="ok" class="primary" type="submit">Use Letter</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <p id="message" class="message" role="status"></p>
+  </main>
+  <script src="word-tile-arena.js"></script>
+</body>
+</html>

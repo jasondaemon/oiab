@@ -1,0 +1,13 @@
+id: komga
+name: Komga
+description: Books, comics, PDFs, and graphic novel library server.
+category: library
+install_default: false
+runtime: docker
+compose_file: services/compose/komga.yml
+systemd_unit: oiab-komga.service
+launcher_url: /apps/komga/
+installed_marker: /data/oiab/services/komga
+ports:
+  - 25600
+

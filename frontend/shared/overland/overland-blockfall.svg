@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Blockfall Battle">
+  <defs>
+    <linearGradient id="bg" x1="18" y1="12" x2="110" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10261d"/>
+      <stop offset=".58" stop-color="#1e4b35"/>
+      <stop offset="1" stop-color="#0b1814"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="5" flood-opacity=".28"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <g filter="url(#shadow)">
+    <rect x="31" y="20" width="18" height="18" rx="4" fill="#80f08a"/>
+    <rect x="51" y="20" width="18" height="18" rx="4" fill="#80f08a"/>
+    <rect x="51" y="40" width="18" height="18" rx="4" fill="#80f08a"/>
+    <rect x="71" y="40" width="18" height="18" rx="4" fill="#80f08a"/>
+    <rect x="31" y="67" width="18" height="18" rx="4" fill="#ffd34e"/>
+    <rect x="51" y="67" width="18" height="18" rx="4" fill="#ffd34e"/>
+    <rect x="71" y="67" width="18" height="18" rx="4" fill="#ffd34e"/>
+    <rect x="91" y="67" width="18" height="18" rx="4" fill="#ffd34e"/>
+    <rect x="21" y="90" width="18" height="18" rx="4" fill="#ff756f"/>
+    <rect x="41" y="90" width="18" height="18" rx="4" fill="#ff756f"/>
+    <rect x="41" y="70" width="18" height="18" rx="4" fill="#ff756f" opacity=".9"/>
+  </g>
+  <path d="M24 112h80" stroke="#eff8e9" stroke-width="6" stroke-linecap="round" opacity=".82"/>
+</svg>

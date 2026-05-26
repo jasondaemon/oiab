@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#123822">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="IIAB Overland">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Territory Trace | IIAB Overland</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/mobile/overland-touch-icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
+  <link rel="manifest" href="/mobile/manifest.webmanifest">
+  <link rel="stylesheet" href="claimline.css">
+</head>
+<body>
+  <main class="trace-shell">
+    <header class="trace-header">
+      <a class="icon-button" href="/mobile/" aria-label="Back to mobile launcher">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 5.2 8 12l6.8 6.8-1.8 1.8L5.4 13a1.4 1.4 0 0 1 0-2L13 3.4l1.8 1.8z"></path></svg>
+      </a>
+      <h1>Territory Trace</h1>
+      <button id="refreshGame" class="icon-button" type="button" aria-label="Refresh">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.7 6.3A8 8 0 0 0 4.3 10H2l3.6 4.1L9.2 10H6.4a6 6 0 0 1 10.2-2.2 6 6 0 0 1 .1 8.4 5.9 5.9 0 0 1-4.2 1.8 6 6 0 0 1-4.4-2l-1.5 1.4A8 8 0 1 0 17.7 6.3z"></path></svg>
+      </button>
+    </header>
+
+    <section id="lobby" class="panel lobby">
+      <div class="profile-chip">Playing as <strong id="playerNameLabel">Player</strong></div>
+      <div class="mode-grid" role="group" aria-label="Game mode">
+        <button data-mode="solo" type="button" class="mode-card primary">Solo Score</button>
+        <button data-mode="timed-battle" type="button" class="mode-card">Timed Battle</button>
+        <button data-mode="elimination" type="button" class="mode-card">Elimination</button>
+      </div>
+      <label class="duration-label">
+        Match Length
+        <select id="duration">
+          <option value="60">1 minute</option>
+          <option value="120" selected>2 minutes</option>
+          <option value="180">3 minutes</option>
+          <option value="300">5 minutes</option>
+        </select>
+      </label>
+      <div class="actions">
+        <button id="startMode" type="button" class="primary">Start Solo Score</button>
+      </div>
+      <h2>Open Territory Battles</h2>
+      <div id="openGames" class="open-games"></div>
+      <p class="hint">Hold Draw while leaving a claimed edge. Reconnect to the wall or your territory to claim an enclosed region.</p>
+    </section>
+
+    <section id="gamePanel" class="panel game-panel" hidden>
+      <div class="top-strip">
+        <div><span id="gameState">Ready</span><strong id="gameStatus">Waiting.</strong></div>
+        <div id="timer" class="timer">0:00</div>
+      </div>
+      <canvas id="traceCanvas" width="960" height="600" aria-label="Territory Trace board"></canvas>
+      <div id="leaderboard" class="leaderboard"></div>
+      <div class="controls">
+        <button data-dir="up" type="button" aria-label="Up">↑</button>
+        <button data-dir="left" type="button" aria-label="Left">←</button>
+        <button id="drawButton" type="button" class="draw-button" aria-label="Draw">Draw</button>
+        <button data-dir="right" type="button" aria-label="Right">→</button>
+        <button data-dir="down" type="button" aria-label="Down">↓</button>
+      </div>
+      <div class="actions">
+        <button id="resetGame" type="button">Reset</button>
+        <button id="leaveGame" type="button">Leave</button>
+        <button id="closeGame" type="button" class="danger">Close</button>
+      </div>
+    </section>
+
+    <p id="message" class="message" role="status"></p>
+  </main>
+  <script src="claimline.js"></script>
+</body>
+</html>

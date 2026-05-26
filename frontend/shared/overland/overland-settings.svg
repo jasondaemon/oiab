@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Overland settings">
+  <defs>
+    <linearGradient id="bg" x1="14" y1="14" x2="114" y2="114" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7df08c"/>
+      <stop offset=".55" stop-color="#ffd34d"/>
+      <stop offset="1" stop-color="#6ee7ff"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#000" flood-opacity=".28"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="30" fill="#0b1812"/>
+  <circle cx="64" cy="64" r="43" fill="url(#bg)" filter="url(#shadow)"/>
+  <path fill="#0b1812" d="m71.9 26 2.7 10.7c2.4.8 4.6 1.8 6.8 3.1l9.8-5.7 9.9 17.2-8.6 7.2c.2 1.8.3 3.6.3 5.5s-.1 3.7-.3 5.5l8.6 7.2-9.9 17.2-9.8-5.7c-2.2 1.3-4.4 2.3-6.8 3.1L71.9 102H52.1l-2.7-10.7c-2.4-.8-4.7-1.8-6.8-3.1l-9.8 5.7-9.9-17.2 8.6-7.2c-.2-1.8-.3-3.6-.3-5.5s.1-3.7.3-5.5l-8.6-7.2 9.9-17.2 9.8 5.7c2.1-1.3 4.4-2.3 6.8-3.1L52.1 26h19.8Z"/>
+  <circle cx="62" cy="64" r="16" fill="#f3fff3"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Tic-tac-toe">
+  <rect width="128" height="128" rx="28" fill="#102319"/>
+  <path d="M44 18v92M84 18v92M18 44h92M18 84h92" fill="none" stroke="#80f08a" stroke-width="8" stroke-linecap="round"/>
+  <path d="M31 27l22 22M53 27L31 49M75 79l22 22M97 79l-22 22" fill="none" stroke="#ffd34e" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="86" cy="38" r="15" fill="none" stroke="#f5fbef" stroke-width="8"/>
+  <circle cx="42" cy="94" r="15" fill="none" stroke="#f5fbef" stroke-width="8"/>
+</svg>

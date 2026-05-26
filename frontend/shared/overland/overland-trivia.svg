@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Trail Trivia">
+  <defs>
+    <linearGradient id="bg" x1="15" y1="10" x2="114" y2="120" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1a2c21"/>
+      <stop offset="1" stop-color="#07100e"/>
+    </linearGradient>
+    <linearGradient id="card" x1="22" y1="20" x2="105" y2="108" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffcc3e"/>
+      <stop offset="1" stop-color="#83e092"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <path d="M25 34c0-8 7-15 15-15h48c8 0 15 7 15 15v60c0 8-7 15-15 15H40c-8 0-15-7-15-15V34Z" fill="url(#card)"/>
+  <path d="M43 41c2-12 12-20 25-20 14 0 25 9 25 22 0 11-6 17-16 22-8 4-10 7-10 15v3H54v-5c0-11 5-17 15-22 7-4 11-7 11-13 0-7-5-11-13-11s-13 5-15 13l-9-4Z" fill="#07100e"/>
+  <circle cx="61" cy="96" r="8" fill="#07100e"/>
+  <path d="M22 91 12 105m94-78 10-15M14 40l14 7m85 48-14-7" stroke="#f7f4e8" stroke-width="7" stroke-linecap="round" opacity=".9"/>
+</svg>

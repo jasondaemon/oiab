@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#123822">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="IIAB Overland">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Minesweeper | IIAB Overland</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/mobile/overland-touch-icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
+  <link rel="manifest" href="/mobile/manifest.webmanifest">
+  <link rel="stylesheet" href="minesweeper.css">
+</head>
+<body>
+  <main class="ms-shell">
+    <header class="ms-header">
+      <a class="ms-icon-button" href="/mobile/" aria-label="Back to mobile launcher">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 5.2 8 12l6.8 6.8-1.8 1.8L5.4 13a1.4 1.4 0 0 1 0-2L13 3.4l1.8 1.8z"></path></svg>
+      </a>
+      <h1>Minesweeper</h1>
+      <button id="newGameTop" class="ms-icon-button" type="button" aria-label="New game">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.7 6.3A8 8 0 0 0 4.3 10H2l3.6 4.1L9.2 10H6.4a6 6 0 0 1 10.2-2.2 6 6 0 0 1 .1 8.4 5.9 5.9 0 0 1-4.2 1.8 6 6 0 0 1-4.4-2l-1.5 1.4A8 8 0 1 0 17.7 6.3z"></path></svg>
+      </button>
+    </header>
+
+    <section class="ms-panel">
+      <div class="ms-profile">Playing as <button id="playerName" type="button">Player</button></div>
+      <div class="ms-toolbar" aria-label="Minesweeper controls">
+        <div class="ms-difficulty" role="group" aria-label="Difficulty">
+          <button class="active" data-difficulty="easy" type="button">Easy</button>
+          <button data-difficulty="medium" type="button">Medium</button>
+          <button data-difficulty="hard" type="button">Hard</button>
+        </div>
+        <button id="flagMode" class="ms-flag-button" type="button" aria-pressed="false">Flag</button>
+      </div>
+      <div class="ms-readout" aria-label="Game status">
+        <article><span>Mines</span><strong id="mineCount">10</strong></article>
+        <article><span>Flags</span><strong id="flagCount">0</strong></article>
+        <article><span>Time</span><strong id="timer">0:00</strong></article>
+        <article><span>Score</span><strong id="score">0</strong></article>
+      </div>
+      <div id="status" class="ms-status">Reveal a square to start.</div>
+      <div class="ms-board-wrap">
+        <div id="board" class="ms-board" aria-label="Minefield"></div>
+      </div>
+      <div class="ms-actions">
+        <button id="newGame" type="button">New Field</button>
+        <a href="/mobile/scoreboard.html" class="ms-score-link">Scoreboard</a>
+      </div>
+    </section>
+
+    <dialog id="nameDialog" class="ms-dialog">
+      <form method="dialog">
+        <button class="ms-dialog-close" value="cancel" aria-label="Close">x</button>
+      </form>
+      <h2>Player Name</h2>
+      <input id="nameInput" type="text" maxlength="24" autocomplete="name">
+      <button id="saveName" type="button">Save Name</button>
+    </dialog>
+  </main>
+  <script src="minesweeper.js"></script>
+</body>
+</html>

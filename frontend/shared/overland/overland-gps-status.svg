@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="GPS Status">
+  <defs>
+    <linearGradient id="bg" x1="18" y1="108" x2="110" y2="18" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0b1e16"/>
+      <stop offset=".55" stop-color="#244d35"/>
+      <stop offset="1" stop-color="#79ef8e"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <path d="M18 88c18-14 33-12 48-2s27 11 44-1" fill="none" stroke="#93f5a0" stroke-width="4" stroke-linecap="round" opacity=".38"/>
+  <path d="M20 102c23-17 43-15 61-3s29 10 48-7" fill="none" stroke="#35e5e8" stroke-width="3" stroke-linecap="round" opacity=".32"/>
+  <circle cx="64" cy="54" r="31" fill="#07140f" stroke="#dff7e5" stroke-width="4"/>
+  <circle cx="64" cy="54" r="5" fill="#ffd45a" filter="url(#glow)"/>
+  <path d="M64 24v13M64 71v13M34 54h13M81 54h13" stroke="#dff7e5" stroke-width="4" stroke-linecap="round"/>
+  <path d="M64 54 80 31 70 58 48 77 58 50z" fill="#79ef8e" stroke="#102018" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M40 105h48" stroke="#ffd45a" stroke-width="7" stroke-linecap="round"/>
+  <path d="M49 94h30" stroke="#dff7e5" stroke-width="5" stroke-linecap="round" opacity=".88"/>
+</svg>

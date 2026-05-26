@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#123822">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="IIAB Overland">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>IIAB Overland Mobile</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/mobile/overland-touch-icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
+  <link rel="manifest" href="/mobile/manifest.webmanifest">
+  <link rel="stylesheet" href="mobile-shell.css">
+</head>
+<body>
+  <main class="mobile-shell" aria-label="IIAB Overland mobile launcher">
+    <section class="mobile-welcome" aria-label="Player profile">
+      <span>Welcome to another adventure,</span>
+      <button id="editPlayerName" type="button">Player</button>
+    </section>
+
+    <section id="openGamesPanel" class="quick-panel sessions-panel" aria-label="Open games" hidden>
+      <div class="section-title">
+        <h2>Open Games</h2>
+        <button id="refreshGames" class="icon-button" type="button" aria-label="Refresh open games">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.7 6.3A8 8 0 0 0 4.3 10H2l3.6 4.1L9.2 10H6.4a6 6 0 0 1 10.2-2.2 6 6 0 0 1 .1 8.4 5.9 5.9 0 0 1-4.2 1.8 6 6 0 0 1-4.4-2l-1.5 1.4A8 8 0 1 0 17.7 6.3z"></path></svg>
+        </button>
+      </div>
+      <div id="openGamesGrid" class="app-grid compact-grid"></div>
+    </section>
+
+    <section class="quick-panel" aria-label="All apps">
+      <div class="section-title">
+        <button id="appsBack" class="back-button" type="button" hidden>‹ Apps</button>
+        <span id="appsFolderTitle"></span>
+        <button id="refreshApps" class="icon-button" type="button" aria-label="Refresh apps">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.7 6.3A8 8 0 0 0 4.3 10H2l3.6 4.1L9.2 10H6.4a6 6 0 0 1 10.2-2.2 6 6 0 0 1 .1 8.4 5.9 5.9 0 0 1-4.2 1.8 6 6 0 0 1-4.4-2l-1.5 1.4A8 8 0 1 0 17.7 6.3z"></path></svg>
+        </button>
+      </div>
+      <div id="appsGrid" class="app-grid"></div>
+    </section>
+  </main>
+  <dialog id="playerNameDialog" class="player-name-dialog">
+    <h2>Your Name</h2>
+    <p>This name is saved on this device and used for local family games.</p>
+    <input id="playerNameInput" maxlength="24" autocomplete="nickname" placeholder="Player name">
+    <div id="playerNameError" class="password-error"></div>
+    <button id="savePlayerName" class="password-submit" type="button">Save Name</button>
+  </dialog>
+  <script src="mobile-shell.js"></script>
+</body>
+</html>

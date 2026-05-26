@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Games folder">
+  <defs>
+    <linearGradient id="folder" x1="10" x2="86" y1="20" y2="82" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffe06a"/>
+      <stop offset="1" stop-color="#f6b329"/>
+    </linearGradient>
+    <linearGradient id="face" x1="24" x2="77" y1="38" y2="70" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1d3b33"/>
+      <stop offset="1" stop-color="#0b1815"/>
+    </linearGradient>
+  </defs>
+  <path fill="#d99622" d="M8 28c0-5 4-9 9-9h21l8 9h33c5 0 9 4 9 9v3H8V28z"/>
+  <rect width="80" height="54" x="8" y="32" fill="url(#folder)" rx="10"/>
+  <path fill="#000" opacity=".14" d="M8 46h80v30c0 6-4 10-10 10H18C12 86 8 82 8 76V46z"/>
+  <path fill="url(#face)" d="M28 49c5-5 14-6 20-2h1c6-4 15-3 20 2 4 4 7 13 7 20 0 5-2 8-6 9-4 2-8 0-12-5l-3-4H42l-4 5c-3 4-7 6-11 4-4-1-6-4-6-9 0-7 3-16 7-20z"/>
+  <rect width="4" height="16" x="36" y="54" fill="#8af095" rx="2"/>
+  <rect width="16" height="4" x="30" y="60" fill="#8af095" rx="2"/>
+  <circle cx="61" cy="58" r="4" fill="#ffd34e"/>
+  <circle cx="68" cy="66" r="4" fill="#80d4ff"/>
+</svg>

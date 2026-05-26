@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Reading folder">
+  <defs>
+    <linearGradient id="folder" x1="9" x2="86" y1="18" y2="84" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffe06a"/>
+      <stop offset="1" stop-color="#f2ae28"/>
+    </linearGradient>
+  </defs>
+  <path fill="#d99622" d="M8 28c0-5 4-9 9-9h21l8 9h33c5 0 9 4 9 9v3H8V28z"/>
+  <rect width="80" height="54" x="8" y="32" fill="url(#folder)" rx="10"/>
+  <path fill="#000" opacity=".14" d="M8 46h80v30c0 6-4 10-10 10H18C12 86 8 82 8 76V46z"/>
+  <rect width="12" height="34" x="25" y="45" fill="#57c785" rx="2" transform="rotate(-8 31 62)"/>
+  <rect width="12" height="38" x="41" y="42" fill="#e94f64" rx="2"/>
+  <rect width="12" height="32" x="58" y="47" fill="#4ba3ff" rx="2" transform="rotate(9 64 63)"/>
+  <path fill="#f8fff5" opacity=".78" d="M29 52h7v4h-7zm14-3h8v4h-8zm17 6h7v4h-7z"/>
+  <path fill="#102018" opacity=".35" d="M24 77h50v4H24z"/>
+</svg>

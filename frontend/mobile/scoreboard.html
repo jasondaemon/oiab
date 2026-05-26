@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#123822">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="IIAB Overland">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Scoreboard | IIAB Overland</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/mobile/overland-touch-icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
+  <link rel="manifest" href="/mobile/manifest.webmanifest">
+  <link rel="stylesheet" href="game-stats.css">
+</head>
+<body>
+  <main class="gs-shell">
+    <header class="gs-header">
+      <a class="gs-icon-button" href="/mobile/" aria-label="Back to mobile launcher">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 5.2 8 12l6.8 6.8-1.8 1.8L5.4 13a1.4 1.4 0 0 1 0-2L13 3.4l1.8 1.8z"></path></svg>
+      </a>
+      <h1>Scoreboard</h1>
+      <button id="refreshScores" class="gs-icon-button" type="button" aria-label="Refresh scoreboard">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.7 6.3A8 8 0 0 0 4.3 10H2l3.6 4.1L9.2 10H6.4a6 6 0 0 1 10.2-2.2 6 6 0 0 1 .1 8.4 5.9 5.9 0 0 1-4.2 1.8 6 6 0 0 1-4.4-2l-1.5 1.4A8 8 0 1 0 17.7 6.3z"></path></svg>
+      </button>
+    </header>
+
+    <section class="gs-panel gs-summary" aria-label="Score summary">
+      <article><span>Matches</span><strong id="matchCount">0</strong></article>
+      <article><span>Players</span><strong id="playerCount">0</strong></article>
+      <article><span>Leader</span><strong id="leaderName">-</strong></article>
+    </section>
+
+    <section class="gs-panel">
+      <div class="gs-tabs" role="tablist" aria-label="Ranking type">
+        <button class="active" data-view="overall" type="button">Overall</button>
+        <button data-view="tic-tac-toe" type="button">Tic-Tac-Toe</button>
+        <button data-view="chess" type="button">Chess</button>
+        <button data-view="checkers" type="button">Checkers</button>
+        <button data-view="minesweeper" type="button">Minesweeper</button>
+        <button data-view="blockfall" type="button">Blockfall</button>
+        <button data-view="claimline" type="button">Territory Trace</button>
+        <button data-view="word-tile-arena" type="button">Word Tiles</button>
+        <button data-view="blank-slate" type="button">Blank Slate</button>
+        <button data-view="dots-and-boxes" type="button">Dots</button>
+        <button data-view="connect-four" type="button">Connect Four</button>
+        <button data-view="battleship" type="button">Battleship</button>
+        <button data-view="hangman" type="button">Hangman</button>
+        <button data-view="word-grid" type="button">Word Grid</button>
+        <button data-view="pattern-match" type="button">Pattern</button>
+        <button data-view="trivia" type="button">Trivia</button>
+      </div>
+      <div id="rankings" class="gs-rankings"></div>
+    </section>
+
+    <section class="gs-panel">
+      <h2>Recent Games</h2>
+      <div id="recentGames" class="gs-recent"></div>
+    </section>
+
+    <p id="message" class="gs-message" role="status"></p>
+  </main>
+  <script src="game-stats.js"></script>
+</body>
+</html>

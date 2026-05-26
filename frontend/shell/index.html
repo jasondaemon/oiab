@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#123822">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="OIAB">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Overland In A Box</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/mobile/overland-touch-icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
+  <link rel="manifest" href="/mobile/manifest.webmanifest">
+  <link rel="stylesheet" href="universal-shell.css">
+</head>
+<body>
+  <main id="shell" class="uo-shell" aria-label="Overland In A Box">
+    <aside class="uo-sidebar" aria-label="Overland dock">
+      <div class="uo-clock">
+        <strong id="sidebarTime">--:--</strong>
+        <span id="sidebarDate">OIAB</span>
+      </div>
+      <div class="uo-status-row" aria-label="Status">
+        <span id="gpsPill" class="uo-status-pill" title="GPS status">GPS</span>
+        <span id="netPill" class="uo-status-pill" title="Network status">LAN</span>
+        <span class="uo-status-pill is-placeholder" title="Power telemetry placeholder">12V</span>
+      </div>
+      <nav id="sidebarApps" class="uo-side-apps" aria-label="Pinned apps"></nav>
+      <div class="uo-sidebar-bottom">
+        <button id="homeButton" class="uo-dock-button" type="button" aria-label="Home" title="Home"></button>
+        <button id="appsButton" class="uo-dock-button is-folder" type="button" aria-label="Apps" title="Apps"></button>
+        <button id="settingsButton" class="uo-dock-button" type="button" aria-label="Settings" title="Settings"></button>
+      </div>
+    </aside>
+
+    <section class="uo-main" aria-live="polite">
+      <section id="dashboardView" class="uo-dashboard" aria-label="Dashboard">
+        <button id="dashMapPanel" class="uo-panel uo-map-panel" type="button">
+          <iframe id="dashMapFrame" title="Map preview" allow="geolocation; fullscreen"></iframe>
+          <span class="uo-panel-label">Maps</span>
+        </button>
+        <article id="dashMusicPanel" class="uo-panel uo-music-panel">
+          <canvas id="dashMusicCanvas" aria-hidden="true"></canvas>
+          <img id="dashMusicArt" src="/maps/overland/tunes.png" alt="">
+          <div>
+            <span class="uo-eyebrow">Now Playing</span>
+            <h1 id="dashMusicTitle">No track selected</h1>
+            <p id="dashMusicMeta">Open Music to choose local audio.</p>
+          </div>
+          <div class="uo-music-controls">
+            <button id="dashPrev" class="uo-round-control" type="button" aria-label="Previous"></button>
+            <button id="dashPlay" class="uo-round-control is-primary" type="button" aria-label="Play"></button>
+            <button id="dashNext" class="uo-round-control" type="button" aria-label="Next"></button>
+          </div>
+          <progress id="dashMusicProgress" max="1000" value="0"></progress>
+        </article>
+        <button id="quickWaypointPanel" class="uo-panel uo-waypoint-panel" type="button">
+          <span class="uo-eyebrow">Quick Save</span>
+          <strong>Waypoint</strong>
+          <small id="quickWaypointStatus">Uses stabilized GPS when available.</small>
+        </button>
+        <article class="uo-panel uo-status-panel">
+          <span class="uo-eyebrow">Vehicle Position</span>
+          <strong id="dashGpsSource">Waiting for GPS</strong>
+          <small id="dashGpsMeta">USB GPS preferred, browser fallback retained.</small>
+        </article>
+      </section>
+
+      <section id="appViewport" class="uo-app-viewport" hidden>
+        <header class="uo-app-bar">
+          <button id="backButton" class="uo-icon-button" type="button" aria-label="Back"></button>
+          <div>
+            <span class="uo-eyebrow">Overland In A Box</span>
+            <h1 id="appTitle">App</h1>
+          </div>
+          <a id="openExternal" class="uo-open-link" href="#" target="_blank" rel="noopener">Open</a>
+        </header>
+        <iframe id="appFrame" title="Overland app" allow="geolocation; fullscreen; autoplay"></iframe>
+      </section>
+
+      <section id="musicView" class="uo-music-view" hidden>
+        <canvas id="musicVisualizer" aria-hidden="true"></canvas>
+        <header class="uo-music-top">
+          <button id="musicBack" class="uo-icon-button" type="button" aria-label="Back"></button>
+          <button id="musicLibraryRefresh" class="uo-chip-button" type="button">Scan Library</button>
+        </header>
+        <div class="uo-music-layout">
+          <div class="uo-album-card">
+            <img id="musicArt" src="/maps/overland/tunes.png" alt="">
+            <h1 id="musicTitle">No track selected</h1>
+            <p id="musicMeta">Choose music from the library.</p>
+            <div class="uo-music-controls is-large">
+              <button id="musicPrev" class="uo-round-control" type="button" aria-label="Previous"></button>
+              <button id="musicPlay" class="uo-round-control is-primary" type="button" aria-label="Play"></button>
+              <button id="musicNext" class="uo-round-control" type="button" aria-label="Next"></button>
+            </div>
+            <div class="uo-seek-row">
+              <span id="musicElapsed">0:00</span>
+              <input id="musicSeek" type="range" min="0" max="1000" value="0" aria-label="Seek">
+              <span id="musicDuration">0:00</span>
+            </div>
+          </div>
+          <div class="uo-library-card">
+            <div class="uo-filter-grid">
+              <select id="artistFilter" aria-label="Artist"></select>
+              <select id="albumFilter" aria-label="Album"></select>
+              <select id="folderFilter" aria-label="Folder"></select>
+            </div>
+            <div id="trackList" class="uo-track-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="appsView" class="uo-apps-view" hidden>
+        <header class="uo-view-header">
+          <button id="appsBack" class="uo-icon-button" type="button" aria-label="Back"></button>
+          <h1 id="appsTitle">Apps</h1>
+        </header>
+        <section id="openGamesPanel" class="uo-open-games" hidden>
+          <h2>Open Games</h2>
+          <div id="openGamesGrid" class="uo-app-grid is-games"></div>
+        </section>
+        <div id="appsGrid" class="uo-app-grid"></div>
+      </section>
+
+      <section id="settingsView" class="uo-settings-view" hidden>
+        <header class="uo-view-header">
+          <button id="settingsBack" class="uo-icon-button" type="button" aria-label="Back"></button>
+          <h1>Settings</h1>
+        </header>
+        <div class="uo-settings-grid">
+          <section class="uo-settings-card">
+            <h2>Theme</h2>
+            <label>Accent <input id="themeAccent" type="color" value="#83dc8c"></label>
+            <label>Background
+              <select id="themeBackground">
+                <option value="topo">Topo Green</option>
+                <option value="dark">Dark Slate</option>
+                <option value="amber">Amber Trail</option>
+                <option value="blue">Night Blue</option>
+              </select>
+            </label>
+            <label>Panel Opacity <input id="themeOpacity" type="range" min="55" max="96" value="82"></label>
+            <label>Blur <input id="themeBlur" type="range" min="0" max="28" value="16"></label>
+          </section>
+          <section class="uo-settings-card">
+            <h2>Dock Apps</h2>
+            <div id="dockSettings" class="uo-dock-settings"></div>
+            <button id="resetDock" class="uo-soft-action" type="button">Reset Dock</button>
+          </section>
+          <section class="uo-settings-card">
+            <h2>Fallback</h2>
+            <a href="/overland/legacy.html">Legacy Overland Shell</a>
+            <a href="/mobile/">Mobile Launcher</a>
+            <a href="/api/config">Runtime Config</a>
+            <a href="/api/services">Optional Services</a>
+          </section>
+        </div>
+      </section>
+    </section>
+
+    <dialog id="waypointDialog" class="uo-dialog">
+      <form method="dialog"><button class="uo-dialog-close" aria-label="Close">×</button></form>
+      <h2>Save Waypoint</h2>
+      <p>Choose a type. The shell will use stabilized USB GPS first, then browser location if needed.</p>
+      <div id="waypointTypes" class="uo-waypoint-types"></div>
+      <p id="waypointMessage" class="uo-dialog-message"></p>
+    </dialog>
+
+    <dialog id="passwordDialog" class="uo-dialog">
+      <form method="dialog"><button class="uo-dialog-close" aria-label="Close">×</button></form>
+      <h2 id="passwordTitle">Protected Folder</h2>
+      <input id="passwordInput" type="password" autocomplete="current-password" placeholder="Password">
+      <p id="passwordError" class="uo-dialog-message"></p>
+      <button id="passwordSubmit" class="uo-soft-action" type="button">Open</button>
+    </dialog>
+
+    <audio id="globalAudio" preload="metadata"></audio>
+  </main>
+  <script src="universal-shell.js"></script>
+</body>
+</html>

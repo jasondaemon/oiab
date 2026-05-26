@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Word Tile Arena">
+  <defs>
+    <linearGradient id="bg" x1="28" y1="18" x2="226" y2="238" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#183a24"/>
+      <stop offset="1" stop-color="#0d2017"/>
+    </linearGradient>
+    <linearGradient id="tile" x1="62" y1="54" x2="196" y2="204" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff1b8"/>
+      <stop offset="1" stop-color="#d6a548"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="54" fill="url(#bg)"/>
+  <path d="M48 68h160v120H48z" fill="#244d31" stroke="#77e889" stroke-width="6" rx="14"/>
+  <path d="M48 108h160M48 148h160M88 68v120M128 68v120M168 68v120" stroke="#77e889" stroke-opacity=".35" stroke-width="5"/>
+  <rect x="70" y="86" width="48" height="48" rx="10" fill="url(#tile)" stroke="#3a2a11" stroke-opacity=".25" stroke-width="3"/>
+  <rect x="138" y="122" width="48" height="48" rx="10" fill="url(#tile)" stroke="#3a2a11" stroke-opacity=".25" stroke-width="3"/>
+  <text x="94" y="121" text-anchor="middle" font-family="Avenir Next, Helvetica, Arial, sans-serif" font-size="34" font-weight="900" fill="#132217">W</text>
+  <text x="162" y="157" text-anchor="middle" font-family="Avenir Next, Helvetica, Arial, sans-serif" font-size="34" font-weight="900" fill="#132217">A</text>
+  <circle cx="202" cy="56" r="15" fill="#ffd34e"/>
+  <circle cx="54" cy="204" r="10" fill="#80f08a"/>
+</svg>

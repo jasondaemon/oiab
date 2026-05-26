@@ -1,0 +1,76 @@
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 10%, rgba(128, 240, 138, 0.23), transparent 28rem),
+    radial-gradient(circle at 88% 4%, rgba(255, 211, 78, 0.16), transparent 24rem),
+    linear-gradient(135deg, #06100b, #1b3325 52%, #08151a);
+}
+
+body.mobile-standalone .op-root,
+body.mobile-standalone .ot-root,
+body.mobile-standalone .odr-root,
+body.mobile-standalone .oe-root {
+  inset: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+body.mobile-standalone .op-toolbar,
+body.mobile-standalone .ot-toolbar,
+body.mobile-standalone .odr-toolbar,
+body.mobile-standalone .oe-header {
+  padding-top: calc(12px + env(safe-area-inset-top));
+}
+
+body.mobile-standalone .om-player {
+  inset: 0;
+  width: 100dvw;
+  max-width: none;
+  min-width: 0;
+  height: 100dvh;
+  border-left: 0;
+}
+
+body.mobile-standalone #overlandMapShell {
+  display: none;
+}
+
+body.mobile-standalone.od-admin-standalone .od-dock,
+body.mobile-standalone.od-admin-standalone .od-restore {
+  display: none !important;
+}
+
+body.mobile-standalone.od-admin-standalone .od-settings-panel {
+  inset: 0;
+  width: 100dvw;
+  height: 100dvh;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+body.mobile-standalone.od-admin-standalone .od-settings-toolbar {
+  padding-top: calc(9px + env(safe-area-inset-top));
+}
+
+body.mobile-standalone.od-admin-standalone .od-settings-scroll {
+  width: min(1180px, calc(100% - 24px));
+}
+
+.standalone-error {
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+  padding: 24px;
+  color: #f5fbef;
+  font: 900 1.1rem "Avenir Next", "Trebuchet MS", Verdana, sans-serif;
+}

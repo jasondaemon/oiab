@@ -1,0 +1,770 @@
+.ot-root[hidden] {
+    display: none !important;
+}
+
+.ot-root {
+    --ot-bg: #07130d;
+    --ot-panel: rgba(236, 248, 236, .13);
+    --ot-panel-strong: rgba(236, 248, 236, .18);
+    --ot-line: rgba(236, 248, 236, .18);
+    --ot-text: #f5fbef;
+    --ot-muted: rgba(245, 251, 239, .72);
+    --ot-green: #80f08a;
+    --ot-gold: #ffd34e;
+    --ot-red: #ff756f;
+    position: fixed;
+    inset: max(6px, env(safe-area-inset-top)) max(6px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom)) max(6px, env(safe-area-inset-left));
+    z-index: 87;
+    overflow: hidden;
+    color: var(--ot-text);
+    font-family: "Avenir Next", "Trebuchet MS", Verdana, sans-serif;
+    background:
+        radial-gradient(circle at 18% 8%, rgba(128, 240, 138, .22), transparent 28rem),
+        radial-gradient(circle at 88% 5%, rgba(255, 211, 78, .14), transparent 24rem),
+        repeating-radial-gradient(ellipse at 28% 20%, rgba(128, 240, 138, .12) 0 1px, transparent 2px 20px),
+        linear-gradient(135deg, rgba(6, 16, 11, .98), rgba(27, 51, 37, .96) 54%, rgba(8, 21, 26, .97));
+    background-size: auto, auto, 520px 360px, auto;
+    border: 1px solid var(--ot-line);
+    border-radius: 18px;
+    box-shadow: 0 28px 70px rgba(0, 0, 0, .62);
+    backdrop-filter: blur(18px) saturate(1.08);
+}
+
+.ot-root * {
+    box-sizing: border-box;
+}
+
+.ot-shell {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    height: 100%;
+    min-height: 0;
+}
+
+.ot-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    min-height: 54px;
+    padding: 8px 12px;
+    background: rgba(0, 8, 7, .38);
+    border-bottom: 1px solid var(--ot-line);
+}
+
+.ot-toolbar h2 {
+    margin: 0;
+    font-size: clamp(1.35rem, 2.4vw, 2rem);
+    line-height: .95;
+    letter-spacing: -.055em;
+}
+
+.ot-toolbar span,
+.ot-pack-card span,
+.ot-turn-card span {
+    color: var(--ot-muted);
+    font-weight: 760;
+}
+
+.ot-pack-card small {
+    color: rgba(245, 251, 239, .58);
+    font-size: .82rem;
+    font-weight: 780;
+    line-height: 1.25;
+}
+
+.ot-toolbar-actions,
+.ot-reset-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ot-button,
+.ot-icon-button,
+.ot-count-button,
+.ot-tile,
+.ot-answer {
+    color: var(--ot-text);
+    background: rgba(255, 255, 255, .1);
+    border: 1px solid var(--ot-line);
+    border-radius: 14px;
+    font: inherit;
+    font-weight: 850;
+    cursor: pointer;
+}
+
+.ot-button {
+    min-height: 38px;
+    padding: 0 13px;
+}
+
+.ot-button--primary,
+.ot-count-button--selected {
+    color: #0d1c13;
+    background: var(--ot-gold);
+    border-color: rgba(255, 235, 120, .75);
+}
+
+.ot-button--danger {
+    color: #220b09;
+    background: var(--ot-red);
+    border-color: transparent;
+}
+
+.ot-icon-button {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    font-size: 1.2rem;
+}
+
+.ot-main {
+    min-height: 0;
+    overflow: hidden;
+}
+
+.ot-loading,
+.ot-reset {
+    display: grid;
+    height: 100%;
+    place-items: center;
+    padding: 18px;
+    font-size: 1.35rem;
+    font-weight: 900;
+}
+
+.ot-setup {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+    gap: 14px;
+    height: 100%;
+    padding: 14px;
+}
+
+.ot-setup-card,
+.ot-pack-card,
+.ot-turn-card,
+.ot-category,
+.ot-question-card,
+.ot-reset-card {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, .08), transparent 36%),
+        var(--ot-panel);
+    border: 1px solid var(--ot-line);
+    border-radius: 18px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+
+.ot-setup-card {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    padding: 20px;
+    overflow: auto;
+}
+
+.ot-setup-card h3,
+.ot-reset-card h3,
+.ot-question-card h3 {
+    margin: 0;
+}
+
+.ot-setup-card h3 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: .92;
+    letter-spacing: -.07em;
+}
+
+.ot-kicker {
+    color: var(--ot-green);
+    font-size: .8rem;
+    font-weight: 850;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.ot-count-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.ot-count-button {
+    width: 58px;
+    height: 52px;
+    font-size: 1.35rem;
+}
+
+.ot-name-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.ot-mode-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.ot-mode-card,
+.ot-solo-card,
+.ot-host-card {
+    color: #f7f4e8;
+    background: rgba(255, 255, 255, .08);
+    border: 1px solid rgba(255, 255, 255, .14);
+    border-radius: 16px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+
+.ot-mode-card {
+    display: grid;
+    gap: 7px;
+    min-height: 118px;
+    padding: 14px;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+}
+
+.ot-mode-card--selected {
+    color: #101a11;
+    background: linear-gradient(135deg, #84df90, #ffcc3e);
+    border-color: rgba(255, 235, 120, .9);
+}
+
+.ot-mode-card strong,
+.ot-solo-card strong {
+    font-size: 1.24rem;
+    line-height: 1;
+}
+
+.ot-mode-card span,
+.ot-solo-card span {
+    color: inherit;
+    font-size: .86rem;
+    font-weight: 800;
+    line-height: 1.2;
+    opacity: .78;
+}
+
+.ot-solo-card {
+    display: grid;
+    gap: 7px;
+    padding: 16px;
+}
+
+.ot-name-grid label {
+    display: grid;
+    gap: 6px;
+    color: rgba(247, 244, 232, .7);
+    font-size: .85rem;
+    font-weight: 850;
+    text-transform: uppercase;
+}
+
+.ot-name-grid input {
+    min-height: 50px;
+    padding: 0 12px;
+    color: #f7f4e8;
+    background: rgba(255, 255, 255, .1);
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 12px;
+    font: inherit;
+    font-weight: 850;
+}
+
+.ot-pack-card {
+    display: grid;
+    align-content: center;
+    gap: 8px;
+    padding: 20px;
+}
+
+.ot-pack-card strong {
+    color: var(--ot-gold);
+    font-size: clamp(3rem, 9vw, 7rem);
+    line-height: .85;
+    letter-spacing: -.08em;
+}
+
+.ot-game {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 7px;
+    height: 100%;
+    min-height: 0;
+    padding: 8px 10px 10px;
+}
+
+.ot-question-screen {
+    display: grid;
+    grid-template-columns: minmax(150px, 210px) minmax(0, 1fr);
+    gap: 8px;
+    height: 100%;
+    min-height: 0;
+    padding: 8px;
+}
+
+.ot-scoreboard {
+    display: flex;
+    align-content: start;
+    gap: 6px;
+    min-height: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.ot-score {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 7px;
+    min-width: min(156px, 44vw);
+    min-height: 38px;
+    padding: 6px 8px;
+    background: rgba(255, 255, 255, .075);
+    border: 1px solid var(--ot-line);
+    border-radius: 14px;
+}
+
+.ot-score--active {
+    color: #0d1c13;
+    background: linear-gradient(135deg, var(--ot-green), var(--ot-gold));
+    border-color: transparent;
+}
+
+.ot-score span {
+    overflow: hidden;
+    font-weight: 850;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ot-score strong {
+    font-size: .98rem;
+    letter-spacing: -.04em;
+}
+
+.ot-board-wrap {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 10px;
+    min-width: 0;
+    min-height: 0;
+}
+
+.ot-turn-card {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr);
+    align-items: center;
+    gap: 9px;
+    min-height: 42px;
+    padding: 7px 10px;
+}
+
+.ot-turn-card strong {
+    color: var(--ot-gold);
+    font-size: 1.1rem;
+    letter-spacing: -.04em;
+}
+
+.ot-board {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(150px, 1fr);
+    gap: 8px;
+    min-height: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 6px;
+    scroll-snap-type: x proximity;
+}
+
+.ot-category {
+    display: grid;
+    grid-template-rows: minmax(38px, auto) repeat(5, minmax(52px, 1fr));
+    gap: 6px;
+    min-height: 0;
+    padding: 7px;
+    scroll-snap-align: start;
+}
+
+.ot-category h3 {
+    display: grid;
+    align-items: center;
+    min-height: 0;
+    margin: 0;
+    color: var(--ot-text);
+    font-size: clamp(.9rem, 1.6vw, 1.25rem);
+    line-height: 1;
+}
+
+.ot-tile {
+    display: grid;
+    place-items: center;
+    min-height: 0;
+    padding: 6px;
+    background: rgba(255, 211, 78, .14);
+    border-color: rgba(255, 211, 78, .3);
+}
+
+.ot-tile strong {
+    color: var(--ot-gold);
+    font-size: clamp(1.35rem, 2.65vw, 2.25rem);
+    line-height: .85;
+    letter-spacing: -.06em;
+}
+
+.ot-tile span {
+    color: rgba(247, 244, 232, .66);
+    font-size: .68rem;
+}
+
+.ot-tile:disabled {
+    cursor: not-allowed;
+}
+
+.ot-tile--used,
+.ot-tile--empty {
+    position: relative;
+    overflow: hidden;
+    color: rgba(247, 244, 232, .42);
+    background:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, .08), transparent 13%),
+        repeating-radial-gradient(ellipse at 55% 45%, rgba(128, 240, 138, .2) 0 1px, transparent 2px 12px),
+        rgba(6, 15, 12, .5);
+    border-color: rgba(128, 240, 138, .16);
+    opacity: .72;
+}
+
+.ot-tile--used strong,
+.ot-tile--empty strong {
+    color: rgba(247, 244, 232, .38);
+}
+
+.ot-tile--used::after {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(128, 240, 138, .22);
+    border-radius: 12px;
+    pointer-events: none;
+}
+
+.ot-question-card {
+    display: grid;
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    gap: 12px;
+    min-height: 0;
+    padding: 14px;
+}
+
+.ot-question-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.ot-question-meta span,
+.ot-question-meta strong {
+    padding: 7px 10px;
+    background: rgba(255, 255, 255, .1);
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 999px;
+    font-size: .85rem;
+    font-weight: 850;
+}
+
+.ot-question-meta strong {
+    color: #0d1c13;
+    background: var(--ot-gold);
+}
+
+.ot-question-card h3 {
+    font-size: clamp(1.35rem, 3.2vw, 3rem);
+    line-height: 1.03;
+    letter-spacing: -.05em;
+}
+
+.ot-answers {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    min-height: 0;
+}
+
+.ot-answer {
+    min-height: 76px;
+    padding: 12px;
+    text-align: left;
+    font-size: clamp(1rem, 2.2vw, 1.45rem);
+    line-height: 1.1;
+}
+
+.ot-answer--correct {
+    color: #06100b;
+    background: var(--ot-green);
+    border-color: rgba(128, 240, 138, .9);
+}
+
+.ot-answer--wrong {
+    color: #220b09;
+    background: var(--ot-red);
+    border-color: rgba(255, 133, 118, .9);
+}
+
+.ot-feedback {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 12px;
+    align-items: center;
+    padding: 12px;
+    background: rgba(255, 255, 255, .08);
+    border: 1px solid var(--ot-line);
+    border-radius: 14px;
+}
+
+.ot-feedback strong {
+    font-size: 1.2rem;
+}
+
+.ot-feedback p {
+    grid-column: 1;
+    margin: 0;
+    color: var(--ot-muted);
+    font-weight: 750;
+}
+
+.ot-feedback span {
+    grid-column: 1;
+    color: var(--ot-gold);
+    font-weight: 850;
+}
+
+.ot-feedback button {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+}
+
+.ot-feedback--correct strong {
+    color: var(--ot-green);
+}
+
+.ot-feedback--wrong strong {
+    color: var(--ot-red);
+}
+
+.ot-reset-card {
+    display: grid;
+    gap: 12px;
+    width: min(520px, 100%);
+    padding: 22px;
+}
+
+.ot-reset-card h3 {
+    font-size: 2.3rem;
+    line-height: .95;
+}
+
+.ot-reset-card p {
+    margin: 0;
+    color: rgba(247, 244, 232, .7);
+    font-weight: 760;
+}
+
+.ot-host-screen {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 12px;
+    height: 100%;
+    min-height: 0;
+    padding: 14px;
+}
+
+.ot-host-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.ot-host-head h3 {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: .92;
+    letter-spacing: -.07em;
+}
+
+.ot-host-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    min-height: 0;
+    overflow: auto;
+}
+
+.ot-host-card {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    min-height: 0;
+    padding: 16px;
+}
+
+.ot-host-card span {
+    color: #84df90;
+    font-size: .82rem;
+    font-weight: 950;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.ot-host-card h4 {
+    margin: 0;
+    font-size: clamp(1.15rem, 2.6vw, 2rem);
+    line-height: 1.05;
+}
+
+.ot-host-card strong {
+    color: #ffcc3e;
+    font-size: clamp(1.4rem, 3vw, 2.4rem);
+    line-height: 1;
+}
+
+.ot-host-card p {
+    margin: 0;
+    color: rgba(247, 244, 232, .74);
+    font-weight: 760;
+    line-height: 1.25;
+}
+
+.ot-message {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    z-index: 2;
+    max-width: min(520px, calc(100% - 28px));
+    padding: 11px 14px;
+    color: #0d1c13;
+    background: var(--ot-green);
+    border-radius: 999px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, .34);
+    font-weight: 850;
+    transform: translateX(-50%);
+}
+
+.ot-message--error {
+    color: #220b09;
+    background: var(--ot-red);
+}
+
+@media (max-width: 860px), (max-height: 520px) {
+    .ot-root {
+        inset: 0;
+        border-radius: 0;
+    }
+
+    .ot-toolbar {
+        padding: 8px 10px;
+    }
+
+    .ot-toolbar span {
+        display: none;
+    }
+
+    .ot-button {
+        min-height: 40px;
+        padding: 0 11px;
+    }
+
+    .ot-icon-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .ot-setup,
+    .ot-game,
+    .ot-question-screen,
+    .ot-host-screen {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 8px;
+        overflow: auto;
+    }
+
+    .ot-pack-card {
+        display: none;
+    }
+
+    .ot-scoreboard {
+        display: flex;
+        min-height: 50px;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    .ot-score {
+        min-width: 138px;
+    }
+
+    .ot-turn-card {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .ot-turn-card span:last-child {
+        display: none;
+    }
+
+    .ot-board {
+        min-height: 420px;
+    }
+
+    .ot-category {
+        grid-template-rows: minmax(36px, auto) repeat(5, minmax(62px, 1fr));
+    }
+
+    .ot-question-card {
+        min-height: 0;
+    }
+
+    .ot-answers {
+        grid-template-columns: 1fr;
+    }
+
+    .ot-answer {
+        min-height: 58px;
+    }
+
+    .ot-mode-grid,
+    .ot-host-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ot-mode-card {
+        min-height: 86px;
+    }
+
+    .ot-host-head {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .ot-feedback {
+        grid-template-columns: 1fr;
+    }
+
+    .ot-feedback button {
+        grid-column: 1;
+        grid-row: auto;
+    }
+}
+
+@media (max-width: 560px) {
+    .ot-name-grid {
+        grid-template-columns: 1fr;
+    }
+}

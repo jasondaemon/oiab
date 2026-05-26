@@ -1,0 +1,13 @@
+id: kiwix
+name: Offline Wikipedia / Kiwix
+description: Offline ZIM reader for Wikipedia and other Kiwix content.
+category: learning
+install_default: false
+runtime: docker
+compose_file: services/compose/kiwix.yml
+systemd_unit: oiab-kiwix.service
+launcher_url: /apps/wiki/
+installed_marker: /data/oiab/content/zim
+ports:
+  - 8081
+

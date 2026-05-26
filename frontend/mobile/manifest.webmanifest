@@ -1,0 +1,25 @@
+{
+  "name": "IIAB Overland",
+  "short_name": "Overland",
+  "description": "Offline-first overland launcher for maps, media, learning, and family games.",
+  "start_url": "/mobile/",
+  "scope": "/",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#07160f",
+  "theme_color": "#123822",
+  "icons": [
+    {
+      "src": "/mobile/overland-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/mobile/overland-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

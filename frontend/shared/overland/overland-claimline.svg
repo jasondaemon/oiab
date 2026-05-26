@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Territory Trace">
+  <defs>
+    <linearGradient id="bg" x1="36" y1="20" x2="220" y2="232" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0b2118"/>
+      <stop offset="1" stop-color="#1f5b38"/>
+    </linearGradient>
+    <linearGradient id="claim" x1="62" y1="57" x2="198" y2="193" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8df28f"/>
+      <stop offset="1" stop-color="#ffd34b"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="54" fill="url(#bg)"/>
+  <path d="M52 58h152v138H52z" fill="#10271d" stroke="#8df28f" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M60 66h68v56H60zM132 126h64v62h-64z" fill="url(#claim)" opacity=".78"/>
+  <path d="M60 66h68v56H60zM132 126h64v62h-64z" fill="none" stroke="#dfffe0" stroke-width="2" opacity=".45"/>
+  <path d="M68 180h28v-42h54v-36h34" fill="none" stroke="#ffd34b" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="68" cy="180" r="16" fill="#78f08b" stroke="#082015" stroke-width="7"/>
+  <circle cx="184" cy="102" r="17" fill="#ff6d6d" stroke="#082015" stroke-width="7"/>
+  <circle cx="150" cy="138" r="10" fill="#ffffff" opacity=".86"/>
+  <path d="M52 94h152M52 128h152M52 162h152M90 58v138M128 58v138M166 58v138" stroke="#ffffff" stroke-width="2" opacity=".16"/>
+</svg>

@@ -1,0 +1,179 @@
+{
+  "schema": 1,
+  "title": "Overland In A Box",
+  "mapUrl": "/maps-v2/",
+  "defaultDock": [
+    "maps-v2",
+    "music",
+    "gps-status",
+    "games"
+  ],
+  "apps": [
+    {
+      "id": "maps-v2",
+      "title": "Overland Maps",
+      "description": "Native MapLibre and PMTiles Overland map runtime.",
+      "url": "/maps-v2/",
+      "icon": "/maps-v2/icons/vehicle.svg",
+      "category": "Overland",
+      "dock": true,
+      "openMode": "overlay"
+    },
+    {
+      "id": "gps-status",
+      "title": "GPS Status",
+      "description": "USB GPS and browser fallback diagnostics.",
+      "url": "/mobile/gps-status.html",
+      "icon": "/maps/overland/overland-gps-status.svg",
+      "category": "Overland",
+      "dock": true,
+      "openMode": "overlay"
+    },
+    {
+      "id": "music",
+      "title": "Music",
+      "description": "Persistent local music player.",
+      "url": "#music",
+      "icon": "/maps/overland/tunes.png",
+      "category": "Media",
+      "dock": true,
+      "native": "music"
+    },
+    {
+      "id": "games",
+      "title": "Games",
+      "description": "Offline family games and scoreboards.",
+      "url": "/mobile/",
+      "icon": "/maps/overland/overland-folder-games.svg",
+      "category": "Games",
+      "dock": true
+    },
+    {
+      "id": "file-uploads",
+      "title": "File Uploads",
+      "description": "Upload music, GPX, books, and local content.",
+      "url": "/mobile/admin.html",
+      "icon": "/maps/overland/overland-folder-settings.svg",
+      "category": "Admin"
+    },
+    {
+      "id": "overland-settings",
+      "title": "OIAB Settings",
+      "description": "Configure apps, services, maps, certificates, and theme.",
+      "url": "/settings/",
+      "icon": "/maps/overland/overland-settings.svg",
+      "category": "Admin"
+    },
+    {
+      "id": "service-manager",
+      "title": "Optional Services",
+      "description": "Manage optional Kiwix, Jellyfin, Komga, and Minecraft services.",
+      "url": "/api/services",
+      "icon": "/maps/overland/overland-folder-settings.svg",
+      "category": "Admin"
+    },
+    {
+      "id": "scoreboard",
+      "title": "Scoreboard",
+      "description": "Family game rankings and match history.",
+      "url": "/mobile/scoreboard.html",
+      "icon": "/maps/overland/overland-scoreboard.svg",
+      "category": "Games"
+    },
+    {
+      "id": "chess",
+      "title": "Chess",
+      "description": "Two-player or computer chess over the local LAN.",
+      "url": "/mobile/chess.html",
+      "icon": "/maps/overland/overland-chess.svg",
+      "category": "Games"
+    },
+    {
+      "id": "checkers",
+      "title": "Checkers",
+      "description": "Two-player or computer checkers.",
+      "url": "/mobile/checkers.html",
+      "icon": "/maps/overland/overland-checkers.svg",
+      "category": "Games"
+    },
+    {
+      "id": "blockfall",
+      "title": "Blockfall Battle",
+      "description": "Falling-block puzzle with solo and battle modes.",
+      "url": "/mobile/blockfall.html",
+      "icon": "/maps/overland/overland-blockfall.svg",
+      "category": "Games"
+    },
+    {
+      "id": "word-tile-arena",
+      "title": "Word Tile Arena",
+      "description": "Crossword-style tile board game.",
+      "url": "/mobile/word-tile-arena.html",
+      "icon": "/maps/overland/overland-word-tile-arena.svg",
+      "category": "Games"
+    },
+    {
+      "id": "trivia",
+      "title": "Trail Trivia",
+      "description": "Offline family trivia.",
+      "url": "/mobile/trivia.html",
+      "icon": "/maps/overland/overland-trivia.svg",
+      "category": "Games",
+      "native": "trivia"
+    },
+    {
+      "id": "drums",
+      "title": "Drums",
+      "description": "Playable touch drum kit.",
+      "url": "/mobile/drums.html",
+      "icon": "/maps/overland/overland-drums.svg",
+      "category": "Games",
+      "native": "drums"
+    },
+    {
+      "id": "license-plates",
+      "title": "License Plates",
+      "description": "Road-trip state license plate tracker.",
+      "url": "/mobile/license-plates.html",
+      "icon": "/maps/overland/overland-plates.svg",
+      "category": "Travel"
+    },
+    {
+      "id": "wikipedia",
+      "title": "Wikipedia",
+      "description": "Optional offline Kiwix Wikipedia service.",
+      "url": "/apps/wiki/",
+      "icon": "/maps/overland/overland-folder-reading.svg",
+      "category": "Learning",
+      "optionalService": "kiwix"
+    },
+    {
+      "id": "jellyfin",
+      "title": "Jellyfin",
+      "description": "Optional local video/audio media server.",
+      "url": "/apps/jellyfin/",
+      "icon": "/maps/overland/jellyfin.png",
+      "category": "Media",
+      "optionalService": "jellyfin"
+    },
+    {
+      "id": "komga",
+      "title": "Komga",
+      "description": "Optional books, comics, and PDF library server.",
+      "url": "/apps/komga/",
+      "icon": "/maps/overland/overland-folder-reading.svg",
+      "category": "Library",
+      "optionalService": "komga"
+    },
+    {
+      "id": "minecraft",
+      "title": "Minecraft Server",
+      "description": "Optional managed Minecraft server.",
+      "url": "/apps/minecraft/",
+      "icon": "/maps/overland/overland-folder-games.svg",
+      "category": "Games",
+      "optionalService": "minecraft"
+    }
+  ]
+}
+

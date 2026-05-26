@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "active_basemap": "protomaps_conus",
+  "basemaps": [
+    {
+      "id": "protomaps_conus",
+      "name": "Protomaps CONUS",
+      "type": "pmtiles",
+      "url": "/maps/packs/protomaps-conus.pmtiles",
+      "style": "/maps-v2/map-style.json",
+      "attribution": "© OpenStreetMap contributors"
+    },
+    {
+      "id": "openmaptiles_us",
+      "name": "OpenMapTiles US Full Region",
+      "type": "pmtiles",
+      "url": "/maps/openstreetmap-openmaptiles.2026-04-01.full-region.us.pmtiles",
+      "style": "/maps-v2/map-style.json",
+      "attribution": "© OpenStreetMap contributors"
+    }
+  ],
+  "overlays": []
+}

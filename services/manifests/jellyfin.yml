@@ -1,0 +1,13 @@
+id: jellyfin
+name: Jellyfin
+description: Media server for local video and audio libraries.
+category: media
+install_default: false
+runtime: docker
+compose_file: services/compose/jellyfin.yml
+systemd_unit: oiab-jellyfin.service
+launcher_url: /apps/jellyfin/
+installed_marker: /data/oiab/services/jellyfin
+ports:
+  - 8096
+

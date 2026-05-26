@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="theme-color" content="#123822">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="GPS Status">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>GPS Status | IIAB Overland</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/mobile/overland-touch-icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
+  <link rel="manifest" href="/mobile/manifest.webmanifest">
+  <link rel="stylesheet" href="/mobile/gps-status.css">
+</head>
+<body>
+  <main class="gps-shell" aria-label="GPS status">
+    <header class="gps-topbar">
+      <button id="gpsBack" class="gps-icon-button" type="button" aria-label="Back to mobile launcher">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.4 5.4 8.8 12l6.6 6.6-1.8 1.8L5.2 12l8.4-8.4z"/></svg>
+      </button>
+      <div>
+        <small>IIAB Overland</small>
+        <h1>GPS Status</h1>
+      </div>
+      <button id="gpsRefresh" class="gps-icon-button" type="button" aria-label="Refresh GPS">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.7 6.3A8 8 0 0 0 4.3 10H2l3.6 4.1L9.2 10H6.4a6 6 0 0 1 10.2-2.2 6 6 0 0 1 .1 8.4 5.9 5.9 0 0 1-4.2 1.8 6 6 0 0 1-4.4-2l-1.5 1.4A8 8 0 1 0 17.7 6.3z"/></svg>
+      </button>
+    </header>
+
+    <section id="gpsHero" class="gps-hero">
+      <div class="gps-status-card">
+        <span id="gpsLockBadge" class="gps-lock-badge">Acquiring</span>
+        <strong id="gpsSource">USB GPS</strong>
+        <span id="gpsUpdated">Waiting for fix...</span>
+      </div>
+      <div class="gps-speed-card">
+        <span>Speed</span>
+        <strong><span id="gpsSpeed">--</span><small>mph</small></strong>
+      </div>
+      <div class="gps-compass-card" aria-label="Heading">
+        <div class="gps-compass">
+          <span>N</span><span>E</span><span>S</span><span>W</span>
+          <i id="gpsNeedle"></i>
+        </div>
+        <strong id="gpsHeading">--°</strong>
+      </div>
+    </section>
+
+    <section class="gps-readout-grid">
+      <article class="gps-readout gps-coords">
+        <small>Stable Location</small>
+        <strong id="gpsLatLon">--</strong>
+        <button id="gpsCopyCoords" type="button">Copy coordinates</button>
+      </article>
+      <article class="gps-readout">
+        <small>Altitude</small>
+        <strong id="gpsAltitude">--</strong>
+      </article>
+      <article class="gps-readout">
+        <small>Accuracy</small>
+        <strong id="gpsAccuracy">--</strong>
+      </article>
+      <article class="gps-readout">
+        <small>HDOP</small>
+        <strong id="gpsHdop">--</strong>
+      </article>
+      <article class="gps-readout">
+        <small>Fix Mode</small>
+        <strong id="gpsFixMode">--</strong>
+      </article>
+      <article class="gps-readout">
+        <small>Age</small>
+        <strong id="gpsAge">--</strong>
+      </article>
+      <article id="gpsTrackCard" class="gps-readout gps-track-card">
+        <small>Track Recording</small>
+        <strong id="gpsTrackStatus">Inactive</strong>
+        <span id="gpsTrackDetail">No active track</span>
+      </article>
+    </section>
+
+    <section class="gps-location-pair">
+      <article class="gps-location-card">
+        <div class="gps-panel-title">
+          <span>Stable Location — used by map</span>
+          <strong id="gpsStableMode">--</strong>
+        </div>
+        <dl class="gps-metric-list">
+          <div><dt>Coordinates</dt><dd id="gpsStableLatLon">--</dd></div>
+          <div><dt>Speed</dt><dd id="gpsStableSpeed">--</dd></div>
+          <div><dt>Heading</dt><dd id="gpsStableHeading">--</dd></div>
+          <div><dt>Altitude</dt><dd id="gpsStableAltitude">--</dd></div>
+          <div><dt>Accuracy</dt><dd id="gpsStableAccuracy">--</dd></div>
+          <div><dt>HDOP</dt><dd id="gpsStableHdop">--</dd></div>
+          <div><dt>Stationary</dt><dd id="gpsStableStationary">--</dd></div>
+          <div><dt>Raw offset</dt><dd id="gpsStableRawDistance">--</dd></div>
+          <div><dt>Age</dt><dd id="gpsStableAge">--</dd></div>
+        </dl>
+      </article>
+
+      <article class="gps-location-card raw">
+        <div class="gps-panel-title">
+          <span>Raw GPS Location — direct receiver data</span>
+          <strong id="gpsRawFixMode">--</strong>
+        </div>
+        <dl class="gps-metric-list">
+          <div><dt>Coordinates</dt><dd id="gpsRawLatLon">--</dd></div>
+          <div><dt>Speed</dt><dd id="gpsRawSpeed">--</dd></div>
+          <div><dt>Heading</dt><dd id="gpsRawHeading">--</dd></div>
+          <div><dt>Altitude</dt><dd id="gpsRawAltitude">--</dd></div>
+          <div><dt>Accuracy</dt><dd id="gpsRawAccuracy">--</dd></div>
+          <div><dt>HDOP</dt><dd id="gpsRawHdop">--</dd></div>
+          <div><dt>Satellites</dt><dd id="gpsRawSatellites">--</dd></div>
+          <div><dt>Age</dt><dd id="gpsRawAge">--</dd></div>
+        </dl>
+      </article>
+    </section>
+
+    <section class="gps-panel gps-sats-panel">
+      <div class="gps-panel-title">
+        <span>Satellite Connectivity</span>
+        <strong id="gpsSatCount">--</strong>
+      </div>
+      <div id="gpsSatBars" class="gps-sat-bars" aria-label="Satellite signal summary"></div>
+    </section>
+
+    <section class="gps-panel gps-device-panel">
+      <div class="gps-panel-title">
+        <span>Receiver</span>
+        <strong id="gpsReceiverState">--</strong>
+      </div>
+      <dl class="gps-device-list">
+        <div><dt>Device</dt><dd id="gpsDevice">--</dd></div>
+        <div><dt>Driver</dt><dd id="gpsDriver">--</dd></div>
+        <div><dt>Chipset</dt><dd id="gpsChipset">--</dd></div>
+        <div><dt>Timestamp</dt><dd id="gpsTimestamp">--</dd></div>
+      </dl>
+    </section>
+
+    <details class="gps-panel gps-raw">
+      <summary>Raw status JSON</summary>
+      <pre id="gpsRaw">{}</pre>
+    </details>
+  </main>
+  <script src="/mobile/gps-status-stable.js?v=20260525-gps-track1"></script>
+</body>
+</html>
