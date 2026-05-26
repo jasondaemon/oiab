@@ -9,7 +9,7 @@ The base install is intentionally lean:
 - USB GPS/gpsd location endpoint with stabilized location output
 - waypoints, folders, current track display stubs, and quick waypoint save
 - persistent music player and local music scanner
-- file/static upload data layout with trivia question-pack upload support
+- file/static upload workflow for music, trivia packs, PMTiles, books, comics, ZIM files, ROMs, visualizer images, and general uploads
 - local games launcher with SQLite-backed active games, scores, player identity merges, and license plate tracking
 - optional service manager framework
 - certificate and hostname configuration docs/scripts
@@ -93,7 +93,17 @@ Trail Trivia reads category packs from:
 /data/oiab/trivia/questions
 ```
 
-The File Uploads app can upload and list those trivia JSON files without rebuilding the frontend.
+The File Uploads app can upload and list local content without rebuilding the frontend. Current upload targets are:
+
+- Music: `/data/oiab/media/music`
+- Trivia questions: `/data/oiab/trivia/questions`
+- Map packs: `/data/oiab/maps/packs`
+- Books: `/data/oiab/media/books`
+- Comics: `/data/oiab/media/comics`
+- Kiwix ZIM files: `/data/oiab/content/zim`
+- Emulator ROMs: `/data/oiab/games/roms`
+- Music visualizer images: `/data/oiab/media/music/visualizers`
+- General uploads: `/data/oiab/media/uploads`
 
 ## Map Packs
 

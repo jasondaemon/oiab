@@ -105,11 +105,35 @@
       "category": "Games"
     },
     {
+      "id": "minesweeper",
+      "title": "Minesweeper",
+      "description": "Single-player minefield puzzle with local scoring.",
+      "url": "/mobile/minesweeper.html",
+      "icon": "/maps/overland/overland-minesweeper.svg",
+      "category": "Games"
+    },
+    {
       "id": "blockfall",
       "title": "Blockfall Battle",
       "description": "Falling-block puzzle with solo and battle modes.",
       "url": "/mobile/blockfall.html",
       "icon": "/maps/overland/overland-blockfall.svg",
+      "category": "Games"
+    },
+    {
+      "id": "claimline",
+      "title": "Territory Trace",
+      "description": "Territory capture game with solo and local battle modes.",
+      "url": "/mobile/claimline.html",
+      "icon": "/maps/overland/overland-claimline.svg",
+      "category": "Games"
+    },
+    {
+      "id": "blank-slate",
+      "title": "Blank Slate",
+      "description": "Family party word-matching game.",
+      "url": "/mobile/blank-slate.html",
+      "icon": "/maps/overland/overland-blank-slate.svg",
       "category": "Games"
     },
     {
@@ -119,6 +143,63 @@
       "url": "/mobile/word-tile-arena.html",
       "icon": "/maps/overland/overland-word-tile-arena.svg",
       "category": "Games"
+    },
+    {
+      "id": "connect-four",
+      "title": "Connect Four",
+      "description": "Two-player or computer vertical checker game.",
+      "url": "/mobile/connect-four.html",
+      "icon": "/maps/overland/overland-connect-four.svg",
+      "category": "Games"
+    },
+    {
+      "id": "battleship",
+      "title": "Battleship",
+      "description": "Fleet search game with local multiplayer support.",
+      "url": "/mobile/battleship.html",
+      "icon": "/maps/overland/overland-battleship.svg",
+      "category": "Games"
+    },
+    {
+      "id": "dots-and-boxes",
+      "title": "Dots and Boxes",
+      "description": "Classic line-and-box capture game.",
+      "url": "/mobile/dots-and-boxes.html",
+      "icon": "/maps/overland/overland-dots-boxes.svg",
+      "category": "Games"
+    },
+    {
+      "id": "hangman",
+      "title": "Hangman",
+      "description": "Word guessing game with solo and two-player modes.",
+      "url": "/mobile/hangman.html",
+      "icon": "/maps/overland/overland-hangman.svg",
+      "category": "Games"
+    },
+    {
+      "id": "word-grid",
+      "title": "Word Grid",
+      "description": "Find linked words on a timed letter grid.",
+      "url": "/mobile/word-grid.html",
+      "icon": "/maps/overland/overland-word-grid.svg",
+      "category": "Games"
+    },
+    {
+      "id": "pattern-match",
+      "title": "Pattern Match",
+      "description": "Repeat the growing light and sound sequence.",
+      "url": "/mobile/pattern-match.html",
+      "icon": "/maps/overland/overland-pattern-match.svg",
+      "category": "Games"
+    },
+    {
+      "id": "web-emulator",
+      "title": "Web Emulator",
+      "description": "Browser-based ROM launcher for local legally-owned games.",
+      "url": "/mobile/emulator.html",
+      "icon": "/maps/overland/overland-emulator.svg",
+      "category": "Games",
+      "native": "emulator"
     },
     {
       "id": "trivia",
@@ -139,12 +220,36 @@
       "native": "drums"
     },
     {
+      "id": "tic-tac-toe",
+      "title": "Tic-Tac-Toe",
+      "description": "Fast local multiplayer or computer tic-tac-toe.",
+      "url": "/mobile/tic-tac-toe.html",
+      "icon": "/mobile/tic-tac-toe.svg",
+      "category": "Games"
+    },
+    {
       "id": "license-plates",
       "title": "License Plates",
       "description": "Road-trip state license plate tracker.",
       "url": "/mobile/license-plates.html",
       "icon": "/maps/overland/overland-plates.svg",
       "category": "Travel"
+    },
+    {
+      "id": "audio-test",
+      "title": "Audio Test",
+      "description": "Touch-friendly HTML audio and WebAudio diagnostics.",
+      "url": "/maps/overland/overland-audio-test.html",
+      "icon": "/maps/overland/overland-audio-test.svg",
+      "category": "Admin"
+    },
+    {
+      "id": "game-data",
+      "title": "Game Data",
+      "description": "Merge player identities, clear active games, and manage score data.",
+      "url": "/mobile/game-data.html",
+      "icon": "/maps/overland/overland-game-data.svg",
+      "category": "Admin"
     },
     {
       "id": "wikipedia",

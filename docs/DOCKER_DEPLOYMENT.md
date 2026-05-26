@@ -30,8 +30,13 @@ Important subdirectories:
 /data/oiab/certs
 /data/oiab/maps/packs
 /data/oiab/media/music
+/data/oiab/media/music/visualizers
+/data/oiab/media/books
+/data/oiab/media/comics
 /data/oiab/media/uploads
 /data/oiab/games
+/data/oiab/games/roms
+/data/oiab/content/zim
 /data/oiab/tracks
 /data/oiab/waypoints
 /data/oiab/services

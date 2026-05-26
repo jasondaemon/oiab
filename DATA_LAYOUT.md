@@ -15,10 +15,14 @@ Subdirectories:
 /data/oiab/maps/styles
 /data/oiab/maps/sprites
 /data/oiab/media/music
+/data/oiab/media/music/visualizers
+/data/oiab/media/books
+/data/oiab/media/comics
 /data/oiab/media/uploads
 /data/oiab/trivia/questions
 /data/oiab/trivia/backups
 /data/oiab/games
+/data/oiab/games/roms
 /data/oiab/tracks
 /data/oiab/waypoints
 /data/oiab/content/zim
@@ -36,6 +40,13 @@ Primary durable state is SQLite:
 - active games, score history, player identity merges, and license plates: `/data/oiab/games/oiab-games.sqlite3`
 - trivia question packs: `/data/oiab/trivia/questions/*.json`
 - music cache: `/data/oiab/media/music-library.json`
+- uploaded local content:
+  - music: `/data/oiab/media/music`
+  - books: `/data/oiab/media/books`
+  - comics: `/data/oiab/media/comics`
+  - emulator ROMs: `/data/oiab/games/roms`
+  - Kiwix ZIM files: `/data/oiab/content/zim`
+  - PMTiles map packs: `/data/oiab/maps/packs`
 
 The OIAB database stores:
 

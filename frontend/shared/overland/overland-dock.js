@@ -17,9 +17,9 @@
         settingsPassword: "",
         hiddenAppIds: ["legacy-home", "legacy-admin"],
         folders: [
-            {id: "games", title: "Games", icon: "/maps/overland/overland-folder-games.svg", protected: false, appIds: ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "drums", "trivia", "tic-tac-toe", "license-plates", "minecraft-map"]},
-            {id: "reading", title: "Reading", icon: "/maps/overland/overland-folder-reading.svg", protected: false, appIds: ["wikipedia", "ted-kids", "kolibri", "books", "minecraft-wiki", "pokemon-wiki", "survivor-library", "medical-library", "military-medicine"]},
-            {id: "settings", title: "Settings", icon: "/maps/overland/overland-folder-settings.svg", protected: true, appIds: ["overland-settings", "system-monitor", "file-uploads", "audio-test", "https-setup", "minecraft-admin", "mindustry-admin", "maps-admin"]},
+            {id: "games", title: "Games", icon: "/maps/overland/overland-folder-games.svg", protected: false, appIds: ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "drums", "trivia", "tic-tac-toe", "license-plates"]},
+            {id: "reading", title: "Reading", icon: "/maps/overland/overland-folder-reading.svg", protected: false, appIds: ["wikipedia", "books", "komga"]},
+            {id: "settings", title: "Settings", icon: "/maps/overland/overland-folder-settings.svg", protected: true, appIds: ["overland-settings", "gps-status", "file-uploads", "map-packs", "service-manager", "game-data", "audio-test"]},
         ],
     }
 

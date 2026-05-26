@@ -7,9 +7,10 @@
   <style>
     :root {
       color-scheme: dark;
-      --bg: #06170f;
-      --panel: rgba(19, 54, 33, 0.9);
-      --line: rgba(185, 255, 198, 0.24);
+      --bg: #07160f;
+      --panel: rgba(22, 58, 35, 0.86);
+      --panel-strong: rgba(11, 31, 20, 0.94);
+      --line: rgba(190, 255, 205, 0.24);
       --text: #f4f7ed;
       --muted: rgba(244, 247, 237, 0.72);
       --accent: #7df18b;
@@ -23,27 +24,97 @@
       color: var(--text);
       font: 500 16px/1.35 "Avenir Next", "Trebuchet MS", sans-serif;
       background:
-        radial-gradient(circle at 20% 20%, rgba(125, 241, 139, 0.22), transparent 28rem),
-        linear-gradient(135deg, #102d18, var(--bg));
+        radial-gradient(circle at 20% 15%, rgba(125, 241, 139, 0.24), transparent 28rem),
+        radial-gradient(circle at 80% 10%, rgba(255, 211, 77, 0.13), transparent 24rem),
+        linear-gradient(135deg, #193e25, var(--bg));
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.28;
+      background-image:
+        radial-gradient(ellipse at 30% 20%, transparent 38%, rgba(125, 241, 139, 0.24) 39%, transparent 40%),
+        radial-gradient(ellipse at 70% 50%, transparent 42%, rgba(125, 241, 139, 0.16) 43%, transparent 44%);
+      background-size: 360px 240px;
     }
     main {
-      width: min(980px, calc(100vw - 24px));
+      position: relative;
+      width: min(1080px, calc(100vw - 24px));
       margin: 0 auto;
-      padding: 24px 0 48px;
+      padding: 18px 0 48px;
+    }
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
     }
     h1 {
-      margin: 0 0 14px;
-      font-size: clamp(2.4rem, 9vw, 4.8rem);
+      margin: 0;
+      font-size: clamp(2.2rem, 8vw, 4.4rem);
       line-height: 0.92;
-      letter-spacing: -0.06em;
+      letter-spacing: -0.055em;
+    }
+    h2 { margin: 0; font-size: 1.25rem; }
+    p { color: var(--muted); margin: 8px 0 0; }
+    button, .button {
+      min-height: 48px;
+      border: 0;
+      border-radius: 999px;
+      padding: 0 20px;
+      color: #06150c;
+      background: var(--accent);
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    button.secondary, .button.secondary {
+      color: var(--text);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .shell {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
     }
     .panel {
       border: 1px solid var(--line);
       border-radius: 24px;
-      padding: 20px;
-      background: linear-gradient(145deg, rgba(38, 83, 51, 0.92), rgba(7, 28, 17, 0.94));
+      background: linear-gradient(145deg, var(--panel), var(--panel-strong));
       box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
-      margin: 14px 0;
+      overflow: hidden;
+    }
+    .target-list {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+    }
+    .target-tab {
+      width: 100%;
+      justify-content: flex-start;
+      min-height: 58px;
+      color: var(--text);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+    }
+    .target-tab.active {
+      color: #06150c;
+      background: var(--accent);
+    }
+    .content {
+      padding: 20px;
+      display: grid;
+      gap: 16px;
     }
     .kicker {
       display: block;
@@ -53,12 +124,16 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
     }
-    p { color: var(--muted); margin: 8px 0 16px; }
-    form {
+    .active .kicker { color: #06150c; }
+    .upload-form {
       display: grid;
       gap: 12px;
       grid-template-columns: 1fr auto;
       align-items: center;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(0, 0, 0, 0.16);
     }
     input[type="file"] {
       width: 100%;
@@ -68,41 +143,45 @@
       color: var(--text);
       background: rgba(0, 0, 0, 0.22);
     }
-    button, .button {
-      min-height: 54px;
-      border: 0;
-      border-radius: 999px;
-      padding: 0 22px;
-      color: #05150b;
-      background: var(--accent);
-      font-weight: 900;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    button.secondary, .button.secondary {
-      color: var(--text);
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.08);
-    }
-    .toolbar {
-      display: flex;
+    .details {
+      display: grid;
       gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .detail-card {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+    }
+    .detail-card strong {
+      display: block;
+      color: var(--accent);
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .detail-card code {
+      display: block;
+      margin-top: 6px;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .message {
       min-height: 22px;
       color: var(--warn);
-      font-weight: 800;
+      font-weight: 900;
     }
     .message.error { color: var(--bad); }
     .file-list {
       display: grid;
       gap: 8px;
-      margin-top: 12px;
+      max-height: min(52vh, 520px);
+      overflow: auto;
+      padding-right: 4px;
     }
     .file-row {
       display: grid;
@@ -121,11 +200,26 @@
       white-space: nowrap;
     }
     .file-row small { color: var(--muted); }
-    @media (max-width: 680px) {
-      main { width: min(100vw - 16px, 520px); padding-top: 14px; }
-      .panel { border-radius: 18px; padding: 16px; }
-      form { grid-template-columns: 1fr; }
-      button, .button { width: 100%; }
+    .empty {
+      padding: 18px;
+      color: var(--muted);
+      border: 1px dashed var(--line);
+      border-radius: 16px;
+    }
+    @media (max-width: 760px) {
+      main { width: min(100vw - 14px, 560px); padding-top: 12px; }
+      .toolbar { justify-content: space-between; }
+      .shell { grid-template-columns: 1fr; }
+      .target-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .target-tab {
+        min-height: 54px;
+        justify-content: center;
+        padding: 0 12px;
+      }
+      .upload-form, .details { grid-template-columns: 1fr; }
+      button, .button { min-height: 46px; }
     }
   </style>
 </head>
@@ -137,70 +231,143 @@
     </div>
     <h1>File Uploads</h1>
 
-    <section class="panel">
-      <span class="kicker">Trail Trivia</span>
-      <h2>Question Packs</h2>
-      <p>Upload category JSON files. The trivia game reads these from the OIAB data directory, so question packs can be maintained without rebuilding the app.</p>
-      <form id="triviaForm">
-        <input id="triviaFile" name="file" type="file" accept="application/json,.json" required>
-        <button type="submit">Upload JSON</button>
-      </form>
-      <p id="message" class="message"></p>
-      <div id="triviaFiles" class="file-list"></div>
+    <section class="shell" aria-label="Upload manager">
+      <aside class="panel">
+        <div id="targetList" class="target-list"></div>
+      </aside>
+      <section class="panel content">
+        <div>
+          <span id="targetKicker" class="kicker">OIAB Storage</span>
+          <h2 id="targetTitle">Loading...</h2>
+          <p id="targetDescription"></p>
+        </div>
+        <form id="uploadForm" class="upload-form">
+          <input id="uploadFile" name="file" type="file" required>
+          <button id="uploadButton" type="submit">Upload</button>
+        </form>
+        <div class="details">
+          <div class="detail-card"><strong>Data Path</strong><code id="targetPath">--</code></div>
+          <div class="detail-card"><strong>Accepted</strong><code id="targetAccept">Any file</code></div>
+        </div>
+        <p id="message" class="message" role="status"></p>
+        <div id="fileList" class="file-list"></div>
+      </section>
     </section>
   </main>
   <script>
-    const message = document.getElementById("message");
-    const list = document.getElementById("triviaFiles");
+    const state = { targets: [], active: "trivia" };
+    const els = {
+      targetList: document.getElementById("targetList"),
+      title: document.getElementById("targetTitle"),
+      kicker: document.getElementById("targetKicker"),
+      description: document.getElementById("targetDescription"),
+      path: document.getElementById("targetPath"),
+      accept: document.getElementById("targetAccept"),
+      file: document.getElementById("uploadFile"),
+      list: document.getElementById("fileList"),
+      message: document.getElementById("message"),
+    };
 
     function setMessage(text, error = false) {
-      message.textContent = text || "";
-      message.classList.toggle("error", Boolean(error));
+      els.message.textContent = text || "";
+      els.message.classList.toggle("error", Boolean(error));
     }
 
     function formatSize(bytes) {
       const value = Number(bytes || 0);
+      if (value > 1024 * 1024 * 1024) return `${(value / 1024 / 1024 / 1024).toFixed(2)} GB`;
       if (value > 1024 * 1024) return `${(value / 1024 / 1024).toFixed(1)} MB`;
       if (value > 1024) return `${Math.round(value / 1024)} KB`;
       return `${value} B`;
     }
 
-    async function loadFiles() {
-      const response = await fetch("/api/uploads/trivia-questions", {cache: "no-cache"});
+    function activeTarget() {
+      return state.targets.find((target) => target.id === state.active) || state.targets[0];
+    }
+
+    function renderTargets() {
+      els.targetList.replaceChildren(...state.targets.map((target) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `target-tab${target.id === state.active ? " active" : ""}`;
+        button.textContent = target.title;
+        button.addEventListener("click", () => {
+          state.active = target.id;
+          renderTargets();
+          renderTarget();
+          loadFiles();
+        });
+        return button;
+      }));
+    }
+
+    function renderTarget() {
+      const target = activeTarget();
+      if (!target) return;
+      els.kicker.textContent = target.id.replaceAll("-", " ");
+      els.title.textContent = target.title;
+      els.description.textContent = target.description || "";
+      els.path.textContent = target.path || "--";
+      els.accept.textContent = target.extensions?.length ? target.extensions.join(", ") : "Any file";
+      els.file.accept = target.accept || "";
+      els.file.value = "";
+    }
+
+    async function loadTargets() {
+      const response = await fetch("/api/uploads/targets", { cache: "no-cache" });
       const data = await response.json();
-      if (!response.ok || data.ok === false) throw new Error(data.error || `Load failed: ${response.status}`);
+      if (!response.ok || data.ok === false) throw new Error(data.error || `Targets failed: ${response.status}`);
+      state.targets = data.targets || [];
+      if (!state.targets.some((target) => target.id === state.active)) state.active = state.targets[0]?.id || "uploads";
+      renderTargets();
+      renderTarget();
+    }
+
+    async function loadFiles() {
+      const target = activeTarget();
+      if (!target) return;
+      const response = await fetch(`/api/uploads/list?target=${encodeURIComponent(target.id)}`, { cache: "no-cache" });
+      const data = await response.json();
+      if (!response.ok || data.ok === false) throw new Error(data.error || `List failed: ${response.status}`);
       const files = data.files || [];
-      list.innerHTML = files.length ? files.map(file => `
+      els.list.innerHTML = files.length ? files.map((file) => `
         <article class="file-row">
           <div>
             <strong>${file.name}</strong>
             <small>${formatSize(file.size)} · ${file.updated || ""}</small>
           </div>
-          <a class="button secondary" href="/maps/overland/trivia/questions/${encodeURIComponent(file.name)}">View</a>
+          <a class="button secondary" href="${file.url}">Open</a>
         </article>
-      `).join("") : '<article class="file-row"><div><strong>No question files uploaded.</strong><small>Upload JSON packs to enable Trail Trivia.</small></div></article>';
+      `).join("") : `<div class="empty">No files in ${target.title} yet.</div>`;
     }
 
-    document.getElementById("refresh").addEventListener("click", () => loadFiles().catch(error => setMessage(error.message, true)));
-    document.getElementById("triviaForm").addEventListener("submit", async (event) => {
+    async function refreshAll() {
+      setMessage("");
+      await loadTargets();
+      await loadFiles();
+    }
+
+    document.getElementById("refresh").addEventListener("click", () => refreshAll().catch((error) => setMessage(error.message, true)));
+    document.getElementById("uploadForm").addEventListener("submit", async (event) => {
       event.preventDefault();
-      const file = document.getElementById("triviaFile").files[0];
-      if (!file) return;
+      const target = activeTarget();
+      const file = els.file.files[0];
+      if (!target || !file) return;
       const body = new FormData();
       body.append("file", file);
-      setMessage("Uploading...");
+      setMessage(`Uploading ${file.name}...`);
       try {
-        const response = await fetch("/api/uploads/trivia-question", {method: "POST", body});
+        const response = await fetch(`/api/uploads/file?target=${encodeURIComponent(target.id)}`, { method: "POST", body });
         const data = await response.json().catch(() => ({}));
         if (!response.ok || data.ok === false) throw new Error(data.error || `Upload failed: ${response.status}`);
-        document.getElementById("triviaFile").value = "";
-        setMessage(`${data.file} uploaded.`);
+        els.file.value = "";
+        setMessage(`${data.file} uploaded to ${target.title}.`);
         await loadFiles();
       } catch (error) {
         setMessage(error.message, true);
       }
     });
-    loadFiles().catch(error => setMessage(error.message, true));
+    refreshAll().catch((error) => setMessage(error.message, true));
   </script>
 </body>
 </html>

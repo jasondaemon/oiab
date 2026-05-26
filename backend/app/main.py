@@ -57,9 +57,9 @@ class OIABHandler(BaseHTTPRequestHandler):
             refresh = "refresh=1" in parsed.query
             return self.send_json(self.music_library(refresh=refresh))
         if path in {"/music-api/visualizer-images", "/api/music/visualizer-images"}:
-            return self.send_json({"ok": True, "images": []})
+            return self.send_json(self.visualizer_images())
         if path in {"/roms-api/library", "/api/roms"}:
-            return self.send_json({"ok": True, "systems": [], "roms": []})
+            return self.send_json(self.rom_library())
         if path in {"/mobile-games", "/api/mobile-games"}:
             return self.send_json({"ok": True, "games": self.open_games()})
         if path in {"/game-stats", "/api/game-stats"}:
@@ -68,6 +68,11 @@ class OIABHandler(BaseHTTPRequestHandler):
             return self.send_json(self.license_plates())
         if path in {"/api/uploads/trivia-questions", "/api/trivia/questions"}:
             return self.send_json(self.trivia_question_files())
+        if path in {"/api/uploads/targets", "/api/uploads/categories"}:
+            return self.send_json({"ok": True, "targets": self.upload_targets()})
+        if path in {"/api/uploads/list", "/api/uploads/files"}:
+            target = parse_qs(parsed.query).get("target", ["uploads"])[-1]
+            return self.send_json(self.upload_files(target))
         if path in {"/maps/overland/trivia/questions/manifest.json", "/trivia/questions/manifest.json"}:
             return self.send_json(self.trivia_manifest())
         if path in {"/api/apps", "/overland/apps.json", "/maps/overland/apps.json"}:
@@ -143,6 +148,9 @@ class OIABHandler(BaseHTTPRequestHandler):
             return self.handle_license_plates()
         if path in {"/api/uploads/trivia-question", "/api/trivia/questions/upload"}:
             return self.handle_trivia_question_upload()
+        if path in {"/api/uploads/file", "/api/uploads/upload"}:
+            target = parse_qs(parsed.query).get("target", ["uploads"])[-1]
+            return self.handle_file_upload(target)
         if path in {"/api/maps-v2/map-packs", "/maps-v2-map-packs"}:
             return self.handle_map_packs()
         self.send_error(HTTPStatus.NOT_FOUND, "Not found")
@@ -254,6 +262,14 @@ class OIABHandler(BaseHTTPRequestHandler):
             return self.safe_join(REPO_ROOT / "frontend" / "shared" / "overland", path.removeprefix("/maps/overland/"))
         if path.startswith("/media/music/"):
             return self.safe_join(self.settings.data_dir / "media" / "music", path.removeprefix("/media/music/"))
+        if path.startswith("/media/books/"):
+            return self.safe_join(self.settings.data_dir / "media" / "books", path.removeprefix("/media/books/"))
+        if path.startswith("/media/comics/"):
+            return self.safe_join(self.settings.data_dir / "media" / "comics", path.removeprefix("/media/comics/"))
+        if path.startswith("/content/zim/"):
+            return self.safe_join(self.settings.data_dir / "content" / "zim", path.removeprefix("/content/zim/"))
+        if path.startswith("/games/roms/"):
+            return self.safe_join(self.settings.data_dir / "games" / "roms", path.removeprefix("/games/roms/"))
         if path.startswith("/uploads/"):
             return self.safe_join(self.settings.data_dir / "media" / "uploads", path.removeprefix("/uploads/"))
         return None
@@ -331,6 +347,86 @@ class OIABHandler(BaseHTTPRequestHandler):
         cache.parent.mkdir(parents=True, exist_ok=True)
         cache.write_text(json.dumps(payload, indent=2), encoding="utf-8")
         return payload
+
+    def visualizer_images(self) -> dict:
+        target = self.settings.data_dir / "media" / "music" / "visualizers"
+        target.mkdir(parents=True, exist_ok=True)
+        extensions = {".png", ".jpg", ".jpeg", ".webp", ".gif"}
+        images = []
+        for path in sorted(target.rglob("*")):
+            if not path.is_file() or path.name.startswith(".") or path.suffix.lower() not in extensions:
+                continue
+            rel = path.relative_to(target).as_posix()
+            images.append(
+                {
+                    "id": rel,
+                    "name": path.stem.replace("-", " ").replace("_", " ").strip().title() or path.name,
+                    "filename": path.name,
+                    "url": f"/media/music/visualizers/{rel}",
+                    "size": path.stat().st_size,
+                }
+            )
+        return {"ok": True, "images": images}
+
+    def rom_library(self) -> dict:
+        root = self.settings.data_dir / "games" / "roms"
+        root.mkdir(parents=True, exist_ok=True)
+        core_by_extension = {
+            ".nes": ("nes", "Nintendo NES", "nes"),
+            ".sfc": ("snes", "Super Nintendo", "snes"),
+            ".smc": ("snes", "Super Nintendo", "snes"),
+            ".gba": ("gba", "Game Boy Advance", "gba"),
+            ".gb": ("gb", "Game Boy", "gb"),
+            ".gbc": ("gb", "Game Boy Color", "gb"),
+            ".gen": ("segaMD", "Sega Genesis", "segaMD"),
+            ".md": ("segaMD", "Sega Genesis", "segaMD"),
+            ".sms": ("segaMS", "Sega Master System", "segaMS"),
+            ".gg": ("segaGG", "Sega Game Gear", "segaGG"),
+            ".n64": ("n64", "Nintendo 64", "n64"),
+            ".z64": ("n64", "Nintendo 64", "n64"),
+            ".v64": ("n64", "Nintendo 64", "n64"),
+        }
+        zip_folder_defaults = {
+            "nes": ("nes", "Nintendo NES", "nes"),
+            "snes": ("snes", "Super Nintendo", "snes"),
+            "gba": ("gba", "Game Boy Advance", "gba"),
+            "gb": ("gb", "Game Boy", "gb"),
+            "gbc": ("gb", "Game Boy Color", "gb"),
+            "genesis": ("segaMD", "Sega Genesis", "segaMD"),
+            "sega": ("segaMD", "Sega Genesis", "segaMD"),
+            "n64": ("n64", "Nintendo 64", "n64"),
+        }
+        games = []
+        systems: dict[str, dict] = {}
+        for path in sorted(root.rglob("*")):
+            if not path.is_file() or path.name.startswith("."):
+                continue
+            rel = path.relative_to(root).as_posix()
+            first_dir = rel.split("/", 1)[0].lower() if "/" in rel else ""
+            if path.suffix.lower() == ".zip":
+                core_data = zip_folder_defaults.get(first_dir)
+            else:
+                core_data = core_by_extension.get(path.suffix.lower())
+            if not core_data:
+                continue
+            system_id, system_title, core = core_data
+            game = {
+                "name": path.stem.replace("_", " ").replace("-", " ").strip() or path.name,
+                "filename": path.name,
+                "path": rel,
+                "url": f"/games/roms/{rel}",
+                "system": system_id,
+                "systemTitle": system_title,
+                "core": core,
+                "size": path.stat().st_size,
+            }
+            games.append(game)
+            entry = systems.setdefault(system_id, {"id": system_id, "title": system_title, "count": 0})
+            entry["count"] += 1
+        emulator_ready = (REPO_ROOT / "frontend" / "shared" / "emulatorjs" / "data" / "loader.js").exists() or (
+            REPO_ROOT / "frontend" / "shared" / "overland" / "emulatorjs" / "data" / "loader.js"
+        ).exists()
+        return {"ok": True, "systems": sorted(systems.values(), key=lambda item: item["title"]), "games": games, "emulatorReady": emulator_ready}
 
     def games_db(self) -> GamesDB:
         return GamesDB(self.settings)
@@ -492,6 +588,158 @@ class OIABHandler(BaseHTTPRequestHandler):
         except Exception as exc:  # noqa: BLE001 - HTTP boundary
             return self.send_json({"ok": False, "error": str(exc)}, status=500)
 
+    def upload_targets(self) -> list[dict]:
+        return [
+            {
+                "id": "music",
+                "title": "Music",
+                "description": "Audio files for the persistent OIAB music player.",
+                "path": str(self.settings.data_dir / "media" / "music"),
+                "publicBase": "/media/music/",
+                "accept": ".mp3,.m4a,.aac,.ogg,.wav,.flac",
+                "extensions": [".mp3", ".m4a", ".aac", ".ogg", ".wav", ".flac"],
+            },
+            {
+                "id": "trivia",
+                "title": "Trivia Questions",
+                "description": "Trail Trivia category JSON files.",
+                "path": str(self.trivia_questions_dir()),
+                "publicBase": "/trivia/questions/",
+                "accept": "application/json,.json",
+                "extensions": [".json"],
+            },
+            {
+                "id": "maps",
+                "title": "Map Packs",
+                "description": "Local PMTiles archives for Maps v2. Large packs are usually copied directly to disk.",
+                "path": str(self.settings.data_dir / "maps" / "packs"),
+                "publicBase": "/maps/packs/",
+                "accept": ".pmtiles",
+                "extensions": [".pmtiles"],
+            },
+            {
+                "id": "books",
+                "title": "Books",
+                "description": "Komga ebook/PDF library files.",
+                "path": str(self.settings.data_dir / "media" / "books"),
+                "publicBase": "/media/books/",
+                "accept": ".epub,.pdf,.cbz,.cbr",
+                "extensions": [".epub", ".pdf", ".cbz", ".cbr"],
+            },
+            {
+                "id": "comics",
+                "title": "Comics",
+                "description": "Komga comic archives and PDFs.",
+                "path": str(self.settings.data_dir / "media" / "comics"),
+                "publicBase": "/media/comics/",
+                "accept": ".cbz,.cbr,.pdf",
+                "extensions": [".cbz", ".cbr", ".pdf"],
+            },
+            {
+                "id": "zim",
+                "title": "Kiwix ZIM",
+                "description": "Offline Wikipedia/Kiwix ZIM files.",
+                "path": str(self.settings.data_dir / "content" / "zim"),
+                "publicBase": "/content/zim/",
+                "accept": ".zim",
+                "extensions": [".zim"],
+            },
+            {
+                "id": "roms",
+                "title": "ROMs",
+                "description": "Local emulator ROM library. Only upload ROMs you are legally allowed to use.",
+                "path": str(self.settings.data_dir / "games" / "roms"),
+                "publicBase": "/games/roms/",
+                "accept": ".nes,.sfc,.smc,.gba,.gb,.gbc,.gen,.md,.sms,.gg,.n64,.z64,.v64,.zip",
+                "extensions": [".nes", ".sfc", ".smc", ".gba", ".gb", ".gbc", ".gen", ".md", ".sms", ".gg", ".n64", ".z64", ".v64", ".zip"],
+            },
+            {
+                "id": "visualizers",
+                "title": "Visualizer Images",
+                "description": "Images usable by music visualizer modes.",
+                "path": str(self.settings.data_dir / "media" / "music" / "visualizers"),
+                "publicBase": "/media/music/visualizers/",
+                "accept": ".png,.jpg,.jpeg,.webp,.gif",
+                "extensions": [".png", ".jpg", ".jpeg", ".webp", ".gif"],
+            },
+            {
+                "id": "uploads",
+                "title": "General Uploads",
+                "description": "General-purpose local files.",
+                "path": str(self.settings.data_dir / "media" / "uploads"),
+                "publicBase": "/uploads/",
+                "accept": "",
+                "extensions": [],
+            },
+        ]
+
+    def upload_target(self, target_id: str) -> dict:
+        target_id = str(target_id or "uploads").strip().lower()
+        targets = {target["id"]: target for target in self.upload_targets()}
+        if target_id not in targets:
+            raise ValueError(f"Unknown upload target: {target_id}")
+        return targets[target_id]
+
+    def upload_files(self, target_id: str) -> dict:
+        try:
+            target = self.upload_target(target_id)
+        except ValueError as exc:
+            return {"ok": False, "error": str(exc), "files": []}
+        root = Path(target["path"])
+        root.mkdir(parents=True, exist_ok=True)
+        files = []
+        for path in sorted(root.rglob("*")):
+            if not path.is_file() or path.name.startswith("."):
+                continue
+            rel = path.relative_to(root).as_posix()
+            files.append(
+                {
+                    "name": rel,
+                    "size": path.stat().st_size,
+                    "updated": datetime.fromtimestamp(path.stat().st_mtime).isoformat(),
+                    "url": f"{target['publicBase']}{rel}",
+                }
+            )
+        return {"ok": True, "target": target, "files": files}
+
+    def handle_file_upload(self, target_id: str) -> None:
+        try:
+            content_type = self.headers.get("Content-Type", "")
+            if "multipart/form-data" not in content_type:
+                return self.send_json({"ok": False, "error": "Expected multipart/form-data with a file field."}, status=400)
+            target = self.upload_target(target_id)
+            upload = self.read_multipart_upload("file")
+            if not upload:
+                return self.send_json({"ok": False, "error": "No file provided."}, status=400)
+            filename = self.safe_upload_name(Path(upload["filename"]).name)
+            suffix = Path(filename).suffix.lower()
+            allowed = [str(ext).lower() for ext in target.get("extensions", [])]
+            if allowed and suffix not in allowed:
+                return self.send_json({"ok": False, "error": f"{target['title']} uploads must use: {', '.join(allowed)}"}, status=400)
+            raw = upload["content"]
+            if target["id"] == "trivia":
+                try:
+                    data = json.loads(raw.decode("utf-8"))
+                except json.JSONDecodeError as exc:
+                    return self.send_json({"ok": False, "error": f"Invalid JSON: {exc}"}, status=400)
+                if filename != "manifest.json" and (not isinstance(data, dict) or not isinstance(data.get("questions"), list)):
+                    return self.send_json({"ok": False, "error": "Question JSON must contain a questions array."}, status=400)
+            root = Path(target["path"])
+            root.mkdir(parents=True, exist_ok=True)
+            destination = root / filename
+            destination.write_bytes(raw)
+            if target["id"] == "music":
+                cache = self.settings.data_dir / "media" / "music-library.json"
+                if cache.exists():
+                    cache.unlink()
+            if target["id"] == "maps":
+                self.app_db().rescan_map_packs()
+            return self.send_json({"ok": True, "target": target["id"], "file": filename, "files": self.upload_files(target["id"]).get("files", [])})
+        except ValueError as exc:
+            return self.send_json({"ok": False, "error": str(exc)}, status=400)
+        except Exception as exc:  # noqa: BLE001 - HTTP boundary
+            return self.send_json({"ok": False, "error": str(exc)}, status=500)
+
     @staticmethod
     def safe_upload_name(name: str) -> str:
         cleaned = re.sub(r"[^A-Za-z0-9._-]+", "-", name).strip(".-")
@@ -530,9 +778,9 @@ class OIABHandler(BaseHTTPRequestHandler):
             "settingsPassword": "",
             "hiddenAppIds": ["legacy-home", "legacy-admin"],
             "folders": [
-                {"id": "games", "title": "Games", "icon": "/maps/overland/overland-folder-games.svg", "protected": False, "appIds": ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "drums", "trivia", "tic-tac-toe", "license-plates"]},
+                {"id": "games", "title": "Games", "icon": "/maps/overland/overland-folder-games.svg", "protected": False, "appIds": ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "drums", "trivia", "tic-tac-toe", "license-plates"]},
                 {"id": "reading", "title": "Reading", "icon": "/maps/overland/overland-folder-reading.svg", "protected": False, "appIds": ["wikipedia", "books", "komga"]},
-                {"id": "settings", "title": "Settings", "icon": "/maps/overland/overland-folder-settings.svg", "protected": True, "appIds": ["overland-settings", "gps-status", "system-monitor", "file-uploads", "map-packs", "service-manager"]},
+                {"id": "settings", "title": "Settings", "icon": "/maps/overland/overland-folder-settings.svg", "protected": True, "appIds": ["overland-settings", "gps-status", "file-uploads", "map-packs", "service-manager", "game-data", "audio-test"]},
             ],
         }
 

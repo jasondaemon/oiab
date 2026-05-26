@@ -5,9 +5,9 @@
     settingsPassword: "",
     hiddenAppIds: ["legacy-home", "legacy-admin"],
     folders: [
-      { id: "games", title: "Games", icon: "/maps/overland/overland-folder-games.svg", protected: false, appIds: ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "drums", "trivia", "tic-tac-toe", "license-plates", "minecraft-map"] },
-      { id: "reading", title: "Reading", icon: "/maps/overland/overland-folder-reading.svg", protected: false, appIds: ["wikipedia", "ted-kids", "kolibri", "books", "minecraft-wiki", "pokemon-wiki", "survivor-library", "medical-library", "military-medicine"] },
-      { id: "settings", title: "Settings", icon: "/maps/overland/overland-folder-settings.svg", protected: true, appIds: ["overland-settings", "system-monitor", "file-uploads", "audio-test", "game-data", "https-setup", "minecraft-admin", "mindustry-admin", "maps-admin"] },
+      { id: "games", title: "Games", icon: "/maps/overland/overland-folder-games.svg", protected: false, appIds: ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "drums", "trivia", "tic-tac-toe", "license-plates"] },
+      { id: "reading", title: "Reading", icon: "/maps/overland/overland-folder-reading.svg", protected: false, appIds: ["wikipedia", "books", "komga"] },
+      { id: "settings", title: "Settings", icon: "/maps/overland/overland-folder-settings.svg", protected: true, appIds: ["overland-settings", "gps-status", "file-uploads", "map-packs", "service-manager", "game-data", "audio-test"] },
     ],
   };
   let currentConfig = null;
@@ -132,7 +132,7 @@
     if (app.id === "dots-and-boxes") {
       return join("/mobile/dots-and-boxes.html");
     }
-    if (["blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "hangman", "word-grid", "pattern-match"].includes(app.id)) {
+    if (["minesweeper", "blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "hangman", "word-grid", "pattern-match"].includes(app.id)) {
       return join(`/mobile/${app.id}.html`);
     }
     if (standaloneUrls[app.id]) {
@@ -305,6 +305,8 @@
       hangman: "/mobile/hangman.html",
       "word-grid": "/mobile/word-grid.html",
       "pattern-match": "/mobile/pattern-match.html",
+      minesweeper: "/mobile/minesweeper.html",
+      claimline: "/mobile/claimline.html",
       blockfall: "/mobile/blockfall.html",
     }[game.type] || "/mobile/tic-tac-toe.html";
     card.href = `${gameUrl}?game=${encodeURIComponent(game.id)}&playerId=${encodeURIComponent(profile.id)}&playerName=${encodeURIComponent(profile.name || "Player")}`;
