@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>File Uploads</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #06170f;
+      --panel: rgba(19, 54, 33, 0.9);
+      --line: rgba(185, 255, 198, 0.24);
+      --text: #f4f7ed;
+      --muted: rgba(244, 247, 237, 0.72);
+      --accent: #7df18b;
+      --warn: #ffd34d;
+      --bad: #ff706a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font: 500 16px/1.35 "Avenir Next", "Trebuchet MS", sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(125, 241, 139, 0.22), transparent 28rem),
+        linear-gradient(135deg, #102d18, var(--bg));
+    }
+    main {
+      width: min(980px, calc(100vw - 24px));
+      margin: 0 auto;
+      padding: 24px 0 48px;
+    }
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(2.4rem, 9vw, 4.8rem);
+      line-height: 0.92;
+      letter-spacing: -0.06em;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 20px;
+      background: linear-gradient(145deg, rgba(38, 83, 51, 0.92), rgba(7, 28, 17, 0.94));
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+      margin: 14px 0;
+    }
+    .kicker {
+      display: block;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    p { color: var(--muted); margin: 8px 0 16px; }
+    form {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+    }
+    input[type="file"] {
+      width: 100%;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      color: var(--text);
+      background: rgba(0, 0, 0, 0.22);
+    }
+    button, .button {
+      min-height: 54px;
+      border: 0;
+      border-radius: 999px;
+      padding: 0 22px;
+      color: #05150b;
+      background: var(--accent);
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    button.secondary, .button.secondary {
+      color: var(--text);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .message {
+      min-height: 22px;
+      color: var(--warn);
+      font-weight: 800;
+    }
+    .message.error { color: var(--bad); }
+    .file-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .file-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(0, 0, 0, 0.18);
+    }
+    .file-row strong {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .file-row small { color: var(--muted); }
+    @media (max-width: 680px) {
+      main { width: min(100vw - 16px, 520px); padding-top: 14px; }
+      .panel { border-radius: 18px; padding: 16px; }
+      form { grid-template-columns: 1fr; }
+      button, .button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="toolbar">
+      <a class="button secondary" href="/mobile/">Back</a>
+      <button id="refresh" class="secondary" type="button">Refresh</button>
+    </div>
+    <h1>File Uploads</h1>
+
+    <section class="panel">
+      <span class="kicker">Trail Trivia</span>
+      <h2>Question Packs</h2>
+      <p>Upload category JSON files. The trivia game reads these from the OIAB data directory, so question packs can be maintained without rebuilding the app.</p>
+      <form id="triviaForm">
+        <input id="triviaFile" name="file" type="file" accept="application/json,.json" required>
+        <button type="submit">Upload JSON</button>
+      </form>
+      <p id="message" class="message"></p>
+      <div id="triviaFiles" class="file-list"></div>
+    </section>
+  </main>
+  <script>
+    const message = document.getElementById("message");
+    const list = document.getElementById("triviaFiles");
+
+    function setMessage(text, error = false) {
+      message.textContent = text || "";
+      message.classList.toggle("error", Boolean(error));
+    }
+
+    function formatSize(bytes) {
+      const value = Number(bytes || 0);
+      if (value > 1024 * 1024) return `${(value / 1024 / 1024).toFixed(1)} MB`;
+      if (value > 1024) return `${Math.round(value / 1024)} KB`;
+      return `${value} B`;
+    }
+
+    async function loadFiles() {
+      const response = await fetch("/api/uploads/trivia-questions", {cache: "no-cache"});
+      const data = await response.json();
+      if (!response.ok || data.ok === false) throw new Error(data.error || `Load failed: ${response.status}`);
+      const files = data.files || [];
+      list.innerHTML = files.length ? files.map(file => `
+        <article class="file-row">
+          <div>
+            <strong>${file.name}</strong>
+            <small>${formatSize(file.size)} · ${file.updated || ""}</small>
+          </div>
+          <a class="button secondary" href="/maps/overland/trivia/questions/${encodeURIComponent(file.name)}">View</a>
+        </article>
+      `).join("") : '<article class="file-row"><div><strong>No question files uploaded.</strong><small>Upload JSON packs to enable Trail Trivia.</small></div></article>';
+    }
+
+    document.getElementById("refresh").addEventListener("click", () => loadFiles().catch(error => setMessage(error.message, true)));
+    document.getElementById("triviaForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const file = document.getElementById("triviaFile").files[0];
+      if (!file) return;
+      const body = new FormData();
+      body.append("file", file);
+      setMessage("Uploading...");
+      try {
+        const response = await fetch("/api/uploads/trivia-question", {method: "POST", body});
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || data.ok === false) throw new Error(data.error || `Upload failed: ${response.status}`);
+        document.getElementById("triviaFile").value = "";
+        setMessage(`${data.file} uploaded.`);
+        await loadFiles();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+    loadFiles().catch(error => setMessage(error.message, true));
+  </script>
+</body>
+</html>

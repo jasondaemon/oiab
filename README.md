@@ -9,8 +9,8 @@ The base install is intentionally lean:
 - USB GPS/gpsd location endpoint with stabilized location output
 - waypoints, folders, current track display stubs, and quick waypoint save
 - persistent music player and local music scanner
-- file/static upload data layout
-- local games launcher and score/open-game storage foundation
+- file/static upload data layout with trivia question-pack upload support
+- local games launcher with SQLite-backed active games, scores, player identity merges, and license plate tracking
 - optional service manager framework
 - certificate and hostname configuration docs/scripts
 
@@ -72,6 +72,20 @@ scripts/dev.sh
 ```
 
 In Docker, the host path from `OIAB_DATA_DIR` is bind-mounted to `/data/oiab` inside the container. Certs, PMTiles, music, uploads, waypoints, tracks, games, and optional service data all remain under that one directory.
+
+Game platform state is stored in:
+
+```text
+/data/oiab/games/oiab-games.sqlite3
+```
+
+Trail Trivia reads category packs from:
+
+```text
+/data/oiab/trivia/questions
+```
+
+The File Uploads app can upload and list those trivia JSON files without rebuilding the frontend.
 
 ## Map Packs
 

@@ -7,11 +7,10 @@
   - waypoints
   - folders
   - tracks
-  - game scores
   - settings
   - sync metadata
+- Expand the file upload UI beyond trivia packs into music, GPX, books, and content packs.
 - Complete optional service install/start/stop/remove actions.
-- Add real upload UI/backend for music, GPX, books, and content packs.
 - Improve map sprites and POI symbol loading.
 - Validate PMTiles range-serving behavior on Raspberry Pi deployment.
 - Add a TLS reverse-proxy container once the standalone certificate flow is finalized.

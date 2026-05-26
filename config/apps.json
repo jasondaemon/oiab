@@ -52,7 +52,7 @@
       "id": "file-uploads",
       "title": "File Uploads",
       "description": "Upload music, GPX, books, and local content.",
-      "url": "/mobile/admin.html",
+      "url": "/mobile/file-uploads.html",
       "icon": "/maps/overland/overland-folder-settings.svg",
       "category": "Admin"
     },
@@ -176,4 +176,3 @@
     }
   ]
 }
-

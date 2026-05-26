@@ -15,6 +15,8 @@ Subdirectories:
 /data/oiab/maps/sprites
 /data/oiab/media/music
 /data/oiab/media/uploads
+/data/oiab/trivia/questions
+/data/oiab/trivia/backups
 /data/oiab/games
 /data/oiab/tracks
 /data/oiab/waypoints
@@ -27,13 +29,12 @@ Subdirectories:
 /data/oiab/backups
 ```
 
-Current first-pass persistence is JSON/GeoJSON:
+Current first-pass persistence is SQLite for game platform data and JSON/GeoJSON for map/user content:
 
 - waypoints: `/data/oiab/waypoints/trailer-places.geojson`
 - current track: `/data/oiab/tracks/current.geojson`
-- game lobby state: `/data/oiab/games/mobile-games.json`
-- score data: `/data/oiab/games/scoreboard.json`
+- active games, score history, player identity merges, and license plates: `/data/oiab/games/oiab-games.sqlite3`
+- trivia question packs: `/data/oiab/trivia/questions/*.json`
 - music cache: `/data/oiab/media/music-library.json`
 
-Future hardening target: migrate durable data to SQLite behind the storage modules.
-
+The game database runs in SQLite WAL mode so multiple local clients can read while short writes are committed safely. Future hardening target: migrate waypoints, folders, tracks, settings, and sync metadata behind the same style of storage modules.

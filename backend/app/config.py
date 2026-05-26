@@ -55,6 +55,8 @@ DATA_SUBDIRS = [
     "maps/sprites",
     "media/music",
     "media/uploads",
+    "trivia/questions",
+    "trivia/backups",
     "games",
     "tracks",
     "waypoints",
