@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Cave Entrance">
+  <rect width="64" height="64" fill="none"/>
+  <g><path d="M12 49c2-24 16-35 40 0M22 49c1-12 8-18 20 0" fill="none" stroke="#555" stroke-width="4" stroke-linejoin="round"/><path d="M17 49h30" stroke="#555" stroke-width="4" stroke-linecap="round"/></g>
+</svg>

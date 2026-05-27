@@ -5,6 +5,7 @@
   const DOCK_KEY = "iiab-overland-universal-dock-v1";
   const MUSIC_KEY = "iiab-overland-universal-music-v1";
   const RECENT_KEY = "iiab-overland-universal-recents-v1";
+  const MAP_3D_BUILDINGS_KEY = "omv2.show3dBuildings";
   const FALLBACK_ART = "/maps/overland/tunes.png";
   const DEFAULT_LAYOUT = {
     schema: 1,
@@ -13,7 +14,7 @@
     folders: [
       { id: "games", title: "Games", icon: "/maps/overland/overland-folder-games.svg", protected: false, appIds: ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "drums", "trivia", "tic-tac-toe", "license-plates"] },
       { id: "reading", title: "Reading", icon: "/maps/overland/overland-folder-reading.svg", protected: false, appIds: ["wikipedia", "books", "komga"] },
-      { id: "settings", title: "Settings", icon: "/maps/overland/overland-folder-settings.svg", protected: true, appIds: ["overland-settings", "gps-status", "file-uploads", "map-packs", "service-manager", "game-data", "audio-test"] },
+      { id: "settings", title: "Settings", icon: "/maps/overland/overland-folder-settings.svg", protected: true, appIds: ["overland-settings", "gps-status", "system-monitor", "file-uploads", "map-packs", "service-manager", "game-data", "audio-test"] },
     ],
   };
   const HOST_PREFIXES = ["mobile", "maps", "music", "iiab", "files", "jellyfin", "monitor", "maps-admin", "minecraft-map", "minecraft-admin", "mindustry"];
@@ -55,6 +56,8 @@
       visible: [],
       currentId: "",
       filter: { artist: "", album: "", folder: "" },
+      repeatMode: "off",
+      shuffle: false,
       restoreTime: 0,
       visualSeed: Array.from({ length: 36 }, () => ({
         x: Math.random(),
@@ -76,6 +79,10 @@
       pause: "M7 5h4v14H7zm6 0h4v14h-4z",
       prev: "M6 6h2v12H6zm3 6 9 6V6z",
       next: "M16 6h2v12h-2zm-10 6 9 6V6z",
+      repeat: "M7 7h9.2l-2-2L15.6 3.6 20 8l-4.4 4.4-1.4-1.4 1-1H7v3H5V9a2 2 0 0 1 2-2zm10 8H7.8l2 2-1.4 1.4L4 14l4.4-4.4L9.8 11l-2 2H17v-3h2v3a2 2 0 0 1-2 2z",
+      repeatOne: "M7 7h9.2l-2-2L15.6 3.6 20 8l-4.4 4.4-1.4-1.4 1-1H7v3H5V9a2 2 0 0 1 2-2zm10 8H7.8l2 2-1.4 1.4L4 14l4.4-4.4L9.8 11l-2 2H17v-3h2v3a2 2 0 0 1-2 2zm-5-1h1v5h-2v-3.2l-1 .6-.8-1.4z",
+      shuffle: "M16.6 4.6 20 8l-3.4 3.4-1.4-1.4 1-1H15c-2.3 0-3.4 1.4-4.7 3.7C8.9 15.2 7.4 17 4 17v-2c2.2 0 3.2-1.1 4.6-3.5C10 8.9 11.7 7 15 7h1.2l-1-1 1.4-1.4zM4 7c2 0 3.4.7 4.5 2.1l-1.2 1.7C6.4 9.6 5.5 9 4 9V7zm9.1 6.5c.7.9 1.5 1.5 2.9 1.5h.2l-1-1 1.4-1.4L20 16l-3.4 3.4-1.4-1.4 1-1H16c-2.1 0-3.4-.8-4.4-2.1l1.5-1.4z",
+      waypoint: "M12 2a6 6 0 0 0-6 6c0 4.5 6 13 6 13s6-8.5 6-13a6 6 0 0 0-6-6zm0 8.4A2.4 2.4 0 1 1 12 5.6a2.4 2.4 0 0 1 0 4.8z",
       folder: "M3 6h7l2 2h9v11H3z",
     };
     return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${paths[name] || paths.apps}"/></svg>`;
@@ -119,7 +126,7 @@
 
   function appUrl(app) {
     if (!app) return "#";
-    if (app.id === "maps" || app.id === "maps-v2") return "/maps-v2/";
+    if (app.id === "maps" || app.id === "maps-v2") return "/maps-v2/?shell=1";
     if (app.id === "music" || app.native === "music") return "#music";
     const nativeUrl = NATIVE_APP_URLS[app.id];
     let url = nativeUrl || resolveUrl(app.url);
@@ -127,6 +134,10 @@
       const player = profile();
       const separator = url.includes("?") ? "&" : "?";
       url = `${url}${separator}playerId=${encodeURIComponent(player.id)}&playerName=${encodeURIComponent(player.name)}`;
+    }
+    if (url.startsWith("/") && !url.startsWith("//")) {
+      const separator = url.includes("?") ? "&" : "?";
+      url = `${url}${separator}shell=1`;
     }
     return url;
   }
@@ -237,6 +248,7 @@
 
   function renderDockSettings() {
     const box = $("dockSettings");
+    if (!box) return;
     const choices = state.apps.filter((app) => !isHidden(app.id)).map((app) => {
       const label = document.createElement("label");
       label.className = "uo-dock-choice";
@@ -264,6 +276,7 @@
   function setView(view, options = {}) {
     if (!options.replace && state.currentView !== view) state.history.push(state.currentView);
     state.currentView = view;
+    if (view !== "app" && view !== "music") state.currentAppId = "";
     $("dashboardView").hidden = view !== "dashboard";
     $("appViewport").hidden = view !== "app";
     $("musicView").hidden = view !== "music";
@@ -456,7 +469,7 @@
   function renderTrackList() {
     const list = $("trackList");
     if (!state.music.visible.length) {
-      list.textContent = "No music found. Use File Uploads to add MP3 files, then Scan Library.";
+      list.textContent = "No music found. Use File Uploads to add MP3 files.";
       return;
     }
     const rows = state.music.visible.map((track) => {
@@ -512,12 +525,43 @@
     else audio.pause();
   }
 
-  function nextTrack(direction = 1) {
+  function nextTrack(direction = 1, wrap = true) {
     const list = state.music.visible.length ? state.music.visible : state.music.library;
     if (!list.length) return;
+    if (state.music.shuffle && direction > 0 && list.length > 1) {
+      const current = state.music.currentId;
+      const choices = list.filter((track) => track.id !== current);
+      setAudioTrack(choices[Math.floor(Math.random() * choices.length)], true);
+      return;
+    }
     const currentIndex = Math.max(0, list.findIndex((track) => track.id === state.music.currentId));
-    const next = list[(currentIndex + direction + list.length) % list.length];
+    const nextIndex = currentIndex + direction;
+    if (!wrap && (nextIndex < 0 || nextIndex >= list.length)) return;
+    const next = list[(nextIndex + list.length) % list.length];
     setAudioTrack(next, true);
+  }
+
+  function cycleRepeat() {
+    const order = ["off", "one", "all"];
+    state.music.repeatMode = order[(order.indexOf(state.music.repeatMode) + 1) % order.length];
+    updateMusicUi();
+    persistMusicState();
+  }
+
+  function toggleShuffle() {
+    state.music.shuffle = !state.music.shuffle;
+    updateMusicUi();
+    persistMusicState();
+  }
+
+  function handleTrackEnded() {
+    const audio = $("globalAudio");
+    if (state.music.repeatMode === "one") {
+      audio.currentTime = 0;
+      audio.play().catch((error) => console.warn(error));
+      return;
+    }
+    nextTrack(1, state.music.repeatMode === "all");
   }
 
   function formatTime(seconds) {
@@ -540,6 +584,24 @@
     $("musicArt").src = art;
     $("dashPlay").innerHTML = iconSvg(audio.paused ? "play" : "pause");
     $("musicPlay").innerHTML = iconSvg(audio.paused ? "play" : "pause");
+    const repeatIcon = state.music.repeatMode === "one" ? "repeatOne" : "repeat";
+    const repeatLabel = state.music.repeatMode === "off" ? "Repeat off" : state.music.repeatMode === "one" ? "Repeat one" : "Repeat all";
+    for (const id of ["dashRepeat", "musicRepeat"]) {
+      const button = $(id);
+      if (!button) continue;
+      button.innerHTML = iconSvg(repeatIcon);
+      button.classList.toggle("is-active", state.music.repeatMode !== "off");
+      button.title = repeatLabel;
+      button.setAttribute("aria-label", repeatLabel);
+    }
+    for (const id of ["dashShuffle", "musicShuffle"]) {
+      const button = $(id);
+      if (!button) continue;
+      button.innerHTML = iconSvg("shuffle");
+      button.classList.toggle("is-active", state.music.shuffle);
+      button.title = state.music.shuffle ? "Shuffle on" : "Shuffle off";
+      button.setAttribute("aria-label", button.title);
+    }
     const value = audio.duration ? Math.round((audio.currentTime / audio.duration) * 1000) : 0;
     $("dashMusicProgress").value = value;
     $("musicSeek").value = value;
@@ -554,12 +616,16 @@
       currentId: state.music.currentId,
       currentTime: audio.currentTime || 0,
       filter: state.music.filter,
+      repeatMode: state.music.repeatMode,
+      shuffle: state.music.shuffle,
     }));
   }
 
   function restoreMusicState() {
     const saved = safeJson(localStorage.getItem(MUSIC_KEY), {});
     state.music.filter = { artist: "", album: "", folder: "", ...(saved.filter || {}) };
+    state.music.repeatMode = ["off", "one", "all"].includes(saved.repeatMode) ? saved.repeatMode : "off";
+    state.music.shuffle = Boolean(saved.shuffle);
     state.music.restoreTime = Number(saved.currentTime || 0);
     buildMusicFilters();
     applyMusicFilter();
@@ -621,8 +687,13 @@
     $("gpsPill").classList.toggle("is-warn", !valid);
     $("dashGpsSource").textContent = valid ? (gps.active_source || gps.source || "GPS").replaceAll("_", " ").toUpperCase() : "No GPS lock";
     const stable = gps?.stable || gps || {};
+    const speed = Math.round(Number(stable.speed_mph || gps?.speed_mph || 0));
+    const heading = Number(stable.heading_deg ?? gps?.heading_deg);
+    $("dashSpeed").textContent = String(speed);
+    $("dashHeading").textContent = Number.isFinite(heading) ? `${Math.round(heading)}°` : "--°";
+    $("dashCompassNeedle").style.setProperty("--heading", `${Number.isFinite(heading) ? heading : 0}deg`);
     $("dashGpsMeta").textContent = valid
-      ? `${Number(stable.lat).toFixed(5)}, ${Number(stable.lon).toFixed(5)} - ${Math.round(Number(stable.speed_mph || 0))} mph`
+      ? `${Number(stable.lat).toFixed(5)}, ${Number(stable.lon).toFixed(5)}`
       : "USB GPS preferred, browser fallback retained.";
   }
 
@@ -715,17 +786,21 @@
     setButtonIcon("backButton", "back");
     setButtonIcon("appsBack", "back");
     setButtonIcon("settingsBack", "back");
-    setButtonIcon("musicBack", "back");
     setButtonIcon("dashPrev", "prev");
     setButtonIcon("dashPlay", "play");
     setButtonIcon("dashNext", "next");
+    setButtonIcon("dashRepeat", "repeat");
+    setButtonIcon("dashShuffle", "shuffle");
     setButtonIcon("musicPrev", "prev");
     setButtonIcon("musicPlay", "play");
     setButtonIcon("musicNext", "next");
+    setButtonIcon("musicRepeat", "repeat");
+    setButtonIcon("musicShuffle", "shuffle");
+    setButtonIcon("quickWaypointPanel", "waypoint");
 
     $("homeButton").addEventListener("click", () => setView("dashboard"));
     $("appsButton").addEventListener("click", () => { state.currentFolder = null; renderApps(); loadOpenGames(); setView("apps"); });
-    $("settingsButton").addEventListener("click", () => { renderDockSettings(); setView("settings"); });
+    $("settingsButton").addEventListener("click", () => { setView("settings"); });
     $("backButton").addEventListener("click", goBack);
     $("appsBack").addEventListener("click", () => {
       if (state.currentFolder) {
@@ -734,11 +809,28 @@
       } else goBack();
     });
     $("settingsBack").addEventListener("click", goBack);
-    $("musicBack").addEventListener("click", goBack);
-    $("dashMapPanel").addEventListener("click", () => openApp(state.appById.get("maps")));
+    document.querySelectorAll("[data-open-app]").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const app = state.appById.get(link.dataset.openApp);
+        if (!app) return;
+        event.preventDefault();
+        openApp(app);
+      });
+    });
+    $("dashMapPanel").addEventListener("click", (event) => {
+      if (event.target.closest("iframe")) return;
+      openApp(state.appById.get("maps-v2") || state.appById.get("maps"));
+    });
+    $("dashMusicArtButton").addEventListener("click", (event) => {
+      event.stopPropagation();
+      state.currentAppId = "music";
+      renderDock();
+      setView("music");
+    });
     $("dashMusicPanel").addEventListener("click", (event) => {
       if (event.target.closest("button") || event.target.closest("progress")) return;
       state.currentAppId = "music";
+      renderDock();
       setView("music");
     });
     $("quickWaypointPanel").addEventListener("click", () => {
@@ -757,11 +849,24 @@
     for (const id of ["dashPlay", "musicPlay"]) $(id).addEventListener("click", (event) => { event.stopPropagation(); playPause(); });
     for (const id of ["dashPrev", "musicPrev"]) $(id).addEventListener("click", (event) => { event.stopPropagation(); nextTrack(-1); });
     for (const id of ["dashNext", "musicNext"]) $(id).addEventListener("click", (event) => { event.stopPropagation(); nextTrack(1); });
+    for (const id of ["dashRepeat", "musicRepeat"]) $(id).addEventListener("click", (event) => { event.stopPropagation(); cycleRepeat(); });
+    for (const id of ["dashShuffle", "musicShuffle"]) $(id).addEventListener("click", (event) => { event.stopPropagation(); toggleShuffle(); });
+    window.addEventListener("message", (event) => {
+      if (event.origin !== window.location.origin) return;
+      const data = event.data || {};
+      if (data.type === "oiab:home") {
+        $("appFrame").src = "about:blank";
+        setView("dashboard");
+        return;
+      }
+      if (data.type !== "oiab:open-app") return;
+      const app = state.appById.get(String(data.appId || ""));
+      if (app) openApp(app);
+    });
     $("musicSeek").addEventListener("input", () => {
       const audio = $("globalAudio");
       if (audio.duration) audio.currentTime = (Number($("musicSeek").value) / 1000) * audio.duration;
     });
-    $("musicLibraryRefresh").addEventListener("click", () => loadMusicLibrary(true).catch((error) => $("trackList").textContent = error.message));
     $("globalAudio").addEventListener("loadedmetadata", () => {
       if (state.music.restoreTime) {
         $("globalAudio").currentTime = Math.min(state.music.restoreTime, $("globalAudio").duration || state.music.restoreTime);
@@ -771,7 +876,7 @@
     });
     for (const eventName of ["play", "pause", "timeupdate", "ended", "durationchange"]) {
       $("globalAudio").addEventListener(eventName, () => {
-        if (eventName === "ended") nextTrack(1);
+        if (eventName === "ended") handleTrackEnded();
         updateMusicUi();
         if (eventName === "timeupdate") persistMusicState();
       });
@@ -779,7 +884,13 @@
     for (const [id, key] of [["themeAccent", "accent"], ["themeBackground", "background"], ["themeOpacity", "opacity"], ["themeBlur", "blur"]]) {
       $(id).addEventListener("input", () => saveTheme({ ...loadTheme(), [key]: $(id).value }));
     }
-    $("resetDock").addEventListener("click", () => {
+    if ($("map3dBuildings")) {
+      $("map3dBuildings").checked = JSON.parse(localStorage.getItem(MAP_3D_BUILDINGS_KEY) || "false");
+      $("map3dBuildings").addEventListener("change", () => {
+        localStorage.setItem(MAP_3D_BUILDINGS_KEY, JSON.stringify($("map3dBuildings").checked));
+      });
+    }
+    if ($("resetDock")) $("resetDock").addEventListener("click", () => {
       localStorage.removeItem(DOCK_KEY);
       state.dockIds = state.config.defaultDock || [];
       renderDockSettings();
@@ -796,7 +907,7 @@
     const [config, layout] = await Promise.all([loadConfig(), loadLayout()]);
     state.layout = layout;
     normalizeApps(config);
-    $("dashMapFrame").src = "/maps-v2/";
+    $("dashMapFrame").src = "/maps-v2/?shell=1";
     renderDock();
     renderApps();
     renderDockSettings();

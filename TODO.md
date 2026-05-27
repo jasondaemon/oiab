@@ -14,7 +14,8 @@
 - Validate PMTiles range-serving behavior on Raspberry Pi deployment.
 - Add a TLS reverse-proxy container once the standalone certificate flow is finalized.
 - Add optional in-container gpsd/device-passthrough override for users who do not want host gpsd.
-- Add map-pack download/import workflow.
+- Add curated OIAB-hosted map-pack catalog URLs so users do not depend on a specific Protomaps daily build URL.
+- Add visible background progress for very large map-pack downloads/extractions.
 - Deepen Kiwix/Wikipedia integration.
 - Add production HTTPS reverse proxy/unit integration.
 - Add sync/backup strategy for family game data and waypoints.

@@ -13,4 +13,4 @@ services:
       ENABLE_RCON: "true"
       RCON_PASSWORD: ${MINECRAFT_RCON_PASSWORD:-change-me}
     volumes:
-      - "${OIAB_DATA_DIR:-/data/oiab}/services/minecraft:/data"
+      - "${OIAB_MINECRAFT_DIR:-/srv/trailer/minecraft/server}:/data"

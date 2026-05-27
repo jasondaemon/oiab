@@ -8,47 +8,121 @@ OIAB Maps v2 is a standalone MapLibre/PMTiles map app located at:
 
 ## Map Packs
 
-Expected default PMTiles path:
+PMTiles files live under:
 
 ```text
-/data/oiab/maps/packs/protomaps-conus.pmtiles
+/data/oiab/maps/packs
 ```
 
-Map packs are declared in the registry:
+OIAB has two map-pack concepts:
 
-```text
-/data/oiab/maps/registry.json
-```
+- Catalog: `config/map-pack-catalog.json`, the installable/known pack list.
+- Installed registry: SQLite plus `/data/oiab/maps/registry.json` compatibility import.
 
-If no data-dir registry exists, OIAB seeds from `config/map-packs.json` and then stores map-pack metadata in:
-
-```text
-/data/oiab/db/oiab.sqlite
-```
-
-## Map Pack API
-
-```text
-GET  /api/maps-v2/map-packs
-POST /api/maps-v2/map-packs
-```
-
-Supported POST actions:
-
-```json
-{"action":"rescan"}
-{"action":"set-active","id":"protomaps-conus"}
-{"action":"import-path","path":"/mnt/ssd/maps/protomaps-conus.pmtiles"}
-```
-
-The backend serves PMTiles files from `/data/oiab/maps/packs` through `/maps/packs/<file>.pmtiles` and supports HTTP range requests.
-
-The mobile/admin Map Packs page is available at:
+The Settings page is:
 
 ```text
 /mobile/map-packs.html
 /map-packs
 ```
+
+## Acquisition
+
+Supported paths:
+
+- Direct PMTiles URL: catalog entries with `source_type=direct_pmtiles` download into `/data/oiab/maps/tmp/*.part`, then atomically move into `/data/oiab/maps/packs`.
+- Protomaps extraction: catalog entries with `source_type=extract_from_parent` call `pmtiles extract` against the configured parent source and bounding box.
+- Manual seed/import: copy `.pmtiles` files into `/data/oiab/maps/packs`, then click Rescan.
+
+The Docker image includes the `pmtiles` CLI so world/CONUS/state extracts can run when internet is available. The parent Protomaps source is intentionally a catalog entry, not bundled in git.
+
+## Map Pack API
+
+```text
+GET  /api/maps/packs/catalog
+GET  /api/maps/packs/installed
+GET  /api/maps/packs/status
+GET  /api/maps/packs/diagnostics
+POST /api/maps/packs/install
+POST /api/maps/packs/set-active
+POST /api/maps/packs/remove
+POST /api/maps/packs/rescan
+POST /api/maps/packs/import-path
+```
+
+Compatibility aliases remain:
+
+```text
+GET/POST /api/maps-v2/map-packs
+GET/POST /maps-v2-map-packs
+```
+
+Example manual import:
+
+```json
+{"path":"/mnt/ssd/maps/protomaps-conus.pmtiles"}
+```
+
+The Python backend can serve PMTiles files from `/data/oiab/maps/packs` through `/maps/packs/<file>.pmtiles` and supports HTTP range requests. This is the fallback path.
+
+Installed pack URLs returned by the registry are versioned from file metadata:
+
+```text
+/maps/packs/<file>.pmtiles?v=<file_size>-<mtime_ns>
+```
+
+If you manually replace a `.pmtiles` file, click **Rescan** in Map Packs so the stored file size/mtime and public URL version update. This prevents clients from reusing stale cached byte ranges from the old file.
+
+For production and large packs, put Caddy or nginx in front of `oiab-core` and serve `/maps/packs/` directly from `/data/oiab/maps/packs`. OIAB includes example configs:
+
+```text
+deploy/caddy/Caddyfile
+deploy/nginx/oiab.conf
+```
+
+The static server should return:
+
+- `206 Partial Content` for byte-range requests
+- `Accept-Ranges: bytes`
+- `Cache-Control: public, max-age=31536000, immutable` only for versioned `?v=` PMTiles URLs
+- `Cache-Control: no-cache` or `no-store` for unversioned PMTiles URLs
+- `ETag` or `Last-Modified`
+
+In `OIAB_DEV_MODE=true`, the Python fallback returns `Cache-Control: no-store` for static files so local pack replacement cannot be hidden by browser cache. In production, the Python fallback only uses immutable caching for versioned PMTiles URLs.
+
+Diagnostics page:
+
+```text
+/map-diagnostics
+```
+
+Diagnostics API:
+
+```text
+/api/maps/packs/diagnostics
+```
+
+Tile-level checks:
+
+```text
+GET  /api/maps/packs/tile-check?pack=us_pa&z=10&x=293&y=391
+GET  /api/maps/packs/range-check?pack=us_pa&range=bytes=0-16383
+POST /api/maps/packs/validate
+```
+
+Maps v2 stores recent MapLibre tile errors in browser local storage and links them to `/map-diagnostics`. Use this flow for repeatable gray rectangles or missing tiles:
+
+1. Open Maps v2 and reproduce the gray tile.
+2. Open the Tile Diagnostics panel in the map or the browser console.
+3. Copy the failing `z/x/y`, source id, and active pack id.
+4. Open `/map-diagnostics` and run Tile Check.
+5. If Tile Check reports `tile_exists=false`, regenerate or reinstall that map pack.
+6. If Tile Check reports the tile exists but browser range checks fail, fix static serving/range support.
+7. If Tile Check succeeds and range checks pass, clear browser site data for the OIAB hostname and retry.
+
+To clear stale browser data, remove site data/cache for the OIAB hostname in the browser settings. On Chromium-based browsers this is usually under Site Settings → View permissions and data stored across sites. On mobile Safari, use Settings → Safari → Advanced → Website Data for the hostname.
+
+If you manually replace a `.pmtiles` file, always click **Rescan** in Settings → Map Packs before testing. Rescan updates the versioned public URL so stale byte ranges are not reused.
 
 ## Offline Behavior
 
@@ -59,7 +133,9 @@ Maps v2 does not require internet after a PMTiles file is installed. It does not
 - Full offline search is not yet ported.
 - Future overlay registry entries are planned for USGS topo, MVUM, public lands, weather, radar, and wildfire data.
 - Legacy map visual assets are tracked as transitional assets. OIAB-specific icons live separately so they can replace inherited visuals gradually.
+- The Protomaps build URL in the catalog should be refreshed periodically or replaced by a curated OIAB pack repository.
+- Explicit multi-pack overlays are intentionally disabled for now. Maps v2 renders one active PMTiles basemap at a time to avoid duplicate full-style tile requests. Future overlays should use purpose-built overlay layers, not duplicate basemap styles.
 
 ## Legacy Visual Assets
 
-Maps v2 currently includes original OIAB SVG waypoint/category icons and vendored MapLibre/PMTiles runtime files. Any IIAB/maps.black-derived CSS, sprites, or icons must remain separated under legacy asset folders and be documented in `THIRD_PARTY_NOTICES.md` before release packaging.
+Maps v2 currently uses the license-compatible maps.black Protomaps light style and sprite set as a transitional visual baseline because OIAB's PMTiles packs use the Protomaps schema. Original OIAB SVG waypoint/category icons remain separate under `frontend/maps/icons`, and inherited map visuals live under `frontend/maps/sprites/legacy` and `frontend/maps/styles/legacy`.

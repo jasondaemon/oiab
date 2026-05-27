@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>HTTPS Setup | OIAB</title>
+  <style>
+    :root { color-scheme:dark; --bg:#07180f; --panel:rgba(22,58,34,.92); --line:rgba(187,255,198,.22); --text:#f4f7ed; --muted:rgba(244,247,237,.72); --accent:#7df18b; --warn:#ffd34d; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; color:var(--text); font:600 16px/1.35 "Avenir Next","Trebuchet MS",sans-serif; background:radial-gradient(circle at 20% 15%,rgba(125,241,139,.22),transparent 28rem),linear-gradient(135deg,#123822,var(--bg)); }
+    main { width:min(940px,calc(100vw - 24px)); margin:0 auto; padding:20px 0 48px; }
+    h1 { margin:10px 0 14px; font-size:clamp(2.6rem,9vw,5rem); line-height:.9; letter-spacing:-.06em; }
+    .toolbar { display:flex; gap:10px; }
+    a.button { min-height:48px; border:1px solid var(--line); border-radius:999px; padding:0 18px; color:var(--text); background:rgba(255,255,255,.08); font-weight:900; text-decoration:none; display:inline-flex; align-items:center; }
+    .panel { border:1px solid var(--line); border-radius:24px; padding:18px; margin:14px 0; background:linear-gradient(145deg,rgba(39,82,50,.92),rgba(8,29,18,.95)); }
+    .kicker { display:block; color:var(--accent); font-size:.76rem; font-weight:1000; letter-spacing:.16em; text-transform:uppercase; }
+    code,pre { display:block; overflow:auto; border-radius:16px; padding:12px; background:rgba(0,0,0,.25); color:var(--warn); }
+    .grid { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); }
+    .stat { border:1px solid var(--line); border-radius:18px; padding:14px; background:rgba(255,255,255,.06); }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="toolbar"><a class="button" href="/mobile/">Back</a><a class="button" href="/docs/CERTIFICATES.md">Docs</a></div>
+    <h1>HTTPS Setup</h1>
+    <section class="panel">
+      <span class="kicker">Runtime certificate configuration</span>
+      <div id="config" class="grid"></div>
+    </section>
+    <section class="panel">
+      <span class="kicker">Trusted local HTTPS</span>
+      <p>OIAB keeps certificate files under the mounted data directory so Docker rebuilds do not erase them. Use DNS-01/Cloudflare issuance outside the container or mount existing certs into the cert directory.</p>
+      <pre>OIAB_HOSTNAME=overland.daemonadventures.net
+OIAB_CERT_MODE=existing
+/data/oiab/certs</pre>
+      <p>Future work will add a guarded certificate action API here. For now this central settings page keeps the current hostname/cert paths visible without hardcoding secrets into the repo.</p>
+    </section>
+  </main>
+  <script>
+    fetch("/api/config", {cache:"no-store"}).then(r => r.json()).then(data => {
+      document.getElementById("config").innerHTML = [
+        ["Hostname", data.hostname],
+        ["Cert Mode", data.cert_mode],
+        ["Data Dir", data.data_dir],
+        ["HTTPS Port", data.https_port || "configured at proxy"]
+      ].map(([label, value]) => `<div class="stat"><span class="kicker">${label}</span><strong>${value || "--"}</strong></div>`).join("");
+    });
+  </script>
+</body>
+</html>

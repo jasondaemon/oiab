@@ -14,6 +14,11 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/mobile/overland-touch-icon-180.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
   <link rel="manifest" href="/mobile/manifest.webmanifest">
+  <script>
+    if (new URLSearchParams(window.location.search).get("shell") === "1") {
+      document.documentElement.classList.add("oiab-shell-embed");
+    }
+  </script>
   <link rel="stylesheet" href="/mobile/gps-status.css">
 </head>
 <body>

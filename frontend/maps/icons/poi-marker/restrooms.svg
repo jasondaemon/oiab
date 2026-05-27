@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="Restrooms marker">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0b170f" flood-opacity=".28"/>
+    </filter>
+  </defs>
+  <circle cx="40" cy="40" r="31" fill="#f8fbf6" stroke="#555" stroke-width="5" filter="url(#shadow)"/>
+  <g transform="translate(8 8)"><circle cx="24" cy="20" r="4" fill="#173125"/><circle cx="42" cy="20" r="4" fill="#173125"/><path d="M16 50l6-24h4l6 24M35 50V30h14v20" fill="none" stroke="#173125" stroke-width="4" stroke-linecap="round"/></g>
+</svg>

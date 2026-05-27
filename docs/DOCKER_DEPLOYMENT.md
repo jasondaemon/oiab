@@ -17,6 +17,9 @@ It does not install Jellyfin, Komga, Kiwix, Minecraft, map packs, media, or ROMs
 ## Persistent Data
 
 The host path in `OIAB_DATA_DIR` is bind-mounted into the container as `/data/oiab`.
+Use it for app state: SQLite, settings, tracks, waypoints, certificates, logs, map registry, and service config.
+
+Large content can be mounted separately so OIAB can reuse an existing external SSD layout instead of duplicating media under the app-state directory.
 
 Default:
 
@@ -42,6 +45,20 @@ Important subdirectories:
 /data/oiab/services
 ```
 
+Example trailer/SSD layout:
+
+```text
+OIAB_DATA_DIR=/srv/trailer/data/oiab
+OIAB_MAP_PACKS_DIR=/srv/trailer/data/oiab/maps/packs
+OIAB_MEDIA_DIR=/srv/trailer/media
+OIAB_MUSIC_DIR=/srv/trailer/media/music
+OIAB_BOOKS_DIR=/srv/trailer/media/books/Ebooks
+OIAB_COMICS_DIR=/srv/trailer/media/books/Comics
+OIAB_ZIM_DIR=/srv/trailer/iiab/zims
+OIAB_ROMS_DIR=/srv/trailer/roms
+OIAB_MINECRAFT_DIR=/srv/trailer/minecraft
+```
+
 ## Environment
 
 Use `config/oiab.env` for deployment configuration.
@@ -52,6 +69,13 @@ Common values:
 OIAB_HOSTNAME=overland.daemonadventures.net
 OIAB_DATA_DIR=/data/oiab
 OIAB_DB_PATH=/data/oiab/db/oiab.sqlite
+OIAB_MAP_PACKS_DIR=/data/oiab/maps/packs
+OIAB_MEDIA_DIR=/data/oiab/media
+OIAB_MUSIC_DIR=/data/oiab/media/music
+OIAB_BOOKS_DIR=/data/oiab/media/books
+OIAB_COMICS_DIR=/data/oiab/media/comics
+OIAB_ZIM_DIR=/data/oiab/content/zim
+OIAB_ROMS_DIR=/data/oiab/games/roms
 OIAB_HTTP_PUBLISHED_PORT=80
 OIAB_GPSD_HOST=host.docker.internal
 OIAB_GPSD_PORT=2947
@@ -62,13 +86,13 @@ OIAB_ALLOW_DOCKER_CONTROL=false
 
 PMTiles files are data, not git content.
 
-Default expected path:
+Put manually downloaded packs here, or use Settings → Map Packs to download/extract from the catalog:
 
 ```text
-/data/oiab/maps/packs/protomaps-conus.pmtiles
+/data/oiab/maps/packs
 ```
 
-The container serves map packs through the OIAB backend with HTTP range support.
+The container serves map packs through the OIAB backend with HTTP range support. The image includes the `pmtiles` CLI for catalog entries that extract World Overview, CONUS, or state packs from the configured Protomaps parent source.
 
 ## Certificates
 

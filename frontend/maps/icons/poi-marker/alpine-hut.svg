@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="Alpine Hut / Cabin / Chalet marker">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0b170f" flood-opacity=".28"/>
+    </filter>
+  </defs>
+  <circle cx="40" cy="40" r="31" fill="#f8fbf6" stroke="#555" stroke-width="5" filter="url(#shadow)"/>
+  <g transform="translate(8 8)"><rect x="15" y="28" width="34" height="22" rx="2" fill="none" stroke="#173125" stroke-width="4"/><path d="M10 28L32 10l22 18M25 50V37h14v13M19 16v-8h7" fill="none" stroke="#173125" stroke-width="4" stroke-linejoin="round"/></g>
+</svg>

@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Rock / Boulder">
+  <rect width="64" height="64" fill="none"/>
+  <g><path d="M15 48l-5-16 10-14 18-5 16 12 1 15-13 12z" fill="none" stroke="#555" stroke-width="4" stroke-linejoin="round"/><path d="M24 19l5 12 14-6M18 34l12 3" stroke="#555" stroke-width="3"/></g>
+</svg>

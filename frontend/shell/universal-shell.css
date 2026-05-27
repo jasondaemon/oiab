@@ -216,9 +216,10 @@ button {
 
 .uo-dashboard {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(320px, .85fr);
-  grid-template-rows: minmax(0, 1fr) minmax(180px, .42fr);
-  gap: 16px;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 34vw);
+  grid-template-rows: minmax(0, 1fr) minmax(220px, 34vh);
+  gap: 6px;
+  padding: 6px;
 }
 
 .uo-panel {
@@ -250,10 +251,6 @@ button {
   background: #dce8d5;
 }
 
-.uo-map-panel iframe {
-  pointer-events: none;
-}
-
 .uo-map-panel::after {
   content: "";
   position: absolute;
@@ -275,10 +272,13 @@ button {
 
 .uo-music-panel {
   display: grid;
-  grid-template-columns: 120px minmax(0, 1fr);
-  grid-template-rows: auto auto 8px;
-  gap: 14px;
-  padding: 18px;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto 8px;
+  gap: 10px;
+  justify-items: center;
+  align-content: start;
+  padding: 18px 18px 16px;
+  text-align: center;
 }
 
 .uo-music-panel canvas,
@@ -298,14 +298,31 @@ button {
   z-index: 1;
 }
 
+.uo-art-button {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: min(28vh, 148px);
+  aspect-ratio: 1;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
 .uo-music-panel img {
-  grid-row: 1 / 3;
-  width: 120px;
-  height: 120px;
+  width: 100%;
+  height: 100%;
   border-radius: 20px;
   object-fit: cover;
   background: rgba(255, 255, 255, .08);
   box-shadow: 0 18px 38px rgba(0, 0, 0, .28);
+}
+
+.uo-music-now {
+  min-width: 0;
+  width: 100%;
 }
 
 .uo-eyebrow {
@@ -320,7 +337,7 @@ button {
 .uo-music-panel h1 {
   margin: 5px 0 2px;
   overflow: hidden;
-  font-size: clamp(1.3rem, 2.6vw, 2.4rem);
+  font-size: clamp(1.35rem, 2.3vw, 2.25rem);
   line-height: .95;
   letter-spacing: -.045em;
   text-overflow: ellipsis;
@@ -338,6 +355,8 @@ button {
 .uo-music-controls {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
@@ -355,6 +374,12 @@ button {
   border-color: transparent;
 }
 
+.uo-round-control.is-active {
+  color: #07130d;
+  background: var(--uo-accent);
+  border-color: transparent;
+}
+
 .uo-music-panel progress {
   grid-column: 1 / -1;
   width: 100%;
@@ -365,41 +390,144 @@ button {
   border-radius: 999px;
 }
 
-.uo-waypoint-panel,
-.uo-status-panel {
-  padding: 22px;
-}
-
-.uo-waypoint-panel {
+.uo-drive-panel {
   display: grid;
-  align-content: center;
-  gap: 4px;
-  cursor: pointer;
-  text-align: left;
+  grid-template-columns: minmax(120px, .75fr) minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 16px;
 }
 
-.uo-waypoint-panel strong,
-.uo-status-panel strong {
-  font-size: clamp(1.8rem, 3vw, 3rem);
+.uo-drive-compass {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+
+.uo-compass-rose {
+  position: relative;
+  width: min(18vh, 132px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 211, 78, .18) 0 7%, transparent 8%),
+    repeating-conic-gradient(from 0deg, rgba(255,255,255,.58) 0 1.5deg, transparent 1.5deg 7deg),
+    radial-gradient(circle, rgba(4, 13, 9, .9) 0 58%, transparent 59%);
+  box-shadow: inset 0 0 24px rgba(0,0,0,.5);
+}
+
+.uo-compass-rose span {
+  position: absolute;
+  color: rgba(242,248,239,.75);
+  font-size: .65rem;
+  font-weight: 900;
+}
+
+.uo-compass-rose span:nth-child(1) { top: 7px; left: 50%; transform: translateX(-50%); }
+.uo-compass-rose span:nth-child(2) { right: 9px; top: 50%; transform: translateY(-50%); }
+.uo-compass-rose span:nth-child(3) { bottom: 7px; left: 50%; transform: translateX(-50%); }
+.uo-compass-rose span:nth-child(4) { left: 9px; top: 50%; transform: translateY(-50%); }
+
+.uo-compass-rose i {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  width: 4px;
+  height: 39%;
+  transform-origin: 50% 100%;
+  transform: translateX(-50%) rotate(var(--heading, 0deg));
+  background: linear-gradient(var(--uo-gold), rgba(255,211,78,.12));
+  border-radius: 999px;
+  box-shadow: 0 0 16px rgba(255,211,78,.45);
+}
+
+.uo-compass-rose i::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  width: 16px;
+  height: 16px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--uo-gold);
+}
+
+.uo-drive-compass strong {
+  color: var(--uo-gold);
+  font-size: 1.2rem;
   line-height: 1;
-  letter-spacing: -.045em;
 }
 
-.uo-waypoint-panel small,
-.uo-status-panel small {
+.uo-drive-readout {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.uo-drive-readout strong {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  font-size: clamp(2.6rem, 5vw, 5rem);
+  line-height: .85;
+  letter-spacing: -.055em;
+}
+
+.uo-drive-readout strong small {
   color: var(--uo-muted);
-  font-size: .96rem;
+  font-size: .32em;
+  letter-spacing: 0;
+}
+
+.uo-drive-readout > small,
+.uo-drive-status {
+  color: var(--uo-muted);
+  font-size: .86rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.uo-drive-actions {
+  display: grid;
+  gap: 8px;
+}
+
+.uo-drive-action {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  color: #07130d;
+  background: var(--uo-accent);
+  border: 0;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.uo-drive-action svg {
+  width: 30px;
+  height: 30px;
+  fill: currentColor;
+}
+
+.uo-drive-status {
+  grid-column: 1 / -1;
 }
 
 .uo-app-viewport {
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-  gap: 12px;
+  display: block;
+  padding: 0;
+}
+
+.uo-app-viewport iframe {
+  display: block;
 }
 
 .uo-app-bar,
-.uo-view-header,
-.uo-music-top {
+.uo-view-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -411,6 +539,10 @@ button {
   margin: 0;
   font-size: clamp(1.35rem, 3vw, 2.5rem);
   line-height: 1;
+}
+
+.uo-app-bar {
+  display: none;
 }
 
 .uo-icon-button,
@@ -445,15 +577,20 @@ button {
   overflow: auto;
 }
 
+.uo-music-view {
+  padding: 0;
+}
+
 .uo-music-layout {
   position: relative;
   z-index: 1;
   display: grid;
   grid-template-columns: minmax(260px, .78fr) minmax(320px, 1fr);
   gap: 18px;
-  height: calc(100% - 62px);
+  height: 100%;
   min-height: 0;
   align-items: stretch;
+  padding: 18px;
 }
 
 .uo-album-card,
@@ -661,6 +798,40 @@ button {
   font-weight: 700;
 }
 
+.uo-switch-row {
+  display: flex !important;
+  grid-template-columns: none !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 58px;
+  padding: 12px 14px;
+  border: 1px solid var(--uo-line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .055);
+}
+
+.uo-switch-row span {
+  display: grid;
+  gap: 2px;
+}
+
+.uo-switch-row strong {
+  color: var(--uo-text);
+}
+
+.uo-switch-row small {
+  color: var(--uo-muted);
+  font-size: .86rem;
+}
+
+.uo-switch-row input[type="checkbox"] {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  accent-color: var(--uo-accent);
+}
+
 .uo-settings-card input[type="range"] {
   accent-color: var(--uo-accent);
 }
@@ -809,7 +980,8 @@ button {
   .uo-dashboard {
     grid-template-columns: 1fr;
     grid-template-rows: minmax(0, 1fr) auto auto;
-    padding: 10px;
+    padding: 0;
+    gap: 6px;
   }
 
   .uo-map-panel {
@@ -818,13 +990,16 @@ button {
   }
 
   .uo-music-panel {
-    grid-template-columns: 70px minmax(0, 1fr);
+    grid-template-columns: 78px minmax(0, 1fr);
+    grid-template-rows: auto auto 8px;
+    justify-items: start;
+    text-align: left;
     padding: 12px;
   }
 
-  .uo-music-panel img {
-    width: 70px;
-    height: 70px;
+  .uo-art-button {
+    grid-row: 1 / 3;
+    width: 78px;
   }
 
   .uo-music-panel h1 {
@@ -836,16 +1011,16 @@ button {
     height: 42px;
   }
 
-  .uo-waypoint-panel,
-  .uo-status-panel {
-    min-height: 92px;
-    padding: 14px;
+  .uo-drive-panel {
+    grid-template-columns: 96px minmax(0, 1fr) auto;
+    padding: 12px;
   }
 
   .uo-music-layout {
     grid-template-columns: 1fr;
     height: auto;
-    min-height: calc(100vh - 150px);
+    min-height: 100%;
+    padding: 10px;
   }
 
   .uo-library-card {
@@ -858,6 +1033,11 @@ button {
 
   .uo-app-viewport,
   .uo-music-view,
+  .uo-apps-view,
+  .uo-settings-view {
+    padding: 0;
+  }
+
   .uo-apps-view,
   .uo-settings-view {
     padding: 10px;

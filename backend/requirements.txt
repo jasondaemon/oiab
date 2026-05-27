@@ -1,3 +1,1 @@
-# OIAB currently runs on Python's standard library for the base server.
-# Optional service integrations may add dependencies later.
-
+Pillow>=10.0

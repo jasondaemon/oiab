@@ -1,0 +1,14 @@
+id: emulatorjs
+name: Web Emulator Runtime
+description: Optional browser emulator launcher for local legally-owned ROMs.
+category: games
+install_default: false
+runtime: asset
+launcher_url: /mobile/emulator.html
+installed_marker: /data/oiab/services/emulatorjs/data/loader.js
+installer_script: scripts/install-emulatorjs.sh
+install_command: docker compose --env-file config/oiab.env exec oiab-core scripts/install-emulatorjs.sh
+data_path: /data/oiab/services/emulatorjs/data
+content_path: /data/oiab/games/roms
+notes: Downloads the offline EmulatorJS runtime. ROMs stay on the external SSD ROM directory.
+ports:

@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Shelter">
+  <rect width="64" height="64" fill="none"/>
+  <g><path d="M12 30L32 15l20 15M18 30v20M46 30v20M14 50h36" fill="none" stroke="#555" stroke-width="4" stroke-linejoin="round"/></g>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="Fire Station marker">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0b170f" flood-opacity=".28"/>
+    </filter>
+  </defs>
+  <circle cx="40" cy="40" r="31" fill="#f8fbf6" stroke="#8d7469" stroke-width="5" filter="url(#shadow)"/>
+  <g transform="translate(8 8)"><path d="M32 12c13 12 12 26 0 36-12-10-12-22 0-36z" fill="#173125" opacity=".9"/><path d="M34 35c5 5 3 11-2 14-5-4-6-9 2-14z" fill="#fff" opacity=".75"/></g>
+</svg>

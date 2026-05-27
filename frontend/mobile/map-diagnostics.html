@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>PMTiles Diagnostics | OIAB</title>
+  <style>
+    :root { color-scheme: dark; --bg:#07180f; --panel:rgba(22,58,34,.92); --line:rgba(187,255,198,.22); --text:#f4f7ed; --muted:rgba(244,247,237,.72); --accent:#7df18b; --warn:#ffd34d; --bad:#ff706a; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; color:var(--text); font:500 16px/1.35 "Avenir Next","Trebuchet MS",sans-serif; background:radial-gradient(circle at 20% 15%, rgba(125,241,139,.22), transparent 28rem), linear-gradient(135deg,#123822,var(--bg)); }
+    main { width:min(1120px,calc(100vw - 24px)); margin:0 auto; padding:20px 0 48px; }
+    h1 { margin:10px 0 6px; font-size:clamp(2.4rem,8vw,4.6rem); line-height:.9; letter-spacing:-.06em; }
+    p { color:var(--muted); }
+    .toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    .panel { border:1px solid var(--line); border-radius:24px; background:linear-gradient(145deg,rgba(39,82,50,.92),rgba(8,29,18,.95)); box-shadow:0 18px 48px rgba(0,0,0,.24); padding:18px; margin:14px 0; }
+    .grid { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); }
+    .card { border:1px solid var(--line); border-radius:18px; background:rgba(255,255,255,.06); padding:14px; overflow:hidden; }
+    .form-grid { display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); align-items:end; }
+    .kicker { display:block; color:var(--accent); font-size:.76rem; font-weight:900; letter-spacing:.16em; text-transform:uppercase; }
+    button,.button { min-height:52px; border:0; border-radius:999px; padding:0 20px; color:#06170f; background:var(--accent); font-weight:900; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
+    .button.secondary,button.secondary { color:var(--text); border:1px solid var(--line); background:rgba(255,255,255,.08); }
+    label { display:grid; gap:5px; color:var(--muted); font-weight:900; }
+    input { width:100%; min-height:48px; border:1px solid var(--line); border-radius:14px; color:var(--text); background:rgba(0,0,0,.2); padding:0 12px; font:inherit; }
+    code,pre { overflow-wrap:anywhere; white-space:pre-wrap; }
+    pre { max-height:42vh; overflow:auto; border-radius:18px; padding:14px; background:rgba(0,0,0,.28); }
+    .ok { color:var(--accent); font-weight:900; }
+    .bad { color:var(--bad); font-weight:900; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="toolbar">
+      <a class="button secondary" href="/mobile/">Back</a>
+      <a class="button secondary" href="/map-packs">Map Packs</a>
+      <button id="refresh" type="button">Run Diagnostics</button>
+    </div>
+    <h1>PMTiles Diagnostics</h1>
+    <p>Checks the active map pack path, versioned URL, cache headers, HEAD response, and HTTP byte-range behavior.</p>
+    <section id="summary" class="panel">Loading...</section>
+    <section class="panel">
+      <span class="kicker">Tile Check</span>
+      <p>Use the z/x/y from the Maps v2 tile error panel to confirm whether a tile exists inside the active PMTiles archive.</p>
+      <div class="form-grid">
+        <label>Pack ID <input id="tilePack" placeholder="active"></label>
+        <label>Z <input id="tileZ" inputmode="numeric" placeholder="z"></label>
+        <label>X <input id="tileX" inputmode="numeric" placeholder="x"></label>
+        <label>Y <input id="tileY" inputmode="numeric" placeholder="y"></label>
+        <button id="checkTile" type="button">Check Tile</button>
+        <button id="validatePack" type="button" class="secondary">Validate Pack</button>
+      </div>
+      <pre id="tileResult">{}</pre>
+    </section>
+    <section class="panel">
+      <span class="kicker">Recent MapLibre Tile Errors</span>
+      <div id="recentErrors" class="grid"></div>
+    </section>
+    <section class="panel">
+      <span class="kicker">Raw diagnostics JSON</span>
+      <pre id="raw">{}</pre>
+    </section>
+  </main>
+  <script>
+    const summary = document.getElementById("summary");
+    const raw = document.getElementById("raw");
+    const tileResult = document.getElementById("tileResult");
+    const params = new URLSearchParams(location.search);
+    document.getElementById("tilePack").value = params.get("pack") || "";
+    document.getElementById("tileZ").value = params.get("z") || "";
+    document.getElementById("tileX").value = params.get("x") || "";
+    document.getElementById("tileY").value = params.get("y") || "";
+    function yes(value) { return value ? '<span class="ok">yes</span>' : '<span class="bad">no</span>'; }
+    function row(label, value) { return `<div class="card"><span class="kicker">${label}</span><strong>${value ?? "--"}</strong></div>`; }
+    function renderRecentErrors() {
+      const node = document.getElementById("recentErrors");
+      let errors = [];
+      try { errors = JSON.parse(localStorage.getItem("omv2.tileErrors") || "[]"); } catch {}
+      if (!errors.length) {
+        node.innerHTML = `<p>No recent tile errors captured from Maps v2 in this browser.</p>`;
+        return;
+      }
+      node.innerHTML = errors.slice(0, 12).map((entry) => `
+        <div class="card">
+          <span class="kicker">${entry.tile ? `Tile ${entry.tile}` : "Map Error"}</span>
+          <strong>${entry.message || "--"}</strong>
+          <p>Pack: ${entry.packId || "--"} · Zoom: ${entry.zoom || "--"} · Status: ${entry.status || "--"}</p>
+          ${entry.url ? `<code>${entry.url}</code>` : ""}
+          ${entry.tile ? `<p><button type="button" data-pack="${entry.packId || ""}" data-z="${entry.z}" data-x="${entry.x}" data-y="${entry.y}">Load Tile Check</button></p>` : ""}
+        </div>
+      `).join("");
+      node.querySelectorAll("button[data-z]").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.getElementById("tilePack").value = button.dataset.pack || "";
+          document.getElementById("tileZ").value = button.dataset.z || "";
+          document.getElementById("tileX").value = button.dataset.x || "";
+          document.getElementById("tileY").value = button.dataset.y || "";
+          checkTile();
+        });
+      });
+    }
+    async function browserProbe(url, options = {}) {
+      try {
+        const response = await fetch(url, {cache:"no-store", ...options});
+        if (options.method === "HEAD") {
+          return {
+            ok: response.ok,
+            status: response.status,
+            accept_ranges: response.headers.get("Accept-Ranges"),
+            cache_control: response.headers.get("Cache-Control"),
+            etag: response.headers.get("ETag"),
+            last_modified: response.headers.get("Last-Modified"),
+            server: response.headers.get("Server"),
+            content_range: response.headers.get("Content-Range"),
+            content_length: response.headers.get("Content-Length")
+          };
+        }
+        const body = await response.arrayBuffer();
+        return {
+          ok: response.ok,
+          status: response.status,
+          bytes_read: body.byteLength,
+          accept_ranges: response.headers.get("Accept-Ranges"),
+          cache_control: response.headers.get("Cache-Control"),
+          etag: response.headers.get("ETag"),
+          last_modified: response.headers.get("Last-Modified"),
+          server: response.headers.get("Server"),
+          content_range: response.headers.get("Content-Range"),
+          content_length: response.headers.get("Content-Length")
+        };
+      } catch (error) {
+        return {ok:false, error:error.message};
+      }
+    }
+    async function load() {
+      summary.textContent = "Running diagnostics...";
+      const response = await fetch("/api/maps/packs/diagnostics", {cache:"no-store"});
+      const data = await response.json();
+      const browserHead = data.public_url ? await browserProbe(data.public_url, {method:"HEAD"}) : {};
+      const browserRange = data.public_url ? await browserProbe(data.public_url, {headers:{"Range":"bytes=0-16383"}}) : {};
+      data.current_origin_tests = {head: browserHead, range: browserRange};
+      raw.textContent = JSON.stringify(data, null, 2);
+      const head = data.tests?.head || {};
+      const range = data.tests?.range || {};
+      summary.innerHTML = `
+        <div class="grid">
+          ${row("Active Pack", `${data.active_name || data.active_id || "--"}`)}
+          ${row("Versioned URL", `<code>${data.versioned_url || data.public_url || "--"}</code>`)}
+          ${row("Base URL", `<code>${data.base_url || "--"}</code>`)}
+          ${row("Version", `<code>${data.version || "--"}</code>`)}
+          ${row("Path", `<code>${data.path || "--"}</code>`)}
+          ${row("File Exists", yes(data.exists))}
+          ${row("Readable", yes(data.readable))}
+          ${row("Size", `${Number(data.size_bytes || 0).toLocaleString()} bytes`)}
+          ${row("MTime", data.mtime_iso || data.mtime || "--")}
+          ${row("MTime NS", data.mtime_ns || "--")}
+          ${row("HEAD Status", head.status || head.error || "--")}
+          ${row("Range Status", range.status || range.error || "--")}
+          ${row("206 Partial Content", yes(range.status === 206))}
+          ${row("Current-Origin Range", browserRange.status || browserRange.error || "--")}
+          ${row("Current-Origin 206", yes(browserRange.status === 206))}
+          ${row("Accept-Ranges", range.accept_ranges || head.accept_ranges || "--")}
+          ${row("Cache-Control", range.cache_control || head.cache_control || "--")}
+          ${row("ETag", range.etag || head.etag || "--")}
+          ${row("Serving Path", data.serving_path || "--")}
+          ${row("Current-Origin Server", browserRange.server || browserHead.server || "Unavailable to browser")}
+          ${row("Bounds", `<code>${JSON.stringify(data.metadata?.bounds ?? "--")}</code>`)}
+          ${row("Min/Max Zoom", `${data.metadata?.minzoom ?? "--"} / ${data.metadata?.maxzoom ?? "--"}`)}
+          ${row("Catalog Min/Max", `${data.pack_zoom?.catalog_minzoom ?? "--"} / ${data.pack_zoom?.catalog_maxzoom ?? "--"}`)}
+          ${row("Actual PMTiles Min/Max", `${data.pack_zoom?.actual_minzoom ?? "--"} / ${data.pack_zoom?.actual_maxzoom ?? "--"}`)}
+          ${row("MapLibre Source Min/Max", `${data.pack_zoom?.source_minzoom ?? "--"} / ${data.pack_zoom?.source_maxzoom ?? "--"}`)}
+          ${row("Metadata Source", data.pack_zoom?.metadata_source || "--")}
+        </div>
+      `;
+    }
+    async function checkTile() {
+      const query = new URLSearchParams({
+        pack: document.getElementById("tilePack").value,
+        z: document.getElementById("tileZ").value,
+        x: document.getElementById("tileX").value,
+        y: document.getElementById("tileY").value
+      });
+      tileResult.textContent = "Checking tile...";
+      const response = await fetch(`/api/maps/packs/tile-check?${query}`, {cache:"no-store"});
+      tileResult.textContent = JSON.stringify(await response.json(), null, 2);
+    }
+    async function validatePack() {
+      tileResult.textContent = "Validating pack...";
+      const body = {id: document.getElementById("tilePack").value || undefined};
+      const response = await fetch("/api/maps/packs/validate", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)});
+      tileResult.textContent = JSON.stringify(await response.json(), null, 2);
+    }
+    document.getElementById("refresh").addEventListener("click", () => load().catch(error => { summary.innerHTML = `<span class="bad">${error.message}</span>`; }));
+    document.getElementById("checkTile").addEventListener("click", () => checkTile().catch(error => { tileResult.textContent = error.message; }));
+    document.getElementById("validatePack").addEventListener("click", () => validatePack().catch(error => { tileResult.textContent = error.message; }));
+    renderRecentErrors();
+    load().catch(error => { summary.innerHTML = `<span class="bad">${error.message}</span>`; });
+    if (document.getElementById("tileZ").value && document.getElementById("tileX").value && document.getElementById("tileY").value) {
+      checkTile().catch(error => { tileResult.textContent = error.message; });
+    }
+  </script>
+</body>
+</html>

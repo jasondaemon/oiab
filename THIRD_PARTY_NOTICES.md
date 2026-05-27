@@ -35,7 +35,13 @@ Current original OIAB map icons live under:
 frontend/maps/icons
 ```
 
-Future legacy imports, if any, should live under:
+Current legacy imports:
+
+- `frontend/maps/map-style.json` is derived from `maps-black-upstream/styles/naturalearth-protomaps/protomaps/light/style.json`.
+- `frontend/maps/sprites/legacy/protomaps-light/` contains the corresponding Protomaps light sprite JSON/PNG assets from maps.black upstream.
+- `frontend/maps/styles/legacy/protomaps-light/` contains the upstream `LICENSE.txt` and `SOURCE.txt` files for that style.
+
+Legacy imports should live under:
 
 ```text
 frontend/maps/icons/legacy

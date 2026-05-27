@@ -24,15 +24,25 @@ services:
       OIAB_ALLOW_DOCKER_CONTROL: ${OIAB_ALLOW_DOCKER_CONTROL:-false}
       OIAB_GPSD_HOST: ${OIAB_GPSD_HOST:-host.docker.internal}
       OIAB_GPSD_PORT: ${OIAB_GPSD_PORT:-2947}
+      OIAB_EMULATORJS_DIR: /data/oiab/services/emulatorjs/data
     ports:
       - "${OIAB_HTTP_PUBLISHED_PORT:-80}:8080"
     volumes:
-      # All durable OIAB data lives under this single bind mount.
-      - "${OIAB_DATA_DIR:-/data/oiab}:/data/oiab"
+      # Durable OIAB app state lives here. Large media/content can be mounted
+      # separately so installs can reuse an existing external SSD layout.
+      - "${OIAB_DATA_DIR:-/srv/trailer/data/oiab}:/data/oiab"
+      - "${OIAB_MAP_PACKS_DIR:-/srv/trailer/data/oiab/maps/packs}:/data/oiab/maps/packs"
+      - "${OIAB_MUSIC_DIR:-/srv/trailer/media/music}:/data/oiab/media/music"
+      - "${OIAB_BOOKS_DIR:-/srv/trailer/media/books/Ebooks}:/data/oiab/media/books"
+      - "${OIAB_COMICS_DIR:-/srv/trailer/media/books/Comics}:/data/oiab/media/comics"
+      - "${OIAB_ZIM_DIR:-/srv/trailer/iiab/zims}:/data/oiab/content/zim"
+      - "${OIAB_ROMS_DIR:-/srv/trailer/roms}:/data/oiab/games/roms"
+      - "${JELLYFIN_CONFIG_DIR:-/srv/trailer/jellyfin/config}:/data/oiab/services/jellyfin/config"
+      - "${OIAB_MINECRAFT_DIR:-/srv/trailer/minecraft/server}:/data/oiab/services/minecraft/server"
       # Important subpaths under the bind mount:
       #   certs: /data/oiab/certs
       #   PMTiles/map packs: /data/oiab/maps/packs
-      #   music/uploads: /data/oiab/media
+      #   music/books/comics/ROMs: may be separate external SSD mounts
     extra_hosts:
       - "host.docker.internal:host-gateway"
     healthcheck:
@@ -42,6 +52,18 @@ services:
       start_period: 20s
       retries: 3
 
+  oiab-web:
+    image: caddy:2-alpine
+    profiles: ["static-server", "production"]
+    restart: unless-stopped
+    depends_on:
+      - oiab-core
+    ports:
+      - "${OIAB_WEB_HTTP_PUBLISHED_PORT:-18080}:80"
+    volumes:
+      - "./deploy/caddy/Caddyfile:/etc/caddy/Caddyfile:ro"
+      - "${OIAB_MAP_PACKS_DIR:-/data/oiab/maps/packs}:/data/oiab/maps/packs:ro"
+
   jellyfin:
     image: jellyfin/jellyfin:latest
     profiles: ["jellyfin", "media", "optional"]
@@ -49,9 +71,9 @@ services:
     ports:
       - "${JELLYFIN_PORT:-8096}:8096"
     volumes:
-      - "${OIAB_DATA_DIR:-/data/oiab}/services/jellyfin/config:/config"
-      - "${OIAB_DATA_DIR:-/data/oiab}/services/jellyfin/cache:/cache"
-      - "${OIAB_DATA_DIR:-/data/oiab}/media:/media"
+      - "${JELLYFIN_CONFIG_DIR:-/srv/trailer/jellyfin/config}:/config"
+      - "${JELLYFIN_CACHE_DIR:-/srv/trailer/jellyfin/cache}:/cache"
+      - "${OIAB_MEDIA_DIR:-/srv/trailer/media}:/media"
 
   komga:
     image: gotson/komga:latest
@@ -61,8 +83,8 @@ services:
       - "${KOMGA_PORT:-25600}:25600"
     volumes:
       - "${OIAB_DATA_DIR:-/data/oiab}/services/komga/config:/config"
-      - "${OIAB_DATA_DIR:-/data/oiab}/media/books:/books"
-      - "${OIAB_DATA_DIR:-/data/oiab}/media/comics:/comics"
+      - "${OIAB_BOOKS_DIR:-/data/oiab/media/books}:/books"
+      - "${OIAB_COMICS_DIR:-/data/oiab/media/comics}:/comics"
 
   kiwix:
     image: ghcr.io/kiwix/kiwix-serve:latest
@@ -71,7 +93,7 @@ services:
     ports:
       - "${KIWIX_PORT:-8081}:8080"
     volumes:
-      - "${OIAB_DATA_DIR:-/data/oiab}/content/zim:/data:ro"
+      - "${OIAB_ZIM_DIR:-/data/oiab/content/zim}:/data:ro"
     command: ["--library", "/data/library.xml"]
 
   minecraft:
@@ -88,4 +110,4 @@ services:
       ENABLE_RCON: "true"
       RCON_PASSWORD: ${MINECRAFT_RCON_PASSWORD:-change-me}
     volumes:
-      - "${OIAB_DATA_DIR:-/data/oiab}/services/minecraft:/data"
+      - "${OIAB_MINECRAFT_DIR:-/srv/trailer/minecraft/server}:/data"

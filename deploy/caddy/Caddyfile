@@ -1,0 +1,29 @@
+{
+  auto_https off
+}
+
+:80 {
+  @notMapPacks {
+    not path /maps/packs/*
+  }
+  encode @notMapPacks zstd gzip
+
+  handle_path /maps/packs/* {
+    root * /data/oiab/maps/packs
+    @versioned query v=*
+    @unversioned {
+      not query v=*
+    }
+    header @versioned {
+      Cache-Control "public, max-age=31536000, immutable"
+      Accept-Ranges "bytes"
+    }
+    header @unversioned {
+      Cache-Control "no-cache"
+      Accept-Ranges "bytes"
+    }
+    file_server
+  }
+
+  reverse_proxy oiab-core:8080
+}

@@ -11,6 +11,15 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/mobile/overland-touch-icon-180.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
   <link rel="manifest" href="/mobile/manifest.webmanifest">
+  <script>
+    if (window.parent && window.parent !== window) {
+      document.documentElement.hidden = true;
+      const goHome = () => window.parent.postMessage({ type: "oiab:home" }, window.location.origin);
+      goHome();
+      setTimeout(goHome, 75);
+      setTimeout(goHome, 250);
+    }
+  </script>
   <link rel="stylesheet" href="mobile-shell.css">
 </head>
 <body>

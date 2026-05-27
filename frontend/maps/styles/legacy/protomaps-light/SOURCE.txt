@@ -1,0 +1,2 @@
+https://github.com/protomaps/basemaps.git
+a37e8ef

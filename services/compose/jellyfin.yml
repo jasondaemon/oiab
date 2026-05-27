@@ -6,6 +6,6 @@ services:
     ports:
       - "${JELLYFIN_PORT:-8096}:8096"
     volumes:
-      - "${OIAB_DATA_DIR:-/data/oiab}/services/jellyfin/config:/config"
-      - "${OIAB_DATA_DIR:-/data/oiab}/services/jellyfin/cache:/cache"
-      - "${OIAB_DATA_DIR:-/data/oiab}/media:/media"
+      - "${JELLYFIN_CONFIG_DIR:-/srv/trailer/jellyfin/config}:/config"
+      - "${JELLYFIN_CACHE_DIR:-/srv/trailer/jellyfin/cache}:/cache"
+      - "${OIAB_MEDIA_DIR:-/srv/trailer/media}:/media"

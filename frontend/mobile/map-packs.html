@@ -25,8 +25,11 @@
     .grid { display:grid; gap:10px; grid-template-columns:1fr auto; }
     .meta { display:grid; gap:4px; color:var(--muted); font-size:.92rem; overflow:hidden; }
     .meta strong { color:var(--text); font-size:1.2rem; }
+    .group-title { margin:24px 0 8px; color:var(--text); font-size:1.35rem; letter-spacing:-.03em; }
     .badge { width:max-content; border-radius:999px; padding:5px 10px; color:#06170f; background:var(--accent); font-weight:900; font-size:.8rem; }
     .badge.missing { background:var(--bad); color:#fff; }
+    .badge.manual { background:var(--warn); color:#06170f; }
+    .badge.installing { background:#9bd7ff; color:#06170f; }
     .message { min-height:24px; color:var(--warn); font-weight:900; }
     .path { overflow-wrap:anywhere; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
     @media (max-width:680px) { main { width:min(100vw - 14px,560px); padding-top:12px; } .pack,.grid { grid-template-columns:1fr; } button,.button { width:100%; } }
@@ -37,17 +40,24 @@
     <div class="toolbar">
       <a class="button secondary" href="/mobile/">Back</a>
       <button id="refresh" class="secondary" type="button">Refresh</button>
+      <a class="button secondary" href="/map-diagnostics">Diagnostics</a>
     </div>
     <h1>Map Packs</h1>
-    <p>PMTiles live under <strong>/data/oiab/maps/packs</strong>. Rescan after copying a pack to the Pi or external SSD.</p>
+    <p>Choose one active PMTiles basemap at a time. World Overview is the default low-detail fallback; CONUS or a state pack should be set active for detail.</p>
 
     <section class="panel">
-      <span class="kicker">Installed PMTiles</span>
+      <span class="kicker">Available Map Packs</span>
+      <p>Install from the catalog when a source is available, or copy PMTiles to the host and rescan. Installed packs can be activated from the list.</p>
       <div class="actions">
         <button id="rescan" type="button">Rescan Map Packs</button>
         <a class="button secondary" href="/maps-v2/">Open Maps v2</a>
       </div>
       <p id="message" class="message"></p>
+      <div id="catalog"></div>
+    </section>
+
+    <section class="panel">
+      <span class="kicker">Installed PMTiles</span>
       <div id="packs"></div>
     </section>
 
@@ -62,8 +72,14 @@
   </main>
   <script>
     const packsNode = document.getElementById("packs");
+    const catalogNode = document.getElementById("catalog");
     const message = document.getElementById("message");
     const fmt = new Intl.NumberFormat();
+    let installedPacks = [];
+    let catalogPacks = [];
+    let installJobs = {};
+    let pollTimer = null;
+
     function setMessage(text, error = false) {
       message.textContent = text || "";
       message.style.color = error ? "var(--bad)" : "var(--warn)";
@@ -75,22 +91,129 @@
       if (n > 1024) return `${fmt.format(Math.round(n / 1024))} KB`;
       return `${fmt.format(n)} B`;
     }
-    async function api(action, body = {}) {
-      const response = await fetch("/api/maps-v2/map-packs", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({action, ...body})
-      });
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok || data.ok === false) throw new Error(data.error || `Request failed: ${response.status}`);
+
+    async function fetchJson(url, options = {}) {
+      const response = await fetch(url, {cache: "no-store", ...options});
+      const text = await response.text();
+      let data;
+      try {
+        data = JSON.parse(text || "{}");
+      } catch (error) {
+        const preview = text.slice(0, 80).replace(/\s+/g, " ");
+        throw new Error(`${url} returned non-JSON (${response.status}): ${preview}`);
+      }
+      if (!response.ok || data.ok === false) throw new Error(data.error || `${url} returned ${response.status}`);
       return data;
     }
+
+    async function fetchFirst(urls) {
+      const errors = [];
+      for (const url of urls) {
+        try {
+          return await fetchJson(url);
+        } catch (error) {
+          errors.push(error.message);
+        }
+      }
+      throw new Error(errors[0] || "No map-pack endpoint returned JSON.");
+    }
+
+    async function api(action, body = {}) {
+      const attempts = [
+        {url: `/api/maps/packs/${action}`, payload: body},
+        {url: "/api/maps-v2/map-packs", payload: {action, ...body}},
+        {url: "/maps-v2-map-packs", payload: {action, ...body}}
+      ];
+      const errors = [];
+      for (const attempt of attempts) {
+        try {
+          return await fetchJson(attempt.url, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(attempt.payload)
+          });
+        } catch (error) {
+          errors.push(error.message);
+        }
+      }
+      throw new Error(errors[0] || "Map-pack request failed.");
+    }
+
+    function installedIndex() {
+      const byId = new Map(installedPacks.map((pack) => [String(pack.id), pack]));
+      const byFile = new Map(installedPacks.map((pack) => {
+        const raw = pack.path || pack.public_url || pack.url || "";
+        return [String(raw).split("/").pop(), pack];
+      }));
+      return {byId, byFile};
+    }
+
+    function packState(pack) {
+      const {byId, byFile} = installedIndex();
+      return byId.get(String(pack.id)) || byFile.get(String(pack.expected_filename || "")) || null;
+    }
+
+    function packJob(pack) {
+      return pack.install_job || installJobs[String(pack.id)] || null;
+    }
+
+    function isInstalling(pack) {
+      const status = String(packJob(pack)?.status || pack.install_status || "");
+      return status === "pending" || status === "running";
+    }
+
+    function isFailed(pack) {
+      const status = String(packJob(pack)?.status || pack.install_status || "");
+      return status === "failed";
+    }
+
+    function statusClass(pack, state) {
+      if (isInstalling(pack)) return "installing";
+      if (isFailed(pack)) return "missing";
+      if (state?.active || pack.active) return "";
+      if (state?.installed || state?.exists || pack.installed) return "";
+      if (pack.install_available) return "manual";
+      return "missing";
+    }
+
+    function statusText(pack, state) {
+      if (isInstalling(pack)) return "Installing";
+      if (isFailed(pack)) return "Failed";
+      if (state?.active || pack.active) return "Active";
+      if (state?.installed || state?.exists || pack.installed) return "Installed";
+      if (pack.install_available) return "Not installed";
+      return "Manual only";
+    }
+
+    function updatePollState() {
+      const active = catalogPacks.some(isInstalling) || Object.values(installJobs || {}).some((job) => ["pending", "running"].includes(String(job.status || "")));
+      if (active && !pollTimer) {
+        pollTimer = setInterval(() => load().catch(error => setMessage(error.message, true)), 2500);
+      }
+      if (!active && pollTimer) {
+        clearInterval(pollTimer);
+        pollTimer = null;
+      }
+    }
+
     async function load() {
-      const response = await fetch("/api/maps-v2/map-packs", {cache:"no-store"});
-      const data = await response.json();
-      if (!response.ok || data.ok === false) throw new Error(data.error || `Load failed: ${response.status}`);
-      const packs = data.basemaps || [];
-      packsNode.innerHTML = packs.length ? packs.map(pack => `
+      const installed = await fetchFirst(["/api/maps/packs/installed", "/api/maps-v2/map-packs", "/maps-v2-map-packs"]);
+      let catalog = {packs: []};
+      try {
+        catalog = await fetchFirst(["/api/maps/packs/catalog", "/maps-packs-catalog", "/config/map-pack-catalog.json"]);
+      } catch (error) {
+        setMessage(`Catalog unavailable: ${error.message}`, true);
+      }
+      installedPacks = installed.basemaps || installed.packs || [];
+      installJobs = catalog.jobs || installed.jobs || {};
+      catalogPacks = (catalog.packs || []).filter((pack) => !pack.hidden);
+      renderCatalog();
+      renderInstalled();
+      updatePollState();
+    }
+
+    function renderInstalled() {
+      packsNode.innerHTML = installedPacks.length ? installedPacks.map(pack => `
         <article class="pack ${pack.active ? "is-active" : ""}">
           <div class="meta">
             <span class="badge ${pack.exists ? "" : "missing"}">${pack.active ? "Active" : pack.exists ? "Installed" : "Missing"}</span>
@@ -100,10 +223,77 @@
           </div>
           <div class="actions">
             <button type="button" data-active="${pack.id}" ${pack.exists && !pack.active ? "" : "disabled"}>Set Active</button>
+            <button class="secondary" type="button" data-remove="${pack.id}" ${pack.exists ? "" : "disabled"}>Remove</button>
           </div>
         </article>
-      `).join("") : '<div class="hint panel"><strong>No map packs found.</strong><p>Copy a .pmtiles file into /data/oiab/maps/packs, then rescan.</p></div>';
+      `).join("") : '<div class="hint panel"><strong>No map packs found.</strong><p>Use Install on World Overview or another catalog pack. Manual fallback: place a .pmtiles file in /data/oiab/maps/packs, then rescan.</p></div>';
+
       packsNode.querySelectorAll("[data-active]").forEach(button => {
+        button.addEventListener("click", async () => {
+          setMessage("Setting active map pack...");
+          try { await api("set-active", {id: button.dataset.active}); setMessage("Active map pack updated."); await load(); }
+          catch (error) { setMessage(error.message, true); }
+        });
+      });
+      packsNode.querySelectorAll("[data-remove]").forEach(button => {
+        button.addEventListener("click", async () => {
+          if (!confirm("Remove this PMTiles file from /data/oiab/maps/packs?")) return;
+          setMessage("Removing map pack...");
+          try { await api("remove", {id: button.dataset.remove}); setMessage("Map pack removed."); await load(); }
+          catch (error) { setMessage(error.message, true); }
+        });
+      });
+    }
+
+    function renderCatalog() {
+      const groups = [
+        ["world", "World"],
+        ["country", "United States"],
+        ["state", "States"],
+        ["custom", "Future / Other Regions"]
+      ];
+      const anyInstalling = catalogPacks.some(isInstalling);
+      catalogNode.innerHTML = groups.map(([key, title]) => {
+        const items = catalogPacks.filter((pack) => (pack.region_type || "custom") === key);
+        if (!items.length) return "";
+        return `<section><h2 class="group-title">${title}</h2>${items.map(pack => {
+          const state = packState(pack);
+          const installed = Boolean(state?.installed || state?.exists || pack.installed);
+          const active = Boolean(state?.active || pack.active);
+          const installing = isInstalling(pack);
+          const failed = isFailed(pack);
+          const installable = Boolean(pack.install_available && !installed && !anyInstalling);
+          const error = pack.install_error || packJob(pack)?.error || "";
+          return `
+          <article class="pack ${active ? "is-active" : ""}">
+            <div class="meta">
+              <span class="badge ${statusClass(pack, state)}">${active ? "Active" : statusText(pack, state)}</span>
+              <strong>${pack.name || pack.id}</strong>
+              <span>${pack.description || ""}</span>
+              <span>${pack.source_type || "manual"} · ${size(state?.size_bytes || pack.size_bytes)} · ${pack.expected_filename || ""}</span>
+              ${installing ? `<span>Install running${pack.install_progress ? ` · ${pack.install_progress}%` : ""}</span>` : ""}
+              ${failed && error ? `<span style="color:var(--bad)">Error: ${error}</span>` : ""}
+              ${pack.install_available ? "" : "<span>Install source not configured yet. Manual fallback: place the PMTiles file in /data/oiab/maps/packs and rescan.</span>"}
+            </div>
+            <div class="actions">
+              <button type="button" data-install="${pack.id}" ${installable ? "" : "disabled"}>${failed ? "Retry Install" : "Install"}</button>
+              <button type="button" data-active="${pack.id}" ${installed && !active && !anyInstalling ? "" : "disabled"}>Set Active</button>
+            </div>
+          </article>
+        `;
+        }).join("")}</section>`;
+      }).join("");
+      if (!catalogNode.innerHTML.trim()) {
+        catalogNode.innerHTML = '<div class="hint panel"><strong>No catalog loaded.</strong><p>Check /config/map-pack-catalog.json or the map-pack catalog API.</p></div>';
+      }
+      catalogNode.querySelectorAll("[data-install]").forEach(button => {
+        button.addEventListener("click", async () => {
+          setMessage("Install started. This can take a while for large packs.");
+          try { await api("install", {id: button.dataset.install}); await load(); }
+          catch (error) { setMessage(error.message, true); }
+        });
+      });
+      catalogNode.querySelectorAll("[data-active]").forEach(button => {
         button.addEventListener("click", async () => {
           setMessage("Setting active map pack...");
           try { await api("set-active", {id: button.dataset.active}); setMessage("Active map pack updated."); await load(); }

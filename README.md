@@ -14,7 +14,13 @@ The base install is intentionally lean:
 - optional service manager framework
 - certificate and hostname configuration docs/scripts
 
-Optional services such as Jellyfin, Komga, Kiwix/Wikipedia, and Minecraft are represented as managed service manifests. They are not installed by default.
+Optional plugins such as Jellyfin, Komga, Kiwix/Wikipedia, Web Emulator Runtime, and Minecraft are represented as managed manifests. They are not installed or shown in the launcher by default.
+
+For a trailer-style install that reuses the existing SSD content layout, prepare the expected directories with:
+
+```bash
+sudo scripts/prepare-trailer-ssd-layout.sh
+```
 
 ## Quick Start
 
@@ -71,7 +77,16 @@ export OIAB_DATA_DIR="$PWD/data"
 scripts/dev.sh
 ```
 
-In Docker, the host path from `OIAB_DATA_DIR` is bind-mounted to `/data/oiab` inside the container. Certs, PMTiles, music, uploads, waypoints, tracks, games, and optional service data all remain under that one directory.
+In Docker, the host path from `OIAB_DATA_DIR` is bind-mounted to `/data/oiab` inside the container. The trailer defaults keep OIAB app state under `/srv/trailer/data/oiab` while large existing SSD libraries stay in their original locations:
+
+- Music: `/srv/trailer/media/music`
+- Jellyfin media: `/srv/trailer/media`
+- Books: `/srv/trailer/media/books/Ebooks`
+- Comics: `/srv/trailer/media/books/Comics`
+- Emulator ROMs: `/srv/trailer/roms`
+- Kiwix/ZIM content: `/srv/trailer/iiab/zims`
+- Jellyfin config/cache: `/srv/trailer/jellyfin`
+- Minecraft server: `/srv/trailer/minecraft/server`
 
 Game platform state is stored in:
 
@@ -109,25 +124,43 @@ The File Uploads app can upload and list local content without rebuilding the fr
 
 Maps are core to OIAB, but map data is not committed to git.
 
-Default expected PMTiles path:
+PMTiles packs live under:
 
 ```text
-/data/oiab/maps/packs/protomaps-conus.pmtiles
+/data/oiab/maps/packs
 ```
 
-The registry is configurable through `OIAB_MAP_PACK_REGISTRY` and defaults to:
+The installable catalog is `config/map-pack-catalog.json`. The installed registry is stored in SQLite and can import from:
 
 ```text
 /data/oiab/maps/registry.json
 ```
 
-If no PMTiles pack is present, `/maps-v2/` shows a friendly missing-pack state instead of crashing.
+On first run, OIAB checks for an active PMTiles pack. If none exists, it registers `/data/oiab/maps/packs/world-overview.pmtiles` when present. If that file is missing and `OIAB_AUTO_INSTALL_WORLD_MAP=true` (the default), OIAB starts a background World Overview install using `pmtiles extract`.
+
+If no active PMTiles pack is ready yet, `/maps-v2/` shows setup progress and recovery actions instead of stopping at a dead end.
 
 Manage installed packs from:
 
 ```text
 /mobile/map-packs.html
 ```
+
+Check PMTiles range/header behavior from:
+
+```text
+/map-diagnostics
+```
+
+Supported install paths:
+
+- Catalog direct PMTiles URL download.
+- Catalog extraction from a Protomaps parent source using `pmtiles extract`.
+- Manual copy into `/data/oiab/maps/packs` followed by Rescan.
+
+Set `OIAB_AUTO_INSTALL_WORLD_MAP=false` only when you explicitly want to skip first-run World Overview installation.
+
+For production or large packs, serve `/maps/packs/` with the included Caddy/nginx static-server config instead of relying on Python fallback range serving. See `docs/DOCKER.md`.
 
 ## Raspberry Pi + External SSD Docker Install
 
@@ -188,13 +221,21 @@ docker compose --env-file config/oiab.env up -d --build oiab-core
 docker compose --env-file config/oiab.env ps
 ```
 
-7. Start optional services only when wanted:
+7. Start optional plugins/services only when wanted:
 
 ```bash
 docker compose --env-file config/oiab.env --profile jellyfin up -d
 docker compose --env-file config/oiab.env --profile komga up -d
 docker compose --env-file config/oiab.env --profile kiwix up -d
 docker compose --env-file config/oiab.env --profile minecraft up -d
+```
+
+The in-app Plugins page can enable/disable launcher visibility after install. Docker start/stop actions require Docker Compose access from the backend; otherwise the page shows the exact host command to run.
+
+Install the offline EmulatorJS runtime with the Plugins page, or from the host:
+
+```bash
+docker compose --env-file config/oiab.env exec oiab-core scripts/install-emulatorjs.sh
 ```
 
 ## GPS With Docker

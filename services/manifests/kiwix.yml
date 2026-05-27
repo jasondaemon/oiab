@@ -5,9 +5,14 @@ category: learning
 install_default: false
 runtime: docker
 compose_file: services/compose/kiwix.yml
+compose_profile: kiwix
+compose_service: kiwix
 systemd_unit: oiab-kiwix.service
 launcher_url: /apps/wiki/
 installed_marker: /data/oiab/content/zim
+install_command: docker compose --env-file config/oiab.env --profile kiwix up -d kiwix
+data_path: /data/oiab/content/zim
+content_path: /data/oiab/content/zim
+notes: Uses the existing trailer ZIM directory when OIAB_ZIM_DIR points at /srv/trailer/iiab/zims.
 ports:
   - 8081
-

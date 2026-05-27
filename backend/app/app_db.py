@@ -3,9 +3,11 @@ from __future__ import annotations
 import json
 import shutil
 import sqlite3
+import subprocess
 from contextlib import contextmanager
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import urlsplit
 from typing import Any, Iterator
 
 from .config import REPO_ROOT, Settings
@@ -35,6 +37,27 @@ def bool_int(value: Any, default: bool = False) -> int:
     if isinstance(value, bool):
         return 1 if value else 0
     return 1 if str(value).strip().lower() in {"1", "true", "yes", "on", "shown", "enabled"} else 0
+
+
+def parse_json_text(value: str | None) -> Any | None:
+    if not value:
+        return None
+    try:
+        return json.loads(value)
+    except json.JSONDecodeError:
+        return None
+
+
+def numeric_value(value: Any) -> int | float | None:
+    if value is None or value == "":
+        return None
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError):
+        return None
+    if parsed.is_integer():
+        return int(parsed)
+    return parsed
 
 
 class AppDB:
@@ -168,6 +191,7 @@ class AppDB:
                   attribution TEXT,
                   installed INTEGER NOT NULL DEFAULT 0,
                   active INTEGER NOT NULL DEFAULT 0,
+                  enabled INTEGER NOT NULL DEFAULT 0,
                   size_bytes INTEGER NOT NULL DEFAULT 0,
                   metadata_json TEXT NOT NULL DEFAULT '{}',
                   created_at TEXT NOT NULL,
@@ -246,6 +270,17 @@ class AppDB:
                 self.mark_migration("map_pack_registry_v1", details)
             except Exception as exc:  # noqa: BLE001 - migration boundary
                 print(f"OIAB DB migration map_pack_registry_v1 failed: {exc}")
+        if not self.migration_applied("map_pack_enabled_v1"):
+            try:
+                with self.connect() as conn:
+                    columns = {row["name"] for row in conn.execute("PRAGMA table_info(map_packs)").fetchall()}
+                    if "enabled" not in columns:
+                        conn.execute("ALTER TABLE map_packs ADD COLUMN enabled INTEGER NOT NULL DEFAULT 0")
+                    conn.execute("UPDATE map_packs SET enabled = CASE WHEN active = 1 THEN 1 ELSE enabled END")
+                    conn.execute("UPDATE map_packs SET enabled = 1 WHERE id = 'world_overview' AND installed = 1")
+                self.mark_migration("map_pack_enabled_v1", {"ok": True})
+            except Exception as exc:  # noqa: BLE001 - migration boundary
+                print(f"OIAB DB migration map_pack_enabled_v1 failed: {exc}")
 
     def places_file(self) -> Path:
         return self.settings.data_dir / "waypoints" / "trailer-places.geojson"
@@ -548,7 +583,6 @@ class AppDB:
         candidates = []
         if self.settings.map_pack_registry:
             candidates.append(self.settings.map_pack_registry)
-        candidates.append(REPO_ROOT / "config" / "map-packs.json")
         imported = 0
         active = ""
         for path in candidates:
@@ -563,7 +597,7 @@ class AppDB:
                 imported += 1
         return {"imported": imported, "active": active}
 
-    def upsert_map_pack(self, pack: dict[str, Any], active: bool = False) -> None:
+    def upsert_map_pack(self, pack: dict[str, Any], active: bool = False, enabled: bool | None = None) -> None:
         pack_id = str(pack.get("id") or Path(str(pack.get("path") or pack.get("url") or "map-pack")).stem)
         name = str(pack.get("name") or pack_id.replace("-", " ").replace("_", " ").title())
         public_url = str(pack.get("public_url") or pack.get("url") or f"/maps/packs/{Path(str(pack.get('path') or pack_id + '.pmtiles')).name}")
@@ -571,14 +605,17 @@ class AppDB:
         style = str(pack.get("style_path") or pack.get("style") or "/maps-v2/map-style.json")
         file_path = self.resolve_pack_path(path)
         exists = file_path.exists()
+        if enabled is None:
+            enabled = bool(pack.get("enabled", active))
+        metadata = self.enrich_map_pack_metadata(pack, file_path if exists else None)
         with self.connect() as conn:
             if active:
                 conn.execute("UPDATE map_packs SET active = 0")
             conn.execute(
                 """
                 INSERT INTO map_packs(id, name, type, path, public_url, style_path, attribution,
-                                      installed, active, size_bytes, metadata_json, created_at, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                      installed, active, enabled, size_bytes, metadata_json, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(id) DO UPDATE SET
                   name = excluded.name,
                   type = excluded.type,
@@ -588,6 +625,7 @@ class AppDB:
                   attribution = excluded.attribution,
                   installed = excluded.installed,
                   active = CASE WHEN excluded.active = 1 THEN 1 ELSE map_packs.active END,
+                  enabled = excluded.enabled,
                   size_bytes = excluded.size_bytes,
                   metadata_json = excluded.metadata_json,
                   updated_at = excluded.updated_at
@@ -602,14 +640,86 @@ class AppDB:
                     str(pack.get("attribution") or "© OpenStreetMap contributors"),
                     1 if exists else 0,
                     1 if active else 0,
+                    1 if enabled else 0,
                     file_path.stat().st_size if exists else 0,
-                    json_dumps(pack),
+                    json_dumps(metadata),
                     now_iso(),
                     now_iso(),
                 ),
             )
 
+    def enrich_map_pack_metadata(self, pack: dict[str, Any], file_path: Path | None) -> dict[str, Any]:
+        metadata = dict(pack)
+        catalog = metadata.get("catalog") if isinstance(metadata.get("catalog"), dict) else {}
+        metadata["catalog_minzoom"] = numeric_value(
+            catalog.get("minzoom")
+            or catalog.get("min_zoom")
+            or pack.get("catalog_minzoom")
+            or pack.get("minzoom")
+            or pack.get("min_zoom")
+        )
+        metadata["catalog_maxzoom"] = numeric_value(
+            catalog.get("maxzoom")
+            or catalog.get("max_zoom")
+            or pack.get("catalog_maxzoom")
+            or pack.get("maxzoom")
+            or pack.get("max_zoom")
+        )
+        if not file_path or not file_path.exists() or file_path.suffix.lower() != ".pmtiles":
+            return metadata
+        actual = self.read_pmtiles_archive_metadata(file_path)
+        metadata["actual_metadata"] = actual
+        metadata["actual_minzoom"] = numeric_value(actual.get("minzoom"))
+        metadata["actual_maxzoom"] = numeric_value(actual.get("maxzoom"))
+        metadata["actual_bounds"] = actual.get("bounds")
+        metadata["actual_center"] = actual.get("center")
+        metadata["actual_vector_layers"] = actual.get("vector_layers")
+        return metadata
+
+    @staticmethod
+    def read_pmtiles_archive_metadata(file_path: Path) -> dict[str, Any]:
+        pmtiles = shutil.which("pmtiles")
+        if not pmtiles:
+            return {"ok": False, "error": "pmtiles CLI is not installed."}
+
+        def run_show(flag: str) -> Any | None:
+            result = subprocess.run(
+                [pmtiles, "show", str(file_path), flag],
+                text=True,
+                capture_output=True,
+                timeout=20,
+                check=False,
+            )
+            if result.returncode != 0:
+                return {"ok": False, "command": [pmtiles, "show", str(file_path), flag], "stderr": result.stderr[-2000:]}
+            return parse_json_text(result.stdout)
+
+        header = run_show("--header-json")
+        tilejson = run_show("--tilejson")
+        header_obj = header if isinstance(header, dict) else {}
+        tilejson_obj = tilejson if isinstance(tilejson, dict) else {}
+        return {
+            "ok": bool(header_obj or tilejson_obj),
+            "header": header,
+            "tilejson": tilejson,
+            "bounds": tilejson_obj.get("bounds") or header_obj.get("bounds"),
+            "center": tilejson_obj.get("center") or header_obj.get("center"),
+            "minzoom": tilejson_obj.get("minzoom") if tilejson_obj.get("minzoom") is not None else header_obj.get("minzoom"),
+            "maxzoom": tilejson_obj.get("maxzoom") if tilejson_obj.get("maxzoom") is not None else header_obj.get("maxzoom"),
+            "vector_layers": tilejson_obj.get("vector_layers"),
+        }
+
+    def catalog_pack_for_filename(self, filename: str) -> dict[str, Any] | None:
+        catalog = read_json(REPO_ROOT / "config" / "map-pack-catalog.json", {"packs": []})
+        for pack in catalog.get("packs", []) or []:
+            if not isinstance(pack, dict):
+                continue
+            if str(pack.get("expected_filename") or "") == filename:
+                return pack
+        return None
+
     def resolve_pack_path(self, value: str) -> Path:
+        value = urlsplit(str(value)).path
         path = Path(value)
         if path.is_absolute():
             return path
@@ -618,34 +728,55 @@ class AppDB:
         return self.settings.data_dir / "maps" / "packs" / path.name
 
     def path_for_pack_url(self, url: str) -> str:
+        url = urlsplit(str(url)).path
         if url.startswith("/maps/packs/"):
             return str(self.settings.data_dir / "maps" / "packs" / url.removeprefix("/maps/packs/"))
         return url
 
+    @staticmethod
+    def versioned_pack_url(public_url: str, path: Path) -> str:
+        base = urlsplit(str(public_url)).path
+        if not path.exists() or not path.is_file():
+            return base
+        stat = path.stat()
+        return f"{base}?v={stat.st_size}-{stat.st_mtime_ns}"
+
     def rescan_map_packs(self) -> dict[str, Any]:
         packs_dir = self.settings.data_dir / "maps" / "packs"
         packs_dir.mkdir(parents=True, exist_ok=True)
+        with self.connect() as conn:
+            existing_rows = {
+                row["id"]: row
+                for row in conn.execute("SELECT id, active, enabled FROM map_packs").fetchall()
+            }
         found = 0
         for path in sorted(packs_dir.glob("*.pmtiles")):
-            pack_id = path.stem.lower().replace(" ", "-").replace("_", "-")
+            catalog_pack = self.catalog_pack_for_filename(path.name) or {}
+            pack_id = str(catalog_pack.get("id") or path.stem.lower().replace(" ", "-").replace("_", "-"))
+            existing = existing_rows.get(pack_id)
             self.upsert_map_pack(
                 {
                     "id": pack_id,
-                    "name": path.stem.replace("-", " ").replace("_", " ").title(),
+                    "name": catalog_pack.get("name") or path.stem.replace("-", " ").replace("_", " ").title(),
                     "type": "pmtiles",
                     "path": str(path),
                     "url": f"/maps/packs/{path.name}",
-                    "style": "/maps-v2/map-style.json",
-                    "attribution": "© OpenStreetMap contributors",
-                }
+                    "style": catalog_pack.get("style") or "/maps-v2/map-style.json",
+                    "attribution": catalog_pack.get("attribution") or "© OpenStreetMap contributors",
+                    "catalog": catalog_pack,
+                },
+                active=bool(existing["active"]) if existing else False,
+                enabled=bool(existing["enabled"]) if existing else (pack_id == "world_overview"),
             )
             found += 1
         with self.connect() as conn:
             active = conn.execute("SELECT id FROM map_packs WHERE active = 1 AND installed = 1 LIMIT 1").fetchone()
             if not active:
-                first = conn.execute("SELECT id FROM map_packs WHERE installed = 1 ORDER BY updated_at DESC LIMIT 1").fetchone()
+                world = conn.execute("SELECT id FROM map_packs WHERE id = 'world_overview' AND installed = 1 LIMIT 1").fetchone()
+                first = world or conn.execute("SELECT id FROM map_packs WHERE installed = 1 ORDER BY updated_at DESC LIMIT 1").fetchone()
                 if first:
                     conn.execute("UPDATE map_packs SET active = CASE WHEN id = ? THEN 1 ELSE 0 END", (first["id"],))
+            conn.execute("UPDATE map_packs SET enabled = 1 WHERE id = 'world_overview' AND installed = 1")
         return {"found": found}
 
     def set_active_map_pack(self, pack_id: str) -> dict[str, Any]:
@@ -656,6 +787,17 @@ class AppDB:
             if not row["installed"]:
                 raise ValueError("Map pack file is not installed.")
             conn.execute("UPDATE map_packs SET active = CASE WHEN id = ? THEN 1 ELSE 0 END", (pack_id,))
+            conn.execute("UPDATE map_packs SET enabled = CASE WHEN id = ? THEN 1 ELSE 0 END", (pack_id,))
+        return self.map_pack_registry()
+
+    def disable_map_pack(self, pack_id: str) -> dict[str, Any]:
+        with self.connect() as conn:
+            row = conn.execute("SELECT id, installed FROM map_packs WHERE id = ?", (pack_id,)).fetchone()
+            if not row:
+                raise ValueError("Map pack not found.")
+            if pack_id == "world_overview":
+                raise ValueError("World Overview stays enabled as the base map.")
+            conn.execute("UPDATE map_packs SET enabled = 0 WHERE id = ?", (pack_id,))
         return self.map_pack_registry()
 
     def import_pmtiles_path(self, value: str, name: str | None = None) -> dict[str, Any]:
@@ -665,7 +807,19 @@ class AppDB:
         target = self.settings.data_dir / "maps" / "packs" / path.name
         if path.resolve() != target.resolve():
             shutil.copy2(path, target)
-        self.upsert_map_pack({"id": target.stem.lower().replace("_", "-"), "name": name or target.stem, "path": str(target), "url": f"/maps/packs/{target.name}"})
+        catalog_pack = self.catalog_pack_for_filename(target.name) or {}
+        self.upsert_map_pack(
+            {
+                "id": catalog_pack.get("id") or target.stem.lower().replace("_", "-"),
+                "name": name or catalog_pack.get("name") or target.stem,
+                "path": str(target),
+                "url": f"/maps/packs/{target.name}",
+                "style": catalog_pack.get("style") or "/maps-v2/map-style.json",
+                "attribution": catalog_pack.get("attribution") or "© OpenStreetMap contributors",
+                "catalog": catalog_pack,
+            },
+            enabled=(catalog_pack.get("id") == "world_overview"),
+        )
         return self.map_pack_registry()
 
     def map_pack_registry(self) -> dict[str, Any]:
@@ -674,30 +828,84 @@ class AppDB:
             rows = conn.execute("SELECT * FROM map_packs ORDER BY active DESC, name COLLATE NOCASE").fetchall()
         basemaps = []
         active = None
+        enabled_ids: list[str] = []
         for row in rows:
             path = self.resolve_pack_path(row["path"])
             exists = path.exists()
+            try:
+                metadata = json.loads(row["metadata_json"] or "{}")
+            except Exception:  # noqa: BLE001
+                metadata = {}
+            catalog = metadata.get("catalog") if isinstance(metadata.get("catalog"), dict) else {}
+            catalog_minzoom = metadata.get("catalog_minzoom")
+            catalog_maxzoom = metadata.get("catalog_maxzoom")
+            actual_minzoom = metadata.get("actual_minzoom")
+            actual_maxzoom = metadata.get("actual_maxzoom")
+            if actual_minzoom is None and isinstance(metadata.get("actual_metadata"), dict):
+                actual_minzoom = metadata["actual_metadata"].get("minzoom")
+            if actual_maxzoom is None and isinstance(metadata.get("actual_metadata"), dict):
+                actual_maxzoom = metadata["actual_metadata"].get("maxzoom")
+            if catalog_minzoom is None:
+                catalog_minzoom = catalog.get("minzoom") or catalog.get("min_zoom")
+            if catalog_maxzoom is None:
+                catalog_maxzoom = catalog.get("maxzoom") or catalog.get("max_zoom")
+            effective_minzoom = actual_minzoom if actual_minzoom is not None else catalog_minzoom
+            effective_maxzoom = actual_maxzoom if actual_maxzoom is not None else catalog_maxzoom
+            base_url = urlsplit(str(row["public_url"] or f"/maps/packs/{path.name}")).path
+            versioned_url = self.versioned_pack_url(base_url, path)
+            size_bytes = path.stat().st_size if exists else 0
+            mtime_ns = path.stat().st_mtime_ns if exists else 0
+            mtime = path.stat().st_mtime if exists else 0
             item = {
                 "id": row["id"],
                 "name": row["name"],
                 "type": row["type"],
                 "path": row["path"],
-                "url": row["public_url"],
-                "public_url": row["public_url"],
+                "url": versioned_url,
+                "public_url": versioned_url,
+                "base_url": base_url,
                 "style": row["style_path"] or "/maps-v2/map-style.json",
                 "style_path": row["style_path"] or "/maps-v2/map-style.json",
                 "attribution": row["attribution"] or "© OpenStreetMap contributors",
                 "installed": bool(exists),
                 "exists": bool(exists),
                 "active": bool(row["active"] and exists),
-                "size_bytes": path.stat().st_size if exists else 0,
+                "enabled": bool(row["active"] and exists),
+                "size_bytes": size_bytes,
+                "mtime": mtime,
+                "mtime_ns": mtime_ns,
+                "version": f"{size_bytes}-{mtime_ns}" if exists else "",
                 "created": row["created_at"],
                 "updated": row["updated_at"],
+                "bbox": metadata.get("actual_bounds") or metadata.get("bbox") or catalog.get("bbox"),
+                "bounds": metadata.get("actual_bounds") or metadata.get("bbox") or catalog.get("bbox"),
+                "catalog_minzoom": catalog_minzoom,
+                "catalog_maxzoom": catalog_maxzoom,
+                "catalog_min_zoom": catalog_minzoom,
+                "catalog_max_zoom": catalog_maxzoom,
+                "actual_minzoom": actual_minzoom,
+                "actual_maxzoom": actual_maxzoom,
+                "actual_min_zoom": actual_minzoom,
+                "actual_max_zoom": actual_maxzoom,
+                "actual_bounds": metadata.get("actual_bounds"),
+                "actual_center": metadata.get("actual_center"),
+                "minzoom": effective_minzoom,
+                "maxzoom": effective_maxzoom,
+                "min_zoom": effective_minzoom,
+                "max_zoom": effective_maxzoom,
+                "metadata_source": "actual_pmtiles" if actual_maxzoom is not None or actual_minzoom is not None else "catalog",
+                "region_type": metadata.get("region_type") or catalog.get("region_type"),
+                "country": metadata.get("country") or catalog.get("country"),
+                "state": metadata.get("state") or catalog.get("state"),
             }
             if item["active"]:
                 active = item["id"]
+            if item["enabled"]:
+                enabled_ids.append(item["id"])
             basemaps.append(item)
         if active is None:
-            installed = next((pack for pack in basemaps if pack["installed"]), None)
-            active = installed["id"] if installed else (basemaps[0]["id"] if basemaps else None)
-        return {"ok": True, "active": active, "active_basemap": active, "basemaps": basemaps}
+            installed = next((pack for pack in basemaps if pack["id"] == "world_overview" and pack["installed"]), None)
+            installed = installed or next((pack for pack in basemaps if pack["installed"]), None)
+            active = installed["id"] if installed else None
+        enabled_ids = [active] if active else []
+        return {"ok": True, "active": active, "active_basemap": active, "enabled_pack_ids": enabled_ids, "basemaps": basemaps}

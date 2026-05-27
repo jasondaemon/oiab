@@ -494,3 +494,35 @@ button {
     grid-template-columns: 1fr;
   }
 }
+
+html.oiab-shell-embed,
+html.oiab-shell-embed body {
+  min-height: 100%;
+  background: transparent;
+}
+
+html.oiab-shell-embed body::before {
+  opacity: 0.32;
+}
+
+html.oiab-shell-embed .gps-shell {
+  width: 100%;
+  min-height: 100dvh;
+  padding: 10px;
+}
+
+html.oiab-shell-embed .gps-topbar {
+  display: none;
+}
+
+html.oiab-shell-embed .gps-status-card,
+html.oiab-shell-embed .gps-speed-card,
+html.oiab-shell-embed .gps-compass-card {
+  min-height: 150px;
+}
+
+html.oiab-shell-embed .gps-panel,
+html.oiab-shell-embed .gps-location-pair,
+html.oiab-shell-embed .gps-readout-grid {
+  margin-top: 10px;
+}

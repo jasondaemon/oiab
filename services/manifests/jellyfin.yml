@@ -5,9 +5,14 @@ category: media
 install_default: false
 runtime: docker
 compose_file: services/compose/jellyfin.yml
+compose_profile: jellyfin
+compose_service: jellyfin
 systemd_unit: oiab-jellyfin.service
 launcher_url: /apps/jellyfin/
-installed_marker: /data/oiab/services/jellyfin
+installed_marker: /data/oiab/services/jellyfin/config
+install_command: docker compose --env-file config/oiab.env --profile jellyfin up -d jellyfin
+data_path: /data/oiab/services/jellyfin
+content_path: /data/oiab/media
+notes: Uses the existing trailer media directory for movies, TV, home videos, and music when the SSD env paths are configured.
 ports:
   - 8096
-

@@ -15,11 +15,15 @@
     <section id="missingPack" class="omv2-missing" hidden>
       <div class="omv2-missing-card">
         <p class="eyebrow">Maps v2</p>
-        <h1>No Maps v2 map pack installed</h1>
-        <p>Install a local PMTiles pack and refresh. The preferred future path is:</p>
-        <code>/srv/overland/maps/packs/protomaps-conus.pmtiles</code>
-        <p>The registry endpoint is <code>/maps-v2-map-packs</code>. Place PMTiles archives under <code>/data/oiab/maps/packs</code> or update the OIAB map-pack registry.</p>
+        <h1 id="missingPackTitle">Setting up maps</h1>
+        <p id="missingPackIntro">OIAB is preparing a low-detail World Overview map. If internet is available, this happens automatically.</p>
+        <code>/data/oiab/maps/packs</code>
+        <p>World Overview, CONUS, and state packs are managed from Settings → Map Packs. Manual PMTiles placement is still available as a fallback.</p>
+        <p id="mapPackMessage" class="omv2-pack-message" role="status"></p>
         <button id="retryMapPack" type="button">Retry</button>
+        <button id="rescanMapPacks" type="button">Rescan Local Packs</button>
+        <button id="installWorldOverview" type="button">Install World Overview</button>
+        <button id="openMapPackSettings" type="button">Open Map Pack Settings</button>
       </div>
     </section>
 
@@ -46,7 +50,18 @@
     <section class="omv2-controls omv2-controls-right" aria-label="Layer controls">
       <button id="layersToggle" type="button" title="Folders and layers">☰</button>
       <button id="refreshData" type="button" title="Refresh map data">↻</button>
+      <button id="inspectTile" type="button" title="Inspect PMTiles tile">?</button>
     </section>
+
+    <aside id="mapErrorPanel" class="omv2-panel omv2-errors" hidden>
+      <div class="omv2-panel-head">
+        <div>
+          <span class="eyebrow">Tile Diagnostics</span>
+          <strong>Map loading issues</strong>
+        </div>
+      </div>
+      <div id="mapErrorList" class="omv2-error-list"></div>
+    </aside>
 
     <aside id="layersPanel" class="omv2-panel omv2-layers" hidden>
       <div class="omv2-panel-head">

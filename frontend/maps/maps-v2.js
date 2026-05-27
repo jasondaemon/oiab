@@ -1,24 +1,26 @@
 (() => {
   const $ = (id) => document.getElementById(id);
   const API = {
-    packs: "/maps-v2-map-packs",
+    packs: "/api/maps/packs/installed",
+    packStatus: "/api/maps/packs/status",
     data: "/maps-data",
     location: "/maps-location-current",
     track: "/maps-tracks-current",
     save: "/maps-quick-save",
   };
+  const MAP_3D_BUILDINGS_KEY = "omv2.show3dBuildings";
   const EMPTY = { type: "FeatureCollection", features: [] };
   const WAYPOINT_TYPES = [
-    ["gas", "Gas", "fuel"],
-    ["camp", "Camp", "camp"],
-    ["waterfall", "Waterfall", "water"],
-    ["lookout", "Lookout", "lookout"],
+    ["gas", "Gas", "gas-station-ev-station"],
+    ["camp", "Camp", "campsite"],
+    ["waterfall", "Waterfall", "waterfall"],
+    ["lookout", "Lookout", "viewpoint"],
     ["trailhead", "Trailhead", "trailhead"],
-    ["food", "Food", "food"],
-    ["restroom", "Restroom", "restroom"],
+    ["food", "Food", "restaurant"],
+    ["restroom", "Restroom", "restrooms"],
     ["hazard", "Hazard", "hazard"],
     ["photo", "Photo", "photo"],
-    ["other", "Other", "pin"],
+    ["other", "Other", "information"],
   ];
   const CATEGORY_COLORS = {
     gas: "#f3c74d",
@@ -38,10 +40,123 @@
     quick_save: "#ffd34f",
     "quick-save": "#ffd34f",
   };
+  const MAP_KIND_TO_POI_ICON = {
+    aerodrome: "airport",
+    airport: "airport",
+    alpine_hut: "alpine-hut",
+    atm: "atm",
+    attraction: "attraction",
+    bakery: "bakery",
+    bank: "bank",
+    bar: "bar",
+    beach: "beach",
+    bicycle_parking: "bicycle-parking",
+    bicycle_shop: "bike-shop",
+    bus_station: "bus-station",
+    cafe: "cafe",
+    camp_site: "campsite",
+    campsite: "campsite",
+    campground: "campground",
+    cave_entrance: "cave-entrance",
+    cinema: "cinema",
+    college: "college-university",
+    university: "college-university",
+    dog_park: "dog-park",
+    drinking_water: "drinking-water",
+    fast_food: "fast-food",
+    ferry_terminal: "ferry-terminal",
+    fire_station: "fire-station",
+    fuel: "gas-station-ev-station",
+    gas_station: "gas-station-ev-station",
+    charging_station: "gas-station-ev-station",
+    garden: "garden",
+    golf_course: "golf-course",
+    supermarket: "grocery-store",
+    convenience: "grocery-store",
+    grocery: "grocery-store",
+    hotel: "lodging",
+    motel: "lodging",
+    hot_spring: "hotspring",
+    information: "information",
+    library: "library",
+    lighthouse: "lighthouse",
+    marina: "marina",
+    hospital: "medical-clinic-hospital",
+    clinic: "medical-clinic-hospital",
+    doctors: "medical-clinic-hospital",
+    pharmacy: "pharmacy",
+    mine: "mine-quarry",
+    quarry: "mine-quarry",
+    museum: "museum",
+    outdoor: "outdoor-store",
+    parking: "parking",
+    parking_lot: "parking",
+    peak: "peak-summit",
+    picnic_site: "picnic-area",
+    playground: "playground",
+    police: "police-station",
+    post_office: "post-office",
+    pub: "pub-brewery",
+    ranger_station: "ranger-station",
+    restaurant: "restaurant",
+    restroom: "restrooms",
+    restrooms: "restrooms",
+    station: "train-station",
+    bus_stop: "bus-station",
+    toilet: "restrooms",
+    toilets: "restrooms",
+    rv_site: "rv-camping",
+    school: "school",
+    shelter: "shelter",
+    shop: "shopping",
+    ski: "ski-area",
+    spring: "spring",
+    swimming_pool: "swimming-area",
+    theatre: "theater",
+    theme_park: "theme-park",
+    trailhead: "trailhead",
+    train_station: "train-station",
+    viewpoint: "viewpoint",
+    lookout: "lookout-tower",
+    visitor_center: "visitor-center",
+    volcano: "volcano",
+    waterfall: "waterfall",
+    zoo: "zoo",
+  };
+  const WAYPOINT_CATEGORY_TO_POI_ICON = {
+    gas: "gas-station-ev-station",
+    fuel: "gas-station-ev-station",
+    camp: "campsite",
+    campsite: "campsite",
+    campground: "campground",
+    waterfall: "waterfall",
+    water: "drinking-water",
+    lookout: "viewpoint",
+    viewpoint: "viewpoint",
+    trailhead: "trailhead",
+    food: "restaurant",
+    restaurant: "restaurant",
+    restroom: "restrooms",
+    restrooms: "restrooms",
+    toilet: "restrooms",
+    hazard: "hazard",
+    photo: "photo",
+    parking: "parking",
+    library: "library",
+    other: "information",
+    waypoint: "information",
+    quick_save: "information",
+    "quick-save": "information",
+  };
+  const POI_ICON_KEYS = Array.from(new Set([
+    ...Object.values(MAP_KIND_TO_POI_ICON),
+    ...Object.values(WAYPOINT_CATEGORY_TO_POI_ICON),
+    "information",
+  ])).sort();
 
   const state = {
     map: null,
-    pack: null,
+    packSelection: null,
     follow: false,
     addFromMap: false,
     currentLocation: null,
@@ -51,10 +166,19 @@
     hiddenFolders: new Set(JSON.parse(localStorage.getItem("omv2.hiddenFolders") || "[]")),
     showWaypoints: JSON.parse(localStorage.getItem("omv2.showWaypoints") || "true"),
     showTracks: JSON.parse(localStorage.getItem("omv2.showTracks") || "true"),
+    show3dBuildings: JSON.parse(localStorage.getItem(MAP_3D_BUILDINGS_KEY) || "false"),
     places: EMPTY,
     track: null,
     vehicleMarker: null,
     modalPoint: null,
+    missingPackPoll: null,
+    dataTimer: null,
+    locationTimer: null,
+    trackTimer: null,
+    packTimer: null,
+    packSignature: "",
+    tileErrors: [],
+    inspectTile: false,
   };
 
   function toast(message, error = false) {
@@ -64,6 +188,69 @@
     node.hidden = false;
     clearTimeout(toast.timer);
     toast.timer = setTimeout(() => { node.hidden = true; }, 3200);
+  }
+
+  function setPackMessage(message, error = false) {
+    const node = $("mapPackMessage");
+    if (!node) return;
+    node.textContent = message || "";
+    node.classList.toggle("is-error", Boolean(error));
+  }
+
+  function worldOverviewJob(registry) {
+    const jobs = registry?.jobs || {};
+    return jobs.world_overview || null;
+  }
+
+  function renderMissingPack(registry = {}) {
+    const job = worldOverviewJob(registry);
+    const title = $("missingPackTitle");
+    const intro = $("missingPackIntro");
+    const installButton = $("installWorldOverview");
+    const status = String(job?.status || "");
+    $("missingPack").hidden = false;
+    $("mapPackName").textContent = "No active map pack";
+    installButton.disabled = status === "pending" || status === "running";
+    if (status === "pending" || status === "running") {
+      title.textContent = "Setting up maps";
+      intro.textContent = "World Overview is installing in the background. Maps will load automatically when it is ready.";
+      setPackMessage(`World Overview install ${status}${job?.progress ? ` · ${job.progress}%` : ""}.`);
+      return;
+    }
+    if (status === "failed") {
+      title.textContent = "Map setup needs attention";
+      intro.textContent = "World Overview could not install automatically. Retry it, open Map Pack Settings, or rescan local PMTiles.";
+      setPackMessage(job?.error || "World Overview install failed.", true);
+      return;
+    }
+    title.textContent = "No active map pack";
+    intro.textContent = "Install World Overview from the catalog, or use Map Pack Settings to install CONUS or state packs.";
+    setPackMessage("");
+  }
+
+  function stopMissingPackPoll() {
+    if (state.missingPackPoll) {
+      clearInterval(state.missingPackPoll);
+      state.missingPackPoll = null;
+    }
+  }
+
+  function startMissingPackPoll() {
+    if (state.missingPackPoll) return;
+    state.missingPackPoll = setInterval(async () => {
+      try {
+        const registry = await fetchJson(API.packStatus, { ok: false, basemaps: [] });
+        const selection = normalizePackSelection(registry);
+        if (selection) {
+          stopMissingPackPoll();
+          await boot();
+          return;
+        }
+        renderMissingPack(registry);
+      } catch (error) {
+        setPackMessage(error.message, true);
+      }
+    }, 3000);
   }
 
   function number(value, digits = 5) {
@@ -96,6 +283,14 @@
     return props.color || CATEGORY_COLORS[categoryOf(feature)] || "#ffd34f";
   }
 
+  function waypointIconKey(properties = {}) {
+    const raw = String(properties.icon || properties.category || properties.type || "waypoint")
+      .toLowerCase()
+      .replace(/[^a-z0-9_-]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+    return WAYPOINT_CATEGORY_TO_POI_ICON[raw] || (POI_ICON_KEYS.includes(raw) ? raw : "information");
+  }
+
   function featureName(feature) {
     const props = feature.properties || {};
     return props.name || props.title || props.category || "Saved place";
@@ -105,8 +300,8 @@
     return Number.isFinite(Number(lat)) && Number.isFinite(Number(lon)) && Math.abs(Number(lat)) <= 90 && Math.abs(Number(lon)) <= 180;
   }
 
-  async function fetchJson(url, fallback = null) {
-    const response = await fetch(url, { cache: "no-cache" });
+  async function fetchJson(url, fallback = null, options = {}) {
+    const response = await fetch(url, { cache: "no-cache", ...options });
     if (!response.ok) {
       if (fallback !== null) return fallback;
       throw new Error(`${url} returned ${response.status}`);
@@ -114,41 +309,513 @@
     return response.json();
   }
 
-  function normalizePackRegistry(registry) {
-    const basemaps = Array.isArray(registry.basemaps) ? registry.basemaps : [];
-    const activeId = registry.active || registry.active_basemap || "";
-    return basemaps.find((pack) => pack.id === activeId && pack.exists) || basemaps.find((pack) => pack.exists) || null;
+  async function postJson(url, body = {}) {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const text = await response.text();
+    let payload = {};
+    try {
+      payload = JSON.parse(text || "{}");
+    } catch {
+      throw new Error(`${url} returned non-JSON (${response.status}).`);
+    }
+    if (!response.ok || payload.ok === false) throw new Error(payload.error || `${url} returned ${response.status}`);
+    return payload;
+  }
+
+  function clone(value) {
+    return JSON.parse(JSON.stringify(value));
+  }
+
+  function localizeStyle(style) {
+    style.glyphs = absoluteTemplateUrl("/maps-v2/fonts/{fontstack}/{range}.pbf?v=oiab-glyph-fallback-1");
+    if (!style.sprite || String(style.sprite).includes("maps.black") || String(style.sprite).startsWith("/")) {
+      style.sprite = absoluteTemplateUrl("/maps-v2/sprites/legacy/protomaps-light/sprites");
+    }
+    normalizeStyleFonts(style);
+    return style;
+  }
+
+  function absoluteTemplateUrl(value) {
+    if (!value) return value;
+    if (/^https?:\/\//i.test(String(value))) return value;
+    const raw = String(value);
+    if (raw.startsWith("/")) return `${window.location.origin}${raw}`;
+    return `${window.location.href.replace(/[^/]*$/, "")}${raw}`;
+  }
+
+  function normalizeStyleFonts(value) {
+    if (Array.isArray(value)) {
+      for (let i = 0; i < value.length; i += 1) {
+        if (value[i] === "Noto Sans Medium" || value[i] === "Noto Sans Italic") {
+          value[i] = "Noto Sans Regular";
+        } else {
+          normalizeStyleFonts(value[i]);
+        }
+      }
+      return;
+    }
+    if (!value || typeof value !== "object") return;
+    for (const key of Object.keys(value)) normalizeStyleFonts(value[key]);
+  }
+
+  function templateVectorSource(style) {
+    const sources = style.sources || {};
+    if (sources.basemap && sources.basemap.type === "vector") return { id: "basemap", source: sources.basemap };
+    const found = Object.entries(sources).find(([, source]) => source && source.type === "vector");
+    if (found) return { id: found[0], source: found[1] };
+    return { id: "basemap", source: {} };
+  }
+
+  function sourceIdFor(pack) {
+    return `pack-${String(pack.id || "map").replace(/[^a-z0-9_-]+/gi, "-")}`;
+  }
+
+  function poiImageId(key) {
+    return `oiab-poi-${String(key || "information").replace(/[^a-z0-9_-]+/gi, "-")}`;
+  }
+
+  function poiMarkerImageId(key) {
+    return `oiab-poi-marker-${String(key || "information").replace(/[^a-z0-9_-]+/gi, "-")}`;
+  }
+
+  function mapPoiMatchExpression(property, mapping, fallback = "information", idFactory = poiImageId) {
+    const expression = ["match", ["get", property]];
+    for (const [value, iconKey] of Object.entries(mapping)) {
+      expression.push(value, idFactory(iconKey));
+    }
+    expression.push(idFactory(fallback));
+    return expression;
+  }
+
+  async function loadSvgMapImage(id, url, size = 96) {
+    if (!state.map || state.map.hasImage(id)) return;
+    const response = await fetch(url, { cache: "force-cache" });
+    if (!response.ok) throw new Error(`${url} returned ${response.status}`);
+    const svg = await response.text();
+    const objectUrl = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
+    try {
+      const image = new Image();
+      image.decoding = "async";
+      await new Promise((resolve, reject) => {
+        image.onload = resolve;
+        image.onerror = reject;
+        image.src = objectUrl;
+      });
+      const canvas = document.createElement("canvas");
+      canvas.width = size;
+      canvas.height = size;
+      const context = canvas.getContext("2d");
+      context.clearRect(0, 0, size, size);
+      context.drawImage(image, 0, 0, size, size);
+      state.map.addImage(id, context.getImageData(0, 0, size, size), { pixelRatio: 2 });
+    } finally {
+      URL.revokeObjectURL(objectUrl);
+    }
+  }
+
+  async function loadPoiImages() {
+    const tasks = POI_ICON_KEYS.flatMap((key) => [
+      loadSvgMapImage(poiImageId(key), `/maps-v2/icons/poi/${key}.svg`).catch((error) => {
+        console.warn("[OIAB Maps v2] POI icon failed", key, error);
+      }),
+      loadSvgMapImage(poiMarkerImageId(key), `/maps-v2/icons/poi-marker/${key}.svg`, 120).catch((error) => {
+        console.warn("[OIAB Maps v2] POI marker failed", key, error);
+      }),
+    ]);
+    await Promise.all(tasks);
+  }
+
+  function addBasePoiIconLayer() {
+    const sourceId = sourceIdFor(state.packSelection?.base || {});
+    if (!state.map || !state.map.getSource(sourceId) || state.map.getLayer("oiab-poi-icons")) return;
+    const beforeId = state.map.getLayer("oiab-travel-poi-labels") ? "oiab-travel-poi-labels" : undefined;
+    state.map.addLayer({
+      id: "oiab-poi-icons",
+      type: "symbol",
+      source: sourceId,
+      "source-layer": "pois",
+      minzoom: 13,
+      filter: ["in", ["get", "kind"], ["literal", Object.keys(MAP_KIND_TO_POI_ICON)]],
+      layout: {
+        "icon-image": mapPoiMatchExpression("kind", MAP_KIND_TO_POI_ICON, "information", poiMarkerImageId),
+        "icon-size": ["interpolate", ["linear"], ["zoom"], 13, 0.22, 15, 0.3, 18, 0.42],
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+        "icon-optional": false,
+        "icon-padding": 2,
+      },
+    }, beforeId);
+  }
+
+  function numericPackZoom(pack, key, fallback) {
+    const aliases = key === "maxzoom"
+      ? [pack.actual_maxzoom, pack.actual_max_zoom, pack.maxzoom, pack.max_zoom, pack.catalog_maxzoom, pack.catalog_max_zoom]
+      : [pack.actual_minzoom, pack.actual_min_zoom, pack.minzoom, pack.min_zoom, pack.catalog_minzoom, pack.catalog_min_zoom];
+    for (const value of aliases) {
+      const parsed = Number(value);
+      if (Number.isFinite(parsed)) return parsed;
+    }
+    return fallback;
+  }
+
+  function packZoomDiagnostics(pack, templateSource = {}) {
+    const sourceMinzoom = numericPackZoom(pack, "minzoom", templateSource.minzoom ?? 0);
+    const sourceMaxzoom = numericPackZoom(pack, "maxzoom", templateSource.maxzoom ?? 15);
+    const catalogMax = Number(pack.catalog_maxzoom ?? pack.catalog_max_zoom);
+    const actualMax = Number(pack.actual_maxzoom ?? pack.actual_max_zoom);
+    return {
+      sourceMinzoom,
+      sourceMaxzoom,
+      catalogMinzoom: pack.catalog_minzoom ?? pack.catalog_min_zoom ?? "",
+      catalogMaxzoom: Number.isFinite(catalogMax) ? catalogMax : "",
+      actualMinzoom: pack.actual_minzoom ?? pack.actual_min_zoom ?? "",
+      actualMaxzoom: Number.isFinite(actualMax) ? actualMax : "",
+      warning: Number.isFinite(actualMax) && Number.isFinite(catalogMax) && actualMax < catalogMax
+        ? `Catalog maxzoom ${catalogMax} is higher than actual PMTiles maxzoom ${actualMax}; using actual archive maxzoom.`
+        : "",
+    };
+  }
+
+  function normalizePackSelection(registry) {
+    const basemaps = (Array.isArray(registry.basemaps) ? registry.basemaps : []).filter((pack) => pack && pack.exists);
+    if (!basemaps.length) return null;
+    const byId = new Map(basemaps.map((pack) => [String(pack.id), pack]));
+    const activeId = String(registry.active || registry.active_basemap || "");
+    const detailed = byId.get(activeId);
+    const base = detailed || byId.get("world_overview") || basemaps[0];
+    return {
+      base,
+      overlays: [],
+      all: [base],
+      overlayCount: 0,
+    };
+  }
+
+  function selectionSignature(selection) {
+    return JSON.stringify((selection?.all || []).map((pack) => ({
+      id: pack.id,
+      url: pack.url,
+      public_url: pack.public_url,
+      version: pack.version || "",
+      size_bytes: pack.size_bytes || 0,
+      mtime_ns: pack.mtime_ns || 0,
+      enabled: Boolean(pack.enabled),
+    })));
   }
 
   async function loadPack() {
     const registry = await fetchJson(API.packs, { ok: false, basemaps: [] });
-    const pack = normalizePackRegistry(registry);
-    if (!pack) {
-      $("missingPack").hidden = false;
-      $("mapPackName").textContent = "No map pack installed";
+    const selection = normalizePackSelection(registry);
+    if (!selection) {
+      renderMissingPack(registry);
+      startMissingPackPoll();
       return null;
     }
+    stopMissingPackPoll();
     $("missingPack").hidden = true;
-    $("mapPackName").textContent = pack.name || pack.id;
-    state.pack = pack;
-    return pack;
+    $("mapPackName").textContent = selection.base.name || selection.base.id;
+    state.packSelection = selection;
+    return selection;
   }
 
-  async function loadStyle(pack) {
-    const style = await fetchJson(pack.style || "/maps-v2/map-style.json");
+  async function loadStyle(selection) {
+    const styleUrl = new URL(selection.base.style || "/maps-v2/map-style.json", window.location.href);
+    styleUrl.searchParams.set("v", selectionSignature(selection));
+    const style = localizeStyle(await fetchJson(styleUrl.href, null, { cache: "no-store" }));
+    const templateLayers = Array.isArray(style.layers) ? style.layers : [];
+    const template = templateVectorSource(style);
+    const templateSource = clone(template.source || {});
+    const sources = {};
+    const layers = [];
+    const pack = selection.base;
     const url = new URL(pack.url, window.location.href).href;
-    style.sources = style.sources || {};
-    style.sources.basemap = {
-      ...(style.sources.basemap || {}),
+    const activeSourceId = sourceIdFor(pack);
+    const zooms = packZoomDiagnostics(pack, templateSource);
+    state.sourceZoom = zooms;
+    if (zooms.warning) console.warn("[OIAB Maps v2]", zooms.warning, pack);
+    sources[activeSourceId] = {
+      ...templateSource,
       type: "vector",
       url: `pmtiles://${url}`,
+      minzoom: zooms.sourceMinzoom,
+      maxzoom: zooms.sourceMaxzoom,
       attribution: pack.attribution || "© OpenStreetMap contributors",
     };
+    for (const layer of templateLayers) {
+      if (!layer.source) {
+        layers.push(clone(layer));
+        continue;
+      }
+      if (layer.source !== template.id) continue;
+      const copy = clone(layer);
+      copy.id = layer.id;
+      copy.source = activeSourceId;
+      layers.push(copy);
+    }
+    style.sources = sources;
+    style.layers = layers;
     return style;
   }
 
+  function clearPollers() {
+    ["dataTimer", "locationTimer", "trackTimer", "packTimer"].forEach((key) => {
+      if (state[key]) {
+        clearInterval(state[key]);
+        state[key] = null;
+      }
+    });
+  }
+
+  function maybeFitToSelection(selection) {
+    const target = selection.overlays[selection.overlays.length - 1] || selection.base;
+    const bbox = Array.isArray(target?.bbox) ? target.bbox : null;
+    const signature = selectionSignature(selection);
+    const previous = localStorage.getItem("omv2.packSelection");
+    localStorage.setItem("omv2.packSelection", signature);
+    if (!bbox || bbox.length !== 4 || !state.map) return;
+    const center = state.map.getCenter();
+    const inside = center.lng >= bbox[0] && center.lng <= bbox[2] && center.lat >= bbox[1] && center.lat <= bbox[3];
+    if (previous === signature && inside) return;
+    state.map.fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], {
+      padding: 48,
+      duration: 650,
+      maxZoom: target.region_type === "state" ? 10.5 : target.region_type === "country" ? 7.4 : 3.8,
+    });
+  }
+
+  async function checkPackChange() {
+    try {
+      const registry = await fetchJson(API.packStatus, { ok: false, basemaps: [] });
+      const next = normalizePackSelection(registry);
+      if (!next) return;
+      if (!state.packSelection || selectionSignature(next) !== selectionSignature(state.packSelection)) {
+        await boot();
+      }
+    } catch {
+      // Keep the current map running if pack polling fails.
+    }
+  }
+
+  function tileIdFromEvent(event, error) {
+    const candidates = [
+      event?.tile?.tileID?.canonical,
+      event?.tile?.tileID,
+      event?.coord?.canonical,
+      event?.coord,
+      error?.tileID?.canonical,
+      error?.tileID,
+    ];
+    for (const candidate of candidates) {
+      if (!candidate) continue;
+      const z = candidate.z ?? candidate.overscaledZ;
+      const x = candidate.x;
+      const y = candidate.y;
+      if (Number.isFinite(z) && Number.isFinite(x) && Number.isFinite(y)) {
+        return { z: Number(z), x: Number(x), y: Number(y) };
+      }
+    }
+    const text = `${error?.message || ""} ${error?.url || ""} ${event?.url || ""}`;
+    const patterns = [
+      /(?:^|[^\d])z[=:/ ](\d+)[^\d]+x[=:/ ](\d+)[^\d]+y[=:/ ](\d+)/i,
+      /(?:^|[^\d])(\d{1,2})\/(\d+)\/(\d+)(?:\.|\?|$|[^\d])/,
+    ];
+    for (const pattern of patterns) {
+      const match = text.match(pattern);
+      if (match) return { z: Number(match[1]), x: Number(match[2]), y: Number(match[3]) };
+    }
+    return null;
+  }
+
+  function logMapError(event) {
+    const error = event?.error || event;
+    const message = error?.message || String(error || "MapLibre error");
+    const sourceId = event?.sourceId || event?.source?.id || error?.sourceId || "";
+    const tileId = tileIdFromEvent(event, error);
+    const center = state.map?.getCenter();
+    const activePack = state.packSelection?.base || {};
+    const entry = {
+      time: new Date().toISOString(),
+      sourceId,
+      status: error?.status || error?.statusCode || event?.status || "",
+      url: error?.url || event?.url || error?.resource?.url || event?.resource?.url || "",
+      message,
+      tile: tileId ? `${tileId.z}/${tileId.x}/${tileId.y}` : "",
+      z: tileId?.z,
+      x: tileId?.x,
+      y: tileId?.y,
+      packId: activePack.id || "",
+      packUrl: activePack.public_url || activePack.url || "",
+      zoom: state.map ? Number(state.map.getZoom().toFixed(3)) : "",
+      center: center ? { lon: Number(center.lng.toFixed(6)), lat: Number(center.lat.toFixed(6)) } : null,
+    };
+    state.tileErrors.unshift(entry);
+    state.tileErrors = state.tileErrors.slice(0, 20);
+    localStorage.setItem("omv2.tileErrors", JSON.stringify(state.tileErrors));
+    console.groupCollapsed("[OIAB Maps v2 tile error]", entry.tile || entry.sourceId || entry.message);
+    console.warn(entry);
+    console.warn(event);
+    console.groupEnd();
+    renderMapErrors();
+  }
+
+  function lngLatToTile(lngLat, zoom) {
+    const z = Math.max(0, Math.floor(Number(zoom) || 0));
+    const scale = 2 ** z;
+    const latRad = lngLat.lat * Math.PI / 180;
+    const x = Math.floor((lngLat.lng + 180) / 360 * scale);
+    const y = Math.floor((1 - Math.asinh(Math.tan(latRad)) / Math.PI) / 2 * scale);
+    return { z, x, y };
+  }
+
+  function tileAtZoom(lngLat, zoom) {
+    return lngLatToTile(lngLat, Math.max(0, Number(zoom) || 0));
+  }
+
+  function uniqueTiles(tiles) {
+    const seen = new Set();
+    return tiles.filter((item) => {
+      const key = `${item.role}:${item.z}/${item.x}/${item.y}`;
+      const tileKey = `${item.z}/${item.x}/${item.y}`;
+      if (seen.has(key) || seen.has(tileKey)) return false;
+      seen.add(key);
+      seen.add(tileKey);
+      return true;
+    });
+  }
+
+  async function checkPackTile(pack, tile) {
+    const params = new URLSearchParams({
+      pack: pack.id || "",
+      z: String(tile.z),
+      x: String(tile.x),
+      y: String(tile.y),
+    });
+    const result = await fetchJson(`/api/maps/packs/tile-check?${params}`, { ok: false });
+    return {
+      ...tile,
+      url: `/api/maps/packs/tile-check?${params}`,
+      ok: Boolean(result.ok),
+      tile_exists: Boolean(result.tile_exists),
+      cli_readable: Boolean(result.cli_readable),
+      tile_bytes: Number(result.tile_bytes || 0),
+      result,
+    };
+  }
+
+  async function inspectTileAt(lngLat) {
+    if (!state.map || !state.packSelection?.base) return;
+    const pack = state.packSelection.base;
+    const mapZoom = Number(state.map.getZoom());
+    const floorZoom = Math.floor(mapZoom);
+    const ceilZoom = Math.ceil(mapZoom);
+    const sourceMaxzoom = Number(state.sourceZoom?.sourceMaxzoom ?? pack.actual_maxzoom ?? pack.actual_max_zoom ?? pack.maxzoom ?? pack.max_zoom ?? floorZoom);
+    const likelyZoom = Math.min(sourceMaxzoom, ceilZoom);
+    const floorTile = tileAtZoom(lngLat, floorZoom);
+    const childZoom = floorZoom + 1;
+    const childBase = { z: childZoom, x: floorTile.x * 2, y: floorTile.y * 2 };
+    const checks = uniqueTiles([
+      { role: "floor", ...floorTile },
+      { role: "ceil", ...tileAtZoom(lngLat, ceilZoom) },
+      { role: "source_max", ...tileAtZoom(lngLat, sourceMaxzoom) },
+      { role: "likely_maplibre", ...tileAtZoom(lngLat, likelyZoom) },
+      ...(mapZoom > floorZoom ? [
+        { role: "floor_child_nw", ...childBase },
+        { role: "floor_child_ne", z: childZoom, x: childBase.x + 1, y: childBase.y },
+        { role: "floor_child_sw", z: childZoom, x: childBase.x, y: childBase.y + 1 },
+        { role: "floor_child_se", z: childZoom, x: childBase.x + 1, y: childBase.y + 1 },
+      ] : []),
+    ]);
+    const center = state.map.getCenter();
+    const entry = {
+      time: new Date().toISOString(),
+      sourceId: sourceIdFor(pack),
+      message: "Manual tile inspection",
+      tile: `${floorTile.z}/${floorTile.x}/${floorTile.y}`,
+      z: floorTile.z,
+      x: floorTile.x,
+      y: floorTile.y,
+      packId: pack.id || "",
+      packUrl: pack.public_url || pack.url || "",
+      zoom: Number(mapZoom.toFixed(3)),
+      center: { lon: Number(center.lng.toFixed(6)), lat: Number(center.lat.toFixed(6)) },
+      url: `/api/maps/packs/tile-check?pack=${encodeURIComponent(pack.id || "")}&z=${floorTile.z}&x=${floorTile.x}&y=${floorTile.y}`,
+      zoomDiagnostics: {
+        catalogMinzoom: pack.catalog_minzoom ?? pack.catalog_min_zoom ?? "",
+        catalogMaxzoom: pack.catalog_maxzoom ?? pack.catalog_max_zoom ?? "",
+        actualMinzoom: pack.actual_minzoom ?? pack.actual_min_zoom ?? "",
+        actualMaxzoom: pack.actual_maxzoom ?? pack.actual_max_zoom ?? "",
+        sourceMinzoom: state.sourceZoom?.sourceMinzoom ?? "",
+        sourceMaxzoom,
+        likelyRequestedZoom: likelyZoom,
+        beyondActualMaxzoom: Number.isFinite(Number(pack.actual_maxzoom ?? pack.actual_max_zoom)) && mapZoom > Number(pack.actual_maxzoom ?? pack.actual_max_zoom),
+      },
+    };
+    try {
+      const results = await Promise.all(checks.map((tile) => checkPackTile(pack, tile)));
+      const likely = results.find((tile) => tile.role === "likely_maplibre") || results[0];
+      entry.status = likely?.tile_exists ? "likely tile exists" : "likely tile missing";
+      entry.message = likely?.tile_exists
+        ? `Likely MapLibre tile ${likely.z}/${likely.x}/${likely.y} exists in ${pack.name || pack.id}: ${Number(likely.tile_bytes || 0).toLocaleString()} bytes`
+        : `Likely MapLibre tile is missing or unreadable in ${pack.name || pack.id}`;
+      entry.tileChecks = results;
+      entry.result = likely?.result;
+    } catch (error) {
+      entry.status = "check failed";
+      entry.message = error.message;
+    }
+    state.tileErrors.unshift(entry);
+    state.tileErrors = state.tileErrors.slice(0, 20);
+    localStorage.setItem("omv2.tileErrors", JSON.stringify(state.tileErrors));
+    renderMapErrors();
+    toast(`${entry.tile}: ${entry.status}`);
+    console.groupCollapsed("[OIAB Maps v2 manual tile check]", entry.tile);
+    console.warn(entry);
+    console.groupEnd();
+  }
+
+  function renderMapErrors() {
+    const node = $("mapErrorPanel");
+    const list = $("mapErrorList");
+    if (!node || !list) return;
+    node.hidden = state.tileErrors.length === 0;
+    list.innerHTML = state.tileErrors.slice(0, 8).map((entry) => `
+      <div class="omv2-error-row">
+        <strong>${escapeHtml(entry.sourceId || "map")}</strong>
+        <span>${escapeHtml(entry.message)}</span>
+        ${entry.tile ? `<small>tile ${escapeHtml(entry.tile)} · pack ${escapeHtml(entry.packId)} · zoom ${escapeHtml(entry.zoom)}</small>` : ""}
+        ${entry.zoomDiagnostics ? `<small>catalog ${escapeHtml(entry.zoomDiagnostics.catalogMinzoom ?? "--")}/${escapeHtml(entry.zoomDiagnostics.catalogMaxzoom ?? "--")} · actual ${escapeHtml(entry.zoomDiagnostics.actualMinzoom ?? "--")}/${escapeHtml(entry.zoomDiagnostics.actualMaxzoom ?? "--")} · source ${escapeHtml(entry.zoomDiagnostics.sourceMinzoom ?? "--")}/${escapeHtml(entry.zoomDiagnostics.sourceMaxzoom ?? "--")} · likely z${escapeHtml(entry.zoomDiagnostics.likelyRequestedZoom ?? "--")}</small>` : ""}
+        ${entry.status ? `<small>status ${escapeHtml(entry.status)}</small>` : ""}
+        ${Array.isArray(entry.tileChecks) ? `<div class="omv2-tile-checks">${entry.tileChecks.map((tile) => `<small>${escapeHtml(tile.role)} ${escapeHtml(tile.z)}/${escapeHtml(tile.x)}/${escapeHtml(tile.y)}: ${tile.tile_exists ? `${Number(tile.tile_bytes || 0).toLocaleString()} bytes` : "missing"}</small>`).join("")}</div>` : ""}
+        ${entry.url ? `<code>${escapeHtml(entry.url)}</code>` : ""}
+        ${entry.tile ? `<a href="/map-diagnostics?pack=${encodeURIComponent(entry.packId)}&z=${encodeURIComponent(entry.z)}&x=${encodeURIComponent(entry.x)}&y=${encodeURIComponent(entry.y)}" target="_blank" rel="noreferrer">Check this tile</a>` : ""}
+      </div>
+    `).join("");
+  }
+
+  function applyBuildingDisplayMode() {
+    if (!state.map) return;
+    const extrusionVisibility = state.show3dBuildings ? "visible" : "none";
+    const fillVisibility = state.show3dBuildings ? "none" : "visible";
+    if (state.map.getLayer("buildings-3d")) {
+      state.map.setLayoutProperty("buildings-3d", "visibility", extrusionVisibility);
+    }
+    if (state.map.getLayer("buildings-fill")) {
+      state.map.setLayoutProperty("buildings-fill", "visibility", fillVisibility);
+    }
+    if (state.map.getLayer("buildings")) {
+      state.map.setLayoutProperty("buildings", "visibility", "visible");
+    }
+  }
+
   function initMap(style) {
+    clearPollers();
     if (state.map) state.map.remove();
+    state.tileErrors = [];
+    renderMapErrors();
     state.map = new maplibregl.Map({
       container: "mapCanvas",
       style,
@@ -158,35 +825,132 @@
       bearing: Number(localStorage.getItem("omv2.bearing") || 0),
       attributionControl: true,
       cooperativeGestures: false,
+      canvasContextAttributes: { antialias: true },
     });
     state.map.addControl(new maplibregl.ScaleControl({ maxWidth: 120, unit: "imperial" }), "bottom-left");
+    state.map.on("error", logMapError);
     state.map.on("moveend", saveMapView);
-    state.map.on("load", () => {
+    state.map.on("load", async () => {
+      applyBuildingDisplayMode();
+      await loadPoiImages();
+      addBasePoiIconLayer();
       addOverlandSources();
       loadOverlandData();
       pollLocation();
       pollTrack();
-      setInterval(loadOverlandData, 10000);
-      setInterval(pollLocation, 1000);
-      setInterval(pollTrack, 4000);
+      maybeFitToSelection(state.packSelection);
+      state.dataTimer = setInterval(loadOverlandData, 10000);
+      state.locationTimer = setInterval(pollLocation, 1000);
+      state.trackTimer = setInterval(pollTrack, 4000);
+      state.packTimer = setInterval(checkPackChange, 30000);
     });
     state.map.on("click", (event) => {
+      if (state.inspectTile) {
+        inspectTileAt(event.lngLat);
+        return;
+      }
       if (!state.addFromMap) return;
       state.modalPoint = { lat: event.lngLat.lat, lon: event.lngLat.lng, source: "map_click" };
       state.addFromMap = false;
       $("addMapWaypoint").classList.remove("is-pending");
       openWaypointModal("Save map point");
     });
-    state.map.on("click", "overland-waypoint-circles", (event) => {
-      const feature = event.features && event.features[0];
-      if (!feature) return;
-      const props = feature.properties || {};
-      const coords = feature.geometry.coordinates;
-      new maplibregl.Popup()
-        .setLngLat(coords)
-        .setHTML(`<strong>${escapeHtml(featureName(feature))}</strong><br>${escapeHtml(props.category || "waypoint")} · ${escapeHtml(props.folder || "Unfiled")}<br><small>${escapeHtml(props.notes || "")}</small>`)
-        .addTo(state.map);
-    });
+    state.map.on("click", "overland-waypoint-circles", showWaypointPopup);
+    state.map.on("click", "overland-waypoint-icons", showWaypointPopup);
+    state.map.on("click", "oiab-poi-icons", showBasePoiPopup);
+    state.map.on("click", "pois", showBasePoiPopup);
+  }
+
+  function showWaypointPopup(event) {
+    const feature = event.features && event.features[0];
+    if (!feature) return;
+    const props = feature.properties || {};
+    const coords = feature.geometry.coordinates;
+    new maplibregl.Popup()
+      .setLngLat(coords)
+      .setHTML(`<strong>${escapeHtml(featureName(feature))}</strong><br>${escapeHtml(props.category || "waypoint")} · ${escapeHtml(props.folder || "Unfiled")}<br><small>${escapeHtml(props.notes || "")}</small>`)
+      .addTo(state.map);
+  }
+
+  function showBasePoiPopup(event) {
+    const feature = event.features && event.features[0];
+    if (!feature) return;
+    const props = feature.properties || {};
+    const coords = feature.geometry?.coordinates || [event.lngLat.lng, event.lngLat.lat];
+    const lngLat = Array.isArray(coords) && Number.isFinite(Number(coords[0])) && Number.isFinite(Number(coords[1]))
+      ? coords
+      : [event.lngLat.lng, event.lngLat.lat];
+    new maplibregl.Popup({ className: "omv2-poi-popup", maxWidth: "360px" })
+      .setLngLat(lngLat)
+      .setHTML(basePoiPopupHtml(props))
+      .addTo(state.map);
+  }
+
+  function basePoiPopupHtml(props = {}) {
+    const name = props.name || props["name:en"] || props.name_en || "Point of interest";
+    const kind = humanizePoiValue(props.kind || props.kind_detail || props.amenity || props.shop || props.tourism || "poi");
+    const details = readablePoiDetails(props);
+    const technical = Object.entries(props)
+      .filter(([, value]) => value !== undefined && value !== null && String(value).trim() !== "")
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([key, value]) => `<dt>${escapeHtml(humanizePoiKey(key))}</dt><dd>${escapeHtml(formatPoiValue(value))}</dd>`)
+      .join("");
+    return `
+      <article class="omv2-poi-card">
+        <p class="omv2-poi-kicker">${escapeHtml(kind)}</p>
+        <h3>${escapeHtml(name)}</h3>
+        ${details.length ? `<dl class="omv2-poi-details">${details.map(([key, value]) => `<dt>${escapeHtml(key)}</dt><dd>${escapeHtml(value)}</dd>`).join("")}</dl>` : `<p class="omv2-poi-empty">No additional details in this map pack.</p>`}
+        ${technical ? `<details class="omv2-poi-technical"><summary>Technical details</summary><dl>${technical}</dl></details>` : ""}
+      </article>
+    `;
+  }
+
+  function readablePoiDetails(props = {}) {
+    const fields = [
+      ["kind_detail", "Detail"],
+      ["brand", "Brand"],
+      ["operator", "Operator"],
+      ["network", "Network"],
+      ["cuisine", "Cuisine"],
+      ["opening_hours", "Hours"],
+      ["website", "Website"],
+      ["phone", "Phone"],
+      ["addr:housenumber", "Address #"],
+      ["addr:street", "Street"],
+      ["addr:city", "City"],
+      ["addr:state", "State"],
+      ["addr:postcode", "Postcode"],
+      ["ref", "Reference"],
+      ["ele", "Elevation"],
+    ];
+    const result = [];
+    for (const [key, label] of fields) {
+      const value = props[key] ?? props[key.replace(/:/g, "_")];
+      if (value === undefined || value === null || String(value).trim() === "") continue;
+      result.push([label, formatPoiValue(value)]);
+    }
+    if (props.min_zoom !== undefined) result.push(["Appears from zoom", formatPoiValue(props.min_zoom)]);
+    return result;
+  }
+
+  function humanizePoiKey(key) {
+    return String(key || "")
+      .replace(/^addr:/, "address ")
+      .replace(/[:_]+/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+  }
+
+  function humanizePoiValue(value) {
+    return String(value || "")
+      .replace(/[_-]+/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+  }
+
+  function formatPoiValue(value) {
+    if (typeof value === "boolean") return value ? "Yes" : "No";
+    if (Array.isArray(value)) return value.map(formatPoiValue).join(", ");
+    if (typeof value === "object") return JSON.stringify(value);
+    return humanizePoiValue(value);
   }
 
   function saveMapView() {
@@ -216,10 +980,24 @@
       type: "circle",
       source: "overland-waypoints",
       paint: {
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 5, 12, 8, 16, 12],
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 11, 12, 17, 16, 24],
         "circle-color": ["get", "color"],
+        "circle-opacity": 0.78,
         "circle-stroke-color": "#0a170f",
         "circle-stroke-width": 2,
+      },
+    });
+    state.map.addLayer({
+      id: "overland-waypoint-icons",
+      type: "symbol",
+      source: "overland-waypoints",
+      layout: {
+        "icon-image": mapPoiMatchExpression("marker_icon_key", Object.fromEntries(
+          POI_ICON_KEYS.map((key) => [key, key]),
+        ), "information", poiMarkerImageId),
+        "icon-size": ["interpolate", ["linear"], ["zoom"], 4, 0.36, 12, 0.52, 16, 0.68],
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
       },
     });
     state.map.addLayer({
@@ -290,6 +1068,7 @@
       copy.properties = copy.properties || {};
       copy.properties.name = featureName(feature);
       copy.properties.color = colorFor(feature);
+      copy.properties.marker_icon_key = waypointIconKey(copy.properties);
       if (geometry.type === "Point" && state.showWaypoints) waypointFeatures.push(copy);
       if (["LineString", "MultiLineString"].includes(geometry.type) && state.showTracks) trackFeatures.push(copy);
     }
@@ -464,10 +1243,10 @@
   function renderWaypointTypes() {
     const node = $("waypointTypes");
     node.innerHTML = "";
-    for (const [id, label] of WAYPOINT_TYPES) {
+    for (const [id, label, iconKey] of WAYPOINT_TYPES) {
       const button = document.createElement("button");
       button.type = "button";
-      button.textContent = label;
+      button.innerHTML = `<img src="/maps-v2/icons/poi/${escapeHtml(iconKey)}.svg" alt="" loading="lazy"><span>${escapeHtml(label)}</span>`;
       button.addEventListener("click", () => saveWaypoint(id));
       node.appendChild(button);
     }
@@ -505,7 +1284,45 @@
     $("layersToggle").addEventListener("click", () => { $("layersPanel").hidden = !$("layersPanel").hidden; });
     $("closeLayers").addEventListener("click", () => { $("layersPanel").hidden = true; });
     $("refreshData").addEventListener("click", () => { loadOverlandData(); pollLocation(); pollTrack(); });
+    $("inspectTile").addEventListener("click", () => {
+      state.inspectTile = !state.inspectTile;
+      state.addFromMap = false;
+      $("inspectTile").classList.toggle("is-pending", state.inspectTile);
+      $("addMapWaypoint").classList.remove("is-pending");
+      toast(state.inspectTile ? "Tile inspect mode on. Tap the gray block." : "Tile inspect mode off.");
+    });
     $("retryMapPack").addEventListener("click", boot);
+    $("rescanMapPacks").addEventListener("click", async () => {
+      try {
+        setPackMessage("Scanning /data/oiab/maps/packs...");
+        await postJson("/api/maps/packs/rescan");
+        toast("Map packs rescanned.");
+        setPackMessage("Map packs rescanned.");
+        await boot();
+      } catch (error) {
+        setPackMessage(error.message, true);
+        toast(error.message, true);
+      }
+    });
+    $("installWorldOverview").addEventListener("click", async () => {
+      try {
+        setPackMessage("Starting World Overview install...");
+        toast("Starting World Overview install...");
+        await postJson("/api/maps/packs/install", { id: "world_overview" });
+        setPackMessage("World Overview install is running in the background.");
+        startMissingPackPoll();
+      } catch (error) {
+        setPackMessage(error.message, true);
+        toast(error.message, true);
+      }
+    });
+    $("openMapPackSettings").addEventListener("click", () => {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: "oiab:open-app", appId: "map-packs" }, window.location.origin);
+      } else {
+        window.location.href = "/mobile/map-packs.html";
+      }
+    });
     $("closeWaypointModal").addEventListener("click", closeWaypointModal);
     $("showWaypoints").checked = state.showWaypoints;
     $("showTracks").checked = state.showTracks;
@@ -529,9 +1346,15 @@
         maplibregl.addProtocol("pmtiles", protocol.tile);
         boot.protocolInstalled = true;
       }
-      const pack = await loadPack();
-      if (!pack) return;
-      const style = await loadStyle(pack);
+      const selection = await loadPack();
+      if (!selection) return;
+      const signature = selectionSignature(selection);
+      if (state.map && signature === state.packSignature) {
+        maybeFitToSelection(selection);
+        return;
+      }
+      state.packSignature = signature;
+      const style = await loadStyle(selection);
       initMap(style);
     } catch (error) {
       $("missingPack").hidden = false;
@@ -542,5 +1365,10 @@
 
   bindControls();
   renderWaypointTypes();
+  window.addEventListener("storage", (event) => {
+    if (event.key !== MAP_3D_BUILDINGS_KEY) return;
+    state.show3dBuildings = JSON.parse(event.newValue || "false");
+    applyBuildingDisplayMode();
+  });
   boot();
 })();

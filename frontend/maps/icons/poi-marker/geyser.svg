@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="Geyser marker">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0b170f" flood-opacity=".28"/>
+    </filter>
+  </defs>
+  <circle cx="40" cy="40" r="31" fill="#f8fbf6" stroke="#31a8b7" stroke-width="5" filter="url(#shadow)"/>
+  <g transform="translate(8 8)"><path d="M28 50h8M32 49v-14M15 44c9-2 13-8 13-18M49 44c-9-2-13-8-13-18M24 34c-4-10 2-18 8-24 6 6 12 14 8 24" fill="none" stroke="#173125" stroke-width="4" stroke-linecap="round"/></g>
+</svg>

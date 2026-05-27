@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Mine / Quarry">
+  <rect width="64" height="64" fill="none"/>
+  <g><path d="M15 48l14-14M49 48L35 34M24 24l16-10M19 19l10 10M45 19l-10 10" stroke="#555" stroke-width="4" stroke-linecap="round"/></g>
+</svg>

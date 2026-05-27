@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Ranger Station">
+  <rect width="64" height="64" fill="none"/>
+  <g><path d="M15 50v-25h34v25M11 25L32 11l21 14M26 50V37h12v13" fill="none" stroke="#555" stroke-width="4" stroke-linejoin="round"/><circle cx="32" cy="28" r="3" fill="#555"/></g>
+</svg>

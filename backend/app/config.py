@@ -32,6 +32,7 @@ class Settings:
     gpsd_host: str = os.environ.get("OIAB_GPSD_HOST", "127.0.0.1")
     gpsd_port: int = int(os.environ.get("OIAB_GPSD_PORT", "2947"))
     allow_docker_control: bool = env_bool("OIAB_ALLOW_DOCKER_CONTROL", False)
+    auto_install_world_map: bool = env_bool("OIAB_AUTO_INSTALL_WORLD_MAP", True)
 
     def __post_init__(self) -> None:
         registry = os.environ.get("OIAB_MAP_PACK_REGISTRY")
@@ -70,9 +71,11 @@ DATA_SUBDIRS = [
     "tracks",
     "waypoints",
     "content/zim",
+    "maps/tmp",
     "services/jellyfin",
     "services/komga",
     "services/minecraft",
+    "services/emulatorjs",
     "certs",
     "logs",
     "backups",

@@ -117,6 +117,7 @@ input {
 .omv2-controls button,
 .omv2-panel button,
 .omv2-missing-card button,
+.omv2-link-button,
 .omv2-modal-card button {
   border: 0;
   color: var(--om-text);
@@ -130,7 +131,8 @@ input {
 .omv2-controls button:hover,
 .omv2-controls button.is-active,
 .omv2-panel button:hover,
-.omv2-missing-card button:hover {
+.omv2-missing-card button:hover,
+.omv2-link-button:hover {
   background: var(--om-green);
   color: #082012;
 }
@@ -150,6 +152,52 @@ input {
   overflow: auto;
   border-radius: 24px;
   padding: 14px;
+}
+
+.omv2-errors {
+  left: 50%;
+  right: auto;
+  top: auto;
+  bottom: max(14px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  width: min(640px, calc(100% - 120px));
+  max-height: 34vh;
+}
+
+.omv2-error-list {
+  display: grid;
+  gap: 8px;
+}
+
+.omv2-error-row {
+  display: grid;
+  gap: 3px;
+  border-radius: 14px;
+  padding: 10px;
+  background: rgba(255, 112, 104, 0.12);
+  border: 1px solid rgba(255, 112, 104, 0.32);
+  color: var(--om-muted);
+  font-size: 0.82rem;
+}
+
+.omv2-error-row strong {
+  color: var(--om-red);
+}
+
+.omv2-error-row code {
+  overflow-wrap: anywhere;
+  color: var(--om-yellow);
+}
+
+.omv2-error-row a {
+  color: var(--om-green);
+  font-weight: 900;
+}
+
+.omv2-tile-checks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 2px 8px;
 }
 
 .omv2-panel-head {
@@ -245,12 +293,30 @@ input {
   padding: 12px;
 }
 
-.omv2-missing-card button {
+.omv2-pack-message {
+  min-height: 1.3em;
+  margin: 12px 0 0;
+  color: var(--om-yellow);
+  font-weight: 900;
+}
+
+.omv2-pack-message.is-error {
+  color: var(--om-red);
+}
+
+.omv2-missing-card button,
+.omv2-link-button {
   margin-top: 16px;
   border-radius: 18px;
   padding: 0 18px;
   background: var(--om-green);
   color: #082012;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  text-decoration: none;
 }
 
 .omv2-hint {
@@ -271,11 +337,25 @@ input {
   border: 1px solid rgba(255, 255, 255, 0.12);
   text-align: left;
   padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .omv2-type-grid button:hover {
   background: var(--om-yellow);
   color: #1b1500;
+}
+
+.omv2-type-grid button img {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.omv2-type-grid button span {
+  min-width: 0;
 }
 
 .omv2-toast {
@@ -301,6 +381,91 @@ input {
   height: 32px;
   transform-origin: 50% 50%;
   filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.45));
+}
+
+.omv2-poi-popup .maplibregl-popup-content {
+  width: min(360px, calc(100vw - 36px));
+  border-radius: 18px;
+  padding: 0;
+  overflow: hidden;
+  background: rgba(248, 251, 246, 0.96);
+  color: #173125;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32);
+}
+
+.omv2-poi-popup .maplibregl-popup-close-button {
+  width: 34px;
+  height: 34px;
+  font-size: 22px;
+  color: #173125;
+}
+
+.omv2-poi-card {
+  padding: 16px 18px 14px;
+  font-family: inherit;
+}
+
+.omv2-poi-card h3 {
+  margin: 0 34px 10px 0;
+  font-size: 22px;
+  line-height: 1.05;
+}
+
+.omv2-poi-kicker {
+  margin: 0 34px 5px 0;
+  color: #2d7d47;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.omv2-poi-details,
+.omv2-poi-technical dl {
+  display: grid;
+  grid-template-columns: minmax(90px, 0.42fr) 1fr;
+  gap: 6px 12px;
+  margin: 0;
+}
+
+.omv2-poi-details dt,
+.omv2-poi-technical dt {
+  color: rgba(23, 49, 37, 0.64);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.omv2-poi-details dd,
+.omv2-poi-technical dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.omv2-poi-empty {
+  margin: 0;
+  color: rgba(23, 49, 37, 0.72);
+  font-weight: 750;
+}
+
+.omv2-poi-technical {
+  margin-top: 12px;
+  border-top: 1px solid rgba(23, 49, 37, 0.16);
+  padding-top: 10px;
+}
+
+.omv2-poi-technical summary {
+  cursor: pointer;
+  color: #2d7d47;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.omv2-poi-technical dl {
+  margin-top: 8px;
 }
 
 .vehicle-marker::before {

@@ -35,14 +35,16 @@
 
     <section class="uo-main" aria-live="polite">
       <section id="dashboardView" class="uo-dashboard" aria-label="Dashboard">
-        <button id="dashMapPanel" class="uo-panel uo-map-panel" type="button">
+        <article id="dashMapPanel" class="uo-panel uo-map-panel">
           <iframe id="dashMapFrame" title="Map preview" allow="geolocation; fullscreen"></iframe>
           <span class="uo-panel-label">Maps</span>
-        </button>
+        </article>
         <article id="dashMusicPanel" class="uo-panel uo-music-panel">
           <canvas id="dashMusicCanvas" aria-hidden="true"></canvas>
-          <img id="dashMusicArt" src="/maps/overland/tunes.png" alt="">
-          <div>
+          <button id="dashMusicArtButton" class="uo-art-button" type="button" aria-label="Open music player">
+            <img id="dashMusicArt" src="/maps/overland/tunes.png" alt="">
+          </button>
+          <div class="uo-music-now">
             <span class="uo-eyebrow">Now Playing</span>
             <h1 id="dashMusicTitle">No track selected</h1>
             <p id="dashMusicMeta">Open Music to choose local audio.</p>
@@ -51,18 +53,29 @@
             <button id="dashPrev" class="uo-round-control" type="button" aria-label="Previous"></button>
             <button id="dashPlay" class="uo-round-control is-primary" type="button" aria-label="Play"></button>
             <button id="dashNext" class="uo-round-control" type="button" aria-label="Next"></button>
+            <button id="dashRepeat" class="uo-round-control" type="button" aria-label="Repeat off"></button>
+            <button id="dashShuffle" class="uo-round-control" type="button" aria-label="Shuffle off"></button>
           </div>
           <progress id="dashMusicProgress" max="1000" value="0"></progress>
         </article>
-        <button id="quickWaypointPanel" class="uo-panel uo-waypoint-panel" type="button">
-          <span class="uo-eyebrow">Quick Save</span>
-          <strong>Waypoint</strong>
-          <small id="quickWaypointStatus">Uses stabilized GPS when available.</small>
-        </button>
-        <article class="uo-panel uo-status-panel">
-          <span class="uo-eyebrow">Vehicle Position</span>
-          <strong id="dashGpsSource">Waiting for GPS</strong>
-          <small id="dashGpsMeta">USB GPS preferred, browser fallback retained.</small>
+        <article class="uo-panel uo-drive-panel">
+          <div class="uo-drive-compass" aria-label="Current heading">
+            <div class="uo-compass-rose">
+              <span>N</span><span>E</span><span>S</span><span>W</span>
+              <i id="dashCompassNeedle"></i>
+            </div>
+            <strong id="dashHeading">--°</strong>
+          </div>
+          <div class="uo-drive-readout">
+            <span class="uo-eyebrow">Vehicle</span>
+            <strong><span id="dashSpeed">0</span><small>mph</small></strong>
+            <small id="dashGpsSource">No GPS lock</small>
+            <small id="dashGpsMeta">USB GPS preferred, browser fallback retained.</small>
+          </div>
+          <div class="uo-drive-actions">
+            <button id="quickWaypointPanel" class="uo-drive-action" type="button" aria-label="Save waypoint" title="Save waypoint"></button>
+          </div>
+          <span id="quickWaypointStatus" class="uo-drive-status">Uses stabilized GPS when available.</span>
         </article>
       </section>
 
@@ -80,10 +93,6 @@
 
       <section id="musicView" class="uo-music-view" hidden>
         <canvas id="musicVisualizer" aria-hidden="true"></canvas>
-        <header class="uo-music-top">
-          <button id="musicBack" class="uo-icon-button" type="button" aria-label="Back"></button>
-          <button id="musicLibraryRefresh" class="uo-chip-button" type="button">Scan Library</button>
-        </header>
         <div class="uo-music-layout">
           <div class="uo-album-card">
             <img id="musicArt" src="/maps/overland/tunes.png" alt="">
@@ -93,6 +102,8 @@
               <button id="musicPrev" class="uo-round-control" type="button" aria-label="Previous"></button>
               <button id="musicPlay" class="uo-round-control is-primary" type="button" aria-label="Play"></button>
               <button id="musicNext" class="uo-round-control" type="button" aria-label="Next"></button>
+              <button id="musicRepeat" class="uo-round-control" type="button" aria-label="Repeat off"></button>
+              <button id="musicShuffle" class="uo-round-control" type="button" aria-label="Shuffle off"></button>
             </div>
             <div class="uo-seek-row">
               <span id="musicElapsed">0:00</span>
@@ -144,14 +155,25 @@
             <label>Blur <input id="themeBlur" type="range" min="0" max="28" value="16"></label>
           </section>
           <section class="uo-settings-card">
-            <h2>Dock Apps</h2>
-            <div id="dockSettings" class="uo-dock-settings"></div>
-            <button id="resetDock" class="uo-soft-action" type="button">Reset Dock</button>
+            <h2>Maps</h2>
+            <label class="uo-switch-row">
+              <span>
+                <strong>3D Buildings</strong>
+                <small>Extrude available building footprints in Maps v2.</small>
+              </span>
+              <input id="map3dBuildings" type="checkbox">
+            </label>
+            <a href="/mobile/map-packs.html" data-open-app="map-packs">Maps / Map Packs</a>
           </section>
           <section class="uo-settings-card">
-            <h2>Fallback</h2>
-            <a href="/overland/legacy.html">Legacy Overland Shell</a>
-            <a href="/mobile/">Mobile Launcher</a>
+            <h2>Plugins</h2>
+            <a href="/mobile/services.html" data-open-app="service-manager">Install / Enable Plugins</a>
+            <a href="/mobile/file-uploads.html" data-open-app="file-uploads">File Uploads</a>
+            <a href="/https-settings/" data-open-app="https-settings">HTTPS Setup</a>
+          </section>
+          <section class="uo-settings-card">
+            <h2>System</h2>
+            <a href="/system-monitor/" data-open-app="system-monitor">Performance Monitor</a>
             <a href="/api/config">Runtime Config</a>
             <a href="/api/services">Optional Services</a>
           </section>

@@ -1,3 +1,7 @@
+FROM golang:1.25-bookworm AS pmtiles-cli
+
+RUN go install github.com/protomaps/go-pmtiles@latest
+
 FROM python:3.12-slim AS oiab-core
 
 LABEL org.opencontainers.image.title="Overland In A Box Core"
@@ -10,6 +14,7 @@ ENV OIAB_BIND_HOST=0.0.0.0
 ENV OIAB_PORT_HTTP=8080
 ENV OIAB_DATA_DIR=/data/oiab
 ENV OIAB_DEV_MODE=false
+ENV OIAB_AUTO_INSTALL_WORLD_MAP=true
 
 WORKDIR /opt/oiab
 
@@ -22,9 +27,11 @@ COPY backend /opt/oiab/backend
 COPY frontend /opt/oiab/frontend
 COPY config /opt/oiab/config
 COPY services /opt/oiab/services
+COPY scripts /opt/oiab/scripts
 COPY docs /opt/oiab/docs
 COPY licenses /opt/oiab/licenses
 COPY README.md ARCHITECTURE.md DATA_LAYOUT.md MIGRATION.md TODO.md THIRD_PARTY_NOTICES.md LICENSE.md /opt/oiab/
+COPY --from=pmtiles-cli /go/bin/go-pmtiles /usr/local/bin/pmtiles
 
 RUN useradd --system --uid 10001 --gid 0 --home-dir /opt/oiab oiab \
     && mkdir -p /data/oiab \

@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="RV Camping">
+  <rect width="64" height="64" fill="none"/>
+  <g><path d="M11 41V23h30l12 10v8z" fill="none" stroke="#555" stroke-width="4" stroke-linejoin="round"/><circle cx="21" cy="45" r="4" fill="#555"/><circle cx="44" cy="45" r="4" fill="#555"/><path d="M18 29h10M36 28h8" stroke="#555" stroke-width="3"/></g>
+</svg>

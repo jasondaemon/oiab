@@ -1,0 +1,578 @@
+{
+  "schema": 1,
+  "name": "OIAB Map Legend Reference Pack",
+  "notes": [
+    "Original SVG redraws inspired by user-provided legend screenshots.",
+    "Some entries are placeholders for future overlays such as USGS/topo/public lands.",
+    "This catalog is a design source; MapLibre style wiring is a separate step."
+  ],
+  "line_area": [
+    {
+      "id": "trail",
+      "label": "Trail",
+      "sample": "dash"
+    },
+    {
+      "id": "private-trail",
+      "label": "Privately Maintained Trail",
+      "sample": "private"
+    },
+    {
+      "id": "no-public-access-trail",
+      "label": "Trail with No Public Access",
+      "sample": "no-access"
+    },
+    {
+      "id": "alpine-hiking-route",
+      "label": "Alpine Hiking Route",
+      "sample": "dot"
+    },
+    {
+      "id": "double-track-trail",
+      "label": "Double Track Trail",
+      "sample": "double"
+    },
+    {
+      "id": "ski-run-trail",
+      "label": "Ski Run / Ski Trail",
+      "sample": "ski"
+    },
+    {
+      "id": "chairlift",
+      "label": "Chairlift",
+      "sample": "chairlift"
+    },
+    {
+      "id": "ferry-route",
+      "label": "Ferry Route",
+      "sample": "ferry"
+    },
+    {
+      "id": "powerlines",
+      "label": "Powerlines",
+      "sample": "power"
+    },
+    {
+      "id": "railroad",
+      "label": "Railroad: Active / Abandoned",
+      "sample": "rail"
+    },
+    {
+      "id": "forest-cover",
+      "label": "Forest Cover: Tree / Shrub",
+      "sample": "area:forest"
+    },
+    {
+      "id": "scree-lava-flow",
+      "label": "Scree / Lava Flow",
+      "sample": "area:scree"
+    },
+    {
+      "id": "intermittent-waterbody",
+      "label": "Intermittent Waterbody",
+      "sample": "area:intermittent-water"
+    },
+    {
+      "id": "contours",
+      "label": "Contours",
+      "sample": "area:contours"
+    },
+    {
+      "id": "military-area",
+      "label": "Military Area",
+      "sample": "area:military"
+    },
+    {
+      "id": "snow-ice",
+      "label": "Snow / Ice",
+      "sample": "area:snow"
+    },
+    {
+      "id": "building-structure",
+      "label": "Building / Structure",
+      "sample": "area:building"
+    },
+    {
+      "id": "primary-road",
+      "label": "Primary Road / Interstate",
+      "sample": "primary"
+    },
+    {
+      "id": "secondary-road",
+      "label": "Secondary Road / Highway",
+      "sample": "secondary"
+    },
+    {
+      "id": "minor-road",
+      "label": "Minor Road / Street",
+      "sample": "minor"
+    },
+    {
+      "id": "track-road",
+      "label": "Track / Unmaintained Road / High Clearance Road",
+      "sample": "track"
+    },
+    {
+      "id": "trail-distance",
+      "label": "Trail / Track Distance",
+      "sample": "distance"
+    },
+    {
+      "id": "one-way",
+      "label": "One Way Trail / Road",
+      "sample": "oneway"
+    },
+    {
+      "id": "national-forest",
+      "label": "National Forest",
+      "sample": "box:#e5f4e8:#6dc476"
+    },
+    {
+      "id": "national-park",
+      "label": "National Park / National Recreation Area",
+      "sample": "box:#efe6da:#c7b49c"
+    },
+    {
+      "id": "state-park",
+      "label": "State Park",
+      "sample": "box:#ffe2e1:#ef9aa2"
+    },
+    {
+      "id": "blm",
+      "label": "Bureau of Land Management (BLM)",
+      "sample": "box:#fffbd0:#d8d074"
+    },
+    {
+      "id": "state-land",
+      "label": "State Land",
+      "sample": "box:#efedff:#c3b9f0"
+    },
+    {
+      "id": "wildlife-area",
+      "label": "Wildlife Area",
+      "sample": "box:#fbedd7:#d9b36a"
+    },
+    {
+      "id": "marine-protection",
+      "label": "Marine Protection Area",
+      "sample": "box:#d9f4fb:#84cadd"
+    },
+    {
+      "id": "wilderness",
+      "label": "Wilderness / Wilderness Study Area",
+      "sample": "box:#d7ecd7:#7aa87a"
+    },
+    {
+      "id": "other-protected",
+      "label": "Other Park / Protected Area",
+      "sample": "box:#daf7ed:#8ed9c5"
+    }
+  ],
+  "poi": [
+    {
+      "id": "airport",
+      "label": "Airport",
+      "color": "#2f75c9"
+    },
+    {
+      "id": "alpine-hut",
+      "label": "Alpine Hut / Cabin / Chalet",
+      "color": "#555"
+    },
+    {
+      "id": "amphitheater",
+      "label": "Amphitheater",
+      "color": "#555"
+    },
+    {
+      "id": "atm",
+      "label": "ATM",
+      "color": "#8d7469"
+    },
+    {
+      "id": "attraction",
+      "label": "Attraction",
+      "color": "#7d5ab5"
+    },
+    {
+      "id": "bakery",
+      "label": "Bakery",
+      "color": "#d8752b"
+    },
+    {
+      "id": "bank",
+      "label": "Bank",
+      "color": "#8d7469"
+    },
+    {
+      "id": "bar",
+      "label": "Bar",
+      "color": "#d8752b"
+    },
+    {
+      "id": "beach",
+      "label": "Beach",
+      "color": "#555"
+    },
+    {
+      "id": "bicycle-parking",
+      "label": "Bicycle Parking",
+      "color": "#555"
+    },
+    {
+      "id": "bike-shop",
+      "label": "Bike Shop",
+      "color": "#d8752b"
+    },
+    {
+      "id": "bus-station",
+      "label": "Bus Station",
+      "color": "#2f75c9"
+    },
+    {
+      "id": "cafe",
+      "label": "Cafe",
+      "color": "#d8752b"
+    },
+    {
+      "id": "campground",
+      "label": "Campground",
+      "color": "#555"
+    },
+    {
+      "id": "campsite",
+      "label": "Campsite",
+      "color": "#555"
+    },
+    {
+      "id": "canoe-launch",
+      "label": "Canoe Launch",
+      "color": "#555"
+    },
+    {
+      "id": "cave-entrance",
+      "label": "Cave Entrance",
+      "color": "#555"
+    },
+    {
+      "id": "cinema",
+      "label": "Cinema",
+      "color": "#7d5ab5"
+    },
+    {
+      "id": "climbing-area",
+      "label": "Climbing Area",
+      "color": "#555"
+    },
+    {
+      "id": "college-university",
+      "label": "College / University",
+      "color": "#8d7469"
+    },
+    {
+      "id": "dog-park",
+      "label": "Dog Park",
+      "color": "#438a54"
+    },
+    {
+      "id": "drinking-water",
+      "label": "Drinking Water",
+      "color": "#31a8b7"
+    },
+    {
+      "id": "entrance-station",
+      "label": "Entrance Station",
+      "color": "#555"
+    },
+    {
+      "id": "fast-food",
+      "label": "Fast Food",
+      "color": "#d8752b"
+    },
+    {
+      "id": "fee-booth",
+      "label": "Fee Booth",
+      "color": "#555"
+    },
+    {
+      "id": "ferry-terminal",
+      "label": "Ferry Terminal",
+      "color": "#2f75c9"
+    },
+    {
+      "id": "fire-station",
+      "label": "Fire Station",
+      "color": "#8d7469"
+    },
+    {
+      "id": "fishing",
+      "label": "Fishing",
+      "color": "#555"
+    },
+    {
+      "id": "food-box",
+      "label": "Food Box",
+      "color": "#555"
+    },
+    {
+      "id": "garden",
+      "label": "Garden",
+      "color": "#438a54"
+    },
+    {
+      "id": "gas-station-ev-station",
+      "label": "Gas Station / EV Station",
+      "color": "#d8752b"
+    },
+    {
+      "id": "gate",
+      "label": "Gate",
+      "color": "#555"
+    },
+    {
+      "id": "geyser",
+      "label": "Geyser",
+      "color": "#31a8b7"
+    },
+    {
+      "id": "golf-course",
+      "label": "Golf Course",
+      "color": "#438a54"
+    },
+    {
+      "id": "grocery-store",
+      "label": "Grocery Store",
+      "color": "#d8752b"
+    },
+    {
+      "id": "group-camp",
+      "label": "Group Camp",
+      "color": "#555"
+    },
+    {
+      "id": "horseback-riding",
+      "label": "Horseback Riding",
+      "color": "#555"
+    },
+    {
+      "id": "hotspring",
+      "label": "Hotspring",
+      "color": "#31a8b7"
+    },
+    {
+      "id": "ice-cream",
+      "label": "Ice Cream",
+      "color": "#d8752b"
+    },
+    {
+      "id": "information",
+      "label": "Information",
+      "color": "#555"
+    },
+    {
+      "id": "library",
+      "label": "Library",
+      "color": "#8d7469"
+    },
+    {
+      "id": "lighthouse",
+      "label": "Lighthouse",
+      "color": "#555"
+    },
+    {
+      "id": "lodging",
+      "label": "Lodging",
+      "color": "#2f75c9"
+    },
+    {
+      "id": "lookout-tower",
+      "label": "Lookout Tower",
+      "color": "#555"
+    },
+    {
+      "id": "marina",
+      "label": "Marina",
+      "color": "#555"
+    },
+    {
+      "id": "medical-clinic-hospital",
+      "label": "Medical Clinic / Hospital",
+      "color": "#d92929"
+    },
+    {
+      "id": "mine-quarry",
+      "label": "Mine / Quarry",
+      "color": "#555"
+    },
+    {
+      "id": "museum",
+      "label": "Museum",
+      "color": "#7d5ab5"
+    },
+    {
+      "id": "outdoor-store",
+      "label": "Outdoor Store",
+      "color": "#d8752b"
+    },
+    {
+      "id": "parking",
+      "label": "Parking",
+      "color": "#555"
+    },
+    {
+      "id": "peak-summit",
+      "label": "Peak / Summit",
+      "color": "#8d7469"
+    },
+    {
+      "id": "picnic-area",
+      "label": "Picnic Area",
+      "color": "#555"
+    },
+    {
+      "id": "pharmacy",
+      "label": "Pharmacy",
+      "color": "#d92929"
+    },
+    {
+      "id": "playground",
+      "label": "Playground",
+      "color": "#438a54"
+    },
+    {
+      "id": "police-station",
+      "label": "Police Station",
+      "color": "#8d7469"
+    },
+    {
+      "id": "post-office",
+      "label": "Post Office",
+      "color": "#8d7469"
+    },
+    {
+      "id": "pub-brewery",
+      "label": "Pub / Brewery",
+      "color": "#d8752b"
+    },
+    {
+      "id": "ranger-station",
+      "label": "Ranger Station",
+      "color": "#555"
+    },
+    {
+      "id": "restaurant",
+      "label": "Restaurant",
+      "color": "#d8752b"
+    },
+    {
+      "id": "restrooms",
+      "label": "Restrooms",
+      "color": "#555"
+    },
+    {
+      "id": "rock-boulder",
+      "label": "Rock / Boulder",
+      "color": "#555"
+    },
+    {
+      "id": "rv-camping",
+      "label": "RV Camping",
+      "color": "#555"
+    },
+    {
+      "id": "school",
+      "label": "School",
+      "color": "#8d7469"
+    },
+    {
+      "id": "shelter",
+      "label": "Shelter",
+      "color": "#555"
+    },
+    {
+      "id": "shopping",
+      "label": "Shopping",
+      "color": "#d8752b"
+    },
+    {
+      "id": "ski-area",
+      "label": "Ski Area",
+      "color": "#555"
+    },
+    {
+      "id": "slipway-boat-launch",
+      "label": "Slipway / Boat Launch",
+      "color": "#555"
+    },
+    {
+      "id": "spring",
+      "label": "Spring",
+      "color": "#31a8b7"
+    },
+    {
+      "id": "swimming-area",
+      "label": "Swimming Area",
+      "color": "#555"
+    },
+    {
+      "id": "theater",
+      "label": "Theater",
+      "color": "#7d5ab5"
+    },
+    {
+      "id": "theme-park",
+      "label": "Theme Park",
+      "color": "#7d5ab5"
+    },
+    {
+      "id": "trailhead",
+      "label": "Trailhead",
+      "color": "#555"
+    },
+    {
+      "id": "train-station",
+      "label": "Train Station",
+      "color": "#2f75c9"
+    },
+    {
+      "id": "viewpoint",
+      "label": "Viewpoint",
+      "color": "#555"
+    },
+    {
+      "id": "visitor-center",
+      "label": "Visitor Center",
+      "color": "#555"
+    },
+    {
+      "id": "volcano",
+      "label": "Volcano",
+      "color": "#8d7469"
+    },
+    {
+      "id": "waterfall",
+      "label": "Waterfall",
+      "color": "#31a8b7"
+    },
+    {
+      "id": "xc-ski-area",
+      "label": "XC Ski Area",
+      "color": "#555"
+    },
+    {
+      "id": "zoo",
+      "label": "Zoo",
+      "color": "#7d5ab5"
+    },
+    {
+      "id": "hazard",
+      "label": "Hazard",
+      "color": "#d92929"
+    },
+    {
+      "id": "photo",
+      "label": "Photo",
+      "color": "#2f75c9"
+    }
+  ]
+}

@@ -5,8 +5,7 @@
   "defaultDock": [
     "maps-v2",
     "music",
-    "gps-status",
-    "games"
+    "gps-status"
   ],
   "apps": [
     {
@@ -40,15 +39,6 @@
       "native": "music"
     },
     {
-      "id": "games",
-      "title": "Games",
-      "description": "Offline family games and scoreboards.",
-      "url": "/mobile/",
-      "icon": "/maps/overland/overland-folder-games.svg",
-      "category": "Games",
-      "dock": true
-    },
-    {
       "id": "file-uploads",
       "title": "File Uploads",
       "description": "Upload music, GPX, books, and local content.",
@@ -66,9 +56,25 @@
     },
     {
       "id": "service-manager",
-      "title": "Optional Services",
-      "description": "Manage optional Kiwix, Jellyfin, Komga, and Minecraft services.",
+      "title": "Plugins",
+      "description": "Install, enable, disable, and configure optional OIAB plugins.",
       "url": "/mobile/services.html",
+      "icon": "/maps/overland/overland-folder-settings.svg",
+      "category": "Admin"
+    },
+    {
+      "id": "system-monitor",
+      "title": "Performance Monitor",
+      "description": "CPU, memory, storage, temperature, and service status.",
+      "url": "/system-monitor/",
+      "icon": "/maps/overland/overland-monitor.svg",
+      "category": "Admin"
+    },
+    {
+      "id": "https-settings",
+      "title": "HTTPS Setup",
+      "description": "Hostname and certificate storage notes for trusted local HTTPS.",
+      "url": "/https-settings/",
       "icon": "/maps/overland/overland-folder-settings.svg",
       "category": "Admin"
     },
@@ -199,7 +205,8 @@
       "url": "/mobile/emulator.html",
       "icon": "/maps/overland/overland-emulator.svg",
       "category": "Games",
-      "native": "emulator"
+      "native": "emulator",
+      "optionalService": "emulatorjs"
     },
     {
       "id": "trivia",

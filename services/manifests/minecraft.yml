@@ -5,10 +5,15 @@ category: games
 install_default: false
 runtime: docker
 compose_file: services/compose/minecraft.yml
+compose_profile: minecraft
+compose_service: minecraft
 systemd_unit: oiab-minecraft.service
 launcher_url: /apps/minecraft/
-installed_marker: /data/oiab/services/minecraft
+installed_marker: /data/oiab/services/minecraft/server
+install_command: docker compose --env-file config/oiab.env --profile minecraft up -d minecraft
+data_path: /data/oiab/services/minecraft
+content_path: /data/oiab/services/minecraft/server
+notes: Uses the old trailer Minecraft SSD directory when OIAB_MINECRAFT_DIR points at /srv/trailer/minecraft/server.
 ports:
   - 25565
   - 19132
-
