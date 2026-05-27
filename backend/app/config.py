@@ -57,6 +57,8 @@ DATA_SUBDIRS = [
     "config",
     "db",
     "maps/packs",
+    "maps/overlays",
+    "maps/cache",
     "maps/styles",
     "maps/sprites",
     "media/music",

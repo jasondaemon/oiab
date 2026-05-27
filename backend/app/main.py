@@ -303,6 +303,10 @@ class OIABHandler(BaseHTTPRequestHandler):
             return self.send_json(self.map_pack_catalog())
         if path in {"/api/maps/packs/installed", "/api/maps/packs/status", "/api/maps/packs"}:
             return self.send_json(self.map_packs())
+        if path in {"/api/maps/overlays/catalog", "/maps-overlays-catalog"}:
+            return self.send_json(self.app_db().map_overlay_catalog())
+        if path in {"/api/maps/overlays", "/api/maps/overlays/installed", "/api/maps/overlays/status", "/maps-overlays"}:
+            return self.send_json(self.map_overlays())
         if path in {"/api/maps/packs/diagnostics", "/api/maps/pmtiles/diagnostics"}:
             return self.send_json(self.pmtiles_diagnostics())
         if path in {"/api/maps/packs/tile-check", "/api/maps/pmtiles/tile-check"}:
@@ -441,8 +445,13 @@ class OIABHandler(BaseHTTPRequestHandler):
             return self.handle_file_upload(target)
         if path in {"/api/maps-v2/map-packs", "/maps-v2-map-packs"}:
             return self.handle_map_packs()
+        if path in {"/api/maps/overlays", "/maps-overlays"}:
+            return self.handle_map_overlays()
         if path in {"/api/maps/packs/validate", "/api/maps/pmtiles/validate"}:
             return self.send_json(self.pmtiles_validate(self.read_body()))
+        if path.startswith("/api/maps/overlays/"):
+            action = path.rstrip("/").rsplit("/", 1)[-1]
+            return self.handle_map_overlays(action_override=action)
         if path.startswith("/api/maps/packs/"):
             action = path.rstrip("/").rsplit("/", 1)[-1]
             return self.handle_map_packs(action_override=action)
@@ -565,6 +574,8 @@ class OIABHandler(BaseHTTPRequestHandler):
         if path.startswith("/maps-v2-packs/") or path.startswith("/maps/packs/"):
             rel = path.split("/packs/", 1)[-1] if "/packs/" in path else path.removeprefix("/maps-v2-packs/")
             return self.safe_join(self.settings.data_dir / "maps" / "packs", rel)
+        if path.startswith("/maps/overlays/"):
+            return self.safe_join(self.settings.data_dir / "maps" / "overlays", path.removeprefix("/maps/overlays/"))
         if path.startswith("/maps/emulatorjs/data/"):
             rel = path.removeprefix("/maps/emulatorjs/data/")
             runtime = self.safe_join(self.settings.data_dir / "services" / "emulatorjs" / "data", rel)
@@ -658,6 +669,9 @@ class OIABHandler(BaseHTTPRequestHandler):
     def map_packs(self) -> dict:
         registry = self.app_db().map_pack_registry()
         return {**registry, "jobs": map_pack_job_snapshot()}
+
+    def map_overlays(self) -> dict:
+        return self.app_db().map_overlay_registry()
 
     def pmtiles_diagnostics(self) -> dict:
         try:
@@ -987,6 +1001,27 @@ class OIABHandler(BaseHTTPRequestHandler):
                 self.app_db().rescan_map_packs()
                 return self.send_json(self.map_packs())
             return self.send_json({"ok": False, "error": f"Unknown map pack action: {action}"}, status=400)
+        except Exception as exc:  # noqa: BLE001 - HTTP boundary
+            return self.send_json({"ok": False, "error": str(exc)}, status=400)
+
+    def handle_map_overlays(self, action_override: str | None = None) -> None:
+        payload = self.read_body()
+        action = str(action_override or payload.get("action") or "rescan")
+        db = self.app_db()
+        try:
+            if action in {"rescan", "scan"}:
+                db.rescan_map_overlays()
+                return self.send_json(db.map_overlay_registry())
+            if action in {"set-enabled", "enable", "disable"}:
+                enabled = action == "enable" or bool(payload.get("enabled"))
+                if action == "disable":
+                    enabled = False
+                return self.send_json(db.set_map_overlay_enabled(str(payload.get("id") or ""), enabled))
+            if action == "set-opacity":
+                return self.send_json(db.set_map_overlay_opacity(str(payload.get("id") or ""), payload.get("opacity")))
+            if action == "set-order":
+                return self.send_json(db.set_map_overlay_order(str(payload.get("id") or ""), payload.get("sort_order", payload.get("order"))))
+            return self.send_json({"ok": False, "error": f"Unknown map overlay action: {action}"}, status=400)
         except Exception as exc:  # noqa: BLE001 - HTTP boundary
             return self.send_json({"ok": False, "error": str(exc)}, status=400)
 

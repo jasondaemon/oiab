@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "notes": "Overlay sources are independent MapLibre sources/layers. They are not merged into the active PMTiles basemap.",
+  "overlays": [
+    {
+      "id": "usgs_topo",
+      "name": "USGS Topo",
+      "description": "Online USGS National Map topographic raster overlay. Requires internet unless a future cache/mirror is configured.",
+      "type": "raster",
+      "source_url": "",
+      "tiles": [
+        "https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}"
+      ],
+      "minzoom": 0,
+      "maxzoom": 16,
+      "tile_size": 256,
+      "attribution": "USGS National Map",
+      "online_available": true,
+      "offline_available": false,
+      "cache_mode": "browser",
+      "enabled": false,
+      "opacity": 0.65,
+      "sort_order": 20
+    },
+    {
+      "id": "local_geojson",
+      "name": "Local GeoJSON Overlay",
+      "description": "Drop custom.geojson into /data/oiab/maps/overlays and rescan to use this offline vector overlay.",
+      "type": "geojson",
+      "source_url": "/maps/overlays/custom.geojson",
+      "path": "/data/oiab/maps/overlays/custom.geojson",
+      "attribution": "Local overlay",
+      "online_available": false,
+      "offline_available": false,
+      "cache_mode": "local",
+      "enabled": false,
+      "opacity": 0.8,
+      "sort_order": 100
+    },
+    {
+      "id": "local_pmtiles_overlay",
+      "name": "Local PMTiles Vector Overlay",
+      "description": "Drop custom-overlay.pmtiles into /data/oiab/maps/overlays and configure its source layer before enabling.",
+      "type": "pmtiles",
+      "source_url": "/maps/overlays/custom-overlay.pmtiles",
+      "path": "/data/oiab/maps/overlays/custom-overlay.pmtiles",
+      "source_layer": "default",
+      "layers": [],
+      "attribution": "Local PMTiles overlay",
+      "online_available": false,
+      "offline_available": false,
+      "cache_mode": "local",
+      "enabled": false,
+      "opacity": 0.8,
+      "sort_order": 110
+    }
+  ]
+}

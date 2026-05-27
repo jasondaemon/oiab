@@ -213,6 +213,30 @@ class AppDB:
                   updated_at TEXT NOT NULL
                 );
 
+                CREATE TABLE IF NOT EXISTS map_overlays (
+                  id TEXT PRIMARY KEY,
+                  name TEXT NOT NULL,
+                  type TEXT NOT NULL,
+                  source_url TEXT NOT NULL DEFAULT '',
+                  path TEXT,
+                  source_layer TEXT,
+                  tiles_json TEXT NOT NULL DEFAULT '[]',
+                  layers_json TEXT NOT NULL DEFAULT '[]',
+                  attribution TEXT,
+                  online_available INTEGER NOT NULL DEFAULT 0,
+                  offline_available INTEGER NOT NULL DEFAULT 0,
+                  cache_mode TEXT NOT NULL DEFAULT 'none',
+                  enabled INTEGER NOT NULL DEFAULT 0,
+                  opacity REAL NOT NULL DEFAULT 1.0,
+                  sort_order INTEGER NOT NULL DEFAULT 100,
+                  metadata_json TEXT NOT NULL DEFAULT '{}',
+                  created_at TEXT NOT NULL,
+                  updated_at TEXT NOT NULL
+                );
+
+                CREATE INDEX IF NOT EXISTS idx_map_overlays_enabled
+                  ON map_overlays(enabled, sort_order);
+
                 CREATE TABLE IF NOT EXISTS app_settings (
                   key TEXT PRIMARY KEY,
                   value_json TEXT NOT NULL,
@@ -909,3 +933,214 @@ class AppDB:
             active = installed["id"] if installed else None
         enabled_ids = [active] if active else []
         return {"ok": True, "active": active, "active_basemap": active, "enabled_pack_ids": enabled_ids, "basemaps": basemaps}
+
+    def map_overlay_catalog(self) -> dict[str, Any]:
+        catalog = read_json(REPO_ROOT / "config" / "map-overlays.json", {"version": 1, "overlays": []})
+        overlays = [item for item in catalog.get("overlays", []) or [] if isinstance(item, dict)]
+        return {"ok": True, "version": catalog.get("version", 1), "overlays": overlays}
+
+    def resolve_overlay_path(self, value: str) -> Path:
+        raw = urlsplit(str(value or "")).path
+        path = Path(raw)
+        if path.is_absolute():
+            return path
+        if raw.startswith("/maps/overlays/"):
+            return self.settings.data_dir / "maps" / "overlays" / raw.removeprefix("/maps/overlays/")
+        return self.settings.data_dir / "maps" / "overlays" / path.name
+
+    def versioned_overlay_url(self, public_url: str, path: Path | None) -> str:
+        base = urlsplit(str(public_url or "")).path
+        if not base:
+            return ""
+        if not path or not path.exists() or not path.is_file():
+            return base
+        stat = path.stat()
+        return f"{base}?v={stat.st_size}-{stat.st_mtime_ns}"
+
+    def upsert_map_overlay(self, overlay: dict[str, Any], preserve_existing: bool = True) -> None:
+        overlay_id = str(overlay.get("id") or Path(str(overlay.get("source_url") or overlay.get("path") or "overlay")).stem)
+        if not overlay_id:
+            raise ValueError("Overlay id is required.")
+        overlay_type = str(overlay.get("type") or "geojson").lower()
+        name = str(overlay.get("name") or overlay_id.replace("-", " ").replace("_", " ").title())
+        source_url = str(overlay.get("source_url") or overlay.get("url") or "")
+        path_value = str(overlay.get("path") or "")
+        if not source_url and path_value:
+            source_url = f"/maps/overlays/{Path(path_value).name}"
+        if not path_value and source_url.startswith("/maps/overlays/"):
+            path_value = str(self.resolve_overlay_path(source_url))
+        path = self.resolve_overlay_path(path_value or source_url) if (path_value or source_url) else None
+        offline_available = bool(overlay.get("offline_available", False))
+        if path and path.exists():
+            offline_available = True
+        online_available = bool(overlay.get("online_available", False) or str(source_url).startswith(("http://", "https://")))
+        tiles = overlay.get("tiles") if isinstance(overlay.get("tiles"), list) else []
+        layers = overlay.get("layers") if isinstance(overlay.get("layers"), list) else []
+        metadata = {
+            key: value
+            for key, value in overlay.items()
+            if key not in {"id", "name", "type", "source_url", "url", "path", "source_layer", "tiles", "layers", "attribution", "online_available", "offline_available", "cache_mode", "enabled", "opacity", "sort_order"}
+        }
+        with self.connect() as conn:
+            existing = conn.execute("SELECT * FROM map_overlays WHERE id = ?", (overlay_id,)).fetchone()
+            if existing and preserve_existing:
+                enabled = bool(existing["enabled"])
+                opacity = float(existing["opacity"])
+                sort_order = int(existing["sort_order"])
+            else:
+                enabled = bool(overlay.get("enabled", overlay.get("enabled_default", False)))
+                opacity = float(overlay.get("opacity", 1.0))
+                sort_order = int(overlay.get("sort_order", 100))
+            conn.execute(
+                """
+                INSERT INTO map_overlays(id, name, type, source_url, path, source_layer,
+                                         tiles_json, layers_json, attribution,
+                                         online_available, offline_available, cache_mode,
+                                         enabled, opacity, sort_order, metadata_json,
+                                         created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(id) DO UPDATE SET
+                  name = excluded.name,
+                  type = excluded.type,
+                  source_url = excluded.source_url,
+                  path = excluded.path,
+                  source_layer = excluded.source_layer,
+                  tiles_json = excluded.tiles_json,
+                  layers_json = excluded.layers_json,
+                  attribution = excluded.attribution,
+                  online_available = excluded.online_available,
+                  offline_available = excluded.offline_available,
+                  cache_mode = excluded.cache_mode,
+                  enabled = excluded.enabled,
+                  opacity = excluded.opacity,
+                  sort_order = excluded.sort_order,
+                  metadata_json = excluded.metadata_json,
+                  updated_at = excluded.updated_at
+                """,
+                (
+                    overlay_id,
+                    name,
+                    overlay_type,
+                    source_url,
+                    str(path) if path else path_value or None,
+                    overlay.get("source_layer"),
+                    json_dumps(tiles),
+                    json_dumps(layers),
+                    overlay.get("attribution"),
+                    bool_int(online_available),
+                    bool_int(offline_available),
+                    str(overlay.get("cache_mode") or "none"),
+                    bool_int(enabled),
+                    max(0.0, min(1.0, opacity)),
+                    sort_order,
+                    json_dumps(metadata),
+                    now_iso(),
+                    now_iso(),
+                ),
+            )
+
+    def rescan_map_overlays(self) -> dict[str, Any]:
+        overlays_dir = self.settings.data_dir / "maps" / "overlays"
+        overlays_dir.mkdir(parents=True, exist_ok=True)
+        imported = 0
+        for overlay in self.map_overlay_catalog().get("overlays", []):
+            self.upsert_map_overlay(overlay, preserve_existing=True)
+            imported += 1
+        scanned = 0
+        for path in sorted([*overlays_dir.glob("*.geojson"), *overlays_dir.glob("*.json"), *overlays_dir.glob("*.pmtiles")]):
+            overlay_id = f"local_{path.stem.lower().replace(' ', '_').replace('-', '_')}"
+            overlay_type = "pmtiles" if path.suffix.lower() == ".pmtiles" else "geojson"
+            self.upsert_map_overlay(
+                {
+                    "id": overlay_id,
+                    "name": path.stem.replace("-", " ").replace("_", " ").title(),
+                    "type": overlay_type,
+                    "path": str(path),
+                    "source_url": f"/maps/overlays/{path.name}",
+                    "offline_available": True,
+                    "online_available": False,
+                    "cache_mode": "local",
+                    "enabled": False,
+                    "opacity": 0.8,
+                    "sort_order": 200 + scanned,
+                    "source_layer": "default",
+                    "notes": "Auto-registered local overlay. PMTiles vector overlays need source_layer/layer styling configured before enabling.",
+                },
+                preserve_existing=True,
+            )
+            scanned += 1
+        return {"catalog": imported, "local_files": scanned}
+
+    def row_to_map_overlay(self, row: sqlite3.Row) -> dict[str, Any]:
+        path = self.resolve_overlay_path(row["path"] or row["source_url"])
+        exists = path.exists() if row["path"] or str(row["source_url"]).startswith("/maps/overlays/") else False
+        source_url = str(row["source_url"] or "")
+        if exists and source_url.startswith("/maps/overlays/"):
+            source_url = self.versioned_overlay_url(source_url, path)
+        item = {
+            "id": row["id"],
+            "name": row["name"],
+            "type": row["type"],
+            "source_url": source_url,
+            "url": source_url,
+            "path": row["path"],
+            "source_layer": row["source_layer"],
+            "tiles": json_loads(row["tiles_json"], []),
+            "layers": json_loads(row["layers_json"], []),
+            "attribution": row["attribution"] or "",
+            "online_available": bool(row["online_available"]),
+            "offline_available": bool(row["offline_available"] or exists),
+            "available": bool(row["online_available"] or row["offline_available"] or exists),
+            "exists": exists,
+            "cache_mode": row["cache_mode"],
+            "enabled": bool(row["enabled"]),
+            "opacity": float(row["opacity"]),
+            "sort_order": int(row["sort_order"]),
+            "metadata": json_loads(row["metadata_json"], {}),
+            "created": row["created_at"],
+            "updated": row["updated_at"],
+        }
+        return item
+
+    def map_overlay_registry(self) -> dict[str, Any]:
+        self.rescan_map_overlays()
+        with self.connect() as conn:
+            rows = conn.execute("SELECT * FROM map_overlays ORDER BY sort_order, name COLLATE NOCASE").fetchall()
+        overlays = [self.row_to_map_overlay(row) for row in rows]
+        return {
+            "ok": True,
+            "overlays": overlays,
+            "enabled_overlay_ids": [item["id"] for item in overlays if item["enabled"]],
+            "storage_root": str(self.settings.data_dir / "maps" / "overlays"),
+            "cache_root": str(self.settings.data_dir / "maps" / "cache"),
+        }
+
+    def set_map_overlay_enabled(self, overlay_id: str, enabled: bool) -> dict[str, Any]:
+        with self.connect() as conn:
+            row = conn.execute("SELECT id FROM map_overlays WHERE id = ?", (overlay_id,)).fetchone()
+            if not row:
+                raise ValueError("Map overlay not found.")
+            conn.execute("UPDATE map_overlays SET enabled = ?, updated_at = ? WHERE id = ?", (bool_int(enabled), now_iso(), overlay_id))
+        return self.map_overlay_registry()
+
+    def set_map_overlay_opacity(self, overlay_id: str, opacity: Any) -> dict[str, Any]:
+        value = numeric_value(opacity)
+        if value is None:
+            raise ValueError("Opacity must be a number from 0 to 1.")
+        with self.connect() as conn:
+            row = conn.execute("SELECT id FROM map_overlays WHERE id = ?", (overlay_id,)).fetchone()
+            if not row:
+                raise ValueError("Map overlay not found.")
+            conn.execute("UPDATE map_overlays SET opacity = ?, updated_at = ? WHERE id = ?", (max(0.0, min(1.0, float(value))), now_iso(), overlay_id))
+        return self.map_overlay_registry()
+
+    def set_map_overlay_order(self, overlay_id: str, sort_order: Any) -> dict[str, Any]:
+        value = numeric_value(sort_order)
+        if value is None:
+            raise ValueError("Sort order must be a number.")
+        with self.connect() as conn:
+            row = conn.execute("SELECT id FROM map_overlays WHERE id = ?", (overlay_id,)).fetchone()
+            if not row:
+                raise ValueError("Map overlay not found.")
+            conn.execute("UPDATE map_overlays SET sort_order = ?, updated_at = ? WHERE id = ?", (int(value), now_iso(), overlay_id))
+        return self.map_overlay_registry()

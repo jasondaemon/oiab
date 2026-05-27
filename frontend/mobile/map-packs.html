@@ -32,6 +32,9 @@
     .badge.installing { background:#9bd7ff; color:#06170f; }
     .message { min-height:24px; color:var(--warn); font-weight:900; }
     .path { overflow-wrap:anywhere; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+    .overlay-range { display:grid; gap:6px; min-width:180px; }
+    .overlay-range input[type="range"] { min-height:auto; padding:0; accent-color:var(--accent); }
+    .overlay-order { width:96px; }
     @media (max-width:680px) { main { width:min(100vw - 14px,560px); padding-top:12px; } .pack,.grid { grid-template-columns:1fr; } button,.button { width:100%; } }
   </style>
 </head>
@@ -62,6 +65,15 @@
     </section>
 
     <section class="panel">
+      <span class="kicker">Overlay Sources</span>
+      <p>Overlays are independent MapLibre sources layered over the active basemap. Enable only what you need; online overlays require internet unless cached or mirrored later.</p>
+      <div class="actions">
+        <button id="rescanOverlays" type="button">Rescan Overlays</button>
+      </div>
+      <div id="overlays"></div>
+    </section>
+
+    <section class="panel">
       <span class="kicker">Import host path</span>
       <p>Use this when the PMTiles file already exists on the OIAB host. Browser upload is intentionally not used for huge map packs.</p>
       <div class="grid">
@@ -73,10 +85,12 @@
   <script>
     const packsNode = document.getElementById("packs");
     const catalogNode = document.getElementById("catalog");
+    const overlaysNode = document.getElementById("overlays");
     const message = document.getElementById("message");
     const fmt = new Intl.NumberFormat();
     let installedPacks = [];
     let catalogPacks = [];
+    let overlaySources = [];
     let installJobs = {};
     let pollTimer = null;
 
@@ -137,6 +151,14 @@
         }
       }
       throw new Error(errors[0] || "Map-pack request failed.");
+    }
+
+    async function overlayApi(action, body = {}) {
+      return fetchJson(`/api/maps/overlays/${action}`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(body)
+      });
     }
 
     function installedIndex() {
@@ -207,8 +229,16 @@
       installedPacks = installed.basemaps || installed.packs || [];
       installJobs = catalog.jobs || installed.jobs || {};
       catalogPacks = (catalog.packs || []).filter((pack) => !pack.hidden);
+      try {
+        const overlays = await fetchJson("/api/maps/overlays");
+        overlaySources = overlays.overlays || [];
+      } catch (error) {
+        overlaySources = [];
+        setMessage(`Overlay registry unavailable: ${error.message}`, true);
+      }
       renderCatalog();
       renderInstalled();
+      renderOverlays();
       updatePollState();
     }
 
@@ -301,10 +331,82 @@
         });
       });
     }
+
+    function renderOverlays() {
+      overlaysNode.innerHTML = overlaySources.length ? overlaySources.map((overlay) => {
+        const available = overlay.available || overlay.online_available || overlay.offline_available || overlay.exists;
+        const status = overlay.enabled ? "Enabled" : available ? "Disabled" : "Unavailable";
+        const mode = overlay.online_available && !overlay.offline_available ? "online" : overlay.offline_available ? "offline" : "manual";
+        return `
+          <article class="pack ${overlay.enabled ? "is-active" : ""}">
+            <div class="meta">
+              <span class="badge ${available ? "" : "missing"}">${status}</span>
+              <strong>${overlay.name || overlay.id}</strong>
+              <span>${overlay.type || "overlay"} · ${mode} · cache: ${overlay.cache_mode || "none"}</span>
+              <span>${overlay.attribution || ""}</span>
+              ${overlay.source_url ? `<span class="path">${overlay.source_url}</span>` : ""}
+              ${overlay.path ? `<span class="path">${overlay.path}</span>` : ""}
+              ${overlay.metadata?.description ? `<span>${overlay.metadata.description}</span>` : ""}
+            </div>
+            <div class="actions">
+              <button type="button" data-overlay-enable="${overlay.id}" data-enabled="${overlay.enabled ? "0" : "1"}" ${available ? "" : "disabled"}>${overlay.enabled ? "Disable" : "Enable"}</button>
+              <label class="overlay-range">
+                <span>Opacity ${Math.round(Number(overlay.opacity ?? 1) * 100)}%</span>
+                <input type="range" min="0" max="1" step="0.05" value="${Number(overlay.opacity ?? 1)}" data-overlay-opacity="${overlay.id}">
+              </label>
+              <input class="overlay-order" type="number" value="${Number(overlay.sort_order ?? 100)}" data-overlay-order="${overlay.id}" title="Layer order">
+            </div>
+          </article>
+        `;
+      }).join("") : '<div class="hint panel"><strong>No overlays registered.</strong><p>Use Rescan Overlays to load the catalog and auto-detect files in /data/oiab/maps/overlays.</p></div>';
+
+      overlaysNode.querySelectorAll("[data-overlay-enable]").forEach(button => {
+        button.addEventListener("click", async () => {
+          setMessage("Updating overlay...");
+          try {
+            await overlayApi("set-enabled", {id: button.dataset.overlayEnable, enabled: button.dataset.enabled === "1"});
+            setMessage("Overlay updated.");
+            await load();
+          } catch (error) {
+            setMessage(error.message, true);
+          }
+        });
+      });
+      overlaysNode.querySelectorAll("[data-overlay-opacity]").forEach(input => {
+        input.addEventListener("change", async () => {
+          setMessage("Updating overlay opacity...");
+          try {
+            await overlayApi("set-opacity", {id: input.dataset.overlayOpacity, opacity: input.value});
+            setMessage("Overlay opacity updated.");
+            await load();
+          } catch (error) {
+            setMessage(error.message, true);
+          }
+        });
+      });
+      overlaysNode.querySelectorAll("[data-overlay-order]").forEach(input => {
+        input.addEventListener("change", async () => {
+          setMessage("Updating overlay order...");
+          try {
+            await overlayApi("set-order", {id: input.dataset.overlayOrder, sort_order: input.value});
+            setMessage("Overlay order updated.");
+            await load();
+          } catch (error) {
+            setMessage(error.message, true);
+          }
+        });
+      });
+    }
+
     document.getElementById("refresh").addEventListener("click", () => load().catch(error => setMessage(error.message, true)));
     document.getElementById("rescan").addEventListener("click", async () => {
       setMessage("Scanning /data/oiab/maps/packs...");
       try { await api("rescan"); setMessage("Map packs rescanned."); await load(); }
+      catch (error) { setMessage(error.message, true); }
+    });
+    document.getElementById("rescanOverlays").addEventListener("click", async () => {
+      setMessage("Scanning /data/oiab/maps/overlays...");
+      try { await overlayApi("rescan"); setMessage("Overlays rescanned."); await load(); }
       catch (error) { setMessage(error.message, true); }
     });
     document.getElementById("importButton").addEventListener("click", async () => {

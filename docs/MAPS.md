@@ -128,13 +128,51 @@ If you manually replace a `.pmtiles` file, always click **Rescan** in Settings â
 
 Maps v2 does not require internet after a PMTiles file is installed. It does not require API keys.
 
+## Overlay Sources
+
+Overlays are managed independently from the active basemap. They are not merged into PMTiles map packs and they do not duplicate the full basemap style.
+
+Overlay catalog:
+
+```text
+config/map-overlays.json
+```
+
+Local overlay storage:
+
+```text
+/data/oiab/maps/overlays
+/data/oiab/maps/cache
+```
+
+Overlay API:
+
+```text
+GET  /api/maps/overlays/catalog
+GET  /api/maps/overlays
+GET  /api/maps/overlays/status
+POST /api/maps/overlays/rescan
+POST /api/maps/overlays/set-enabled
+POST /api/maps/overlays/set-opacity
+POST /api/maps/overlays/set-order
+```
+
+Supported overlay source types:
+
+- `geojson`: local or remote GeoJSON source rendered with default fill/line/point styling unless custom layers are configured.
+- `pmtiles`: independent vector PMTiles overlay. Custom layer definitions are recommended because PMTiles overlays need a known `source_layer`.
+- `raster`: tiled raster overlay such as USGS topo. Online raster overlays require internet unless mirrored or cached later.
+
+Settings â†’ Map Packs includes an **Overlay Sources** section for layer toggles, opacity, ordering, rescan, availability, cache mode, and attribution. Enabled overlays are persisted in SQLite and loaded by Maps v2 on startup. Overlay layers are inserted below symbol/label layers by default so labels remain readable.
+
 ## Current Gaps
 
 - Full offline search is not yet ported.
-- Future overlay registry entries are planned for USGS topo, MVUM, public lands, weather, radar, and wildfire data.
+- Overlay caching is currently represented in the registry (`browser`, `local`, `none`) but full offline tile mirroring is not implemented yet.
+- Future overlay registry entries are planned for MVUM, public lands, weather, radar, and wildfire data.
 - Legacy map visual assets are tracked as transitional assets. OIAB-specific icons live separately so they can replace inherited visuals gradually.
 - The Protomaps build URL in the catalog should be refreshed periodically or replaced by a curated OIAB pack repository.
-- Explicit multi-pack overlays are intentionally disabled for now. Maps v2 renders one active PMTiles basemap at a time to avoid duplicate full-style tile requests. Future overlays should use purpose-built overlay layers, not duplicate basemap styles.
+- Explicit multi-pack basemap rendering is intentionally disabled. Maps v2 renders one active PMTiles basemap at a time to avoid duplicate full-style tile requests. Additional data should use purpose-built overlay sources/layers.
 
 ## Legacy Visual Assets
 

@@ -3,6 +3,7 @@
   const API = {
     packs: "/api/maps/packs/installed",
     packStatus: "/api/maps/packs/status",
+    overlays: "/api/maps/overlays",
     data: "/maps-data",
     location: "/maps-location-current",
     track: "/maps-tracks-current",
@@ -177,6 +178,7 @@
     trackTimer: null,
     packTimer: null,
     packSignature: "",
+    overlayRegistry: null,
     tileErrors: [],
     inspectTile: false,
   };
@@ -374,6 +376,14 @@
     return `pack-${String(pack.id || "map").replace(/[^a-z0-9_-]+/gi, "-")}`;
   }
 
+  function overlaySourceId(overlay) {
+    return `overlay-${String(overlay.id || "source").replace(/[^a-z0-9_-]+/gi, "-")}`;
+  }
+
+  function overlayLayerId(overlay, suffix) {
+    return `${overlaySourceId(overlay)}-${suffix}`;
+  }
+
   function poiImageId(key) {
     return `oiab-poi-${String(key || "information").replace(/[^a-z0-9_-]+/gi, "-")}`;
   }
@@ -480,6 +490,25 @@
     };
   }
 
+  function normalizeOverlayRegistry(registry) {
+    return (Array.isArray(registry?.overlays) ? registry.overlays : [])
+      .filter((overlay) => overlay && overlay.enabled && (overlay.available || overlay.online_available || overlay.offline_available || overlay.exists))
+      .sort((a, b) => Number(a.sort_order ?? 100) - Number(b.sort_order ?? 100));
+  }
+
+  function overlaySignature(overlays) {
+    return overlays.map((overlay) => ({
+      id: overlay.id,
+      type: overlay.type,
+      url: overlay.url || overlay.source_url,
+      tiles: overlay.tiles || [],
+      source_layer: overlay.source_layer || "",
+      enabled: Boolean(overlay.enabled),
+      opacity: Number(overlay.opacity ?? 1),
+      sort_order: Number(overlay.sort_order ?? 100),
+    }));
+  }
+
   function normalizePackSelection(registry) {
     const basemaps = (Array.isArray(registry.basemaps) ? registry.basemaps : []).filter((pack) => pack && pack.exists);
     if (!basemaps.length) return null;
@@ -489,26 +518,30 @@
     const base = detailed || byId.get("world_overview") || basemaps[0];
     return {
       base,
-      overlays: [],
+      overlays: normalizeOverlayRegistry(state.overlayRegistry),
       all: [base],
-      overlayCount: 0,
+      overlayCount: normalizeOverlayRegistry(state.overlayRegistry).length,
     };
   }
 
   function selectionSignature(selection) {
-    return JSON.stringify((selection?.all || []).map((pack) => ({
-      id: pack.id,
-      url: pack.url,
-      public_url: pack.public_url,
-      version: pack.version || "",
-      size_bytes: pack.size_bytes || 0,
-      mtime_ns: pack.mtime_ns || 0,
-      enabled: Boolean(pack.enabled),
-    })));
+    return JSON.stringify({
+      packs: (selection?.all || []).map((pack) => ({
+        id: pack.id,
+        url: pack.url,
+        public_url: pack.public_url,
+        version: pack.version || "",
+        size_bytes: pack.size_bytes || 0,
+        mtime_ns: pack.mtime_ns || 0,
+        enabled: Boolean(pack.enabled),
+      })),
+      overlays: overlaySignature(selection?.overlays || []),
+    });
   }
 
   async function loadPack() {
     const registry = await fetchJson(API.packs, { ok: false, basemaps: [] });
+    state.overlayRegistry = await fetchJson(API.overlays, { ok: false, overlays: [] });
     const selection = normalizePackSelection(registry);
     if (!selection) {
       renderMissingPack(registry);
@@ -520,6 +553,159 @@
     $("mapPackName").textContent = selection.base.name || selection.base.id;
     state.packSelection = selection;
     return selection;
+  }
+
+  function overlayOpacity(overlay) {
+    const value = Number(overlay.opacity);
+    return Number.isFinite(value) ? Math.max(0, Math.min(1, value)) : 1;
+  }
+
+  function applyOverlayOpacity(layer, opacity) {
+    const copy = clone(layer);
+    copy.paint = copy.paint || {};
+    if (copy.type === "raster") copy.paint["raster-opacity"] = opacity;
+    if (copy.type === "fill") copy.paint["fill-opacity"] = opacity;
+    if (copy.type === "line") copy.paint["line-opacity"] = opacity;
+    if (copy.type === "circle") copy.paint["circle-opacity"] = opacity;
+    if (copy.type === "symbol") {
+      copy.paint["icon-opacity"] = opacity;
+      copy.paint["text-opacity"] = opacity;
+    }
+    if (copy.type === "fill-extrusion") copy.paint["fill-extrusion-opacity"] = opacity;
+    return copy;
+  }
+
+  function defaultOverlayLayers(overlay, sourceId) {
+    const opacity = overlayOpacity(overlay);
+    if (overlay.type === "raster") {
+      return [{
+        id: overlayLayerId(overlay, "raster"),
+        type: "raster",
+        source: sourceId,
+        paint: { "raster-opacity": opacity },
+      }];
+    }
+    if (overlay.type === "geojson") {
+      return [
+        {
+          id: overlayLayerId(overlay, "fill"),
+          type: "fill",
+          source: sourceId,
+          filter: ["==", ["geometry-type"], "Polygon"],
+          paint: { "fill-color": "#ffcf45", "fill-opacity": opacity * 0.22 },
+        },
+        {
+          id: overlayLayerId(overlay, "line"),
+          type: "line",
+          source: sourceId,
+          filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
+          paint: { "line-color": "#ffcf45", "line-width": 2, "line-opacity": opacity },
+        },
+        {
+          id: overlayLayerId(overlay, "point"),
+          type: "circle",
+          source: sourceId,
+          filter: ["==", ["geometry-type"], "Point"],
+          paint: {
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 7, 3, 14, 6],
+            "circle-color": "#ffcf45",
+            "circle-stroke-color": "#102719",
+            "circle-stroke-width": 1.5,
+            "circle-opacity": opacity,
+          },
+        },
+      ];
+    }
+    if (overlay.type === "pmtiles" && overlay.source_layer) {
+      return [
+        {
+          id: overlayLayerId(overlay, "fill"),
+          type: "fill",
+          source: sourceId,
+          "source-layer": overlay.source_layer,
+          filter: ["==", ["geometry-type"], "Polygon"],
+          paint: { "fill-color": "#ffcf45", "fill-opacity": opacity * 0.22 },
+        },
+        {
+          id: overlayLayerId(overlay, "line"),
+          type: "line",
+          source: sourceId,
+          "source-layer": overlay.source_layer,
+          filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
+          paint: { "line-color": "#ffcf45", "line-width": 2, "line-opacity": opacity },
+        },
+        {
+          id: overlayLayerId(overlay, "point"),
+          type: "circle",
+          source: sourceId,
+          "source-layer": overlay.source_layer,
+          filter: ["==", ["geometry-type"], "Point"],
+          paint: {
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 7, 3, 14, 6],
+            "circle-color": "#ffcf45",
+            "circle-stroke-color": "#102719",
+            "circle-stroke-width": 1.5,
+            "circle-opacity": opacity,
+          },
+        },
+      ];
+    }
+    return [];
+  }
+
+  function appendOverlaySourcesAndLayers(style, overlays) {
+    if (!overlays.length) return;
+    style.sources = style.sources || {};
+    style.layers = Array.isArray(style.layers) ? style.layers : [];
+    const overlayLayers = [];
+    for (const overlay of overlays) {
+      const sourceId = overlaySourceId(overlay);
+      const sourceUrl = overlay.url || overlay.source_url;
+      if (overlay.type === "raster") {
+        const tiles = Array.isArray(overlay.tiles) && overlay.tiles.length ? overlay.tiles : sourceUrl ? [sourceUrl] : [];
+        if (!tiles.length) continue;
+        style.sources[sourceId] = {
+          type: "raster",
+          tiles: tiles.map((tile) => absoluteTemplateUrl(tile)),
+          tileSize: Number(overlay.metadata?.tile_size || overlay.tile_size || 256),
+          minzoom: Number(overlay.minzoom ?? overlay.metadata?.minzoom ?? 0),
+          maxzoom: Number(overlay.maxzoom ?? overlay.metadata?.maxzoom ?? 22),
+          attribution: overlay.attribution || "",
+        };
+      } else if (overlay.type === "geojson") {
+        if (!sourceUrl) continue;
+        style.sources[sourceId] = {
+          type: "geojson",
+          data: absoluteTemplateUrl(sourceUrl),
+          attribution: overlay.attribution || "",
+        };
+      } else if (overlay.type === "pmtiles") {
+        if (!sourceUrl) continue;
+        style.sources[sourceId] = {
+          type: "vector",
+          url: `pmtiles://${new URL(sourceUrl, window.location.href).href}`,
+          attribution: overlay.attribution || "",
+        };
+      } else {
+        continue;
+      }
+      const customLayers = Array.isArray(overlay.layers) ? overlay.layers : [];
+      const layers = customLayers.length
+        ? customLayers.map((layer, index) => {
+          const next = { ...layer, id: layer.id || overlayLayerId(overlay, `custom-${index}`), source: layer.source || sourceId };
+          if (overlay.type === "pmtiles" && overlay.source_layer && !next["source-layer"]) next["source-layer"] = overlay.source_layer;
+          return applyOverlayOpacity(next, overlayOpacity(overlay));
+        })
+        : defaultOverlayLayers(overlay, sourceId);
+      overlayLayers.push(...layers);
+    }
+    if (!overlayLayers.length) return;
+    const labelIndex = style.layers.findIndex((layer) => layer.type === "symbol");
+    if (labelIndex < 0) {
+      style.layers.push(...overlayLayers);
+      return;
+    }
+    style.layers.splice(labelIndex, 0, ...overlayLayers);
   }
 
   async function loadStyle(selection) {
@@ -558,6 +744,7 @@
     }
     style.sources = sources;
     style.layers = layers;
+    appendOverlaySourcesAndLayers(style, selection.overlays || []);
     return style;
   }
 
@@ -590,6 +777,7 @@
   async function checkPackChange() {
     try {
       const registry = await fetchJson(API.packStatus, { ok: false, basemaps: [] });
+      state.overlayRegistry = await fetchJson(API.overlays, { ok: false, overlays: [] });
       const next = normalizePackSelection(registry);
       if (!next) return;
       if (!state.packSelection || selectionSignature(next) !== selectionSignature(state.packSelection)) {
