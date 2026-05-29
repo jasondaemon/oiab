@@ -7,6 +7,7 @@ runtime: docker
 compose_file: services/compose/kiwix.yml
 compose_profile: kiwix
 compose_service: kiwix
+external_container: oiab-kiwix-1
 systemd_unit: oiab-kiwix.service
 launcher_url: /apps/wiki/
 installed_marker: /data/oiab/content/zim

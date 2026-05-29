@@ -1,10 +1,11 @@
 {
   "version": 1,
   "optional_services": [
+    "filebrowser",
     "kiwix",
     "jellyfin",
     "komga",
-    "minecraft"
+    "minecraft",
+    "emulatorjs"
   ]
 }
-

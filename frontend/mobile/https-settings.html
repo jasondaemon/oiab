@@ -5,46 +5,289 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>HTTPS Setup | OIAB</title>
   <style>
-    :root { color-scheme:dark; --bg:#07180f; --panel:rgba(22,58,34,.92); --line:rgba(187,255,198,.22); --text:#f4f7ed; --muted:rgba(244,247,237,.72); --accent:#7df18b; --warn:#ffd34d; }
-    * { box-sizing:border-box; }
-    body { margin:0; min-height:100vh; color:var(--text); font:600 16px/1.35 "Avenir Next","Trebuchet MS",sans-serif; background:radial-gradient(circle at 20% 15%,rgba(125,241,139,.22),transparent 28rem),linear-gradient(135deg,#123822,var(--bg)); }
-    main { width:min(940px,calc(100vw - 24px)); margin:0 auto; padding:20px 0 48px; }
-    h1 { margin:10px 0 14px; font-size:clamp(2.6rem,9vw,5rem); line-height:.9; letter-spacing:-.06em; }
-    .toolbar { display:flex; gap:10px; }
-    a.button { min-height:48px; border:1px solid var(--line); border-radius:999px; padding:0 18px; color:var(--text); background:rgba(255,255,255,.08); font-weight:900; text-decoration:none; display:inline-flex; align-items:center; }
-    .panel { border:1px solid var(--line); border-radius:24px; padding:18px; margin:14px 0; background:linear-gradient(145deg,rgba(39,82,50,.92),rgba(8,29,18,.95)); }
-    .kicker { display:block; color:var(--accent); font-size:.76rem; font-weight:1000; letter-spacing:.16em; text-transform:uppercase; }
-    code,pre { display:block; overflow:auto; border-radius:16px; padding:12px; background:rgba(0,0,0,.25); color:var(--warn); }
-    .grid { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); }
-    .stat { border:1px solid var(--line); border-radius:18px; padding:14px; background:rgba(255,255,255,.06); }
+    :root {
+      color-scheme: dark;
+      --bg: #07180f;
+      --panel: rgba(17, 51, 31, .94);
+      --panel-2: rgba(34, 75, 45, .88);
+      --line: rgba(187, 255, 198, .24);
+      --text: #f4f7ed;
+      --muted: rgba(244, 247, 237, .72);
+      --accent: #7df18b;
+      --warn: #ffd34d;
+      --danger: #ff6c64;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font: 700 14px/1.32 "Avenir Next", "Trebuchet MS", sans-serif;
+      background:
+        radial-gradient(circle at 20% 12%, rgba(125, 241, 139, .18), transparent 30rem),
+        linear-gradient(135deg, #123822, var(--bg));
+    }
+    main { width: min(1120px, calc(100vw - 24px)); margin: 0 auto; padding: 14px 0 34px; }
+    h1 { margin: 8px 0 6px; font-size: clamp(2.4rem, 8vw, 4.8rem); line-height: .9; letter-spacing: -.06em; }
+    p { margin: 7px 0; color: var(--muted); }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; }
+    button, a.button {
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0 16px;
+      color: var(--text);
+      background: rgba(255,255,255,.08);
+      font: inherit;
+      font-weight: 1000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    button.primary { background: var(--accent); color: #062110; border-color: transparent; }
+    button.warn { background: var(--warn); color: #241900; border-color: transparent; }
+    button:disabled { opacity: .48; cursor: not-allowed; }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 16px;
+      margin: 12px 0;
+      background: linear-gradient(145deg, var(--panel-2), var(--panel));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 18px 44px rgba(0,0,0,.22);
+    }
+    .kicker { display: block; color: var(--accent); font-size: .72rem; font-weight: 1000; letter-spacing: .18em; text-transform: uppercase; }
+    .grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(245px, 1fr)); }
+    label {
+      display: grid;
+      gap: 5px;
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 1000;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    input {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 0 11px;
+      color: var(--text);
+      background: rgba(0,0,0,.26);
+      font: 800 .94rem/1.2 "Avenir Next", sans-serif;
+      outline: none;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(125, 241, 139, .18); }
+    .actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 14px; }
+    .status-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); margin-top: 10px; }
+    .stat { border: 1px solid var(--line); border-radius: 16px; padding: 11px; background: rgba(0,0,0,.16); min-height: 70px; }
+    .stat strong { display: block; font-size: 1.05rem; margin-top: 4px; overflow-wrap: anywhere; }
+    pre {
+      min-height: 148px;
+      white-space: pre-wrap;
+      overflow: auto;
+      border-radius: 16px;
+      padding: 12px;
+      margin: 12px 0 0;
+      background: rgba(0,0,0,.32);
+      color: var(--warn);
+      font: 700 .88rem/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .note { color: var(--muted); font-size: .9rem; }
   </style>
 </head>
 <body>
   <main>
-    <div class="toolbar"><a class="button" href="/mobile/">Back</a><a class="button" href="/docs/CERTIFICATES.md">Docs</a></div>
+    <div class="toolbar">
+      <a class="button" href="/settings/">Back</a>
+      <a class="button" href="/docs/CERTIFICATES.md">Docs</a>
+      <button id="refreshStatus" type="button">Refresh</button>
+    </div>
     <h1>HTTPS Setup</h1>
+    <p>Configure trusted local HTTPS using the same DNS-01 helper workflow from the IIAB build. Secrets are passed to the helper and are not stored in the repo.</p>
+
     <section class="panel">
-      <span class="kicker">Runtime certificate configuration</span>
-      <div id="config" class="grid"></div>
+      <span class="kicker">Current Runtime</span>
+      <div id="runtimeConfig" class="status-grid"></div>
     </section>
+
     <section class="panel">
-      <span class="kicker">Trusted local HTTPS</span>
-      <p>OIAB keeps certificate files under the mounted data directory so Docker rebuilds do not erase them. Use DNS-01/Cloudflare issuance outside the container or mount existing certs into the cert directory.</p>
-      <pre>OIAB_HOSTNAME=overland.daemonadventures.net
-OIAB_CERT_MODE=existing
-/data/oiab/certs</pre>
-      <p>Future work will add a guarded certificate action API here. For now this central settings page keeps the current hostname/cert paths visible without hardcoding secrets into the repo.</p>
+      <span class="kicker">Certificate Settings</span>
+      <div class="grid">
+        <label>Base Domain <input id="domain" placeholder="overland.daemonadventures.net"></label>
+        <label>Pi LAN IP <input id="piLanIp" placeholder="192.168.8.2"></label>
+        <label>Certificate Domains <input id="certDomains" placeholder="overland.daemonadventures.net,*.overland.daemonadventures.net"></label>
+        <label>ACME Email <input id="email" placeholder="you@example.com"></label>
+        <label>Maps Host <input id="mapsHost" placeholder="maps.overland.daemonadventures.net"></label>
+        <label>Mobile Host <input id="mobileHost" placeholder="mobile.overland.daemonadventures.net"></label>
+        <label>Music Host <input id="musicHost" placeholder="music.overland.daemonadventures.net"></label>
+        <label>Files Host <input id="filesHost" placeholder="files.overland.daemonadventures.net"></label>
+        <label>Jellyfin Host <input id="jellyfinHost" placeholder="jellyfin.overland.daemonadventures.net"></label>
+        <label>Komga Host <input id="komgaHost" placeholder="komga.overland.daemonadventures.net"></label>
+        <label>Kiwix Host <input id="kiwixHost" placeholder="wiki.overland.daemonadventures.net"></label>
+        <label>Monitor Host <input id="monitorHost" placeholder="monitor.overland.daemonadventures.net"></label>
+        <label>Minecraft Map Host <input id="minecraftMapHost" placeholder="minecraft-map.overland.daemonadventures.net"></label>
+        <label>Minecraft Admin Host <input id="minecraftAdminHost" placeholder="minecraft-admin.overland.daemonadventures.net"></label>
+        <label>Cloudflare API Token <input id="token" type="password" autocomplete="new-password" placeholder="Paste token to save or replace"></label>
+      </div>
+      <div class="actions">
+        <button id="saveConfig" class="primary" type="button">Save Config</button>
+        <button id="saveToken" type="button">Save Token</button>
+        <button id="issueCert" class="warn" type="button">Issue / Renew Cert</button>
+        <button id="showDns" type="button">Show Router DNS</button>
+        <button id="pretrip" type="button">Pre-Trip Check</button>
+      </div>
+      <p class="note">The backend calls <code>overland-https-admin.py</code> if it is installed on the host/container. If the helper is missing, this page reports that directly.</p>
+      <pre id="output">Loading HTTPS status...</pre>
     </section>
   </main>
+
   <script>
-    fetch("/api/config", {cache:"no-store"}).then(r => r.json()).then(data => {
-      document.getElementById("config").innerHTML = [
-        ["Hostname", data.hostname],
-        ["Cert Mode", data.cert_mode],
-        ["Data Dir", data.data_dir],
-        ["HTTPS Port", data.https_port || "configured at proxy"]
-      ].map(([label, value]) => `<div class="stat"><span class="kicker">${label}</span><strong>${value || "--"}</strong></div>`).join("");
-    });
+    const fields = {
+      domain: "domain",
+      piLanIp: "piLanIp",
+      certDomains: "certDomains",
+      email: "email",
+      mapsHost: "mapsHost",
+      mobileHost: "mobileHost",
+      musicHost: "musicHost",
+      filesHost: "filesHost",
+      jellyfinHost: "jellyfinHost",
+      komgaHost: "komgaHost",
+      kiwixHost: "kiwixHost",
+      monitorHost: "monitorHost",
+      minecraftMapHost: "minecraftMapHost",
+      minecraftAdminHost: "minecraftAdminHost",
+    };
+    const hostDefaults = {
+      mapsHost: "maps",
+      mobileHost: "mobile",
+      musicHost: "music",
+      filesHost: "files",
+      jellyfinHost: "jellyfin",
+      komgaHost: "komga",
+      kiwixHost: "wiki",
+      monitorHost: "monitor",
+      minecraftMapHost: "minecraft-map",
+      minecraftAdminHost: "minecraft-admin",
+    };
+    const output = document.getElementById("output");
+
+    function setOutput(text) {
+      output.textContent = text || "";
+    }
+
+    function value(id) {
+      return document.getElementById(id)?.value.trim() || "";
+    }
+
+    function defaultish(value) {
+      return !value || /^(maps|mobile|music|files|jellyfin|komga|wiki|monitor|minecraft-map|minecraft-admin)\.overland\.daemonadventures\.net$/i.test(value);
+    }
+
+    function applyDomainDefaults() {
+      const domain = value("domain");
+      if (!domain) return;
+      const certField = document.getElementById("certDomains");
+      if (certField && defaultish(certField.value)) {
+        certField.value = `${domain},*.${domain}`;
+      }
+      Object.entries(hostDefaults).forEach(([id, prefix]) => {
+        const field = document.getElementById(id);
+        if (field && defaultish(field.value)) field.value = `${prefix}.${domain}`;
+      });
+    }
+
+    async function httpsAdmin(action, payload = {}) {
+      setOutput(`${action}...`);
+      const response = await fetch("/overland-https-admin", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({action, ...payload}),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.ok) throw new Error(data.error || `HTTPS admin failed: ${response.status}`);
+      return data;
+    }
+
+    function renderRuntime(data) {
+      const config = data.config || {};
+      const cert = data.certificate || {};
+      document.getElementById("runtimeConfig").innerHTML = [
+        ["Token", data.tokenConfigured ? "configured" : "missing"],
+        ["Trusted Site", data.trustedSiteEnabled ? "enabled" : "not enabled"],
+        ["Domain", config.domain || "--"],
+        ["Cert", cert.ok ? "issued" : "not issued"],
+      ].map(([label, text]) => `<div class="stat"><span class="kicker">${label}</span><strong>${text}</strong></div>`).join("");
+    }
+
+    function renderStatus(data) {
+      const config = data.config || {};
+      Object.entries(fields).forEach(([key, id]) => {
+        const field = document.getElementById(id);
+        if (field) field.value = config[key] || "";
+      });
+      applyDomainDefaults();
+      renderRuntime(data);
+      const cert = data.certificate || {};
+      const lines = [
+        `Token configured: ${data.tokenConfigured ? "yes" : "no"}`,
+        `Trusted HTTPS enabled: ${data.trustedSiteEnabled ? "yes" : "not yet"}`,
+      ];
+      if (cert.ok) lines.push("", "Certificate:", cert.stdout || "Issued.");
+      else lines.push("", "Certificate not issued yet.", cert.stderr || cert.stdout || "");
+      setOutput(lines.join("\n").trim());
+    }
+
+    async function loadStatus() {
+      try {
+        renderStatus(await httpsAdmin("status"));
+      } catch (error) {
+        setOutput(error.message);
+      }
+    }
+
+    async function saveConfig() {
+      applyDomainDefaults();
+      const config = {};
+      Object.entries(fields).forEach(([key, id]) => { config[key] = value(id); });
+      try {
+        renderStatus(await httpsAdmin("save-config", {config}));
+      } catch (error) {
+        setOutput(error.message);
+      }
+    }
+
+    async function saveToken() {
+      const tokenField = document.getElementById("token");
+      try {
+        renderStatus(await httpsAdmin("save-token", {token: tokenField.value || ""}));
+        tokenField.value = "";
+      } catch (error) {
+        setOutput(error.message);
+      }
+    }
+
+    async function simpleAction(action, outputKey) {
+      try {
+        const data = await httpsAdmin(action);
+        const result = data[outputKey] || data;
+        setOutput(result.stdout || result.stderr || JSON.stringify(data, null, 2));
+        renderRuntime(data);
+      } catch (error) {
+        setOutput(error.message);
+      }
+    }
+
+    document.getElementById("domain").addEventListener("change", applyDomainDefaults);
+    document.getElementById("refreshStatus").addEventListener("click", loadStatus);
+    document.getElementById("saveConfig").addEventListener("click", saveConfig);
+    document.getElementById("saveToken").addEventListener("click", saveToken);
+    document.getElementById("issueCert").addEventListener("click", () => simpleAction("renew", "renew"));
+    document.getElementById("showDns").addEventListener("click", () => simpleAction("dns", "dns"));
+    document.getElementById("pretrip").addEventListener("click", () => simpleAction("pretrip", "pretrip"));
+    loadStatus();
   </script>
 </body>
 </html>

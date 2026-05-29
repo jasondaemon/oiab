@@ -7,6 +7,7 @@ runtime: docker
 compose_file: services/compose/komga.yml
 compose_profile: komga
 compose_service: komga
+external_container: trailer-komga
 systemd_unit: oiab-komga.service
 launcher_url: /apps/komga/
 installed_marker: /data/oiab/services/komga
@@ -15,4 +16,4 @@ data_path: /data/oiab/services/komga
 content_path: /data/oiab/media/books
 notes: Uses the existing trailer ebook and comic directories when OIAB_BOOKS_DIR and OIAB_COMICS_DIR point at /srv/trailer/media/books.
 ports:
-  - 25600
+  - 25601

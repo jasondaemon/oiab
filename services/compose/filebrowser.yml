@@ -1,0 +1,16 @@
+services:
+  filebrowser:
+    image: filebrowser/filebrowser:s6
+    profiles: ["filebrowser", "uploads", "optional"]
+    restart: unless-stopped
+    ports:
+      - "${FILEBROWSER_PORT:-8091}:80"
+    environment:
+      PUID: "${OIAB_UID:-1000}"
+      PGID: "${OIAB_GID:-1000}"
+      TZ: "${TZ:-America/New_York}"
+    command: ["--noauth", "--root", "/srv", "--database", "/database/filebrowser.db", "--address", "0.0.0.0"]
+    volumes:
+      - "${OIAB_FILEBROWSER_ROOT:-/data/oiab}:/srv"
+      - "${OIAB_FILEBROWSER_DB_DIR:-/data/oiab/services/filebrowser/database}:/database"
+      - "${OIAB_FILEBROWSER_CONFIG_DIR:-/data/oiab/services/filebrowser/config}:/config"

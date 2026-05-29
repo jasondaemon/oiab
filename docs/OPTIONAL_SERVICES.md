@@ -9,6 +9,7 @@ Current manifests:
 - Kiwix / Offline Wikipedia
 - Web Emulator Runtime
 - Minecraft
+- File Manager / File Browser
 
 Manifests live under:
 
@@ -29,6 +30,7 @@ docker compose --env-file config/oiab.env --profile jellyfin up -d
 docker compose --env-file config/oiab.env --profile komga up -d
 docker compose --env-file config/oiab.env --profile kiwix up -d
 docker compose --env-file config/oiab.env --profile minecraft up -d
+docker compose --env-file config/oiab.env --profile filebrowser up -d
 ```
 
 The Web Emulator Runtime is an asset plugin. Installing it downloads the offline EmulatorJS runtime into:
@@ -80,6 +82,23 @@ Current implementation runs `docker compose` from the OIAB repo directory when D
 /srv/trailer/minecraft/server -> Minecraft /data
 /srv/trailer/roms -> /data/oiab/games/roms
 /srv/trailer/data/oiab/services/emulatorjs/data -> /maps/emulatorjs/data/
+/srv/trailer -> File Browser /srv root by default
+/srv/trailer/wikis -> /data/oiab/content/wikis
 ```
 
 Kiwix expects ZIM content under `/data/oiab/content/zim`. The first compose profile uses `kiwix-serve --library /data/library.xml`; a future ZIM manager should generate or update that library file.
+
+File Browser is the drag-and-drop file manager used for bulk LAN uploads. It is intentionally separate from the lightweight built-in upload page. Configure credentials and any File Browser auth policy outside git under `/data/oiab/services/filebrowser/config`.
+
+Legacy libraries and static wikis can be linked or copied into the OIAB data layout with:
+
+```bash
+OIAB_DATA_DIR=/data/oiab scripts/migrate-legacy-content.sh
+```
+
+By default the script creates symlinks for large existing libraries. Set `OIAB_CONTENT_MIGRATION_MODE=copy` to copy content instead. It targets:
+
+- Survivor Library -> `/data/oiab/media/books/Survivor Library`
+- Medical Library -> `/data/oiab/media/books/Medical Library`
+- Minecraft Wiki -> `/data/oiab/content/wikis/minecraft`
+- Pokemon Wiki -> `/data/oiab/content/wikis/pokemon`

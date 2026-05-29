@@ -18,3 +18,8 @@ tmp/
 *.mbtiles
 *.sqlite
 *.sqlite3
+
+# Android wrapper generated files
+android-wrapper/.gradle/
+android-wrapper/**/build/
+android-wrapper/local.properties

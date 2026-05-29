@@ -508,7 +508,8 @@ html.oiab-shell-embed body::before {
 html.oiab-shell-embed .gps-shell {
   width: 100%;
   min-height: 100dvh;
-  padding: 10px;
+  max-width: none;
+  padding: 12px;
 }
 
 html.oiab-shell-embed .gps-topbar {
@@ -518,7 +519,70 @@ html.oiab-shell-embed .gps-topbar {
 html.oiab-shell-embed .gps-status-card,
 html.oiab-shell-embed .gps-speed-card,
 html.oiab-shell-embed .gps-compass-card {
-  min-height: 150px;
+  min-height: 128px;
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.05), transparent 34%),
+    linear-gradient(180deg, rgba(24, 40, 31, .86), rgba(11, 22, 17, .9));
+}
+
+html.oiab-shell-embed .gps-hero {
+  grid-template-columns: minmax(240px, 1.15fr) minmax(140px, .42fr) minmax(150px, .42fr);
+}
+
+html.oiab-shell-embed .gps-status-card strong {
+  font-family: "DIN Alternate", "Avenir Next Condensed", "Arial Narrow", monospace;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 1000;
+  letter-spacing: -.04em;
+}
+
+html.oiab-shell-embed .gps-speed-card strong,
+html.oiab-shell-embed .gps-readout strong {
+  font-family: "DIN Alternate", "Avenir Next Condensed", "Arial Narrow", monospace;
+  font-weight: 1000;
+  letter-spacing: -.035em;
+}
+
+html.oiab-shell-embed .gps-speed-card strong {
+  font-size: clamp(2rem, 5vw, 3.6rem);
+}
+
+html.oiab-shell-embed .gps-compass {
+  width: 104px;
+  height: 104px;
+}
+
+html.oiab-shell-embed .gps-readout-grid {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+html.oiab-shell-embed .gps-readout {
+  min-height: 92px;
+  padding: 14px;
+  border-radius: 22px;
+}
+
+html.oiab-shell-embed .gps-readout strong {
+  font-size: clamp(1.05rem, 2vw, 1.55rem);
+}
+
+html.oiab-shell-embed .gps-coords {
+  grid-column: span 2;
+}
+
+html.oiab-shell-embed .gps-location-card,
+html.oiab-shell-embed .gps-panel {
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.045), transparent 34%),
+    rgba(9, 24, 16, .84);
+}
+
+html.oiab-shell-embed .gps-metric-list div,
+html.oiab-shell-embed .gps-device-list div {
+  padding: 10px 12px;
+  border-radius: 15px;
 }
 
 html.oiab-shell-embed .gps-panel,

@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CONFIG_FILE="${OIAB_NETWORK_CONFIG:-/data/oiab/config/network.env}"
+RUN_DIR="${OIAB_NETWORK_RUN_DIR:-/run/oiab-network}"
+MODE_FILE="$RUN_DIR/mode"
+
+OIAB_ETH_IFACE="${OIAB_ETH_IFACE:-eth0}"
+OIAB_AP_IFACE="${OIAB_AP_IFACE:-wlan0}"
+OIAB_WAN_WIFI_IFACE="${OIAB_WAN_WIFI_IFACE:-wlan1}"
+OIAB_AP_IP="${OIAB_AP_IP:-192.168.8.2}"
+OIAB_AP_SUBNET="${OIAB_AP_SUBNET:-192.168.8.0/24}"
+
+if [[ -f "$CONFIG_FILE" ]]; then
+  # shellcheck disable=SC1090
+  source "$CONFIG_FILE"
+fi
+
+service_state() {
+  if command -v systemctl >/dev/null 2>&1; then
+    systemctl is-active "$1" 2>/dev/null || true
+  else
+    printf 'unknown'
+  fi
+}
+
+carrier_state() {
+  local iface="$1"
+  local carrier="/sys/class/net/$iface/carrier"
+  if [[ ! -e "/sys/class/net/$iface" ]]; then
+    printf 'missing'
+  elif [[ -r "$carrier" ]]; then
+    [[ "$(cat "$carrier" 2>/dev/null || printf 0)" == "1" ]] && printf 'carrier' || printf 'no-carrier'
+  elif ip link show "$iface" 2>/dev/null | grep -q "LOWER_UP"; then
+    printf 'carrier'
+  else
+    printf 'unknown'
+  fi
+}
+
+iface_summary() {
+  local iface="$1"
+  if [[ ! -e "/sys/class/net/$iface" ]]; then
+    printf 'missing'
+    return
+  fi
+  local link ip4
+  link="$(ip -br link show "$iface" 2>/dev/null | awk '{print $2}' || true)"
+  ip4="$(ip -br -4 addr show "$iface" 2>/dev/null | awk '{$1=$2=""; sub(/^  */, ""); print}' || true)"
+  printf '%s%s' "${link:-unknown}" "${ip4:+ / $ip4}"
+}
+
+nat_state() {
+  if command -v nft >/dev/null 2>&1 && nft list table ip oiab_nat >/dev/null 2>&1; then
+    printf 'enabled (nftables)'
+  elif command -v iptables >/dev/null 2>&1 && iptables -t nat -S POSTROUTING 2>/dev/null | grep -q "$OIAB_AP_SUBNET"; then
+    printf 'enabled (iptables)'
+  else
+    printf 'disabled'
+  fi
+}
+
+clients() {
+  if command -v iw >/dev/null 2>&1 && [[ -e "/sys/class/net/$OIAB_AP_IFACE" ]]; then
+    local stations
+    stations="$(iw dev "$OIAB_AP_IFACE" station dump 2>/dev/null | awk '/^Station / {print $2}' || true)"
+    if [[ -n "$stations" ]]; then
+      printf '%s\n' "$stations"
+      return
+    fi
+  fi
+  if command -v hostapd_cli >/dev/null 2>&1; then
+    hostapd_cli -i "$OIAB_AP_IFACE" all_sta 2>/dev/null | awk '/^[0-9a-fA-F:]{17}$/ {print $0}' || true
+  fi
+}
+
+mode="UNKNOWN"
+[[ -r "$MODE_FILE" ]] && mode="$(cat "$MODE_FILE")"
+
+printf 'OIAB Network Status\n'
+printf '===================\n'
+printf 'mode: %s\n' "$mode"
+printf 'config: %s\n' "$CONFIG_FILE"
+printf 'eth interface: %s (%s)\n' "$OIAB_ETH_IFACE" "$(carrier_state "$OIAB_ETH_IFACE")"
+printf 'AP interface: %s (%s)\n' "$OIAB_AP_IFACE" "$(iface_summary "$OIAB_AP_IFACE")"
+printf 'WAN Wi-Fi interface: %s (%s)\n' "$OIAB_WAN_WIFI_IFACE" "$(iface_summary "$OIAB_WAN_WIFI_IFACE")"
+printf 'DHCP/DNS service: %s\n' "$(service_state oiab-dnsmasq.service)"
+printf 'AP service: %s\n' "$(service_state oiab-hostapd.service)"
+printf 'NAT: %s\n' "$(nat_state)"
+printf 'Pi AP IP: %s\n' "$OIAB_AP_IP"
+printf 'AP subnet: %s\n' "$OIAB_AP_SUBNET"
+printf 'connected Wi-Fi clients:\n'
+client_list="$(clients)"
+if [[ -n "$client_list" ]]; then
+  printf '%s\n' "$client_list" | sed 's/^/  - /'
+else
+  printf '  none detected\n'
+fi

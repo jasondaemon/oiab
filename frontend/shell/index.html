@@ -23,7 +23,6 @@
       <div class="uo-status-row" aria-label="Status">
         <span id="gpsPill" class="uo-status-pill" title="GPS status">GPS</span>
         <span id="netPill" class="uo-status-pill" title="Network status">LAN</span>
-        <span class="uo-status-pill is-placeholder" title="Power telemetry placeholder">12V</span>
       </div>
       <nav id="sidebarApps" class="uo-side-apps" aria-label="Pinned apps"></nav>
       <div class="uo-sidebar-bottom">
@@ -37,7 +36,6 @@
       <section id="dashboardView" class="uo-dashboard" aria-label="Dashboard">
         <article id="dashMapPanel" class="uo-panel uo-map-panel">
           <iframe id="dashMapFrame" title="Map preview" allow="geolocation; fullscreen"></iframe>
-          <span class="uo-panel-label">Maps</span>
         </article>
         <article id="dashMusicPanel" class="uo-panel uo-music-panel">
           <canvas id="dashMusicCanvas" aria-hidden="true"></canvas>
@@ -95,7 +93,9 @@
         <canvas id="musicVisualizer" aria-hidden="true"></canvas>
         <div class="uo-music-layout">
           <div class="uo-album-card">
-            <img id="musicArt" src="/maps/overland/tunes.png" alt="">
+            <button id="musicArtButton" class="uo-art-button is-large" type="button" aria-label="Open now playing detail">
+              <img id="musicArt" src="/maps/overland/tunes.png" alt="">
+            </button>
             <h1 id="musicTitle">No track selected</h1>
             <p id="musicMeta">Choose music from the library.</p>
             <div class="uo-music-controls is-large">
@@ -118,6 +118,19 @@
               <select id="folderFilter" aria-label="Folder"></select>
             </div>
             <div id="trackList" class="uo-track-list"></div>
+          </div>
+        </div>
+        <div id="musicDetailView" class="uo-music-detail" hidden>
+          <button id="musicDetailArtButton" class="uo-art-button is-detail" type="button" aria-label="Return to full player">
+            <img id="musicDetailArt" src="/maps/overland/tunes.png" alt="">
+          </button>
+          <h1 id="musicDetailTitle">No track selected</h1>
+          <p id="musicDetailArtist">Unknown Artist</p>
+          <p id="musicDetailAlbum">Unknown Album</p>
+          <div class="uo-seek-row is-detail">
+            <span id="musicDetailElapsed">0:00</span>
+            <progress id="musicDetailProgress" max="1000" value="0"></progress>
+            <span id="musicDetailDuration">0:00</span>
           </div>
         </div>
       </section>
@@ -163,19 +176,87 @@
               </span>
               <input id="map3dBuildings" type="checkbox">
             </label>
+            <label class="uo-switch-row">
+              <span>
+                <strong>Auto Track Recording</strong>
+                <small>Record stabilized GPS tracks automatically when moving.</small>
+              </span>
+              <input id="mapAutoRecording" type="checkbox">
+            </label>
             <a href="/mobile/map-packs.html" data-open-app="map-packs">Maps / Map Packs</a>
+          </section>
+          <section class="uo-settings-card uo-network-settings-card">
+            <h2>HotSpot Config</h2>
+            <p class="uo-card-note">Used by the host systemd network mode manager. Saves to OIAB data config; apply requires the host manager service.</p>
+            <div class="uo-settings-fields">
+              <label>Ethernet <input id="networkEthIface" type="text" autocomplete="off" placeholder="eth0"></label>
+              <label>AP Wi-Fi <input id="networkApIface" type="text" autocomplete="off" placeholder="wlan0"></label>
+              <label>WAN Wi-Fi <input id="networkWanIface" type="text" autocomplete="off" placeholder="wlan1"></label>
+              <label>SSID <input id="networkApSsid" type="text" autocomplete="off" placeholder="Daemon Adventures"></label>
+              <label>Wi-Fi Key <input id="networkApPassphrase" type="password" autocomplete="new-password" placeholder="Leave blank for open AP"></label>
+              <label>Country <input id="networkApCountry" type="text" maxlength="2" autocomplete="off" placeholder="US"></label>
+              <label>Channel <input id="networkApChannel" type="number" min="1" max="165" placeholder="6"></label>
+              <label>AP Subnet <input id="networkApSubnet" type="text" autocomplete="off" placeholder="192.168.8.0/24"></label>
+              <label>AP IP <input id="networkApIp" type="text" autocomplete="off" placeholder="192.168.8.2"></label>
+              <label>DHCP Range <input id="networkDhcpRange" type="text" autocomplete="off" placeholder="192.168.8.3,192.168.8.20,12h"></label>
+            </div>
+            <button id="saveNetworkSettings" type="button">Save HotSpot Config</button>
+            <small id="networkSettingsMessage" class="uo-status-note"></small>
+          </section>
+          <section class="uo-settings-card">
+            <h2>Music</h2>
+            <p class="uo-card-note">Library rebuild and visualizer settings are shared with the music player.</p>
+            <label>Visualizer
+              <select id="musicVisualizerMode">
+                <option value="particles">Particles</option>
+                <option value="bars">Bars</option>
+                <option value="waveform">Waveform</option>
+                <option value="radial">Radial</option>
+                <option value="imagefloat">Image Float</option>
+                <option value="off">Off</option>
+              </select>
+            </label>
+            <label>Visualizer Style
+              <select id="musicVisualizerStyle">
+                <option value="drift">Drift</option>
+                <option value="pulse">Pulse</option>
+                <option value="nebula">Nebula</option>
+              </select>
+            </label>
+            <label>Visualizer Focus
+              <select id="musicVisualizerFocus">
+                <option value="soft">Soft</option>
+                <option value="sharp">Sharp</option>
+                <option value="dream">Dream</option>
+              </select>
+            </label>
+            <label>Visualizer Image
+              <select id="musicVisualizerImage"></select>
+            </label>
+            <button id="rebuildMusicLibrary" type="button">Rebuild Music Library</button>
+            <small id="musicSettingsMessage" class="uo-status-note"></small>
           </section>
           <section class="uo-settings-card">
             <h2>Plugins</h2>
             <a href="/mobile/services.html" data-open-app="service-manager">Install / Enable Plugins</a>
-            <a href="/mobile/file-uploads.html" data-open-app="file-uploads">File Uploads</a>
-            <a href="/https-settings/" data-open-app="https-settings">HTTPS Setup</a>
+            <a href="/apps/filebrowser/" data-open-app="file-uploads">File Manager</a>
           </section>
           <section class="uo-settings-card">
             <h2>System</h2>
-            <a href="/system-monitor/" data-open-app="system-monitor">Performance Monitor</a>
-            <a href="/api/config">Runtime Config</a>
-            <a href="/api/services">Optional Services</a>
+            <label class="uo-pin-row">
+              <span>
+                <strong>Settings PIN</strong>
+                <small>Six digits. This is a simple kid lock, not real security.</small>
+              </span>
+              <input id="settingsPinInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off" placeholder="••••••">
+            </label>
+            <button id="saveSettingsPin" type="button">Save PIN</button>
+            <small id="settingsPinMessage" class="uo-status-note"></small>
+            <a href="/https-settings/" data-open-app="https-settings">Certificates / HTTPS</a>
+            <a href="/mobile/game-data.html" data-open-app="game-data">Game Data</a>
+            <a href="/apps/minecraft-admin/" data-open-app="minecraft">Minecraft Admin</a>
+            <a href="/system/reboot" data-system-action="reboot">Reboot Pi</a>
+            <a href="/system/shutdown" data-system-action="shutdown">Shut Down Pi</a>
           </section>
         </div>
       </section>

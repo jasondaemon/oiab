@@ -95,6 +95,14 @@ No audioMotion-analyzer source code is bundled, copied, imported, or linked.
 
 The optional emulator shell is designed to use a locally cached EmulatorJS runtime installed outside this repository. Emulator runtime files, libretro cores, and ROMs are not committed.
 
+## File Browser
+
+File Browser is a core managed component for browsing and uploading OIAB media, maps, books, ROMs, and backups on the local appliance.
+
+- Project: https://filebrowser.org/
+- Source: https://github.com/filebrowser/filebrowser
+- License: Apache-2.0
+
 ## Jellyfin
 
 Jellyfin is represented as an optional managed service.

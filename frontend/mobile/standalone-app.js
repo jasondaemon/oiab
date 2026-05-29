@@ -2,7 +2,11 @@
   const app = document.body.dataset.standaloneApp || "";
 
   function goHome() {
-    window.location.href = "/mobile/";
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ type: "oiab:home" }, window.location.origin);
+      return;
+    }
+    window.location.href = "/";
   }
 
   function forceMusicFullscreen() {

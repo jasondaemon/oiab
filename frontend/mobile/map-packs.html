@@ -38,9 +38,32 @@
     .badge.installing { background:#9bd7ff; color:#06170f; }
     .message { min-height:24px; color:var(--warn); font-weight:900; }
     .path { overflow-wrap:anywhere; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
-    .overlay-range { display:grid; gap:6px; min-width:180px; }
-    .overlay-range input[type="range"] { min-height:auto; padding:0; accent-color:var(--accent); }
-    .overlay-order { width:96px; }
+    .overlay-card { grid-template-columns:1fr auto; }
+    .overlay-card .actions { justify-content:flex-end; }
+    .icon-button { width:42px; min-width:42px; min-height:42px; padding:0; border-radius:50%; color:var(--text); background:rgba(255,255,255,.08); border:1px solid var(--line); }
+    .subdetails { margin:12px 0; border:1px solid var(--line); border-radius:20px; overflow:hidden; background:rgba(0,0,0,.12); }
+    .subdetails > summary { cursor:pointer; list-style:none; padding:14px 16px; font-weight:900; font-size:1.2rem; }
+    .subdetails > summary::-webkit-details-marker { display:none; }
+    .subdetails > summary::after { content:"▸"; float:right; color:var(--accent); }
+    .subdetails[open] > summary::after { content:"▾"; }
+    .subdetails-body { padding:0 14px 14px; }
+    .overlay-group { margin-top:16px; }
+    .overlay-status { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+    .readiness-grid { display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); margin:14px 0 4px; }
+    .readiness-card { border:1px solid var(--line); border-radius:18px; padding:14px; background:rgba(0,0,0,.14); }
+    .readiness-card strong { display:block; margin:6px 0; font-size:1.05rem; }
+    .readiness-card ul { margin:8px 0 0; padding-left:18px; color:var(--muted); }
+    .modal-backdrop { position:fixed; inset:0; z-index:20; display:grid; place-items:center; padding:18px; background:rgba(0,0,0,.62); }
+    .modal-backdrop[hidden] { display:none; }
+    .modal-card { width:min(720px,100%); max-height:min(760px,88vh); overflow:auto; padding:22px; border:1px solid var(--line); border-radius:28px; background:linear-gradient(145deg,rgba(39,82,50,.98),rgba(8,29,18,.98)); box-shadow:0 24px 90px rgba(0,0,0,.48); }
+    .modal-head { display:flex; justify-content:space-between; gap:14px; align-items:start; margin-bottom:12px; }
+    .detail-grid { display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
+    .detail-cell { padding:12px; border:1px solid var(--line); border-radius:16px; background:rgba(0,0,0,.16); overflow-wrap:anywhere; }
+    .detail-cell span { display:block; color:var(--accent); font-size:.72rem; font-weight:900; letter-spacing:.14em; text-transform:uppercase; }
+    .key-form { display:grid; gap:8px; grid-template-columns:minmax(220px,1fr) auto auto; align-items:center; margin-top:8px; }
+    .key-form input { min-height:44px; }
+    .key-form .button { min-height:44px; }
+    .key-note { color:var(--warn); font-size:.9rem; }
     @media (max-width:680px) { main { width:min(100vw - 14px,560px); padding-top:12px; } .pack,.grid { grid-template-columns:1fr; } button,.button { width:100%; } }
   </style>
 </head>
@@ -56,7 +79,7 @@
 
     <section class="panel">
       <span class="kicker">Overlay Sources</span>
-      <p>Overlays are independent MapLibre sources layered over the active basemap. Enable only what you need; online overlays require internet unless cached or mirrored later.</p>
+      <p>Download or refresh overlay data here. Show/hide and opacity live in the map layer menu so this page stays focused on data management.</p>
       <div class="actions">
         <button id="rescanOverlays" type="button">Rescan Overlays</button>
       </div>
@@ -72,7 +95,7 @@
       </div>
     </details>
 
-    <details class="panel" open>
+    <details class="panel">
       <summary>
         <span class="kicker">Available Map Packs</span>
       </summary>
@@ -96,17 +119,32 @@
       </div>
     </section>
   </main>
+  <div id="overlayModal" class="modal-backdrop" hidden>
+    <article class="modal-card">
+      <div class="modal-head">
+        <div>
+          <span id="overlayModalKicker" class="kicker">Overlay</span>
+          <h2 id="overlayModalTitle" class="group-title">Details</h2>
+        </div>
+        <button id="overlayModalClose" class="icon-button" type="button" aria-label="Close">×</button>
+      </div>
+      <div id="overlayModalBody" class="detail-grid"></div>
+    </article>
+  </div>
   <script>
     const packsNode = document.getElementById("packs");
     const catalogNode = document.getElementById("catalog");
     const overlaysNode = document.getElementById("overlays");
+    const overlayReadinessNode = document.getElementById("overlayReadiness");
     const message = document.getElementById("message");
     const fmt = new Intl.NumberFormat();
     let installedPacks = [];
     let catalogPacks = [];
     let overlaySources = [];
     let installJobs = {};
+    let overlayJobs = {};
     let pollTimer = null;
+    const FIRMS_KEY_URL = "https://firms.modaps.eosdis.nasa.gov/api/map_key/";
 
     function setMessage(text, error = false) {
       message.textContent = text || "";
@@ -175,6 +213,22 @@
       });
     }
 
+    async function overlayRefresh(id) {
+      if (id === "firms_active_hotspots") return fetchJson("/api/maps/overlays/wildfire/refresh", {method: "POST"});
+      if (id === "nws_active_alerts") return fetchJson("/api/maps/overlays/weather/alerts/refresh", {method: "POST"});
+      throw new Error("This overlay does not have a refresh action yet.");
+    }
+
+    async function overlayInstall(overlay) {
+      if (overlay.id === "mvum_roads_us") return fetchJson("/api/maps/overlays/mvum/roads/install", {method: "POST"});
+      if (overlay.id === "mvum_trails_us") return fetchJson("/api/maps/overlays/mvum/trails/install", {method: "POST"});
+      throw new Error("This overlay does not have an install workflow yet.");
+    }
+
+    async function saveFirmsKey(mapKey) {
+      return overlayApi("firms-key", {map_key: mapKey});
+    }
+
     function installedIndex() {
       const byId = new Map(installedPacks.map((pack) => [String(pack.id), pack]));
       const byFile = new Map(installedPacks.map((pack) => {
@@ -203,6 +257,14 @@
       return status === "failed";
     }
 
+    function overlayJob(overlay) {
+      return overlayJobs[`${overlay.id}_install`] || overlayJobs[overlay.id] || null;
+    }
+
+    function overlayInstalling(overlay) {
+      return ["pending", "running"].includes(String(overlayJob(overlay)?.status || ""));
+    }
+
     function statusClass(pack, state) {
       if (isInstalling(pack)) return "installing";
       if (isFailed(pack)) return "missing";
@@ -222,7 +284,9 @@
     }
 
     function updatePollState() {
-      const active = catalogPacks.some(isInstalling) || Object.values(installJobs || {}).some((job) => ["pending", "running"].includes(String(job.status || "")));
+      const active = catalogPacks.some(isInstalling)
+        || Object.values(installJobs || {}).some((job) => ["pending", "running"].includes(String(job.status || "")))
+        || Object.values(overlayJobs || {}).some((job) => ["pending", "running"].includes(String(job.status || "")));
       if (active && !pollTimer) {
         pollTimer = setInterval(() => load().catch(error => setMessage(error.message, true)), 2500);
       }
@@ -246,8 +310,10 @@
       try {
         const overlays = await fetchJson("/api/maps/overlays");
         overlaySources = overlays.overlays || [];
+        overlayJobs = overlays.jobs || {};
       } catch (error) {
         overlaySources = [];
+        overlayJobs = {};
         setMessage(`Overlay registry unavailable: ${error.message}`, true);
       }
       renderCatalog();
@@ -300,7 +366,7 @@
       catalogNode.innerHTML = groups.map(([key, title]) => {
         const items = catalogPacks.filter((pack) => (pack.region_type || "custom") === key);
         if (!items.length) return "";
-        return `<section><h2 class="group-title">${title}</h2>${items.map(pack => {
+        const body = items.map(pack => {
           const state = packState(pack);
           const installed = Boolean(state?.installed || state?.exists || pack.installed);
           const active = Boolean(state?.active || pack.active);
@@ -325,7 +391,11 @@
             </div>
           </article>
         `;
-        }).join("")}</section>`;
+        }).join("");
+        if (key === "state") {
+          return `<details class="subdetails"><summary>${title}</summary><div class="subdetails-body">${body}</div></details>`;
+        }
+        return `<section><h2 class="group-title">${title}</h2>${body}</section>`;
       }).join("");
       if (!catalogNode.innerHTML.trim()) {
         catalogNode.innerHTML = '<div class="hint panel"><strong>No catalog loaded.</strong><p>Check /config/map-pack-catalog.json or the map-pack catalog API.</p></div>';
@@ -346,70 +416,267 @@
       });
     }
 
-    function renderOverlays() {
-      overlaysNode.innerHTML = overlaySources.length ? overlaySources.map((overlay) => {
-        const available = overlay.available || overlay.online_available || overlay.offline_available || overlay.exists;
-        const status = overlay.enabled ? "Enabled" : available ? "Disabled" : "Unavailable";
-        const mode = overlay.online_available && !overlay.offline_available ? "online" : overlay.offline_available ? "offline" : "manual";
-        return `
-          <article class="pack ${overlay.enabled ? "is-active" : ""}">
-            <div class="meta">
-              <span class="badge ${available ? "" : "missing"}">${status}</span>
-              <strong>${overlay.name || overlay.id}</strong>
-              <span>${overlay.type || "overlay"} · ${mode} · cache: ${overlay.cache_mode || "none"}</span>
-              <span>${overlay.attribution || ""}</span>
-              ${overlay.source_url ? `<span class="path">${overlay.source_url}</span>` : ""}
-              ${overlay.path ? `<span class="path">${overlay.path}</span>` : ""}
-              ${overlay.metadata?.description ? `<span>${overlay.metadata.description}</span>` : ""}
-            </div>
-            <div class="actions">
-              <button type="button" data-overlay-enable="${overlay.id}" data-enabled="${overlay.enabled ? "0" : "1"}" ${available ? "" : "disabled"}>${overlay.enabled ? "Disable" : "Enable"}</button>
-              <label class="overlay-range">
-                <span>Opacity ${Math.round(Number(overlay.opacity ?? 1) * 100)}%</span>
-                <input type="range" min="0" max="1" step="0.05" value="${Number(overlay.opacity ?? 1)}" data-overlay-opacity="${overlay.id}">
-              </label>
-              <input class="overlay-order" type="number" value="${Number(overlay.sort_order ?? 100)}" data-overlay-order="${overlay.id}" title="Layer order">
-            </div>
-          </article>
-        `;
-      }).join("") : '<div class="hint panel"><strong>No overlays registered.</strong><p>Use Rescan Overlays to load the catalog and auto-detect files in /data/oiab/maps/overlays.</p></div>';
+    function overlayCategoryLabel(category) {
+      return ({
+        topo: "Topo",
+        mvum: "MVUM",
+        wildfire: "Wildfire",
+        weather: "Weather",
+        public_lands: "Public Lands",
+        user: "User Overlays"
+      })[category || "user"] || String(category || "User Overlays").replace(/_/g, " ");
+    }
 
-      overlaysNode.querySelectorAll("[data-overlay-enable]").forEach(button => {
+    function overlayMode(overlay) {
+      if (overlay.online_required && !overlay.offline_available) return "online";
+      if (overlay.offline_available || overlay.exists) return "offline";
+      if (overlay.cache_mode === "latest_snapshot") return "cached snapshot";
+      return "manual";
+    }
+
+    function overlayBadgeClass(overlay, available) {
+      if (overlay.cache_status === "failed" || overlay.install_status === "not_implemented") return "missing";
+      if (overlay.cache_status === "stale") return "manual";
+      return available ? "" : "missing";
+    }
+
+    function byOverlayId(id) {
+      return overlaySources.find((overlay) => overlay.id === id) || {};
+    }
+
+    function yesNo(value) {
+      return value ? "yes" : "no";
+    }
+
+    function readinessBadge(ok, text) {
+      return `<span class="badge ${ok ? "" : "missing"}">${text}</span>`;
+    }
+
+    function renderOverlayReadiness() {
+      const usgs = byOverlayId("usgs_topo");
+      const roads = byOverlayId("mvum_roads_us");
+      const trails = byOverlayId("mvum_trails_us");
+      const firms = byOverlayId("firms_active_hotspots");
+      const nws = byOverlayId("nws_active_alerts");
+      const mvumLines = (overlay) => {
+        const missingRequired = overlay.missing_required_tools || overlay.missing_tools || [];
+        const missingOptional = overlay.missing_optional_tools || [];
+        return `
+          <li>Source: ${overlay.source_url_configured ? `${overlay.mvum_source_mode || "configured"} configured` : "missing"}</li>
+          <li>Required tools: ${missingRequired.length ? `missing ${missingRequired.join(", ")}` : "ready"}</li>
+          <li>Optional PMTiles tools: ${missingOptional.length ? `missing ${missingOptional.join(", ")}; GeoJSON fallback still works` : "ready"}</li>
+          <li>Installed/cache: ${overlay.cache_status || "not_cached"}${overlay.last_fetch_at ? ` · ${overlay.last_fetch_at}` : ""}</li>
+        `;
+      };
+      overlayReadinessNode.innerHTML = `
+        <div class="readiness-grid">
+          <article class="readiness-card">
+            ${readinessBadge(Boolean(usgs.configured_url || usgs.tiles?.length), "Online")}
+            <strong>USGS Topo</strong>
+            <ul>
+              <li>Online-only raster overlay.</li>
+              <li>URL configured: ${yesNo(usgs.configured_url || usgs.tiles?.length)}</li>
+              <li>Enabled: ${yesNo(usgs.enabled)}</li>
+            </ul>
+          </article>
+          <article class="readiness-card">
+            ${readinessBadge(Boolean(roads.install_available || roads.exists), roads.exists ? "Installed" : roads.install_available ? "Ready" : "Blocked")}
+            <strong>MVUM Roads</strong>
+            <ul>${mvumLines(roads)}</ul>
+          </article>
+          <article class="readiness-card">
+            ${readinessBadge(Boolean(trails.install_available || trails.exists), trails.exists ? "Installed" : trails.install_available ? "Ready" : "Blocked")}
+            <strong>MVUM Trails</strong>
+            <ul>${mvumLines(trails)}</ul>
+          </article>
+          <article class="readiness-card">
+            ${readinessBadge(Boolean(firms.key_configured), firms.key_configured ? "Key configured" : "Needs key")}
+            <strong>Wildfire / NASA FIRMS</strong>
+            <ul>
+              <li>MAP_KEY configured: ${yesNo(firms.key_configured)}</li>
+              <li>Cached snapshot: ${yesNo(firms.exists)}</li>
+              <li>Last refresh: ${firms.last_fetch_at || "never"}</li>
+              <li>Status: ${firms.cache_status || "not_cached"}</li>
+            </ul>
+          </article>
+          <article class="readiness-card">
+            ${readinessBadge(true, "No key")}
+            <strong>NWS Weather Alerts</strong>
+            <ul>
+              <li>NWS API is available without a key.</li>
+              <li>Cached snapshot: ${yesNo(nws.exists)}</li>
+              <li>Last refresh: ${nws.last_fetch_at || "never"}</li>
+              <li>Status: ${nws.cache_status || "not_cached"}</li>
+            </ul>
+          </article>
+        </div>
+      `;
+    }
+
+    function renderOverlays() {
+      const groups = ["topo", "mvum", "wildfire", "weather", "public_lands", "user"]
+        .map(category => [category, overlaySources.filter(overlay => (overlay.category || "user") === category)])
+        .filter(([, items]) => items.length);
+      overlaysNode.innerHTML = groups.length ? groups.map(([category, overlays]) => `
+        <section class="overlay-group">
+          <h2 class="group-title">${overlayCategoryLabel(category)}</h2>
+          ${overlays.map((overlay) => {
+            const available = Boolean(overlay.available);
+            const downloaded = Boolean(overlay.exists || overlay.offline_available);
+            const onlineOnly = Boolean(overlay.online_required && !downloaded && overlay.online_available);
+            const status = downloaded ? "Downloaded" : onlineOnly ? "Online" : overlay.install_status === "not_implemented" ? "Unavailable" : "Not downloaded";
+            const canRefresh = overlay.id === "firms_active_hotspots" || overlay.id === "nws_active_alerts";
+            const job = overlayJob(overlay);
+            const installing = overlayInstalling(overlay);
+            const isMvum = overlay.category === "mvum";
+            const hasDownloadAction = isMvum;
+            const canInstall = isMvum && overlay.install_available && !installing;
+            const canRunRefresh = overlay.id === "nws_active_alerts" || (overlay.id === "firms_active_hotspots" && overlay.key_configured);
+            const firmsHint = overlay.id === "firms_active_hotspots" && !overlay.key_configured ? "Paste a free NASA FIRMS MAP_KEY below to enable live wildfire refresh. Cached GeoJSON will still render if present." : "";
+            const firmsKeyForm = overlay.id === "firms_active_hotspots" ? `
+              <form class="key-form" data-firms-key-form>
+                <input type="password" name="map_key" placeholder="${overlay.key_configured ? "Replace saved FIRMS MAP_KEY" : "Paste NASA FIRMS MAP_KEY"}" autocomplete="off">
+                <button type="submit">${overlay.key_configured ? "Update key" : "Save key"}</button>
+                <a class="button secondary" href="${FIRMS_KEY_URL}" target="_blank" rel="noopener noreferrer">Get free key</a>
+              </form>
+              <span class="key-note">${overlay.key_configured ? `MAP_KEY configured from ${overlay.key_source || "settings"}. ` : ""}NASA sends the free MAP_KEY by email. Saved locally in OIAB SQLite, not in the repo.</span>
+            ` : "";
+            const sizeText = overlay.size_bytes ? size(overlay.size_bytes) : downloaded ? "unknown size" : "0 B";
+            const lastText = overlay.last_fetch_at ? `Updated ${overlay.last_fetch_at}` : downloaded ? "Downloaded locally" : onlineOnly ? "Streams online" : "Not cached";
+            return `
+              <article class="pack overlay-card ${available ? "is-active" : ""}">
+                <div class="meta">
+                  <div class="overlay-status">
+                    <span class="badge ${overlayBadgeClass(overlay, available)}">${status}</span>
+                    <span class="badge ${overlay.cache_status === "stale" ? "manual" : ""}">${overlay.cache_status || "not_cached"}</span>
+                    ${installing ? `<span class="badge manual">${job.status}: ${job.step || "working"} ${job.progress ?? 0}%</span>` : ""}
+                  </div>
+                  <strong>${overlay.name || overlay.id}</strong>
+                  <span>${overlay.description || overlay.metadata?.description || overlay.attribution || ""}</span>
+                  <span>${sizeText} · ${lastText}${overlay.feature_count != null ? ` · ${fmt.format(Number(overlay.feature_count || 0))} features` : ""}</span>
+                  ${overlay.error_message ? `<span style="color:var(--bad)">Error: ${overlay.error_message}</span>` : ""}
+                  ${job?.error_message ? `<span style="color:var(--bad)">Job error: ${job.error_message}</span>` : ""}
+                  ${firmsHint ? `<span style="color:var(--warn)">${firmsHint}</span>` : ""}
+                  ${firmsKeyForm}
+                </div>
+                <div class="actions">
+                  ${hasDownloadAction ? `<button type="button" data-overlay-install="${overlay.id}" ${canInstall ? "" : "disabled"}>${installing ? "Working..." : downloaded ? "Update" : "Download"}</button>` : ""}
+                  ${canRefresh ? `<button type="button" data-overlay-refresh="${overlay.id}" ${canRunRefresh ? "" : "disabled"}>${downloaded ? "Update" : "Download"}</button>` : ""}
+                  <button class="secondary" type="button" data-overlay-clear="${overlay.id}" ${downloaded ? "" : "disabled"}>Clear cache</button>
+                  <button class="icon-button" type="button" data-overlay-info="${overlay.id}" aria-label="Overlay details">i</button>
+                </div>
+              </article>
+            `;
+          }).join("")}
+        </section>
+      `).join("") : '<div class="hint panel"><strong>No overlays registered.</strong><p>Use Rescan Overlays to load the catalog and auto-detect files in /data/oiab/maps/overlays.</p></div>';
+
+      overlaysNode.querySelectorAll("[data-overlay-refresh]").forEach(button => {
         button.addEventListener("click", async () => {
-          setMessage("Updating overlay...");
+          setMessage("Updating overlay data...");
+          button.disabled = true;
           try {
-            await overlayApi("set-enabled", {id: button.dataset.overlayEnable, enabled: button.dataset.enabled === "1"});
-            setMessage("Overlay updated.");
+            await overlayRefresh(button.dataset.overlayRefresh);
+            setMessage("Overlay update started.");
+            await load();
+          } catch (error) {
+            setMessage(error.message, true);
+            await load();
+          } finally {
+            button.disabled = false;
+          }
+        });
+      });
+      overlaysNode.querySelectorAll("[data-overlay-install]").forEach(button => {
+        button.addEventListener("click", async () => {
+          const overlay = overlaySources.find(item => item.id === button.dataset.overlayInstall);
+          if (!overlay) return;
+          setMessage(`Starting ${overlay.name || overlay.id} ${overlay.exists ? "update" : "download"}...`);
+          button.disabled = true;
+          try {
+            await overlayInstall(overlay);
+            setMessage("Overlay job started.");
+            await load();
+          } catch (error) {
+            setMessage(error.message, true);
+            await load();
+          } finally {
+            button.disabled = false;
+          }
+        });
+      });
+      overlaysNode.querySelectorAll("[data-overlay-clear]").forEach(button => {
+        button.addEventListener("click", async () => {
+          const overlay = overlaySources.find(item => item.id === button.dataset.overlayClear);
+          if (!overlay || !confirm(`Clear cached data for ${overlay.name || overlay.id}?`)) return;
+          setMessage("Clearing overlay cache...");
+          try {
+            await overlayApi("clear-cache", {id: overlay.id});
+            setMessage("Overlay cache cleared.");
             await load();
           } catch (error) {
             setMessage(error.message, true);
           }
         });
       });
-      overlaysNode.querySelectorAll("[data-overlay-opacity]").forEach(input => {
-        input.addEventListener("change", async () => {
-          setMessage("Updating overlay opacity...");
+      overlaysNode.querySelectorAll("[data-overlay-info]").forEach(button => {
+        button.addEventListener("click", () => {
+          const overlay = overlaySources.find(item => item.id === button.dataset.overlayInfo);
+          if (overlay) showOverlayInfo(overlay);
+        });
+      });
+      overlaysNode.querySelectorAll("[data-firms-key-form]").forEach(form => {
+        form.addEventListener("submit", async event => {
+          event.preventDefault();
+          const value = new FormData(form).get("map_key");
+          if (!String(value || "").trim()) {
+            setMessage("Paste the NASA FIRMS MAP_KEY first.", true);
+            return;
+          }
+          setMessage("Saving NASA FIRMS MAP_KEY...");
           try {
-            await overlayApi("set-opacity", {id: input.dataset.overlayOpacity, opacity: input.value});
-            setMessage("Overlay opacity updated.");
+            await saveFirmsKey(value);
+            form.reset();
+            setMessage("FIRMS MAP_KEY saved. Wildfire refresh is now available.");
             await load();
           } catch (error) {
             setMessage(error.message, true);
           }
         });
       });
-      overlaysNode.querySelectorAll("[data-overlay-order]").forEach(input => {
-        input.addEventListener("change", async () => {
-          setMessage("Updating overlay order...");
-          try {
-            await overlayApi("set-order", {id: input.dataset.overlayOrder, sort_order: input.value});
-            setMessage("Overlay order updated.");
-            await load();
-          } catch (error) {
-            setMessage(error.message, true);
-          }
-        });
-      });
+    }
+
+    function detailCell(label, value) {
+      const shown = value === undefined || value === null || value === "" ? "--" : String(value);
+      return `<div class="detail-cell"><span>${label}</span>${shown}</div>`;
+    }
+
+    function showOverlayInfo(overlay) {
+      document.getElementById("overlayModalKicker").textContent = overlayCategoryLabel(overlay.category);
+      document.getElementById("overlayModalTitle").textContent = overlay.name || overlay.id;
+      const missingRequired = (overlay.missing_required_tools || overlay.missing_tools || []).join(", ");
+      const missingOptional = (overlay.missing_optional_tools || []).join(", ");
+      document.getElementById("overlayModalBody").innerHTML = [
+        detailCell("Status", overlay.install_status || overlay.cache_status || "unknown"),
+        detailCell("Cache", overlay.cache_status || "not_cached"),
+        detailCell("Size", size(overlay.size_bytes || 0)),
+        detailCell("Features", overlay.feature_count != null ? fmt.format(Number(overlay.feature_count || 0)) : ""),
+        detailCell("Last update", overlay.last_fetch_at),
+        detailCell("Expires/stale", overlay.expires_at),
+        detailCell("Type", `${overlay.source_type || overlay.type || "overlay"} / ${overlay.cache_mode || "none"}`),
+        detailCell("Attribution", overlay.attribution),
+        detailCell("Source URL", overlay.source_url),
+        detailCell("Local path", overlay.path || overlay.local_path),
+        detailCell("Required tools", missingRequired || "ready"),
+        detailCell("Optional tools", missingOptional || "ready"),
+        detailCell("Error", overlay.error_message || overlayJob(overlay)?.error_message || ""),
+        detailCell("Description", overlay.description || overlay.metadata?.description || ""),
+      ].join("");
+      document.getElementById("overlayModal").hidden = false;
+    }
+
+    function closeOverlayInfo() {
+      document.getElementById("overlayModal").hidden = true;
     }
 
     document.getElementById("refresh").addEventListener("click", () => load().catch(error => setMessage(error.message, true)));
@@ -429,6 +696,17 @@
       setMessage("Importing PMTiles path...");
       try { await api("import-path", {path}); setMessage("PMTiles path imported."); await load(); }
       catch (error) { setMessage(error.message, true); }
+    });
+    document.getElementById("overlayModalClose").addEventListener("click", closeOverlayInfo);
+    document.getElementById("overlayModal").addEventListener("click", event => {
+      if (event.target.id === "overlayModal") closeOverlayInfo();
+    });
+    document.querySelectorAll('a[href="/mobile/"]').forEach(link => {
+      link.addEventListener("click", event => {
+        event.preventDefault();
+        window.parent?.postMessage({ type: "oiab:home" }, window.location.origin);
+        if (window.parent === window) window.location.href = "/";
+      });
     });
     load().catch(error => setMessage(error.message, true));
   </script>

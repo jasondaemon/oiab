@@ -277,10 +277,10 @@
 
   function goBack() {
     if (window.parent && window.parent !== window) {
-      window.parent.postMessage({ type: "overland-close-overlay" }, "*");
+      window.parent.postMessage({ type: "oiab:home" }, window.location.origin);
       return;
     }
-    window.location.href = "/mobile/";
+    window.location.href = "/";
   }
 
   async function copyCoords() {

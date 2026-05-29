@@ -12,6 +12,14 @@ Subdirectories:
 /data/oiab/config
 /data/oiab/db
 /data/oiab/maps/packs
+/data/oiab/maps/overlays
+/data/oiab/maps/overlays/mvum/source
+/data/oiab/maps/overlays/mvum/geojson
+/data/oiab/maps/overlays/mvum/pmtiles
+/data/oiab/maps/overlays/wildfire
+/data/oiab/maps/overlays/weather
+/data/oiab/maps/overlays/imagery/routes
+/data/oiab/maps/cache
 /data/oiab/maps/styles
 /data/oiab/maps/sprites
 /data/oiab/media/music
@@ -26,9 +34,15 @@ Subdirectories:
 /data/oiab/tracks
 /data/oiab/waypoints
 /data/oiab/content/zim
+/data/oiab/content/wikis
+/data/oiab/content/wikis/minecraft
+/data/oiab/content/wikis/pokemon
 /data/oiab/services/jellyfin
 /data/oiab/services/komga
 /data/oiab/services/minecraft
+/data/oiab/services/filebrowser
+/data/oiab/services/filebrowser/database
+/data/oiab/services/filebrowser/config
 /data/oiab/certs
 /data/oiab/logs
 /data/oiab/backups
@@ -46,6 +60,7 @@ Primary durable state is SQLite:
   - comics: `/data/oiab/media/comics`
   - emulator ROMs: `/data/oiab/games/roms`
   - Kiwix ZIM files: `/data/oiab/content/zim`
+  - static wiki content: `/data/oiab/content/wikis`
   - PMTiles map packs: `/data/oiab/maps/packs`
 
 The OIAB database stores:

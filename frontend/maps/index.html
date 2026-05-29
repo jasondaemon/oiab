@@ -27,16 +27,14 @@
       </div>
     </section>
 
-    <section class="omv2-topbar" aria-label="Map status">
-      <div>
-        <span class="eyebrow">Overland Maps v2</span>
-        <strong id="mapPackName">Loading map pack</strong>
-      </div>
-      <div class="omv2-status">
-        <span id="gpsSource">GPS --</span>
-        <span id="gpsSpeed">0 mph</span>
-        <span id="trackStatus">Track --</span>
-      </div>
+    <section class="omv2-mini-status" aria-label="Map status">
+      <button id="trackDotButton" class="omv2-recording-button" type="button" title="Track recording disabled" aria-label="Track recording status">
+        <span id="trackDot" class="omv2-recording-dot is-disabled"></span>
+      </button>
+      <span id="gpsSpeed" class="omv2-mini-speed">0 mph</span>
+      <span id="mapPackName" hidden>Loading map pack</span>
+      <span id="gpsSource" hidden>GPS --</span>
+      <span id="trackStatus" hidden>Track --</span>
     </section>
 
     <section class="omv2-controls omv2-controls-left" aria-label="Map controls">
@@ -47,8 +45,25 @@
       <button id="addMapWaypoint" type="button" title="Save waypoint from map tap">＋</button>
     </section>
 
-    <section class="omv2-controls omv2-controls-right" aria-label="Layer controls">
-      <button id="layersToggle" type="button" title="Folders and layers">☰</button>
+    <section id="mapSearch" class="omv2-search" aria-label="Map search">
+      <button id="searchToggle" type="button" title="Search visible map">⌕</button>
+      <form id="searchForm" class="omv2-search-box" hidden>
+        <input id="searchInput" name="q" type="search" placeholder="Search visible map..." autocomplete="off">
+        <div class="omv2-search-scope" aria-label="Search sources">
+          <label><input id="searchBase" type="checkbox" checked> Map</label>
+          <label><input id="searchOverlays" type="checkbox" checked> Overlays</label>
+          <label><input id="searchSaved" type="checkbox" checked> Saved</label>
+        </div>
+        <button id="searchSubmit" type="submit" title="Search">Go</button>
+        <button id="searchClose" type="button" title="Clear search">×</button>
+      </form>
+      <div id="searchResults" class="omv2-search-results" hidden></div>
+    </section>
+
+    <section class="omv2-controls omv2-controls-right" aria-label="Map data and overlay controls">
+      <button id="savedDataToggle" type="button" title="Saved waypoints, tracks, and folders">▣</button>
+      <button id="overlaysToggle" type="button" title="Map overlays">☰</button>
+      <button id="legendToggle" type="button" title="Map legend">ⓘ</button>
       <button id="refreshData" type="button" title="Refresh map data">↻</button>
       <button id="inspectTile" type="button" title="Inspect PMTiles tile">?</button>
     </section>
@@ -63,17 +78,106 @@
       <div id="mapErrorList" class="omv2-error-list"></div>
     </aside>
 
-    <aside id="layersPanel" class="omv2-panel omv2-layers" hidden>
+    <aside id="overlaysPanel" class="omv2-panel omv2-layers" hidden>
       <div class="omv2-panel-head">
         <div>
           <span class="eyebrow">Layers</span>
-          <strong>Folders</strong>
+          <strong>Overlays</strong>
         </div>
-        <button id="closeLayers" type="button">×</button>
+        <button id="closeOverlays" type="button">×</button>
+      </div>
+      <div class="omv2-layer-subhead">
+        <span class="eyebrow">Overlays</span>
+        <a href="/mobile/map-packs.html">Settings</a>
+      </div>
+      <div id="overlayList" class="omv2-folder-list"></div>
+    </aside>
+
+    <aside id="savedDataPanel" class="omv2-panel omv2-layers" hidden>
+      <div class="omv2-panel-head">
+        <div>
+          <span class="eyebrow">Saved Data</span>
+          <strong>Waypoints & Tracks</strong>
+        </div>
+        <button id="closeSavedData" type="button">×</button>
       </div>
       <label class="omv2-check"><input id="showWaypoints" type="checkbox" checked> Waypoints</label>
       <label class="omv2-check"><input id="showTracks" type="checkbox" checked> Tracks</label>
+      <div class="omv2-layer-subhead">
+        <span class="eyebrow">Folders</span>
+        <button id="openDataManager" class="omv2-text-button" type="button" data-open-map-data-manager>Manage</button>
+      </div>
       <div id="folderList" class="omv2-folder-list"></div>
+    </aside>
+
+    <aside id="dataManagerPanel" class="omv2-panel omv2-data-manager-panel" hidden>
+      <div class="omv2-panel-head">
+        <div>
+          <span class="eyebrow">Saved Data</span>
+          <strong>Manager</strong>
+        </div>
+        <button id="closeDataManager" type="button">×</button>
+      </div>
+      <div class="omv2-manager-actions" aria-label="Map data actions">
+        <button id="managerAddFolderOpen" type="button" title="Add folder">＋</button>
+        <button id="managerMoveOpen" type="button" title="Move selected">↪</button>
+        <button id="managerExport" type="button" title="Export selected">⇧</button>
+        <button id="managerDelete" class="is-danger" type="button" title="Delete selected">⌫</button>
+      </div>
+      <div id="managerStatus" class="omv2-manager-status"></div>
+      <form id="managerAddFolderForm" class="omv2-manager-inline-form" hidden>
+        <input name="folder" placeholder="New folder name" required>
+        <button type="submit">Add</button>
+        <button type="button" data-cancel-manager-form>Cancel</button>
+      </form>
+      <form id="managerMoveForm" class="omv2-manager-inline-form" hidden>
+        <select id="managerMoveFolder" name="folder"></select>
+        <button type="submit">Move</button>
+        <button type="button" data-cancel-manager-form>Cancel</button>
+      </form>
+      <div id="managerFolderList" class="omv2-manager-list"></div>
+      <details id="managerImportSection" class="omv2-manager-section">
+        <summary>Import GPX / GeoJSON / KML</summary>
+        <form id="managerImportForm" class="omv2-manager-form">
+          <label>Folder <select id="managerImportFolder" name="folder"></select></label>
+          <label>File <input name="import_file" type="file" accept=".gpx,.geojson,.json,.kml,application/gpx+xml,application/geo+json,application/json,application/vnd.google-earth.kml+xml"></label>
+          <button type="submit">Import</button>
+        </form>
+      </details>
+      <details id="managerAddPointSection" class="omv2-manager-section">
+        <summary>Add Waypoint By Coordinates</summary>
+        <form id="managerCoordinateForm" class="omv2-manager-form">
+          <label>Name <input name="name" placeholder="Campsite Day 1" required></label>
+          <label>Folder <select id="managerCoordFolder" name="folder"></select></label>
+          <label>Lat <input name="lat" inputmode="decimal" required></label>
+          <label>Lon <input name="lon" inputmode="decimal" required></label>
+          <label>Category
+            <select name="category">
+              <option value="waypoint">Waypoint</option>
+              <option value="camp">Camp</option>
+              <option value="fuel">Fuel</option>
+              <option value="food">Food</option>
+              <option value="trailhead">Trailhead</option>
+              <option value="hazard">Hazard</option>
+            </select>
+          </label>
+          <label>Notes <input name="notes" placeholder="Optional note or URL"></label>
+          <button type="submit">Add</button>
+        </form>
+      </details>
+    </aside>
+
+    <aside id="legendModal" class="omv2-modal" hidden>
+      <div class="omv2-modal-card omv2-legend-card">
+        <div class="omv2-panel-head">
+          <div>
+            <span class="eyebrow">Map Legend</span>
+            <strong>Roads, POIs, Areas, and Overlays</strong>
+          </div>
+          <button id="closeLegendModal" type="button">×</button>
+        </div>
+        <div id="legendContent" class="omv2-legend-grid"></div>
+      </div>
     </aside>
 
     <aside id="waypointModal" class="omv2-modal" hidden>
@@ -87,6 +191,78 @@
         </div>
         <p id="waypointLocationHint" class="omv2-hint">Uses stabilized USB GPS when available.</p>
         <div id="waypointTypes" class="omv2-type-grid"></div>
+      </div>
+    </aside>
+
+    <aside id="trackModeModal" class="omv2-modal" hidden>
+      <div class="omv2-modal-card">
+        <div class="omv2-panel-head">
+          <div>
+            <span class="eyebrow">Track Recording</span>
+            <strong id="trackModeTitle">Recording options</strong>
+          </div>
+          <button id="closeTrackModeModal" type="button">×</button>
+        </div>
+        <p id="trackModeHint" class="omv2-hint">Auto recording starts above 2 mph. Manual recording keeps one route active until you stop it.</p>
+        <div class="omv2-edit-actions">
+          <button id="startManualTrack" class="omv2-link-button" type="button">Record Until Stopped</button>
+          <button id="stopManualTrack" class="omv2-link-button is-danger" type="button">Stop Recording</button>
+          <button id="closeTrackModeAction" class="omv2-link-button" type="button">Close</button>
+        </div>
+      </div>
+    </aside>
+
+    <aside id="dataEditModal" class="omv2-modal" hidden>
+      <form id="dataEditForm" class="omv2-modal-card omv2-edit-form">
+        <div class="omv2-panel-head">
+          <div>
+            <span class="eyebrow">Saved Data</span>
+            <strong>Edit item</strong>
+          </div>
+          <button id="closeDataEdit" type="button">×</button>
+        </div>
+        <input id="dataEditId" name="item_id" type="hidden">
+        <label><span>Name</span><input id="dataEditName" name="name"></label>
+        <label><span>Folder</span><select id="dataEditFolder" name="folder"></select></label>
+        <label><span>Category</span><input id="dataEditCategory" name="category" placeholder="camp, route, waypoint"></label>
+        <label><span>Icon</span><select id="dataEditIcon" name="icon"></select></label>
+        <label id="dataEditRoadTypeLabel" hidden><span>Road type</span>
+          <select id="dataEditRoadType" name="road_type">
+            <option value="">Default / unchanged</option>
+            <option value="interstate">Interstate</option>
+            <option value="main_road">Main road</option>
+            <option value="street">Minor road / street</option>
+            <option value="gravel">Gravel road</option>
+            <option value="dirt">Dirt road</option>
+            <option value="high_clearance">High-clearance road</option>
+            <option value="trail">Trail / path</option>
+          </select>
+        </label>
+        <label><span>URL</span><input id="dataEditUrl" name="url" type="url" placeholder="https://..."></label>
+        <label class="is-stack"><span>Description / comments</span><textarea id="dataEditNotes" name="notes" rows="4"></textarea></label>
+        <label><span>Color</span><input id="dataEditColor" name="color" type="color" value="#ffd34f"></label>
+        <div id="dataEditColorSwatches" class="omv2-color-swatches" aria-label="Route color swatches"></div>
+        <div class="omv2-edit-actions">
+          <button class="omv2-link-button" type="submit">Save Changes</button>
+          <button class="omv2-link-button" type="button" data-open-map-data-manager>Open Manager</button>
+        </div>
+      </form>
+    </aside>
+
+    <aside id="dataDeleteModal" class="omv2-modal" hidden>
+      <div class="omv2-modal-card">
+        <div class="omv2-panel-head">
+          <div>
+            <span class="eyebrow">Saved Data</span>
+            <strong>Delete item?</strong>
+          </div>
+          <button id="closeDataDelete" type="button">×</button>
+        </div>
+        <p id="dataDeleteMessage" class="omv2-hint">This removes the saved item from OIAB map data.</p>
+        <div class="omv2-edit-actions">
+          <button id="confirmDataDelete" class="omv2-link-button is-danger" type="button">Delete</button>
+          <button id="cancelDataDelete" class="omv2-link-button" type="button">Cancel</button>
+        </div>
       </div>
     </aside>
 

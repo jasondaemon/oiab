@@ -216,7 +216,7 @@ button {
 
 .uo-dashboard {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 34vw);
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 27.5vw);
   grid-template-rows: minmax(0, 1fr) minmax(220px, 34vh);
   gap: 6px;
   padding: 6px;
@@ -309,6 +309,14 @@ button {
   background: transparent;
   border: 0;
   cursor: pointer;
+}
+
+.uo-art-button.is-large {
+  width: min(42vh, 320px);
+}
+
+.uo-art-button.is-detail {
+  width: min(54vh, 420px);
 }
 
 .uo-music-panel img {
@@ -593,6 +601,45 @@ button {
   padding: 18px;
 }
 
+.uo-music-detail {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 12px;
+  min-height: 100%;
+  padding: 24px;
+  text-align: center;
+}
+
+.uo-music-detail h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 4.8rem);
+  line-height: .92;
+  letter-spacing: -.06em;
+}
+
+.uo-music-detail p {
+  margin: 0;
+  color: var(--uo-muted);
+  font-size: clamp(1rem, 1.6vw, 1.4rem);
+}
+
+.uo-seek-row.is-detail {
+  max-width: min(70vw, 760px);
+  font-size: 1rem;
+}
+
+.uo-seek-row.is-detail progress {
+  width: 100%;
+  height: 10px;
+  overflow: hidden;
+  accent-color: var(--uo-accent);
+  border: 0;
+  border-radius: 999px;
+}
+
 .uo-album-card,
 .uo-library-card,
 .uo-settings-card,
@@ -779,12 +826,16 @@ button {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 18px;
+  align-items: start;
+  grid-auto-rows: min-content;
 }
 
 .uo-settings-card {
   display: grid;
   gap: 14px;
   padding: 18px;
+  align-self: start;
+  align-content: start;
 }
 
 .uo-settings-card h2 {
@@ -796,6 +847,30 @@ button {
   gap: 6px;
   color: var(--uo-muted);
   font-weight: 700;
+}
+
+.uo-card-note {
+  margin: 0;
+  color: var(--uo-muted);
+}
+
+.uo-settings-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 10px;
+}
+
+.uo-settings-fields input,
+.uo-settings-card input[type="text"],
+.uo-settings-card input[type="number"] {
+  min-width: 0;
+  height: 42px;
+  border-radius: 14px;
+  border: 1px solid var(--uo-line);
+  padding: 0 12px;
+  color: var(--uo-text);
+  background: rgba(0, 0, 0, .18);
+  font: inherit;
 }
 
 .uo-switch-row {
@@ -830,6 +905,32 @@ button {
   height: 28px;
   flex: 0 0 auto;
   accent-color: var(--uo-accent);
+}
+
+.uo-pin-row {
+  grid-template-columns: minmax(0, 1fr) 8rem;
+  align-items: center;
+  gap: 12px !important;
+  padding: 12px 14px;
+  border: 1px solid var(--uo-line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .055);
+}
+
+.uo-pin-row input {
+  min-width: 0;
+  height: 42px;
+  border-radius: 14px;
+  border: 1px solid var(--uo-line);
+  padding: 0 12px;
+  color: var(--uo-text);
+  background: rgba(0, 0, 0, .18);
+  font: inherit;
+}
+
+.uo-status-note {
+  min-height: 1.1rem;
+  color: var(--uo-muted);
 }
 
 .uo-settings-card input[type="range"] {

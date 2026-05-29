@@ -9,6 +9,8 @@ services:
     container_name: ${OIAB_CORE_CONTAINER:-oiab-core}
     restart: unless-stopped
     user: "${OIAB_UID:-1000}:${OIAB_GID:-1000}"
+    group_add:
+      - "${OIAB_DOCKER_GID:-998}"
     environment:
       OIAB_HOSTNAME: ${OIAB_HOSTNAME:-overland.daemonadventures.net}
       OIAB_BIND_HOST: 0.0.0.0
@@ -22,9 +24,29 @@ services:
       OIAB_DEFAULT_MAP_APP: ${OIAB_DEFAULT_MAP_APP:-maps_v2}
       OIAB_CERT_MODE: ${OIAB_CERT_MODE:-existing}
       OIAB_ALLOW_DOCKER_CONTROL: ${OIAB_ALLOW_DOCKER_CONTROL:-false}
+      OIAB_GPSD_SOCKET: ${OIAB_GPSD_SOCKET:-}
       OIAB_GPSD_HOST: ${OIAB_GPSD_HOST:-host.docker.internal}
       OIAB_GPSD_PORT: ${OIAB_GPSD_PORT:-2947}
       OIAB_EMULATORJS_DIR: /data/oiab/services/emulatorjs/data
+      FILEBROWSER_PORT: ${FILEBROWSER_PORT:-8091}
+      FILEBROWSER_URL: ${FILEBROWSER_URL:-}
+      JELLYFIN_PORT: ${JELLYFIN_PORT:-8096}
+      JELLYFIN_URL: ${JELLYFIN_URL:-}
+      KOMGA_PORT: ${KOMGA_PORT:-25601}
+      KOMGA_URL: ${KOMGA_URL:-}
+      KOMGA_PROXY_TARGET: ${KOMGA_PROXY_TARGET:-http://host.docker.internal:25601}
+      KOMGA_READER_AUTH_HEADER: ${KOMGA_READER_AUTH_HEADER:-}
+      KOMGA_READER_AUTH_FILE: /run/oiab/komga-reader-auth.env
+      KIWIX_PORT: ${KIWIX_PORT:-8081}
+      KIWIX_URL: ${KIWIX_URL:-}
+      MINECRAFT_MAP_PORT: ${MINECRAFT_MAP_PORT:-8123}
+      MINECRAFT_ADMIN_PORT: ${MINECRAFT_ADMIN_PORT:-8452}
+      MINECRAFT_MAP_URL: ${MINECRAFT_MAP_URL:-}
+      MINECRAFT_ADMIN_URL: ${MINECRAFT_ADMIN_URL:-}
+      OIAB_CRAFTY_DB: /data/oiab/services/crafty/config/db/crafty.sqlite
+      OIAB_CRAFTY_SERVER_NAME: ${OIAB_CRAFTY_SERVER_NAME:-Trailer Pi Minecraft}
+      OIAB_MINECRAFT_WIKI_DIR: /data/oiab/content/wikis/minecraft
+      OIAB_POKEMON_WIKI_DIR: /data/oiab/content/wikis/pokemon
     ports:
       - "${OIAB_HTTP_PUBLISHED_PORT:-80}:8080"
     volumes:
@@ -36,9 +58,14 @@ services:
       - "${OIAB_BOOKS_DIR:-/srv/trailer/media/books/Ebooks}:/data/oiab/media/books"
       - "${OIAB_COMICS_DIR:-/srv/trailer/media/books/Comics}:/data/oiab/media/comics"
       - "${OIAB_ZIM_DIR:-/srv/trailer/iiab/zims}:/data/oiab/content/zim"
+      - "${OIAB_WIKIS_DIR:-/srv/trailer/wikis}:/data/oiab/content/wikis"
       - "${OIAB_ROMS_DIR:-/srv/trailer/roms}:/data/oiab/games/roms"
       - "${JELLYFIN_CONFIG_DIR:-/srv/trailer/jellyfin/config}:/data/oiab/services/jellyfin/config"
       - "${OIAB_MINECRAFT_DIR:-/srv/trailer/minecraft/server}:/data/oiab/services/minecraft/server"
+      - "${OIAB_CRAFTY_CONFIG_DIR:-/srv/trailer/crafty/docker/config}:/data/oiab/services/crafty/config"
+      - "${OIAB_GPSD_SOCKET_HOST:-/var/run/gpsd.sock}:${OIAB_GPSD_SOCKET:-/var/run/gpsd.sock}"
+      - "${OIAB_DOCKER_SOCKET_HOST:-/var/run/docker.sock}:/var/run/docker.sock"
+      - "${KOMGA_READER_AUTH_FILE_HOST:-/dev/null}:/run/oiab/komga-reader-auth.env:ro"
       # Important subpaths under the bind mount:
       #   certs: /data/oiab/certs
       #   PMTiles/map packs: /data/oiab/maps/packs
@@ -80,11 +107,15 @@ services:
     profiles: ["komga", "reading", "optional"]
     restart: unless-stopped
     ports:
-      - "${KOMGA_PORT:-25600}:25600"
+      - "${KOMGA_PORT:-25601}:25600"
+    environment:
+      TZ: "${TZ:-America/New_York}"
+      KOMGA_CONFIGDIR: /config
+      SERVER_SERVLET_CONTEXT_PATH: "${KOMGA_CONTEXT_PATH:-/books}"
+      KOMGA_LIBRARIES_SCAN_CRON: "${KOMGA_LIBRARIES_SCAN_CRON:-0 0 */2 * * *}"
     volumes:
-      - "${OIAB_DATA_DIR:-/data/oiab}/services/komga/config:/config"
-      - "${OIAB_BOOKS_DIR:-/data/oiab/media/books}:/books"
-      - "${OIAB_COMICS_DIR:-/data/oiab/media/comics}:/comics"
+      - "${KOMGA_CONFIG_DIR:-/srv/trailer/komga/config}:/config"
+      - "${KOMGA_LIBRARY_DIR:-/srv/trailer/media/books}:/data"
 
   kiwix:
     image: ghcr.io/kiwix/kiwix-serve:latest
@@ -94,7 +125,7 @@ services:
       - "${KIWIX_PORT:-8081}:8080"
     volumes:
       - "${OIAB_ZIM_DIR:-/data/oiab/content/zim}:/data:ro"
-    command: ["--library", "/data/library.xml"]
+    command: ["--library", "/data/library.xml", "--urlRootLocation=/wiki/"]
 
   minecraft:
     image: itzg/minecraft-server:latest
@@ -111,3 +142,18 @@ services:
       RCON_PASSWORD: ${MINECRAFT_RCON_PASSWORD:-change-me}
     volumes:
       - "${OIAB_MINECRAFT_DIR:-/srv/trailer/minecraft/server}:/data"
+
+  filebrowser:
+    image: filebrowser/filebrowser:s6
+    restart: unless-stopped
+    ports:
+      - "${FILEBROWSER_PORT:-8091}:80"
+    environment:
+      PUID: "${OIAB_UID:-1000}"
+      PGID: "${OIAB_GID:-1000}"
+      TZ: "${TZ:-America/New_York}"
+    command: ["--noauth", "--root", "/srv", "--database", "/database/filebrowser.db", "--address", "0.0.0.0"]
+    volumes:
+      - "${OIAB_FILEBROWSER_ROOT:-/srv/trailer}:/srv"
+      - "${OIAB_FILEBROWSER_DB_DIR:-/srv/trailer/data/oiab/services/filebrowser/database}:/database"
+      - "${OIAB_FILEBROWSER_CONFIG_DIR:-/srv/trailer/data/oiab/services/filebrowser/config}:/config"

@@ -1,0 +1,10 @@
+interface=${OIAB_AP_IFACE}
+driver=nl80211
+ssid=${OIAB_AP_SSID}
+country_code=${OIAB_AP_COUNTRY}
+hw_mode=g
+channel=${OIAB_AP_CHANNEL}
+ieee80211n=1
+wmm_enabled=1
+auth_algs=1
+ignore_broadcast_ssid=0

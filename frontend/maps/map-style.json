@@ -2064,24 +2064,8 @@
         "line-color": "#adadad",
         "line-width": 0.7,
         "line-dasharray": [
-          "step",
-          [
-            "zoom"
-          ],
-          [
-            "literal",
-            [
-              2
-            ]
-          ],
-          4,
-          [
-            "literal",
-            [
-              2,
-              1
-            ]
-          ]
+          2,
+          1
         ]
       }
     },
@@ -2102,24 +2086,8 @@
         "line-color": "#adadad",
         "line-width": 0.4,
         "line-dasharray": [
-          "step",
-          [
-            "zoom"
-          ],
-          [
-            "literal",
-            [
-              2
-            ]
-          ],
-          4,
-          [
-            "literal",
-            [
-              2,
-              1
-            ]
-          ]
+          2,
+          1
         ]
       }
     },

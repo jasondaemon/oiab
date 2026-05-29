@@ -7,9 +7,13 @@
     data: "/maps-data",
     location: "/maps-location-current",
     track: "/maps-tracks-current",
+    trackManualStart: "/api/tracks/manual/start",
+    trackManualStop: "/api/tracks/manual/stop",
     save: "/maps-quick-save",
+    manage: "/maps-data-manage",
   };
   const MAP_3D_BUILDINGS_KEY = "omv2.show3dBuildings";
+  const MAP_AUTO_RECORDING_KEY = "omv2.autoTrackRecording";
   const EMPTY = { type: "FeatureCollection", features: [] };
   const WAYPOINT_TYPES = [
     ["gas", "Gas", "gas-station-ev-station"],
@@ -40,6 +44,42 @@
     route: "#ffd34f",
     quick_save: "#ffd34f",
     "quick-save": "#ffd34f",
+  };
+  const ROAD_TYPES = [
+    ["", "Default", "#ffd34f"],
+    ["interstate", "Interstate", "#ff4f2e"],
+    ["main_road", "Main road", "#ff8a2a"],
+    ["street", "Minor road / street", "#ffffff"],
+    ["gravel", "Gravel road", "#b08d57"],
+    ["dirt", "Dirt road", "#8a6a42"],
+    ["high_clearance", "High-clearance road", "#f97316"],
+    ["trail", "Trail / path", "#555555"],
+  ];
+  const COLOR_SWATCHES = [
+    "#ffd34f", "#ff8a2a", "#ff4f2e", "#74e38a", "#62ccff", "#8be0bd",
+    "#c084fc", "#ffffff", "#b08d57", "#8a6a42", "#111827", "#e11d48",
+  ];
+  const SEARCH_SYNONYMS = {
+    gas: ["gas", "fuel", "petrol", "charging", "ev", "service station"],
+    fuel: ["fuel", "gas", "petrol", "charging", "ev"],
+    grocery: ["grocery", "groceries", "supermarket", "market"],
+    food: ["food", "restaurant", "fast food", "cafe", "diner"],
+    restroom: ["restroom", "restrooms", "toilet", "toilets", "bathroom"],
+    camp: ["camp", "campsite", "campground", "rv"],
+    trail: ["trail", "trailhead", "path", "hiking"],
+  };
+  const MVUM_ROUTE_TYPE_LABELS = {
+    "1": "Road open to all vehicles",
+    "2": "Road open to highway-legal vehicles",
+    "3": "Road open to all vehicles",
+    "4": "Trail open to vehicles 50 inches or less",
+    "5": "Trail open to motorcycles",
+    "6": "Trail open to wheeled vehicles",
+    "7": "Special vehicle designation",
+    "8": "Seasonal route",
+    "17": "ATV Only",
+    "18": "Motorcycle Only",
+    "19": "OHV / Off-highway vehicle",
   };
   const MAP_KIND_TO_POI_ICON = {
     aerodrome: "airport",
@@ -135,6 +175,8 @@
     lookout: "viewpoint",
     viewpoint: "viewpoint",
     trailhead: "trailhead",
+    home: "house-home",
+    house: "house-home",
     food: "restaurant",
     restaurant: "restaurant",
     restroom: "restrooms",
@@ -172,6 +214,8 @@
     track: null,
     vehicleMarker: null,
     modalPoint: null,
+    editingItem: null,
+    deletingItem: null,
     missingPackPoll: null,
     dataTimer: null,
     locationTimer: null,
@@ -181,6 +225,12 @@
     overlayRegistry: null,
     tileErrors: [],
     inspectTile: false,
+    managerSnapshot: { folders: [], items: [] },
+    managerSelectedItems: new Set(),
+    managerSelectedFolders: new Set(),
+    managerOpenFolders: new Set(),
+    searchResults: [],
+    manualRecording: false,
   };
 
   function toast(message, error = false) {
@@ -273,7 +323,14 @@
   }
 
   function folderOf(feature) {
-    return String((feature.properties || {}).folder || "Unfiled").trim() || "Unfiled";
+    return normalizeFolderName((feature.properties || {}).folder);
+  }
+
+  function normalizeFolderName(folder) {
+    if (folder && typeof folder === "object") {
+      return String(folder.name || folder.folder || "Unfiled").trim() || "Unfiled";
+    }
+    return String(folder || "Unfiled").trim() || "Unfiled";
   }
 
   function categoryOf(feature) {
@@ -302,6 +359,23 @@
     return Number.isFinite(Number(lat)) && Number.isFinite(Number(lon)) && Math.abs(Number(lat)) <= 90 && Math.abs(Number(lon)) <= 180;
   }
 
+  function parseCoordinateQuery(query) {
+    const raw = String(query || "").trim();
+    if (!raw) return null;
+    const normalized = raw
+      .replace(/[;|]/g, ",")
+      .replace(/\s+/g, " ")
+      .replace(/^[^\d+-]+/, "")
+      .replace(/[^\d.,+\-\s]+$/g, "");
+    const match = normalized.match(/^\s*([+-]?\d+(?:\.\d+)?)\s*,\s*([+-]?\d+(?:\.\d+)?)\s*$/);
+    if (!match) return null;
+    const first = Number(match[1]);
+    const second = Number(match[2]);
+    if (validCoord(first, second)) return { lat: first, lon: second };
+    if (validCoord(second, first)) return { lat: second, lon: first };
+    return null;
+  }
+
   async function fetchJson(url, fallback = null, options = {}) {
     const response = await fetch(url, { cache: "no-cache", ...options });
     if (!response.ok) {
@@ -326,6 +400,14 @@
     }
     if (!response.ok || payload.ok === false) throw new Error(payload.error || `${url} returned ${response.status}`);
     return payload;
+  }
+
+  async function setOverlayEnabled(id, enabled) {
+    return postJson("/api/maps/overlays/set-enabled", { id, enabled });
+  }
+
+  async function setOverlayOpacity(id, opacity) {
+    return postJson("/api/maps/overlays/set-opacity", { id, opacity });
   }
 
   function clone(value) {
@@ -439,6 +521,41 @@
     await Promise.all(tasks);
   }
 
+  function addMilitaryHatchPattern() {
+    if (!state.map || state.map.hasImage("oiab-military-hatch")) return;
+    const size = 32;
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
+    const context = canvas.getContext("2d");
+    context.clearRect(0, 0, size, size);
+    context.strokeStyle = "rgba(220, 38, 38, 0.72)";
+    context.lineWidth = 3;
+    for (let x = -size; x < size * 2; x += 12) {
+      context.beginPath();
+      context.moveTo(x, size);
+      context.lineTo(x + size, 0);
+      context.stroke();
+    }
+    state.map.addImage("oiab-military-hatch", context.getImageData(0, 0, size, size), { pixelRatio: 1 });
+  }
+
+  function addMilitaryHatchLayer() {
+    if (!state.map || state.map.getLayer("oiab-military-hatch") || !state.map.getSource("naturalearth-protomaps")) return;
+    addMilitaryHatchPattern();
+    state.map.addLayer({
+      id: "oiab-military-hatch",
+      type: "fill",
+      source: "naturalearth-protomaps",
+      "source-layer": "landuse",
+      filter: ["in", ["get", "kind"], ["literal", ["military", "naval_base"]]],
+      paint: {
+        "fill-pattern": "oiab-military-hatch",
+        "fill-opacity": 0.45,
+      },
+    });
+  }
+
   function addBasePoiIconLayer() {
     const sourceId = sourceIdFor(state.packSelection?.base || {});
     if (!state.map || !state.map.getSource(sourceId) || state.map.getLayer("oiab-poi-icons")) return;
@@ -492,20 +609,29 @@
 
   function normalizeOverlayRegistry(registry) {
     return (Array.isArray(registry?.overlays) ? registry.overlays : [])
-      .filter((overlay) => overlay && overlay.enabled && (overlay.available || overlay.online_available || overlay.offline_available || overlay.exists))
       .sort((a, b) => Number(a.sort_order ?? 100) - Number(b.sort_order ?? 100));
+  }
+
+  function enabledOverlays(registry) {
+    return normalizeOverlayRegistry(registry)
+      .filter((overlay) => overlay && overlay.enabled && overlay.available);
   }
 
   function overlaySignature(overlays) {
     return overlays.map((overlay) => ({
       id: overlay.id,
       type: overlay.type,
+      source_type: overlay.source_type || "",
       url: overlay.url || overlay.source_url,
       tiles: overlay.tiles || [],
       source_layer: overlay.source_layer || "",
       enabled: Boolean(overlay.enabled),
       opacity: Number(overlay.opacity ?? 1),
       sort_order: Number(overlay.sort_order ?? 100),
+      cache_status: overlay.cache_status || "",
+      last_fetch_at: overlay.last_fetch_at || "",
+      expires_at: overlay.expires_at || "",
+      size_bytes: Number(overlay.size_bytes || 0),
     }));
   }
 
@@ -518,9 +644,9 @@
     const base = detailed || byId.get("world_overview") || basemaps[0];
     return {
       base,
-      overlays: normalizeOverlayRegistry(state.overlayRegistry),
+      overlays: enabledOverlays(state.overlayRegistry),
       all: [base],
-      overlayCount: normalizeOverlayRegistry(state.overlayRegistry).length,
+      overlayCount: enabledOverlays(state.overlayRegistry).length,
     };
   }
 
@@ -575,8 +701,39 @@
     return copy;
   }
 
+  function mvumLinePaint(opacity) {
+    return {
+      "line-color": [
+        "match",
+        ["coalesce", ["get", "style_bucket"], ["get", "route_type"], ["get", "route_type_label"], ""],
+        "restricted", "#ff7068",
+        "closed", "#ff7068",
+        "seasonal", "#ffd34f",
+        "high_clearance", "#f97316",
+        "atv_only", "#22c55e",
+        "motorcycle_only", "#60a5fa",
+        "trail", "#c084fc",
+        "open_motorized", "#ff8c2f",
+        "17", "#22c55e",
+        "18", "#60a5fa",
+        "#a3a3a3",
+      ],
+      "line-width": ["interpolate", ["linear"], ["zoom"], 8, 1.2, 12, 2.2, 16, 4],
+      "line-opacity": opacity,
+    };
+  }
+
+  function routeLinePaint() {
+    return {
+      "line-color": ["coalesce", ["get", "color"], ["match", ["get", "road_type"], "interstate", "#ff4f2e", "main_road", "#ff8a2a", "street", "#ffffff", "gravel", "#b08d57", "dirt", "#8a6a42", "high_clearance", "#f97316", "trail", "#555555", "#ffd34f"]],
+      "line-width": ["interpolate", ["linear"], ["zoom"], 5, 2, 12, 4, 16, 7],
+      "line-opacity": 0.95,
+    };
+  }
+
   function defaultOverlayLayers(overlay, sourceId) {
     const opacity = overlayOpacity(overlay);
+    const style = overlay.style || overlay.category || "";
     if (overlay.type === "raster") {
       return [{
         id: overlayLayerId(overlay, "raster"),
@@ -586,6 +743,55 @@
       }];
     }
     if (overlay.type === "geojson") {
+      if (style === "weather_alerts") {
+        return [
+          {
+            id: overlayLayerId(overlay, "weather-fill"),
+            type: "fill",
+            source: sourceId,
+            filter: ["==", ["geometry-type"], "Polygon"],
+            paint: {
+              "fill-color": ["match", ["get", "severity"], "Extreme", "#7f1d1d", "Severe", "#ef4444", "Moderate", "#f59e0b", "Minor", "#facc15", "#60a5fa"],
+              "fill-opacity": opacity * 0.28,
+            },
+          },
+          {
+            id: overlayLayerId(overlay, "weather-line"),
+            type: "line",
+            source: sourceId,
+            filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
+            paint: {
+              "line-color": ["match", ["get", "severity"], "Extreme", "#7f1d1d", "Severe", "#ef4444", "Moderate", "#f59e0b", "Minor", "#facc15", "#60a5fa"],
+              "line-width": 2,
+              "line-opacity": opacity,
+            },
+          },
+        ];
+      }
+      if (style === "wildfire_hotspots") {
+        return [{
+          id: overlayLayerId(overlay, "hotspots"),
+          type: "circle",
+          source: sourceId,
+          filter: ["==", ["geometry-type"], "Point"],
+          paint: {
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 3, 2.5, 8, 4.5, 13, 7],
+            "circle-color": ["case", ["==", ["get", "confidence"], "h"], "#ff2d1f", ["==", ["get", "confidence"], "n"], "#ff8c1a", "#ffd34f"],
+            "circle-stroke-color": "#4a0906",
+            "circle-stroke-width": 1.5,
+            "circle-opacity": opacity,
+          },
+        }];
+      }
+      if (style === "mvum_roads" || style === "mvum_trails" || overlay.category === "mvum") {
+        return [{
+          id: overlayLayerId(overlay, "mvum-line"),
+          type: "line",
+          source: sourceId,
+          filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString"]]],
+          paint: mvumLinePaint(opacity),
+        }];
+      }
       return [
         {
           id: overlayLayerId(overlay, "fill"),
@@ -617,6 +823,16 @@
       ];
     }
     if (overlay.type === "pmtiles" && overlay.source_layer) {
+      if (style === "mvum_roads" || style === "mvum_trails" || overlay.category === "mvum") {
+        return [{
+          id: overlayLayerId(overlay, "mvum-line"),
+          type: "line",
+          source: sourceId,
+          "source-layer": overlay.source_layer,
+          filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString"]]],
+          paint: mvumLinePaint(opacity),
+        }];
+      }
       return [
         {
           id: overlayLayerId(overlay, "fill"),
@@ -651,6 +867,17 @@
       ];
     }
     return [];
+  }
+
+  function overlayLayerIds(overlay) {
+    const sourceId = overlaySourceId(overlay);
+    const customLayers = Array.isArray(overlay.layers) ? overlay.layers : [];
+    const layers = customLayers.length
+      ? customLayers.map((layer, index) => ({ ...layer, id: layer.id || overlayLayerId(overlay, `custom-${index}`) }))
+      : defaultOverlayLayers(overlay, sourceId);
+    return layers
+      .filter((layer) => layer && layer.id && layer.type !== "raster")
+      .map((layer) => layer.id);
   }
 
   function appendOverlaySourcesAndLayers(style, overlays) {
@@ -1011,17 +1238,20 @@
       zoom: Number(localStorage.getItem("omv2.zoom") || 3.4),
       pitch: Number(localStorage.getItem("omv2.pitch") || 0),
       bearing: Number(localStorage.getItem("omv2.bearing") || 0),
-      attributionControl: true,
+      attributionControl: false,
       cooperativeGestures: false,
       canvasContextAttributes: { antialias: true },
     });
     state.map.addControl(new maplibregl.ScaleControl({ maxWidth: 120, unit: "imperial" }), "bottom-left");
+    state.map.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-right");
     state.map.on("error", logMapError);
     state.map.on("moveend", saveMapView);
     state.map.on("load", async () => {
       applyBuildingDisplayMode();
       await loadPoiImages();
+      addMilitaryHatchLayer();
       addBasePoiIconLayer();
+      bindOverlayFeaturePopups();
       addOverlandSources();
       loadOverlandData();
       pollLocation();
@@ -1043,20 +1273,50 @@
       $("addMapWaypoint").classList.remove("is-pending");
       openWaypointModal("Save map point");
     });
-    state.map.on("click", "overland-waypoint-circles", showWaypointPopup);
-    state.map.on("click", "overland-waypoint-icons", showWaypointPopup);
+    state.map.on("click", "overland-waypoint-circles", showSavedPointPopup);
+    state.map.on("click", "overland-waypoint-icons", showSavedPointPopup);
+    state.map.on("click", "overland-track-lines", showSavedTrackPopup);
+    state.map.on("click", "search-result-halo", (event) => openSearchResult(event.features?.[0]?.properties?.index));
+    state.map.on("click", "search-result-dot", (event) => openSearchResult(event.features?.[0]?.properties?.index));
     state.map.on("click", "oiab-poi-icons", showBasePoiPopup);
     state.map.on("click", "pois", showBasePoiPopup);
   }
 
-  function showWaypointPopup(event) {
+  function bindOverlayFeaturePopups() {
+    if (!state.map) return;
+    const layerIds = (state.packSelection?.overlays || [])
+      .flatMap(overlayLayerIds)
+      .filter((id) => state.map.getLayer(id));
+    for (const layerId of layerIds) {
+      state.map.on("click", layerId, showOverlayPopup);
+      state.map.on("mouseenter", layerId, () => {
+        state.map.getCanvas().style.cursor = "pointer";
+      });
+      state.map.on("mouseleave", layerId, () => {
+        state.map.getCanvas().style.cursor = "";
+      });
+    }
+  }
+
+  function showSavedPointPopup(event) {
     const feature = event.features && event.features[0];
     if (!feature) return;
     const props = feature.properties || {};
     const coords = feature.geometry.coordinates;
-    new maplibregl.Popup()
+    new maplibregl.Popup({ className: "omv2-poi-popup", maxWidth: "380px" })
       .setLngLat(coords)
-      .setHTML(`<strong>${escapeHtml(featureName(feature))}</strong><br>${escapeHtml(props.category || "waypoint")} · ${escapeHtml(props.folder || "Unfiled")}<br><small>${escapeHtml(props.notes || "")}</small>`)
+      .setHTML(savedDataPopupHtml(props, "waypoint", coords))
+      .addTo(state.map);
+  }
+
+  function showSavedTrackPopup(event) {
+    const feature = event.features && event.features[0];
+    if (!feature) return;
+    const props = feature.properties || {};
+    const coords = [event.lngLat.lng, event.lngLat.lat];
+    new maplibregl.Popup({ className: "omv2-poi-popup", maxWidth: "380px" })
+      .setLngLat(coords)
+      .setHTML(savedDataPopupHtml(props, "route", coords))
       .addTo(state.map);
   }
 
@@ -1070,17 +1330,46 @@
       : [event.lngLat.lng, event.lngLat.lat];
     new maplibregl.Popup({ className: "omv2-poi-popup", maxWidth: "360px" })
       .setLngLat(lngLat)
-      .setHTML(basePoiPopupHtml(props))
+      .setHTML(basePoiPopupHtml(props, lngLat))
       .addTo(state.map);
   }
 
-  function basePoiPopupHtml(props = {}) {
+  function showOverlayPopup(event) {
+    const feature = event.features && event.features[0];
+    if (!feature) return;
+    const overlay = overlayForFeature(feature);
+    const coords = feature.geometry?.type === "Point" && Array.isArray(feature.geometry?.coordinates)
+      ? feature.geometry.coordinates
+      : [event.lngLat.lng, event.lngLat.lat];
+    new maplibregl.Popup({ className: "omv2-poi-popup", maxWidth: "390px" })
+      .setLngLat(coords)
+      .setHTML(overlayPopupHtml(feature.properties || {}, overlay, coords))
+      .addTo(state.map);
+  }
+
+  function overlayForFeature(feature) {
+    const layerId = feature?.layer?.id || "";
+    const sourceId = feature?.source || feature?.layer?.source || "";
+    return (state.packSelection?.overlays || []).find((overlay) => {
+      const overlaySource = overlaySourceId(overlay);
+      return sourceId === overlaySource || layerId.startsWith(`${overlaySource}-`);
+    }) || {};
+  }
+
+  function coordinateDetail(coords) {
+    const lon = Array.isArray(coords) ? Number(coords[0]) : NaN;
+    const lat = Array.isArray(coords) ? Number(coords[1]) : NaN;
+    return Number.isFinite(lat) && Number.isFinite(lon) ? `${lat.toFixed(6)}, ${lon.toFixed(6)}` : "";
+  }
+
+  function basePoiPopupHtml(props = {}, coords = null) {
     const name = props.name || props["name:en"] || props.name_en || "Point of interest";
     const kind = humanizePoiValue(props.kind || props.kind_detail || props.amenity || props.shop || props.tourism || "poi");
-    const details = readablePoiDetails(props);
+    const coordText = coordinateDetail(coords);
+    const details = compactDetails([["Coordinates", coordText], ...readablePoiDetails(props)]);
     const technical = Object.entries(props)
       .filter(([, value]) => value !== undefined && value !== null && String(value).trim() !== "")
-      .sort(([a], [b]) => a.localeCompare(b))
+      .sort(([a], [b]) => String(a).localeCompare(String(b)))
       .map(([key, value]) => `<dt>${escapeHtml(humanizePoiKey(key))}</dt><dd>${escapeHtml(formatPoiValue(value))}</dd>`)
       .join("");
     return `
@@ -1089,8 +1378,167 @@
         <h3>${escapeHtml(name)}</h3>
         ${details.length ? `<dl class="omv2-poi-details">${details.map(([key, value]) => `<dt>${escapeHtml(key)}</dt><dd>${escapeHtml(value)}</dd>`).join("")}</dl>` : `<p class="omv2-poi-empty">No additional details in this map pack.</p>`}
         ${technical ? `<details class="omv2-poi-technical"><summary>Technical details</summary><dl>${technical}</dl></details>` : ""}
+        ${coordText ? `<div class="omv2-poi-actions"><button type="button" data-copy-coords="${escapeHtml(coordText)}">Copy coordinates</button></div>` : ""}
       </article>
     `;
+  }
+
+  function overlayPopupHtml(props = {}, overlay = {}, coords = null) {
+    const category = overlay.category || overlay.style || "overlay";
+    const title = overlayFeatureTitle(props, overlay);
+    const kicker = overlay.name || overlayCategoryTitle(category);
+    const coordText = coordinateDetail(coords);
+    const details = compactDetails([["Coordinates", coordText], ...overlayReadableDetails(props, overlay)]);
+    const technical = Object.entries(props)
+      .filter(([key, value]) => !["raw_properties", "rawProperties"].includes(key) && value !== undefined && value !== null && String(value).trim() !== "")
+      .sort(([a], [b]) => String(a).localeCompare(String(b)))
+      .slice(0, 28)
+      .map(([key, value]) => `<dt>${escapeHtml(humanizePoiKey(key))}</dt><dd>${escapeHtml(formatPoiValue(value))}</dd>`)
+      .join("");
+    return `
+      <article class="omv2-poi-card">
+        <p class="omv2-poi-kicker">${escapeHtml(kicker)}</p>
+        <h3>${escapeHtml(title)}</h3>
+        ${details.length ? `<dl class="omv2-poi-details">${details.map(([key, value]) => `<dt>${escapeHtml(key)}</dt><dd>${escapeHtml(value)}</dd>`).join("")}</dl>` : `<p class="omv2-poi-empty">No readable details in this overlay feature.</p>`}
+        ${technical ? `<details class="omv2-poi-technical"><summary>All available fields</summary><dl>${technical}</dl></details>` : ""}
+        ${coordText ? `<div class="omv2-poi-actions"><button type="button" data-copy-coords="${escapeHtml(coordText)}">Copy coordinates</button></div>` : ""}
+      </article>
+    `;
+  }
+
+  function savedDataPopupHtml(props = {}, kind = "waypoint", coords = null) {
+    const title = props.name || props.title || (kind === "route" ? "Saved route" : "Saved waypoint");
+    const lon = Array.isArray(coords) ? Number(coords[0]) : Number(props.lon);
+    const lat = Array.isArray(coords) ? Number(coords[1]) : Number(props.lat);
+    const coordText = Number.isFinite(lat) && Number.isFinite(lon) ? `${lat.toFixed(6)}, ${lon.toFixed(6)}` : "";
+    const details = compactDetails([
+      ["Type", props.category || kind],
+      ["Folder", props.folder || "Unfiled"],
+      ["Coordinates", coordText],
+      ["Source", props.source || ""],
+      ["URL", props.url || props.website || ""],
+      ["Description", props.notes || props.description || ""],
+      ["Created", props.timestamp || props.created_at || ""],
+    ]);
+    const itemId = props.id || "";
+    return `
+      <article class="omv2-poi-card">
+        <p class="omv2-poi-kicker">Saved ${escapeHtml(kind)}</p>
+        <h3>${escapeHtml(title)}</h3>
+        ${details.length ? `<dl class="omv2-poi-details">${details.map(([key, value]) => `<dt>${escapeHtml(key)}</dt><dd>${linkifyDetail(key, value)}</dd>`).join("")}</dl>` : ""}
+        <div class="omv2-poi-actions">
+          ${coordText ? `<button type="button" data-copy-coords="${escapeHtml(coordText)}">Copy coordinates</button>` : ""}
+          <button type="button" data-edit-map-item="${escapeHtml(itemId)}">Edit</button>
+          <button type="button" data-delete-map-item="${escapeHtml(itemId)}" data-delete-map-label="${escapeHtml(title)}">Delete</button>
+          <button type="button" data-open-map-data-manager>Open manager</button>
+        </div>
+      </article>
+    `;
+  }
+
+  function linkifyDetail(key, value) {
+    if (String(key).toLowerCase() === "url" && /^https?:\/\//i.test(String(value))) {
+      const safe = escapeHtml(value);
+      return `<a href="${safe}" target="_blank" rel="noopener">${safe}</a>`;
+    }
+    return escapeHtml(value);
+  }
+
+  function overlayCategoryTitle(category) {
+    return String(category || "overlay")
+      .replace(/[_-]+/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+  }
+
+  function overlayFeatureTitle(props = {}, overlay = {}) {
+    return props.route_name
+      || props.name
+      || props.title
+      || props.headline
+      || props.event
+      || props.route_id
+      || props.id
+      || (overlay.category === "wildfire" ? "Wildfire hotspot" : "")
+      || (overlay.category === "weather" ? "Weather alert" : "")
+      || (overlay.category === "mvum" ? "MVUM route" : "")
+      || "Overlay feature";
+  }
+
+  function mvumRouteTypeLabel(value) {
+    const raw = String(value ?? "").trim();
+    if (!raw) return "";
+    const code = raw.match(/\d+/)?.[0] || raw;
+    const label = MVUM_ROUTE_TYPE_LABELS[code];
+    return label ? `${label} (${code})` : raw;
+  }
+
+  function mvumBucketLabel(value) {
+    return String(value || "")
+      .replace(/_/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+  }
+
+  function firstPresent(props, keys) {
+    for (const key of keys) {
+      const value = props[key] ?? props[key.replace(/:/g, "_")];
+      if (value !== undefined && value !== null && String(value).trim() !== "") return value;
+    }
+    return "";
+  }
+
+  function overlayReadableDetails(props = {}, overlay = {}) {
+    const category = overlay.category || overlay.style || "";
+    if (category === "mvum" || String(overlay.style || "").startsWith("mvum")) {
+      const routeType = firstPresent(props, ["route_type_label", "route_type", "type", "style_bucket"]);
+      return compactDetails([
+        ["Route ID", firstPresent(props, ["route_id", "routeid", "route_no", "route_number", "route"])],
+        ["Route type", mvumRouteTypeLabel(routeType)],
+        ["Route class", mvumBucketLabel(firstPresent(props, ["style_bucket"]))],
+        ["Vehicle classes", firstPresent(props, ["vehicle_classes", "vehicles", "allowed_vehicles"])],
+        ["Season", firstPresent(props, ["season", "seasonal", "season_of_use"])],
+        ["Allowed", firstPresent(props, ["allowed", "allowed_raw", "status"])],
+        ["High clearance", firstPresent(props, ["high_clearance"])],
+        ["Forest", firstPresent(props, ["forest_name", "forest", "admin_forest"])],
+        ["District", firstPresent(props, ["district", "ranger_district"])],
+        ["Source", firstPresent(props, ["source"])],
+      ]);
+    }
+    if (category === "wildfire" || overlay.style === "wildfire_hotspots") {
+      return compactDetails([
+        ["Date", firstPresent(props, ["acq_date", "date"])],
+        ["Time", firstPresent(props, ["acq_time", "time"])],
+        ["Confidence", firstPresent(props, ["confidence"])],
+        ["Brightness", firstPresent(props, ["brightness", "bright_ti4", "bright_ti5"])],
+        ["FRP", firstPresent(props, ["frp"])],
+        ["Satellite", firstPresent(props, ["satellite"])],
+        ["Instrument", firstPresent(props, ["instrument"])],
+        ["Day/night", firstPresent(props, ["daynight"])],
+      ]);
+    }
+    if (category === "weather" || overlay.style === "weather_alerts") {
+      return compactDetails([
+        ["Event", firstPresent(props, ["event"])],
+        ["Severity", firstPresent(props, ["severity"])],
+        ["Urgency", firstPresent(props, ["urgency"])],
+        ["Certainty", firstPresent(props, ["certainty"])],
+        ["Area", firstPresent(props, ["areaDesc", "area_desc"])],
+        ["Effective", firstPresent(props, ["effective", "sent"])],
+        ["Expires", firstPresent(props, ["expires", "ends"])],
+        ["Headline", firstPresent(props, ["headline"])],
+        ["Instruction", firstPresent(props, ["instruction"])],
+      ]);
+    }
+    const ignored = new Set(["raw_properties", "rawProperties"]);
+    return Object.entries(props)
+      .filter(([key, value]) => !ignored.has(key) && value !== undefined && value !== null && String(value).trim() !== "")
+      .slice(0, 10)
+      .map(([key, value]) => [humanizePoiKey(key), formatPoiValue(value)]);
+  }
+
+  function compactDetails(rows) {
+    return rows
+      .filter(([, value]) => value !== undefined && value !== null && String(value).trim() !== "")
+      .map(([key, value]) => [key, formatPoiValue(value)]);
   }
 
   function readablePoiDetails(props = {}) {
@@ -1153,15 +1601,12 @@
   function addOverlandSources() {
     state.map.addSource("overland-waypoints", { type: "geojson", data: EMPTY });
     state.map.addSource("overland-tracks", { type: "geojson", data: EMPTY });
+    state.map.addSource("search-results", { type: "geojson", data: EMPTY });
     state.map.addLayer({
       id: "overland-track-lines",
       type: "line",
       source: "overland-tracks",
-      paint: {
-        "line-color": ["coalesce", ["get", "color"], "#ffd34f"],
-        "line-width": ["interpolate", ["linear"], ["zoom"], 4, 2, 13, 5],
-        "line-opacity": 0.86,
-      },
+      paint: routeLinePaint(),
     });
     state.map.addLayer({
       id: "overland-waypoint-circles",
@@ -1206,6 +1651,29 @@
         "text-halo-width": 1.8,
       },
     });
+    state.map.addLayer({
+      id: "search-result-halo",
+      type: "circle",
+      source: "search-results",
+      paint: {
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 16, 12, 24, 16, 34],
+        "circle-color": "#ffd34f",
+        "circle-opacity": 0.34,
+        "circle-stroke-color": "#102719",
+        "circle-stroke-width": 3,
+      },
+    });
+    state.map.addLayer({
+      id: "search-result-dot",
+      type: "circle",
+      source: "search-results",
+      paint: {
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 5, 12, 8, 16, 11],
+        "circle-color": "#7df28c",
+        "circle-stroke-color": "#102719",
+        "circle-stroke-width": 2,
+      },
+    });
   }
 
   async function loadOverlandData() {
@@ -1220,14 +1688,14 @@
   }
 
   function updateFolders(folders) {
-    for (const folder of folders) state.folders.add(folder || "Unfiled");
+    for (const folder of folders) state.folders.add(normalizeFolderName(folder));
     for (const feature of state.places.features || []) state.folders.add(folderOf(feature));
     renderFolders();
   }
 
   function renderFolders() {
     const node = $("folderList");
-    const folders = Array.from(state.folders).sort((a, b) => a.localeCompare(b));
+    const folders = Array.from(state.folders).map(normalizeFolderName).sort((a, b) => String(a).localeCompare(String(b)));
     node.innerHTML = "";
     for (const folder of folders) {
       const count = (state.places.features || []).filter((feature) => folderOf(feature) === folder).length;
@@ -1244,6 +1712,404 @@
     }
   }
 
+  function renderOverlayControls() {
+    const node = $("overlayList");
+    if (!node) return;
+    const overlays = normalizeOverlayRegistry(state.overlayRegistry).filter((overlay) => overlay.available);
+    node.innerHTML = "";
+    if (!overlays.length) {
+      node.innerHTML = '<div class="omv2-overlay-note">No downloaded overlays yet. Use Settings → Map Packs to download overlay data.</div>';
+      return;
+    }
+    for (const overlay of overlays) {
+      const row = document.createElement("div");
+      row.className = "omv2-folder-row omv2-overlay-row";
+      const status = overlay.cache_status && overlay.cache_status !== "cached" ? ` · ${overlay.cache_status}` : "";
+      row.innerHTML = `
+        <label class="omv2-overlay-check">
+          <input type="checkbox" ${overlay.enabled ? "checked" : ""}>
+          <span>${escapeHtml(overlay.name || overlay.id)}<br><small class="omv2-overlay-note">${escapeHtml(overlay.category || "overlay")}${escapeHtml(status)}</small></span>
+        </label>
+        <label class="omv2-overlay-opacity">
+          <span>${Math.round(Number(overlay.opacity ?? 1) * 100)}%</span>
+          <input type="range" min="0" max="1" step="0.05" value="${Number(overlay.opacity ?? 1)}">
+        </label>
+      `;
+      row.querySelector(".omv2-overlay-check input").addEventListener("change", async (event) => {
+        try {
+          state.overlayRegistry = await setOverlayEnabled(overlay.id, event.target.checked);
+          await boot();
+        } catch (error) {
+          event.target.checked = !event.target.checked;
+          toast(error.message, true);
+        }
+      });
+      row.querySelector(".omv2-overlay-opacity input").addEventListener("change", async (event) => {
+        try {
+          state.overlayRegistry = await setOverlayOpacity(overlay.id, event.target.value);
+          await boot();
+        } catch (error) {
+          toast(error.message, true);
+        }
+      });
+      node.appendChild(row);
+    }
+  }
+
+  function setManagerStatus(message = "", error = false) {
+    const node = $("managerStatus");
+    if (!node) return;
+    node.textContent = message;
+    node.classList.toggle("is-error", Boolean(error));
+  }
+
+  function managerFolderNames() {
+    const names = new Set(["Unfiled"]);
+    for (const folder of state.folders || []) names.add(normalizeFolderName(folder));
+    for (const folder of state.managerSnapshot.folders || []) names.add(normalizeFolderName(folder.name || folder));
+    for (const item of state.managerSnapshot.items || []) names.add(normalizeFolderName(item.folder));
+    return Array.from(names).sort((a, b) => a.localeCompare(b));
+  }
+
+  function fillManagerFolderSelect(select, selected = "Unfiled") {
+    if (!select) return;
+    select.replaceChildren(...managerFolderNames().map((name) => {
+      const option = document.createElement("option");
+      option.value = name;
+      option.textContent = name;
+      option.selected = name === selected;
+      return option;
+    }));
+  }
+
+  function managerGroups() {
+    const folders = new Map();
+    for (const folder of state.managerSnapshot.folders || []) {
+      const name = normalizeFolderName(folder.name || folder);
+      folders.set(name, { name, shown: folder.shown !== false, items: [] });
+    }
+    for (const item of state.managerSnapshot.items || []) {
+      const name = normalizeFolderName(item.folder);
+      if (!folders.has(name)) folders.set(name, { name, shown: true, items: [] });
+      folders.get(name).items.push(item);
+    }
+    return Array.from(folders.values()).sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  async function loadManagerSnapshot() {
+    const data = await fetchJson(API.manage, { ok: false, folders: [], items: [] });
+    if (data.ok === false) throw new Error(data.error || "Map data manager failed to load.");
+    state.managerSnapshot = data;
+    renderDataManager();
+    return data;
+  }
+
+  async function managerAction(payload) {
+    const data = await postJson(API.manage, payload);
+    state.managerSnapshot = data;
+    renderDataManager();
+    await loadOverlandData();
+    return data;
+  }
+
+  function renderDataManager() {
+    const root = $("managerFolderList");
+    if (!root) return;
+    const groups = managerGroups();
+    root.innerHTML = groups.length ? "" : '<div class="omv2-overlay-note">No saved map data yet.</div>';
+    for (const folder of groups) {
+      const open = state.managerOpenFolders.has(folder.name);
+      const folderRow = document.createElement("div");
+      folderRow.className = "omv2-manager-folder";
+      folderRow.innerHTML = `
+        <button class="omv2-manager-caret" type="button" title="Expand folder">${open ? "▾" : "▸"}</button>
+        <input type="checkbox" ${state.managerSelectedFolders.has(folder.name) ? "checked" : ""} title="Select folder">
+        <span class="omv2-manager-name">${escapeHtml(folder.name)}</span>
+        <span class="omv2-manager-meta">${folder.items.length}</span>
+        <span class="omv2-manager-row-actions">
+          <button class="omv2-manager-icon-button" type="button" data-folder-visible="${escapeHtml(folder.name)}" title="${folder.shown ? "Hide" : "Show"}">${folder.shown ? "◉" : "◎"}</button>
+          <button class="omv2-manager-icon-button" type="button" data-folder-delete="${escapeHtml(folder.name)}" title="Delete folder">🗑</button>
+        </span>
+      `;
+      folderRow.querySelector(".omv2-manager-caret").addEventListener("click", () => {
+        if (state.managerOpenFolders.has(folder.name)) state.managerOpenFolders.delete(folder.name);
+        else state.managerOpenFolders.add(folder.name);
+        renderDataManager();
+      });
+      folderRow.querySelector("input").addEventListener("change", (event) => {
+        if (event.target.checked) state.managerSelectedFolders.add(folder.name);
+        else state.managerSelectedFolders.delete(folder.name);
+      });
+      folderRow.querySelector("[data-folder-visible]").addEventListener("click", async () => {
+        try {
+          await managerAction({ action: "set_folder_visibility", folder: folder.name, visible: !folder.shown });
+          setManagerStatus(`${folder.name} ${folder.shown ? "hidden" : "shown"}.`);
+        } catch (error) {
+          setManagerStatus(error.message, true);
+        }
+      });
+      folderRow.querySelector("[data-folder-delete]").addEventListener("click", () => openDataDeleteModal("", folder.name, folder.name));
+      root.appendChild(folderRow);
+      if (!open) continue;
+      for (const item of folder.items) {
+        const itemRow = document.createElement("div");
+        itemRow.className = "omv2-manager-item";
+        itemRow.innerHTML = `
+          <input type="checkbox" ${state.managerSelectedItems.has(item.id) ? "checked" : ""} title="Select item">
+          <span class="omv2-manager-name">${escapeHtml(item.name || "Untitled")}</span>
+          <span class="omv2-manager-meta">${escapeHtml(item.kind || item.category || "")}${item.point_count ? ` · ${Number(item.point_count).toLocaleString()} pts` : ""}</span>
+          <span class="omv2-manager-row-actions">
+            <button class="omv2-manager-icon-button" type="button" data-edit-map-item="${escapeHtml(item.id)}" title="Edit">✎</button>
+            <button class="omv2-manager-icon-button" type="button" data-delete-map-item="${escapeHtml(item.id)}" data-delete-map-label="${escapeHtml(item.name || "item")}" title="Delete">🗑</button>
+          </span>
+        `;
+        itemRow.querySelector("input").addEventListener("change", (event) => {
+          if (event.target.checked) state.managerSelectedItems.add(item.id);
+          else state.managerSelectedItems.delete(item.id);
+        });
+        root.appendChild(itemRow);
+      }
+    }
+    fillManagerFolderSelect($("managerImportFolder"));
+    fillManagerFolderSelect($("managerCoordFolder"));
+    fillManagerFolderSelect($("managerMoveFolder"));
+  }
+
+  async function openDataManagerModal() {
+    $("dataManagerPanel").hidden = false;
+    $("savedDataPanel").hidden = true;
+    $("overlaysPanel").hidden = true;
+    try {
+      await loadManagerSnapshot();
+    } catch (error) {
+      setManagerStatus(error.message, true);
+    }
+  }
+
+  function closeDataManagerModal() {
+    $("dataManagerPanel").hidden = true;
+    loadOverlandData();
+  }
+
+  function closeSearch() {
+    $("searchForm").hidden = true;
+    $("searchResults").hidden = true;
+    $("searchInput").value = "";
+    state.searchResults = [];
+    if (state.map?.getSource("search-results")) state.map.getSource("search-results").setData(EMPTY);
+  }
+
+  function featureSearchText(feature = {}) {
+    const props = feature.properties || {};
+    const values = [
+      props.name,
+      props.title,
+      props.category,
+      props.kind,
+      props.kind_detail,
+      props.amenity,
+      props.shop,
+      props.tourism,
+      props.brand,
+      props.operator,
+      props.description,
+      props.notes,
+      props.route_name,
+      props.route_type,
+      props.style_bucket,
+      props.event,
+      props.headline,
+      props.severity,
+      props.folder,
+    ];
+    return values.filter((value) => value !== undefined && value !== null).join(" ").toLowerCase();
+  }
+
+  function pointForFeature(feature) {
+    const geometry = feature?.geometry || {};
+    if (geometry.type === "Point" && Array.isArray(geometry.coordinates)) return geometry.coordinates;
+    if (geometry.type === "LineString" && Array.isArray(geometry.coordinates) && geometry.coordinates.length) {
+      return geometry.coordinates[Math.floor(geometry.coordinates.length / 2)];
+    }
+    if (geometry.type === "MultiLineString" && Array.isArray(geometry.coordinates) && geometry.coordinates[0]?.length) {
+      const line = geometry.coordinates[0];
+      return line[Math.floor(line.length / 2)];
+    }
+    if (geometry.type === "Polygon" && Array.isArray(geometry.coordinates) && geometry.coordinates[0]?.length) {
+      return geometry.coordinates[0].reduce((acc, coord) => [acc[0] + Number(coord[0] || 0), acc[1] + Number(coord[1] || 0)], [0, 0]).map((value) => value / geometry.coordinates[0].length);
+    }
+    if (geometry.type === "MultiPolygon" && Array.isArray(geometry.coordinates) && geometry.coordinates[0]?.[0]?.length) {
+      return geometry.coordinates[0][0].reduce((acc, coord) => [acc[0] + Number(coord[0] || 0), acc[1] + Number(coord[1] || 0)], [0, 0]).map((value) => value / geometry.coordinates[0][0].length);
+    }
+    return null;
+  }
+
+  function featureWithinBounds(feature, bounds) {
+    const point = pointForFeature(feature);
+    return point && bounds.contains({ lng: Number(point[0]), lat: Number(point[1]) });
+  }
+
+  function searchResultTitle(feature, fallback = "Result") {
+    const props = feature.properties || {};
+    return props.name || props.title || props.route_name || props.headline || props.event || props.kind || props.category || fallback;
+  }
+
+  function searchResultSubtitle(feature, sourceLabel) {
+    const props = feature.properties || {};
+    return [sourceLabel, props.category, props.kind, props.amenity, props.shop, props.folder].filter(Boolean).join(" · ");
+  }
+
+  function renderSearchResults(results) {
+    const list = $("searchResults");
+    if (!results.length) {
+      list.innerHTML = '<div class="omv2-overlay-note">No visible matches.</div>';
+      list.hidden = false;
+      if (state.map?.getSource("search-results")) state.map.getSource("search-results").setData(EMPTY);
+      return;
+    }
+    list.innerHTML = results.slice(0, 40).map((result, index) => `
+      <button class="omv2-search-result" type="button" data-search-index="${index}">
+        <strong>${escapeHtml(result.title)}</strong>
+        <small>${escapeHtml(result.subtitle)}</small>
+      </button>
+    `).join("");
+    list.hidden = false;
+    const highlights = results
+      .filter((result) => result.point)
+      .map((result, index) => ({
+        type: "Feature",
+        geometry: { type: "Point", coordinates: result.point },
+        properties: { index, title: result.title },
+      }));
+    if (state.map?.getSource("search-results")) {
+      state.map.getSource("search-results").setData({ type: "FeatureCollection", features: highlights });
+    }
+  }
+
+  function searchNeedles(query) {
+    const q = String(query || "").trim().toLowerCase();
+    if (!q) return [];
+    const values = new Set([q]);
+    for (const token of q.split(/\s+/).filter(Boolean)) {
+      values.add(token);
+      (SEARCH_SYNONYMS[token] || []).forEach((item) => values.add(item));
+    }
+    return Array.from(values).filter(Boolean);
+  }
+
+  function matchesSearch(feature, needles) {
+    const text = featureSearchText(feature);
+    return needles.some((needle) => text.includes(needle));
+  }
+
+  function featureOverlay(feature) {
+    const source = String(feature.source || feature.layer?.source || "");
+    const sourceLayer = String(feature.sourceLayer || feature.sourceLayer || "");
+    const layerId = String(feature.layer?.id || "");
+    return normalizeOverlayRegistry(state.overlayRegistry)
+      .find((overlay) => {
+        const sourceId = overlaySourceId(overlay);
+        return source === sourceId
+          || layerId.startsWith(`${sourceId}-`)
+          || (overlay.source_layer && sourceLayer === overlay.source_layer);
+      }) || null;
+  }
+
+  function runMapSearch(query) {
+    const q = String(query || "").trim().toLowerCase();
+    if (!state.map || !q) {
+      closeSearch();
+      return;
+    }
+    const coords = parseCoordinateQuery(query);
+    if (coords) {
+      const point = [coords.lon, coords.lat];
+      const title = `${coords.lat.toFixed(6)}, ${coords.lon.toFixed(6)}`;
+      state.searchResults = [{
+        feature: { type: "Feature", geometry: { type: "Point", coordinates: point }, properties: { name: title } },
+        point,
+        title,
+        subtitle: "Coordinates",
+        source: "coordinates",
+      }];
+      renderSearchResults(state.searchResults);
+      state.map.easeTo({ center: point, zoom: Math.max(state.map.getZoom(), 14), duration: 450 });
+      new maplibregl.Popup({ className: "omv2-poi-popup", maxWidth: "340px" })
+        .setLngLat(point)
+        .setHTML(`
+          <article class="omv2-poi-card">
+            <p class="omv2-poi-kicker">Coordinates</p>
+            <h3>${escapeHtml(title)}</h3>
+            <div class="omv2-poi-actions">
+              <button type="button" data-copy-coords="${escapeHtml(title)}">Copy coordinates</button>
+            </div>
+          </article>
+        `)
+        .addTo(state.map);
+      return;
+    }
+    const needles = searchNeedles(q);
+    const includeBase = $("searchBase")?.checked !== false;
+    const includeOverlays = $("searchOverlays")?.checked !== false;
+    const includeSaved = $("searchSaved")?.checked !== false;
+    const bounds = state.map.getBounds();
+    const results = [];
+    const seen = new Set();
+    if (includeSaved) {
+      for (const feature of state.places.features || []) {
+        if (!featureWithinBounds(feature, bounds)) continue;
+        if (!matchesSearch(feature, needles)) continue;
+        const point = pointForFeature(feature);
+        const title = searchResultTitle(feature, "Saved item");
+        const key = `saved:${feature.properties?.id || title}:${point}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        results.push({ feature, point, title, subtitle: searchResultSubtitle(feature, "Saved data"), source: "saved" });
+      }
+    }
+    const searchableLayers = state.map.getStyle().layers
+      .filter((layer) => layer.id && state.map.getLayer(layer.id) && !["background", "raster", "hillshade"].includes(layer.type))
+      .map((layer) => layer.id);
+    const rendered = searchableLayers.length ? state.map.queryRenderedFeatures({ layers: searchableLayers }) : [];
+    for (const feature of rendered) {
+      const overlay = featureOverlay(feature);
+      if (overlay && !includeOverlays) continue;
+      if (!overlay && !includeBase) continue;
+      if (!matchesSearch(feature, needles)) continue;
+      const point = pointForFeature(feature);
+      if (!point) continue;
+      const title = searchResultTitle(feature, "Map item");
+      const key = `${feature.source}:${feature.sourceLayer || feature.layer?.id}:${title}:${point.map((value) => Number(value).toFixed(4)).join(",")}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      results.push({
+        feature,
+        point,
+        title,
+        subtitle: searchResultSubtitle(feature, overlay?.name || feature.sourceLayer || feature.layer?.id || "Map"),
+        source: overlay ? "overlay" : "map",
+        overlay,
+      });
+    }
+    state.searchResults = results;
+    renderSearchResults(results);
+  }
+
+  function openSearchResult(index) {
+    const result = state.searchResults[Number(index)];
+    if (!result?.point || !state.map) return;
+    state.map.easeTo({ center: result.point, zoom: Math.max(state.map.getZoom(), 15), duration: 450 });
+    const html = result.source === "saved"
+      ? savedDataPopupHtml(result.feature.properties || {}, result.feature.geometry?.type === "Point" ? "waypoint" : "route", result.point)
+      : result.source === "overlay"
+        ? overlayPopupHtml(result.feature.properties || {}, result.overlay || {}, result.point)
+        : basePoiPopupHtml(result.feature.properties || {}, result.point);
+    new maplibregl.Popup({ className: "omv2-poi-popup", maxWidth: "380px" })
+      .setLngLat(result.point)
+      .setHTML(html)
+      .addTo(state.map);
+  }
+
   function updateOverlandSources() {
     if (!state.map || !state.map.getSource("overland-waypoints")) return;
     const waypointFeatures = [];
@@ -1257,6 +2123,7 @@
       copy.properties.name = featureName(feature);
       copy.properties.color = colorFor(feature);
       copy.properties.marker_icon_key = waypointIconKey(copy.properties);
+      copy.properties.road_type = copy.properties.road_type || copy.properties.route_type || copy.properties.category || "";
       if (geometry.type === "Point" && state.showWaypoints) waypointFeatures.push(copy);
       if (["LineString", "MultiLineString"].includes(geometry.type) && state.showTracks) trackFeatures.push(copy);
     }
@@ -1360,12 +2227,123 @@
     try {
       const payload = await fetchJson(API.track);
       state.track = payload.track || null;
+      state.manualRecording = Boolean(payload.manual_recording);
       const status = state.track && state.track.status ? state.track.status : "inactive";
       const points = state.track && state.track.point_count ? ` · ${state.track.point_count} pts` : "";
       $("trackStatus").textContent = `Track ${status}${points}`;
+      updateTrackDot(status, payload.track_mode || "auto");
     } catch {
       $("trackStatus").textContent = "Track --";
+      state.manualRecording = false;
+      updateTrackDot("disabled", "auto");
     }
+  }
+
+  function updateTrackDot(status, mode = "auto") {
+    const dot = $("trackDot");
+    const button = $("trackDotButton");
+    if (!dot) return;
+    const autoEnabled = localStorage.getItem(MAP_AUTO_RECORDING_KEY) !== "false";
+    dot.classList.remove("is-active", "is-disabled");
+    if (!autoEnabled || status === "disabled" || status === "--") {
+      dot.classList.add("is-disabled");
+      if (button) button.title = "Track recording disabled";
+      return;
+    }
+    if (state.manualRecording || mode === "manual") {
+      dot.classList.add("is-active");
+      if (button) button.title = "Continuous track recording active";
+      return;
+    }
+    if (status === "current" || status === "active" || status === "recording") {
+      dot.classList.add("is-active");
+      if (button) button.title = "Track recording active";
+      return;
+    }
+    if (button) button.title = "Track recording inactive";
+  }
+
+  function openTrackModeModal() {
+    $("trackModeTitle").textContent = state.manualRecording ? "Continuous recording active" : "Recording options";
+    $("trackModeHint").textContent = state.manualRecording
+      ? "This route will continue recording until you stop it. Auto 2 mph recording is bypassed while continuous recording is active."
+      : "Auto recording starts above 2 mph. Continuous recording keeps a single route active until you stop it.";
+    $("startManualTrack").hidden = state.manualRecording;
+    $("stopManualTrack").hidden = !state.manualRecording;
+    $("trackModeModal").hidden = false;
+  }
+
+  function closeTrackModeModal() {
+    $("trackModeModal").hidden = true;
+  }
+
+  async function setManualTrackRecording(enabled) {
+    const endpoint = enabled ? API.trackManualStart : API.trackManualStop;
+    const response = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok || payload.ok === false) {
+      throw new Error(payload.error || "Track recording update failed.");
+    }
+    state.track = payload.track || null;
+    state.manualRecording = Boolean(payload.manual_recording);
+    const status = state.track && state.track.status ? state.track.status : "inactive";
+    updateTrackDot(status, payload.track_mode || "auto");
+    $("trackStatus").textContent = `Track ${status}${state.track && state.track.point_count ? ` · ${state.track.point_count} pts` : ""}`;
+    return payload;
+  }
+
+  function openLegendModal() {
+    const content = $("legendContent");
+    if (content && !content.dataset.rendered) {
+      content.innerHTML = legendMarkup();
+      content.dataset.rendered = "1";
+    }
+    $("legendModal").hidden = false;
+  }
+
+  function closeLegendModal() {
+    $("legendModal").hidden = true;
+  }
+
+  function legendMarkup() {
+    const lines = [
+      ["Interstate / Primary Road", "solid", "#ff7b24"],
+      ["Main Road / Highway", "solid", "#ffd34f"],
+      ["Street / Local Road", "solid", "#ffffff"],
+      ["Service Road", "dash", "#cfcfcf"],
+      ["Track / Unmaintained Road", "dash", "#777"],
+      ["Trail / Path", "dot", "#555"],
+      ["Railroad", "rail", "#8d8377"],
+      ["MVUM Motor Road", "dash", "#ff8a2a"],
+      ["MVUM Trail", "dash", "#7c5cff"],
+    ];
+    const areas = [
+      ["Park / Forest", "#9bd8ac"],
+      ["Waterway / Waterbody", "#76d9e8"],
+      ["Building / Structure", "#d7d1c5"],
+      ["School / Campus", "#e9e2cb"],
+      ["Industrial / Commercial", "#e0d8d0"],
+      ["Restricted / Military", "#ffd4d4"],
+      ["Weather Alert", "rgba(255, 211, 79, .42)"],
+      ["Wildfire Hotspot", "#ff6b37"],
+    ];
+    const pois = [
+      ["gas-station-ev-station", "Fuel / EV"],
+      ["parking", "Parking"],
+      ["restaurant", "Restaurant"],
+      ["campsite", "Campsite"],
+      ["trailhead", "Trailhead"],
+      ["viewpoint", "Viewpoint"],
+      ["restrooms", "Restrooms"],
+      ["medical-clinic-hospital", "Medical"],
+      ["airport", "Airport"],
+      ["waterfall", "Waterfall"],
+    ];
+    return `
+      <section><h3>Roads & Lines</h3>${lines.map(([label, type, color]) => `<div class="legend-row"><span class="legend-line ${type}" style="--c:${color}"></span><span>${escapeHtml(label)}</span></div>`).join("")}</section>
+      <section><h3>Areas & Overlays</h3>${areas.map(([label, color]) => `<div class="legend-row"><span class="legend-area" style="--c:${color}"></span><span>${escapeHtml(label)}</span></div>`).join("")}</section>
+      <section><h3>Points of Interest</h3>${pois.map(([icon, label]) => `<div class="legend-row"><span class="legend-poi"><img src="/maps-v2/icons/poi/${escapeHtml(icon)}.svg" alt=""></span><span>${escapeHtml(label)}</span></div>`).join("")}</section>
+    `;
   }
 
   function openWaypointModal(label, point = null) {
@@ -1381,6 +2359,117 @@
   function closeWaypointModal() {
     $("waypointModal").hidden = true;
     state.modalPoint = null;
+  }
+
+  function findPlaceById(id) {
+    return (state.places.features || []).find((feature) => String(feature.properties?.id || "") === String(id));
+  }
+
+  function openDataEditModal(itemId) {
+    const feature = findPlaceById(itemId);
+    if (!feature) {
+      toast("Saved item was not found.", true);
+      return;
+    }
+    const props = feature.properties || {};
+    state.editingItem = feature;
+    $("dataEditId").value = props.id || "";
+    $("dataEditName").value = props.name || props.title || "";
+    fillManagerFolderSelect($("dataEditFolder"), props.folder || "Unfiled");
+    $("dataEditCategory").value = props.category || (feature.geometry?.type === "Point" ? "waypoint" : "route");
+    $("dataEditIcon").value = waypointIconKey(props);
+    $("dataEditUrl").value = props.url || props.website || "";
+    $("dataEditNotes").value = props.notes || props.description || "";
+    $("dataEditColor").value = /^#[0-9a-f]{6}$/i.test(String(props.color || "")) ? props.color : colorFor(feature);
+    const isRoute = ["LineString", "MultiLineString"].includes(feature.geometry?.type);
+    $("dataEditRoadTypeLabel").hidden = !isRoute;
+    $("dataEditRoadType").value = props.road_type || props.route_type || "";
+    renderColorSwatches($("dataEditColor").value);
+    $("dataEditModal").hidden = false;
+  }
+
+  function closeDataEditModal() {
+    $("dataEditModal").hidden = true;
+    state.editingItem = null;
+  }
+
+  function openDataDeleteModal(itemId, label = "this item", folder = "") {
+    if (!itemId && !folder) return;
+    state.deletingItem = { id: itemId, label, folder };
+    $("dataDeleteMessage").textContent = folder
+      ? `Delete folder "${label}" and its map data? This cannot be undone.`
+      : `Delete "${label}" from OIAB map data? This cannot be undone.`;
+    $("dataDeleteModal").hidden = false;
+  }
+
+  function openDataBulkDeleteModal(itemIds = [], folderPaths = []) {
+    if (!itemIds.length && !folderPaths.length) return;
+    state.deletingItem = { label: "selected map data", itemIds, folderPaths };
+    $("dataDeleteMessage").textContent = `Delete ${itemIds.length + folderPaths.length} selected map data item(s)? This cannot be undone.`;
+    $("dataDeleteModal").hidden = false;
+  }
+
+  function closeDataDeleteModal() {
+    $("dataDeleteModal").hidden = true;
+    state.deletingItem = null;
+  }
+
+  async function confirmDataDelete() {
+    const target = state.deletingItem;
+    if (!target?.id && !target?.folder && !target?.itemIds?.length && !target?.folderPaths?.length) return;
+    const body = target.itemIds || target.folderPaths
+      ? { action: "delete_items", item_ids: target.itemIds || [], folder_paths: target.folderPaths || [] }
+      : target.folder
+      ? { action: "delete_items", item_ids: [], folder_paths: [target.folder] }
+      : { action: "delete_items", item_ids: [target.id], folder_paths: [] };
+    const response = await fetch("/maps-data-manage", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || data.ok === false) {
+      toast(data.error || "Saved item delete failed.", true);
+      return;
+    }
+    closeDataDeleteModal();
+    const popup = document.querySelector(".maplibregl-popup .maplibregl-popup-close-button");
+    if (popup) popup.click();
+    toast("Saved item deleted.");
+    state.managerSelectedItems.clear();
+    state.managerSelectedFolders.clear();
+    await loadOverlandData();
+    if (!$("dataManagerPanel").hidden) await loadManagerSnapshot();
+  }
+
+  async function copyCoordinates(value) {
+    try {
+      await navigator.clipboard.writeText(value);
+      toast("Coordinates copied.");
+    } catch {
+      toast("Copy failed. Select and copy the coordinates manually.", true);
+    }
+  }
+
+  async function saveDataEdit(event) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const payload = { action: "update_item" };
+    for (const [key, value] of form.entries()) payload[key] = value;
+    const response = await fetch("/maps-data-manage", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || data.ok === false) {
+      toast(data.error || "Saved item update failed.", true);
+      return;
+    }
+    closeDataEditModal();
+    toast("Saved item updated.");
+    await loadOverlandData();
+    if (!$("dataManagerPanel").hidden) await loadManagerSnapshot();
   }
 
   async function saveWaypoint(type) {
@@ -1440,6 +2529,32 @@
     }
   }
 
+  function populateIconSelect() {
+    const select = $("dataEditIcon");
+    if (!select) return;
+    const keys = Array.from(new Set(POI_ICON_KEYS)).sort((a, b) => humanizePoiValue(a).localeCompare(humanizePoiValue(b)));
+    select.innerHTML = keys.map((key) => `<option value="${escapeHtml(key)}">${escapeHtml(humanizePoiValue(key))}</option>`).join("");
+  }
+
+  function renderColorSwatches(selected = "") {
+    const node = $("dataEditColorSwatches");
+    if (!node) return;
+    const active = String(selected || "").toLowerCase();
+    node.replaceChildren(...COLOR_SWATCHES.map((color) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "omv2-color-swatch";
+      button.style.background = color;
+      button.title = color;
+      button.classList.toggle("is-active", color.toLowerCase() === active);
+      button.addEventListener("click", () => {
+        $("dataEditColor").value = color;
+        renderColorSwatches(color);
+      });
+      return button;
+    }));
+  }
+
   function escapeHtml(value) {
     return String(value || "").replace(/[&<>"']/g, (char) => ({
       "&": "&amp;",
@@ -1469,8 +2584,62 @@
       $("addMapWaypoint").classList.toggle("is-pending", state.addFromMap);
       toast(state.addFromMap ? "Tap the map to choose a waypoint location." : "Map waypoint mode off.");
     });
-    $("layersToggle").addEventListener("click", () => { $("layersPanel").hidden = !$("layersPanel").hidden; });
-    $("closeLayers").addEventListener("click", () => { $("layersPanel").hidden = true; });
+    $("savedDataToggle").addEventListener("click", () => {
+      $("savedDataPanel").hidden = !$("savedDataPanel").hidden;
+      $("overlaysPanel").hidden = true;
+      $("dataManagerPanel").hidden = true;
+    });
+    $("overlaysToggle").addEventListener("click", () => {
+      $("overlaysPanel").hidden = !$("overlaysPanel").hidden;
+      $("savedDataPanel").hidden = true;
+      $("dataManagerPanel").hidden = true;
+    });
+    $("closeSavedData").addEventListener("click", () => { $("savedDataPanel").hidden = true; });
+    $("closeOverlays").addEventListener("click", () => { $("overlaysPanel").hidden = true; });
+    $("closeDataManager").addEventListener("click", closeDataManagerModal);
+    $("searchToggle").addEventListener("click", () => {
+      $("searchForm").hidden = false;
+      $("searchInput").focus();
+    });
+    $("searchClose").addEventListener("click", closeSearch);
+    $("searchForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      runMapSearch($("searchInput").value);
+    });
+    $("searchInput").addEventListener("input", (event) => {
+      const value = event.target.value.trim();
+      if (!value) {
+        if (state.map?.getSource("search-results")) state.map.getSource("search-results").setData(EMPTY);
+        $("searchResults").hidden = true;
+      }
+    });
+    $("searchResults").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-search-index]");
+      if (button) openSearchResult(button.dataset.searchIndex);
+    });
+    $("legendToggle").addEventListener("click", openLegendModal);
+    $("closeLegendModal").addEventListener("click", closeLegendModal);
+    $("trackDotButton").addEventListener("click", openTrackModeModal);
+    $("closeTrackModeModal").addEventListener("click", closeTrackModeModal);
+    $("closeTrackModeAction").addEventListener("click", closeTrackModeModal);
+    $("startManualTrack").addEventListener("click", async () => {
+      try {
+        await setManualTrackRecording(true);
+        closeTrackModeModal();
+        toast("Continuous recording started.");
+      } catch (error) {
+        toast(error.message || "Track start failed.", true);
+      }
+    });
+    $("stopManualTrack").addEventListener("click", async () => {
+      try {
+        await setManualTrackRecording(false);
+        closeTrackModeModal();
+        toast("Continuous recording stopped.");
+      } catch (error) {
+        toast(error.message || "Track stop failed.", true);
+      }
+    });
     $("refreshData").addEventListener("click", () => { loadOverlandData(); pollLocation(); pollTrack(); });
     $("inspectTile").addEventListener("click", () => {
       state.inspectTile = !state.inspectTile;
@@ -1507,11 +2676,146 @@
     $("openMapPackSettings").addEventListener("click", () => {
       if (window.parent && window.parent !== window) {
         window.parent.postMessage({ type: "oiab:open-app", appId: "map-packs" }, window.location.origin);
+      } else if (window.top && window.top !== window) {
+        window.top.postMessage({ type: "oiab:open-app", appId: "map-packs" }, window.location.origin);
       } else {
         window.location.href = "/mobile/map-packs.html";
       }
     });
     $("closeWaypointModal").addEventListener("click", closeWaypointModal);
+    $("closeDataEdit").addEventListener("click", closeDataEditModal);
+    $("dataEditForm").addEventListener("submit", saveDataEdit);
+    $("closeDataDelete").addEventListener("click", closeDataDeleteModal);
+    $("cancelDataDelete").addEventListener("click", closeDataDeleteModal);
+    $("confirmDataDelete").addEventListener("click", confirmDataDelete);
+    $("managerAddFolderOpen").addEventListener("click", () => {
+      $("managerMoveForm").hidden = true;
+      $("managerAddFolderForm").hidden = !$("managerAddFolderForm").hidden;
+      if (!$("managerAddFolderForm").hidden) $("managerAddFolderForm").querySelector("input").focus();
+    });
+    $("managerAddFolderForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = new FormData(event.currentTarget);
+      const name = String(form.get("folder") || "").trim();
+      if (!name) return;
+      try {
+        await managerAction({ action: "add_folder", folder: name });
+        event.currentTarget.reset();
+        event.currentTarget.hidden = true;
+        setManagerStatus("Folder added.");
+      } catch (error) {
+        setManagerStatus(error.message, true);
+      }
+    });
+    $("managerMoveOpen").addEventListener("click", () => {
+      if (!state.managerSelectedItems.size && !state.managerSelectedFolders.size) {
+        setManagerStatus("Select items or folders first.", true);
+        return;
+      }
+      fillManagerFolderSelect($("managerMoveFolder"), "Unfiled");
+      $("managerAddFolderForm").hidden = true;
+      $("managerMoveForm").hidden = !$("managerMoveForm").hidden;
+    });
+    $("managerMoveForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = new FormData(event.currentTarget);
+      const target = String(form.get("folder") || "").trim();
+      if (!target) return;
+      try {
+        const data = await managerAction({
+          action: "move_items",
+          item_ids: Array.from(state.managerSelectedItems),
+          folder_paths: Array.from(state.managerSelectedFolders),
+          target_folder: target,
+        });
+        state.managerSelectedItems.clear();
+        state.managerSelectedFolders.clear();
+        event.currentTarget.hidden = true;
+        setManagerStatus(`Moved ${data.count || 0} item(s).`);
+      } catch (error) {
+        setManagerStatus(error.message, true);
+      }
+    });
+    document.querySelectorAll("[data-cancel-manager-form]").forEach((button) => {
+      button.addEventListener("click", () => {
+        $("managerAddFolderForm").hidden = true;
+        $("managerMoveForm").hidden = true;
+      });
+    });
+    $("managerExport").addEventListener("click", () => {
+      window.location.href = "/maps-data-export.gpx";
+    });
+    $("managerDelete").addEventListener("click", async () => {
+      if (!state.managerSelectedItems.size && !state.managerSelectedFolders.size) {
+        setManagerStatus("Select items or folders first.", true);
+        return;
+      }
+      openDataBulkDeleteModal(Array.from(state.managerSelectedItems), Array.from(state.managerSelectedFolders));
+    });
+    $("managerImportForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      setManagerStatus("Importing...");
+      const formElement = event.currentTarget;
+      try {
+        const response = await fetch("/maps-data-import", { method: "POST", body: new FormData(formElement) });
+        const data = await response.json();
+        if (!response.ok || data.ok === false) throw new Error(data.error || "Import failed.");
+        state.managerSnapshot = data;
+        renderDataManager();
+        await loadOverlandData();
+        if (typeof formElement.reset === "function") formElement.reset();
+        setManagerStatus(`Imported ${data.count || 0} item(s).`);
+      } catch (error) {
+        setManagerStatus(error.message, true);
+      }
+    });
+    $("managerCoordinateForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      setManagerStatus("Saving waypoint...");
+      const formElement = event.currentTarget;
+      try {
+        const form = new FormData(formElement);
+        form.set("source", "manual");
+        form.set("icon", form.get("category") || "waypoint");
+        const response = await fetch(API.save, { method: "POST", body: form });
+        const data = await response.json();
+        if (!response.ok || data.ok === false) throw new Error(data.error || "Waypoint save failed.");
+        if (typeof formElement.reset === "function") formElement.reset();
+        await loadManagerSnapshot();
+        await loadOverlandData();
+        setManagerStatus("Waypoint added.");
+      } catch (error) {
+        setManagerStatus(error.message, true);
+      }
+    });
+    window.addEventListener("message", (event) => {
+      if (event.origin !== window.location.origin) return;
+      if (event.data?.type === "oiab:close-map-data-manager") closeDataManagerModal();
+    });
+    document.addEventListener("click", (event) => {
+      const managerLink = event.target.closest("[data-open-map-data-manager]");
+      if (managerLink) {
+        event.preventDefault();
+        openDataManagerModal();
+        return;
+      }
+      const copyButton = event.target.closest("[data-copy-coords]");
+      if (copyButton) {
+        event.preventDefault();
+        copyCoordinates(copyButton.dataset.copyCoords || "");
+        return;
+      }
+      const deleteButton = event.target.closest("[data-delete-map-item]");
+      if (deleteButton) {
+        event.preventDefault();
+        openDataDeleteModal(deleteButton.dataset.deleteMapItem, deleteButton.dataset.deleteMapLabel || "this item");
+        return;
+      }
+      const button = event.target.closest("[data-edit-map-item]");
+      if (!button) return;
+      event.preventDefault();
+      openDataEditModal(button.dataset.editMapItem);
+    });
     $("showWaypoints").checked = state.showWaypoints;
     $("showTracks").checked = state.showTracks;
     $("showWaypoints").addEventListener("change", (event) => {
@@ -1536,6 +2840,7 @@
       }
       const selection = await loadPack();
       if (!selection) return;
+      renderOverlayControls();
       const signature = selectionSignature(selection);
       if (state.map && signature === state.packSignature) {
         maybeFitToSelection(selection);
@@ -1553,6 +2858,7 @@
 
   bindControls();
   renderWaypointTypes();
+  populateIconSelect();
   window.addEventListener("storage", (event) => {
     if (event.key !== MAP_3D_BUILDINGS_KEY) return;
     state.show3dBuildings = JSON.parse(event.newValue || "false");

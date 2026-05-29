@@ -1,0 +1,19 @@
+id: filebrowser
+name: File Manager
+description: Drag-and-drop browser file manager for media, maps, books, ROMs, uploads, and backups.
+category: admin
+install_default: true
+core: true
+runtime: docker
+compose_file: services/compose/filebrowser.yml
+compose_profile: filebrowser
+compose_service: filebrowser
+external_container: trailer-filebrowser
+launcher_url: /apps/filebrowser/
+installed_marker: /data/oiab/services/filebrowser/database
+install_command: docker compose --env-file config/oiab.env --profile filebrowser up -d filebrowser
+data_path: /data/oiab/services/filebrowser
+content_path: /data/oiab
+notes: Core OIAB file manager based on the open-source File Browser project. The root can be pointed at the external SSD with OIAB_FILEBROWSER_ROOT; credentials must be configured outside git.
+ports:
+  - 8091

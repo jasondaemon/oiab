@@ -18,6 +18,14 @@ ENV OIAB_AUTO_INSTALL_WORLD_MAP=true
 
 WORKDIR /opt/oiab
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+      ca-certificates \
+      gdal-bin \
+      wamerican \
+    && (apt-get install -y --no-install-recommends tippecanoe || true) \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY backend/requirements.txt /opt/oiab/backend/requirements.txt
 RUN if [ -s /opt/oiab/backend/requirements.txt ]; then \
       pip install --no-cache-dir -r /opt/oiab/backend/requirements.txt; \

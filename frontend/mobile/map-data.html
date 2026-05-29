@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Map Data</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg:#eef7ed;
+      --panel:#f7fff7;
+      --panel2:#eaf4ea;
+      --row:#edf6ed;
+      --row-alt:#f8fff8;
+      --line:#bed5be;
+      --text:#102314;
+      --muted:#38513c;
+      --toolbar:#87908a;
+      --accent:#4f7f60;
+      --danger:#d66c62;
+      --danger-bg:#f5aea6;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      min-height:100vh;
+      color:var(--text);
+      font:13px/1.25 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:transparent;
+    }
+    main {
+      position:relative;
+      width:min(1120px, calc(100vw - 20px));
+      margin:8px auto 12px;
+      border-radius:18px;
+      background:var(--panel);
+      box-shadow:0 24px 70px rgba(0,0,0,.34);
+      padding:10px 12px 12px;
+    }
+    .manager-head {
+      display:flex;
+      align-items:start;
+      justify-content:space-between;
+      gap:1rem;
+      margin-bottom:28px;
+    }
+    h1 { margin:0; font-size:22px; line-height:1; font-weight:800; letter-spacing:-.03em; }
+    .subtitle { margin:5px 0 0; color:#24422b; font-size:13px; }
+    button, .button, input, select, textarea {
+      border:1px solid var(--line);
+      border-radius:7px;
+      padding:5px 8px;
+      font:inherit;
+      font-weight:700;
+    }
+    button, .button {
+      background:#f9fff9;
+      color:var(--text);
+      cursor:pointer;
+      text-decoration:none;
+      min-height:28px;
+    }
+    .close-button {
+      position:absolute;
+      top:8px;
+      right:8px;
+      z-index:2;
+      width:36px;
+      height:36px;
+      border:1px solid rgba(16,35,20,.12);
+      border-radius:50%;
+      background:#dfe9df;
+      font-size:20px;
+      line-height:1;
+    }
+    button.primary { background:#eef8ee; color:#102314; }
+    button.warn { background:#fff6cf; color:#392b00; }
+    button.danger { background:var(--danger-bg); color:#fff; border-color:var(--danger); }
+    button:disabled { opacity:.45; cursor:not-allowed; }
+    input, select {
+      width:100%;
+      background:white;
+      color:var(--text);
+    }
+    label { display:grid; gap:2px; color:#1f3b25; font-weight:700; }
+    .toolbar {
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:10px;
+      background:var(--toolbar);
+      padding:8px 52px 8px 10px;
+      margin-bottom:10px;
+    }
+    .toolbar button,
+    .toolbar .button {
+      color:white;
+      background:rgba(255,255,255,.13);
+      border-color:rgba(255,255,255,.25);
+      border-radius:12px;
+      padding:0;
+      width:44px;
+      height:38px;
+      min-width:44px;
+      min-height:38px;
+      display:inline-grid;
+      place-items:center;
+    }
+    .toolbar .danger {
+      background:rgba(211,92,82,.88);
+      border-color:rgba(255,255,255,.25);
+    }
+    .toolbar svg {
+      width:20px;
+      height:20px;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+    #bulkDialog label:has(input[type="checkbox"]) {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      text-transform:none;
+    }
+    #bulkDialog input[type="checkbox"] {
+      width:auto;
+    }
+    .compact-section {
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:var(--panel);
+      margin:7px 0;
+      overflow:hidden;
+    }
+    .compact-section summary {
+      padding:7px 10px;
+      font-weight:800;
+      cursor:pointer;
+      list-style:none;
+    }
+    .compact-section summary::-webkit-details-marker { display:none; }
+    .compact-body {
+      display:grid;
+      gap:6px;
+      padding:0 10px 8px;
+    }
+    .import-row {
+      display:grid;
+      grid-template-columns:minmax(220px, 360px) minmax(220px, 1fr) auto;
+      gap:8px;
+      align-items:end;
+    }
+    .coordinate-grid {
+      display:grid;
+      grid-template-columns:1.4fr 1fr 1fr 1fr 1fr auto;
+      gap:8px;
+      align-items:end;
+    }
+    .status { min-height:15px; color:#aa7a00; font-weight:800; }
+    .status.error { color:var(--danger); }
+    .actions { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+    .folder-list { display:grid; gap:.35rem; }
+    .name-cell {
+      display:grid;
+      grid-template-columns:32px 22px minmax(0, 1fr);
+      align-items:center;
+      gap:6px;
+      min-width:0;
+    }
+    .folder-caret {
+      display:inline-grid;
+      place-items:center;
+      width:30px;
+      height:30px;
+      border-radius:8px;
+      font-size:20px;
+      line-height:1;
+    }
+    .name-cell input {
+      width:auto;
+      justify-self:center;
+    }
+    .name-cell strong,
+    .name-cell .folder-name {
+      min-width:0;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .table-head,
+    details.folder summary,
+    .item {
+      display:grid;
+      grid-template-columns:minmax(220px, 1fr) 82px 128px 84px;
+      gap:8px;
+      align-items:center;
+    }
+    .table-head {
+      margin-top:8px;
+      padding:7px 12px;
+      color:#15281a;
+      background:#dbe7dc;
+      border-radius:9px 9px 0 0;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      font-size:11px;
+      font-weight:900;
+    }
+    details.folder {
+      border:0;
+      border-radius:0;
+      background:var(--row-alt);
+      overflow:hidden;
+    }
+    details.folder:nth-child(even) { background:var(--row); }
+    details.folder[open] { background:#f9fff9; }
+    summary {
+      cursor:pointer;
+      list-style:none;
+      padding:4px 10px;
+      font-weight:800;
+      min-height:38px;
+    }
+    summary::-webkit-details-marker { display:none; }
+    .count { justify-self:start; color:#102314; background:transparent; border-radius:0; padding:0; font-size:12px; }
+    .items { display:grid; gap:0; padding:0 6px 4px 34px; }
+    .item {
+      padding:4px 8px;
+      border-radius:5px;
+      background:#e7f1e8;
+      min-height:34px;
+    }
+    .item strong { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .meta { color:#2f4b35; font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .item input { width:auto; }
+    .item-actions { display:flex; gap:5px; flex-wrap:nowrap; justify-content:flex-end; min-width:0; }
+    .item-actions button {
+      width:25px;
+      height:25px;
+      min-height:25px;
+      padding:0;
+      border-radius:50%;
+      font-size:0;
+      display:inline-grid;
+      place-items:center;
+      background:#f8fff8;
+    }
+    .item-actions button::before { font-size:13px; }
+    .item-actions [data-edit]::before { content:"✎"; }
+    .item-actions [data-rename]::before { content:"▣"; }
+    .item-actions [data-delete]::before { content:none; }
+    .folder-actions { display:flex; gap:5px; justify-content:flex-end; min-width:0; }
+    .folder-actions button {
+      width:25px;
+      height:25px;
+      min-height:25px;
+      padding:0;
+      border-radius:50%;
+      font-size:13px;
+      background:#f8fff8;
+    }
+    .folder-actions svg,
+    .item-actions svg {
+      width:14px;
+      height:14px;
+      stroke:#102314;
+      stroke-width:2;
+      fill:none;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+    .item-actions [data-delete] svg,
+    .folder-actions [data-folder-delete] svg {
+      stroke:#111;
+    }
+    .empty { padding:7px 8px; color:#49624e; }
+    dialog {
+      width:min(620px,calc(100vw - 2rem));
+      border:1px solid var(--line);
+      border-radius:12px;
+      color:var(--text);
+      background:var(--panel);
+      box-shadow:0 24px 80px rgba(0,0,0,.35);
+      padding:0;
+    }
+    dialog::backdrop { background:rgba(0,0,0,.35); backdrop-filter:blur(4px); }
+    .modal-body { display:grid; gap:8px; padding:12px; }
+    .modal-head { display:flex; justify-content:space-between; gap:1rem; align-items:center; border-bottom:1px solid var(--line); padding:1rem; }
+    .modal-head h2 { margin:0; }
+    textarea {
+      width:100%;
+      min-height:110px;
+      border:1px solid var(--line);
+      border-radius:7px;
+      padding:7px 8px;
+      color:var(--text);
+      background:white;
+      font:inherit;
+      font-weight:700;
+      resize:vertical;
+    }
+    @media (max-width: 760px) {
+      main { width:calc(100vw - 16px); margin:6px auto 10px; border-radius:16px; }
+      .import-row,
+      .coordinate-grid { grid-template-columns:1fr; }
+      .table-head,
+      details.folder summary,
+      .item { grid-template-columns:minmax(180px, 1fr) 58px 92px 76px; gap:6px; }
+      .table-head { padding:5px 10px; }
+      .items { padding-left:28px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <button id="backBtn" class="close-button" type="button" aria-label="Close">×</button>
+    <div class="toolbar" aria-label="Map data actions">
+      <button id="addFolderOpen" type="button" aria-label="Add folder" title="Add folder">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 2h9v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 13v5M9.5 15.5h5"/></svg>
+      </button>
+      <button id="moveDialogOpen" type="button" aria-label="Move selected" title="Move selected">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 2h9v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M8 14h8M13 11l3 3-3 3"/></svg>
+      </button>
+      <button id="exportBtn" type="button" aria-label="Export selected" title="Export selected">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M5 15v4h14v-4"/></svg>
+      </button>
+      <button id="bulkTypeOpen" type="button" aria-label="Bulk change type" title="Bulk change type">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16"/><path d="M7 12h10"/><path d="M10 17h4"/></svg>
+      </button>
+      <button id="bulkColorOpen" type="button" aria-label="Bulk change color" title="Bulk change color">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a8 8 0 0 0 0 16h1.2a2 2 0 0 0 1.5-3.3 1.8 1.8 0 0 1 1.4-3h1.1A3.2 3.2 0 0 0 20 10.5 6.5 6.5 0 0 0 12 4z"/><path d="M7.5 11h.01M9.5 7.8h.01M13 7.2h.01"/></svg>
+      </button>
+      <button id="deleteBtn" class="danger" type="button" aria-label="Delete selected" title="Delete selected">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16"/><path d="M9 7V5h6v2"/><path d="M7 7l1 13h8l1-13"/><path d="M10 11v6M14 11v6"/></svg>
+      </button>
+    </div>
+
+    <details class="compact-section">
+      <summary>▸ Add Waypoint By Coordinates</summary>
+      <div class="compact-body">
+        <form id="coordinateForm">
+          <div class="coordinate-grid">
+            <label>Name <input name="name" placeholder="Campsite Day 1" required></label>
+            <label>Folder <select id="coordFolder" name="folder"></select></label>
+            <label>Latitude <input name="lat" inputmode="decimal" placeholder="39.123456" required></label>
+            <label>Longitude <input name="lon" inputmode="decimal" placeholder="-75.123456" required></label>
+            <label>Category
+              <select name="category">
+                <option value="waypoint">Waypoint</option>
+                <option value="camp">Camp</option>
+                <option value="fuel">Fuel</option>
+                <option value="food">Food</option>
+                <option value="trailhead">Trailhead</option>
+                <option value="hazard">Hazard</option>
+                <option value="place">Place</option>
+              </select>
+            </label>
+            <button class="primary">Add</button>
+          </div>
+          <input name="notes" placeholder="Optional note or URL">
+        </form>
+        <div class="status" id="coordinateStatus"></div>
+      </div>
+    </details>
+
+    <div class="table-head"><span>Name</span><span>Category</span><span>Info</span><span>Actions</span></div>
+    <div id="folderList" class="folder-list"></div>
+    <div class="status" id="actionStatus"></div>
+
+    <details class="compact-section">
+      <summary>▸ Import GPX / GeoJSON / KML</summary>
+      <div class="compact-body">
+        <form id="importForm">
+          <div class="import-row">
+            <label>Folder
+              <select id="importFolder" name="folder"></select>
+            </label>
+            <label>File
+              <input name="import_file" type="file" accept=".gpx,.geojson,.json,.kml,application/gpx+xml,application/geo+json,application/json,application/vnd.google-earth.kml+xml">
+            </label>
+            <button class="primary">Import</button>
+          </div>
+        </form>
+        <div class="status" id="importStatus"></div>
+      </div>
+    </details>
+  </main>
+  <dialog id="addFolderDialog">
+    <div class="modal-head">
+      <h2>Add Folder</h2>
+      <button type="button" data-close-add-folder>Close</button>
+    </div>
+    <div class="modal-body">
+      <label>Folder name <input id="newFolder" placeholder="Trips/Day 1"></label>
+      <div class="actions">
+        <button id="addFolderBtn" class="primary" type="button">Add Folder</button>
+        <button type="button" data-close-add-folder>Cancel</button>
+      </div>
+    </div>
+  </dialog>
+  <dialog id="moveDialog">
+    <div class="modal-head">
+      <h2>Move Selected</h2>
+      <button type="button" data-close-move>Close</button>
+    </div>
+    <div class="modal-body">
+      <label>Move selected to folder <select id="targetFolder"></select></label>
+      <div class="actions">
+        <button id="moveBtn" class="primary" type="button">Move Selected</button>
+        <button type="button" data-close-move>Cancel</button>
+      </div>
+    </div>
+  </dialog>
+  <dialog id="bulkDialog">
+    <div class="modal-head">
+      <h2>Bulk Update Selected</h2>
+      <button type="button" data-close-bulk>Close</button>
+    </div>
+    <div class="modal-body">
+      <label>Type / category
+        <select id="bulkCategory">
+          <option value="">Do not change</option>
+          <option value="waypoint">Waypoint</option>
+          <option value="place">Place</option>
+          <option value="camp">Camp</option>
+          <option value="fuel">Fuel</option>
+          <option value="food">Food</option>
+          <option value="trailhead">Trailhead</option>
+          <option value="hazard">Hazard</option>
+          <option value="photo">Photo</option>
+          <option value="route">Route</option>
+        </select>
+      </label>
+      <label>Color <input id="bulkColor" type="color" value="#ffd34f"></label>
+      <label><input id="bulkApplyColor" type="checkbox"> Apply selected color</label>
+      <div class="actions">
+        <button id="bulkApplyBtn" class="primary" type="button">Apply To Selected</button>
+        <button type="button" data-close-bulk>Cancel</button>
+      </div>
+    </div>
+  </dialog>
+  <dialog id="editDialog">
+    <form id="editForm" method="dialog">
+      <div class="modal-head">
+        <h2>Edit Map Item</h2>
+        <button type="button" data-close-edit>Close</button>
+      </div>
+      <div class="modal-body">
+        <input id="editItemId" type="hidden">
+        <label>Name <input id="editName" required></label>
+        <label>Folder <select id="editFolder"></select></label>
+        <label>Category <input id="editCategory" placeholder="waypoint, route, track"></label>
+        <label>URL <input id="editUrl" type="url" placeholder="https://..."></label>
+        <label>Description / comments <textarea id="editNotes"></textarea></label>
+        <div class="actions">
+          <button class="primary" value="save">Save</button>
+          <button type="button" data-close-edit>Cancel</button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+
+  <script>
+    const API = "/maps-data-manage";
+    const selectedItems = new Set();
+    const selectedFolders = new Set();
+    const openFolders = new Set();
+    let snapshot = { folders: [], items: [] };
+
+    const byId = id => document.getElementById(id);
+    const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, ch => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[ch]));
+    const setStatus = (id, text, error = false) => {
+      const node = byId(id);
+      node.textContent = text || "";
+      node.classList.toggle("error", Boolean(error));
+    };
+
+    function iconSvg(name) {
+      const icons = {
+        eye: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/><circle cx="12" cy="12" r="2.6"/></svg>`,
+        eyeOff: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 5.2A10.8 10.8 0 0 1 12 5c6 0 9.5 7 9.5 7a15.5 15.5 0 0 1-3.1 3.8"/><path d="M6.1 6.8A15.4 15.4 0 0 0 2.5 12s3.5 7 9.5 7c1.7 0 3.2-.4 4.4-1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>`,
+        trash: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16"/><path d="M9 7V5h6v2"/><path d="M7 7l1 13h8l1-13"/><path d="M10 11v6M14 11v6"/></svg>`
+      };
+      return icons[name] || "";
+    }
+
+    function itemSubtitle(item) {
+      const parts = [item.kind, item.category, item.status, item.point_count ? `${item.point_count} points` : "", item.source].filter(Boolean);
+      return parts.join(" · ");
+    }
+
+    function itemInfo(item) {
+      if (Number.isFinite(Number(item.lat)) && Number.isFinite(Number(item.lon))) {
+        return `Point ${Number(item.lat).toFixed(5)}, ${Number(item.lon).toFixed(5)}`;
+      }
+      if (item.point_count) return `Route with ${item.point_count} point(s)`;
+      return item.status || item.source || "";
+    }
+
+    function itemKind(item) {
+      return item.kind || item.category || "";
+    }
+
+    function itemSummary(item) {
+      if (item.point_count) return `${item.point_count} pts`;
+      if (item.category && item.category !== item.kind) return item.category;
+      return item.status || "";
+    }
+
+    function groupedItems() {
+      const folders = new Map();
+      for (const folder of snapshot.folders || []) {
+        folders.set(folder.name || "Unfiled", { ...folder, items: [] });
+      }
+      for (const item of snapshot.items || []) {
+        const name = item.folder || "Unfiled";
+        if (!folders.has(name)) folders.set(name, { name, count: 0, shown: true, items: [] });
+        folders.get(name).items.push(item);
+      }
+      return [...folders.values()].sort((a, b) => String(a.name).localeCompare(String(b.name)));
+    }
+
+    function folderNames() {
+      const names = new Set(["Unfiled"]);
+      for (const folder of snapshot.folders || []) names.add(folder.name || "Unfiled");
+      for (const item of snapshot.items || []) names.add(item.folder || "Unfiled");
+      return [...names].sort((a, b) => String(a).localeCompare(String(b)));
+    }
+
+    function fillFolderSelect(select, selected = "Unfiled") {
+      select.replaceChildren(...folderNames().map(name => {
+        const option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        option.selected = name === selected;
+        return option;
+      }));
+    }
+
+    function render() {
+      const root = byId("folderList");
+      const groups = groupedItems();
+      root.innerHTML = groups.length ? "" : `<div class="empty">No map data yet.</div>`;
+      for (const folder of groups) {
+        const details = document.createElement("details");
+        details.className = "folder";
+        details.open = openFolders.has(folder.name);
+        const folderId = `folder-${btoa(unescape(encodeURIComponent(folder.name))).replace(/=/g, "")}`;
+        details.innerHTML = `
+          <summary>
+            <label class="name-cell" style="color:var(--text);margin:0">
+              <span class="folder-caret" aria-hidden="true">${details.open ? "▾" : "▸"}</span>
+              <input type="checkbox" data-folder="${escapeHtml(folder.name)}" ${selectedFolders.has(folder.name) ? "checked" : ""}>
+              <span class="folder-name">${escapeHtml(folder.name)}</span>
+            </label>
+            <span>Folder</span>
+            <span>${folder.items.length} item(s) · ${folder.shown === false ? "hidden" : "shown"}</span>
+            <span class="folder-actions">
+              <button type="button" data-folder-visible="${escapeHtml(folder.name)}" title="${folder.shown === false ? "Show" : "Hide"}">${iconSvg(folder.shown === false ? "eyeOff" : "eye")}</button>
+              <button type="button" data-folder-delete="${escapeHtml(folder.name)}" title="Delete folder">${iconSvg("trash")}</button>
+            </span>
+          </summary>
+          <div class="items" id="${folderId}"></div>
+        `;
+        details.addEventListener("toggle", () => {
+          if (details.open) openFolders.add(folder.name);
+          else openFolders.delete(folder.name);
+          const caret = details.querySelector("summary .folder-caret");
+          if (caret) caret.textContent = details.open ? "▾" : "▸";
+        });
+        const checkbox = details.querySelector("summary input");
+        checkbox.addEventListener("click", event => event.stopPropagation());
+        checkbox.addEventListener("change", () => {
+          if (checkbox.checked) selectedFolders.add(folder.name);
+          else selectedFolders.delete(folder.name);
+        });
+        details.querySelector("[data-folder-visible]").addEventListener("click", async event => {
+          event.preventDefault();
+          event.stopPropagation();
+          try {
+            await action({ action: "set_folder_visibility", folder: folder.name, visible: folder.shown === false });
+            setStatus("actionStatus", `${folder.name} ${folder.shown === false ? "shown" : "hidden"}.`);
+          } catch (error) {
+            setStatus("actionStatus", error.message, true);
+          }
+        });
+        details.querySelector("[data-folder-delete]").addEventListener("click", async event => {
+          event.preventDefault();
+          event.stopPropagation();
+          if (!confirm(`Delete folder "${folder.name}" and its map data?`)) return;
+          try {
+            await action({ action: "delete_items", item_ids: [], folder_paths: [folder.name] });
+            selectedFolders.delete(folder.name);
+            setStatus("actionStatus", "Deleted folder.");
+          } catch (error) {
+            setStatus("actionStatus", error.message, true);
+          }
+        });
+        const list = details.querySelector(".items");
+        if (!folder.items.length) {
+          list.innerHTML = `<div class="empty">Empty folder.</div>`;
+        } else {
+          for (const item of folder.items) {
+            const row = document.createElement("div");
+            row.className = "item";
+            row.innerHTML = `
+              <span>
+                <label class="name-cell" style="color:var(--text);margin:0">
+                  <span class="folder-caret" aria-hidden="true"></span>
+                  <input type="checkbox" data-item="${escapeHtml(item.id)}" ${selectedItems.has(item.id) ? "checked" : ""}>
+                  <strong>${escapeHtml(item.name)}</strong>
+                </label>
+              </span>
+              <span>${escapeHtml(itemKind(item))}</span>
+              <span class="meta">${escapeHtml(itemSummary(item))}</span>
+              <span class="item-actions">
+                <button data-edit="${escapeHtml(item.id)}" title="Edit">Edit</button>
+                <button data-rename="${escapeHtml(item.id)}" title="Move">Rename</button>
+                <button class="danger" data-delete="${escapeHtml(item.id)}" title="Delete">${iconSvg("trash")}</button>
+              </span>
+            `;
+            row.querySelector("input").addEventListener("change", event => {
+              const id = event.target.dataset.item;
+              if (event.target.checked) selectedItems.add(id);
+              else selectedItems.delete(id);
+            });
+            row.querySelector("[data-edit]").addEventListener("click", () => editItem(item));
+            row.querySelector("[data-rename]").addEventListener("click", () => renameItem(item));
+            row.querySelector("[data-delete]").addEventListener("click", () => deleteOne(item.id));
+            list.appendChild(row);
+          }
+        }
+        root.appendChild(details);
+      }
+      fillFolderSelect(byId("targetFolder"));
+      fillFolderSelect(byId("importFolder"));
+      fillFolderSelect(byId("coordFolder"));
+    }
+
+    async function load() {
+      const response = await fetch(API, { cache: "no-store" });
+      const data = await response.json();
+      if (!data.ok) throw new Error(data.error || "Failed to load map data.");
+      snapshot = data;
+      render();
+    }
+
+    async function action(payload) {
+      const response = await fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      if (!data.ok) throw new Error(data.error || "Action failed.");
+      snapshot = data;
+      render();
+      return data;
+    }
+
+    async function renameItem(item) {
+      openEditModal(item, true);
+    }
+
+    function openEditModal(item, focusName = false) {
+      byId("editItemId").value = item.id || "";
+      byId("editName").value = item.name || "";
+      fillFolderSelect(byId("editFolder"), item.folder || "Unfiled");
+      byId("editCategory").value = item.category || (item.kind === "track" ? "route" : "waypoint");
+      byId("editUrl").value = item.url || "";
+      byId("editNotes").value = item.notes || "";
+      byId("editDialog").showModal();
+      if (focusName) byId("editName").focus();
+    }
+
+    async function editItem(item) {
+      openEditModal(item);
+    }
+
+    async function deleteOne(id) {
+      if (!confirm("Delete this item?")) return;
+      try {
+        await action({ action: "delete_items", item_ids: [id], folder_paths: [] });
+        selectedItems.delete(id);
+        setStatus("actionStatus", "Deleted item.");
+      } catch (error) {
+        setStatus("actionStatus", error.message, true);
+      }
+    }
+
+    byId("backBtn").addEventListener("click", () => {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: "oiab:close-map-data-manager" }, "*");
+        try {
+          if (window.parent === window.top) {
+            window.top.postMessage({ type: "oiab:home" }, "*");
+          }
+        } catch (error) {
+          console.debug("Could not notify top shell", error);
+        }
+        return;
+      }
+      window.location.href = "/";
+    });
+    byId("addFolderOpen").addEventListener("click", () => byId("addFolderDialog").showModal());
+    document.querySelectorAll("[data-close-add-folder]").forEach(button => button.addEventListener("click", () => byId("addFolderDialog").close()));
+    byId("moveDialogOpen").addEventListener("click", () => {
+      if (!selectedItems.size && !selectedFolders.size) return setStatus("actionStatus", "Select items or folders first.", true);
+      fillFolderSelect(byId("targetFolder"));
+      byId("moveDialog").showModal();
+    });
+    document.querySelectorAll("[data-close-move]").forEach(button => button.addEventListener("click", () => byId("moveDialog").close()));
+    function openBulkDialog(mode) {
+      if (!selectedItems.size && !selectedFolders.size) return setStatus("actionStatus", "Select items or folders first.", true);
+      byId("bulkCategory").value = "";
+      byId("bulkApplyColor").checked = mode === "color";
+      if (mode === "type") byId("bulkCategory").focus();
+      byId("bulkDialog").showModal();
+    }
+    byId("bulkTypeOpen").addEventListener("click", () => openBulkDialog("type"));
+    byId("bulkColorOpen").addEventListener("click", () => openBulkDialog("color"));
+    document.querySelectorAll("[data-close-bulk]").forEach(button => button.addEventListener("click", () => byId("bulkDialog").close()));
+    byId("bulkApplyBtn").addEventListener("click", async () => {
+      const category = byId("bulkCategory").value;
+      const color = byId("bulkApplyColor").checked ? byId("bulkColor").value : "";
+      if (!category && !color) return setStatus("actionStatus", "Choose a type or enable color before applying.", true);
+      try {
+        const data = await action({
+          action: "bulk_update_items",
+          item_ids: [...selectedItems],
+          folder_paths: [...selectedFolders],
+          category,
+          color,
+        });
+        byId("bulkDialog").close();
+        setStatus("actionStatus", `Updated ${data.count || 0} item(s).`);
+      } catch (error) {
+        setStatus("actionStatus", error.message, true);
+      }
+    });
+    byId("exportBtn").addEventListener("click", () => {
+      if (!selectedItems.size && !selectedFolders.size) {
+        window.location.href = "/maps-data-export.gpx";
+        return;
+      }
+      const selected = (snapshot.items || []).filter(item => selectedItems.has(item.id) || selectedFolders.has(item.folder || "Unfiled"));
+      const features = selected
+        .filter(item => Number.isFinite(Number(item.lat)) && Number.isFinite(Number(item.lon)))
+        .map(item => ({
+          type: "Feature",
+          geometry: { type: "Point", coordinates: [Number(item.lon), Number(item.lat)] },
+          properties: { ...item },
+        }));
+      const blob = new Blob([JSON.stringify({ type: "FeatureCollection", features }, null, 2)], { type: "application/geo+json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "oiab-selected-map-data.geojson";
+      link.click();
+      URL.revokeObjectURL(url);
+      setStatus("actionStatus", `Exported ${features.length} selected waypoint(s). Routes export with full geometry from the full GPX export.`);
+    });
+    byId("importForm").addEventListener("submit", async event => {
+      event.preventDefault();
+      setStatus("importStatus", "Importing...");
+      const formElement = event.currentTarget;
+      try {
+        const form = new FormData(formElement);
+        const response = await fetch("/maps-data-import", { method: "POST", body: form });
+        const data = await response.json();
+        if (!data.ok) throw new Error(data.error || "Import failed.");
+        snapshot = data;
+        render();
+        setStatus("importStatus", `Imported ${data.count || 0} item(s) into ${data.folder || "Imported"}.`);
+        if (formElement && typeof formElement.reset === "function") formElement.reset();
+      } catch (error) {
+        setStatus("importStatus", error.message, true);
+      }
+    });
+    byId("coordinateForm").addEventListener("submit", async event => {
+      event.preventDefault();
+      setStatus("coordinateStatus", "Saving waypoint...");
+      const formElement = event.currentTarget;
+      try {
+        const form = new FormData(formElement);
+        form.set("source", "manual");
+        form.set("icon", form.get("category") || "waypoint");
+        const response = await fetch("/maps-quick-save", { method: "POST", body: form });
+        const data = await response.json();
+        if (!data.ok) throw new Error(data.error || "Waypoint save failed.");
+        if (formElement && typeof formElement.reset === "function") formElement.reset();
+        await load();
+        setStatus("coordinateStatus", "Waypoint added.");
+      } catch (error) {
+        setStatus("coordinateStatus", error.message, true);
+      }
+    });
+    byId("moveBtn").addEventListener("click", async () => {
+      try {
+        const target = byId("targetFolder").value;
+        const data = await action({ action: "move_items", item_ids: [...selectedItems], folder_paths: [...selectedFolders], target_folder: target });
+        selectedItems.clear();
+        selectedFolders.clear();
+        byId("moveDialog").close();
+        setStatus("actionStatus", `Moved ${data.count || 0} item(s).`);
+      } catch (error) {
+        setStatus("actionStatus", error.message, true);
+      }
+    });
+    byId("deleteBtn").addEventListener("click", async () => {
+      if (!selectedItems.size && !selectedFolders.size) return setStatus("actionStatus", "Select items or folders first.", true);
+      if (!confirm("Delete selected map data?")) return;
+      try {
+        const data = await action({ action: "delete_items", item_ids: [...selectedItems], folder_paths: [...selectedFolders] });
+        selectedItems.clear();
+        selectedFolders.clear();
+        setStatus("actionStatus", `Deleted ${data.count || 0} item(s).`);
+      } catch (error) {
+        setStatus("actionStatus", error.message, true);
+      }
+    });
+    byId("addFolderBtn").addEventListener("click", async () => {
+      try {
+        const folder = byId("newFolder").value;
+        await action({ action: "add_folder", folder });
+        byId("newFolder").value = "";
+        byId("addFolderDialog").close();
+        setStatus("actionStatus", "Added folder.");
+      } catch (error) {
+        setStatus("actionStatus", error.message, true);
+      }
+    });
+    byId("editForm").addEventListener("submit", async event => {
+      event.preventDefault();
+      try {
+        const item = snapshot.items.find(item => item.id === byId("editItemId").value) || {};
+        await action({
+          action: "update_item",
+          item_id: byId("editItemId").value,
+          name: byId("editName").value.trim(),
+          folder: byId("editFolder").value || "Unfiled",
+          category: byId("editCategory").value.trim(),
+          url: byId("editUrl").value.trim(),
+          notes: byId("editNotes").value.trim(),
+          color: item.color || "",
+        });
+        byId("editDialog").close();
+        setStatus("actionStatus", "Updated item.");
+      } catch (error) {
+        setStatus("actionStatus", error.message, true);
+      }
+    });
+    document.querySelectorAll("[data-close-edit]").forEach(button => button.addEventListener("click", () => byId("editDialog").close()));
+
+    load().catch(error => setStatus("actionStatus", error.message, true));
+  </script>
+</body>
+</html>

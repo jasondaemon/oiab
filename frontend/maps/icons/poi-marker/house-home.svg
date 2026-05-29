@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="House">
+  <circle cx="60" cy="60" r="48" fill="#fff8ee" stroke="#4f453f" stroke-width="8"/>
+  <path fill="#4f453f" d="M28 58 60 31l32 27-6 7.2L60 43.6 34 65.2z"/>
+  <path fill="#4f453f" d="M38 59h44v31H38z"/>
+  <path fill="#fff8ee" d="M47 68h26v22H47z"/>
+  <path fill="#4f453f" d="M56 74h10v16H56z"/>
+</svg>

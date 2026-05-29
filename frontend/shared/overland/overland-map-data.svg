@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Map Data Manager">
+  <defs>
+    <linearGradient id="bg" x1="12" y1="8" x2="84" y2="88" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#244e34"/>
+      <stop offset="1" stop-color="#07180f"/>
+    </linearGradient>
+    <linearGradient id="pin" x1="31" y1="20" x2="66" y2="69" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7df28c"/>
+      <stop offset="1" stop-color="#ffd34f"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="80" height="80" rx="20" fill="url(#bg)"/>
+  <path d="M20 28h18l8 8h30v28c0 5-3 8-8 8H28c-5 0-8-3-8-8V28z" fill="#d79a22"/>
+  <path d="M20 36h56v30c0 4-3 7-7 7H27c-4 0-7-3-7-7V36z" fill="#f2b93c"/>
+  <path d="M30 48h14M30 58h24M30 68h15" stroke="#0b2616" stroke-width="4" stroke-linecap="round"/>
+  <path d="M61 25c-9 0-16 7-16 16 0 12 16 29 16 29s16-17 16-29c0-9-7-16-16-16z" fill="url(#pin)" stroke="#092012" stroke-width="4"/>
+  <circle cx="61" cy="41" r="6" fill="#0b2616"/>
+</svg>

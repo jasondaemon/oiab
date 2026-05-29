@@ -221,6 +221,26 @@ docker compose --env-file config/oiab.env up -d --build oiab-core
 docker compose --env-file config/oiab.env ps
 ```
 
+## Raspberry Pi Network Modes
+
+OIAB can manage trailer network behavior on the Raspberry Pi host:
+
+- Docked/router mode when Ethernet has carrier.
+- Field/offline AP mode when Ethernet is unplugged.
+- Optional Starlink WAN passthrough when a second Wi-Fi interface is connected upstream.
+
+Install the host-level manager on the Pi:
+
+```bash
+cd /srv/trailer/oiab
+sudo OIAB_NETWORK_CONFIG=/srv/trailer/data/oiab/config/network.env scripts/install-network-mode-manager.sh
+oiab-network-status
+```
+
+Configure interfaces and AP settings from Central Settings → HotSpot Config.
+
+Full docs: [`docs/NETWORK_MODES.md`](docs/NETWORK_MODES.md).
+
 7. Start optional plugins/services only when wanted:
 
 ```bash
@@ -287,5 +307,7 @@ See:
 - [Migration Notes](MIGRATION.md)
 - [Data Layout](DATA_LAYOUT.md)
 - [Docker Deployment](docs/DOCKER_DEPLOYMENT.md)
+- [Maps](docs/MAPS.md)
+- [Map Overlays](docs/OVERLAYS.md)
 - [TODO](TODO.md)
 - [Third Party Notices](THIRD_PARTY_NOTICES.md)

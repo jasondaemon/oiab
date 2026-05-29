@@ -21,7 +21,14 @@ def parse_iso(value: str | None) -> float | None:
 
 def read_gpsd(timeout: float = 1.1) -> dict[str, Any]:
     try:
-        with socket.create_connection((SETTINGS.gpsd_host, SETTINGS.gpsd_port), timeout=timeout) as sock:
+        if SETTINGS.gpsd_socket:
+            sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+            sock.settimeout(timeout)
+            sock.connect(SETTINGS.gpsd_socket)
+            context = sock
+        else:
+            context = socket.create_connection((SETTINGS.gpsd_host, SETTINGS.gpsd_port), timeout=timeout)
+        with context as sock:
             sock.settimeout(timeout)
             sock.sendall(b'?WATCH={"enable":true,"json":true};\n?POLL;\n')
             chunks: list[bytes] = []
@@ -42,6 +49,7 @@ def read_gpsd(timeout: float = 1.1) -> dict[str, Any]:
             "available": False,
             "valid": False,
             "reason": "gpsd_unavailable",
+            "gpsd_socket": SETTINGS.gpsd_socket,
             "gpsd_host": SETTINGS.gpsd_host,
             "gpsd_port": SETTINGS.gpsd_port,
         }

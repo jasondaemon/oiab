@@ -4,8 +4,12 @@ services:
     profiles: ["komga", "reading", "optional"]
     restart: unless-stopped
     ports:
-      - "${KOMGA_PORT:-25600}:25600"
+      - "${KOMGA_PORT:-25601}:25600"
+    environment:
+      TZ: "${TZ:-America/New_York}"
+      KOMGA_CONFIGDIR: /config
+      SERVER_SERVLET_CONTEXT_PATH: "${KOMGA_CONTEXT_PATH:-/books}"
+      KOMGA_LIBRARIES_SCAN_CRON: "${KOMGA_LIBRARIES_SCAN_CRON:-0 0 */2 * * *}"
     volumes:
-      - "${OIAB_DATA_DIR:-/data/oiab}/services/komga/config:/config"
-      - "${OIAB_DATA_DIR:-/data/oiab}/media/books:/books"
-      - "${OIAB_DATA_DIR:-/data/oiab}/media/comics:/comics"
+      - "${KOMGA_CONFIG_DIR:-/srv/trailer/komga/config}:/config"
+      - "${KOMGA_LIBRARY_DIR:-/srv/trailer/media/books}:/data"

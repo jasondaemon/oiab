@@ -71,3 +71,25 @@ GET /api/maps/packs/diagnostics
 The diagnostics report active pack path, versioned public URL, size, mtime, file readability, HEAD response, byte-range response, `Cache-Control`, and whether the active PMTiles URL returns `206 Partial Content`.
 
 If a PMTiles file is replaced manually on the host or external SSD, rescan packs from Settings → Map Packs before loading Maps v2. Rescan updates the file size/mtime version in the public URL so browsers and PMTiles range caches do not reuse stale byte ranges.
+
+## Host Wi-Fi/AP Network Manager
+
+The OIAB network mode manager is installed on the Raspberry Pi host, not inside `oiab-core`.
+
+Docker continues to serve the web app while the host manager switches the Pi between:
+
+- Ethernet docked/router mode
+- offline Wi-Fi AP mode
+- optional AP plus Starlink WAN NAT mode
+
+Install on the Pi:
+
+```bash
+cd /srv/trailer/oiab
+sudo OIAB_NETWORK_CONFIG=/srv/trailer/data/oiab/config/network.env scripts/install-network-mode-manager.sh
+oiab-network-status
+```
+
+Central Settings → HotSpot Config writes the `network.env` consumed by the host service.
+
+See `docs/NETWORK_MODES.md` for rollback, diagnostics, and Starlink notes.

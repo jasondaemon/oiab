@@ -7,6 +7,7 @@ runtime: docker
 compose_file: services/compose/minecraft.yml
 compose_profile: minecraft
 compose_service: minecraft
+external_container: trailer-crafty
 systemd_unit: oiab-minecraft.service
 launcher_url: /apps/minecraft/
 installed_marker: /data/oiab/services/minecraft/server

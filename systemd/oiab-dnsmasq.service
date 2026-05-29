@@ -1,0 +1,14 @@
+[Unit]
+Description=OIAB field-mode DHCP and DNS
+After=network-pre.target
+Wants=network-pre.target
+
+[Service]
+Type=simple
+ExecStartPre=/usr/bin/test -f /run/oiab-network/dnsmasq.conf
+ExecStart=/usr/sbin/dnsmasq --keep-in-foreground --conf-file=/run/oiab-network/dnsmasq.conf
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

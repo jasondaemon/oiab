@@ -6,15 +6,14 @@
   const MUSIC_KEY = "iiab-overland-universal-music-v1";
   const RECENT_KEY = "iiab-overland-universal-recents-v1";
   const MAP_3D_BUILDINGS_KEY = "omv2.show3dBuildings";
+  const MAP_AUTO_RECORDING_KEY = "omv2.autoTrackRecording";
   const FALLBACK_ART = "/maps/overland/tunes.png";
   const DEFAULT_LAYOUT = {
     schema: 1,
-    settingsPassword: "",
-    hiddenAppIds: ["legacy-home", "legacy-admin"],
+    settingsPassword: "314159",
+    hiddenAppIds: ["legacy-home", "legacy-admin", "https-settings", "service-manager", "audio-test", "minecraft"],
     folders: [
-      { id: "games", title: "Games", icon: "/maps/overland/overland-folder-games.svg", protected: false, appIds: ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "drums", "trivia", "tic-tac-toe", "license-plates"] },
-      { id: "reading", title: "Reading", icon: "/maps/overland/overland-folder-reading.svg", protected: false, appIds: ["wikipedia", "books", "komga"] },
-      { id: "settings", title: "Settings", icon: "/maps/overland/overland-folder-settings.svg", protected: true, appIds: ["overland-settings", "gps-status", "system-monitor", "file-uploads", "map-packs", "service-manager", "game-data", "audio-test"] },
+      { id: "games", title: "Games", icon: "/maps/overland/overland-folder-games.svg", protected: false, appIds: ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "minecraft-map", "drums", "trivia", "tic-tac-toe", "license-plates"] },
     ],
   };
   const HOST_PREFIXES = ["mobile", "maps", "music", "iiab", "files", "jellyfin", "monitor", "maps-admin", "minecraft-map", "minecraft-admin", "mindustry"];
@@ -37,6 +36,9 @@
     ["photo", "Photo", "photo"],
     ["place", "Other", "pin"],
   ];
+  const MUSIC_VISUALIZER_TYPES = ["particles", "bars", "waveform", "radial", "imagefloat", "off"];
+  const MUSIC_VISUALIZER_STYLES = ["drift", "pulse", "nebula"];
+  const MUSIC_VISUALIZER_FOCUS = ["soft", "sharp", "dream"];
 
   const $ = (id) => document.getElementById(id);
   const state = {
@@ -50,7 +52,9 @@
     currentAppId: "",
     currentFolder: null,
     passwordFolder: null,
+    passwordAction: null,
     gps: null,
+    lastMovingHeading: null,
     music: {
       library: [],
       visible: [],
@@ -58,6 +62,14 @@
       filter: { artist: "", album: "", folder: "" },
       repeatMode: "off",
       shuffle: false,
+      detailMode: false,
+      visualizer: MUSIC_VISUALIZER_TYPES.includes(localStorage.getItem("overlandMusicVisualizer") || "") ? localStorage.getItem("overlandMusicVisualizer") : "particles",
+      visualizerStyle: MUSIC_VISUALIZER_STYLES.includes(localStorage.getItem("overlandMusicVisualizerStyle") || "") ? localStorage.getItem("overlandMusicVisualizerStyle") : "drift",
+      visualizerFocus: MUSIC_VISUALIZER_FOCUS.includes(localStorage.getItem("overlandMusicVisualizerFocus") || "") ? localStorage.getItem("overlandMusicVisualizerFocus") : "soft",
+      visualizerImageId: localStorage.getItem("overlandMusicVisualizerImageId") || "",
+      visualizerImages: [],
+      visualizerImage: null,
+      controlBusy: false,
       restoreTime: 0,
       visualSeed: Array.from({ length: 36 }, () => ({
         x: Math.random(),
@@ -242,8 +254,19 @@
 
   function renderDock() {
     const dock = $("sidebarApps");
-    const pinned = state.dockIds.map((id) => state.appById.get(id)).filter(Boolean).filter((app) => !isHidden(app.id));
-    dock.replaceChildren(...pinned.slice(0, 8).map(appButton));
+    const recent = safeJson(localStorage.getItem(RECENT_KEY), []);
+    const ordered = [...recent, ...state.dockIds];
+    const seen = new Set();
+    const apps = ordered
+      .map((id) => state.appById.get(id))
+      .filter(Boolean)
+      .filter((app) => !isHidden(app.id))
+      .filter((app) => {
+        if (seen.has(app.id)) return false;
+        seen.add(app.id);
+        return true;
+      });
+    dock.replaceChildren(...apps.slice(0, 3).map(appButton));
   }
 
   function renderDockSettings() {
@@ -273,7 +296,15 @@
     box.replaceChildren(...choices);
   }
 
+  function unloadLeavingApp(nextAppId = "") {
+    if (state.currentView === "app" && state.currentAppId === "jellyfin" && nextAppId !== "jellyfin") {
+      const frame = $("appFrame");
+      if (frame) frame.src = "about:blank";
+    }
+  }
+
   function setView(view, options = {}) {
+    if (state.currentView === "app" && view !== "app") unloadLeavingApp("");
     if (!options.replace && state.currentView !== view) state.history.push(state.currentView);
     state.currentView = view;
     if (view !== "app" && view !== "music") state.currentAppId = "";
@@ -294,16 +325,38 @@
     else setView("dashboard", { replace: true });
   }
 
+  function goHome() {
+    const frame = $("appFrame");
+    if (frame) frame.src = "about:blank";
+    state.history = [];
+    state.currentAppId = "";
+    state.music.detailMode = false;
+    updateMusicUi();
+    setView("dashboard", { replace: true });
+  }
+
   function openApp(app) {
     if (!app) return;
+    if (app.id === "overland-settings") {
+      openSettingsProtected();
+      return;
+    }
     if (app.id === "music" || app.native === "music") {
       state.currentAppId = "music";
+      saveRecent("music");
       renderDock();
       setView("music");
       return;
     }
     const url = appUrl(app);
     if (!url || url === "#") return;
+    unloadLeavingApp(app.id);
+    if (app.openMode === "external") {
+      saveRecent(app.id);
+      renderDock();
+      window.open(url, "_blank", "noopener");
+      return;
+    }
     state.currentAppId = app.id;
     $("appTitle").textContent = app.title || "App";
     $("appFrame").src = url;
@@ -313,8 +366,10 @@
   }
 
   function saveRecent(appId) {
+    const app = state.appById.get(appId);
+    if (!app || isHidden(app.id)) return;
     const recent = safeJson(localStorage.getItem(RECENT_KEY), []);
-    localStorage.setItem(RECENT_KEY, JSON.stringify([appId, ...recent.filter((id) => id !== appId)].slice(0, 8)));
+    localStorage.setItem(RECENT_KEY, JSON.stringify([appId, ...recent.filter((id) => id !== appId)].slice(0, 3)));
   }
 
   function renderAppCard(app) {
@@ -334,6 +389,7 @@
   function openFolder(folder) {
     if (folder.protected && state.layout.settingsPassword) {
       state.passwordFolder = folder;
+      state.passwordAction = null;
       $("passwordInput").value = "";
       $("passwordError").textContent = "";
       $("passwordTitle").textContent = folder.title;
@@ -343,6 +399,28 @@
     }
     state.currentFolder = folder;
     renderApps();
+  }
+
+  function openSettingsProtected() {
+    if (state.layout.settingsPassword) {
+      state.passwordFolder = null;
+      state.passwordAction = () => {
+        state.currentAppId = "overland-settings";
+        saveRecent("overland-settings");
+        renderDock();
+        setView("settings");
+      };
+      $("passwordInput").value = "";
+      $("passwordError").textContent = "";
+      $("passwordTitle").textContent = "Settings";
+      $("passwordDialog").showModal();
+      $("passwordInput").focus();
+      return;
+    }
+    state.currentAppId = "overland-settings";
+    saveRecent("overland-settings");
+    renderDock();
+    setView("settings");
   }
 
   function renderFolderCard(folder) {
@@ -509,20 +587,37 @@
     if (autoplay) audio.play().catch((error) => console.warn(error));
   }
 
+  function setMusicDetailMode(enabled) {
+    state.music.detailMode = Boolean(enabled);
+    updateMusicUi();
+  }
+
   function playTrack(trackId) {
     const track = state.music.library.find((item) => item.id === trackId);
     setAudioTrack(track, true);
   }
 
-  function playPause() {
+  async function playPause() {
     const audio = $("globalAudio");
+    if (state.music.controlBusy) return;
+    state.music.controlBusy = true;
     if (!audio.src) {
       const first = state.music.visible[0] || state.music.library[0];
       if (first) setAudioTrack(first, true);
+      state.music.controlBusy = false;
       return;
     }
-    if (audio.paused) audio.play().catch((error) => console.warn(error));
-    else audio.pause();
+    try {
+      if (audio.paused) await audio.play();
+      else audio.pause();
+    } catch (error) {
+      console.warn(error);
+    } finally {
+      setTimeout(() => {
+        state.music.controlBusy = false;
+        updateMusicUi();
+      }, 220);
+    }
   }
 
   function nextTrack(direction = 1, wrap = true) {
@@ -582,6 +677,10 @@
     $("musicTitle").textContent = title;
     $("musicMeta").textContent = meta;
     $("musicArt").src = art;
+    $("musicDetailTitle").textContent = title;
+    $("musicDetailArtist").textContent = track?.artist || "Unknown Artist";
+    $("musicDetailAlbum").textContent = track?.album || "Unknown Album";
+    $("musicDetailArt").src = art;
     $("dashPlay").innerHTML = iconSvg(audio.paused ? "play" : "pause");
     $("musicPlay").innerHTML = iconSvg(audio.paused ? "play" : "pause");
     const repeatIcon = state.music.repeatMode === "one" ? "repeatOne" : "repeat";
@@ -607,6 +706,13 @@
     $("musicSeek").value = value;
     $("musicElapsed").textContent = formatTime(audio.currentTime);
     $("musicDuration").textContent = formatTime(audio.duration);
+    $("musicDetailProgress").value = value;
+    $("musicDetailElapsed").textContent = formatTime(audio.currentTime);
+    $("musicDetailDuration").textContent = formatTime(audio.duration);
+    $("musicView").classList.toggle("is-detail-mode", state.music.detailMode);
+    const musicLayout = document.querySelector("#musicView .uo-music-layout");
+    if (musicLayout) musicLayout.hidden = state.music.detailMode;
+    $("musicDetailView").hidden = !state.music.detailMode;
     renderTrackList();
   }
 
@@ -633,6 +739,43 @@
     if (track) setAudioTrack(track, false);
   }
 
+  function persistVisualizerSettings() {
+    localStorage.setItem("overlandMusicVisualizer", state.music.visualizer);
+    localStorage.setItem("overlandMusicVisualizerStyle", state.music.visualizerStyle);
+    localStorage.setItem("overlandMusicVisualizerFocus", state.music.visualizerFocus);
+    localStorage.setItem("overlandMusicVisualizerImageId", state.music.visualizerImageId || "");
+  }
+
+  async function loadVisualizerImages(force = false) {
+    if (state.music.visualizerImages.length && !force) return state.music.visualizerImages;
+    const response = await fetch("/music-api/visualizer-images", { cache: "no-store" });
+    if (!response.ok) throw new Error(`visualizer images ${response.status}`);
+    const data = await response.json();
+    state.music.visualizerImages = Array.isArray(data.images) ? data.images : [];
+    if (!state.music.visualizerImages.some((image) => image.id === state.music.visualizerImageId)) {
+      state.music.visualizerImageId = state.music.visualizerImages[0]?.id || "";
+    }
+    state.music.visualizerImages = state.music.visualizerImages.map((image) => {
+      if (image?.url) {
+        const img = new Image();
+        img.src = image.url;
+        return { ...image, _img: img };
+      }
+      return image;
+    });
+    state.music.visualizerImage = state.music.visualizerImages.find((image) => image.id === state.music.visualizerImageId) || null;
+    persistVisualizerSettings();
+    const select = $("musicVisualizerImage");
+    if (select) {
+      select.replaceChildren(
+        new Option(state.music.visualizerImages.length ? "Select image" : "Upload images to music/visualizers", ""),
+        ...state.music.visualizerImages.map((image) => new Option(image.name || image.filename || image.id, image.id)),
+      );
+      select.value = state.music.visualizerImageId || "";
+    }
+    return state.music.visualizerImages;
+  }
+
   function drawMusicCanvas(canvasId) {
     const canvas = $(canvasId);
     if (!canvas) return;
@@ -647,17 +790,67 @@
     }
     ctx.clearRect(0, 0, width, height);
     const audio = $("globalAudio");
-    const pulse = audio.paused ? .32 : .62 + Math.sin(Date.now() / 180) * .18;
+    const pulse = audio.paused ? .26 : .56 + Math.sin(Date.now() / 180) * .18;
+    if (state.music.visualizer === "off") return;
+    if (state.music.visualizer.startsWith("image") && state.music.visualizerImage?.url) {
+      const image = state.music.visualizerImage._img;
+      if (image?.complete) {
+        ctx.globalAlpha = state.music.visualizerFocus === "dream" ? 0.3 : 0.22;
+        ctx.drawImage(image, 0, 0, width, height);
+        ctx.globalAlpha = 1;
+      }
+    }
+    if (state.music.visualizer === "bars") {
+      const bars = 28;
+      for (let i = 0; i < bars; i += 1) {
+        const sample = .2 + Math.abs(Math.sin(Date.now() / 260 + i * .45)) * pulse;
+        const barHeight = height * sample * (state.music.visualizerStyle === "pulse" ? .82 : .66);
+        const barWidth = width / bars;
+        ctx.fillStyle = `rgba(131,220,140,${0.2 + sample * 0.4})`;
+        ctx.fillRect(i * barWidth + barWidth * 0.18, height - barHeight, barWidth * 0.64, barHeight);
+      }
+      return;
+    }
+    if (state.music.visualizer === "waveform") {
+      ctx.strokeStyle = "rgba(131,220,140,0.8)";
+      ctx.lineWidth = 2 * dpr;
+      ctx.beginPath();
+      for (let i = 0; i <= 80; i += 1) {
+        const x = (i / 80) * width;
+        const y = height * 0.5 + Math.sin(Date.now() / 220 + i * .22) * height * 0.13 * (1 + pulse);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      return;
+    }
+    if (state.music.visualizer === "radial") {
+      const cx = width / 2;
+      const cy = height / 2;
+      for (let i = 0; i < 48; i += 1) {
+        const angle = (Math.PI * 2 * i) / 48 + Date.now() / 2200;
+        const inner = Math.min(width, height) * 0.12;
+        const outer = inner + Math.abs(Math.sin(Date.now() / 240 + i * .33)) * Math.min(width, height) * 0.2 * (1 + pulse);
+        ctx.strokeStyle = `rgba(131,220,140,${0.18 + pulse * 0.55})`;
+        ctx.lineWidth = 2 * dpr;
+        ctx.beginPath();
+        ctx.moveTo(cx + Math.cos(angle) * inner, cy + Math.sin(angle) * inner);
+        ctx.lineTo(cx + Math.cos(angle) * outer, cy + Math.sin(angle) * outer);
+        ctx.stroke();
+      }
+      return;
+    }
     for (const particle of state.music.visualSeed) {
-      particle.p += particle.s * .01;
+      particle.p += particle.s * (state.music.visualizerStyle === "nebula" ? .018 : .01);
       const x = ((particle.x + Math.sin(particle.p) * .06 + 1) % 1) * width;
       const y = ((particle.y + Math.cos(particle.p * .7) * .06 + 1) % 1) * height;
-      const gradient = ctx.createRadialGradient(x, y, 0, x, y, particle.r * dpr * (1 + pulse));
-      gradient.addColorStop(0, `rgba(131, 220, 140, ${.22 * pulse})`);
+      const radius = particle.r * dpr * (1 + pulse * (state.music.visualizerFocus === "sharp" ? 1.5 : 1));
+      const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+      gradient.addColorStop(0, `rgba(131, 220, 140, ${.18 + .18 * pulse})`);
       gradient.addColorStop(1, "rgba(131, 220, 140, 0)");
       ctx.fillStyle = gradient;
       ctx.beginPath();
-      ctx.arc(x, y, particle.r * dpr * (1 + pulse), 0, Math.PI * 2);
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
       ctx.fill();
     }
   }
@@ -688,10 +881,13 @@
     $("dashGpsSource").textContent = valid ? (gps.active_source || gps.source || "GPS").replaceAll("_", " ").toUpperCase() : "No GPS lock";
     const stable = gps?.stable || gps || {};
     const speed = Math.round(Number(stable.speed_mph || gps?.speed_mph || 0));
-    const heading = Number(stable.heading_deg ?? gps?.heading_deg);
+    const rawHeading = Number(stable.heading_deg ?? gps?.heading_deg);
+    const stationary = stable.stationary === true || speed < 2;
+    if (!stationary && Number.isFinite(rawHeading)) state.lastMovingHeading = rawHeading;
+    const heading = stationary ? state.lastMovingHeading : rawHeading;
     $("dashSpeed").textContent = String(speed);
     $("dashHeading").textContent = Number.isFinite(heading) ? `${Math.round(heading)}°` : "--°";
-    $("dashCompassNeedle").style.setProperty("--heading", `${Number.isFinite(heading) ? heading : 0}deg`);
+    if (Number.isFinite(heading)) $("dashCompassNeedle").style.setProperty("--heading", `${heading}deg`);
     $("dashGpsMeta").textContent = valid
       ? `${Number(stable.lat).toFixed(5)}, ${Number(stable.lon).toFixed(5)}`
       : "USB GPS preferred, browser fallback retained.";
@@ -798,9 +994,9 @@
     setButtonIcon("musicShuffle", "shuffle");
     setButtonIcon("quickWaypointPanel", "waypoint");
 
-    $("homeButton").addEventListener("click", () => setView("dashboard"));
+    $("homeButton").addEventListener("click", goHome);
     $("appsButton").addEventListener("click", () => { state.currentFolder = null; renderApps(); loadOpenGames(); setView("apps"); });
-    $("settingsButton").addEventListener("click", () => { setView("settings"); });
+    $("settingsButton").addEventListener("click", openSettingsProtected);
     $("backButton").addEventListener("click", goBack);
     $("appsBack").addEventListener("click", () => {
       if (state.currentFolder) {
@@ -817,21 +1013,56 @@
         openApp(app);
       });
     });
+    document.querySelectorAll("[data-system-action]").forEach((link) => {
+      link.addEventListener("click", async (event) => {
+        event.preventDefault();
+        const action = link.dataset.systemAction || "";
+        const label = action === "shutdown" ? "shut down" : "reboot";
+        if (!window.confirm(`Really ${label} the Pi?`)) return;
+        try {
+          const response = await fetch(`/api/system/${action}`, { method: "POST" });
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok || data.ok === false) throw new Error(data.error || `${label} failed`);
+        } catch (error) {
+          window.alert(error.message || `${label} failed`);
+        }
+      });
+    });
+    $("appFrame").addEventListener("load", () => {
+      try {
+        const url = new URL($("appFrame").contentWindow.location.href);
+        if (url.origin === window.location.origin && ["/", "/index.html", "/mobile/", "/mobile/index.html"].includes(url.pathname)) goHome();
+      } catch {
+        // Cross-origin services are allowed in the app frame when they support it.
+      }
+    });
     $("dashMapPanel").addEventListener("click", (event) => {
       if (event.target.closest("iframe")) return;
       openApp(state.appById.get("maps-v2") || state.appById.get("maps"));
     });
     $("dashMusicArtButton").addEventListener("click", (event) => {
       event.stopPropagation();
+      setMusicDetailMode(false);
       state.currentAppId = "music";
+      saveRecent("music");
       renderDock();
       setView("music");
     });
     $("dashMusicPanel").addEventListener("click", (event) => {
       if (event.target.closest("button") || event.target.closest("progress")) return;
+      setMusicDetailMode(false);
       state.currentAppId = "music";
+      saveRecent("music");
       renderDock();
       setView("music");
+    });
+    $("musicArtButton").addEventListener("click", (event) => {
+      event.stopPropagation();
+      setMusicDetailMode(true);
+    });
+    $("musicDetailArtButton").addEventListener("click", (event) => {
+      event.stopPropagation();
+      setMusicDetailMode(false);
     });
     $("quickWaypointPanel").addEventListener("click", () => {
       $("waypointMessage").textContent = "";
@@ -840,9 +1071,15 @@
     $("passwordSubmit").addEventListener("click", () => {
       if ($("passwordInput").value === state.layout.settingsPassword) {
         $("passwordDialog").close();
-        state.currentFolder = state.passwordFolder;
-        state.passwordFolder = null;
-        renderApps();
+        if (typeof state.passwordAction === "function") {
+          const action = state.passwordAction;
+          state.passwordAction = null;
+          action();
+        } else {
+          state.currentFolder = state.passwordFolder;
+          state.passwordFolder = null;
+          renderApps();
+        }
       } else $("passwordError").textContent = "Incorrect password.";
     });
 
@@ -855,8 +1092,7 @@
       if (event.origin !== window.location.origin) return;
       const data = event.data || {};
       if (data.type === "oiab:home") {
-        $("appFrame").src = "about:blank";
-        setView("dashboard");
+        goHome();
         return;
       }
       if (data.type !== "oiab:open-app") return;
@@ -866,6 +1102,9 @@
     $("musicSeek").addEventListener("input", () => {
       const audio = $("globalAudio");
       if (audio.duration) audio.currentTime = (Number($("musicSeek").value) / 1000) * audio.duration;
+    });
+    $("musicDetailProgress").addEventListener("click", () => {
+      setMusicDetailMode(false);
     });
     $("globalAudio").addEventListener("loadedmetadata", () => {
       if (state.music.restoreTime) {
@@ -881,6 +1120,35 @@
         if (eventName === "timeupdate") persistMusicState();
       });
     }
+    $("rebuildMusicLibrary")?.addEventListener("click", async () => {
+      const message = $("musicSettingsMessage");
+      if (message) message.textContent = "Rebuilding music library...";
+      try {
+        await loadMusicLibrary(true);
+        await loadVisualizerImages(true).catch(() => {});
+        syncMusicSettingsUi();
+        if (message) message.textContent = "Music library rebuilt.";
+      } catch (error) {
+        if (message) message.textContent = error.message;
+      }
+    });
+    $("musicVisualizerMode")?.addEventListener("change", () => {
+      state.music.visualizer = $("musicVisualizerMode").value || "particles";
+      persistVisualizerSettings();
+    });
+    $("musicVisualizerStyle")?.addEventListener("change", () => {
+      state.music.visualizerStyle = $("musicVisualizerStyle").value || "drift";
+      persistVisualizerSettings();
+    });
+    $("musicVisualizerFocus")?.addEventListener("change", () => {
+      state.music.visualizerFocus = $("musicVisualizerFocus").value || "soft";
+      persistVisualizerSettings();
+    });
+    $("musicVisualizerImage")?.addEventListener("change", () => {
+      state.music.visualizerImageId = $("musicVisualizerImage").value || "";
+      state.music.visualizerImage = state.music.visualizerImages.find((image) => image.id === state.music.visualizerImageId) || null;
+      persistVisualizerSettings();
+    });
     for (const [id, key] of [["themeAccent", "accent"], ["themeBackground", "background"], ["themeOpacity", "opacity"], ["themeBlur", "blur"]]) {
       $(id).addEventListener("input", () => saveTheme({ ...loadTheme(), [key]: $(id).value }));
     }
@@ -889,6 +1157,49 @@
       $("map3dBuildings").addEventListener("change", () => {
         localStorage.setItem(MAP_3D_BUILDINGS_KEY, JSON.stringify($("map3dBuildings").checked));
       });
+    }
+    if ($("mapAutoRecording")) {
+      $("mapAutoRecording").checked = JSON.parse(localStorage.getItem(MAP_AUTO_RECORDING_KEY) || "true");
+      $("mapAutoRecording").addEventListener("change", async () => {
+        const enabled = $("mapAutoRecording").checked;
+        localStorage.setItem(MAP_AUTO_RECORDING_KEY, JSON.stringify(enabled));
+        try {
+          await fetch("/api/settings/app", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ map_auto_recording: enabled }),
+          });
+        } catch (error) {
+          console.warn(error);
+        }
+      });
+    }
+    if ($("saveSettingsPin")) {
+      $("saveSettingsPin").addEventListener("click", async () => {
+        const pin = String($("settingsPinInput")?.value || "").trim();
+        const message = $("settingsPinMessage");
+        if (!/^\d{6}$/.test(pin)) {
+          if (message) message.textContent = "PIN must be exactly 6 digits.";
+          return;
+        }
+        try {
+          const response = await fetch("/api/settings/app", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ settings_pin: pin }),
+          });
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok || data.ok === false) throw new Error(data.error || `settings ${response.status}`);
+          state.layout.settingsPassword = pin;
+          if (message) message.textContent = "PIN saved.";
+          if ($("settingsPinInput")) $("settingsPinInput").value = "";
+        } catch (error) {
+          if (message) message.textContent = error.message;
+        }
+      });
+    }
+    if ($("saveNetworkSettings")) {
+      $("saveNetworkSettings").addEventListener("click", saveNetworkSettings);
     }
     if ($("resetDock")) $("resetDock").addEventListener("click", () => {
       localStorage.removeItem(DOCK_KEY);
@@ -907,6 +1218,8 @@
     const [config, layout] = await Promise.all([loadConfig(), loadLayout()]);
     state.layout = layout;
     normalizeApps(config);
+    loadAppSettings().catch((error) => console.warn(error));
+    loadNetworkSettings().catch((error) => console.warn(error));
     $("dashMapFrame").src = "/maps-v2/?shell=1";
     renderDock();
     renderApps();
@@ -916,7 +1229,75 @@
     loadGps();
     setInterval(loadGps, 1500);
     loadMusicLibrary(false).catch((error) => $("trackList").textContent = error.message);
+    loadVisualizerImages(false).then(() => syncMusicSettingsUi()).catch((error) => {
+      const message = $("musicSettingsMessage");
+      if (message) message.textContent = error.message;
+    });
     animationLoop();
+  }
+
+  async function loadAppSettings() {
+    const response = await fetch("/api/settings/app", { cache: "no-store" });
+    if (!response.ok) throw new Error(`settings ${response.status}`);
+    const data = await response.json();
+    const enabled = data?.settings?.map_auto_recording !== false;
+    localStorage.setItem(MAP_AUTO_RECORDING_KEY, JSON.stringify(enabled));
+    if ($("mapAutoRecording")) $("mapAutoRecording").checked = enabled;
+    const pin = data?.settings?.settings_pin;
+    if (pin) state.layout.settingsPassword = String(pin);
+  }
+
+  const NETWORK_FIELD_MAP = {
+    OIAB_ETH_IFACE: "networkEthIface",
+    OIAB_AP_IFACE: "networkApIface",
+    OIAB_WAN_WIFI_IFACE: "networkWanIface",
+    OIAB_AP_SSID: "networkApSsid",
+    OIAB_AP_PASSPHRASE: "networkApPassphrase",
+    OIAB_AP_COUNTRY: "networkApCountry",
+    OIAB_AP_CHANNEL: "networkApChannel",
+    OIAB_AP_SUBNET: "networkApSubnet",
+    OIAB_AP_IP: "networkApIp",
+    OIAB_DHCP_RANGE: "networkDhcpRange",
+  };
+
+  async function loadNetworkSettings() {
+    const response = await fetch("/api/settings/network", { cache: "no-store" });
+    if (!response.ok) throw new Error(`network settings ${response.status}`);
+    const data = await response.json();
+    const settings = data?.settings || {};
+    for (const [key, id] of Object.entries(NETWORK_FIELD_MAP)) {
+      if ($(id)) $(id).value = settings[key] || "";
+    }
+    if ($("networkSettingsMessage")) {
+      $("networkSettingsMessage").textContent = data?.config_path ? `Saved at ${data.config_path}` : "";
+    }
+  }
+
+  function syncMusicSettingsUi() {
+    if ($("musicVisualizerMode")) $("musicVisualizerMode").value = state.music.visualizer || "particles";
+    if ($("musicVisualizerStyle")) $("musicVisualizerStyle").value = state.music.visualizerStyle || "drift";
+    if ($("musicVisualizerFocus")) $("musicVisualizerFocus").value = state.music.visualizerFocus || "soft";
+    if ($("musicVisualizerImage")) $("musicVisualizerImage").value = state.music.visualizerImageId || "";
+  }
+
+  async function saveNetworkSettings() {
+    const message = $("networkSettingsMessage");
+    const settings = {};
+    for (const [key, id] of Object.entries(NETWORK_FIELD_MAP)) {
+      settings[key] = String($(id)?.value || "").trim();
+    }
+    try {
+      const response = await fetch("/api/settings/network", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ settings }),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data.ok === false) throw new Error(data.error || `network settings ${response.status}`);
+      if (message) message.textContent = `Saved. Host manager reads ${data.config_path}.`;
+    } catch (error) {
+      if (message) message.textContent = error.message;
+    }
   }
 
   init().catch((error) => {

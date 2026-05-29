@@ -7,6 +7,7 @@ runtime: docker
 compose_file: services/compose/jellyfin.yml
 compose_profile: jellyfin
 compose_service: jellyfin
+external_container: trailer-jellyfin
 systemd_unit: oiab-jellyfin.service
 launcher_url: /apps/jellyfin/
 installed_marker: /data/oiab/services/jellyfin/config

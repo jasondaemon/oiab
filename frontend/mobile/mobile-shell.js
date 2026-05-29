@@ -5,9 +5,8 @@
     settingsPassword: "",
     hiddenAppIds: ["legacy-home", "legacy-admin"],
     folders: [
-      { id: "games", title: "Games", icon: "/maps/overland/overland-folder-games.svg", protected: false, appIds: ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "drums", "trivia", "tic-tac-toe", "license-plates"] },
-      { id: "reading", title: "Reading", icon: "/maps/overland/overland-folder-reading.svg", protected: false, appIds: ["wikipedia", "books", "komga"] },
-      { id: "settings", title: "Settings", icon: "/maps/overland/overland-folder-settings.svg", protected: true, appIds: ["overland-settings", "gps-status", "system-monitor", "https-settings", "file-uploads", "map-packs", "service-manager", "game-data", "audio-test"] },
+      { id: "games", title: "Games", icon: "/maps/overland/overland-folder-games.svg", protected: false, appIds: ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "minecraft", "minecraft-map", "drums", "trivia", "tic-tac-toe", "license-plates"] },
+      { id: "settings", title: "Settings", icon: "/maps/overland/overland-folder-settings.svg", protected: true, appIds: ["overland-settings", "https-settings", "map-packs", "service-manager", "game-data", "audio-test"] },
     ],
   };
   let currentConfig = null;

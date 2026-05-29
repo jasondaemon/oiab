@@ -16,6 +16,12 @@
 - Add optional in-container gpsd/device-passthrough override for users who do not want host gpsd.
 - Add curated OIAB-hosted map-pack catalog URLs so users do not depend on a specific Protomaps daily build URL.
 - Add visible background progress for very large map-pack downloads/extractions.
+- Add state/forest-scoped MVUM install options so users can avoid fetching national roads/trails when only one region is needed.
+- Add state/forest-level MVUM catalogs after the national roads/trails workflow is proven.
+- Add selective offline topo caching/vector-derived contours instead of full-CONUS raster mirroring.
+- Implement NOAA radar as an online raster overlay after the weather alert cache workflow is stable.
+- Add stale-overlay warnings directly in the map HUD for cached wildfire/weather overlays.
+- Add route-corridor satellite/imagery caching under `/data/oiab/maps/overlays/imagery/routes`.
 - Deepen Kiwix/Wikipedia integration.
 - Add production HTTPS reverse proxy/unit integration.
 - Add sync/backup strategy for family game data and waypoints.

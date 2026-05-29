@@ -1,0 +1,14 @@
+[Unit]
+Description=OIAB network mode manager
+After=network-pre.target
+Wants=network-pre.target
+
+[Service]
+Type=simple
+Environment=OIAB_NETWORK_CONFIG=/data/oiab/config/network.env
+ExecStart=/usr/local/sbin/oiab-network-manager run
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

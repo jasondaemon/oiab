@@ -155,21 +155,35 @@ POST /api/maps/overlays/rescan
 POST /api/maps/overlays/set-enabled
 POST /api/maps/overlays/set-opacity
 POST /api/maps/overlays/set-order
+POST /api/maps/overlays/wildfire/refresh
+POST /api/maps/overlays/weather/alerts/refresh
+POST /api/maps/overlays/mvum/roads/install
+POST /api/maps/overlays/mvum/trails/install
+GET  /api/maps/overlays/jobs
+GET  /api/maps/overlays/jobs/<job_id>
 ```
 
 Supported overlay source types:
 
-- `geojson`: local or remote GeoJSON source rendered with default fill/line/point styling unless custom layers are configured.
-- `pmtiles`: independent vector PMTiles overlay. Custom layer definitions are recommended because PMTiles overlays need a known `source_layer`.
-- `raster`: tiled raster overlay such as USGS topo. Online raster overlays require internet unless mirrored or cached later.
+- `raster_xyz` / `arcgis_raster`: tiled raster overlay such as USGS topo. USGS Topo is online-only for now.
+- `geojson` / `cached_geojson`: local or cached GeoJSON rendered with default or overlay-specific styling.
+- `pmtiles_vector` / `generated_pmtiles`: independent vector PMTiles overlay. PMTiles overlays need a known `source_layer`.
 
 Settings → Map Packs includes an **Overlay Sources** section for layer toggles, opacity, ordering, rescan, availability, cache mode, and attribution. Enabled overlays are persisted in SQLite and loaded by Maps v2 on startup. Overlay layers are inserted below symbol/label layers by default so labels remain readable.
+
+Current overlay direction:
+
+- USGS Topo starts as an online National Map raster overlay. Full-CONUS offline raster topo is intentionally deferred because it can consume large amounts of storage.
+- MVUM is the first full-US offline overlay target. OIAB can fetch roads/trails from the USFS EDW `EDW_MVUM_01` ArcGIS MapServer, normalize them to GeoJSON, and generate PMTiles when `tippecanoe` is available. Manual converted files under `/data/oiab/maps/overlays/mvum` are still detected by rescan.
+- Wildfire hotspots use a cached NASA FIRMS GeoJSON snapshot. Live refresh requires `OIAB_FIRMS_MAP_KEY` when the selected FIRMS endpoint requires a key.
+- NWS weather alerts use a cached GeoJSON snapshot from `api.weather.gov`, rendered offline until stale.
+- NOAA radar is represented as a disabled placeholder for a later online raster layer.
 
 ## Current Gaps
 
 - Full offline search is not yet ported.
-- Overlay caching is currently represented in the registry (`browser`, `local`, `none`) but full offline tile mirroring is not implemented yet.
-- Future overlay registry entries are planned for MVUM, public lands, weather, radar, and wildfire data.
+- Overlay caching is implemented for latest-snapshot GeoJSON overlays. Raster tile mirroring is not implemented yet.
+- MVUM install jobs now have a default ArcGIS REST path. Explicit shapefile/file source overrides still require `ogr2ogr`; PMTiles output requires `tippecanoe`.
 - Legacy map visual assets are tracked as transitional assets. OIAB-specific icons live separately so they can replace inherited visuals gradually.
 - The Protomaps build URL in the catalog should be refreshed periodically or replaced by a curated OIAB pack repository.
 - Explicit multi-pack basemap rendering is intentionally disabled. Maps v2 renders one active PMTiles basemap at a time to avoid duplicate full-style tile requests. Additional data should use purpose-built overlay sources/layers.

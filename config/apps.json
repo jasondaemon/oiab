@@ -40,10 +40,10 @@
     },
     {
       "id": "file-uploads",
-      "title": "File Uploads",
-      "description": "Upload music, GPX, books, and local content.",
-      "url": "/mobile/file-uploads.html",
-      "icon": "/maps/overland/overland-folder-settings.svg",
+      "title": "File Manager",
+      "description": "Drag-and-drop file manager for media, maps, books, ROMs, uploads, and backups.",
+      "url": "/apps/filebrowser/",
+      "icon": "/maps/overland/overland-file-manager.svg",
       "category": "Admin"
     },
     {
@@ -84,6 +84,14 @@
       "description": "Rescan, validate, and activate local PMTiles map packs.",
       "url": "/mobile/map-packs.html",
       "icon": "/maps-v2/icons/folder.svg",
+      "category": "Admin"
+    },
+    {
+      "id": "map-data",
+      "title": "Map Data Manager",
+      "description": "Full-screen manager for folders, waypoints, GPX routes, tracks, bulk edits, import, and export.",
+      "url": "/mobile/map-data.html",
+      "icon": "/maps/overland/overland-map-data.svg",
       "category": "Admin"
     },
     {
@@ -205,8 +213,7 @@
       "url": "/mobile/emulator.html",
       "icon": "/maps/overland/overland-emulator.svg",
       "category": "Games",
-      "native": "emulator",
-      "optionalService": "emulatorjs"
+      "native": "emulator"
     },
     {
       "id": "trivia",
@@ -260,10 +267,10 @@
     },
     {
       "id": "wikipedia",
-      "title": "Wikipedia",
+      "title": "Kiwix",
       "description": "Optional offline Kiwix Wikipedia service.",
       "url": "/apps/wiki/",
-      "icon": "/maps/overland/overland-folder-reading.svg",
+      "icon": "/maps/overland/overland-kiwix.svg",
       "category": "Learning",
       "optionalService": "kiwix"
     },
@@ -281,15 +288,25 @@
       "title": "Komga",
       "description": "Optional books, comics, and PDF library server.",
       "url": "/apps/komga/",
-      "icon": "/maps/overland/overland-folder-reading.svg",
+      "icon": "/maps/overland/overland-komga.svg",
       "category": "Library",
       "optionalService": "komga"
     },
     {
       "id": "minecraft",
       "title": "Minecraft Server",
-      "description": "Optional managed Minecraft server.",
-      "url": "/apps/minecraft/",
+      "description": "Optional managed Minecraft server. Admin access is handled from Settings.",
+      "url": "/apps/minecraft-admin/",
+      "icon": "/maps/overland/overland-folder-games.svg",
+      "category": "Admin",
+      "optionalService": "minecraft",
+      "openMode": "external"
+    },
+    {
+      "id": "minecraft-map",
+      "title": "Minecraft Map",
+      "description": "Live web map for the local Minecraft world.",
+      "url": "/apps/minecraft-map/",
       "icon": "/maps/overland/overland-folder-games.svg",
       "category": "Games",
       "optionalService": "minecraft"
