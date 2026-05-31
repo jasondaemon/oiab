@@ -1,8 +1,5 @@
-FROM golang:1.25-bookworm AS pmtiles-cli
-
-RUN go install github.com/protomaps/go-pmtiles@latest
-
 FROM python:3.12-slim AS oiab-core
+ARG TARGETARCH=arm64
 
 LABEL org.opencontainers.image.title="Overland In A Box Core"
 LABEL org.opencontainers.image.description="Standalone OIAB backend and web frontend."
@@ -37,9 +34,11 @@ COPY config /opt/oiab/config
 COPY services /opt/oiab/services
 COPY scripts /opt/oiab/scripts
 COPY docs /opt/oiab/docs
+COPY tools /opt/oiab/tools
 COPY licenses /opt/oiab/licenses
 COPY README.md ARCHITECTURE.md DATA_LAYOUT.md MIGRATION.md TODO.md THIRD_PARTY_NOTICES.md LICENSE.md /opt/oiab/
-COPY --from=pmtiles-cli /go/bin/go-pmtiles /usr/local/bin/pmtiles
+
+RUN install -m 0755 "/opt/oiab/tools/pmtiles/linux-${TARGETARCH}/pmtiles" /usr/local/bin/pmtiles
 
 RUN useradd --system --uid 10001 --gid 0 --home-dir /opt/oiab oiab \
     && mkdir -p /data/oiab \

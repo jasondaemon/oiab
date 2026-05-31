@@ -7,7 +7,9 @@ from typing import Any
 
 
 GPS_STALE_SECONDS = 5
-GPS_MAX_HDOP = 3.0
+# This receiver routinely settles in the 3-5 HDOP range while still
+# producing usable, stabilized location for overland use.
+GPS_MAX_HDOP = 5.0
 GPS_MAX_ACCURACY_M = 75
 GPS_STATIONARY_SPEED_MPH = 2.0
 GPS_STATIONARY_DRIFT_RADIUS_M = 20

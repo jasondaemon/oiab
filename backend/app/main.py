@@ -13,6 +13,7 @@ import random
 import re
 import secrets
 import shutil
+import socket
 import subprocess
 import threading
 import time
@@ -82,6 +83,109 @@ ROM_EXTENSIONS = {
     ".gg", ".iso", ".m3u", ".md", ".n64", ".nds", ".nes", ".sfc", ".smc",
     ".sms", ".v64", ".vb", ".ws", ".wsc", ".z64", ".zip",
 }
+
+DOCKER_SOCKET_PATH = Path(os.environ.get("OIAB_DOCKER_SOCKET", "/var/run/docker.sock"))
+HOST_POWER_HELPER_IMAGE = os.environ.get("OIAB_HOST_POWER_HELPER_IMAGE", "oiab-core:latest")
+
+
+def docker_unix_json_request(method: str, path: str, payload: object | None = None, *, timeout: float = 20.0) -> tuple[int, object]:
+    if not DOCKER_SOCKET_PATH.exists():
+        return 503, {"ok": False, "error": f"Docker socket not mounted: {DOCKER_SOCKET_PATH}"}
+    body = b""
+    headers = ""
+    if payload is not None:
+        body = json.dumps(payload).encode("utf-8")
+        headers = "Content-Type: application/json\r\n"
+    request = (
+        f"{method} {path} HTTP/1.1\r\n"
+        "Host: docker\r\n"
+        f"{headers}"
+        f"Content-Length: {len(body)}\r\n"
+        "Connection: close\r\n\r\n"
+    ).encode("utf-8") + body
+    try:
+        with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as sock:
+            sock.settimeout(timeout)
+            sock.connect(str(DOCKER_SOCKET_PATH))
+            sock.sendall(request)
+            chunks: list[bytes] = []
+            while True:
+                chunk = sock.recv(65536)
+                if not chunk:
+                    break
+                chunks.append(chunk)
+    except OSError as exc:
+        return 503, {"ok": False, "error": str(exc)}
+    raw = b"".join(chunks)
+    header, _, response_body = raw.partition(b"\r\n\r\n")
+    status_line = header.splitlines()[0].decode("utf-8", errors="replace") if header else "HTTP/1.1 500"
+    try:
+        status = int(status_line.split()[1])
+    except Exception:
+        status = 500
+    header_map: dict[str, str] = {}
+    for line in header.splitlines()[1:]:
+        if b":" not in line:
+            continue
+        key, value = line.split(b":", 1)
+        header_map[key.decode("utf-8", errors="replace").lower()] = value.decode("utf-8", errors="replace").strip().lower()
+    if header_map.get("transfer-encoding") == "chunked":
+        decoded = bytearray()
+        rest = response_body
+        while rest:
+            size_raw, _, rest = rest.partition(b"\r\n")
+            try:
+                size = int(size_raw.split(b";", 1)[0], 16)
+            except ValueError:
+                break
+            if size == 0:
+                break
+            decoded.extend(rest[:size])
+            rest = rest[size + 2 :]
+        response_body = bytes(decoded)
+    if not response_body:
+        return status, {}
+    try:
+        return status, json.loads(response_body.decode("utf-8"))
+    except json.JSONDecodeError:
+        return status, response_body.decode("utf-8", errors="replace")
+
+
+def trigger_host_power_via_docker(action: str) -> dict[str, object]:
+    if action not in {"reboot", "shutdown"}:
+        return {"ok": False, "error": f"Unsupported power action: {action}"}
+    command = [
+        "nsenter",
+        "-t", "1",
+        "-m", "-u", "-i", "-n", "-p",
+        "/sbin/shutdown",
+        "-h" if action == "shutdown" else "-r",
+        "now",
+    ]
+    name = f"oiab-host-power-{action}-{secrets.token_hex(4)}"
+    create_payload = {
+        "Image": HOST_POWER_HELPER_IMAGE,
+        "Cmd": command,
+        "User": "0:0",
+        "HostConfig": {
+            "AutoRemove": True,
+            "Privileged": True,
+            "PidMode": "host",
+            "NetworkMode": "host",
+        },
+    }
+    status, created = docker_unix_json_request("POST", f"/v1.43/containers/create?name={quote(name)}", create_payload)
+    if status >= 300:
+        message = created.get("message") if isinstance(created, dict) else str(created)
+        return {"ok": False, "error": f"Docker helper create failed: {message}"}
+    container_id = str((created or {}).get("Id") or "")
+    if not container_id:
+        return {"ok": False, "error": "Docker helper create returned no container id."}
+    status, started = docker_unix_json_request("POST", f"/v1.43/containers/{container_id}/start")
+    if status >= 300:
+        message = started.get("message") if isinstance(started, dict) else str(started)
+        return {"ok": False, "error": f"Docker helper start failed: {message}"}
+    return {"ok": True, "action": action, "via": "docker-nsenter", "container": container_id[:12]}
 
 MOBILE_GAME_TITLES = {
     "tic-tac-toe": "Tic-Tac-Toe",
@@ -2616,11 +2720,18 @@ class OIABHandler(BaseHTTPRequestHandler):
     def handle_power_action(self, action: str) -> None:
         if action not in {"reboot", "shutdown"}:
             return self.send_json({"ok": False, "error": "Unsupported power action."}, status=400)
-        if os.environ.get("OIAB_ALLOW_HOST_POWER", "").lower() not in {"1", "true", "yes", "on"}:
+        allow_host_power = os.environ.get("OIAB_ALLOW_HOST_POWER", "").lower() in {"1", "true", "yes", "on"}
+        if DOCKER_SOCKET_PATH.exists():
+            result = trigger_host_power_via_docker(action)
+            if result.get("ok"):
+                return self.send_json(result)
+            if allow_host_power:
+                return self.send_json(result, status=500)
+        if not allow_host_power:
             return self.send_json(
                 {
                     "ok": False,
-                    "error": "Host power controls are disabled. Set OIAB_ALLOW_HOST_POWER=true and grant the container/host helper permission.",
+                    "error": "Host power controls are disabled. Set OIAB_ALLOW_HOST_POWER=true or mount Docker host-control access for OIAB.",
                 },
                 status=403,
             )
