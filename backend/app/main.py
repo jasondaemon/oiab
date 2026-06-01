@@ -3024,7 +3024,7 @@ print(json.dumps({
 }))
 PY
 """
-        result = trigger_host_command_via_docker(["/bin/sh", "-lc", script], timeout=30)
+        result = trigger_host_command_via_docker(["/bin/sh", "-c", script], timeout=30)
         if result.get("ok") and result.get("stdout"):
             try:
                 details = json.loads(str(result["stdout"]))
@@ -3116,11 +3116,11 @@ PY
         if action == "install":
             command = ["/bin/bash", "/srv/trailer/oiab/scripts/install-raspap-host.sh"]
         elif action == "enable":
-            command = ["/bin/sh", "-lc", "systemctl enable oiab-raspap-mode.service >/dev/null 2>&1 || true; nmcli radio wifi on >/dev/null 2>&1 || true; /usr/local/sbin/oiab-raspap-mode-manager apply"]
+            command = ["/bin/sh", "-c", "systemctl enable oiab-raspap-mode.service >/dev/null 2>&1 || true; nmcli radio wifi on >/dev/null 2>&1 || true; /usr/local/sbin/oiab-raspap-mode-manager apply"]
         elif action == "disable":
-            command = ["/bin/sh", "-lc", "systemctl disable --now oiab-raspap-mode.service >/dev/null 2>&1 || true; systemctl stop hostapd dnsmasq >/dev/null 2>&1 || true; ip link set ${OIAB_AP_IFACE:-wlan0} down >/dev/null 2>&1 || true; rm -f /run/oiab-raspap/mode"]
+            command = ["/bin/sh", "-c", "systemctl disable --now oiab-raspap-mode.service >/dev/null 2>&1 || true; systemctl stop hostapd dnsmasq >/dev/null 2>&1 || true; ip link set ${OIAB_AP_IFACE:-wlan0} down >/dev/null 2>&1 || true; rm -f /run/oiab-raspap/mode"]
         else:
-            command = ["/bin/sh", "-lc", "/usr/local/sbin/oiab-raspap-mode-manager apply >/dev/null 2>&1 || true"]
+            command = ["/bin/sh", "-c", "/usr/local/sbin/oiab-raspap-mode-manager apply >/dev/null 2>&1 || true"]
             timeout = 60.0
         result = trigger_host_command_via_docker(command, timeout=timeout)
         status = 200 if result.get("ok") else 500
