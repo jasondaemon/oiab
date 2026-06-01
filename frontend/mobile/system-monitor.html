@@ -344,7 +344,7 @@
     function fuelCard(disk, index) {
       const used = pct(disk.percent);
       const empty = 100 - used;
-      const label = index === 0 || disk.path === "/" ? "System SD" : "SSD Data";
+      const label = disk.label || (index === 0 || disk.path === "/" ? "System SD" : "SSD Data");
       return `<article class="fuel-card square"><div class="fuel-meter" style="--empty:${empty}"></div><div><h3>${label}</h3><div class="fuel-value">${used.toFixed(0)}%</div><div class="small"><strong><code>${disk.path}</code></strong><br>${gb(disk.used)} / ${gb(disk.total)} used<br>${gb(disk.free)} free</div></div></article>`;
     }
 

@@ -225,6 +225,48 @@ def trigger_host_power_via_docker(action: str) -> dict[str, object]:
         return result
     return {"ok": True, "action": action, "via": "docker-nsenter", "container": result.get("container")}
 
+
+def parse_df_usage(stdout: str) -> list[dict[str, object]]:
+    disks: list[dict[str, object]] = []
+    for raw_line in (stdout or "").splitlines()[1:]:
+        parts = raw_line.split()
+        if len(parts) < 4:
+            continue
+        try:
+            total = int(parts[0])
+            used = int(parts[1])
+            free = int(parts[2])
+        except ValueError:
+            continue
+        path = parts[3]
+        percent = round((used / total) * 100, 1) if total else 0.0
+        disks.append(
+            {
+                "path": path,
+                "total": total,
+                "used": used,
+                "free": free,
+                "percent": percent,
+            }
+        )
+    return disks
+
+
+def host_disk_usage() -> list[dict[str, object]]:
+    result = trigger_host_command_via_docker(
+        [
+            "/bin/df",
+            "-B1",
+            "--output=size,used,avail,target",
+            "/",
+            "/srv/trailer-data",
+        ],
+        timeout=10.0,
+    )
+    if not result.get("ok"):
+        return []
+    return parse_df_usage(str(result.get("stdout") or ""))
+
 MOBILE_GAME_TITLES = {
     "tic-tac-toe": "Tic-Tac-Toe",
     "chess": "Chess",
@@ -4830,12 +4872,32 @@ PY
         mem = self.read_meminfo()
         network = self.read_network_io()
         disks = []
-        for path in [Path("/"), self.settings.data_dir]:
-            try:
-                usage = shutil.disk_usage(path)
-                disks.append({"path": str(path), "total": usage.total, "used": usage.used, "free": usage.free, "percent": round((usage.used / usage.total) * 100, 1)})
-            except OSError:
-                continue
+        host_disks = host_disk_usage() if self.settings.allow_docker_control else []
+        if host_disks:
+            for item in host_disks:
+                path = str(item.get("path") or "")
+                label = "System SD" if path == "/" else "SSD Data" if path == "/srv/trailer-data" else path
+                disks.append({**item, "label": label})
+        else:
+            fallback_paths = [
+                ("System SD", Path("/")),
+                ("SSD Data", self.settings.data_dir),
+            ]
+            for label, path in fallback_paths:
+                try:
+                    usage = shutil.disk_usage(path)
+                    disks.append(
+                        {
+                            "label": label,
+                            "path": str(path),
+                            "total": usage.total,
+                            "used": usage.used,
+                            "free": usage.free,
+                            "percent": round((usage.used / usage.total) * 100, 1),
+                        }
+                    )
+                except OSError:
+                    continue
         temp_c = None
         temp_path = Path("/sys/class/thermal/thermal_zone0/temp")
         if temp_path.exists():
