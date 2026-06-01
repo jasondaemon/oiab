@@ -79,6 +79,16 @@
         p: Math.random() * Math.PI * 2,
       })),
     },
+    storage: {
+      settings: {},
+      locations: [],
+      browseRoots: [],
+      configPath: "",
+      browserKey: "",
+      browserPath: "",
+      browserParentPath: null,
+      browserSelectedPath: "",
+    },
   };
 
   function iconSvg(name) {
@@ -768,7 +778,7 @@
     const select = $("musicVisualizerImage");
     if (select) {
       select.replaceChildren(
-        new Option(state.music.visualizerImages.length ? "Select image" : "Upload images to music/visualizers", ""),
+        new Option(state.music.visualizerImages.length ? "Select image" : "Upload images to media/visualizers", ""),
         ...state.music.visualizerImages.map((image) => new Option(image.name || image.filename || image.id, image.id)),
       );
       select.value = state.music.visualizerImageId || "";
@@ -1201,6 +1211,22 @@
     if ($("saveNetworkSettings")) {
       $("saveNetworkSettings").addEventListener("click", saveNetworkSettings);
     }
+    if ($("saveStorageSettings")) {
+      $("saveStorageSettings").addEventListener("click", saveStorageSettings);
+    }
+    $("storageBrowserRoots")?.addEventListener("change", () => browseStoragePath($("storageBrowserRoots").value));
+    $("storageBrowserUp")?.addEventListener("click", () => {
+      if (state.storage.browserParentPath) browseStoragePath(state.storage.browserParentPath);
+    });
+    $("storageBrowserChoose")?.addEventListener("click", () => {
+      if (!state.storage.browserKey || !state.storage.browserPath) return;
+      state.storage.settings[state.storage.browserKey] = state.storage.browserSelectedPath || state.storage.browserPath;
+      const location = state.storage.locations.find((entry) => entry.key === state.storage.browserKey);
+      if (location) location.value = state.storage.settings[state.storage.browserKey];
+      renderStorageSettings();
+      $("storageBrowserDialog").close();
+      if ($("storageSettingsMessage")) $("storageSettingsMessage").textContent = `${location?.title || state.storage.browserKey} updated. Save Storage Paths to persist.`;
+    });
     if ($("resetDock")) $("resetDock").addEventListener("click", () => {
       localStorage.removeItem(DOCK_KEY);
       state.dockIds = state.config.defaultDock || [];
@@ -1220,6 +1246,10 @@
     normalizeApps(config);
     loadAppSettings().catch((error) => console.warn(error));
     loadNetworkSettings().catch((error) => console.warn(error));
+    loadStorageSettings().catch((error) => {
+      const message = $("storageSettingsMessage");
+      if (message) message.textContent = error.message;
+    });
     $("dashMapFrame").src = "/maps-v2/?shell=1";
     renderDock();
     renderApps();
@@ -1259,6 +1289,126 @@
     OIAB_AP_IP: "networkApIp",
     OIAB_DHCP_RANGE: "networkDhcpRange",
   };
+
+  function renderStorageSettings() {
+    const holder = $("storageLocations");
+    if (!holder) return;
+    const rows = state.storage.locations.map((location) => {
+      const row = document.createElement("div");
+      row.className = "uo-storage-row";
+      const label = document.createElement("label");
+      const title = document.createElement("strong");
+      title.textContent = location.title || location.key;
+      const note = document.createElement("small");
+      note.textContent = location.description || "";
+      const value = document.createElement("div");
+      value.className = "uo-storage-value";
+      value.title = location.value || "";
+      value.textContent = location.value || location.default || "--";
+      label.append(title, note, value);
+
+      const browse = document.createElement("button");
+      browse.type = "button";
+      browse.textContent = "Browse";
+      browse.addEventListener("click", () => openStorageBrowser(location.key));
+      row.append(label, browse);
+      return row;
+    });
+    holder.replaceChildren(...rows);
+  }
+
+  async function loadStorageSettings() {
+    const response = await fetch("/api/settings/storage", { cache: "no-store" });
+    if (!response.ok) throw new Error(`storage settings ${response.status}`);
+    const data = await response.json();
+    state.storage.settings = { ...(data?.settings || {}) };
+    state.storage.locations = Array.isArray(data?.locations) ? data.locations.map((location) => ({ ...location })) : [];
+    state.storage.browseRoots = Array.isArray(data?.browse_roots) ? data.browse_roots : [];
+    state.storage.configPath = data?.config_path || "";
+    renderStorageSettings();
+    if ($("storageSettingsMessage")) {
+      $("storageSettingsMessage").textContent = state.storage.configPath ? `Saved at ${state.storage.configPath}. Apply with a redeploy/recreate.` : "";
+    }
+  }
+
+  async function saveStorageSettings() {
+    const message = $("storageSettingsMessage");
+    try {
+      const response = await fetch("/api/settings/storage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ settings: state.storage.settings }),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data.ok === false) throw new Error(data.error || `storage settings ${response.status}`);
+      state.storage.settings = { ...(data?.settings || {}) };
+      state.storage.locations = Array.isArray(data?.locations) ? data.locations.map((location) => ({ ...location })) : [];
+      state.storage.browseRoots = Array.isArray(data?.browse_roots) ? data.browse_roots : state.storage.browseRoots;
+      state.storage.configPath = data?.config_path || state.storage.configPath;
+      renderStorageSettings();
+      if (message) message.textContent = `Saved at ${state.storage.configPath}. Recreate OIAB to apply new bind mounts.`;
+    } catch (error) {
+      if (message) message.textContent = error.message;
+    }
+  }
+
+  function syncStorageBrowserUi(data) {
+    state.storage.browserPath = data.current_path || "";
+    state.storage.browserParentPath = data.parent_path || null;
+    state.storage.browserSelectedPath = data.current_path || "";
+    const roots = Array.isArray(data.roots) ? data.roots : state.storage.browseRoots;
+    state.storage.browseRoots = roots;
+    if ($("storageBrowserCurrentPath")) $("storageBrowserCurrentPath").textContent = state.storage.browserPath;
+    const rootSelect = $("storageBrowserRoots");
+    if (rootSelect) {
+      rootSelect.replaceChildren(...roots.map((root) => new Option(root, root)));
+      const selectedRoot = roots.find((root) => state.storage.browserPath === root || state.storage.browserPath.startsWith(`${root}/`)) || roots[0] || "";
+      rootSelect.value = selectedRoot;
+    }
+    if ($("storageBrowserUp")) $("storageBrowserUp").disabled = !state.storage.browserParentPath;
+    const list = $("storageBrowserList");
+    if (!list) return;
+    const rows = (data.directories || []).map((entry) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "uo-storage-browser-item";
+      button.innerHTML = `<span><strong>${entry.name}</strong><small>${entry.path}</small></span><span>Open</span>`;
+      button.addEventListener("click", () => browseStoragePath(entry.path));
+      return button;
+    });
+    const current = document.createElement("button");
+    current.type = "button";
+    current.className = "uo-storage-browser-item is-current";
+    current.innerHTML = `<span><strong>Use current folder</strong><small>${state.storage.browserPath}</small></span><span>Selected</span>`;
+    current.addEventListener("click", () => {
+      state.storage.browserSelectedPath = state.storage.browserPath;
+      if ($("storageBrowserMessage")) $("storageBrowserMessage").textContent = `Selected ${state.storage.browserSelectedPath}`;
+    });
+    list.replaceChildren(current, ...rows);
+  }
+
+  async function browseStoragePath(path) {
+    const message = $("storageBrowserMessage");
+    if (message) message.textContent = "Loading folders...";
+    try {
+      const response = await fetch(`/api/settings/storage/browse?path=${encodeURIComponent(path || "")}`, { cache: "no-store" });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data.ok === false) throw new Error(data.error || `browse ${response.status}`);
+      syncStorageBrowserUi(data);
+      if (message) message.textContent = "";
+    } catch (error) {
+      if (message) message.textContent = error.message;
+    }
+  }
+
+  async function openStorageBrowser(key) {
+    const location = state.storage.locations.find((entry) => entry.key === key);
+    state.storage.browserKey = key;
+    if ($("storageBrowserTitle")) $("storageBrowserTitle").textContent = location ? `Choose ${location.title}` : "Choose Folder";
+    if ($("storageBrowserNote")) $("storageBrowserNote").textContent = location?.description || "Select a host directory for this data location.";
+    $("storageBrowserDialog").showModal();
+    await browseStoragePath(state.storage.settings[key] || location?.value || state.storage.browseRoots[0] || "/srv");
+  }
 
   async function loadNetworkSettings() {
     const response = await fetch("/api/settings/network", { cache: "no-store" });

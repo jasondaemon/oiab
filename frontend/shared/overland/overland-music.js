@@ -473,7 +473,7 @@
         if (!select) return
         select.replaceChildren()
         if (!state.visualizerImages.length) {
-            select.append(new Option("Upload images to music/visualizers", ""))
+            select.append(new Option("Upload images to media/visualizers", ""))
             state.visualizerImageId = ""
             state.visualizerImage = null
             return
@@ -750,7 +750,7 @@
         if (!state.trackIds.length) {
             const empty = document.createElement("div")
             empty.className = "om-empty"
-            empty.textContent = "No audio files found. Upload MP3s to /srv/trailer/media/music using File Uploads, then reopen this player."
+            empty.textContent = "No audio files found. Upload MP3s to the configured music library using File Manager, then reopen this player."
             list.append(empty)
             return
         }
