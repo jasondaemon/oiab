@@ -4565,15 +4565,15 @@ PY
         output_dir.mkdir(parents=True, exist_ok=True)
         raw_geojson = output_dir / "blm-sma-latest.geojson"
         output = output_dir / "blm-sma-latest.pmtiles"
-        service_url = "https://gis.blm.gov/arcgis/rest/services/lands/BLM_Natl_SMA_LimitedScale/MapServer/22/query"
+        service_url = "https://gis.blm.gov/arcgis/rest/services/lands/BLM_Natl_SMA_Cached_BLM_Only/MapServer/2/query"
         field_list = "OBJECTID,SMA_ID,ADMIN_DEPT_CODE,ADMIN_AGENCY_CODE,ADMIN_UNIT_NAME,ADMIN_UNIT_TYPE,ADMIN_ST,HOLD_ID,HOLD_DEPT_CODE,HOLD_AGENCY_CODE,FAU_ID"
         page_size = 2000
         params_base = {
             "where": "1=1",
             "outFields": field_list,
             "outSR": "4326",
-            "geometryPrecision": "5",
-            "maxAllowableOffset": "0.01",
+            "geometryPrecision": "6",
+            "maxAllowableOffset": "0.0005",
             "f": "geojson",
         }
         try:
@@ -4619,8 +4619,8 @@ PY
                     "fetched_at": timestamp(),
                     "feature_count": len(features),
                     "generalization": {
-                        "geometryPrecision": 5,
-                        "maxAllowableOffsetDegrees": 0.01,
+                        "geometryPrecision": 6,
+                        "maxAllowableOffsetDegrees": 0.0005,
                     },
                 },
             }
@@ -4641,8 +4641,8 @@ PY
                         str(output),
                         "-l",
                         "blm_public_lands",
-                        "-Z5",
-                        "-z10",
+                        "-Z4",
+                        "-z14",
                         "--force",
                         "--drop-densest-as-needed",
                         "--coalesce-densest-as-needed",
@@ -4686,8 +4686,8 @@ PY
                     "blm_service_url": service_url,
                     "source_size_bytes": raw_geojson.stat().st_size if raw_geojson.exists() else 0,
                     "size_bytes": output_path.stat().st_size,
-                    "maxzoom": 10,
-                    "minzoom": 5,
+                    "maxzoom": 14,
+                    "minzoom": 4,
                     "style": "public_lands_blm",
                 },
                 path=str(output_path),
