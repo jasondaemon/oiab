@@ -115,7 +115,7 @@
     {
       "id": "blm_sma_cached",
       "name": "BLM Land Boundaries",
-      "description": "Cached Bureau of Land Management vector land boundaries. Refresh to download the latest simplified national BLM polygon snapshot for offline use and readable map popups.",
+      "description": "Cached Bureau of Land Management vector surface management agency areas from the national SMA polygon dataset. Refresh downloads the detailed national source for offline use; bbox-limited trip extracts are supported by the refresh job.",
       "category": "public_lands",
       "type": "pmtiles",
       "source_type": "generated_pmtiles",
@@ -123,9 +123,11 @@
       "local_path": "/data/oiab/maps/overlays/public-lands/blm-sma-latest.pmtiles",
       "path": "/data/oiab/maps/overlays/public-lands/blm-sma-latest.pmtiles",
       "source_layer": "blm_public_lands",
+      "blm_source_item_id": "6bf2e737c59d4111be92420ee5ab0b46",
+      "blm_download_url": "https://www.arcgis.com/sharing/rest/content/items/6bf2e737c59d4111be92420ee5ab0b46/data",
       "blm_service_url": "https://gis.blm.gov/arcgis/rest/services/lands/BLM_Natl_SMA_Cached_BLM_Only/MapServer/2/query",
       "minzoom": 4,
-      "maxzoom": 14,
+      "maxzoom": 16,
       "attribution": "Bureau of Land Management Surface Management Agency",
       "online_required": false,
       "online_available": true,
@@ -138,7 +140,8 @@
       "layer_order": 55,
       "sort_order": 55,
       "style": "public_lands_blm",
-      "refresh_interval_minutes": 10080
+      "refresh_interval_minutes": 10080,
+      "warning": "BLM SMA shows surface management agency areas, not legal parcel ownership boundaries."
     },
     {
       "id": "firms_active_hotspots",

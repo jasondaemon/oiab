@@ -943,6 +943,7 @@
               </div>
             </div>
             <p class="uo-settings-item-subtitle">${escapeHtml(overlay.description || "")}</p>
+            ${overlay.warning ? `<p class="uo-settings-item-subtitle is-warn">${escapeHtml(overlay.warning)}</p>` : ""}
             ${(overlay.last_fetch_at || overlay.error_message) ? `
               <p class="uo-settings-item-subtitle">
                 ${overlay.last_fetch_at ? `Updated ${escapeHtml(formatTimestamp(overlay.last_fetch_at))}. ` : ""}

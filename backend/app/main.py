@@ -15,8 +15,10 @@ import secrets
 import shutil
 import socket
 import subprocess
+import tempfile
 import threading
 import time
+import zipfile
 from datetime import datetime
 from email.utils import formatdate
 from http import HTTPStatus
@@ -3404,7 +3406,7 @@ PY
         if path == "/api/maps/overlays/weather/alerts/refresh":
             return self.send_json(self.refresh_weather_alerts_overlay())
         if path == "/api/maps/overlays/blm/refresh":
-            return self.send_json(self.refresh_blm_overlay())
+            return self.send_json(self.refresh_blm_overlay(self.read_body()))
         if path == "/api/maps/overlays/mvum/roads/install":
             job = start_mvum_install(self.settings, "roads")
             return self.send_json({"ok": True, "job": job, **self.map_overlays()})
@@ -4130,7 +4132,7 @@ PY
             if action in {"refresh-weather", "refresh-alerts", "weather-alerts-refresh"}:
                 return self.send_json(self.refresh_weather_alerts_overlay())
             if action in {"refresh-blm", "blm-refresh"}:
-                return self.send_json(self.refresh_blm_overlay())
+                return self.send_json(self.refresh_blm_overlay(payload))
             if action in {"install-mvum-roads", "mvum-roads-install"}:
                 job = start_mvum_install(self.settings, "roads")
                 return self.send_json({"ok": True, "job": job, **self.map_overlays()})
@@ -4287,6 +4289,71 @@ PY
         shutil.copy2(source, part)
         shutil.move(str(part), str(destination))
         return destination.stat().st_size
+
+    def parse_optional_bbox(self, raw: object) -> tuple[float, float, float, float] | None:
+        if raw in {None, "", []}:
+            return None
+        values = raw
+        if isinstance(raw, str):
+            values = [part.strip() for part in raw.split(",")]
+        if not isinstance(values, (list, tuple)) or len(values) != 4:
+            raise ValueError("bbox must be four values: minLon,minLat,maxLon,maxLat")
+        try:
+            min_lon, min_lat, max_lon, max_lat = [float(value) for value in values]
+        except (TypeError, ValueError) as exc:
+            raise ValueError("bbox values must be numeric.") from exc
+        if min_lon >= max_lon or min_lat >= max_lat:
+            raise ValueError("bbox values are invalid.")
+        return (min_lon, min_lat, max_lon, max_lat)
+
+    def detect_ogr_layer_name(self, dataset_path: Path) -> str:
+        result = subprocess.run(
+            ["ogrinfo", "-ro", "-so", str(dataset_path)],
+            text=True,
+            capture_output=True,
+            timeout=120,
+            check=False,
+        )
+        if result.returncode != 0:
+            raise ValueError((result.stderr or result.stdout or "ogrinfo failed")[-1500:])
+        for line in result.stdout.splitlines():
+            match = re.match(r"\s*\d+:\s*([^(]+?)\s*\(", line)
+            if match:
+                return match.group(1).strip()
+        raise ValueError("Could not determine BLM source layer name from the downloaded dataset.")
+
+    def normalize_blm_geojsonseq(self, source_path: Path, output_geojson: Path) -> int:
+        feature_count = 0
+        output_geojson.parent.mkdir(parents=True, exist_ok=True)
+        with source_path.open("r", encoding="utf-8") as source, output_geojson.open("w", encoding="utf-8") as target:
+            target.write('{"type":"FeatureCollection","features":[')
+            first = True
+            for line in source:
+                line = line.strip()
+                if not line:
+                    continue
+                feature = json.loads(line)
+                if not isinstance(feature, dict) or not feature.get("geometry"):
+                    continue
+                properties = feature.get("properties") if isinstance(feature.get("properties"), dict) else {}
+                normalized = {
+                    "agency": properties.get("ADMIN_AGENCY_CODE") or properties.get("ADMIN_DEPT_CODE") or "BLM",
+                    "unit_name": properties.get("ADMIN_UNIT_NAME") or "",
+                    "state": properties.get("ADMIN_ST") or "",
+                    "source_object_id": properties.get("OBJECTID"),
+                }
+                cleaned = {
+                    "type": "Feature",
+                    "geometry": feature["geometry"],
+                    "properties": normalized,
+                }
+                if not first:
+                    target.write(",")
+                json.dump(cleaned, target, separators=(",", ":"))
+                first = False
+                feature_count += 1
+            target.write("]}")
+        return feature_count
 
     def mvum_prop(self, properties: dict[str, object], candidates: tuple[str, ...]) -> object:
         lowered = {str(key).lower().replace(" ", "").replace("_", ""): value for key, value in properties.items()}
@@ -4599,119 +4666,112 @@ PY
             update_overlay_job(job_id, status="failed", step="NWS refresh failed", progress=100, error_message=str(exc), output_path=str(output) if output.exists() else "")
             return {**registry, "ok": False, "error": str(exc)}
 
-    def refresh_blm_overlay(self) -> dict[str, object]:
+    def refresh_blm_overlay(self, payload: dict | None = None) -> dict[str, object]:
         overlay_id = "blm_sma_cached"
         job_id = f"{overlay_id}_refresh"
+        payload = payload or {}
         update_overlay_job(job_id, overlay_id=overlay_id, type="refresh", status="running", step="preparing BLM download", progress=5, error_message="", started_at=timestamp())
         output_dir = self.settings.data_dir / "maps" / "overlays" / "public-lands"
+        source_dir = output_dir / "source"
         output_dir.mkdir(parents=True, exist_ok=True)
+        source_dir.mkdir(parents=True, exist_ok=True)
+        archive_path = source_dir / "blm-sma-national.gdb.zip"
+        extracted_root = source_dir / "blm-sma-national-extract"
+        raw_seq = output_dir / "blm-sma-latest.raw.geojsonseq"
         raw_geojson = output_dir / "blm-sma-latest.geojson"
         output = output_dir / "blm-sma-latest.pmtiles"
-        service_url = "https://gis.blm.gov/arcgis/rest/services/lands/BLM_Natl_SMA_Cached_BLM_Only/MapServer/2/query"
-        field_list = "OBJECTID,SMA_ID,ADMIN_DEPT_CODE,ADMIN_AGENCY_CODE,ADMIN_UNIT_NAME,ADMIN_UNIT_TYPE,ADMIN_ST,HOLD_ID,HOLD_DEPT_CODE,HOLD_AGENCY_CODE,FAU_ID"
-        page_size = 2000
-        params_base = {
-            "where": "1=1",
-            "outFields": field_list,
-            "outSR": "4326",
-            "geometryPrecision": "6",
-            "maxAllowableOffset": "0.0005",
-            "f": "geojson",
-        }
+        source_item_id = os.environ.get("OIAB_BLM_SOURCE_ITEM_ID", "6bf2e737c59d4111be92420ee5ab0b46").strip()
+        download_url = os.environ.get("OIAB_BLM_DOWNLOAD_URL", f"https://www.arcgis.com/sharing/rest/content/items/{source_item_id}/data").strip()
+        service_url = os.environ.get("OIAB_BLM_SERVICE_URL", "https://gis.blm.gov/arcgis/rest/services/lands/BLM_Natl_SMA_Cached_BLM_Only/MapServer/2/query").strip()
+        max_zoom = max(12, min(17, int(os.environ.get("OIAB_BLM_MAXZOOM", "16") or 16)))
+        bbox = self.parse_optional_bbox(payload.get("bbox"))
         try:
-            update_overlay_job(job_id, step="counting BLM features", progress=10)
-            count_url = f"{service_url}?{urlencode({'where': '1=1', 'returnCountOnly': 'true', 'f': 'json'})}"
-            count_payload = self.fetch_json_url(count_url, timeout=60)
-            total = int(count_payload.get("count") or 0)
-            if total <= 0:
-                raise ValueError("BLM service returned no features.")
-            features: list[dict[str, object]] = []
-            offset = 0
-            while offset < total:
-                params = {
-                    **params_base,
-                    "resultOffset": str(offset),
-                    "resultRecordCount": str(page_size),
-                }
-                page_url = f"{service_url}?{urlencode(params)}"
-                update_overlay_job(job_id, step=f"fetching BLM features {offset}-{min(offset + page_size, total)}", progress=min(92, 15 + int((offset / max(total, 1)) * 70)))
-                request = Request(page_url, headers={"User-Agent": f"OIAB BLM overlay ({self.settings.hostname})", "Accept": "application/geo+json, application/json"})
-                with urlopen(request, timeout=120) as response:  # noqa: S310 - public BLM ArcGIS service
-                    payload = json.loads(response.read().decode("utf-8", errors="replace"))
-                page_features = payload.get("features")
-                if not isinstance(page_features, list):
-                    raise ValueError("BLM service did not return GeoJSON features.")
-                for feature in page_features:
-                    if not isinstance(feature, dict):
-                        continue
-                    props = feature.get("properties")
-                    if isinstance(props, dict):
-                        props.setdefault("source", "Bureau of Land Management")
-                        props.setdefault("agency", "BLM")
-                    features.append(feature)
-                if not page_features:
-                    break
-                offset += len(page_features)
-            collection = {
-                "type": "FeatureCollection",
-                "features": features,
-                "properties": {
-                    "source": "Bureau of Land Management",
-                    "service_url": service_url,
-                    "fetched_at": timestamp(),
-                    "feature_count": len(features),
-                    "generalization": {
-                        "geometryPrecision": 6,
-                        "maxAllowableOffsetDegrees": 0.0005,
-                    },
-                },
-            }
-            raw_geojson.write_text(json.dumps(collection, separators=(",", ":")), encoding="utf-8")
-            timeout_seconds = int(os.environ.get("OIAB_BLM_CONVERT_TIMEOUT_SECONDS", "14400"))
+            self.require_mvum_tools(("ogr2ogr", "tippecanoe"))
+            update_overlay_job(job_id, step="downloading BLM national source", progress=12)
+            source_size = self.download_or_copy_overlay_source(download_url, archive_path, job_id)
+
+            update_overlay_job(job_id, step="extracting BLM source archive", progress=28)
+            shutil.rmtree(extracted_root, ignore_errors=True)
+            extracted_root.mkdir(parents=True, exist_ok=True)
+            with zipfile.ZipFile(archive_path) as archive:
+                archive.extractall(extracted_root)
+            gdb_dirs = [path for path in extracted_root.rglob("*.gdb") if path.is_dir()]
+            if not gdb_dirs:
+                raise ValueError("Downloaded BLM source archive did not contain a File Geodatabase.")
+            gdb_path = gdb_dirs[0]
+            layer_name = self.detect_ogr_layer_name(gdb_path)
+
+            update_overlay_job(job_id, step="converting BLM source to GeoJSON", progress=48)
+            raw_seq.unlink(missing_ok=True)
+            ogr_cmd = [
+                "ogr2ogr",
+                "-f", "GeoJSONSeq",
+                str(raw_seq),
+                str(gdb_path),
+                layer_name,
+                "-t_srs", "EPSG:4326",
+                "-select", "OBJECTID,ADMIN_AGENCY_CODE,ADMIN_DEPT_CODE,ADMIN_UNIT_NAME,ADMIN_ST",
+            ]
+            if bbox:
+                ogr_cmd.extend(["-clipsrc", *[str(value) for value in bbox]])
+            ogr = subprocess.run(
+                ogr_cmd,
+                text=True,
+                capture_output=True,
+                timeout=int(os.environ.get("OIAB_BLM_CONVERT_TIMEOUT_SECONDS", "28800")),
+                check=False,
+            )
+            if ogr.returncode != 0:
+                raise ValueError((ogr.stderr or ogr.stdout or "ogr2ogr failed")[-1500:])
+            if not raw_seq.exists() or raw_seq.stat().st_size <= 0:
+                raise ValueError("ogr2ogr did not create usable BLM GeoJSONSeq output.")
+
+            update_overlay_job(job_id, step="normalizing BLM fields", progress=62)
+            feature_count = self.normalize_blm_geojsonseq(raw_seq, raw_geojson)
+            if feature_count <= 0:
+                raise ValueError("BLM source converted, but no polygon features were found.")
+
+            timeout_seconds = int(os.environ.get("OIAB_BLM_CONVERT_TIMEOUT_SECONDS", "28800"))
             output.unlink(missing_ok=True)
-            source_layer = None
-            output_path = raw_geojson
-            output_type = "geojson"
-            output_url = self.app_db().overlay_public_url_for_path(raw_geojson)
-            install_status = "cached_geojson"
-            if shutil.which("tippecanoe"):
-                update_overlay_job(job_id, step="building BLM PMTiles overlay", progress=94)
-                tip = subprocess.run(
-                    [
-                        "tippecanoe",
-                        "-o",
-                        str(output),
-                        "-l",
-                        "blm_public_lands",
-                        "-Z4",
-                        "-z14",
-                        "--force",
-                        "--drop-densest-as-needed",
-                        "--coalesce-densest-as-needed",
-                        "--extend-zooms-if-still-dropping",
-                        str(raw_geojson),
-                    ],
-                    text=True,
-                    capture_output=True,
-                    timeout=timeout_seconds,
-                    check=False,
-                )
-                if tip.returncode != 0:
-                    output.unlink(missing_ok=True)
-                    raise ValueError((tip.stderr or tip.stdout or "tippecanoe failed")[-1500:])
-                if not output.exists() or output.stat().st_size <= 0:
-                    raise ValueError("tippecanoe did not create a usable PMTiles file.")
-                output_path = output
-                output_type = "pmtiles"
-                output_url = self.app_db().overlay_public_url_for_path(output)
-                source_layer = "blm_public_lands"
-                install_status = "cached"
+            update_overlay_job(job_id, step="building BLM PMTiles overlay", progress=84)
+            tip = subprocess.run(
+                [
+                    "tippecanoe",
+                    "-o", str(output),
+                    "-l", "blm_public_lands",
+                    "-Z4",
+                    f"-z{max_zoom}",
+                    "--force",
+                    "-P",
+                    "-pf",
+                    "-pk",
+                    "--detect-shared-borders",
+                    "--no-simplification-of-shared-nodes",
+                    str(raw_geojson),
+                ],
+                text=True,
+                capture_output=True,
+                timeout=timeout_seconds,
+                check=False,
+            )
+            if tip.returncode != 0:
+                output.unlink(missing_ok=True)
+                raise ValueError((tip.stderr or tip.stdout or "tippecanoe failed")[-1500:])
+            if not output.exists() or output.stat().st_size <= 0:
+                raise ValueError("tippecanoe did not create a usable PMTiles file.")
+
+            output_path = output
+            output_type = "pmtiles"
+            output_url = self.app_db().overlay_public_url_for_path(output)
+            source_layer = "blm_public_lands"
+            install_status = "cached"
             registry = self.app_db().mark_overlay_refresh(
                 overlay_id,
                 output_path=output_path,
                 ok=True,
                 extra={
-                    "feature_count": len(features),
+                    "feature_count": feature_count,
+                    "blm_download_url": download_url,
                     "blm_service_url": service_url,
                     "size_bytes": output_path.stat().st_size,
                     "install_status": install_status,
@@ -4724,21 +4784,25 @@ PY
                     "install_status": install_status,
                     "error_message": "",
                     "last_fetch_at": timestamp(),
-                    "feature_count": len(features),
+                    "feature_count": feature_count,
+                    "blm_download_url": download_url,
+                    "blm_source_item_id": source_item_id,
                     "blm_service_url": service_url,
-                    "source_size_bytes": raw_geojson.stat().st_size if raw_geojson.exists() else 0,
+                    "source_size_bytes": source_size,
                     "size_bytes": output_path.stat().st_size,
-                    "maxzoom": 14,
+                    "maxzoom": max_zoom,
                     "minzoom": 4,
                     "style": "public_lands_blm",
+                    "warning": "BLM SMA shows surface management agency areas, not legal parcel ownership boundaries.",
+                    "bbox": list(bbox) if bbox else None,
                 },
                 path=str(output_path),
                 source_url=output_url,
                 overlay_type=output_type,
                 source_layer=source_layer,
             )
-            update_overlay_job(job_id, status="succeeded", step="cached BLM vector snapshot", progress=100, error_message="", output_path=str(output_path), feature_count=len(features), size_bytes=output_path.stat().st_size)
-            return {"ok": True, "feature_count": len(features), "path": str(output_path), **registry}
+            update_overlay_job(job_id, status="succeeded", step="cached BLM vector snapshot", progress=100, error_message="", output_path=str(output_path), feature_count=feature_count, size_bytes=output_path.stat().st_size)
+            return {"ok": True, "feature_count": feature_count, "path": str(output_path), **registry}
         except Exception as exc:  # noqa: BLE001 - remote data boundary
             registry = self.app_db().mark_overlay_refresh(overlay_id, output_path=output if output.exists() else None, ok=False, error=str(exc))
             update_overlay_job(job_id, status="failed", step="BLM refresh failed", progress=100, error_message=str(exc), output_path=str(output) if output.exists() else "")
