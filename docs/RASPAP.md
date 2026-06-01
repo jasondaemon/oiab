@@ -78,10 +78,13 @@ This wrapper:
 Related environment variables:
 
 - `OIAB_INSTALL_RASPAP`
+- `OIAB_DOCKER_GID`
 - `OIAB_RASPAP_PORT`
 - `OIAB_RASPAP_SCHEME`
 - `OIAB_RASPAP_URL`
 - `RASPAP_INSTALLER_URL`
+
+`OIAB_DOCKER_GID` should match the host Docker socket group so the OIAB container can execute protected host helper actions from Central Settings.
 
 ## Current model
 

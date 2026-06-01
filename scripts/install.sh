@@ -13,6 +13,43 @@ if [ ! -f "$ROOT/config/oiab.env" ]; then
   cp "$ROOT/config/oiab.env.example" "$ROOT/config/oiab.env"
 fi
 
+if [ -S /var/run/docker.sock ] && command -v stat >/dev/null 2>&1; then
+  DOCKER_GID="$(stat -c '%g' /var/run/docker.sock 2>/dev/null || true)"
+  if [ -n "$DOCKER_GID" ]; then
+    python3 - "$ROOT/config/oiab.env" "$DOCKER_GID" <<'PY'
+from pathlib import Path
+import sys
+
+env_path = Path(sys.argv[1])
+gid = sys.argv[2]
+lines = env_path.read_text().splitlines() if env_path.exists() else []
+entries = {}
+order = []
+other = []
+for raw in lines:
+    line = raw.rstrip("\n")
+    stripped = line.strip()
+    if not stripped or stripped.startswith("#") or "=" not in line:
+        other.append(line)
+        continue
+    key, value = line.split("=", 1)
+    key = key.strip()
+    if key not in entries:
+        order.append(key)
+    entries[key] = value
+if "OIAB_DOCKER_GID" not in entries:
+    order.append("OIAB_DOCKER_GID")
+entries["OIAB_DOCKER_GID"] = gid
+output = []
+if other:
+    output.extend(other)
+for key in order:
+    output.append(f"{key}={entries[key]}")
+env_path.write_text("\n".join(output).strip() + "\n")
+PY
+  fi
+fi
+
 if [[ "$INSTALL_RASPAP" == "true" ]] && command -v apt-get >/dev/null 2>&1; then
   echo "Installing RaspAP host integration (default OIAB network component)"
   sudo "$ROOT/scripts/install-raspap-host.sh"

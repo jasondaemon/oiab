@@ -43,13 +43,16 @@ ENVEOF
   fi
 fi
 
-python3 - "$REMOTE_ENV_PATH" "$REMOTE_PORT" <<'PY'
+DOCKER_GID=\$(stat -c '%g' /var/run/docker.sock 2>/dev/null || echo 998)
+
+python3 - "$REMOTE_ENV_PATH" "$REMOTE_PORT" "\$DOCKER_GID" <<'PY'
 from pathlib import Path
 import secrets
 import sys
 
 env_path = Path(sys.argv[1])
 remote_port = sys.argv[2]
+docker_gid = sys.argv[3]
 lines = env_path.read_text().splitlines() if env_path.exists() else []
 
 entries: dict[str, str] = {}
@@ -78,6 +81,9 @@ if "OIAB_HTTP_PUBLISHED_PORT" not in entries:
 entries["OIAB_HTTP_PUBLISHED_PORT"] = remote_port
 ensure("FILEBROWSER_INTERNAL_URL", "http://filebrowser:80")
 ensure("FILEBROWSER_ADMIN_USER", "admin")
+if "OIAB_DOCKER_GID" not in entries:
+    order.append("OIAB_DOCKER_GID")
+entries["OIAB_DOCKER_GID"] = docker_gid
 if entries.get("FILEBROWSER_ADMIN_PASSWORD", "").strip() in {"", "change-me"}:
     if "FILEBROWSER_ADMIN_PASSWORD" not in entries:
         order.append("FILEBROWSER_ADMIN_PASSWORD")
