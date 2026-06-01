@@ -829,32 +829,48 @@
       ["States", catalog.filter((pack) => pack.region_type === "state" && !installedIds.has(String(pack.id)))],
       ["Other", catalog.filter((pack) => !["world", "country", "state"].includes(String(pack.region_type || "")) && !installedIds.has(String(pack.id)))],
     ].filter(([, packs]) => packs.length);
-    holder.innerHTML = groups.map(([label, packs]) => `
-      <section class="uo-settings-item-grid">
-        <h3 class="uo-settings-item-title">${escapeHtml(label)}</h3>
-        ${packs.map((pack) => {
-          const installable = Boolean(pack.install_available);
-          return `
-            <article class="uo-settings-item">
-              <div class="uo-settings-item-main">
-                <div class="uo-settings-item-head">
-                  <h4 class="uo-settings-item-title">${escapeHtml(pack.name || pack.id)}</h4>
-                  <div class="uo-settings-item-meta">
-                    ${badge(installable ? "Installable" : "Manual", installable ? "is-good" : "is-warn")}
-                    ${pack.recommended ? badge("Recommended", "is-good") : ""}
-                    ${pack.size_bytes ? badge(formatBytes(pack.size_bytes)) : ""}
-                  </div>
-                </div>
-                <p class="uo-settings-item-subtitle">${escapeHtml(pack.description || "")}</p>
+    const renderPackCard = (pack) => {
+      const installable = Boolean(pack.install_available);
+      return `
+        <article class="uo-settings-item">
+          <div class="uo-settings-item-main">
+            <div class="uo-settings-item-head">
+              <h4 class="uo-settings-item-title">${escapeHtml(pack.name || pack.id)}</h4>
+              <div class="uo-settings-item-meta">
+                ${badge(installable ? "Installable" : "Manual", installable ? "is-good" : "is-warn")}
+                ${pack.recommended ? badge("Recommended", "is-good") : ""}
+                ${pack.size_bytes ? badge(formatBytes(pack.size_bytes)) : ""}
               </div>
-              <div class="uo-settings-item-actions">
-                <button type="button" data-pack-action="install" data-pack-id="${escapeHtml(pack.id || "")}" class="is-primary"${installable ? "" : " disabled"}>${installable ? "Install" : "Manual"}</button>
-              </div>
-            </article>
-          `;
-        }).join("")}
-      </section>
-    `).join("");
+            </div>
+            <p class="uo-settings-item-subtitle">${escapeHtml(pack.description || "")}</p>
+          </div>
+          <div class="uo-settings-item-actions">
+            <button type="button" data-pack-action="install" data-pack-id="${escapeHtml(pack.id || "")}" class="is-primary"${installable ? "" : " disabled"}>${installable ? "Install" : "Manual"}</button>
+          </div>
+        </article>
+      `;
+    };
+    holder.innerHTML = groups.map(([label, packs]) => {
+      if (label === "States") {
+        return `
+          <details class="uo-settings-collapsible">
+            <summary class="uo-settings-collapsible-summary">
+              <span class="uo-settings-item-title">${escapeHtml(label)}</span>
+              <span class="uo-settings-item-meta">${badge(`${packs.length} available`)}</span>
+            </summary>
+            <section class="uo-settings-item-grid">
+              ${packs.map(renderPackCard).join("")}
+            </section>
+          </details>
+        `;
+      }
+      return `
+        <section class="uo-settings-item-grid">
+          <h3 class="uo-settings-item-title">${escapeHtml(label)}</h3>
+          ${packs.map(renderPackCard).join("")}
+        </section>
+      `;
+    }).join("");
     bindPackActionButtons(holder);
   }
 

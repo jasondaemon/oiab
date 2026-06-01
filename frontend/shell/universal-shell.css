@@ -1134,6 +1134,49 @@ button {
   gap: 14px;
 }
 
+.uo-settings-collapsible {
+  border: 1px solid var(--uo-line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .04);
+  overflow: hidden;
+}
+
+.uo-settings-collapsible + .uo-settings-collapsible,
+.uo-settings-item-grid + .uo-settings-collapsible,
+.uo-settings-collapsible + .uo-settings-item-grid {
+  margin-top: 10px;
+}
+
+.uo-settings-collapsible-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.uo-settings-collapsible-summary::-webkit-details-marker {
+  display: none;
+}
+
+.uo-settings-collapsible-summary::after {
+  content: "▾";
+  margin-left: auto;
+  color: var(--uo-muted);
+  font-size: 1rem;
+  transition: transform .18s ease;
+}
+
+.uo-settings-collapsible[open] .uo-settings-collapsible-summary::after {
+  transform: rotate(180deg);
+}
+
+.uo-settings-collapsible .uo-settings-item-grid {
+  padding: 0 16px 16px;
+}
+
 .uo-storage-settings-card,
 .uo-network-settings-card {
   grid-column: 1 / -1;
