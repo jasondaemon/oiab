@@ -169,11 +169,7 @@ services:
         if [ ! -f "$$DB" ]; then
           filebrowser config init -d "$$DB";
         fi;
-        filebrowser config set -d "$$DB" -a 0.0.0.0 -p 80 -b /apps/filebrowser -r /srv --auth.method=json >/dev/null;
-        if [ -n "$${FILEBROWSER_ADMIN_PASSWORD:-}" ]; then
-          filebrowser users update admin -d "$$DB" -p "$$FILEBROWSER_ADMIN_PASSWORD" >/dev/null 2>&1 ||
-          filebrowser users add admin "$$FILEBROWSER_ADMIN_PASSWORD" -d "$$DB" --perm.admin >/dev/null;
-        fi;
+        filebrowser config set -d "$$DB" -a 0.0.0.0 -p 80 -b /apps/filebrowser -r /srv --auth.method=noauth >/dev/null;
         exec filebrowser -d "$$DB" -a 0.0.0.0 -p 80 -b /apps/filebrowser -r /srv
     volumes:
       - "${OIAB_FILEBROWSER_ROOT:-/srv/trailer}:/srv"

@@ -39,6 +39,15 @@
   const MUSIC_VISUALIZER_TYPES = ["particles", "bars", "waveform", "radial", "imagefloat", "off"];
   const MUSIC_VISUALIZER_STYLES = ["drift", "pulse", "nebula"];
   const MUSIC_VISUALIZER_FOCUS = ["soft", "sharp", "dream"];
+  const INTERNAL_SETTINGS_APP_IDS = new Set(["file-uploads", "map-packs", "map-data", "game-data", "service-manager"]);
+  const SETTINGS_SECTION_BY_APP_ID = {
+    "file-uploads": "file-manager",
+    "map-packs": "maps",
+    "map-data": "maps",
+    "game-data": "game-data",
+    "service-manager": "plugins",
+    "https-settings": "system",
+  };
 
   const $ = (id) => document.getElementById(id);
   const state = {
@@ -89,6 +98,8 @@
       browserParentPath: null,
       browserSelectedPath: "",
     },
+    settingsSection: "music",
+    services: [],
   };
 
   function iconSvg(name) {
@@ -165,7 +176,7 @@
   }
 
   function isHidden(appId) {
-    return (state.layout.hiddenAppIds || []).includes(appId);
+    return INTERNAL_SETTINGS_APP_IDS.has(appId) || (state.layout.hiddenAppIds || []).includes(appId);
   }
 
   function loadTheme() {
@@ -351,6 +362,11 @@
       openSettingsProtected();
       return;
     }
+    const settingsSection = SETTINGS_SECTION_BY_APP_ID[app.id];
+    if (settingsSection) {
+      openSettingsProtected(settingsSection);
+      return;
+    }
     if (app.id === "music" || app.native === "music") {
       state.currentAppId = "music";
       saveRecent("music");
@@ -377,7 +393,7 @@
 
   function saveRecent(appId) {
     const app = state.appById.get(appId);
-    if (!app || isHidden(app.id)) return;
+    if (!app || isHidden(app.id) || INTERNAL_SETTINGS_APP_IDS.has(app.id)) return;
     const recent = safeJson(localStorage.getItem(RECENT_KEY), []);
     localStorage.setItem(RECENT_KEY, JSON.stringify([appId, ...recent.filter((id) => id !== appId)].slice(0, 3)));
   }
@@ -411,14 +427,16 @@
     renderApps();
   }
 
-  function openSettingsProtected() {
+  function openSettingsProtected(section = "music") {
     if (state.layout.settingsPassword) {
       state.passwordFolder = null;
       state.passwordAction = () => {
         state.currentAppId = "overland-settings";
+        state.settingsSection = section;
         saveRecent("overland-settings");
         renderDock();
         setView("settings");
+        renderSettingsSections();
       };
       $("passwordInput").value = "";
       $("passwordError").textContent = "";
@@ -428,9 +446,23 @@
       return;
     }
     state.currentAppId = "overland-settings";
+    state.settingsSection = section;
     saveRecent("overland-settings");
     renderDock();
     setView("settings");
+    renderSettingsSections();
+  }
+
+  function renderSettingsSections() {
+    const active = state.settingsSection || "music";
+    document.querySelectorAll("[data-settings-section]").forEach((button) => {
+      button.classList.toggle("is-active", button.dataset.settingsSection === active);
+    });
+    document.querySelectorAll("[data-settings-page]").forEach((page) => {
+      const isActive = page.dataset.settingsPage === active;
+      page.hidden = !isActive;
+      page.classList.toggle("is-active", isActive);
+    });
   }
 
   function renderFolderCard(folder) {
@@ -449,7 +481,7 @@
 
   function renderApps() {
     const folders = state.layout.folders || [];
-    const hidden = new Set(state.layout.hiddenAppIds || []);
+    const hidden = new Set([...(state.layout.hiddenAppIds || []), ...INTERNAL_SETTINGS_APP_IDS]);
     const inFolders = new Set(folders.flatMap((folder) => folder.appIds || []));
     let cards = [];
     if (state.currentFolder) {
@@ -493,6 +525,20 @@
     } catch (error) {
       $("openGamesPanel").hidden = true;
     }
+  }
+
+  async function loadServicesSettings() {
+    try {
+      const response = await fetch("/api/services", { cache: "no-store" });
+      if (!response.ok) throw new Error(`services ${response.status}`);
+      const data = await response.json();
+      state.services = Array.isArray(data?.services) ? data.services : [];
+    } catch (error) {
+      console.warn(error);
+      state.services = [];
+    }
+    const minecraft = state.services.find((service) => String(service?.id || "") === "minecraft");
+    if ($("settingsNavMinecraft")) $("settingsNavMinecraft").hidden = !(minecraft?.installed || minecraft?.enabled || minecraft?.running);
   }
 
   function normalizeTrack(raw) {
@@ -1023,6 +1069,12 @@
         openApp(app);
       });
     });
+    document.querySelectorAll("[data-settings-section]").forEach((button) => {
+      button.addEventListener("click", () => {
+        state.settingsSection = button.dataset.settingsSection || "music";
+        renderSettingsSections();
+      });
+    });
     document.querySelectorAll("[data-system-action]").forEach((link) => {
       link.addEventListener("click", async (event) => {
         event.preventDefault();
@@ -1237,6 +1289,7 @@
       renderDockSettings();
       renderDock();
     });
+    renderSettingsSections();
   }
 
   async function init() {
@@ -1250,6 +1303,7 @@
     normalizeApps(config);
     loadAppSettings().catch((error) => console.warn(error));
     loadNetworkSettings().catch((error) => console.warn(error));
+    loadServicesSettings().catch((error) => console.warn(error));
     loadStorageSettings().catch((error) => {
       const message = $("storageSettingsMessage");
       if (message) message.textContent = error.message;
@@ -1332,6 +1386,10 @@
     renderStorageSettings();
     if ($("storageSettingsMessage")) {
       $("storageSettingsMessage").textContent = state.storage.configPath ? `Saved at ${state.storage.configPath}. Apply with a redeploy/recreate.` : "";
+    }
+    const fileManagerRoot = state.storage.settings.OIAB_FILEBROWSER_ROOT || data?.settings?.OIAB_FILEBROWSER_ROOT || "";
+    if ($("fileManagerRootNote")) {
+      $("fileManagerRootNote").textContent = fileManagerRoot ? `Current root: ${fileManagerRoot}` : "";
     }
   }
 

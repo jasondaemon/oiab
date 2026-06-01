@@ -877,6 +877,68 @@ button {
   grid-auto-rows: min-content;
 }
 
+.uo-settings-shell {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 18px;
+  min-height: 0;
+  align-items: start;
+}
+
+.uo-settings-sidebar {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  padding: 14px;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid var(--uo-line);
+  border-radius: 26px;
+  backdrop-filter: blur(calc(var(--uo-blur) * .7));
+}
+
+.uo-settings-nav {
+  display: grid;
+  gap: 8px;
+}
+
+.uo-settings-nav-button {
+  min-height: 50px;
+  padding: 0 16px;
+  text-align: left;
+  font: inherit;
+  font-weight: 750;
+  color: var(--uo-muted);
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid transparent;
+  border-radius: 18px;
+  cursor: pointer;
+}
+
+.uo-settings-nav-button:hover,
+.uo-settings-nav-button:focus-visible {
+  color: var(--uo-ink);
+  border-color: rgba(255, 255, 255, .12);
+}
+
+.uo-settings-nav-button.is-active {
+  color: #06130d;
+  background: var(--uo-accent);
+  border-color: transparent;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .08) inset;
+}
+
+.uo-settings-content {
+  min-width: 0;
+}
+
+.uo-settings-page {
+  display: block;
+}
+
+.uo-settings-page[hidden] {
+  display: none;
+}
+
 .uo-settings-card {
   display: grid;
   gap: 10px;
@@ -887,6 +949,51 @@ button {
 
 .uo-settings-card h2 {
   margin: 0;
+}
+
+.uo-settings-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.uo-settings-actions > a,
+.uo-settings-actions > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 16px;
+  border: 1px solid var(--uo-line);
+  background: rgba(255, 255, 255, .07);
+  color: var(--uo-ink);
+  text-decoration: none;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.uo-settings-actions > button:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
+.uo-storage-settings-card,
+.uo-network-settings-card {
+  grid-column: 1 / -1;
+}
+
+.uo-settings-details {
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid var(--uo-line);
+  background: rgba(255, 255, 255, .05);
+}
+
+.uo-settings-details summary {
+  cursor: pointer;
+  font-weight: 750;
 }
 
 .uo-settings-card label {
@@ -1302,6 +1409,20 @@ button {
   .uo-apps-view,
   .uo-settings-view {
     padding: 10px;
+  }
+
+  .uo-settings-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .uo-settings-sidebar {
+    position: static;
+    overflow-x: auto;
+  }
+
+  .uo-settings-nav {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(140px, 1fr);
   }
 
   .uo-app-grid {

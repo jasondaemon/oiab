@@ -84,10 +84,6 @@ ensure("FILEBROWSER_ADMIN_USER", "admin")
 if "OIAB_DOCKER_GID" not in entries:
     order.append("OIAB_DOCKER_GID")
 entries["OIAB_DOCKER_GID"] = docker_gid
-if entries.get("FILEBROWSER_ADMIN_PASSWORD", "").strip() in {"", "change-me"}:
-    if "FILEBROWSER_ADMIN_PASSWORD" not in entries:
-        order.append("FILEBROWSER_ADMIN_PASSWORD")
-    entries["FILEBROWSER_ADMIN_PASSWORD"] = secrets.token_urlsafe(24)
 
 output: list[str] = []
 if passthrough:
@@ -126,7 +122,7 @@ import json
 import urllib.request
 
 payload = json.loads(urllib.request.urlopen('http://127.0.0.1:8080/api/filebrowser/session', timeout=5).read().decode())
-if not payload.get('ok') or not payload.get('token'):
+if not payload.get('ok'):
     raise SystemExit(1)
 PY
 then

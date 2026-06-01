@@ -2685,10 +2685,9 @@ class OIABHandler(BaseHTTPRequestHandler):
         try {
           const response = await fetch("/api/filebrowser/session", { credentials: "same-origin", cache: "no-store" });
           const payload = await response.json();
-          if (!response.ok || !payload || !payload.ok || !payload.token) {
+          if (!response.ok || !payload || !payload.ok) {
             throw new Error(payload && payload.error ? payload.error : `File Browser session failed (${response.status})`);
           }
-          localStorage.setItem("jwt", payload.token);
           status.textContent = "Loading file browser…";
           window.location.replace(payload.target || "/apps/filebrowser/");
         } catch (err) {
@@ -2709,31 +2708,18 @@ class OIABHandler(BaseHTTPRequestHandler):
         self.wfile.write(encoded)
 
     def filebrowser_session_payload(self) -> dict[str, object]:
-        password = str(self.settings.filebrowser_admin_password or "").strip()
-        if not password:
-            return {"ok": False, "error": "File Browser admin password is not configured."}
-        login_url = f"{self.settings.filebrowser_internal_url.rstrip('/')}/api/login"
-        body = json.dumps({
-            "username": self.settings.filebrowser_admin_user or "admin",
-            "password": password,
-        }).encode("utf-8")
-        request = Request(
-            login_url,
-            data=body,
-            method="POST",
-            headers={"Content-Type": "application/json", "User-Agent": "OIAB/FileBrowserLaunch"},
-        )
+        status_url = f"{self.settings.filebrowser_internal_url.rstrip('/')}/"
+        request = Request(status_url, headers={"User-Agent": "OIAB/FileBrowserLaunch"})
         try:
             with urlopen(request, timeout=4) as response:
-                token = response.read().decode("utf-8").strip()
+                if response.status >= 400:
+                    return {"ok": False, "error": f"File Browser health check failed ({response.status})."}
         except HTTPError as exc:
             details = exc.read().decode("utf-8", errors="replace").strip()
-            return {"ok": False, "error": details or f"File Browser login failed ({exc.code})."}
+            return {"ok": False, "error": details or f"File Browser health check failed ({exc.code})."}
         except Exception as exc:
             return {"ok": False, "error": f"File Browser is unavailable: {exc}"}
-        if not token:
-            return {"ok": False, "error": "File Browser returned an empty session token."}
-        return {"ok": True, "token": token, "target": "/apps/filebrowser/"}
+        return {"ok": True, "target": "/apps/filebrowser/"}
 
     def app_settings_payload(self) -> dict[str, object]:
         db = self.app_db()

@@ -152,134 +152,266 @@
           <button id="settingsBack" class="uo-icon-button" type="button" aria-label="Back"></button>
           <h1>Settings</h1>
         </header>
-        <div class="uo-settings-grid">
-          <section class="uo-settings-card">
-            <h2>Theme</h2>
-            <label>Accent <input id="themeAccent" type="color" value="#83dc8c"></label>
-            <label>Background
-              <select id="themeBackground">
-                <option value="topo">Topo Green</option>
-                <option value="dark">Dark Slate</option>
-                <option value="amber">Amber Trail</option>
-                <option value="blue">Night Blue</option>
-              </select>
-            </label>
-            <label>Panel Opacity <input id="themeOpacity" type="range" min="55" max="96" value="82"></label>
-            <label>Blur <input id="themeBlur" type="range" min="0" max="28" value="16"></label>
-          </section>
-          <section class="uo-settings-card">
-            <h2>Maps</h2>
-            <label class="uo-switch-row">
-              <span>
-                <strong>3D Buildings</strong>
-                <small>Extrude available building footprints in Maps v2.</small>
-              </span>
-              <input id="map3dBuildings" type="checkbox">
-            </label>
-            <label class="uo-switch-row">
-              <span>
-                <strong>Auto Track Recording</strong>
-                <small>Record stabilized GPS tracks automatically when moving.</small>
-              </span>
-              <input id="mapAutoRecording" type="checkbox">
-            </label>
-            <a href="/mobile/map-packs.html" data-open-app="map-packs">Maps / Map Packs</a>
-          </section>
-          <section class="uo-settings-card uo-storage-settings-card">
-            <h2>Storage Locations</h2>
-            <p class="uo-card-note">Bind-mount host paths for maps, music, books, ROMs, and services. Save updates the OIAB storage config; apply requires a container recreate.</p>
-            <div id="storageLocations" class="uo-storage-list"></div>
-            <div class="uo-storage-actions">
-              <button id="saveStorageSettings" type="button">Save Storage Paths</button>
-              <a href="/filebrowser-launch" data-open-app="file-uploads">Open File Manager</a>
-            </div>
-            <small id="storageSettingsMessage" class="uo-status-note"></small>
-          </section>
-          <section class="uo-settings-card uo-network-settings-card">
-            <h2>Network / RaspAP</h2>
-            <p class="uo-card-note">RaspAP is the default OIAB network manager on Raspberry Pi deployments. Standard builds use one Wi-Fi radio for client access and, when available, a second Wi-Fi radio for uplink. Ethernet remains a fallback uplink option.</p>
-            <div class="uo-settings-actions">
-              <a id="openRaspapLink" href="/raspap-launch" target="_blank" rel="noopener">Open RaspAP</a>
-              <button id="installRaspapButton" type="button">Install</button>
-              <button id="enableRaspapButton" type="button">Enable</button>
-              <button id="disableRaspapButton" type="button">Disable</button>
-              <button id="refreshRaspapButton" type="button">Refresh Status</button>
-            </div>
-            <small id="networkRaspapMessage" class="uo-status-note"></small>
-            <details class="uo-settings-details">
-              <summary>Advanced AP defaults</summary>
-              <p class="uo-card-note">These values seed the host OIAB RaspAP mode helper: ethernet disables the hotspot, unplugged ethernet enables the local AP, and a second Wi-Fi radio can be used for remembered uplink networks.</p>
-              <div class="uo-settings-fields">
-                <label>Ethernet <input id="networkEthIface" type="text" autocomplete="off" placeholder="eth0"></label>
-                <label>AP Wi-Fi <input id="networkApIface" type="text" autocomplete="off" placeholder="wlan0"></label>
-                <label>WAN Wi-Fi <input id="networkWanIface" type="text" autocomplete="off" placeholder="wlan1"></label>
-                <label>SSID <input id="networkApSsid" type="text" autocomplete="off" placeholder="Daemon Adventures"></label>
-                <label>Wi-Fi Key <input id="networkApPassphrase" type="password" autocomplete="new-password" placeholder="Leave blank for open AP"></label>
-                <label>Country <input id="networkApCountry" type="text" maxlength="2" autocomplete="off" placeholder="US"></label>
-                <label>Channel <input id="networkApChannel" type="number" min="1" max="165" placeholder="6"></label>
-                <label>AP Subnet <input id="networkApSubnet" type="text" autocomplete="off" placeholder="192.168.8.0/24"></label>
-                <label>AP IP <input id="networkApIp" type="text" autocomplete="off" placeholder="192.168.8.2"></label>
-                <label>DHCP Range <input id="networkDhcpRange" type="text" autocomplete="off" placeholder="192.168.8.3,192.168.8.20,12h"></label>
+        <div class="uo-settings-shell">
+          <aside class="uo-settings-sidebar" aria-label="Settings sections">
+            <nav id="settingsSectionNav" class="uo-settings-nav">
+              <button type="button" class="uo-settings-nav-button is-active" data-settings-section="music">Music</button>
+              <button type="button" class="uo-settings-nav-button" data-settings-section="plugins">OIAB Plugins</button>
+              <button type="button" class="uo-settings-nav-button" data-settings-section="file-manager">File Manager</button>
+              <button type="button" class="uo-settings-nav-button" data-settings-section="display">Display</button>
+              <button type="button" class="uo-settings-nav-button" data-settings-section="maps">Maps</button>
+              <button type="button" class="uo-settings-nav-button" data-settings-section="storage">OIAB Storage</button>
+              <button type="button" class="uo-settings-nav-button" data-settings-section="system">System</button>
+              <button type="button" class="uo-settings-nav-button" data-settings-section="game-data">Game Data</button>
+              <button id="settingsNavMinecraft" type="button" class="uo-settings-nav-button" data-settings-section="minecraft-admin" hidden>Minecraft Admin</button>
+              <button type="button" class="uo-settings-nav-button" data-settings-section="raspap">RaspAP</button>
+            </nav>
+          </aside>
+          <div class="uo-settings-content">
+            <section class="uo-settings-page is-active" data-settings-page="music">
+              <div class="uo-settings-grid">
+                <section class="uo-settings-card">
+                  <h2>Music</h2>
+                  <p class="uo-card-note">Library rebuild and visualizer settings are shared with the music player.</p>
+                  <label>Visualizer
+                    <select id="musicVisualizerMode">
+                      <option value="particles">Particles</option>
+                      <option value="aurora">Aurora</option>
+                      <option value="bokeh">Bokeh</option>
+                      <option value="liquid">Liquid</option>
+                      <option value="imagekaleidoscope">Image Kaleidoscope</option>
+                      <option value="imagefloat">Image Float</option>
+                      <option value="particula">Particula</option>
+                      <option value="motion">Motion</option>
+                      <option value="led">LED</option>
+                      <option value="mirror">Mirror</option>
+                      <option value="bars">Bars</option>
+                      <option value="waveform">Waveform</option>
+                      <option value="radial">Radial</option>
+                      <option value="rings">Rings</option>
+                      <option value="tunnel">Tunnel</option>
+                      <option value="kaleidoscope">Kaleidoscope</option>
+                      <option value="off">Off</option>
+                    </select>
+                  </label>
+                  <label>Visualizer Style
+                    <select id="musicVisualizerStyle">
+                      <option value="drift">Drift</option>
+                      <option value="pulse">Pulse</option>
+                      <option value="nebula">Nebula</option>
+                    </select>
+                  </label>
+                  <label>Visualizer Focus
+                    <select id="musicVisualizerFocus">
+                      <option value="soft">Soft</option>
+                      <option value="sharp">Sharp</option>
+                      <option value="dream">Dream</option>
+                    </select>
+                  </label>
+                  <label>Visualizer Image
+                    <select id="musicVisualizerImage"></select>
+                  </label>
+                  <button id="rebuildMusicLibrary" type="button">Rebuild Music Library</button>
+                  <small id="musicSettingsMessage" class="uo-status-note"></small>
+                </section>
+                <section class="uo-settings-card">
+                  <h2>Playback</h2>
+                  <p class="uo-card-note">Equalizer presets will be wired into the shell player next. This page is the new home for those audio settings.</p>
+                  <label>Equalizer Preset
+                    <select id="musicEqPreset" disabled>
+                      <option>Flat</option>
+                      <option>Road Trip</option>
+                      <option>Voice Boost</option>
+                      <option>Bass Boost</option>
+                    </select>
+                  </label>
+                </section>
               </div>
-              <button id="saveNetworkSettings" type="button">Save Bootstrap AP Config</button>
-              <small id="networkSettingsMessage" class="uo-status-note"></small>
-            </details>
-          </section>
-          <section class="uo-settings-card">
-            <h2>Music</h2>
-            <p class="uo-card-note">Library rebuild and visualizer settings are shared with the music player.</p>
-            <label>Visualizer
-              <select id="musicVisualizerMode">
-                <option value="particles">Particles</option>
-                <option value="bars">Bars</option>
-                <option value="waveform">Waveform</option>
-                <option value="radial">Radial</option>
-                <option value="imagefloat">Image Float</option>
-                <option value="off">Off</option>
-              </select>
-            </label>
-            <label>Visualizer Style
-              <select id="musicVisualizerStyle">
-                <option value="drift">Drift</option>
-                <option value="pulse">Pulse</option>
-                <option value="nebula">Nebula</option>
-              </select>
-            </label>
-            <label>Visualizer Focus
-              <select id="musicVisualizerFocus">
-                <option value="soft">Soft</option>
-                <option value="sharp">Sharp</option>
-                <option value="dream">Dream</option>
-              </select>
-            </label>
-            <label>Visualizer Image
-              <select id="musicVisualizerImage"></select>
-            </label>
-            <button id="rebuildMusicLibrary" type="button">Rebuild Music Library</button>
-            <small id="musicSettingsMessage" class="uo-status-note"></small>
-          </section>
-          <section class="uo-settings-card">
-            <h2>Plugins</h2>
-            <a href="/mobile/services.html" data-open-app="service-manager">Install / Enable Plugins</a>
-            <a href="/filebrowser-launch" data-open-app="file-uploads">File Manager</a>
-          </section>
-          <section class="uo-settings-card">
-            <h2>System</h2>
-            <label class="uo-pin-row">
-              <span>
-                <strong>Settings PIN</strong>
-                <small>Six digits. This is a simple kid lock, not real security.</small>
-              </span>
-              <input id="settingsPinInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off" placeholder="••••••">
-            </label>
-            <button id="saveSettingsPin" type="button">Save PIN</button>
-            <small id="settingsPinMessage" class="uo-status-note"></small>
-            <a href="/https-settings/" data-open-app="https-settings">Certificates / HTTPS</a>
-            <a href="/mobile/game-data.html" data-open-app="game-data">Game Data</a>
-            <a href="/apps/minecraft-admin/" data-open-app="minecraft">Minecraft Admin</a>
-            <a href="/system/reboot" data-system-action="reboot">Reboot Pi</a>
-            <a href="/system/shutdown" data-system-action="shutdown">Shut Down Pi</a>
-          </section>
+            </section>
+
+            <section class="uo-settings-page" data-settings-page="plugins" hidden>
+              <div class="uo-settings-grid">
+                <section class="uo-settings-card">
+                  <h2>OIAB Plugins</h2>
+                  <p class="uo-card-note">Install, enable, disable, and configure optional OIAB components.</p>
+                  <div class="uo-settings-actions">
+                    <a href="/mobile/services.html?shell=1">Open Plugin Manager</a>
+                  </div>
+                </section>
+              </div>
+            </section>
+
+            <section class="uo-settings-page" data-settings-page="file-manager" hidden>
+              <div class="uo-settings-grid">
+                <section class="uo-settings-card">
+                  <h2>File Manager</h2>
+                  <p class="uo-card-note">Browse and manage media, maps, books, ROMs, uploads, and backups from the configured file manager root.</p>
+                  <div class="uo-settings-actions">
+                    <a href="/filebrowser-launch">Open File Manager</a>
+                  </div>
+                  <small id="fileManagerRootNote" class="uo-status-note"></small>
+                </section>
+              </div>
+            </section>
+
+            <section class="uo-settings-page" data-settings-page="display" hidden>
+              <div class="uo-settings-grid">
+                <section class="uo-settings-card">
+                  <h2>Theme</h2>
+                  <label>Accent <input id="themeAccent" type="color" value="#83dc8c"></label>
+                  <label>Background
+                    <select id="themeBackground">
+                      <option value="topo">Topo Green</option>
+                      <option value="dark">Dark Slate</option>
+                      <option value="amber">Amber Trail</option>
+                      <option value="blue">Night Blue</option>
+                    </select>
+                  </label>
+                  <label>Panel Opacity <input id="themeOpacity" type="range" min="55" max="96" value="82"></label>
+                  <label>Blur <input id="themeBlur" type="range" min="0" max="28" value="16"></label>
+                </section>
+              </div>
+            </section>
+
+            <section class="uo-settings-page" data-settings-page="maps" hidden>
+              <div class="uo-settings-grid">
+                <section class="uo-settings-card">
+                  <h2>Map Runtime</h2>
+                  <label class="uo-switch-row">
+                    <span>
+                      <strong>3D Buildings</strong>
+                      <small>Extrude available building footprints in Maps v2.</small>
+                    </span>
+                    <input id="map3dBuildings" type="checkbox">
+                  </label>
+                  <label class="uo-switch-row">
+                    <span>
+                      <strong>Auto Track Recording</strong>
+                      <small>Record stabilized GPS tracks automatically when moving.</small>
+                    </span>
+                    <input id="mapAutoRecording" type="checkbox">
+                  </label>
+                </section>
+                <section class="uo-settings-card">
+                  <h2>Map Packs</h2>
+                  <p class="uo-card-note">Manage installed PMTiles packs, choose the active basemap, and rescan local packs.</p>
+                  <div class="uo-settings-actions">
+                    <a href="/mobile/map-packs.html?shell=1">Open Map Packs</a>
+                  </div>
+                </section>
+                <section class="uo-settings-card">
+                  <h2>Overlays</h2>
+                  <p class="uo-card-note">Overlay download and enable controls remain in the Map Packs interface for now.</p>
+                  <div class="uo-settings-actions">
+                    <a href="/mobile/map-packs.html?shell=1">Open Overlays</a>
+                  </div>
+                </section>
+                <section class="uo-settings-card">
+                  <h2>Map Data Manager</h2>
+                  <p class="uo-card-note">Manage folders, import/export GPX and GeoJSON, and edit saved waypoint and route data.</p>
+                  <div class="uo-settings-actions">
+                    <a href="/mobile/map-data.html?shell=1">Open Map Data Manager</a>
+                  </div>
+                </section>
+              </div>
+            </section>
+
+            <section class="uo-settings-page" data-settings-page="storage" hidden>
+              <div class="uo-settings-grid">
+                <section class="uo-settings-card uo-storage-settings-card">
+                  <h2>Storage Locations</h2>
+                  <p class="uo-card-note">Bind-mount host paths for maps, music, books, ROMs, and services. Save updates the OIAB storage config; apply requires a container recreate.</p>
+                  <div id="storageLocations" class="uo-storage-list"></div>
+                  <div class="uo-storage-actions">
+                    <button id="saveStorageSettings" type="button">Save Storage Paths</button>
+                    <a href="/filebrowser-launch">Open File Manager</a>
+                  </div>
+                  <small id="storageSettingsMessage" class="uo-status-note"></small>
+                </section>
+              </div>
+            </section>
+
+            <section class="uo-settings-page" data-settings-page="system" hidden>
+              <div class="uo-settings-grid">
+                <section class="uo-settings-card">
+                  <h2>System</h2>
+                  <label class="uo-pin-row">
+                    <span>
+                      <strong>Settings PIN</strong>
+                      <small>Six digits. This is a simple kid lock, not real security.</small>
+                    </span>
+                    <input id="settingsPinInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off" placeholder="••••••">
+                  </label>
+                  <button id="saveSettingsPin" type="button">Save PIN</button>
+                  <small id="settingsPinMessage" class="uo-status-note"></small>
+                  <div class="uo-settings-actions">
+                    <a href="/https-settings/?shell=1">Certificates / HTTPS</a>
+                    <a href="/system/reboot" data-system-action="reboot">Reboot Pi</a>
+                    <a href="/system/shutdown" data-system-action="shutdown">Shut Down Pi</a>
+                  </div>
+                </section>
+              </div>
+            </section>
+
+            <section class="uo-settings-page" data-settings-page="game-data" hidden>
+              <div class="uo-settings-grid">
+                <section class="uo-settings-card">
+                  <h2>Game Data</h2>
+                  <p class="uo-card-note">Manage scores, resets, and saved local game state from one place.</p>
+                  <div class="uo-settings-actions">
+                    <a href="/mobile/game-data.html?shell=1">Open Game Data</a>
+                  </div>
+                </section>
+              </div>
+            </section>
+
+            <section class="uo-settings-page" data-settings-page="minecraft-admin" hidden>
+              <div class="uo-settings-grid">
+                <section class="uo-settings-card">
+                  <h2>Minecraft Admin</h2>
+                  <p class="uo-card-note">Open the Minecraft administration interface when the Minecraft plugin is enabled.</p>
+                  <div class="uo-settings-actions">
+                    <a href="/apps/minecraft-admin/" data-open-app="minecraft">Open Minecraft Admin</a>
+                  </div>
+                </section>
+              </div>
+            </section>
+
+            <section class="uo-settings-page" data-settings-page="raspap" hidden>
+              <div class="uo-settings-grid">
+                <section class="uo-settings-card uo-network-settings-card">
+                  <h2>RaspAP</h2>
+                  <p class="uo-card-note">RaspAP is the default OIAB network manager on Raspberry Pi deployments. Standard builds use one Wi-Fi radio for client access and, when available, a second Wi-Fi radio for uplink. Ethernet remains a fallback uplink option.</p>
+                  <div class="uo-settings-actions">
+                    <a id="openRaspapLink" href="/raspap-launch" target="_blank" rel="noopener">Open RaspAP</a>
+                    <button id="installRaspapButton" type="button">Install</button>
+                    <button id="enableRaspapButton" type="button">Enable</button>
+                    <button id="disableRaspapButton" type="button">Disable</button>
+                    <button id="refreshRaspapButton" type="button">Refresh Status</button>
+                  </div>
+                  <small id="networkRaspapMessage" class="uo-status-note"></small>
+                  <details class="uo-settings-details">
+                    <summary>Advanced AP defaults</summary>
+                    <p class="uo-card-note">These values seed the host OIAB RaspAP mode helper: ethernet disables the hotspot, unplugged ethernet enables the local AP, and a second Wi-Fi radio can be used for remembered uplink networks.</p>
+                    <div class="uo-settings-fields">
+                      <label>Ethernet <input id="networkEthIface" type="text" autocomplete="off" placeholder="eth0"></label>
+                      <label>AP Wi-Fi <input id="networkApIface" type="text" autocomplete="off" placeholder="wlan0"></label>
+                      <label>WAN Wi-Fi <input id="networkWanIface" type="text" autocomplete="off" placeholder="wlan1"></label>
+                      <label>SSID <input id="networkApSsid" type="text" autocomplete="off" placeholder="Daemon Adventures"></label>
+                      <label>Wi-Fi Key <input id="networkApPassphrase" type="password" autocomplete="new-password" placeholder="Leave blank for open AP"></label>
+                      <label>Country <input id="networkApCountry" type="text" maxlength="2" autocomplete="off" placeholder="US"></label>
+                      <label>Channel <input id="networkApChannel" type="number" min="1" max="165" placeholder="6"></label>
+                      <label>AP Subnet <input id="networkApSubnet" type="text" autocomplete="off" placeholder="192.168.8.0/24"></label>
+                      <label>AP IP <input id="networkApIp" type="text" autocomplete="off" placeholder="192.168.8.2"></label>
+                      <label>DHCP Range <input id="networkDhcpRange" type="text" autocomplete="off" placeholder="192.168.8.3,192.168.8.20,12h"></label>
+                    </div>
+                    <button id="saveNetworkSettings" type="button">Save Bootstrap AP Config</button>
+                    <small id="networkSettingsMessage" class="uo-status-note"></small>
+                  </details>
+                </section>
+              </div>
+            </section>
+          </div>
         </div>
       </section>
     </section>
