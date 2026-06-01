@@ -197,9 +197,13 @@
           </section>
           <section class="uo-settings-card uo-network-settings-card">
             <h2>Network / RaspAP</h2>
-            <p class="uo-card-note">RaspAP is the preferred network manager for OIAB. Standard OIAB builds use one Wi-Fi radio for client access and, when available, a second Wi-Fi radio for uplink. Ethernet remains a fallback uplink option.</p>
+            <p class="uo-card-note">RaspAP is the default OIAB network manager on Raspberry Pi deployments. Standard builds use one Wi-Fi radio for client access and, when available, a second Wi-Fi radio for uplink. Ethernet remains a fallback uplink option.</p>
             <div class="uo-settings-actions">
               <a id="openRaspapLink" href="/raspap-launch" target="_blank" rel="noopener">Open RaspAP</a>
+              <button id="installRaspapButton" type="button">Install</button>
+              <button id="enableRaspapButton" type="button">Enable</button>
+              <button id="disableRaspapButton" type="button">Disable</button>
+              <button id="refreshRaspapButton" type="button">Refresh Status</button>
             </div>
             <small id="networkRaspapMessage" class="uo-status-note"></small>
             <details class="uo-settings-details">

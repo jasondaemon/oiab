@@ -1211,6 +1211,10 @@
     if ($("saveNetworkSettings")) {
       $("saveNetworkSettings").addEventListener("click", saveNetworkSettings);
     }
+    if ($("installRaspapButton")) $("installRaspapButton").addEventListener("click", () => runRaspapAction("install"));
+    if ($("enableRaspapButton")) $("enableRaspapButton").addEventListener("click", () => runRaspapAction("enable"));
+    if ($("disableRaspapButton")) $("disableRaspapButton").addEventListener("click", () => runRaspapAction("disable"));
+    if ($("refreshRaspapButton")) $("refreshRaspapButton").addEventListener("click", () => runRaspapAction("refresh"));
     if ($("saveStorageSettings")) {
       $("saveStorageSettings").addEventListener("click", saveStorageSettings);
     }
@@ -1422,10 +1426,33 @@
     if ($("networkRaspapMessage")) {
       const summary = data?.raspap?.summary || "RaspAP is the preferred network UI for AP and uplink control.";
       const configured = data?.raspap?.configured_url ? ` Configured URL: ${data.raspap.configured_url}.` : ` Launch URL: ${data?.raspap?.launch_url || "/raspap-launch"}.`;
-      $("networkRaspapMessage").textContent = `${summary} Protected admin UI.${configured}`;
+      const status = data?.raspap?.installed
+        ? ` Installed: yes. Helper: ${data?.raspap?.enabled ? "enabled" : "disabled"}. Mode: ${data?.raspap?.mode || "unknown"}. Hotspot: ${data?.raspap?.hotspot_active ? "active" : "inactive"}. Wi-Fi radio: ${data?.raspap?.wifi_radio || "unknown"}.`
+        : " Installed: no.";
+      $("networkRaspapMessage").textContent = `${summary} Protected admin UI.${configured}${status} ${data?.raspap?.message || ""}`.trim();
     }
+    if ($("installRaspapButton")) $("installRaspapButton").disabled = !!data?.raspap?.installed;
+    if ($("enableRaspapButton")) $("enableRaspapButton").disabled = !data?.raspap?.installed || !!data?.raspap?.enabled;
+    if ($("disableRaspapButton")) $("disableRaspapButton").disabled = !data?.raspap?.installed || !data?.raspap?.enabled;
     if ($("networkSettingsMessage")) {
       $("networkSettingsMessage").textContent = data?.config_path ? `Saved at ${data.config_path}` : "";
+    }
+  }
+
+  async function runRaspapAction(action) {
+    const message = $("networkRaspapMessage");
+    if (message) message.textContent = `${action} in progress...`;
+    try {
+      const response = await fetch("/api/settings/raspap", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action }),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data.ok === false) throw new Error(data?.result?.stderr || data?.result?.error || data.error || `RaspAP ${action} ${response.status}`);
+      await loadNetworkSettings();
+    } catch (error) {
+      if (message) message.textContent = error.message;
     }
   }
 

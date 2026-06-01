@@ -32,6 +32,10 @@ If two Wi-Fi interfaces are present:
 Central Settings now includes a `Network / RaspAP` card with:
 
 - `Open RaspAP`
+- `Install`
+- `Enable`
+- `Disable`
+- `Refresh Status`
 - advanced AP defaults for the OIAB host mode helper
 
 The launcher defaults to:
@@ -52,6 +56,12 @@ cd /srv/trailer/oiab
 sudo ./scripts/install-raspap-host.sh
 ```
 
+or run the standard OIAB installer, which now installs RaspAP by default unless:
+
+```bash
+OIAB_INSTALL_RASPAP=false
+```
+
 This wrapper:
 
 - fetches the official RaspAP quick installer
@@ -67,6 +77,7 @@ This wrapper:
 
 Related environment variables:
 
+- `OIAB_INSTALL_RASPAP`
 - `OIAB_RASPAP_PORT`
 - `OIAB_RASPAP_SCHEME`
 - `OIAB_RASPAP_URL`
@@ -75,6 +86,8 @@ Related environment variables:
 ## Current model
 
 RaspAP is the primary user-facing network UI.
+
+It is treated as a default OIAB Raspberry Pi component, but can be disabled from Central Settings when the host-side helper should be turned off.
 
 OIAB adds a small host mode helper around it so the appliance behaves consistently:
 

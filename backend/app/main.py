@@ -151,24 +151,14 @@ def docker_unix_json_request(method: str, path: str, payload: object | None = No
         return status, response_body.decode("utf-8", errors="replace")
 
 
-def trigger_host_power_via_docker(action: str) -> dict[str, object]:
-    if action not in {"reboot", "shutdown"}:
-        return {"ok": False, "error": f"Unsupported power action: {action}"}
-    command = [
-        "nsenter",
-        "-t", "1",
-        "-m", "-u", "-i", "-n", "-p",
-        "/sbin/shutdown",
-        "-h" if action == "shutdown" else "-r",
-        "now",
-    ]
-    name = f"oiab-host-power-{action}-{secrets.token_hex(4)}"
+def run_docker_helper(command: list[str], *, timeout: float = 60.0, capture_output: bool = True) -> dict[str, object]:
+    name = f"oiab-host-helper-{secrets.token_hex(4)}"
     create_payload = {
         "Image": HOST_POWER_HELPER_IMAGE,
         "Cmd": command,
         "User": "0:0",
         "HostConfig": {
-            "AutoRemove": True,
+            "AutoRemove": False,
             "Privileged": True,
             "PidMode": "host",
             "NetworkMode": "host",
@@ -181,11 +171,54 @@ def trigger_host_power_via_docker(action: str) -> dict[str, object]:
     container_id = str((created or {}).get("Id") or "")
     if not container_id:
         return {"ok": False, "error": "Docker helper create returned no container id."}
-    status, started = docker_unix_json_request("POST", f"/v1.43/containers/{container_id}/start")
-    if status >= 300:
-        message = started.get("message") if isinstance(started, dict) else str(started)
-        return {"ok": False, "error": f"Docker helper start failed: {message}"}
-    return {"ok": True, "action": action, "via": "docker-nsenter", "container": container_id[:12]}
+    try:
+        status, started = docker_unix_json_request("POST", f"/v1.43/containers/{container_id}/start")
+        if status >= 300:
+            message = started.get("message") if isinstance(started, dict) else str(started)
+            return {"ok": False, "error": f"Docker helper start failed: {message}"}
+        status, waited = docker_unix_json_request("POST", f"/v1.43/containers/{container_id}/wait?condition=not-running", timeout=timeout)
+        exit_code = int((waited or {}).get("StatusCode", 1)) if isinstance(waited, dict) else 1
+        stdout = ""
+        stderr = ""
+        if capture_output:
+            _, stdout_payload = docker_unix_json_request("GET", f"/v1.43/containers/{container_id}/logs?stdout=1&stderr=0")
+            _, stderr_payload = docker_unix_json_request("GET", f"/v1.43/containers/{container_id}/logs?stdout=0&stderr=1")
+            stdout = stdout_payload if isinstance(stdout_payload, str) else json.dumps(stdout_payload)
+            stderr = stderr_payload if isinstance(stderr_payload, str) else json.dumps(stderr_payload)
+        return {
+            "ok": exit_code == 0,
+            "container": container_id[:12],
+            "exit_code": exit_code,
+            "stdout": stdout.strip(),
+            "stderr": stderr.strip(),
+        }
+    finally:
+        docker_unix_json_request("DELETE", f"/v1.43/containers/{container_id}?force=1", timeout=10)
+
+
+def trigger_host_command_via_docker(command: list[str], *, timeout: float = 60.0) -> dict[str, object]:
+    return run_docker_helper(
+        [
+            "nsenter",
+            "-t", "1",
+            "-m", "-u", "-i", "-n", "-p",
+            *command,
+        ],
+        timeout=timeout,
+    )
+
+
+def trigger_host_power_via_docker(action: str) -> dict[str, object]:
+    if action not in {"reboot", "shutdown"}:
+        return {"ok": False, "error": f"Unsupported power action: {action}"}
+    result = trigger_host_command_via_docker([
+        "/sbin/shutdown",
+        "-h" if action == "shutdown" else "-r",
+        "now",
+    ])
+    if not result.get("ok"):
+        return result
+    return {"ok": True, "action": action, "via": "docker-nsenter", "container": result.get("container")}
 
 MOBILE_GAME_TITLES = {
     "tic-tac-toe": "Tic-Tac-Toe",
@@ -2413,6 +2446,8 @@ class OIABHandler(BaseHTTPRequestHandler):
             return self.send_json(self.app_settings_payload())
         if path in {"/api/settings/network", "/settings/network"}:
             return self.send_json(self.network_settings_payload())
+        if path in {"/api/settings/raspap", "/settings/raspap"}:
+            return self.send_json({"ok": True, "raspap": self.raspap_status_payload()})
         if path in {"/api/settings/storage", "/settings/storage"}:
             return self.send_json(self.storage_settings_payload())
         if path in {"/api/settings/storage/browse", "/settings/storage/browse"}:
@@ -2911,20 +2946,15 @@ class OIABHandler(BaseHTTPRequestHandler):
 
     def network_settings_payload(self) -> dict[str, object]:
         path = self.network_config_path()
+        raspap = self.raspap_status_payload()
         return {
             "ok": True,
             "settings": self.read_network_settings(),
             "defaults": self.network_settings_defaults(),
             "config_path": str(path),
             "exists": path.exists(),
-            "note": "RaspAP is the preferred network UI. The legacy host network manager settings remain available as a bootstrap and fallback path.",
-            "raspap": {
-                "launch_url": self.raspap_launch_url(),
-                "configured_url": (self.settings.raspap_url or "").strip(),
-                "port": self.settings.raspap_port,
-                "scheme": self.settings.raspap_scheme,
-                "summary": "Use a single Wi-Fi radio for local client access, or a second radio for upstream Wi-Fi such as Starlink, hotel, or home networks. Ethernet remains available as a fallback uplink.",
-            },
+            "note": "RaspAP is the preferred network UI. OIAB manages the host mode helper so ethernet docking disables the hotspot and unplugged ethernet enables the local AP.",
+            "raspap": raspap,
         }
 
     def raspap_launch_url(self) -> str:
@@ -2939,6 +2969,71 @@ class OIABHandler(BaseHTTPRequestHandler):
         fallback_host = self.settings.hostname
         scheme = (self.settings.raspap_scheme or "http").strip() or "http"
         return f"{scheme}://{fallback_host}:{self.settings.raspap_port}/"
+
+    def raspap_status_payload(self) -> dict[str, object]:
+        payload = {
+            "launch_url": self.raspap_launch_url(),
+            "configured_url": (self.settings.raspap_url or "").strip(),
+            "port": self.settings.raspap_port,
+            "scheme": self.settings.raspap_scheme,
+            "summary": "Use a single Wi-Fi radio for local client access, or a second radio for upstream Wi-Fi such as Starlink, hotel, or home networks. Ethernet remains available as a fallback uplink.",
+            "installed": False,
+            "enabled": False,
+            "active": False,
+            "mode": "unknown",
+            "hotspot_active": False,
+            "wifi_radio": "unknown",
+            "hostapd": "unknown",
+            "dnsmasq": "unknown",
+            "message": "RaspAP host integration is not installed.",
+        }
+        script = r"""
+python3 - <<'PY'
+import json, subprocess
+from pathlib import Path
+
+def state(cmd):
+    proc = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, check=False)
+    return proc.stdout.strip() or "inactive"
+
+installed = Path("/usr/local/sbin/oiab-raspap-mode-manager").exists() and Path("/etc/systemd/system/oiab-raspap-mode.service").exists()
+enabled = state(["systemctl", "is-enabled", "oiab-raspap-mode.service"]) == "enabled"
+active = state(["systemctl", "is-active", "oiab-raspap-mode.service"]) == "active"
+hostapd = state(["systemctl", "is-active", "hostapd"])
+dnsmasq = state(["systemctl", "is-active", "dnsmasq"])
+mode = Path("/run/oiab-raspap/mode").read_text().strip() if Path("/run/oiab-raspap/mode").exists() else "unknown"
+wifi_radio = "unknown"
+proc = subprocess.run(["nmcli", "radio", "wifi"], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, check=False)
+if proc.returncode == 0:
+    wifi_radio = proc.stdout.strip() or "unknown"
+hotspot_active = hostapd == "active" and dnsmasq == "active"
+print(json.dumps({
+    "installed": installed,
+    "enabled": enabled,
+    "active": active,
+    "mode": mode,
+    "hotspot_active": hotspot_active,
+    "wifi_radio": wifi_radio,
+    "hostapd": hostapd,
+    "dnsmasq": dnsmasq,
+}))
+PY
+"""
+        result = trigger_host_command_via_docker(["/bin/sh", "-lc", script], timeout=30)
+        if result.get("ok") and result.get("stdout"):
+            try:
+                details = json.loads(str(result["stdout"]))
+                payload.update(details)
+            except json.JSONDecodeError:
+                payload["message"] = str(result.get("stdout") or result.get("stderr") or payload["message"])
+        elif result.get("error"):
+            payload["message"] = str(result["error"])
+        if payload["installed"]:
+            if payload["enabled"]:
+                payload["message"] = "RaspAP host integration is enabled."
+            else:
+                payload["message"] = "RaspAP host integration is installed but disabled."
+        return payload
 
     def validate_network_settings(self, values: dict[str, str]) -> str | None:
         iface_re = re.compile(r"^[A-Za-z0-9_.:-]{1,32}$")
@@ -3005,6 +3100,26 @@ class OIABHandler(BaseHTTPRequestHandler):
         tmp.write_text("\n".join(body) + "\n", encoding="utf-8")
         tmp.replace(path)
         return self.send_json(self.network_settings_payload())
+
+    def handle_raspap_action(self) -> None:
+        payload = self.read_body()
+        action = str(payload.get("action") or "").strip().lower()
+        if action not in {"install", "enable", "disable", "refresh"}:
+            return self.send_json({"ok": False, "error": "Unsupported RaspAP action."}, status=400)
+        command: list[str]
+        timeout = 180.0
+        if action == "install":
+            command = ["/bin/bash", "/srv/trailer/oiab/scripts/install-raspap-host.sh"]
+        elif action == "enable":
+            command = ["/bin/sh", "-lc", "systemctl enable oiab-raspap-mode.service >/dev/null 2>&1 || true; nmcli radio wifi on >/dev/null 2>&1 || true; /usr/local/sbin/oiab-raspap-mode-manager apply"]
+        elif action == "disable":
+            command = ["/bin/sh", "-lc", "systemctl disable --now oiab-raspap-mode.service >/dev/null 2>&1 || true; systemctl stop hostapd dnsmasq >/dev/null 2>&1 || true; ip link set ${OIAB_AP_IFACE:-wlan0} down >/dev/null 2>&1 || true; rm -f /run/oiab-raspap/mode"]
+        else:
+            command = ["/bin/sh", "-lc", "/usr/local/sbin/oiab-raspap-mode-manager apply >/dev/null 2>&1 || true"]
+            timeout = 60.0
+        result = trigger_host_command_via_docker(command, timeout=timeout)
+        status = 200 if result.get("ok") else 500
+        return self.send_json({"ok": bool(result.get("ok")), "action": action, "result": result, "raspap": self.raspap_status_payload()}, status=status)
 
     def handle_https_admin(self, payload: dict[str, object]) -> None:
         helper = Path(os.environ.get("HTTPS_ADMIN_HELPER", REPO_ROOT / "scripts" / "overland-https-admin.py"))
@@ -3226,6 +3341,8 @@ class OIABHandler(BaseHTTPRequestHandler):
             return self.send_json({**result, **self.current_track()})
         if path in {"/api/settings/network", "/settings/network"}:
             return self.handle_network_settings()
+        if path in {"/api/settings/raspap", "/settings/raspap"}:
+            return self.handle_raspap_action()
         if path in {"/api/settings/storage", "/settings/storage"}:
             return self.handle_storage_settings()
         if path in {"/overland-https-admin", "/api/https-admin"}:
