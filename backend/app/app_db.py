@@ -2076,6 +2076,8 @@ class AppDB:
             "mvum/pmtiles/mvum-roads-us.pmtiles",
             "mvum/geojson/mvum-trails-us.geojson",
             "mvum/pmtiles/mvum-trails-us.pmtiles",
+            "public-lands/blm-sma-latest.geojson",
+            "public-lands/blm-sma-latest.pmtiles",
         }
         catalog_rel_paths.update(managed_mvum_outputs)
         for overlay in catalog_overlays:
