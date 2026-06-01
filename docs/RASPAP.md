@@ -36,7 +36,8 @@ Central Settings now includes a `Network / RaspAP` card with:
 
 The launcher defaults to:
 
-- `http://<current-host>:8097/`
+- proxied same-origin path: `https://<current-host>/apps/raspap/`
+- local/dev fallback: `http://<current-host>:8097/`
 
 unless explicitly overridden by:
 
@@ -56,6 +57,8 @@ This wrapper:
 - fetches the official RaspAP quick installer
 - runs it unattended
 - moves the RaspAP lighttpd UI to port `8097`
+- patches a PHP 8 session-key warning in `WiFiManager.php`
+- patches nginx, when present, to expose RaspAP at `/apps/raspap/`
 
 Related environment variables:
 
@@ -77,4 +80,6 @@ That means:
 
 - RaspAP is host-level infrastructure, not a Docker-contained app.
 - It should be treated as a core Raspberry Pi appliance component.
-- If OIAB is running over HTTPS, opening RaspAP may navigate to plain HTTP on port `8097` unless a separate reverse proxy or TLS layer is added for RaspAP.
+- Production should expose RaspAP through the main nginx host on:
+  - `https://<current-host>/apps/raspap/`
+- Plain `http://<host>:8097/` remains useful for local host debugging.

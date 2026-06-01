@@ -2933,8 +2933,12 @@ class OIABHandler(BaseHTTPRequestHandler):
             return configured
         host_header = (self.headers.get("Host") or self.settings.hostname).strip()
         host = host_header.split(":", 1)[0] if host_header else self.settings.hostname
+        if host:
+            scheme = "https" if host.endswith("overland.daemonadventures.net") else (self.settings.raspap_scheme or "http").strip() or "http"
+            return f"{scheme}://{host}/apps/raspap/"
+        fallback_host = self.settings.hostname
         scheme = (self.settings.raspap_scheme or "http").strip() or "http"
-        return f"{scheme}://{host}:{self.settings.raspap_port}/"
+        return f"{scheme}://{fallback_host}:{self.settings.raspap_port}/"
 
     def validate_network_settings(self, values: dict[str, str]) -> str | None:
         iface_re = re.compile(r"^[A-Za-z0-9_.:-]{1,32}$")

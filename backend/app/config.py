@@ -35,6 +35,9 @@ class Settings:
     allow_docker_control: bool = env_bool("OIAB_ALLOW_DOCKER_CONTROL", False)
     settings_pin: str = os.environ.get("OIAB_SETTINGS_PIN", "314159")
     ap_passphrase: str = os.environ.get("OIAB_AP_PASSPHRASE", "")
+    # Leave blank to use the deployment-aware default:
+    # network.overland.daemonadventures.net on production, otherwise
+    # the configured host and port.
     raspap_url: str = os.environ.get("OIAB_RASPAP_URL", "")
     raspap_port: int = int(os.environ.get("OIAB_RASPAP_PORT", "8097"))
     raspap_scheme: str = os.environ.get("OIAB_RASPAP_SCHEME", "http")
