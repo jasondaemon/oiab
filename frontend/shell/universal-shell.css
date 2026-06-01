@@ -877,6 +877,10 @@ button {
   grid-auto-rows: min-content;
 }
 
+.uo-settings-grid--stacked {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .uo-settings-shell {
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr);
@@ -981,6 +985,153 @@ button {
 .uo-settings-actions > button:disabled {
   opacity: .45;
   cursor: default;
+}
+
+.uo-settings-summary-card {
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px;
+  border: 1px solid var(--uo-line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .045);
+}
+
+.uo-settings-summary-card[hidden] {
+  display: none;
+}
+
+.uo-settings-summary-card strong {
+  font-size: 1rem;
+}
+
+.uo-settings-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.uo-settings-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: start;
+  padding: 16px;
+  border: 1px solid var(--uo-line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .045);
+}
+
+.uo-settings-item-main {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.uo-settings-item-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  align-items: center;
+}
+
+.uo-settings-item-title {
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 1.05;
+}
+
+.uo-settings-item h3,
+.uo-settings-item h4 {
+  margin: 0;
+}
+
+.uo-settings-item-subtitle,
+.uo-settings-item-path {
+  margin: 0;
+  color: var(--uo-muted);
+  overflow-wrap: anywhere;
+}
+
+.uo-settings-item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.uo-settings-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid var(--uo-line);
+  background: rgba(255, 255, 255, .08);
+  color: var(--uo-muted);
+  font-size: .82rem;
+  font-weight: 800;
+}
+
+.uo-settings-badge.is-good {
+  color: #06130d;
+  background: var(--uo-accent);
+  border-color: transparent;
+}
+
+.uo-settings-badge.is-warn {
+  color: #1d1604;
+  background: var(--uo-gold);
+  border-color: transparent;
+}
+
+.uo-settings-badge.is-bad {
+  color: #fff;
+  background: #d7645d;
+  border-color: transparent;
+}
+
+.uo-settings-item-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.uo-settings-item-actions > a,
+.uo-settings-item-actions > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 14px;
+  border: 1px solid var(--uo-line);
+  background: rgba(255, 255, 255, .07);
+  color: var(--uo-ink);
+  text-decoration: none;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.uo-settings-item-actions > button:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
+.uo-settings-item-actions > .is-primary {
+  color: #06130d;
+  background: var(--uo-accent);
+  border-color: transparent;
+}
+
+.uo-settings-item-actions > .is-danger {
+  color: #fff;
+  background: #d7645d;
+  border-color: transparent;
+}
+
+.uo-settings-item-grid {
+  display: grid;
+  gap: 14px;
 }
 
 .uo-storage-settings-card,
@@ -1219,6 +1370,16 @@ button {
 
 .uo-storage-browser-item small {
   color: var(--uo-muted);
+}
+
+@media (max-width: 980px) {
+  .uo-settings-item {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .uo-settings-item-actions {
+    justify-content: flex-start;
+  }
 }
 
 .uo-dock-settings {

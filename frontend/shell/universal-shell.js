@@ -8,6 +8,7 @@
   const MAP_3D_BUILDINGS_KEY = "omv2.show3dBuildings";
   const MAP_AUTO_RECORDING_KEY = "omv2.autoTrackRecording";
   const FALLBACK_ART = "/maps/overland/tunes.png";
+  const NUMBER_FMT = new Intl.NumberFormat();
   const DEFAULT_LAYOUT = {
     schema: 1,
     settingsPassword: "314159",
@@ -100,6 +101,12 @@
     },
     settingsSection: "music",
     services: [],
+    containers: { available: false, containers: [], error: "" },
+    maps: {
+      installed: { active: "", basemaps: [] },
+      catalog: { packs: [] },
+      overlays: { overlays: [] },
+    },
   };
 
   function iconSvg(name) {
@@ -463,17 +470,42 @@
       page.hidden = !isActive;
       page.classList.toggle("is-active", isActive);
     });
-    loadEmbeddedSettingsFrames(active);
   }
 
-  function loadEmbeddedSettingsFrames(activeSection) {
-    document.querySelectorAll("[data-settings-page]").forEach((page) => {
-      const isActive = page.dataset.settingsPage === activeSection;
-      page.querySelectorAll("[data-embed-src]").forEach((frame) => {
-        if (!isActive || frame.getAttribute("src")) return;
-        frame.setAttribute("src", frame.dataset.embedSrc);
-      });
-    });
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
+  }
+
+  function formatBytes(bytes) {
+    const n = Number(bytes || 0);
+    if (!Number.isFinite(n) || n <= 0) return "0 B";
+    if (n >= 1024 ** 3) return `${(n / 1024 ** 3).toFixed(1)} GB`;
+    if (n >= 1024 ** 2) return `${(n / 1024 ** 2).toFixed(1)} MB`;
+    if (n >= 1024) return `${NUMBER_FMT.format(Math.round(n / 1024))} KB`;
+    return `${NUMBER_FMT.format(n)} B`;
+  }
+
+  function formatTimestamp(value) {
+    if (!value) return "";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return String(value);
+    return date.toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+  }
+
+  function badge(label, kind = "") {
+    return `<span class="uo-settings-badge${kind ? ` ${kind}` : ""}">${escapeHtml(label)}</span>`;
+  }
+
+  function setSettingsMessage(id, text, error = false) {
+    const node = $(id);
+    if (!node) return;
+    node.textContent = text || "";
+    node.style.color = error ? "#ff8f87" : "";
   }
 
   function renderFolderCard(folder) {
@@ -539,17 +571,406 @@
   }
 
   async function loadServicesSettings() {
+    setSettingsMessage("pluginsSettingsMessage", "Loading plugins...");
     try {
       const response = await fetch("/api/services", { cache: "no-store" });
       if (!response.ok) throw new Error(`services ${response.status}`);
       const data = await response.json();
       state.services = Array.isArray(data?.services) ? data.services : [];
+      const containersResponse = await fetch("/api/containers", { cache: "no-store" });
+      const containersData = await containersResponse.json().catch(() => ({}));
+      state.containers = {
+        available: Boolean(containersData?.available),
+        containers: Array.isArray(containersData?.containers) ? containersData.containers : [],
+        error: String(containersData?.error || ""),
+      };
+      renderServicesSettings();
+      renderContainerSettings();
+      setSettingsMessage("pluginsSettingsMessage", "");
     } catch (error) {
       console.warn(error);
       state.services = [];
+      state.containers = { available: false, containers: [], error: error.message };
+      renderServicesSettings();
+      renderContainerSettings();
+      setSettingsMessage("pluginsSettingsMessage", error.message, true);
     }
     const minecraft = state.services.find((service) => String(service?.id || "") === "minecraft");
     if ($("settingsNavMinecraft")) $("settingsNavMinecraft").hidden = !(minecraft?.installed || minecraft?.enabled || minecraft?.running);
+  }
+
+  function renderServicesSettings() {
+    const holder = $("pluginsServices");
+    if (!holder) return;
+    if (!state.services.length) {
+      holder.innerHTML = `<div class="uo-settings-item"><div class="uo-settings-item-main"><p class="uo-settings-item-subtitle">No plugin manifests were returned.</p></div></div>`;
+      return;
+    }
+    holder.innerHTML = state.services.map((service) => {
+      const installed = Boolean(service.installed);
+      const enabled = Boolean(service.enabled);
+      const running = Boolean(service.running || service.active || service.state === "active" || service.state === "running");
+      const launcher = service.launcher_url ? `<a href="${escapeHtml(service.launcher_url)}"${String(service.id) === "minecraft" ? ` data-open-app="minecraft"` : ""}>Open</a>` : "";
+      return `
+        <article class="uo-settings-item">
+          <div class="uo-settings-item-main">
+            <div class="uo-settings-item-head">
+              <h3 class="uo-settings-item-title">${escapeHtml(service.name || service.label || service.id)}</h3>
+              <div class="uo-settings-item-meta">
+                ${badge(installed ? "Installed" : "Available", installed ? "is-good" : "")}
+                ${badge(enabled ? "Enabled" : "Disabled", enabled ? "is-good" : "")}
+                ${badge(running ? "Running" : "Stopped", running ? "is-good" : "")}
+                ${badge(service.runtime || "manual")}
+              </div>
+            </div>
+            <p class="uo-settings-item-subtitle">${escapeHtml(service.description || "")}</p>
+            ${service.notes ? `<p class="uo-settings-item-subtitle">${escapeHtml(service.notes)}</p>` : ""}
+            ${service.data_path ? `<p class="uo-settings-item-path">Data: ${escapeHtml(service.data_path)}</p>` : ""}
+            ${service.content_path ? `<p class="uo-settings-item-path">Content: ${escapeHtml(service.content_path)}</p>` : ""}
+          </div>
+          <div class="uo-settings-item-actions">
+            <button type="button" data-service-action="install" data-service-id="${escapeHtml(service.id)}" class="is-primary"${installed ? " disabled" : ""}>Install</button>
+            <button type="button" data-service-action="enable" data-service-id="${escapeHtml(service.id)}"${installed && !enabled ? "" : " disabled"}>Enable</button>
+            <button type="button" data-service-action="disable" data-service-id="${escapeHtml(service.id)}"${enabled ? "" : " disabled"}>Disable</button>
+            <button type="button" data-service-action="start" data-service-id="${escapeHtml(service.id)}"${installed && !running ? "" : " disabled"}>Start</button>
+            <button type="button" data-service-action="stop" data-service-id="${escapeHtml(service.id)}"${running ? "" : " disabled"}>Stop</button>
+            <button type="button" data-service-action="restart" data-service-id="${escapeHtml(service.id)}"${running ? "" : " disabled"}>Restart</button>
+            <button type="button" data-service-action="remove" data-service-id="${escapeHtml(service.id)}" class="is-danger">Remove</button>
+            ${launcher}
+          </div>
+        </article>
+      `;
+    }).join("");
+    holder.querySelectorAll("[data-service-action]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const serviceId = button.dataset.serviceId || "";
+        const action = button.dataset.serviceAction || "";
+        setSettingsMessage("pluginsSettingsMessage", `${action} ${serviceId}...`);
+        try {
+          const response = await fetch(`/api/services/${encodeURIComponent(serviceId)}/${encodeURIComponent(action)}`, { method: "POST" });
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok || data.ok === false) throw new Error(data.error || `${action} failed`);
+          state.services = Array.isArray(data?.services) ? data.services : state.services;
+          renderServicesSettings();
+          const minecraft = state.services.find((service) => String(service?.id || "") === "minecraft");
+          if ($("settingsNavMinecraft")) $("settingsNavMinecraft").hidden = !(minecraft?.installed || minecraft?.enabled || minecraft?.running);
+          setSettingsMessage("pluginsSettingsMessage", `${serviceId} ${action} complete.`);
+        } catch (error) {
+          setSettingsMessage("pluginsSettingsMessage", error.message, true);
+        }
+      });
+    });
+    holder.querySelectorAll("[data-open-app]").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const app = state.appById.get(link.dataset.openApp);
+        if (!app) return;
+        event.preventDefault();
+        openApp(app);
+      });
+    });
+  }
+
+  function renderContainerSettings() {
+    const holder = $("pluginsContainers");
+    if (!holder) return;
+    if (!state.containers.available) {
+      holder.innerHTML = `<div class="uo-settings-item"><div class="uo-settings-item-main"><p class="uo-settings-item-subtitle">${escapeHtml(state.containers.error || "Docker control is disabled.")}</p></div></div>`;
+      return;
+    }
+    if (!state.containers.containers.length) {
+      holder.innerHTML = `<div class="uo-settings-item"><div class="uo-settings-item-main"><p class="uo-settings-item-subtitle">No containers reported.</p></div></div>`;
+      return;
+    }
+    holder.innerHTML = state.containers.containers.map((container) => {
+      const running = String(container.state || "") === "running";
+      const ports = Array.isArray(container.ports) ? container.ports.map((port) => port?.PublicPort ? `${port.PublicPort}:${port.PrivatePort}/${port.Type}` : `${port.PrivatePort}/${port.Type}`).join(", ") : "";
+      return `
+        <article class="uo-settings-item">
+          <div class="uo-settings-item-main">
+            <div class="uo-settings-item-head">
+              <h3 class="uo-settings-item-title">${escapeHtml(container.name || "container")}</h3>
+              <div class="uo-settings-item-meta">
+                ${badge(container.state || "unknown", running ? "is-good" : "is-warn")}
+                ${badge(container.status || "--")}
+                ${badge(container.image || "image")}
+              </div>
+            </div>
+            <p class="uo-settings-item-path">${escapeHtml(ports || "No published ports")}</p>
+          </div>
+          <div class="uo-settings-item-actions">
+            <button type="button" data-container-action="start" data-container-name="${escapeHtml(container.name || "")}"${running ? " disabled" : ""}>Start</button>
+            <button type="button" data-container-action="stop" data-container-name="${escapeHtml(container.name || "")}"${running ? "" : " disabled"}>Stop</button>
+            <button type="button" data-container-action="restart" data-container-name="${escapeHtml(container.name || "")}"${running ? "" : " disabled"}>Restart</button>
+          </div>
+        </article>
+      `;
+    }).join("");
+    holder.querySelectorAll("[data-container-action]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const name = button.dataset.containerName || "";
+        const action = button.dataset.containerAction || "";
+        setSettingsMessage("pluginsSettingsMessage", `${action} ${name}...`);
+        try {
+          const response = await fetch(`/api/containers/${encodeURIComponent(name)}/${encodeURIComponent(action)}`, { method: "POST" });
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok || data.ok === false) throw new Error(data.error || `${action} failed`);
+          state.containers = {
+            available: Boolean(data?.available),
+            containers: Array.isArray(data?.containers) ? data.containers : [],
+            error: String(data?.error || ""),
+          };
+          renderContainerSettings();
+          setSettingsMessage("pluginsSettingsMessage", `${name} ${action} complete.`);
+        } catch (error) {
+          setSettingsMessage("pluginsSettingsMessage", error.message, true);
+        }
+      });
+    });
+  }
+
+  async function loadMapsSettings() {
+    setSettingsMessage("mapsPacksMessage", "Loading map packs...");
+    setSettingsMessage("mapsOverlaysMessage", "Loading overlays...");
+    try {
+      const [installedResponse, catalogResponse, overlaysResponse] = await Promise.all([
+        fetch("/api/maps/packs/installed", { cache: "no-store" }),
+        fetch("/api/maps/packs/catalog", { cache: "no-store" }),
+        fetch("/api/maps/overlays", { cache: "no-store" }),
+      ]);
+      const installed = await installedResponse.json().catch(() => ({}));
+      const catalog = await catalogResponse.json().catch(() => ({}));
+      const overlays = await overlaysResponse.json().catch(() => ({}));
+      if (!installedResponse.ok || installed.ok === false) throw new Error(installed.error || `packs ${installedResponse.status}`);
+      if (!catalogResponse.ok || catalog.ok === false) throw new Error(catalog.error || `catalog ${catalogResponse.status}`);
+      if (!overlaysResponse.ok || overlays.ok === false) throw new Error(overlays.error || `overlays ${overlaysResponse.status}`);
+      state.maps.installed = installed;
+      state.maps.catalog = catalog;
+      state.maps.overlays = overlays;
+      renderMapsSettings();
+      setSettingsMessage("mapsPacksMessage", "");
+      setSettingsMessage("mapsOverlaysMessage", "");
+    } catch (error) {
+      renderMapsSettings();
+      setSettingsMessage("mapsPacksMessage", error.message, true);
+      setSettingsMessage("mapsOverlaysMessage", error.message, true);
+    }
+  }
+
+  function renderMapsSettings() {
+    renderMapPackSummary();
+    renderInstalledMapPacks();
+    renderCatalogMapPacks();
+    renderOverlaySummary();
+    renderMapOverlays();
+  }
+
+  function renderMapPackSummary() {
+    const holder = $("mapsActivePackSummary");
+    if (!holder) return;
+    const activeId = String(state.maps.installed?.active || "");
+    const activePack = (state.maps.installed?.basemaps || []).find((pack) => String(pack.id || "") === activeId || pack.active);
+    const installedCount = (state.maps.installed?.basemaps || []).filter((pack) => pack.installed || pack.exists || pack.active).length;
+    if (!activePack) {
+      holder.hidden = false;
+      holder.innerHTML = `<strong>No active basemap</strong><span class="uo-settings-item-subtitle">Rescan local packs or install one from the catalog below.</span>`;
+      return;
+    }
+    holder.hidden = false;
+    holder.innerHTML = `
+      <strong>${escapeHtml(activePack.name || activePack.id)}</strong>
+      <div class="uo-settings-item-meta">
+        ${badge("Active", "is-good")}
+        ${badge(`${installedCount} installed`)}
+        ${activePack.size_bytes ? badge(formatBytes(activePack.size_bytes)) : ""}
+      </div>
+      <span class="uo-settings-item-subtitle">${escapeHtml(activePack.attribution || "")}</span>
+    `;
+  }
+
+  function renderInstalledMapPacks() {
+    const holder = $("mapsInstalledPacks");
+    if (!holder) return;
+    const installedPacks = (state.maps.installed?.basemaps || []).filter((pack) => pack.installed || pack.exists || pack.active);
+    if (!installedPacks.length) {
+      holder.innerHTML = "";
+      return;
+    }
+    holder.innerHTML = installedPacks.map((pack) => `
+      <article class="uo-settings-item">
+        <div class="uo-settings-item-main">
+          <div class="uo-settings-item-head">
+            <h3 class="uo-settings-item-title">${escapeHtml(pack.name || pack.id)}</h3>
+            <div class="uo-settings-item-meta">
+              ${badge(pack.active ? "Active" : "Installed", pack.active ? "is-good" : "")}
+              ${pack.region_type ? badge(pack.region_type) : ""}
+              ${pack.size_bytes ? badge(formatBytes(pack.size_bytes)) : ""}
+            </div>
+          </div>
+          <p class="uo-settings-item-subtitle">${escapeHtml(pack.attribution || "")}</p>
+          ${pack.path ? `<p class="uo-settings-item-path">${escapeHtml(pack.path)}</p>` : ""}
+        </div>
+        <div class="uo-settings-item-actions">
+          <button type="button" data-pack-action="set-active" data-pack-id="${escapeHtml(pack.id || "")}" class="is-primary"${pack.active ? " disabled" : ""}>Set Active</button>
+          <button type="button" data-pack-action="remove" data-pack-id="${escapeHtml(pack.id || "")}" class="is-danger">Remove</button>
+        </div>
+      </article>
+    `).join("");
+    bindPackActionButtons(holder);
+  }
+
+  function renderCatalogMapPacks() {
+    const holder = $("mapsCatalogPacks");
+    if (!holder) return;
+    const installedIds = new Set((state.maps.installed?.basemaps || []).filter((pack) => pack.installed || pack.exists || pack.active).map((pack) => String(pack.id)));
+    const catalog = Array.isArray(state.maps.catalog?.packs) ? state.maps.catalog.packs.filter((pack) => !pack.hidden) : [];
+    const groups = [
+      ["World", catalog.filter((pack) => pack.region_type === "world" && !installedIds.has(String(pack.id)))],
+      ["United States", catalog.filter((pack) => pack.region_type === "country" && !installedIds.has(String(pack.id)))],
+      ["States", catalog.filter((pack) => pack.region_type === "state" && !installedIds.has(String(pack.id)))],
+      ["Other", catalog.filter((pack) => !["world", "country", "state"].includes(String(pack.region_type || "")) && !installedIds.has(String(pack.id)))],
+    ].filter(([, packs]) => packs.length);
+    holder.innerHTML = groups.map(([label, packs]) => `
+      <section class="uo-settings-item-grid">
+        <h3 class="uo-settings-item-title">${escapeHtml(label)}</h3>
+        ${packs.map((pack) => {
+          const installable = Boolean(pack.install_available);
+          return `
+            <article class="uo-settings-item">
+              <div class="uo-settings-item-main">
+                <div class="uo-settings-item-head">
+                  <h4 class="uo-settings-item-title">${escapeHtml(pack.name || pack.id)}</h4>
+                  <div class="uo-settings-item-meta">
+                    ${badge(installable ? "Installable" : "Manual", installable ? "is-good" : "is-warn")}
+                    ${pack.recommended ? badge("Recommended", "is-good") : ""}
+                    ${pack.size_bytes ? badge(formatBytes(pack.size_bytes)) : ""}
+                  </div>
+                </div>
+                <p class="uo-settings-item-subtitle">${escapeHtml(pack.description || "")}</p>
+              </div>
+              <div class="uo-settings-item-actions">
+                <button type="button" data-pack-action="install" data-pack-id="${escapeHtml(pack.id || "")}" class="is-primary"${installable ? "" : " disabled"}>${installable ? "Install" : "Manual"}</button>
+              </div>
+            </article>
+          `;
+        }).join("")}
+      </section>
+    `).join("");
+    bindPackActionButtons(holder);
+  }
+
+  function bindPackActionButtons(root) {
+    root.querySelectorAll("[data-pack-action]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const action = button.dataset.packAction || "";
+        const packId = button.dataset.packId || "";
+        setSettingsMessage("mapsPacksMessage", `${action} ${packId}...`);
+        try {
+          const response = await fetch(`/api/maps/packs/${encodeURIComponent(action)}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: packId }),
+          });
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok || data.ok === false) throw new Error(data.error || `${action} failed`);
+          await loadMapsSettings();
+          setSettingsMessage("mapsPacksMessage", `${packId} ${action} complete.`);
+        } catch (error) {
+          setSettingsMessage("mapsPacksMessage", error.message, true);
+        }
+      });
+    });
+  }
+
+  function renderOverlaySummary() {
+    const holder = $("mapsOverlaySummary");
+    if (!holder) return;
+    const overlays = Array.isArray(state.maps.overlays?.overlays) ? state.maps.overlays.overlays : [];
+    const enabled = overlays.filter((overlay) => overlay.enabled).length;
+    const cached = overlays.filter((overlay) => overlay.cache_status === "cached").length;
+    const onlineOnly = overlays.filter((overlay) => overlay.online_required).length;
+    holder.hidden = false;
+    holder.innerHTML = `
+      <strong>${enabled} overlay${enabled === 1 ? "" : "s"} enabled</strong>
+      <div class="uo-settings-item-meta">
+        ${badge(`${cached} cached`)}
+        ${badge(`${onlineOnly} online only`)}
+        ${badge(`${overlays.length} total`)}
+      </div>
+      <span class="uo-settings-item-subtitle">Visibility and opacity stay in the map layer menu. Data acquisition and refresh live here.</span>
+    `;
+  }
+
+  function renderMapOverlays() {
+    const holder = $("mapsOverlaysList");
+    if (!holder) return;
+    const overlays = Array.isArray(state.maps.overlays?.overlays) ? state.maps.overlays.overlays : [];
+    if (!overlays.length) {
+      holder.innerHTML = `<div class="uo-settings-item"><div class="uo-settings-item-main"><p class="uo-settings-item-subtitle">No overlays registered.</p></div></div>`;
+      return;
+    }
+    holder.innerHTML = overlays.map((overlay) => {
+      const canRefresh = ["firms_active_hotspots", "nws_active_alerts", "mvum_roads_us", "mvum_trails_us"].includes(String(overlay.id || ""));
+      const isInstall = ["mvum_roads_us", "mvum_trails_us"].includes(String(overlay.id || ""));
+      const actionLabel = isInstall ? (overlay.exists || overlay.cache_status === "cached" ? "Update" : "Download") : "Refresh";
+      return `
+        <article class="uo-settings-item">
+          <div class="uo-settings-item-main">
+            <div class="uo-settings-item-head">
+              <h3 class="uo-settings-item-title">${escapeHtml(overlay.name || overlay.id)}</h3>
+              <div class="uo-settings-item-meta">
+                ${badge(overlay.category || "overlay")}
+                ${badge(overlay.cache_status || "unknown", overlay.cache_status === "cached" ? "is-good" : overlay.cache_status === "failed" ? "is-bad" : overlay.cache_status === "stale" ? "is-warn" : "")}
+                ${badge(overlay.enabled ? "Enabled" : "Disabled", overlay.enabled ? "is-good" : "")}
+                ${overlay.online_required ? badge("Online", "is-warn") : badge("Offline ready", "is-good")}
+                ${overlay.size_bytes ? badge(formatBytes(overlay.size_bytes)) : ""}
+              </div>
+            </div>
+            <p class="uo-settings-item-subtitle">${escapeHtml(overlay.description || "")}</p>
+            ${(overlay.last_fetch_at || overlay.error_message) ? `
+              <p class="uo-settings-item-subtitle">
+                ${overlay.last_fetch_at ? `Updated ${escapeHtml(formatTimestamp(overlay.last_fetch_at))}. ` : ""}
+                ${overlay.error_message ? `Error: ${escapeHtml(overlay.error_message)}` : ""}
+              </p>` : ""}
+          </div>
+          <div class="uo-settings-item-actions">
+            ${canRefresh ? `<button type="button" data-overlay-action="${isInstall ? "install" : "refresh"}" data-overlay-id="${escapeHtml(overlay.id || "")}" class="is-primary">${actionLabel}</button>` : ""}
+            ${(overlay.exists || overlay.cache_status === "cached" || overlay.size_bytes) ? `<button type="button" data-overlay-action="clear-cache" data-overlay-id="${escapeHtml(overlay.id || "")}">Clear Cache</button>` : ""}
+          </div>
+        </article>
+      `;
+    }).join("");
+    holder.querySelectorAll("[data-overlay-action]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const overlayId = button.dataset.overlayId || "";
+        const action = button.dataset.overlayAction || "";
+        setSettingsMessage("mapsOverlaysMessage", `${action} ${overlayId}...`);
+        try {
+          if (action === "clear-cache") {
+            const response = await fetch("/api/maps/overlays/clear-cache", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ id: overlayId }),
+            });
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok || data.ok === false) throw new Error(data.error || `${action} failed`);
+          } else if (action === "install") {
+            const path = overlayId === "mvum_roads_us" ? "/api/maps/overlays/mvum/roads/install" : "/api/maps/overlays/mvum/trails/install";
+            const response = await fetch(path, { method: "POST" });
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok || data.ok === false) throw new Error(data.error || `${action} failed`);
+          } else if (action === "refresh") {
+            const path = overlayId === "firms_active_hotspots" ? "/api/maps/overlays/wildfire/refresh" : "/api/maps/overlays/weather/alerts/refresh";
+            const response = await fetch(path, { method: "POST" });
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok || data.ok === false) throw new Error(data.error || `${action} failed`);
+          }
+          await loadMapsSettings();
+          setSettingsMessage("mapsOverlaysMessage", `${overlayId} ${action} complete.`);
+        } catch (error) {
+          setSettingsMessage("mapsOverlaysMessage", error.message, true);
+        }
+      });
+    });
   }
 
   function normalizeTrack(raw) {
@@ -1281,6 +1702,30 @@
     if ($("saveStorageSettings")) {
       $("saveStorageSettings").addEventListener("click", saveStorageSettings);
     }
+    $("mapsRescanPacks")?.addEventListener("click", async () => {
+      setSettingsMessage("mapsPacksMessage", "Rescanning local PMTiles...");
+      try {
+        const response = await fetch("/api/maps/packs/rescan", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({}) });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || data.ok === false) throw new Error(data.error || `rescan failed`);
+        await loadMapsSettings();
+        setSettingsMessage("mapsPacksMessage", "Map packs rescanned.");
+      } catch (error) {
+        setSettingsMessage("mapsPacksMessage", error.message, true);
+      }
+    });
+    $("mapsRescanOverlays")?.addEventListener("click", async () => {
+      setSettingsMessage("mapsOverlaysMessage", "Rescanning local overlays...");
+      try {
+        const response = await fetch("/api/maps/overlays/rescan", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({}) });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || data.ok === false) throw new Error(data.error || `overlay rescan failed`);
+        await loadMapsSettings();
+        setSettingsMessage("mapsOverlaysMessage", "Overlays rescanned.");
+      } catch (error) {
+        setSettingsMessage("mapsOverlaysMessage", error.message, true);
+      }
+    });
     $("storageBrowserRoots")?.addEventListener("change", () => browseStoragePath($("storageBrowserRoots").value));
     $("storageBrowserUp")?.addEventListener("click", () => {
       if (state.storage.browserParentPath) browseStoragePath(state.storage.browserParentPath);
@@ -1315,6 +1760,7 @@
     loadAppSettings().catch((error) => console.warn(error));
     loadNetworkSettings().catch((error) => console.warn(error));
     loadServicesSettings().catch((error) => console.warn(error));
+    loadMapsSettings().catch((error) => console.warn(error));
     loadStorageSettings().catch((error) => {
       const message = $("storageSettingsMessage");
       if (message) message.textContent = error.message;
