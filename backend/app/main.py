@@ -146,9 +146,13 @@ def docker_unix_json_request(method: str, path: str, payload: object | None = No
     if not response_body:
         return status, {}
     try:
-        return status, json.loads(response_body.decode("utf-8"))
-    except json.JSONDecodeError:
+        decoded_body = response_body.decode("utf-8")
+    except UnicodeDecodeError:
         return status, response_body.decode("utf-8", errors="replace")
+    try:
+        return status, json.loads(decoded_body)
+    except json.JSONDecodeError:
+        return status, decoded_body
 
 
 def run_docker_helper(command: list[str], *, timeout: float = 60.0, capture_output: bool = True) -> dict[str, object]:
@@ -157,6 +161,7 @@ def run_docker_helper(command: list[str], *, timeout: float = 60.0, capture_outp
         "Image": HOST_POWER_HELPER_IMAGE,
         "Cmd": command,
         "User": "0:0",
+        "Tty": True,
         "HostConfig": {
             "AutoRemove": False,
             "Privileged": True,
