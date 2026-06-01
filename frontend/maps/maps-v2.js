@@ -731,6 +731,86 @@
     };
   }
 
+  function blmOverlayLayers(overlay, sourceId, sourceLayer = null) {
+    const opacity = overlayOpacity(overlay);
+    const minzoom = Number(overlay.minzoom ?? overlay.metadata?.minzoom ?? 0);
+    const maxzoom = Number(overlay.maxzoom ?? overlay.metadata?.maxzoom ?? 22);
+    const shared = {
+      source: sourceId,
+      ...(sourceLayer ? { "source-layer": sourceLayer } : {}),
+      minzoom,
+      maxzoom,
+    };
+    return [
+      {
+        id: overlayLayerId(overlay, "blm-fill-far"),
+        type: "fill",
+        ...shared,
+        minzoom: Math.max(minzoom, 4),
+        maxzoom: Math.min(maxzoom, 7),
+        filter: ["==", ["geometry-type"], "Polygon"],
+        paint: {
+          "fill-color": "#d7d88b",
+          "fill-opacity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            Math.max(minzoom, 4),
+            opacity * 0.04,
+            6.5,
+            opacity * 0.08,
+          ],
+        },
+      },
+      {
+        id: overlayLayerId(overlay, "blm-fill-near"),
+        type: "fill",
+        ...shared,
+        minzoom: Math.max(minzoom, 6),
+        maxzoom,
+        filter: ["==", ["geometry-type"], "Polygon"],
+        paint: {
+          "fill-color": "#d9dd8f",
+          "fill-opacity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            6,
+            opacity * 0.1,
+            8,
+            opacity * 0.16,
+            10,
+            opacity * 0.22,
+            13,
+            opacity * 0.28,
+          ],
+        },
+      },
+      {
+        id: overlayLayerId(overlay, "blm-boundary-casing"),
+        type: "line",
+        ...shared,
+        filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
+        paint: {
+          "line-color": "#f6f3cf",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 4, 1.4, 6, 1.8, 8, 2.4, 11, 3.2],
+          "line-opacity": opacity * 0.85,
+        },
+      },
+      {
+        id: overlayLayerId(overlay, "blm-boundary"),
+        type: "line",
+        ...shared,
+        filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
+        paint: {
+          "line-color": "#9a9640",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 4, 0.8, 6, 1.1, 8, 1.5, 11, 2.2],
+          "line-opacity": opacity * 0.95,
+        },
+      },
+    ];
+  }
+
   function defaultOverlayLayers(overlay, sourceId) {
     const opacity = overlayOpacity(overlay);
     const style = overlay.style || overlay.category || "";
@@ -748,33 +828,7 @@
     }
     if (overlay.type === "geojson") {
       if (style === "public_lands_blm" || overlay.category === "public_lands") {
-        return [
-          {
-            id: overlayLayerId(overlay, "blm-fill"),
-            type: "fill",
-            source: sourceId,
-            minzoom,
-            maxzoom,
-            filter: ["==", ["geometry-type"], "Polygon"],
-            paint: {
-              "fill-color": "#d8d074",
-              "fill-opacity": opacity * 0.24,
-            },
-          },
-          {
-            id: overlayLayerId(overlay, "blm-line"),
-            type: "line",
-            source: sourceId,
-            minzoom,
-            maxzoom,
-            filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
-            paint: {
-              "line-color": "#b8b157",
-              "line-width": ["interpolate", ["linear"], ["zoom"], 5, 0.8, 8, 1.5, 10, 2.2, 12, 2.8],
-              "line-opacity": opacity * 0.95,
-            },
-          },
-        ];
+        return blmOverlayLayers(overlay, sourceId);
       }
       if (style === "weather_alerts") {
         return [
@@ -871,35 +925,7 @@
     }
     if (overlay.type === "pmtiles" && overlay.source_layer) {
       if (style === "public_lands_blm" || overlay.category === "public_lands") {
-        return [
-          {
-            id: overlayLayerId(overlay, "blm-fill"),
-            type: "fill",
-            source: sourceId,
-            "source-layer": overlay.source_layer,
-            minzoom,
-            maxzoom,
-            filter: ["==", ["geometry-type"], "Polygon"],
-            paint: {
-              "fill-color": "#d8d074",
-              "fill-opacity": opacity * 0.24,
-            },
-          },
-          {
-            id: overlayLayerId(overlay, "blm-line"),
-            type: "line",
-            source: sourceId,
-            "source-layer": overlay.source_layer,
-            minzoom,
-            maxzoom,
-            filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
-            paint: {
-              "line-color": "#b8b157",
-              "line-width": ["interpolate", ["linear"], ["zoom"], 5, 0.8, 8, 1.5, 10, 2.2, 12, 2.8],
-              "line-opacity": opacity * 0.95,
-            },
-          },
-        ];
+        return blmOverlayLayers(overlay, sourceId, overlay.source_layer);
       }
       if (style === "mvum_roads" || style === "mvum_trails" || overlay.category === "mvum") {
         return [{
@@ -2420,7 +2446,7 @@
     ];
     const areas = [
       ["Park / Forest", "#9bd8ac"],
-      ["BLM Land Boundary", "#d8d074"],
+      ["BLM-Administered Land", "#d8d074"],
       ["Waterway / Waterbody", "#76d9e8"],
       ["Building / Structure", "#d7d1c5"],
       ["School / Campus", "#e9e2cb"],
