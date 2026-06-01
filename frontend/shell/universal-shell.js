@@ -925,8 +925,9 @@
       return;
     }
     holder.innerHTML = overlays.map((overlay) => {
-      const canRefresh = ["firms_active_hotspots", "nws_active_alerts", "mvum_roads_us", "mvum_trails_us"].includes(String(overlay.id || ""));
-      const isInstall = ["mvum_roads_us", "mvum_trails_us"].includes(String(overlay.id || ""));
+      const overlayId = String(overlay.id || "");
+      const canRefresh = ["firms_active_hotspots", "nws_active_alerts", "mvum_roads_us", "mvum_trails_us", "blm_sma_cached"].includes(overlayId);
+      const isInstall = ["mvum_roads_us", "mvum_trails_us", "blm_sma_cached"].includes(overlayId);
       const actionLabel = isInstall ? (overlay.exists || overlay.cache_status === "cached" ? "Update" : "Download") : "Refresh";
       return `
         <article class="uo-settings-item">
@@ -970,12 +971,20 @@
             const data = await response.json().catch(() => ({}));
             if (!response.ok || data.ok === false) throw new Error(data.error || `${action} failed`);
           } else if (action === "install") {
-            const path = overlayId === "mvum_roads_us" ? "/api/maps/overlays/mvum/roads/install" : "/api/maps/overlays/mvum/trails/install";
+            const path = overlayId === "mvum_roads_us"
+              ? "/api/maps/overlays/mvum/roads/install"
+              : overlayId === "mvum_trails_us"
+                ? "/api/maps/overlays/mvum/trails/install"
+                : "/api/maps/overlays/blm/refresh";
             const response = await fetch(path, { method: "POST" });
             const data = await response.json().catch(() => ({}));
             if (!response.ok || data.ok === false) throw new Error(data.error || `${action} failed`);
           } else if (action === "refresh") {
-            const path = overlayId === "firms_active_hotspots" ? "/api/maps/overlays/wildfire/refresh" : "/api/maps/overlays/weather/alerts/refresh";
+            const path = overlayId === "firms_active_hotspots"
+              ? "/api/maps/overlays/wildfire/refresh"
+              : overlayId === "nws_active_alerts"
+                ? "/api/maps/overlays/weather/alerts/refresh"
+                : "/api/maps/overlays/blm/refresh";
             const response = await fetch(path, { method: "POST" });
             const data = await response.json().catch(() => ({}));
             if (!response.ok || data.ok === false) throw new Error(data.error || `${action} failed`);

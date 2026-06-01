@@ -3361,6 +3361,8 @@ PY
             return self.send_json(self.refresh_wildfire_overlay())
         if path == "/api/maps/overlays/weather/alerts/refresh":
             return self.send_json(self.refresh_weather_alerts_overlay())
+        if path == "/api/maps/overlays/blm/refresh":
+            return self.send_json(self.refresh_blm_overlay())
         if path == "/api/maps/overlays/mvum/roads/install":
             job = start_mvum_install(self.settings, "roads")
             return self.send_json({"ok": True, "job": job, **self.map_overlays()})
@@ -4085,6 +4087,8 @@ PY
                 return self.send_json(self.refresh_wildfire_overlay())
             if action in {"refresh-weather", "refresh-alerts", "weather-alerts-refresh"}:
                 return self.send_json(self.refresh_weather_alerts_overlay())
+            if action in {"refresh-blm", "blm-refresh"}:
+                return self.send_json(self.refresh_blm_overlay())
             if action in {"install-mvum-roads", "mvum-roads-install"}:
                 job = start_mvum_install(self.settings, "roads")
                 return self.send_json({"ok": True, "job": job, **self.map_overlays()})
@@ -4551,6 +4555,151 @@ PY
         except Exception as exc:  # noqa: BLE001 - HTTP boundary
             registry = self.app_db().mark_overlay_refresh("nws_active_alerts", output_path=output if output.exists() else None, ok=False, error=str(exc))
             update_overlay_job(job_id, status="failed", step="NWS refresh failed", progress=100, error_message=str(exc), output_path=str(output) if output.exists() else "")
+            return {**registry, "ok": False, "error": str(exc)}
+
+    def refresh_blm_overlay(self) -> dict[str, object]:
+        overlay_id = "blm_sma_cached"
+        job_id = f"{overlay_id}_refresh"
+        update_overlay_job(job_id, overlay_id=overlay_id, type="refresh", status="running", step="preparing BLM download", progress=5, error_message="", started_at=timestamp())
+        output_dir = self.settings.data_dir / "maps" / "overlays" / "public-lands"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        raw_geojson = output_dir / "blm-sma-latest.geojson"
+        output = output_dir / "blm-sma-latest.pmtiles"
+        service_url = "https://gis.blm.gov/arcgis/rest/services/lands/BLM_Natl_SMA_LimitedScale/MapServer/22/query"
+        field_list = "OBJECTID,SMA_ID,ADMIN_DEPT_CODE,ADMIN_AGENCY_CODE,ADMIN_UNIT_NAME,ADMIN_UNIT_TYPE,ADMIN_ST,HOLD_ID,HOLD_DEPT_CODE,HOLD_AGENCY_CODE,FAU_ID"
+        page_size = 2000
+        params_base = {
+            "where": "1=1",
+            "outFields": field_list,
+            "outSR": "4326",
+            "geometryPrecision": "5",
+            "maxAllowableOffset": "0.01",
+            "f": "geojson",
+        }
+        try:
+            update_overlay_job(job_id, step="counting BLM features", progress=10)
+            count_url = f"{service_url}?{urlencode({'where': '1=1', 'returnCountOnly': 'true', 'f': 'json'})}"
+            count_payload = self.fetch_json_url(count_url, timeout=60)
+            total = int(count_payload.get("count") or 0)
+            if total <= 0:
+                raise ValueError("BLM service returned no features.")
+            features: list[dict[str, object]] = []
+            offset = 0
+            while offset < total:
+                params = {
+                    **params_base,
+                    "resultOffset": str(offset),
+                    "resultRecordCount": str(page_size),
+                }
+                page_url = f"{service_url}?{urlencode(params)}"
+                update_overlay_job(job_id, step=f"fetching BLM features {offset}-{min(offset + page_size, total)}", progress=min(92, 15 + int((offset / max(total, 1)) * 70)))
+                request = Request(page_url, headers={"User-Agent": f"OIAB BLM overlay ({self.settings.hostname})", "Accept": "application/geo+json, application/json"})
+                with urlopen(request, timeout=120) as response:  # noqa: S310 - public BLM ArcGIS service
+                    payload = json.loads(response.read().decode("utf-8", errors="replace"))
+                page_features = payload.get("features")
+                if not isinstance(page_features, list):
+                    raise ValueError("BLM service did not return GeoJSON features.")
+                for feature in page_features:
+                    if not isinstance(feature, dict):
+                        continue
+                    props = feature.get("properties")
+                    if isinstance(props, dict):
+                        props.setdefault("source", "Bureau of Land Management")
+                        props.setdefault("agency", "BLM")
+                    features.append(feature)
+                if not page_features:
+                    break
+                offset += len(page_features)
+            collection = {
+                "type": "FeatureCollection",
+                "features": features,
+                "properties": {
+                    "source": "Bureau of Land Management",
+                    "service_url": service_url,
+                    "fetched_at": timestamp(),
+                    "feature_count": len(features),
+                    "generalization": {
+                        "geometryPrecision": 5,
+                        "maxAllowableOffsetDegrees": 0.01,
+                    },
+                },
+            }
+            raw_geojson.write_text(json.dumps(collection, separators=(",", ":")), encoding="utf-8")
+            timeout_seconds = int(os.environ.get("OIAB_BLM_CONVERT_TIMEOUT_SECONDS", "14400"))
+            output.unlink(missing_ok=True)
+            source_layer = None
+            output_path = raw_geojson
+            output_type = "geojson"
+            output_url = self.app_db().overlay_public_url_for_path(raw_geojson)
+            install_status = "cached_geojson"
+            if shutil.which("tippecanoe"):
+                update_overlay_job(job_id, step="building BLM PMTiles overlay", progress=94)
+                tip = subprocess.run(
+                    [
+                        "tippecanoe",
+                        "-o",
+                        str(output),
+                        "-l",
+                        "blm_public_lands",
+                        "-Z5",
+                        "-z10",
+                        "--force",
+                        "--drop-densest-as-needed",
+                        "--coalesce-densest-as-needed",
+                        "--extend-zooms-if-still-dropping",
+                        str(raw_geojson),
+                    ],
+                    text=True,
+                    capture_output=True,
+                    timeout=timeout_seconds,
+                    check=False,
+                )
+                if tip.returncode != 0:
+                    output.unlink(missing_ok=True)
+                    raise ValueError((tip.stderr or tip.stdout or "tippecanoe failed")[-1500:])
+                if not output.exists() or output.stat().st_size <= 0:
+                    raise ValueError("tippecanoe did not create a usable PMTiles file.")
+                output_path = output
+                output_type = "pmtiles"
+                output_url = self.app_db().overlay_public_url_for_path(output)
+                source_layer = "blm_public_lands"
+                install_status = "cached"
+            registry = self.app_db().mark_overlay_refresh(
+                overlay_id,
+                output_path=output_path,
+                ok=True,
+                extra={
+                    "feature_count": len(features),
+                    "blm_service_url": service_url,
+                    "size_bytes": output_path.stat().st_size,
+                    "install_status": install_status,
+                },
+            )
+            registry = self.app_db().update_map_overlay_metadata(
+                overlay_id,
+                {
+                    "cache_status": "cached",
+                    "install_status": install_status,
+                    "error_message": "",
+                    "last_fetch_at": timestamp(),
+                    "feature_count": len(features),
+                    "blm_service_url": service_url,
+                    "source_size_bytes": raw_geojson.stat().st_size if raw_geojson.exists() else 0,
+                    "size_bytes": output_path.stat().st_size,
+                    "maxzoom": 10,
+                    "minzoom": 5,
+                    "style": "public_lands_blm",
+                },
+                path=str(output_path),
+                source_url=output_url,
+                overlay_type=output_type,
+                source_layer=source_layer,
+            )
+            update_overlay_job(job_id, status="succeeded", step="cached BLM vector snapshot", progress=100, error_message="", output_path=str(output_path), feature_count=len(features), size_bytes=output_path.stat().st_size)
+            return {"ok": True, "feature_count": len(features), "path": str(output_path), **registry}
+        except Exception as exc:  # noqa: BLE001 - remote data boundary
+            registry = self.app_db().mark_overlay_refresh(overlay_id, output_path=output if output.exists() else None, ok=False, error=str(exc))
+            update_overlay_job(job_id, status="failed", step="BLM refresh failed", progress=100, error_message=str(exc), output_path=str(output) if output.exists() else "")
             return {**registry, "ok": False, "error": str(exc)}
 
     def catalog_pack(self, pack_id: str) -> dict:

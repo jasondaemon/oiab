@@ -734,21 +734,56 @@
   function defaultOverlayLayers(overlay, sourceId) {
     const opacity = overlayOpacity(overlay);
     const style = overlay.style || overlay.category || "";
+    const minzoom = Number(overlay.minzoom ?? overlay.metadata?.minzoom ?? 0);
+    const maxzoom = Number(overlay.maxzoom ?? overlay.metadata?.maxzoom ?? 22);
     if (overlay.type === "raster") {
       return [{
         id: overlayLayerId(overlay, "raster"),
         type: "raster",
         source: sourceId,
+        minzoom,
+        maxzoom,
         paint: { "raster-opacity": opacity },
       }];
     }
     if (overlay.type === "geojson") {
+      if (style === "public_lands_blm" || overlay.category === "public_lands") {
+        return [
+          {
+            id: overlayLayerId(overlay, "blm-fill"),
+            type: "fill",
+            source: sourceId,
+            minzoom,
+            maxzoom,
+            filter: ["==", ["geometry-type"], "Polygon"],
+            paint: {
+              "fill-color": "#d8d074",
+              "fill-opacity": opacity * 0.24,
+            },
+          },
+          {
+            id: overlayLayerId(overlay, "blm-line"),
+            type: "line",
+            source: sourceId,
+            minzoom,
+            maxzoom,
+            filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
+            paint: {
+              "line-color": "#b8b157",
+              "line-width": ["interpolate", ["linear"], ["zoom"], 5, 0.8, 8, 1.5, 10, 2.2, 12, 2.8],
+              "line-opacity": opacity * 0.95,
+            },
+          },
+        ];
+      }
       if (style === "weather_alerts") {
         return [
           {
             id: overlayLayerId(overlay, "weather-fill"),
             type: "fill",
             source: sourceId,
+            minzoom,
+            maxzoom,
             filter: ["==", ["geometry-type"], "Polygon"],
             paint: {
               "fill-color": ["match", ["get", "severity"], "Extreme", "#7f1d1d", "Severe", "#ef4444", "Moderate", "#f59e0b", "Minor", "#facc15", "#60a5fa"],
@@ -759,6 +794,8 @@
             id: overlayLayerId(overlay, "weather-line"),
             type: "line",
             source: sourceId,
+            minzoom,
+            maxzoom,
             filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
             paint: {
               "line-color": ["match", ["get", "severity"], "Extreme", "#7f1d1d", "Severe", "#ef4444", "Moderate", "#f59e0b", "Minor", "#facc15", "#60a5fa"],
@@ -773,6 +810,8 @@
           id: overlayLayerId(overlay, "hotspots"),
           type: "circle",
           source: sourceId,
+          minzoom,
+          maxzoom,
           filter: ["==", ["geometry-type"], "Point"],
           paint: {
             "circle-radius": ["interpolate", ["linear"], ["zoom"], 3, 2.5, 8, 4.5, 13, 7],
@@ -788,6 +827,8 @@
           id: overlayLayerId(overlay, "mvum-line"),
           type: "line",
           source: sourceId,
+          minzoom,
+          maxzoom,
           filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString"]]],
           paint: mvumLinePaint(opacity),
         }];
@@ -797,6 +838,8 @@
           id: overlayLayerId(overlay, "fill"),
           type: "fill",
           source: sourceId,
+          minzoom,
+          maxzoom,
           filter: ["==", ["geometry-type"], "Polygon"],
           paint: { "fill-color": "#ffcf45", "fill-opacity": opacity * 0.22 },
         },
@@ -804,6 +847,8 @@
           id: overlayLayerId(overlay, "line"),
           type: "line",
           source: sourceId,
+          minzoom,
+          maxzoom,
           filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
           paint: { "line-color": "#ffcf45", "line-width": 2, "line-opacity": opacity },
         },
@@ -811,6 +856,8 @@
           id: overlayLayerId(overlay, "point"),
           type: "circle",
           source: sourceId,
+          minzoom,
+          maxzoom,
           filter: ["==", ["geometry-type"], "Point"],
           paint: {
             "circle-radius": ["interpolate", ["linear"], ["zoom"], 7, 3, 14, 6],
@@ -823,12 +870,45 @@
       ];
     }
     if (overlay.type === "pmtiles" && overlay.source_layer) {
+      if (style === "public_lands_blm" || overlay.category === "public_lands") {
+        return [
+          {
+            id: overlayLayerId(overlay, "blm-fill"),
+            type: "fill",
+            source: sourceId,
+            "source-layer": overlay.source_layer,
+            minzoom,
+            maxzoom,
+            filter: ["==", ["geometry-type"], "Polygon"],
+            paint: {
+              "fill-color": "#d8d074",
+              "fill-opacity": opacity * 0.24,
+            },
+          },
+          {
+            id: overlayLayerId(overlay, "blm-line"),
+            type: "line",
+            source: sourceId,
+            "source-layer": overlay.source_layer,
+            minzoom,
+            maxzoom,
+            filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
+            paint: {
+              "line-color": "#b8b157",
+              "line-width": ["interpolate", ["linear"], ["zoom"], 5, 0.8, 8, 1.5, 10, 2.2, 12, 2.8],
+              "line-opacity": opacity * 0.95,
+            },
+          },
+        ];
+      }
       if (style === "mvum_roads" || style === "mvum_trails" || overlay.category === "mvum") {
         return [{
           id: overlayLayerId(overlay, "mvum-line"),
           type: "line",
           source: sourceId,
           "source-layer": overlay.source_layer,
+          minzoom,
+          maxzoom,
           filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString"]]],
           paint: mvumLinePaint(opacity),
         }];
@@ -839,6 +919,8 @@
           type: "fill",
           source: sourceId,
           "source-layer": overlay.source_layer,
+          minzoom,
+          maxzoom,
           filter: ["==", ["geometry-type"], "Polygon"],
           paint: { "fill-color": "#ffcf45", "fill-opacity": opacity * 0.22 },
         },
@@ -847,6 +929,8 @@
           type: "line",
           source: sourceId,
           "source-layer": overlay.source_layer,
+          minzoom,
+          maxzoom,
           filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
           paint: { "line-color": "#ffcf45", "line-width": 2, "line-opacity": opacity },
         },
@@ -855,6 +939,8 @@
           type: "circle",
           source: sourceId,
           "source-layer": overlay.source_layer,
+          minzoom,
+          maxzoom,
           filter: ["==", ["geometry-type"], "Point"],
           paint: {
             "circle-radius": ["interpolate", ["linear"], ["zoom"], 7, 3, 14, 6],
@@ -1452,6 +1538,8 @@
 
   function overlayFeatureTitle(props = {}, overlay = {}) {
     return props.route_name
+      || props.ADMIN_UNIT_NAME
+      || props.ADMIN_UNIT_TYPE
       || props.name
       || props.title
       || props.headline
@@ -1461,6 +1549,7 @@
       || (overlay.category === "wildfire" ? "Wildfire hotspot" : "")
       || (overlay.category === "weather" ? "Weather alert" : "")
       || (overlay.category === "mvum" ? "MVUM route" : "")
+      || (overlay.category === "public_lands" ? "BLM public land" : "")
       || "Overlay feature";
   }
 
@@ -1526,6 +1615,18 @@
         ["Expires", firstPresent(props, ["expires", "ends"])],
         ["Headline", firstPresent(props, ["headline"])],
         ["Instruction", firstPresent(props, ["instruction"])],
+      ]);
+    }
+    if (category === "public_lands" || overlay.style === "public_lands_blm") {
+      return compactDetails([
+        ["Agency", firstPresent(props, ["ADMIN_AGENCY_CODE", "agency", "ADMIN_DEPT_CODE"])],
+        ["Unit", firstPresent(props, ["ADMIN_UNIT_NAME"])],
+        ["Unit type", firstPresent(props, ["ADMIN_UNIT_TYPE"])],
+        ["State", firstPresent(props, ["ADMIN_ST"])],
+        ["Surface Mgmt ID", firstPresent(props, ["SMA_ID"])],
+        ["Holding agency", firstPresent(props, ["HOLD_AGENCY_CODE", "HOLD_DEPT_CODE"])],
+        ["Field office", firstPresent(props, ["FAU_ID"])],
+        ["Source", firstPresent(props, ["source"])],
       ]);
     }
     const ignored = new Set(["raw_properties", "rawProperties"]);
@@ -2319,6 +2420,7 @@
     ];
     const areas = [
       ["Park / Forest", "#9bd8ac"],
+      ["BLM Land Boundary", "#d8d074"],
       ["Waterway / Waterbody", "#76d9e8"],
       ["Building / Structure", "#d7d1c5"],
       ["School / Campus", "#e9e2cb"],
