@@ -4291,7 +4291,7 @@ PY
         return destination.stat().st_size
 
     def parse_optional_bbox(self, raw: object) -> tuple[float, float, float, float] | None:
-        if raw in {None, "", []}:
+        if raw is None or raw == "" or raw == []:
             return None
         values = raw
         if isinstance(raw, str):
