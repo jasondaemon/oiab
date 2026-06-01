@@ -55,6 +55,19 @@
       </div>
     </section>
 
+    <section class="gps-source-toggle-panel">
+      <div class="gps-panel-title">
+        <span>Display Source</span>
+        <strong id="gpsDisplayMode">Auto</strong>
+      </div>
+      <p class="gps-toggle-note">This only changes what this page displays. Maps still use the configured priority and stabilized source.</p>
+      <div class="gps-toggle-buttons" role="group" aria-label="GPS status display source">
+        <button id="gpsSourceAuto" type="button" class="gps-toggle-button is-active">Auto</button>
+        <button id="gpsSourceUsb" type="button" class="gps-toggle-button">USB</button>
+        <button id="gpsSourceBrowser" type="button" class="gps-toggle-button">Browser</button>
+      </div>
+    </section>
+
     <section class="gps-readout-grid">
       <article class="gps-readout gps-coords">
         <small>Stable Location</small>

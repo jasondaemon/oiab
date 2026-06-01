@@ -364,6 +364,31 @@ class AppDB:
                 self.mark_migration("legacy_json_geojson_v1", details)
             except Exception as exc:  # noqa: BLE001 - migration boundary
                 print(f"OIAB DB migration legacy_json_geojson_v1 failed: {exc}")
+        if not self.migration_applied("legacy_track_points_jsonl_v1"):
+            details: dict[str, Any] = {}
+            try:
+                details["track_points_backup"] = self.backup_file(self.track_points_file())
+                details["track_metadata_backup"] = self.backup_file(self.current_track_metadata_file())
+                details["track_points_import"] = self.import_track_points_jsonl(
+                    self.track_points_file(),
+                    self.current_track_metadata_file(),
+                )
+                self.mark_migration("legacy_track_points_jsonl_v1", details)
+            except Exception as exc:  # noqa: BLE001 - migration boundary
+                print(f"OIAB DB migration legacy_track_points_jsonl_v1 failed: {exc}")
+        if not self.migration_applied("legacy_data_repair_v1"):
+            details: dict[str, Any] = {}
+            try:
+                if self.waypoint_count() == 0 and self.places_file().exists():
+                    details["places_reimported"] = self.import_places_geojson(self.places_file())
+                if self.track_count() == 0 and self.track_points_file().exists():
+                    details["track_points_reimported"] = self.import_track_points_jsonl(
+                        self.track_points_file(),
+                        self.current_track_metadata_file(),
+                    )
+                self.mark_migration("legacy_data_repair_v1", details)
+            except Exception as exc:  # noqa: BLE001 - migration boundary
+                print(f"OIAB DB migration legacy_data_repair_v1 failed: {exc}")
         if not self.migration_applied("map_pack_registry_v1"):
             try:
                 details = self.import_map_pack_registry()
@@ -388,6 +413,22 @@ class AppDB:
 
     def current_track_file(self) -> Path:
         return self.settings.data_dir / "tracks" / "current.geojson"
+
+    def current_track_metadata_file(self) -> Path:
+        return self.settings.data_dir / "tracks" / "current-track.json"
+
+    def track_points_file(self) -> Path:
+        return self.settings.data_dir / "tracks" / "track-points.jsonl"
+
+    def waypoint_count(self) -> int:
+        with self.connect() as conn:
+            row = conn.execute("SELECT COUNT(*) AS c FROM waypoints").fetchone()
+            return int(row["c"] if row else 0)
+
+    def track_count(self) -> int:
+        with self.connect() as conn:
+            row = conn.execute("SELECT COUNT(*) AS c FROM tracks").fetchone()
+            return int(row["c"] if row else 0)
 
     def folder_id(self, name: str | None, visible: bool = True) -> int:
         folder = str(name or "Unfiled").strip() or "Unfiled"

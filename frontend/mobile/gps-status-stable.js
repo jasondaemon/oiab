@@ -1,11 +1,14 @@
 (() => {
+  const USB_FALLBACK_DELAY_MS = 5000;
   const state = {
     last: null,
     browserWatchId: null,
     browserPosition: null,
+    usbPosition: null,
     usbValidUntil: 0,
     pollTimer: null,
     trackTimer: null,
+    displayMode: localStorage.getItem("oiabGpsStatusDisplayMode") || "auto",
   };
 
   const $ = (id) => document.getElementById(id);
@@ -98,6 +101,35 @@
   function setText(id, text) {
     const el = $(id);
     if (el) el.textContent = text;
+  }
+
+  function syncDisplayModeUi() {
+    const effective = effectiveDisplayMode();
+    setText("gpsDisplayMode", state.displayMode === "auto" ? `Auto · ${sourceLabel(effective)}` : sourceLabel(effective));
+    for (const [id, mode] of [["gpsSourceAuto", "auto"], ["gpsSourceUsb", "usb_gps"], ["gpsSourceBrowser", "browser"]]) {
+      const button = $(id);
+      if (button) button.classList.toggle("is-active", state.displayMode === mode);
+    }
+  }
+
+  function setDisplayMode(mode) {
+    state.displayMode = ["auto", "usb_gps", "browser"].includes(mode) ? mode : "auto";
+    localStorage.setItem("oiabGpsStatusDisplayMode", state.displayMode);
+    syncDisplayModeUi();
+    renderCurrent();
+  }
+
+  function effectiveDisplayMode() {
+    if (state.displayMode === "usb_gps" || state.displayMode === "browser") return state.displayMode;
+    const usbFresh = Boolean(state.usbPosition) && (state.usbPosition.valid || Date.now() <= state.usbValidUntil);
+    return usbFresh || !state.browserPosition ? "usb_gps" : "browser";
+  }
+
+  function renderCurrent() {
+    const mode = effectiveDisplayMode();
+    const payload = mode === "browser" ? state.browserPosition : state.usbPosition;
+    if (payload) render(payload);
+    syncDisplayModeUi();
   }
 
   function renderSatBars(data) {
@@ -227,19 +259,18 @@
     state.browserWatchId = navigator.geolocation.watchPosition(
       (position) => {
         state.browserPosition = browserSnapshot(position);
-        if (Date.now() > state.usbValidUntil) render(state.browserPosition);
+        renderCurrent();
       },
       (error) => {
-        if (Date.now() > state.usbValidUntil) {
-          render({
-            source: "browser",
-            available: false,
-            valid: false,
-            reason: error.message || "browser_location_unavailable",
-            timestamp: new Date().toISOString(),
-            age_seconds: 0,
-          });
-        }
+        state.browserPosition = {
+          source: "browser",
+          available: false,
+          valid: false,
+          reason: error.message || "browser_location_unavailable",
+          timestamp: new Date().toISOString(),
+          age_seconds: 0,
+        };
+        renderCurrent();
       },
       { enableHighAccuracy: true, maximumAge: 5000, timeout: 15000 }
     );
@@ -253,25 +284,23 @@
       });
       if (!response.ok) throw new Error(`GPS endpoint ${response.status}`);
       const data = await response.json();
+      state.usbPosition = data;
       if (data.valid) {
-        state.usbValidUntil = Date.now() + 3500;
-        render(data);
-      } else if (Date.now() > state.usbValidUntil) {
-        render(data);
-        ensureBrowserFallback();
+        state.usbValidUntil = Date.now() + USB_FALLBACK_DELAY_MS;
       }
+      renderCurrent();
+      ensureBrowserFallback();
     } catch (error) {
-      if (Date.now() > state.usbValidUntil) {
-        render({
-          source: "usb_gps",
-          available: false,
-          valid: false,
-          reason: error.message,
-          timestamp: new Date().toISOString(),
-          age_seconds: 0,
-        });
-        ensureBrowserFallback();
-      }
+      state.usbPosition = {
+        source: "usb_gps",
+        available: false,
+        valid: false,
+        reason: error.message,
+        timestamp: new Date().toISOString(),
+        age_seconds: 0,
+      };
+      renderCurrent();
+      ensureBrowserFallback();
     }
   }
 
@@ -299,6 +328,11 @@
     $("gpsBack").addEventListener("click", goBack);
     $("gpsRefresh").addEventListener("click", pollUsbGps);
     $("gpsCopyCoords").addEventListener("click", copyCoords);
+    $("gpsSourceAuto")?.addEventListener("click", () => setDisplayMode("auto"));
+    $("gpsSourceUsb")?.addEventListener("click", () => setDisplayMode("usb_gps"));
+    $("gpsSourceBrowser")?.addEventListener("click", () => setDisplayMode("browser"));
+    syncDisplayModeUi();
+    ensureBrowserFallback();
     pollUsbGps();
     pollTrackStatus();
     state.pollTimer = window.setInterval(pollUsbGps, 1000);
