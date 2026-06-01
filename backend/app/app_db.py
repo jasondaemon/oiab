@@ -2078,6 +2078,10 @@ class AppDB:
             "mvum/pmtiles/mvum-trails-us.pmtiles",
             "public-lands/blm-sma-latest.geojson",
             "public-lands/blm-sma-latest.pmtiles",
+            "contours/contours.raw.geojsonseq",
+            "contours/contours.geojson",
+            "contours/contours.pmtiles",
+            "contours/contours.metadata.json",
         }
         catalog_rel_paths.update(managed_mvum_outputs)
         for overlay in catalog_overlays:

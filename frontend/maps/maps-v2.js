@@ -841,6 +841,78 @@
     ];
   }
 
+  function contourOverlayLayers(overlay, sourceId, sourceLayer = null) {
+    const opacity = overlayOpacity(overlay);
+    const minzoom = Number(overlay.minzoom ?? overlay.metadata?.minzoom ?? 9);
+    const maxzoom = Number(overlay.maxzoom ?? overlay.metadata?.maxzoom ?? 16);
+    const shared = {
+      source: sourceId,
+      ...(sourceLayer ? { "source-layer": sourceLayer } : {}),
+      minzoom,
+      maxzoom,
+    };
+    return [
+      {
+        id: overlayLayerId(overlay, "contour-index"),
+        type: "line",
+        ...shared,
+        minzoom: Math.max(minzoom, 9),
+        filter: [
+          "all",
+          ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString"]]],
+          ["==", ["get", "contour_type"], "index"],
+        ],
+        paint: {
+          "line-color": "#7b6643",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 0.7, 12, 1.1, 16, 1.8],
+          "line-opacity": ["interpolate", ["linear"], ["zoom"], 9, opacity * 0.45, 12, opacity * 0.62, 16, opacity * 0.78],
+        },
+      },
+      {
+        id: overlayLayerId(overlay, "contour-normal"),
+        type: "line",
+        ...shared,
+        minzoom: Math.max(minzoom, 11),
+        filter: [
+          "all",
+          ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString"]]],
+          ["==", ["get", "contour_type"], "normal"],
+        ],
+        paint: {
+          "line-color": "#9a8460",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 11, 0.45, 13, 0.72, 16, 1.05],
+          "line-opacity": ["interpolate", ["linear"], ["zoom"], 11, opacity * 0.22, 13, opacity * 0.36, 16, opacity * 0.5],
+        },
+      },
+      {
+        id: overlayLayerId(overlay, "contour-label"),
+        type: "symbol",
+        ...shared,
+        minzoom: Math.max(minzoom, 12),
+        filter: [
+          "all",
+          ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString"]]],
+          ["==", ["get", "contour_type"], "index"],
+        ],
+        layout: {
+          "symbol-placement": "line",
+          "text-field": ["get", "label"],
+          "text-font": ["Noto Sans Regular"],
+          "text-size": ["interpolate", ["linear"], ["zoom"], 12, 10, 14, 11, 16, 12],
+          "text-letter-spacing": 0.02,
+          "symbol-spacing": 420,
+          "text-keep-upright": true,
+        },
+        paint: {
+          "text-color": "#5a4a31",
+          "text-halo-color": "rgba(247, 245, 233, 0.85)",
+          "text-halo-width": 1.2,
+          "text-opacity": ["interpolate", ["linear"], ["zoom"], 12, opacity * 0.56, 16, opacity * 0.84],
+        },
+      },
+    ];
+  }
+
   function defaultOverlayLayers(overlay, sourceId) {
     const opacity = overlayOpacity(overlay);
     const style = overlay.style || overlay.category || "";
@@ -857,6 +929,9 @@
       }];
     }
     if (overlay.type === "geojson") {
+      if (style === "usgs_contours" || overlay.id === "usgs_topographic_contours") {
+        return contourOverlayLayers(overlay, sourceId);
+      }
       if (style === "public_lands_blm" || overlay.category === "public_lands") {
         return blmOverlayLayers(overlay, sourceId);
       }
@@ -954,6 +1029,9 @@
       ];
     }
     if (overlay.type === "pmtiles" && overlay.source_layer) {
+      if (style === "usgs_contours" || overlay.id === "usgs_topographic_contours") {
+        return contourOverlayLayers(overlay, sourceId, overlay.source_layer);
+      }
       if (style === "public_lands_blm" || overlay.category === "public_lands") {
         return blmOverlayLayers(overlay, sourceId, overlay.source_layer);
       }
@@ -1596,6 +1674,7 @@
     return props.route_name
       || props.ADMIN_UNIT_NAME
       || props.ADMIN_UNIT_TYPE
+      || props.label
       || props.name
       || props.title
       || props.headline
@@ -1606,6 +1685,7 @@
       || (overlay.category === "weather" ? "Weather alert" : "")
       || (overlay.category === "mvum" ? "MVUM route" : "")
       || (overlay.category === "public_lands" ? "BLM public land" : "")
+      || (overlay.style === "usgs_contours" ? "Contour line" : "")
       || "Overlay feature";
   }
 
@@ -1683,6 +1763,16 @@
         ["Holding agency", firstPresent(props, ["HOLD_AGENCY_CODE", "HOLD_DEPT_CODE"])],
         ["Field office", firstPresent(props, ["FAU_ID"])],
         ["Source", firstPresent(props, ["source"])],
+      ]);
+    }
+    if (category === "topo" || overlay.style === "usgs_contours") {
+      return compactDetails([
+        ["Elevation", firstPresent(props, ["label"])],
+        ["Elevation (ft)", firstPresent(props, ["ele_ft"])],
+        ["Elevation (m)", firstPresent(props, ["ele_m"])],
+        ["Contour type", firstPresent(props, ["contour_type"])],
+        ["Interval", firstPresent(props, ["interval_ft"]) ? `${firstPresent(props, ["interval_ft"])} ft` : ""],
+        ["Source", "USGS 3DEP / The National Map"],
       ]);
     }
     const ignored = new Set(["raw_properties", "rawProperties"]);

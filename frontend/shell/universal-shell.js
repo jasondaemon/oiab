@@ -926,8 +926,8 @@
     }
     holder.innerHTML = overlays.map((overlay) => {
       const overlayId = String(overlay.id || "");
-      const canRefresh = ["firms_active_hotspots", "nws_active_alerts", "mvum_roads_us", "mvum_trails_us", "blm_sma_cached"].includes(overlayId);
-      const isInstall = ["mvum_roads_us", "mvum_trails_us", "blm_sma_cached"].includes(overlayId);
+      const canRefresh = ["firms_active_hotspots", "nws_active_alerts", "mvum_roads_us", "mvum_trails_us", "blm_sma_cached", "usgs_topographic_contours"].includes(overlayId);
+      const isInstall = ["mvum_roads_us", "mvum_trails_us", "blm_sma_cached", "usgs_topographic_contours"].includes(overlayId);
       const actionLabel = isInstall ? (overlay.exists || overlay.cache_status === "cached" ? "Update" : "Download") : "Refresh";
       return `
         <article class="uo-settings-item">
@@ -976,7 +976,9 @@
               ? "/api/maps/overlays/mvum/roads/install"
               : overlayId === "mvum_trails_us"
                 ? "/api/maps/overlays/mvum/trails/install"
-                : "/api/maps/overlays/blm/refresh";
+                : overlayId === "usgs_topographic_contours"
+                  ? "/api/maps/overlays/contours/refresh"
+                  : "/api/maps/overlays/blm/refresh";
             const response = await fetch(path, { method: "POST" });
             const data = await response.json().catch(() => ({}));
             if (!response.ok || data.ok === false) throw new Error(data.error || `${action} failed`);

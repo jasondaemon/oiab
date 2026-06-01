@@ -18,7 +18,7 @@
 - Add visible background progress for very large map-pack downloads/extractions.
 - Add state/forest-scoped MVUM install options so users can avoid fetching national roads/trails when only one region is needed.
 - Add state/forest-level MVUM catalogs after the national roads/trails workflow is proven.
-- Add selective offline topo caching/vector-derived contours instead of full-CONUS raster mirroring.
+- Expand offline topo support beyond contours with hillshade and selective region caching, while continuing to avoid full-CONUS raster mirroring.
 - Implement NOAA radar as an online raster overlay after the weather alert cache workflow is stable.
 - Add stale-overlay warnings directly in the map HUD for cached wildfire/weather overlays.
 - Add route-corridor satellite/imagery caching under `/data/oiab/maps/overlays/imagery/routes`.

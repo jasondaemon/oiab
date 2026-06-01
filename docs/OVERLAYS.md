@@ -16,7 +16,7 @@ OIAB overlays are independent MapLibre sources layered over the active PMTiles b
 
 ## Settings
 
-Use Settings → Map Packs → Overlay Sources.
+Use Settings → Maps → Overlays.
 
 Overlay cards show category, enabled state, cache state, opacity, layer order, last fetch time, feature count when available, job/install status, and storage path. Maps v2 also has an overlay checklist in the top-right layer panel for quick enable/disable while driving.
 
@@ -24,7 +24,7 @@ Overlay types are intentionally separate:
 
 - Display-only overlays: online raster layers such as USGS Topo.
 - Refreshable snapshot overlays: wildfire and weather GeoJSON caches.
-- Install/generated overlays: MVUM source data converted into normalized GeoJSON and PMTiles.
+- Install/generated overlays: MVUM source data converted into normalized GeoJSON and PMTiles, plus offline USGS contour generation.
 
 ## USGS Topo
 
@@ -34,7 +34,49 @@ USGS Topo is currently an online raster overlay using The National Map `USGSTopo
 https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}
 ```
 
-Full offline raster topo is intentionally deferred because a broad raster cache can consume a large amount of SSD space. The long-term offline topo direction is vector-derived contours, hillshade, or selective region caching.
+Full offline raster topo is intentionally deferred because a broad raster cache can consume a large amount of SSD space. OIAB instead supports offline vector contours generated from USGS 3DEP / The National Map for a user-selected bbox or trip region.
+
+## USGS Topographic Contours
+
+OIAB can generate an offline vector contour overlay named `USGS Topographic Contours`.
+
+Data flow:
+
+1. Query USGS The National Map / 3DEP for `National Elevation Dataset (NED) 1/3 arc-second` DEM tiles covering a bbox.
+2. Download and cache raw DEM GeoTIFF tiles under `/data/oiab/maps/overlays/contours/source`.
+3. Merge the DEM tiles with `gdalbuildvrt`.
+4. Clip the merged DEM to the requested bbox with `gdalwarp`.
+5. Run `gdal_contour` to generate vector contour lines.
+6. Normalize the contour attributes and package them into PMTiles at `/data/oiab/maps/overlays/contours/contours.pmtiles`.
+
+Related configuration:
+
+```text
+OIAB_CONTOURS_ENABLED=true
+OIAB_CONTOURS_BBOX=minLon,minLat,maxLon,maxLat
+OIAB_CONTOURS_INTERVAL_FT=40
+OIAB_CONTOURS_INDEX_INTERVAL_FT=200
+OIAB_CONTOURS_MINZOOM=9
+OIAB_CONTOURS_MAXZOOM=16
+OIAB_CONTOURS_OUTPUT=/data/oiab/maps/overlays/contours/contours.pmtiles
+```
+
+Generated metadata is written next to the PMTiles archive and includes:
+
+- source
+- bbox
+- contour interval
+- index interval
+- created_at
+- DEM resolution
+- commands/settings used
+
+Contour display behavior:
+
+- index contours visible from z9+
+- normal contours visible from z11+
+- contour labels visible from z12+
+- contours remain an optional overlay and do not modify the basemap
 
 ## MVUM
 
