@@ -1422,7 +1422,7 @@
     if ($("networkRaspapMessage")) {
       const summary = data?.raspap?.summary || "RaspAP is the preferred network UI for AP and uplink control.";
       const configured = data?.raspap?.configured_url ? ` Configured URL: ${data.raspap.configured_url}.` : ` Launch URL: ${data?.raspap?.launch_url || "/raspap-launch"}.`;
-      $("networkRaspapMessage").textContent = summary + configured;
+      $("networkRaspapMessage").textContent = `${summary} Protected admin UI.${configured}`;
     }
     if ($("networkSettingsMessage")) {
       $("networkSettingsMessage").textContent = data?.config_path ? `Saved at ${data.config_path}` : "";

@@ -2935,7 +2935,7 @@ class OIABHandler(BaseHTTPRequestHandler):
         host = host_header.split(":", 1)[0] if host_header else self.settings.hostname
         if host:
             scheme = "https" if host.endswith("overland.daemonadventures.net") else (self.settings.raspap_scheme or "http").strip() or "http"
-            return f"{scheme}://{host}/apps/raspap/"
+            return f"{scheme}://{host}/apps/raspap/login?action=%2Fdashboard"
         fallback_host = self.settings.hostname
         scheme = (self.settings.raspap_scheme or "http").strip() or "http"
         return f"{scheme}://{fallback_host}:{self.settings.raspap_port}/"
