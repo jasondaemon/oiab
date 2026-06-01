@@ -4317,6 +4317,9 @@ PY
         if result.returncode != 0:
             raise ValueError((result.stderr or result.stdout or "ogrinfo failed")[-1500:])
         for line in result.stdout.splitlines():
+            match = re.match(r"\s*Layer:\s*(.+?)\s*\(", line)
+            if match:
+                return match.group(1).strip()
             match = re.match(r"\s*\d+:\s*([^(]+?)\s*\(", line)
             if match:
                 return match.group(1).strip()
@@ -4683,6 +4686,7 @@ PY
         source_item_id = os.environ.get("OIAB_BLM_SOURCE_ITEM_ID", "6bf2e737c59d4111be92420ee5ab0b46").strip()
         download_url = os.environ.get("OIAB_BLM_DOWNLOAD_URL", f"https://www.arcgis.com/sharing/rest/content/items/{source_item_id}/data").strip()
         service_url = os.environ.get("OIAB_BLM_SERVICE_URL", "https://gis.blm.gov/arcgis/rest/services/lands/BLM_Natl_SMA_Cached_BLM_Only/MapServer/2/query").strip()
+        source_layer_name = os.environ.get("OIAB_BLM_SOURCE_LAYER", "SurfaceMgtAgy_BLM").strip() or "SurfaceMgtAgy_BLM"
         max_zoom = max(12, min(17, int(os.environ.get("OIAB_BLM_MAXZOOM", "16") or 16)))
         bbox = self.parse_optional_bbox(payload.get("bbox"))
         try:
@@ -4699,7 +4703,7 @@ PY
             if not gdb_dirs:
                 raise ValueError("Downloaded BLM source archive did not contain a File Geodatabase.")
             gdb_path = gdb_dirs[0]
-            layer_name = self.detect_ogr_layer_name(gdb_path)
+            layer_name = source_layer_name or self.detect_ogr_layer_name(gdb_path)
 
             update_overlay_job(job_id, step="converting BLM source to GeoJSON", progress=48)
             raw_seq.unlink(missing_ok=True)
