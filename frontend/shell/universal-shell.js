@@ -463,6 +463,17 @@
       page.hidden = !isActive;
       page.classList.toggle("is-active", isActive);
     });
+    loadEmbeddedSettingsFrames(active);
+  }
+
+  function loadEmbeddedSettingsFrames(activeSection) {
+    document.querySelectorAll("[data-settings-page]").forEach((page) => {
+      const isActive = page.dataset.settingsPage === activeSection;
+      page.querySelectorAll("[data-embed-src]").forEach((frame) => {
+        if (!isActive || frame.getAttribute("src")) return;
+        frame.setAttribute("src", frame.dataset.embedSrc);
+      });
+    });
   }
 
   function renderFolderCard(folder) {

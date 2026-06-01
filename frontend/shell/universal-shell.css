@@ -947,6 +947,10 @@ button {
   align-content: start;
 }
 
+.uo-settings-embed-card {
+  grid-column: 1 / -1;
+}
+
 .uo-settings-card h2 {
   margin: 0;
 }
@@ -994,6 +998,14 @@ button {
 .uo-settings-details summary {
   cursor: pointer;
   font-weight: 750;
+}
+
+.uo-settings-embed-frame {
+  width: 100%;
+  min-height: 72vh;
+  border: 1px solid var(--uo-line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .03);
 }
 
 .uo-settings-card label {
