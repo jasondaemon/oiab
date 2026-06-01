@@ -30,7 +30,7 @@ from .app_db import AppDB
 from .config import REPO_ROOT, SETTINGS, Settings, ensure_data_layout
 from .games_db import GamesDB
 from .gps.gpsd import read_gpsd
-from .services import docker_container_action, docker_containers, list_services, service_action
+from .services import docker_container_action, docker_containers, docker_socket_request, list_services, service_action
 from .storage import folders_from_places, read_json, read_places, save_waypoint
 
 try:
@@ -2413,6 +2413,14 @@ class OIABHandler(BaseHTTPRequestHandler):
             return self.send_json(self.app_settings_payload())
         if path in {"/api/settings/network", "/settings/network"}:
             return self.send_json(self.network_settings_payload())
+        if path in {"/api/settings/storage", "/settings/storage"}:
+            return self.send_json(self.storage_settings_payload())
+        if path in {"/api/settings/storage/browse", "/settings/storage/browse"}:
+            browse_path = parse_qs(parsed.query).get("path", [""])[-1]
+            try:
+                return self.send_json(self.storage_browse_payload(browse_path))
+            except ValueError as exc:
+                return self.send_json({"ok": False, "error": str(exc)}, status=400)
         if path in {"/overland-https-admin", "/api/https-admin"}:
             return self.handle_https_admin({"action": "status"})
         if path in {"/music-api/library", "/api/music/library"}:
@@ -2457,10 +2465,14 @@ class OIABHandler(BaseHTTPRequestHandler):
             return
         if path == "/books":
             return self.redirect_to_url("/books/")
+        if path in {"/filebrowser-launch", "/filebrowser-launch/"}:
+            return self.serve_filebrowser_launcher()
+        if path in {"/api/filebrowser/session", "/filebrowser/session"}:
+            return self.send_json(self.filebrowser_session_payload())
         if path.startswith("/books/"):
             return self.proxy_komga()
         if path.startswith("/apps/filebrowser"):
-            return self.redirect_to_service(self.settings.filebrowser_url, str(self.settings.filebrowser_port))
+            return self.redirect_to_service(self.settings.filebrowser_url, self.filebrowser_port())
         if path.startswith("/apps/minecraft-map"):
             return self.redirect_to_service(self.settings.minecraft_map_url, str(self.settings.minecraft_map_port))
         if path.startswith("/apps/minecraft-admin"):
@@ -2525,6 +2537,41 @@ class OIABHandler(BaseHTTPRequestHandler):
         target = f"http://{host}:{port}/"
         self.redirect_to_url(target)
 
+    def host_port_reachable(self, port: str, timeout: float = 0.35) -> bool:
+        for host in ("host.docker.internal", "127.0.0.1"):
+            try:
+                request = Request(f"http://{host}:{int(str(port).strip())}/", headers={"User-Agent": "OIAB/port-check"})
+                with urlopen(request, timeout=timeout) as response:
+                    if response.status >= 200:
+                        return True
+            except HTTPError as exc:
+                if exc.code >= 200:
+                    return True
+            except Exception:
+                continue
+        return False
+
+    def filebrowser_port(self) -> str:
+        status, payload = docker_socket_request("GET", "/v1.43/containers/json?all=1")
+        if status < 400 and isinstance(payload, list):
+            for item in payload:
+                names = [str(name).lstrip("/") for name in (item.get("Names") or [])]
+                if not any(name in {"trailer-filebrowser", "filebrowser"} for name in names):
+                    continue
+                for port in item.get("Ports") or []:
+                    if int(port.get("PrivatePort") or 0) == 80 and port.get("PublicPort"):
+                        return str(port["PublicPort"])
+        candidates = [str(self.settings.filebrowser_port), os.environ.get("TRAILER_FILEBROWSER_PORT", ""), "8081"]
+        seen: set[str] = set()
+        for candidate in candidates:
+            candidate = str(candidate or "").strip()
+            if not candidate or candidate in seen:
+                continue
+            seen.add(candidate)
+            if self.host_port_reachable(candidate):
+                return candidate
+        return "8081" if "8081" in seen or "8081" in candidates else str(self.settings.filebrowser_port)
+
     def redirect_to_service(self, configured_url: str, fallback_port: str) -> None:
         if configured_url:
             host = self.headers.get("Host", self.settings.hostname).split(":", 1)[0]
@@ -2540,6 +2587,112 @@ class OIABHandler(BaseHTTPRequestHandler):
         self.send_header("Cache-Control", "no-cache")
         self.end_headers()
 
+    def serve_filebrowser_launcher(self) -> None:
+        html = """<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Opening File Manager</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #08140f;
+        color: #eef8ea;
+      }
+      .card {
+        width: min(28rem, calc(100vw - 2rem));
+        padding: 1.5rem;
+        border-radius: 1.25rem;
+        background: rgba(14, 36, 27, 0.92);
+        border: 1px solid rgba(130, 232, 130, 0.2);
+        box-shadow: 0 1.2rem 3rem rgba(0, 0, 0, 0.35);
+      }
+      h1 {
+        margin: 0 0 0.5rem;
+        font-size: 1.35rem;
+      }
+      p {
+        margin: 0;
+        color: rgba(238, 248, 234, 0.8);
+      }
+      .error {
+        margin-top: 1rem;
+        color: #ff8f8f;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <h1>Opening File Manager</h1>
+      <p id="status">Preparing session…</p>
+      <div id="error" class="error" hidden></div>
+    </main>
+    <script>
+      (async () => {
+        const status = document.getElementById("status");
+        const error = document.getElementById("error");
+        try {
+          const response = await fetch("/api/filebrowser/session", { credentials: "same-origin", cache: "no-store" });
+          const payload = await response.json();
+          if (!response.ok || !payload || !payload.ok || !payload.token) {
+            throw new Error(payload && payload.error ? payload.error : `File Browser session failed (${response.status})`);
+          }
+          localStorage.setItem("jwt", payload.token);
+          status.textContent = "Loading file browser…";
+          window.location.replace(payload.target || "/apps/filebrowser/");
+        } catch (err) {
+          const message = err && err.message ? err.message : String(err);
+          status.textContent = "File Manager could not be opened.";
+          error.hidden = false;
+          error.textContent = message;
+        }
+      })();
+    </script>
+  </body>
+</html>"""
+        encoded = html.encode("utf-8")
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(encoded)))
+        self.end_headers()
+        self.wfile.write(encoded)
+
+    def filebrowser_session_payload(self) -> dict[str, object]:
+        password = str(self.settings.filebrowser_admin_password or "").strip()
+        if not password:
+            return {"ok": False, "error": "File Browser admin password is not configured."}
+        login_url = f"{self.settings.filebrowser_internal_url.rstrip('/')}/api/login"
+        body = json.dumps({
+            "username": self.settings.filebrowser_admin_user or "admin",
+            "password": password,
+        }).encode("utf-8")
+        request = Request(
+            login_url,
+            data=body,
+            method="POST",
+            headers={"Content-Type": "application/json", "User-Agent": "OIAB/FileBrowserLaunch"},
+        )
+        try:
+            with urlopen(request, timeout=4) as response:
+                token = response.read().decode("utf-8").strip()
+        except HTTPError as exc:
+            details = exc.read().decode("utf-8", errors="replace").strip()
+            return {"ok": False, "error": details or f"File Browser login failed ({exc.code})."}
+        except Exception as exc:
+            return {"ok": False, "error": f"File Browser is unavailable: {exc}"}
+        if not token:
+            return {"ok": False, "error": "File Browser returned an empty session token."}
+        return {"ok": True, "token": token, "target": "/apps/filebrowser/"}
+
     def app_settings_payload(self) -> dict[str, object]:
         db = self.app_db()
         return {
@@ -2548,6 +2701,162 @@ class OIABHandler(BaseHTTPRequestHandler):
                 "map_auto_recording": bool(db.app_setting("map_auto_recording", True)),
                 "settings_pin": str(db.app_setting("settings_pin", self.settings.settings_pin) or self.settings.settings_pin),
             },
+        }
+
+    def storage_settings_defaults(self) -> dict[str, str]:
+        return {
+            "OIAB_DATA_DIR": os.environ.get("OIAB_DATA_DIR_HOST", os.environ.get("OIAB_DATA_DIR", "/srv/trailer/data/oiab")),
+            "OIAB_MAP_PACKS_DIR": os.environ.get("OIAB_MAP_PACKS_DIR", "/srv/trailer/data/oiab/maps/packs"),
+            "OIAB_MUSIC_DIR": os.environ.get("OIAB_MUSIC_DIR", "/srv/trailer/media/music"),
+            "OIAB_BOOKS_DIR": os.environ.get("OIAB_BOOKS_DIR", "/srv/trailer/media/books/Ebooks"),
+            "OIAB_COMICS_DIR": os.environ.get("OIAB_COMICS_DIR", "/srv/trailer/media/books/Comics"),
+            "OIAB_ZIM_DIR": os.environ.get("OIAB_ZIM_DIR", "/srv/trailer/iiab/zims"),
+            "OIAB_WIKIS_DIR": os.environ.get("OIAB_WIKIS_DIR", "/srv/trailer/wikis"),
+            "OIAB_ROMS_DIR": os.environ.get("OIAB_ROMS_DIR", "/srv/trailer/roms"),
+            "OIAB_FILEBROWSER_ROOT": os.environ.get("OIAB_FILEBROWSER_ROOT", "/srv/trailer"),
+            "JELLYFIN_CONFIG_DIR": os.environ.get("JELLYFIN_CONFIG_DIR", "/srv/trailer/jellyfin/config"),
+            "KOMGA_CONFIG_DIR": os.environ.get("KOMGA_CONFIG_DIR", "/srv/trailer/komga/config"),
+            "OIAB_MINECRAFT_DIR": os.environ.get("OIAB_MINECRAFT_DIR", "/srv/trailer/minecraft/server"),
+            "OIAB_CRAFTY_CONFIG_DIR": os.environ.get("OIAB_CRAFTY_CONFIG_DIR", "/srv/trailer/crafty/docker/config"),
+        }
+
+    def storage_field_catalog(self) -> list[dict[str, str]]:
+        return [
+            {"key": "OIAB_DATA_DIR", "title": "OIAB Data", "description": "Primary OIAB app data root (DB, settings, tracks, waypoints).", "group": "Core"},
+            {"key": "OIAB_MAP_PACKS_DIR", "title": "Map Packs", "description": "PMTiles basemap storage.", "group": "Maps"},
+            {"key": "OIAB_MUSIC_DIR", "title": "Music Library", "description": "Persistent music library mount.", "group": "Media"},
+            {"key": "OIAB_BOOKS_DIR", "title": "Books Library", "description": "Komga ebook library path.", "group": "Media"},
+            {"key": "OIAB_COMICS_DIR", "title": "Comics Library", "description": "Komga comics / manga library path.", "group": "Media"},
+            {"key": "OIAB_ZIM_DIR", "title": "Kiwix ZIMs", "description": "Offline ZIM content path.", "group": "Reference"},
+            {"key": "OIAB_WIKIS_DIR", "title": "Local Wikis", "description": "Static wiki / extracted content path.", "group": "Reference"},
+            {"key": "OIAB_ROMS_DIR", "title": "ROM Library", "description": "Web emulator ROM content path.", "group": "Games"},
+            {"key": "OIAB_FILEBROWSER_ROOT", "title": "File Manager Root", "description": "Root exposed by File Browser and the settings path picker.", "group": "System"},
+            {"key": "JELLYFIN_CONFIG_DIR", "title": "Jellyfin Config", "description": "Jellyfin config/cache root on the host.", "group": "Services"},
+            {"key": "KOMGA_CONFIG_DIR", "title": "Komga Config", "description": "Komga config root on the host.", "group": "Services"},
+            {"key": "OIAB_MINECRAFT_DIR", "title": "Minecraft Server", "description": "Minecraft server world / data root.", "group": "Services"},
+            {"key": "OIAB_CRAFTY_CONFIG_DIR", "title": "Minecraft Admin", "description": "Crafty admin/config path.", "group": "Services"},
+        ]
+
+    def storage_config_path(self) -> Path:
+        return self.settings.data_dir / "config" / "storage-paths.env"
+
+    def read_storage_settings(self) -> dict[str, str]:
+        values = self.storage_settings_defaults()
+        path = self.storage_config_path()
+        if not path.exists():
+            return values
+        for line in path.read_text(encoding="utf-8").splitlines():
+            stripped = line.strip()
+            if not stripped or stripped.startswith("#") or "=" not in stripped:
+                continue
+            key, raw_value = stripped.split("=", 1)
+            key = key.strip()
+            value = raw_value.strip()
+            if (value.startswith('"') and value.endswith('"')) or (value.startswith("'") and value.endswith("'")):
+                value = value[1:-1]
+            if key in values:
+                values[key] = value
+        return values
+
+    def storage_browse_roots(self) -> list[str]:
+        raw = os.environ.get("OIAB_STORAGE_BROWSE_ROOTS", "/srv,/mnt,/media,/data")
+        roots: list[str] = []
+        seen: set[str] = set()
+        for item in raw.split(","):
+            value = str(item or "").strip()
+            if not value:
+                continue
+            path = Path(value)
+            if not path.is_absolute():
+                continue
+            key = path.as_posix()
+            if key in seen:
+                continue
+            seen.add(key)
+            roots.append(key)
+        return roots or ["/srv"]
+
+    def storage_settings_payload(self) -> dict[str, object]:
+        defaults = self.storage_settings_defaults()
+        values = self.read_storage_settings()
+        locations = [{**field, "value": values.get(field["key"], ""), "default": defaults.get(field["key"], "")} for field in self.storage_field_catalog()]
+        return {
+            "ok": True,
+            "settings": values,
+            "locations": locations,
+            "config_path": str(self.storage_config_path()),
+            "browse_roots": self.storage_browse_roots(),
+            "file_manager_url": "/filebrowser-launch",
+            "file_manager_launch_url": "/filebrowser-launch",
+            "note": "These are host bind-mount paths. Saving them does not hot-swap storage; a container recreate or deploy is required.",
+        }
+
+    def validate_storage_path(self, value: str) -> str | None:
+        if not value:
+            return "Storage paths cannot be empty."
+        if not value.startswith("/"):
+            return "Storage paths must be absolute host paths."
+        return None
+
+    def handle_storage_settings(self) -> None:
+        payload = self.read_body()
+        incoming = payload.get("settings") if isinstance(payload.get("settings"), dict) else payload
+        values = self.read_storage_settings()
+        for key in values:
+            if key in incoming:
+                values[key] = str(incoming.get(key) or "").strip()
+        for key, value in values.items():
+            error = self.validate_storage_path(value)
+            if error:
+                return self.send_json({"ok": False, "error": f"{key}: {error}", "settings": values}, status=400)
+        path = self.storage_config_path()
+        path.parent.mkdir(parents=True, exist_ok=True)
+        body = [
+            "# OIAB host storage path configuration.",
+            "# These values are host bind-mount locations and require a deploy/recreate to take effect.",
+        ]
+        for key in self.storage_settings_defaults():
+            body.append(f"{key}={self.shell_quote_env(values[key])}")
+        tmp = path.with_suffix(path.suffix + ".tmp")
+        tmp.write_text("\n".join(body) + "\n", encoding="utf-8")
+        tmp.replace(path)
+        return self.send_json(self.storage_settings_payload())
+
+    def normalized_storage_browse_path(self, raw: str | None) -> Path:
+        roots = [Path(root).resolve() for root in self.storage_browse_roots() if Path(root).exists()]
+        if not roots:
+            raise ValueError("No browse roots are mounted into OIAB.")
+        candidate = Path(str(raw or roots[0])).expanduser()
+        if not candidate.is_absolute():
+            candidate = roots[0]
+        resolved = candidate.resolve(strict=False)
+        if not any(resolved == root or root in resolved.parents for root in roots):
+            raise ValueError("Requested path is outside the allowed browse roots.")
+        if not resolved.exists():
+            raise ValueError("Requested path does not exist on the host mount.")
+        if not resolved.is_dir():
+            resolved = resolved.parent
+        if not any(resolved == root or root in resolved.parents for root in roots):
+            raise ValueError("Requested path is outside the allowed browse roots.")
+        return resolved
+
+    def storage_browse_payload(self, raw_path: str | None) -> dict[str, object]:
+        current = self.normalized_storage_browse_path(raw_path)
+        roots = [Path(root).resolve() for root in self.storage_browse_roots() if Path(root).exists()]
+        directories = []
+        try:
+            for child in sorted((entry for entry in current.iterdir() if entry.is_dir()), key=lambda entry: entry.name.lower()):
+                directories.append({"name": child.name, "path": child.as_posix()})
+        except PermissionError:
+            raise ValueError("OIAB does not have permission to browse that directory.")
+        parent = current.parent
+        parent_path = parent.as_posix() if any(parent == root or root in parent.parents for root in roots) else None
+        return {
+            "ok": True,
+            "current_path": current.as_posix(),
+            "parent_path": parent_path,
+            "roots": [root.as_posix() for root in roots],
+            "directories": directories,
         }
 
     def handle_app_settings(self) -> None:
@@ -2895,6 +3204,8 @@ class OIABHandler(BaseHTTPRequestHandler):
             return self.send_json({**result, **self.current_track()})
         if path in {"/api/settings/network", "/settings/network"}:
             return self.handle_network_settings()
+        if path in {"/api/settings/storage", "/settings/storage"}:
+            return self.handle_storage_settings()
         if path in {"/overland-https-admin", "/api/https-admin"}:
             return self.handle_https_admin(self.read_body())
         if path in {"/api/system/reboot", "/system/reboot"}:
@@ -3226,6 +3537,8 @@ class OIABHandler(BaseHTTPRequestHandler):
             return target if target and target.exists() else None
         if path.startswith("/media/music-art/"):
             return self.safe_join(self.settings.data_dir / "media" / "music-art", path.removeprefix("/media/music-art/"))
+        if path.startswith("/media/visualizers/"):
+            return self.safe_join(self.settings.data_dir / "media" / "visualizers", path.removeprefix("/media/visualizers/"))
         if path.startswith("/media/music/"):
             return self.safe_join(self.settings.data_dir / "media" / "music", path.removeprefix("/media/music/"))
         if path.startswith("/media/books/"):
@@ -4390,7 +4703,7 @@ class OIABHandler(BaseHTTPRequestHandler):
         return payload
 
     def visualizer_images(self) -> dict:
-        target = self.settings.data_dir / "media" / "music" / "visualizers"
+        target = self.settings.data_dir / "media" / "visualizers"
         target.mkdir(parents=True, exist_ok=True)
         extensions = {".png", ".jpg", ".jpeg", ".webp", ".gif"}
         images = []
@@ -4403,7 +4716,7 @@ class OIABHandler(BaseHTTPRequestHandler):
                     "id": rel,
                     "name": path.stem.replace("-", " ").replace("_", " ").strip().title() or path.name,
                     "filename": path.name,
-                    "url": f"/media/music/visualizers/{rel}",
+                    "url": f"/media/visualizers/{rel}",
                     "size": path.stat().st_size,
                 }
             )
@@ -5080,8 +5393,8 @@ class OIABHandler(BaseHTTPRequestHandler):
                 "id": "visualizers",
                 "title": "Visualizer Images",
                 "description": "Images usable by music visualizer modes.",
-                "path": str(self.settings.data_dir / "media" / "music" / "visualizers"),
-                "publicBase": "/media/music/visualizers/",
+                "path": str(self.settings.data_dir / "media" / "visualizers"),
+                "publicBase": "/media/visualizers/",
                 "accept": ".png,.jpg,.jpeg,.webp,.gif",
                 "extensions": [".png", ".jpg", ".jpeg", ".webp", ".gif"],
             },

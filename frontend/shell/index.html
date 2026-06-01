@@ -185,6 +185,16 @@
             </label>
             <a href="/mobile/map-packs.html" data-open-app="map-packs">Maps / Map Packs</a>
           </section>
+          <section class="uo-settings-card uo-storage-settings-card">
+            <h2>Storage Locations</h2>
+            <p class="uo-card-note">Bind-mount host paths for maps, music, books, ROMs, and services. Save updates the OIAB storage config; apply requires a container recreate.</p>
+            <div id="storageLocations" class="uo-storage-list"></div>
+            <div class="uo-storage-actions">
+              <button id="saveStorageSettings" type="button">Save Storage Paths</button>
+              <a href="/filebrowser-launch" data-open-app="file-uploads">Open File Manager</a>
+            </div>
+            <small id="storageSettingsMessage" class="uo-status-note"></small>
+          </section>
           <section class="uo-settings-card uo-network-settings-card">
             <h2>HotSpot Config</h2>
             <p class="uo-card-note">Used by the host systemd network mode manager. Saves to OIAB data config; apply requires the host manager service.</p>
@@ -239,7 +249,7 @@
           <section class="uo-settings-card">
             <h2>Plugins</h2>
             <a href="/mobile/services.html" data-open-app="service-manager">Install / Enable Plugins</a>
-            <a href="/apps/filebrowser/" data-open-app="file-uploads">File Manager</a>
+            <a href="/filebrowser-launch" data-open-app="file-uploads">File Manager</a>
           </section>
           <section class="uo-settings-card">
             <h2>System</h2>
@@ -276,6 +286,22 @@
       <input id="passwordInput" type="password" autocomplete="current-password" placeholder="Password">
       <p id="passwordError" class="uo-dialog-message"></p>
       <button id="passwordSubmit" class="uo-soft-action" type="button">Open</button>
+    </dialog>
+
+    <dialog id="storageBrowserDialog" class="uo-dialog uo-storage-dialog">
+      <form method="dialog"><button class="uo-dialog-close" aria-label="Close">×</button></form>
+      <h2 id="storageBrowserTitle">Choose Folder</h2>
+      <p id="storageBrowserNote">Select a host directory for this data location.</p>
+      <div class="uo-storage-browser-toolbar">
+        <button id="storageBrowserUp" class="uo-soft-action" type="button">Up</button>
+        <select id="storageBrowserRoots" aria-label="Browse root"></select>
+      </div>
+      <div id="storageBrowserCurrentPath" class="uo-storage-browser-path">/srv</div>
+      <div id="storageBrowserList" class="uo-storage-browser-list"></div>
+      <div class="uo-storage-browser-actions">
+        <button id="storageBrowserChoose" type="button">Use This Folder</button>
+      </div>
+      <p id="storageBrowserMessage" class="uo-dialog-message"></p>
     </dialog>
 
     <audio id="globalAudio" preload="metadata"></audio>

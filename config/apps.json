@@ -42,7 +42,7 @@
       "id": "file-uploads",
       "title": "File Manager",
       "description": "Drag-and-drop file manager for media, maps, books, ROMs, uploads, and backups.",
-      "url": "/apps/filebrowser/",
+      "url": "/filebrowser-launch",
       "icon": "/maps/overland/overland-file-manager.svg",
       "category": "Admin"
     },

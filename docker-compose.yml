@@ -32,6 +32,9 @@ services:
       OIAB_EMULATORJS_DIR: /data/oiab/services/emulatorjs/data
       FILEBROWSER_PORT: ${FILEBROWSER_PORT:-8091}
       FILEBROWSER_URL: ${FILEBROWSER_URL:-}
+      FILEBROWSER_INTERNAL_URL: ${FILEBROWSER_INTERNAL_URL:-http://filebrowser:80}
+      FILEBROWSER_ADMIN_USER: ${FILEBROWSER_ADMIN_USER:-admin}
+      FILEBROWSER_ADMIN_PASSWORD: ${FILEBROWSER_ADMIN_PASSWORD:-}
       JELLYFIN_PORT: ${JELLYFIN_PORT:-8096}
       JELLYFIN_URL: ${JELLYFIN_URL:-}
       KOMGA_PORT: ${KOMGA_PORT:-25601}
@@ -68,6 +71,9 @@ services:
       - "${OIAB_GPSD_SOCKET_HOST:-/var/run/gpsd.sock}:${OIAB_GPSD_SOCKET:-/var/run/gpsd.sock}"
       - "${OIAB_DOCKER_SOCKET_HOST:-/var/run/docker.sock}:/var/run/docker.sock"
       - "${KOMGA_READER_AUTH_FILE_HOST:-/dev/null}:/run/oiab/komga-reader-auth.env:ro"
+      - "${OIAB_STORAGE_BROWSE_SRV:-/srv}:/srv:ro"
+      - "${OIAB_STORAGE_BROWSE_MNT:-/mnt}:/mnt:ro"
+      - "${OIAB_STORAGE_BROWSE_MEDIA:-/media}:/media:ro"
       # Important subpaths under the bind mount:
       #   certs: /data/oiab/certs
       #   PMTiles/map packs: /data/oiab/maps/packs
@@ -146,7 +152,7 @@ services:
       - "${OIAB_MINECRAFT_DIR:-/srv/trailer/minecraft/server}:/data"
 
   filebrowser:
-    image: filebrowser/filebrowser:s6
+    image: filebrowser/filebrowser:latest
     restart: unless-stopped
     ports:
       - "${FILEBROWSER_PORT:-8091}:80"
@@ -154,7 +160,21 @@ services:
       PUID: "${OIAB_UID:-1000}"
       PGID: "${OIAB_GID:-1000}"
       TZ: "${TZ:-America/New_York}"
-    command: ["--noauth", "--root", "/srv", "--database", "/database/filebrowser.db", "--address", "0.0.0.0"]
+      FILEBROWSER_ADMIN_PASSWORD: "${FILEBROWSER_ADMIN_PASSWORD:-}"
+    entrypoint: ["/bin/sh", "-lc"]
+    command:
+      - >
+        set -eu;
+        DB="/database/filebrowser.db";
+        if [ ! -f "$$DB" ]; then
+          filebrowser config init -d "$$DB";
+        fi;
+        filebrowser config set -d "$$DB" -a 0.0.0.0 -p 80 -b /apps/filebrowser -r /srv --auth.method=json >/dev/null;
+        if [ -n "$${FILEBROWSER_ADMIN_PASSWORD:-}" ]; then
+          filebrowser users update admin -d "$$DB" -p "$$FILEBROWSER_ADMIN_PASSWORD" >/dev/null 2>&1 ||
+          filebrowser users add admin "$$FILEBROWSER_ADMIN_PASSWORD" -d "$$DB" --perm.admin >/dev/null;
+        fi;
+        exec filebrowser -d "$$DB" -a 0.0.0.0 -p 80 -b /apps/filebrowser -r /srv
     volumes:
       - "${OIAB_FILEBROWSER_ROOT:-/srv/trailer}:/srv"
       - "${OIAB_FILEBROWSER_DB_DIR:-/srv/trailer/data/oiab/services/filebrowser/database}:/database"
