@@ -94,6 +94,20 @@ if old in text:
 PY
 fi
 
+if [[ -f /var/www/html/app/js/app.js ]]; then
+  python3 - <<'PY'
+from pathlib import Path
+
+path = Path("/var/www/html/app/js/app.js")
+text = path.read_text(encoding="utf-8")
+old = "    const path = window.location.pathname;\n"
+new = "    const path = window.location.pathname.replace(/^\\/apps\\/raspap(?=\\/|$)/, '') || '/';\n"
+if old in text:
+    text = text.replace(old, new, 1)
+    path.write_text(text, encoding="utf-8")
+PY
+fi
+
 systemctl enable lighttpd >/dev/null 2>&1 || true
 systemctl restart lighttpd
 
