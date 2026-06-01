@@ -103,6 +103,14 @@ File Browser is a core managed component for browsing and uploading OIAB media, 
 - Source: https://github.com/filebrowser/filebrowser
 - License: Apache-2.0
 
+## RaspAP
+
+RaspAP is used as the preferred Raspberry Pi network-management UI for local access point and upstream Wi-Fi configuration in OIAB deployments.
+
+- Project: https://raspap.com/
+- Source: https://github.com/RaspAP/raspap-webgui
+- License: BSD-3-Clause
+
 ## Jellyfin
 
 Jellyfin is represented as an optional managed service.

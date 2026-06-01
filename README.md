@@ -239,6 +239,10 @@ oiab-network-status
 
 Configure interfaces and AP settings from Central Settings → HotSpot Config.
 
+For a feature-complete Raspberry Pi network UI with dual-radio AP/uplink support, see:
+
+- [docs/RASPAP.md](docs/RASPAP.md)
+
 Full docs: [`docs/NETWORK_MODES.md`](docs/NETWORK_MODES.md).
 
 7. Start optional plugins/services only when wanted:

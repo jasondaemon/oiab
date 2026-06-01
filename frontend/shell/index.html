@@ -196,22 +196,30 @@
             <small id="storageSettingsMessage" class="uo-status-note"></small>
           </section>
           <section class="uo-settings-card uo-network-settings-card">
-            <h2>HotSpot Config</h2>
-            <p class="uo-card-note">Used by the host systemd network mode manager. Saves to OIAB data config; apply requires the host manager service.</p>
-            <div class="uo-settings-fields">
-              <label>Ethernet <input id="networkEthIface" type="text" autocomplete="off" placeholder="eth0"></label>
-              <label>AP Wi-Fi <input id="networkApIface" type="text" autocomplete="off" placeholder="wlan0"></label>
-              <label>WAN Wi-Fi <input id="networkWanIface" type="text" autocomplete="off" placeholder="wlan1"></label>
-              <label>SSID <input id="networkApSsid" type="text" autocomplete="off" placeholder="Daemon Adventures"></label>
-              <label>Wi-Fi Key <input id="networkApPassphrase" type="password" autocomplete="new-password" placeholder="Leave blank for open AP"></label>
-              <label>Country <input id="networkApCountry" type="text" maxlength="2" autocomplete="off" placeholder="US"></label>
-              <label>Channel <input id="networkApChannel" type="number" min="1" max="165" placeholder="6"></label>
-              <label>AP Subnet <input id="networkApSubnet" type="text" autocomplete="off" placeholder="192.168.8.0/24"></label>
-              <label>AP IP <input id="networkApIp" type="text" autocomplete="off" placeholder="192.168.8.2"></label>
-              <label>DHCP Range <input id="networkDhcpRange" type="text" autocomplete="off" placeholder="192.168.8.3,192.168.8.20,12h"></label>
+            <h2>Network / RaspAP</h2>
+            <p class="uo-card-note">RaspAP is the preferred network manager for OIAB. Standard OIAB builds use one Wi-Fi radio for client access and, when available, a second Wi-Fi radio for uplink. Ethernet remains a fallback uplink option.</p>
+            <div class="uo-settings-actions">
+              <a id="openRaspapLink" href="/raspap-launch" target="_blank" rel="noopener">Open RaspAP</a>
             </div>
-            <button id="saveNetworkSettings" type="button">Save HotSpot Config</button>
-            <small id="networkSettingsMessage" class="uo-status-note"></small>
+            <small id="networkRaspapMessage" class="uo-status-note"></small>
+            <details class="uo-settings-details">
+              <summary>Advanced bootstrap / fallback AP settings</summary>
+              <p class="uo-card-note">These settings are still written for the host legacy AP manager. Keep them available as a bootstrap path, but use RaspAP as the primary UI once installed.</p>
+              <div class="uo-settings-fields">
+                <label>Ethernet <input id="networkEthIface" type="text" autocomplete="off" placeholder="eth0"></label>
+                <label>AP Wi-Fi <input id="networkApIface" type="text" autocomplete="off" placeholder="wlan0"></label>
+                <label>WAN Wi-Fi <input id="networkWanIface" type="text" autocomplete="off" placeholder="wlan1"></label>
+                <label>SSID <input id="networkApSsid" type="text" autocomplete="off" placeholder="Daemon Adventures"></label>
+                <label>Wi-Fi Key <input id="networkApPassphrase" type="password" autocomplete="new-password" placeholder="Leave blank for open AP"></label>
+                <label>Country <input id="networkApCountry" type="text" maxlength="2" autocomplete="off" placeholder="US"></label>
+                <label>Channel <input id="networkApChannel" type="number" min="1" max="165" placeholder="6"></label>
+                <label>AP Subnet <input id="networkApSubnet" type="text" autocomplete="off" placeholder="192.168.8.0/24"></label>
+                <label>AP IP <input id="networkApIp" type="text" autocomplete="off" placeholder="192.168.8.2"></label>
+                <label>DHCP Range <input id="networkDhcpRange" type="text" autocomplete="off" placeholder="192.168.8.3,192.168.8.20,12h"></label>
+              </div>
+              <button id="saveNetworkSettings" type="button">Save Bootstrap AP Config</button>
+              <small id="networkSettingsMessage" class="uo-status-note"></small>
+            </details>
           </section>
           <section class="uo-settings-card">
             <h2>Music</h2>

@@ -2467,6 +2467,8 @@ class OIABHandler(BaseHTTPRequestHandler):
             return self.redirect_to_url("/books/")
         if path in {"/filebrowser-launch", "/filebrowser-launch/"}:
             return self.serve_filebrowser_launcher()
+        if path in {"/raspap-launch", "/raspap-launch/"}:
+            return self.redirect_to_url(self.raspap_launch_url())
         if path in {"/api/filebrowser/session", "/filebrowser/session"}:
             return self.send_json(self.filebrowser_session_payload())
         if path.startswith("/books/"):
@@ -2915,8 +2917,24 @@ class OIABHandler(BaseHTTPRequestHandler):
             "defaults": self.network_settings_defaults(),
             "config_path": str(path),
             "exists": path.exists(),
-            "note": "Host networking changes are applied by the oiab-network-manager systemd service.",
+            "note": "RaspAP is the preferred network UI. The legacy host network manager settings remain available as a bootstrap and fallback path.",
+            "raspap": {
+                "launch_url": self.raspap_launch_url(),
+                "configured_url": (self.settings.raspap_url or "").strip(),
+                "port": self.settings.raspap_port,
+                "scheme": self.settings.raspap_scheme,
+                "summary": "Use a single Wi-Fi radio for local client access, or a second radio for upstream Wi-Fi such as Starlink, hotel, or home networks. Ethernet remains available as a fallback uplink.",
+            },
         }
+
+    def raspap_launch_url(self) -> str:
+        configured = (self.settings.raspap_url or "").strip()
+        if configured:
+            return configured
+        host_header = (self.headers.get("Host") or self.settings.hostname).strip()
+        host = host_header.split(":", 1)[0] if host_header else self.settings.hostname
+        scheme = (self.settings.raspap_scheme or "http").strip() or "http"
+        return f"{scheme}://{host}:{self.settings.raspap_port}/"
 
     def validate_network_settings(self, values: dict[str, str]) -> str | None:
         iface_re = re.compile(r"^[A-Za-z0-9_.:-]{1,32}$")
