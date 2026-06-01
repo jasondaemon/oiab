@@ -32,7 +32,7 @@ If two Wi-Fi interfaces are present:
 Central Settings now includes a `Network / RaspAP` card with:
 
 - `Open RaspAP`
-- advanced fallback AP settings for the older host network manager
+- advanced AP defaults for the OIAB host mode helper
 
 The launcher defaults to:
 
@@ -59,6 +59,11 @@ This wrapper:
 - moves the RaspAP lighttpd UI to port `8097`
 - patches a PHP 8 session-key warning in `WiFiManager.php`
 - patches nginx, when present, to expose RaspAP at `/apps/raspap/`
+- installs an OIAB host mode helper that:
+  - disables the hotspot when ethernet has carrier
+  - enables the hotspot on `wlan0` when ethernet is unplugged
+  - seeds OIAB DNS/captive responses for offline client devices
+  - leaves `wlan1` available for remembered upstream Wi-Fi networks managed by NetworkManager/RaspAP
 
 Related environment variables:
 
@@ -69,12 +74,20 @@ Related environment variables:
 
 ## Current model
 
-For now, OIAB keeps the previous host AP manager settings as a bootstrap/fallback path.
+RaspAP is the primary user-facing network UI.
 
-That means:
+OIAB adds a small host mode helper around it so the appliance behaves consistently:
 
-- RaspAP is the preferred user-facing network UI
-- the legacy OIAB AP manager remains available until full cutover is complete
+- `eth0` carrier present:
+  - hotspot off
+  - Pi behaves as a normal wired client
+- no `eth0` carrier:
+  - hotspot on over `wlan0`
+  - DHCP/DNS served locally for OIAB clients
+  - `overland.daemonadventures.net` and OIAB local names resolve to the AP IP
+- `wlan1` present and configured:
+  - NetworkManager/RaspAP can auto-connect remembered uplink Wi-Fi
+  - AP remains on `wlan0`
 
 ## Notes
 

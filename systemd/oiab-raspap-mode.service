@@ -1,0 +1,13 @@
+[Unit]
+Description=OIAB RaspAP network mode apply
+After=network-online.target NetworkManager.service lighttpd.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=-/data/oiab/config/network.env
+ExecStart=/usr/local/sbin/oiab-raspap-mode-manager apply
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

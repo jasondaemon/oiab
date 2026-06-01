@@ -12,12 +12,24 @@ fi
 
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
-apt-get install -y curl ca-certificates
+apt-get install -y curl ca-certificates iw rfkill dnsmasq hostapd
 
 tmp_installer="$(mktemp)"
 trap 'rm -f "$tmp_installer"' EXIT
 curl -fsSL "$INSTALLER_URL" -o "$tmp_installer"
 bash "$tmp_installer" --yes
+
+install -m 0755 "$REPO_ROOT/scripts/oiab-raspap-mode-manager.sh" /usr/local/sbin/oiab-raspap-mode-manager
+install -m 0644 "$REPO_ROOT/systemd/oiab-raspap-mode.service" /etc/systemd/system/oiab-raspap-mode.service
+
+cat >/etc/NetworkManager/dispatcher.d/90-oiab-raspap-mode <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+if [[ "${2:-}" =~ ^(up|down|dhcp4-change|connectivity-change|hostname|pre-up|vpn-up|vpn-down)$ ]]; then
+  /usr/local/sbin/oiab-raspap-mode-manager apply >/dev/null 2>&1 || true
+fi
+EOF
+chmod 0755 /etc/NetworkManager/dispatcher.d/90-oiab-raspap-mode
 
 if [[ -f /etc/lighttpd/lighttpd.conf ]]; then
   python3 - "$RASPAP_PORT" <<'PY'
@@ -110,6 +122,10 @@ fi
 
 systemctl enable lighttpd >/dev/null 2>&1 || true
 systemctl restart lighttpd
+systemctl daemon-reload
+systemctl enable oiab-raspap-mode.service >/dev/null 2>&1 || true
+nmcli radio wifi on >/dev/null 2>&1 || true
+/usr/local/sbin/oiab-raspap-mode-manager apply || true
 
 cat <<EOF
 RaspAP installed.
@@ -120,8 +136,10 @@ Access:
 
 Recommended OIAB topology:
   - AP / client access interface: wlan0
-  - Uplink interface (Starlink/home/hotel): wlan1
-  - Ethernet remains available as fallback uplink
+  - Uplink interface (Starlink/home/hotel): wlan1 when present
+  - Ethernet remains preferred docked uplink and disables the hotspot
+  - Without ethernet, wlan0 becomes the local OIAB hotspot
+  - With wlan1 present, NetworkManager/RaspAP can remember and auto-connect uplink Wi-Fi
 
 Use Central Settings -> Network / RaspAP -> Open RaspAP to launch it from OIAB.
 EOF
