@@ -2175,16 +2175,17 @@
       source: "offline-regions",
       filter: ["==", ["geometry-type"], "Point"],
       layout: {
-        "text-field": "⬚",
-        "text-size": 17,
+        "text-field": ["case", ["==", ["get", "draft"], 1], "▣ Save", "▣ Cache"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 4, 20, 10, 24, 14, 30],
         "text-font": ["Noto Sans Bold"],
         "text-allow-overlap": true,
         "text-ignore-placement": true,
+        "text-anchor": "bottom-right",
       },
       paint: {
-        "text-color": "#102719",
+        "text-color": "#06170f",
         "text-halo-color": "#7df28c",
-        "text-halo-width": 3,
+        "text-halo-width": 7,
       },
     });
     updateOfflineRegionSources();
@@ -2229,7 +2230,7 @@
       });
       features.push({
         type: "Feature",
-        geometry: { type: "Point", coordinates: [(minLon + maxLon) / 2, (minLat + maxLat) / 2] },
+        geometry: { type: "Point", coordinates: [maxLon - ((maxLon - minLon) * 0.035), minLat + ((maxLat - minLat) * 0.035)] },
         properties,
       });
     }
