@@ -1690,10 +1690,20 @@
     state.map.on("click", "overland-waypoint-circles", showSavedPointPopup);
     state.map.on("click", "overland-waypoint-icons", showSavedPointPopup);
     state.map.on("click", "overland-track-lines", showSavedTrackPopup);
-    state.map.on("click", "offline-region-icons", (event) => {
+    const openOfflineRegionFromFeature = (event) => {
       const regionId = event.features?.[0]?.properties?.id;
       if (regionId && regionId !== "__draft__") openOfflineRegionById(regionId);
-    });
+    };
+    state.map.on("click", "offline-region-icon-halo", openOfflineRegionFromFeature);
+    state.map.on("click", "offline-region-icons", openOfflineRegionFromFeature);
+    for (const layerId of ["offline-region-icon-halo", "offline-region-icons"]) {
+      state.map.on("mouseenter", layerId, () => {
+        state.map.getCanvas().style.cursor = "pointer";
+      });
+      state.map.on("mouseleave", layerId, () => {
+        state.map.getCanvas().style.cursor = "";
+      });
+    }
     state.map.on("click", "search-result-halo", (event) => openSearchResult(event.features?.[0]?.properties?.index));
     state.map.on("click", "search-result-dot", (event) => openSearchResult(event.features?.[0]?.properties?.index));
     state.map.on("click", "oiab-poi-icons", showBasePoiPopup);
@@ -2188,7 +2198,7 @@
       source: "offline-regions",
       filter: ["==", ["geometry-type"], "Point"],
       layout: {
-        "text-field": ["case", ["==", ["get", "draft"], 1], "+", "↧"],
+        "text-field": ["case", ["==", ["get", "draft"], 1], "+", "⚙"],
         "text-size": ["interpolate", ["linear"], ["zoom"], 4, 14, 10, 17, 14, 20],
         "text-font": ["Noto Sans Bold"],
         "text-allow-overlap": true,
