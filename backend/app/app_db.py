@@ -2182,7 +2182,9 @@ class AppDB:
         elif cache_mode in {"offline_pack", "latest_snapshot", "manual_download"}:
             size_bytes = 0
         available = bool(row["online_available"] or exists)
-        if cache_mode == "latest_snapshot" and source_url.startswith("/maps/overlays/"):
+        if cache_mode == "offline_pack":
+            available = exists
+        elif cache_mode == "latest_snapshot" and source_url.startswith("/maps/overlays/"):
             available = exists
         item = {
             "id": row["id"],
