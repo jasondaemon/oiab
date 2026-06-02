@@ -2001,9 +2001,11 @@ class AppDB:
                 sort_order = int(existing["sort_order"])
                 existing_metadata = json_loads(existing["metadata_json"], {})
                 preserve_runtime_status = not (
-                    bool(overlay.get("online_available"))
+                    online_available
                     and str(overlay.get("cache_mode") or "none") == "none"
-                    and not path
+                    and not str(source_url or "").startswith("/maps/overlays/")
+                    and not path_value
+                    and not local_path
                 )
                 preserved_keys = ["last_fetch_at", "expires_at", "local_path", "size_bytes"]
                 if preserve_runtime_status:
@@ -2233,6 +2235,7 @@ class AppDB:
             "refresh_interval_minutes": metadata.get("refresh_interval_minutes"),
             "install_status": metadata.get("install_status") or "",
             "error_message": metadata.get("error_message") or "",
+            "warning": metadata.get("warning") or "",
             "feature_count": metadata.get("feature_count"),
             "source_size_bytes": metadata.get("source_size_bytes"),
             "layer_order": metadata.get("layer_order", row["sort_order"]),
@@ -2291,9 +2294,12 @@ class AppDB:
         if item["id"] == "usgs_topo":
             item["online_only"] = True
             item["configured_url"] = bool(item["tiles"] or item["url_template"] or item["source_url"])
-        if item["id"] == "noaa_radar_online":
+        if item["online_available"] and item["cache_mode"] == "none" and not item["exists"]:
             item["online_only"] = True
             item["configured_url"] = bool(item["tiles"] or item["url_template"] or item["source_url"])
+            item["install_status"] = "online_only"
+            if item["error_message"] == "not_implemented":
+                item["error_message"] = ""
         return item
 
     def map_overlay_registry(self) -> dict[str, Any]:
