@@ -4766,6 +4766,14 @@ PY
         job_id = f"{overlay_id}_refresh"
         payload = payload or {}
         update_overlay_job(job_id, overlay_id=overlay_id, type="refresh", status="running", step="preparing BLM download", progress=5, error_message="", started_at=timestamp())
+        self.app_db().update_map_overlay_metadata(
+            overlay_id,
+            {
+                "cache_status": "refreshing",
+                "install_status": "refreshing",
+                "error_message": "",
+            },
+        )
         output_dir = self.settings.data_dir / "maps" / "overlays" / "public-lands"
         source_dir = output_dir / "source"
         output_dir.mkdir(parents=True, exist_ok=True)
