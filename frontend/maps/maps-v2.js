@@ -1080,7 +1080,7 @@
     ];
   }
 
-  function defaultOverlayLayers(overlay, sourceId, variant = "") {
+  function defaultOverlayLayers(overlay, sourceId, sourceLayer = null, variant = "") {
     const opacity = overlayOpacity(overlay);
     const style = overlay.style || overlay.category || "";
     const minzoom = Number(overlay.minzoom ?? overlay.metadata?.minzoom ?? 0);
@@ -1198,22 +1198,23 @@
         },
       ];
     }
-    if (overlay.type === "pmtiles" && overlay.source_layer) {
+    const pmtilesSourceLayer = sourceLayer || overlay.source_layer;
+    if (overlay.type === "pmtiles" && pmtilesSourceLayer) {
       if (style === "usgs_contours" || overlay.id === "usgs_topographic_contours") {
-        return contourOverlayLayers(overlay, sourceId, overlay.source_layer, variant);
+        return contourOverlayLayers(overlay, sourceId, pmtilesSourceLayer, variant);
       }
       if (style === "public_lands_blm_wilderness") {
-        return blmWildernessOverlayLayers(overlay, sourceId, overlay.source_layer);
+        return blmWildernessOverlayLayers(overlay, sourceId, pmtilesSourceLayer);
       }
       if (style === "public_lands_blm" || overlay.category === "public_lands") {
-        return blmOverlayLayers(overlay, sourceId, overlay.source_layer);
+        return blmOverlayLayers(overlay, sourceId, pmtilesSourceLayer);
       }
       if (style === "mvum_roads" || style === "mvum_trails" || overlay.category === "mvum") {
         return [{
           id: overlayLayerId(overlay, "mvum-line", variant),
           type: "line",
           source: sourceId,
-          "source-layer": overlay.source_layer,
+          "source-layer": pmtilesSourceLayer,
           minzoom,
           maxzoom,
           filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString"]]],
@@ -1225,7 +1226,7 @@
           id: overlayLayerId(overlay, "fill", variant),
           type: "fill",
           source: sourceId,
-          "source-layer": overlay.source_layer,
+          "source-layer": pmtilesSourceLayer,
           minzoom,
           maxzoom,
           filter: ["==", ["geometry-type"], "Polygon"],
@@ -1235,7 +1236,7 @@
           id: overlayLayerId(overlay, "line", variant),
           type: "line",
           source: sourceId,
-          "source-layer": overlay.source_layer,
+          "source-layer": pmtilesSourceLayer,
           minzoom,
           maxzoom,
           filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
@@ -1245,7 +1246,7 @@
           id: overlayLayerId(overlay, "point", variant),
           type: "circle",
           source: sourceId,
-          "source-layer": overlay.source_layer,
+          "source-layer": pmtilesSourceLayer,
           minzoom,
           maxzoom,
           filter: ["==", ["geometry-type"], "Point"],
@@ -1270,7 +1271,7 @@
     const layers = variants.flatMap(({ sourceId, variant }) => (
       customLayers.length
         ? customLayers.map((layer, index) => ({ ...layer, id: layer.id || overlayLayerId(overlay, `custom-${index}`, variant) }))
-        : defaultOverlayLayers(overlay, sourceId, variant)
+        : defaultOverlayLayers(overlay, sourceId, overlay.type === "pmtiles" ? overlay.source_layer : null, variant)
     ));
     return layers
       .filter((layer) => layer && layer.id && layer.type !== "raster")
@@ -1293,7 +1294,7 @@
             url: `pmtiles://${new URL(regionSource.url, window.location.href).href}`,
             attribution: overlay.attribution || "",
           };
-          const layers = defaultOverlayLayers(overlay, regionSourceId, regionSource.region_id || regionSource.region_name || "region");
+          const layers = defaultOverlayLayers(overlay, regionSourceId, overlay.source_layer, regionSource.region_id || regionSource.region_name || "region");
           overlayLayers.push(...layers);
         }
         continue;
@@ -1335,7 +1336,7 @@
           if (overlay.type === "pmtiles" && overlay.source_layer && !next["source-layer"]) next["source-layer"] = overlay.source_layer;
           return applyOverlayOpacity(next, overlayOpacity(overlay));
         })
-        : defaultOverlayLayers(overlay, sourceId);
+        : defaultOverlayLayers(overlay, sourceId, overlay.type === "pmtiles" ? overlay.source_layer : null);
       overlayLayers.push(...layers);
     }
     if (!overlayLayers.length) return;
