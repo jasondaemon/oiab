@@ -2523,7 +2523,9 @@ class OIABHandler(BaseHTTPRequestHandler):
                 y = int(y_raw)
             except ValueError:
                 return self.send_json({"ok": False, "error": "Invalid tile coordinates."}, status=400)
-            return self.serve_overlay_cached_tile(overlay_id, z, x, y)
+            query = parse_qs(parsed.query)
+            offline_only = str(query.get("offline_only", [""])[-1]).lower() in {"1", "true", "yes", "on"}
+            return self.serve_overlay_cached_tile(overlay_id, z, x, y, offline_only=offline_only)
         if path.startswith("/api/maps/overlays/jobs/"):
             job_id = path.rstrip("/").rsplit("/", 1)[-1]
             job = overlay_job_snapshot(job_id)
@@ -4505,9 +4507,9 @@ PY
             raise ValueError("Remote overlay tile response was empty.")
         return data
 
-    def serve_overlay_cached_tile(self, overlay_id: str, z: int, x: int, y: int) -> None:
+    def serve_overlay_cached_tile(self, overlay_id: str, z: int, x: int, y: int, *, offline_only: bool = False) -> None:
         overlay = self.cacheable_overlay(overlay_id)
-        offline_only = bool(self.app_db().app_setting("maps.offline_regions_only", False))
+        offline_only = offline_only or bool(self.app_db().app_setting("maps.offline_regions_only", False))
         matches = self.matching_offline_regions_for_tile(overlay_id, z, x, y)
         mime = self.overlay_tile_mime(overlay)
         for match in matches:
@@ -4516,7 +4518,12 @@ PY
                 return self.send_tile_bytes(cache_path.read_bytes(), mime)
         if offline_only:
             return self.send_blank_overlay_tile()
-        data = self.fetch_remote_tile(overlay, z, x, y)
+        try:
+            data = self.fetch_remote_tile(overlay, z, x, y)
+        except Exception as exc:  # noqa: BLE001 - optional raster overlays should not break map rendering.
+            if self.settings.dev_mode:
+                print(f"Overlay tile fetch failed for {overlay_id} {z}/{x}/{y}: {exc}")
+            return self.send_blank_overlay_tile()
         if matches:
             cache_path = self.tile_cache_path(str(matches[0]["region"]["id"]), overlay_id, z, x, y)
             cache_path.parent.mkdir(parents=True, exist_ok=True)
