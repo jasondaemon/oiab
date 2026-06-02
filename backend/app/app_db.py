@@ -2000,7 +2000,15 @@ class AppDB:
                 opacity = float(existing["opacity"])
                 sort_order = int(existing["sort_order"])
                 existing_metadata = json_loads(existing["metadata_json"], {})
-                for key in ("last_fetch_at", "expires_at", "cache_status", "install_status", "error_message", "local_path", "size_bytes"):
+                preserve_runtime_status = not (
+                    bool(overlay.get("online_available"))
+                    and str(overlay.get("cache_mode") or "none") == "none"
+                    and not path
+                )
+                preserved_keys = ["last_fetch_at", "expires_at", "local_path", "size_bytes"]
+                if preserve_runtime_status:
+                    preserved_keys.extend(["cache_status", "install_status", "error_message"])
+                for key in preserved_keys:
                     if existing_metadata.get(key) not in (None, ""):
                         metadata[key] = existing_metadata[key]
                 existing_path = str(existing["path"] or "")
@@ -2281,6 +2289,9 @@ class AppDB:
             item["key_configured"] = True
             item["refresh_available"] = True
         if item["id"] == "usgs_topo":
+            item["online_only"] = True
+            item["configured_url"] = bool(item["tiles"] or item["url_template"] or item["source_url"])
+        if item["id"] == "noaa_radar_online":
             item["online_only"] = True
             item["configured_url"] = bool(item["tiles"] or item["url_template"] or item["source_url"])
         return item
