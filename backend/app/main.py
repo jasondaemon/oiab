@@ -2457,6 +2457,11 @@ def bboxes_intersect(a: tuple[float, float, float, float], b: tuple[float, float
     return not (a[2] <= b[0] or a[0] >= b[2] or a[3] <= b[1] or a[1] >= b[3])
 
 
+BLANK_PNG_TILE = base64.b64decode(
+    "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAABFUlEQVR4nO3BMQEAAADCoPVP7WsIoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AwBPAABo9vSmwAAAABJRU5ErkJggg=="
+)
+
+
 class OIABHandler(BaseHTTPRequestHandler):
     server_version = "OIAB/0.1"
     settings: Settings = SETTINGS
@@ -4438,6 +4443,9 @@ PY
             return "image/png"
         return "image/jpeg"
 
+    def send_blank_overlay_tile(self) -> None:
+        self.send_tile_bytes(BLANK_PNG_TILE, "image/png")
+
     def overlay_tile_url(self, overlay: dict[str, object], z: int, x: int, y: int) -> str:
         source_type = str(overlay.get("source_type") or "")
         template = ""
@@ -4501,7 +4509,7 @@ PY
             if cache_path.exists() and cache_path.is_file():
                 return self.send_tile_bytes(cache_path.read_bytes(), mime)
         if offline_only:
-            return self.send_json({"ok": False, "error": "Tile not present in offline cache."}, status=404)
+            return self.send_blank_overlay_tile()
         data = self.fetch_remote_tile(overlay, z, x, y)
         if matches:
             cache_path = self.tile_cache_path(str(matches[0]["region"]["id"]), overlay_id, z, x, y)

@@ -685,6 +685,7 @@
         enabled: Boolean(pack.enabled),
       })),
       overlays: overlaySignature(selection?.overlays || []),
+      offline_regions_only: Boolean(state.overlayRegistry?.offline_regions_only),
     });
   }
 
@@ -1276,7 +1277,7 @@
       const sourceUrl = overlay.url || overlay.source_url;
       if (overlay.type === "raster") {
         const tiles = overlay.cached_tile_url_template
-          ? [overlay.cached_tile_url_template]
+          ? [`${overlay.cached_tile_url_template}?offline_only=${state.overlayRegistry?.offline_regions_only ? "1" : "0"}`]
           : Array.isArray(overlay.tiles) && overlay.tiles.length ? overlay.tiles : sourceUrl ? [sourceUrl] : [];
         if (!tiles.length) continue;
         style.sources[sourceId] = {
