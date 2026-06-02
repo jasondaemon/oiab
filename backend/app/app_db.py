@@ -2080,6 +2080,8 @@ class AppDB:
             "public-lands/blm-sma-latest.pmtiles",
             "public-lands/blm-wilderness-latest.geojson",
             "public-lands/blm-wilderness-latest.pmtiles",
+            "public-lands/source/blm-wilderness-area.arcgis.geojson",
+            "public-lands/source/blm-wilderness-study-area.arcgis.geojson",
             "contours/contours.raw.geojsonseq",
             "contours/contours.geojson",
             "contours/contours.pmtiles",
@@ -2119,7 +2121,8 @@ class AppDB:
                         rel_key = candidate.name
                     outside_public_root = not self.overlay_path_is_public(candidate)
                     is_mvum_source = rel_key.startswith("mvum/source/")
-                    if outside_public_root or is_mvum_source or candidate.resolve() in catalog_paths or rel_key in catalog_rel_paths:
+                    is_public_land_source = rel_key.startswith("public-lands/source/")
+                    if outside_public_root or is_mvum_source or is_public_land_source or candidate.resolve() in catalog_paths or rel_key in catalog_rel_paths:
                         conn.execute("DELETE FROM map_overlays WHERE id = ?", (row["id"],))
         scanned = 0
         local_files = [
@@ -2132,6 +2135,8 @@ class AppDB:
             except ValueError:
                 rel_key = path.name
             if rel_key.startswith("mvum/source/"):
+                continue
+            if rel_key.startswith("public-lands/source/"):
                 continue
             if path.resolve() in catalog_paths or rel_key in catalog_rel_paths:
                 continue
