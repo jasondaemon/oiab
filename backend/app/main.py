@@ -4782,6 +4782,7 @@ PY
         extracted_root = source_dir / "blm-sma-national-extract"
         raw_seq = output_dir / "blm-sma-latest.raw.geojsonseq"
         raw_geojson = output_dir / "blm-sma-latest.geojson"
+        mbtiles_output = output_dir / "blm-sma-latest.mbtiles"
         output = output_dir / "blm-sma-latest.pmtiles"
         source_item_id = os.environ.get("OIAB_BLM_SOURCE_ITEM_ID", "6bf2e737c59d4111be92420ee5ab0b46").strip()
         download_url = os.environ.get("OIAB_BLM_DOWNLOAD_URL", f"https://www.arcgis.com/sharing/rest/content/items/{source_item_id}/data").strip()
@@ -4790,7 +4791,7 @@ PY
         max_zoom = max(12, min(17, int(os.environ.get("OIAB_BLM_MAXZOOM", "16") or 16)))
         bbox = self.parse_optional_bbox(payload.get("bbox"))
         try:
-            self.require_mvum_tools(("ogr2ogr", "tippecanoe"))
+            self.require_mvum_tools(("ogr2ogr", "tippecanoe", "pmtiles"))
             update_overlay_job(job_id, step="downloading BLM national source", progress=12)
             source_size = self.download_or_copy_overlay_source(download_url, archive_path, job_id)
 
@@ -4836,12 +4837,13 @@ PY
                 raise ValueError("BLM source converted, but no polygon features were found.")
 
             timeout_seconds = int(os.environ.get("OIAB_BLM_CONVERT_TIMEOUT_SECONDS", "28800"))
+            mbtiles_output.unlink(missing_ok=True)
             output.unlink(missing_ok=True)
             update_overlay_job(job_id, step="building BLM PMTiles overlay", progress=84)
             tip = subprocess.run(
                 [
                     "tippecanoe",
-                    "-o", str(output),
+                    "-o", str(mbtiles_output),
                     "-l", "blm_public_lands",
                     "-Z4",
                     f"-z{max_zoom}",
@@ -4859,10 +4861,24 @@ PY
                 check=False,
             )
             if tip.returncode != 0:
+                mbtiles_output.unlink(missing_ok=True)
                 output.unlink(missing_ok=True)
                 raise ValueError((tip.stderr or tip.stdout or "tippecanoe failed")[-1500:])
+            if not mbtiles_output.exists() or mbtiles_output.stat().st_size <= 0:
+                raise ValueError("tippecanoe did not create a usable MBTiles file.")
+
+            convert = subprocess.run(
+                ["pmtiles", "convert", str(mbtiles_output), str(output)],
+                text=True,
+                capture_output=True,
+                timeout=timeout_seconds,
+                check=False,
+            )
+            if convert.returncode != 0:
+                output.unlink(missing_ok=True)
+                raise ValueError((convert.stderr or convert.stdout or "pmtiles convert failed")[-1500:])
             if not output.exists() or output.stat().st_size <= 0:
-                raise ValueError("tippecanoe did not create a usable PMTiles file.")
+                raise ValueError("pmtiles convert did not create a usable PMTiles file.")
 
             output_path = output
             output_type = "pmtiles"
@@ -4938,10 +4954,11 @@ PY
         contours_gpkg = dem_dir / "contours.gpkg"
         raw_seq = output_dir / "contours.raw.geojsonseq"
         normalized_geojson = output_dir / "contours.geojson"
+        mbtiles_output = output_dir / "contours.mbtiles"
         output = Path(os.environ.get("OIAB_CONTOURS_OUTPUT", str(output_dir / "contours.pmtiles")))
         metadata_path = output.with_suffix(".metadata.json")
         try:
-            self.require_mvum_tools(("gdalbuildvrt", "gdalwarp", "gdal_contour", "ogr2ogr", "tippecanoe"))
+            self.require_mvum_tools(("gdalbuildvrt", "gdalwarp", "gdal_contour", "ogr2ogr", "tippecanoe", "pmtiles"))
             update_overlay_job(job_id, step="querying USGS The National Map", progress=10)
             dem_items = self.tnm_dem_products(bbox)
             tile_paths: list[Path] = []
@@ -5038,11 +5055,12 @@ PY
 
             update_overlay_job(job_id, step="building contour PMTiles overlay", progress=92)
             output.parent.mkdir(parents=True, exist_ok=True)
+            mbtiles_output.unlink(missing_ok=True)
             output.unlink(missing_ok=True)
             tip = subprocess.run(
                 [
                     "tippecanoe",
-                    "-o", str(output),
+                    "-o", str(mbtiles_output),
                     "-l", "contours",
                     f"-Z{min_zoom}",
                     f"-z{max_zoom}",
@@ -5058,9 +5076,25 @@ PY
                 timeout=int(os.environ.get("OIAB_CONTOURS_BUILD_TIMEOUT_SECONDS", "43200")),
                 check=False,
             )
-            if tip.returncode != 0 or not output.exists() or output.stat().st_size <= 0:
+            if tip.returncode != 0:
+                mbtiles_output.unlink(missing_ok=True)
                 output.unlink(missing_ok=True)
                 raise ValueError((tip.stderr or tip.stdout or "tippecanoe failed")[-1500:])
+            if not mbtiles_output.exists() or mbtiles_output.stat().st_size <= 0:
+                raise ValueError("tippecanoe did not create a usable MBTiles file.")
+
+            convert = subprocess.run(
+                ["pmtiles", "convert", str(mbtiles_output), str(output)],
+                text=True,
+                capture_output=True,
+                timeout=int(os.environ.get("OIAB_CONTOURS_BUILD_TIMEOUT_SECONDS", "43200")),
+                check=False,
+            )
+            if convert.returncode != 0:
+                output.unlink(missing_ok=True)
+                raise ValueError((convert.stderr or convert.stdout or "pmtiles convert failed")[-1500:])
+            if not output.exists() or output.stat().st_size <= 0:
+                raise ValueError("pmtiles convert did not create a usable PMTiles file.")
 
             metadata_payload = {
                 "source": "usgs_3dep",
