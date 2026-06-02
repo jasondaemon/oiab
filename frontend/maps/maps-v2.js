@@ -4,6 +4,8 @@
     packs: "/api/maps/packs/installed",
     packStatus: "/api/maps/packs/status",
     overlays: "/api/maps/overlays",
+    overlayRegions: "/api/maps/overlays/regions",
+    overlayOfflineOnly: "/api/maps/overlays/offline-only",
     data: "/maps-data",
     location: "/maps-location-current",
     track: "/maps-tracks-current",
@@ -225,6 +227,10 @@
     overlayRegistry: null,
     tileErrors: [],
     inspectTile: false,
+    offlineRegionDraw: false,
+    offlineRegionStart: null,
+    offlineRegionDraft: null,
+    offlineRegionEditing: null,
     managerSnapshot: { folders: [], items: [] },
     managerSelectedItems: new Set(),
     managerSelectedFolders: new Set(),
@@ -610,6 +616,23 @@
   function normalizeOverlayRegistry(registry) {
     return (Array.isArray(registry?.overlays) ? registry.overlays : [])
       .sort((a, b) => Number(a.sort_order ?? 100) - Number(b.sort_order ?? 100));
+  }
+
+  function offlineRegions(registry = state.overlayRegistry) {
+    return Array.isArray(registry?.offline_regions) ? registry.offline_regions : [];
+  }
+
+  function cacheableRasterOverlays(registry = state.overlayRegistry) {
+    return normalizeOverlayRegistry(registry).filter((overlay) => overlay?.cacheable_region);
+  }
+
+  function bboxToString(bbox) {
+    return Array.isArray(bbox) && bbox.length === 4 ? bbox.map((value) => Number(value).toFixed(6)).join(",") : "";
+  }
+
+  function bboxFromString(text) {
+    const parts = String(text || "").split(",").map((value) => Number(value.trim()));
+    return parts.length === 4 && parts.every((value) => Number.isFinite(value)) ? parts : null;
   }
 
   function enabledOverlays(registry) {
@@ -1252,7 +1275,9 @@
       const sourceId = overlaySourceId(overlay);
       const sourceUrl = overlay.url || overlay.source_url;
       if (overlay.type === "raster") {
-        const tiles = Array.isArray(overlay.tiles) && overlay.tiles.length ? overlay.tiles : sourceUrl ? [sourceUrl] : [];
+        const tiles = overlay.cached_tile_url_template
+          ? [overlay.cached_tile_url_template]
+          : Array.isArray(overlay.tiles) && overlay.tiles.length ? overlay.tiles : sourceUrl ? [sourceUrl] : [];
         if (!tiles.length) continue;
         style.sources[sourceId] = {
           type: "raster",
@@ -1626,6 +1651,7 @@
       state.packTimer = setInterval(checkPackChange, 30000);
     });
     state.map.on("click", (event) => {
+      if (state.offlineRegionDraw) return;
       if (state.inspectTile) {
         inspectTileAt(event.lngLat);
         return;
@@ -1639,10 +1665,32 @@
     state.map.on("click", "overland-waypoint-circles", showSavedPointPopup);
     state.map.on("click", "overland-waypoint-icons", showSavedPointPopup);
     state.map.on("click", "overland-track-lines", showSavedTrackPopup);
+    state.map.on("click", "offline-region-icons", (event) => {
+      const regionId = event.features?.[0]?.properties?.id;
+      if (regionId && regionId !== "__draft__") openOfflineRegionById(regionId);
+    });
+    state.map.on("click", "offline-region-fills", (event) => {
+      const regionId = event.features?.[0]?.properties?.id;
+      if (regionId && regionId !== "__draft__") openOfflineRegionById(regionId);
+    });
+    state.map.on("click", "offline-region-lines", (event) => {
+      const regionId = event.features?.[0]?.properties?.id;
+      if (regionId && regionId !== "__draft__") openOfflineRegionById(regionId);
+    });
     state.map.on("click", "search-result-halo", (event) => openSearchResult(event.features?.[0]?.properties?.index));
     state.map.on("click", "search-result-dot", (event) => openSearchResult(event.features?.[0]?.properties?.index));
     state.map.on("click", "oiab-poi-icons", showBasePoiPopup);
     state.map.on("click", "pois", showBasePoiPopup);
+    state.map.on("mousedown", (event) => {
+      if (!state.offlineRegionDraw) return;
+      startOfflineRegionDraw(event.lngLat);
+    });
+    state.map.on("mousemove", (event) => {
+      moveOfflineRegionDraw(event.lngLat);
+    });
+    state.map.on("mouseup", (event) => {
+      finishOfflineRegionDraw(event.lngLat);
+    });
   }
 
   function bindOverlayFeaturePopups() {
@@ -2007,6 +2055,7 @@
     state.map.addSource("overland-waypoints", { type: "geojson", data: EMPTY });
     state.map.addSource("overland-tracks", { type: "geojson", data: EMPTY });
     state.map.addSource("search-results", { type: "geojson", data: EMPTY });
+    state.map.addSource("offline-regions", { type: "geojson", data: EMPTY });
     state.map.addLayer({
       id: "overland-track-lines",
       type: "line",
@@ -2079,6 +2128,47 @@
         "circle-stroke-width": 2,
       },
     });
+    state.map.addLayer({
+      id: "offline-region-fills",
+      type: "fill",
+      source: "offline-regions",
+      filter: ["==", ["geometry-type"], "Polygon"],
+      paint: {
+        "fill-color": "#8be0bd",
+        "fill-opacity": ["case", ["==", ["get", "draft"], 1], 0.2, 0.14],
+      },
+    });
+    state.map.addLayer({
+      id: "offline-region-lines",
+      type: "line",
+      source: "offline-regions",
+      filter: ["==", ["geometry-type"], "Polygon"],
+      paint: {
+        "line-color": "#7df28c",
+        "line-width": ["case", ["==", ["get", "draft"], 1], 3, 2],
+        "line-opacity": 0.9,
+        "line-dasharray": [2, 1],
+      },
+    });
+    state.map.addLayer({
+      id: "offline-region-icons",
+      type: "symbol",
+      source: "offline-regions",
+      filter: ["==", ["geometry-type"], "Point"],
+      layout: {
+        "text-field": "⬚",
+        "text-size": 17,
+        "text-font": ["Noto Sans Bold"],
+        "text-allow-overlap": true,
+        "text-ignore-placement": true,
+      },
+      paint: {
+        "text-color": "#102719",
+        "text-halo-color": "#7df28c",
+        "text-halo-width": 3,
+      },
+    });
+    updateOfflineRegionSources();
   }
 
   async function loadOverlandData() {
@@ -2090,6 +2180,215 @@
     } catch (error) {
       toast(`Map data failed: ${error.message}`, true);
     }
+  }
+
+  function offlineRegionFeatures() {
+    const features = [];
+    for (const region of offlineRegions()) {
+      const bbox = Array.isArray(region?.bbox) ? region.bbox.map(Number) : [];
+      if (bbox.length !== 4 || bbox.some((value) => !Number.isFinite(value))) continue;
+      const [minLon, minLat, maxLon, maxLat] = bbox;
+      const properties = {
+        id: region.id,
+        name: region.name || "Offline Region",
+        draft: 0,
+        overlays: (Array.isArray(region.items) ? region.items : []).map((item) => item.overlay_name || item.overlay_id).join(", "),
+      };
+      features.push({
+        type: "Feature",
+        geometry: {
+          type: "Polygon",
+          coordinates: [[
+            [minLon, minLat],
+            [maxLon, minLat],
+            [maxLon, maxLat],
+            [minLon, maxLat],
+            [minLon, minLat],
+          ]],
+        },
+        properties,
+      });
+      features.push({
+        type: "Feature",
+        geometry: { type: "Point", coordinates: [(minLon + maxLon) / 2, (minLat + maxLat) / 2] },
+        properties,
+      });
+    }
+    if (Array.isArray(state.offlineRegionDraft) && state.offlineRegionDraft.length === 4) {
+      const [minLon, minLat, maxLon, maxLat] = state.offlineRegionDraft;
+      const draftProps = { id: "__draft__", name: "Draft region", draft: 1, overlays: "" };
+      features.push({
+        type: "Feature",
+        geometry: {
+          type: "Polygon",
+          coordinates: [[
+            [minLon, minLat],
+            [maxLon, minLat],
+            [maxLon, maxLat],
+            [minLon, maxLat],
+            [minLon, minLat],
+          ]],
+        },
+        properties: draftProps,
+      });
+      features.push({
+        type: "Feature",
+        geometry: { type: "Point", coordinates: [(minLon + maxLon) / 2, (minLat + maxLat) / 2] },
+        properties: draftProps,
+      });
+    }
+    return { type: "FeatureCollection", features };
+  }
+
+  function updateOfflineRegionSources() {
+    if (!state.map || !state.map.getSource("offline-regions")) return;
+    state.map.getSource("offline-regions").setData(offlineRegionFeatures());
+  }
+
+  function setOfflineOnlyToggle() {
+    const toggle = $("offlineOnlyToggle");
+    if (!toggle) return;
+    toggle.checked = Boolean(state.overlayRegistry?.offline_regions_only);
+  }
+
+  function setOfflineRegionDrawEnabled(enabled) {
+    state.offlineRegionDraw = Boolean(enabled);
+    if (!state.offlineRegionDraw) {
+      state.offlineRegionStart = null;
+      state.offlineRegionDraft = null;
+      updateOfflineRegionSources();
+    }
+    $("offlineRegionToggle").classList.toggle("is-pending", state.offlineRegionDraw);
+    if (!state.map) return;
+    if (state.offlineRegionDraw) state.map.dragPan.disable();
+    else state.map.dragPan.enable();
+  }
+
+  function regionBBoxFromPoints(start, end) {
+    if (!start || !end) return null;
+    const minLon = Math.min(Number(start.lng), Number(end.lng));
+    const minLat = Math.min(Number(start.lat), Number(end.lat));
+    const maxLon = Math.max(Number(start.lng), Number(end.lng));
+    const maxLat = Math.max(Number(start.lat), Number(end.lat));
+    if (![minLon, minLat, maxLon, maxLat].every((value) => Number.isFinite(value))) return null;
+    return [minLon, minLat, maxLon, maxLat];
+  }
+
+  function renderOfflineRegionOverlayOptions(selectedIds = new Set()) {
+    const holder = $("offlineRegionOverlayOptions");
+    if (!holder) return;
+    const overlays = cacheableRasterOverlays();
+    holder.innerHTML = overlays.map((overlay) => `
+      <label class="omv2-offline-overlay-option">
+        <input type="checkbox" value="${escapeHtml(String(overlay.id || ""))}" ${selectedIds.has(String(overlay.id || "")) ? "checked" : ""}>
+        <span>
+          <strong>${escapeHtml(overlay.name || overlay.id)}</strong>
+          <small>${escapeHtml(overlay.category || "overlay")} · z${escapeHtml(String(overlay.offline_cache_minzoom ?? overlay.minzoom ?? 0))}-${escapeHtml(String(overlay.offline_cache_maxzoom ?? overlay.maxzoom ?? 16))}</small>
+        </span>
+      </label>
+    `).join("");
+  }
+
+  function selectedOfflineOverlayIds() {
+    return Array.from($("offlineRegionOverlayOptions").querySelectorAll('input[type="checkbox"]:checked'))
+      .map((input) => String(input.value || "").trim())
+      .filter(Boolean);
+  }
+
+  function openOfflineRegionModal(region = null, draftBBox = null) {
+    state.offlineRegionEditing = region || null;
+    const bbox = Array.isArray(draftBBox) && draftBBox.length === 4
+      ? draftBBox
+      : Array.isArray(region?.bbox) && region.bbox.length === 4
+        ? region.bbox.map(Number)
+        : null;
+    $("offlineRegionTitle").textContent = region ? "Update offline region" : "Save offline region";
+    $("offlineRegionId").value = region?.id || "";
+    $("offlineRegionName").value = region?.name || "";
+    $("offlineRegionBbox").value = bboxToString(bbox);
+    const selected = new Set((Array.isArray(region?.items) ? region.items : []).map((item) => String(item.overlay_id || "")).filter(Boolean));
+    if (!selected.size) {
+      for (const overlay of cacheableRasterOverlays()) selected.add(String(overlay.id || ""));
+    }
+    renderOfflineRegionOverlayOptions(selected);
+    $("refreshOfflineRegion").hidden = !region;
+    $("deleteOfflineRegion").hidden = !region;
+    $("offlineRegionModal").hidden = false;
+  }
+
+  function closeOfflineRegionModal() {
+    $("offlineRegionModal").hidden = true;
+    $("offlineRegionForm").reset();
+    $("offlineRegionId").value = "";
+    $("offlineRegionBbox").value = "";
+    state.offlineRegionEditing = null;
+  }
+
+  function applyOverlayRegistryUpdate(registry) {
+    state.overlayRegistry = registry;
+    renderOverlayControls();
+    updateOfflineRegionSources();
+  }
+
+  async function saveOfflineRegion(mode = "create") {
+    const regionId = String($("offlineRegionId").value || "").trim();
+    const name = String($("offlineRegionName").value || "").trim() || "Offline Region";
+    const bbox = bboxFromString($("offlineRegionBbox").value);
+    const overlayIds = selectedOfflineOverlayIds();
+    if (!bbox) throw new Error("Draw or select a valid bbox first.");
+    if (!overlayIds.length) throw new Error("Select at least one overlay to cache.");
+    const payload = { region_id: regionId, name, bbox, overlay_ids: overlayIds };
+    const endpoint = mode === "refresh" ? "/api/maps/overlays/regions/refresh" : API.overlayRegions;
+    const data = await postJson(endpoint, payload);
+    state.offlineRegionDraft = null;
+    applyOverlayRegistryUpdate(data);
+    closeOfflineRegionModal();
+    toast(mode === "refresh" ? "Offline region update started." : "Offline region download started.");
+  }
+
+  async function removeOfflineRegion() {
+    const regionId = String($("offlineRegionId").value || "").trim();
+    if (!regionId) throw new Error("No offline region selected.");
+    const data = await postJson("/api/maps/overlays/regions/delete", { region_id: regionId });
+    state.offlineRegionDraft = null;
+    applyOverlayRegistryUpdate(data);
+    closeOfflineRegionModal();
+    toast("Offline region cache cleared.");
+  }
+
+  function openOfflineRegionById(regionId) {
+    const region = offlineRegions().find((item) => String(item.id || "") === String(regionId || ""));
+    if (region) openOfflineRegionModal(region);
+  }
+
+  function startOfflineRegionDraw(lngLat) {
+    state.offlineRegionStart = { lng: Number(lngLat.lng), lat: Number(lngLat.lat) };
+    state.offlineRegionDraft = [state.offlineRegionStart.lng, state.offlineRegionStart.lat, state.offlineRegionStart.lng, state.offlineRegionStart.lat];
+    updateOfflineRegionSources();
+  }
+
+  function moveOfflineRegionDraw(lngLat) {
+    if (!state.offlineRegionDraw || !state.offlineRegionStart) return;
+    const bbox = regionBBoxFromPoints(state.offlineRegionStart, lngLat);
+    if (!bbox) return;
+    state.offlineRegionDraft = bbox;
+    updateOfflineRegionSources();
+  }
+
+  function finishOfflineRegionDraw(lngLat) {
+    if (!state.offlineRegionDraw || !state.offlineRegionStart) return;
+    const bbox = regionBBoxFromPoints(state.offlineRegionStart, lngLat);
+    setOfflineRegionDrawEnabled(false);
+    if (!bbox) return;
+    const width = Math.abs(bbox[2] - bbox[0]);
+    const height = Math.abs(bbox[3] - bbox[1]);
+    if (width < 0.001 || height < 0.001) {
+      toast("Draw a larger offline cache region.", true);
+      return;
+    }
+    state.offlineRegionDraft = bbox;
+    updateOfflineRegionSources();
+    openOfflineRegionModal(null, bbox);
   }
 
   function updateFolders(folders) {
@@ -2120,6 +2419,7 @@
   function renderOverlayControls() {
     const node = $("overlayList");
     if (!node) return;
+    setOfflineOnlyToggle();
     const overlays = normalizeOverlayRegistry(state.overlayRegistry).filter((overlay) => overlay.available);
     node.innerHTML = "";
     if (!overlays.length) {
@@ -2534,6 +2834,7 @@
     }
     state.map.getSource("overland-waypoints").setData({ type: "FeatureCollection", features: waypointFeatures });
     state.map.getSource("overland-tracks").setData({ type: "FeatureCollection", features: trackFeatures });
+    updateOfflineRegionSources();
   }
 
   function activeLocationPayload(payload) {
@@ -3002,9 +3303,60 @@
       $("savedDataPanel").hidden = true;
       $("dataManagerPanel").hidden = true;
     });
+    $("offlineRegionToggle").addEventListener("click", () => {
+      state.inspectTile = false;
+      state.addFromMap = false;
+      $("inspectTile").classList.remove("is-pending");
+      $("addMapWaypoint").classList.remove("is-pending");
+      $("savedDataPanel").hidden = true;
+      $("overlaysPanel").hidden = true;
+      $("dataManagerPanel").hidden = true;
+      const enabled = !state.offlineRegionDraw;
+      setOfflineRegionDrawEnabled(enabled);
+      toast(enabled ? "Draw a box on the map to cache online overlays." : "Offline cache region mode off.");
+    });
     $("closeSavedData").addEventListener("click", () => { $("savedDataPanel").hidden = true; });
     $("closeOverlays").addEventListener("click", () => { $("overlaysPanel").hidden = true; });
     $("closeDataManager").addEventListener("click", closeDataManagerModal);
+    $("closeOfflineRegionModal").addEventListener("click", () => {
+      state.offlineRegionDraft = null;
+      updateOfflineRegionSources();
+      closeOfflineRegionModal();
+    });
+    $("offlineRegionForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      try {
+        await saveOfflineRegion("create");
+      } catch (error) {
+        toast(error.message || "Offline region save failed.", true);
+      }
+    });
+    $("refreshOfflineRegion").addEventListener("click", async () => {
+      try {
+        await saveOfflineRegion("refresh");
+      } catch (error) {
+        toast(error.message || "Offline region update failed.", true);
+      }
+    });
+    $("deleteOfflineRegion").addEventListener("click", async () => {
+      try {
+        await removeOfflineRegion();
+      } catch (error) {
+        toast(error.message || "Offline region delete failed.", true);
+      }
+    });
+    $("offlineOnlyToggle").addEventListener("change", async (event) => {
+      try {
+        const data = await postJson(API.overlayOfflineOnly, { enabled: event.target.checked });
+        applyOverlayRegistryUpdate(data);
+        state.packSignature = "";
+        await boot();
+        toast(event.target.checked ? "Offline regions only enabled." : "Online fallback restored.");
+      } catch (error) {
+        event.target.checked = !event.target.checked;
+        toast(error.message || "Offline-only toggle failed.", true);
+      }
+    });
     $("searchToggle").addEventListener("click", () => {
       $("searchForm").hidden = false;
       $("searchInput").focus();

@@ -314,6 +314,32 @@ class AppDB:
                 CREATE INDEX IF NOT EXISTS idx_map_overlays_enabled
                   ON map_overlays(enabled, sort_order);
 
+                CREATE TABLE IF NOT EXISTS offline_overlay_regions (
+                  id TEXT PRIMARY KEY,
+                  name TEXT NOT NULL,
+                  bbox_json TEXT NOT NULL,
+                  created_at TEXT NOT NULL,
+                  updated_at TEXT NOT NULL
+                );
+
+                CREATE TABLE IF NOT EXISTS offline_overlay_region_items (
+                  region_id TEXT NOT NULL,
+                  overlay_id TEXT NOT NULL,
+                  status TEXT NOT NULL DEFAULT 'pending',
+                  minzoom INTEGER,
+                  maxzoom INTEGER,
+                  tile_count INTEGER NOT NULL DEFAULT 0,
+                  cached_tiles INTEGER NOT NULL DEFAULT 0,
+                  size_bytes INTEGER NOT NULL DEFAULT 0,
+                  error_message TEXT NOT NULL DEFAULT '',
+                  created_at TEXT NOT NULL,
+                  updated_at TEXT NOT NULL,
+                  PRIMARY KEY(region_id, overlay_id)
+                );
+
+                CREATE INDEX IF NOT EXISTS idx_offline_overlay_region_items_overlay
+                  ON offline_overlay_region_items(overlay_id, status);
+
                 CREATE TABLE IF NOT EXISTS app_settings (
                   key TEXT PRIMARY KEY,
                   value_json TEXT NOT NULL,
@@ -2246,6 +2272,15 @@ class AppDB:
             "created": row["created_at"],
             "updated": row["updated_at"],
         }
+        item["cacheable_region"] = bool(
+            item["type"] == "raster"
+            and item["online_available"]
+            and item["source_type"] in {"arcgis_raster", "raster_wms"}
+        )
+        if item["cacheable_region"]:
+            item["offline_cache_minzoom"] = int(metadata.get("offline_cache_minzoom", item.get("minzoom") or 0) or 0)
+            item["offline_cache_maxzoom"] = int(metadata.get("offline_cache_maxzoom", item.get("maxzoom") or 16) or 16)
+            item["cached_tile_url_template"] = f"/api/maps/overlays/cache/{row['id']}/{{z}}/{{x}}/{{y}}"
         if item["id"] in {"mvum_roads_us", "mvum_trails_us"}:
             explicit_url = self.settings.mvum_roads_url if item["id"] == "mvum_roads_us" else self.settings.mvum_trails_url
             source_download_url = explicit_url or self.settings.mvum_mapserver_url
@@ -2313,7 +2348,188 @@ class AppDB:
             "enabled_overlay_ids": [item["id"] for item in overlays if item["enabled"] and item["available"]],
             "storage_root": str(self.settings.data_dir / "maps" / "overlays"),
             "cache_root": str(self.settings.data_dir / "maps" / "cache"),
+            "offline_regions": self.offline_overlay_regions(),
+            "offline_regions_only": bool(self.app_setting("maps.offline_regions_only", False)),
         }
+
+    def offline_overlay_regions(self) -> list[dict[str, Any]]:
+        with self.connect() as conn:
+            region_rows = conn.execute(
+                "SELECT * FROM offline_overlay_regions ORDER BY updated_at DESC, name COLLATE NOCASE"
+            ).fetchall()
+            item_rows = conn.execute(
+                """
+                SELECT items.*, overlays.name AS overlay_name
+                FROM offline_overlay_region_items AS items
+                LEFT JOIN map_overlays AS overlays ON overlays.id = items.overlay_id
+                ORDER BY items.updated_at DESC, overlay_name COLLATE NOCASE
+                """
+            ).fetchall()
+        items_by_region: dict[str, list[dict[str, Any]]] = {}
+        for row in item_rows:
+            items_by_region.setdefault(str(row["region_id"]), []).append(
+                {
+                    "region_id": row["region_id"],
+                    "overlay_id": row["overlay_id"],
+                    "overlay_name": row["overlay_name"] or row["overlay_id"],
+                    "status": row["status"],
+                    "minzoom": row["minzoom"],
+                    "maxzoom": row["maxzoom"],
+                    "tile_count": int(row["tile_count"] or 0),
+                    "cached_tiles": int(row["cached_tiles"] or 0),
+                    "size_bytes": int(row["size_bytes"] or 0),
+                    "error_message": row["error_message"] or "",
+                    "created_at": row["created_at"],
+                    "updated_at": row["updated_at"],
+                }
+            )
+        result: list[dict[str, Any]] = []
+        for row in region_rows:
+            bbox = json_loads(row["bbox_json"], [])
+            result.append(
+                {
+                    "id": row["id"],
+                    "name": row["name"],
+                    "bbox": bbox if isinstance(bbox, list) else [],
+                    "items": items_by_region.get(str(row["id"]), []),
+                    "created_at": row["created_at"],
+                    "updated_at": row["updated_at"],
+                }
+            )
+        return result
+
+    def save_offline_overlay_region(
+        self,
+        *,
+        name: str,
+        bbox: list[float],
+        overlay_ids: list[str],
+        region_id: str | None = None,
+    ) -> dict[str, Any]:
+        region_name = str(name or "Offline Region").strip() or "Offline Region"
+        region_key = str(region_id or f"region_{hashlib.sha1(f'{region_name}:{bbox}:{now_iso()}'.encode('utf-8')).hexdigest()[:12]}")
+        overlay_ids = sorted({str(item).strip() for item in overlay_ids if str(item).strip()})
+        if len(bbox) != 4:
+            raise ValueError("bbox must contain four numeric values.")
+        now = now_iso()
+        with self.connect() as conn:
+            conn.execute(
+                """
+                INSERT INTO offline_overlay_regions(id, name, bbox_json, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?)
+                ON CONFLICT(id) DO UPDATE SET
+                  name = excluded.name,
+                  bbox_json = excluded.bbox_json,
+                  updated_at = excluded.updated_at
+                """,
+                (region_key, region_name, json_dumps(list(bbox)), now, now),
+            )
+            existing = {
+                str(row["overlay_id"])
+                for row in conn.execute(
+                    "SELECT overlay_id FROM offline_overlay_region_items WHERE region_id = ?",
+                    (region_key,),
+                ).fetchall()
+            }
+            for overlay_id in existing - set(overlay_ids):
+                conn.execute(
+                    "DELETE FROM offline_overlay_region_items WHERE region_id = ? AND overlay_id = ?",
+                    (region_key, overlay_id),
+                )
+            for overlay_id in overlay_ids:
+                conn.execute(
+                    """
+                    INSERT INTO offline_overlay_region_items(
+                      region_id, overlay_id, status, minzoom, maxzoom, tile_count, cached_tiles,
+                      size_bytes, error_message, created_at, updated_at
+                    )
+                    VALUES (?, ?, 'pending', NULL, NULL, 0, 0, 0, '', ?, ?)
+                    ON CONFLICT(region_id, overlay_id) DO UPDATE SET
+                      status = CASE WHEN offline_overlay_region_items.status = 'cached' THEN 'cached' ELSE 'pending' END,
+                      error_message = '',
+                      updated_at = excluded.updated_at
+                    """,
+                    (region_key, overlay_id, now, now),
+                )
+        return next((item for item in self.offline_overlay_regions() if item["id"] == region_key), {})
+
+    def set_offline_overlay_region_item(
+        self,
+        region_id: str,
+        overlay_id: str,
+        *,
+        status: str,
+        minzoom: int | None = None,
+        maxzoom: int | None = None,
+        tile_count: int | None = None,
+        cached_tiles: int | None = None,
+        size_bytes: int | None = None,
+        error_message: str | None = None,
+    ) -> None:
+        now = now_iso()
+        with self.connect() as conn:
+            row = conn.execute(
+                "SELECT * FROM offline_overlay_region_items WHERE region_id = ? AND overlay_id = ?",
+                (region_id, overlay_id),
+            ).fetchone()
+            if row:
+                conn.execute(
+                    """
+                    UPDATE offline_overlay_region_items
+                    SET status = ?, minzoom = COALESCE(?, minzoom), maxzoom = COALESCE(?, maxzoom),
+                        tile_count = COALESCE(?, tile_count), cached_tiles = COALESCE(?, cached_tiles),
+                        size_bytes = COALESCE(?, size_bytes), error_message = COALESCE(?, error_message),
+                        updated_at = ?
+                    WHERE region_id = ? AND overlay_id = ?
+                    """,
+                    (
+                        status,
+                        minzoom,
+                        maxzoom,
+                        tile_count,
+                        cached_tiles,
+                        size_bytes,
+                        error_message,
+                        now,
+                        region_id,
+                        overlay_id,
+                    ),
+                )
+            else:
+                conn.execute(
+                    """
+                    INSERT INTO offline_overlay_region_items(
+                      region_id, overlay_id, status, minzoom, maxzoom, tile_count, cached_tiles,
+                      size_bytes, error_message, created_at, updated_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        region_id,
+                        overlay_id,
+                        status,
+                        minzoom,
+                        maxzoom,
+                        tile_count or 0,
+                        cached_tiles or 0,
+                        size_bytes or 0,
+                        error_message or "",
+                        now,
+                        now,
+                    ),
+                )
+            conn.execute(
+                "UPDATE offline_overlay_regions SET updated_at = ? WHERE id = ?",
+                (now, region_id),
+            )
+
+    def delete_offline_overlay_region(self, region_id: str) -> None:
+        with self.connect() as conn:
+            conn.execute("DELETE FROM offline_overlay_region_items WHERE region_id = ?", (region_id,))
+            conn.execute("DELETE FROM offline_overlay_regions WHERE id = ?", (region_id,))
+
+    def set_offline_regions_only(self, enabled: bool) -> dict[str, Any]:
+        self.set_app_setting("maps.offline_regions_only", bool(enabled))
+        return self.map_overlay_registry()
 
     def set_map_overlay_enabled(self, overlay_id: str, enabled: bool) -> dict[str, Any]:
         with self.connect() as conn:

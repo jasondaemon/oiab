@@ -63,6 +63,10 @@
     <section class="omv2-controls omv2-controls-right" aria-label="Map data and overlay controls">
       <button id="savedDataToggle" type="button" title="Saved waypoints, tracks, and folders">▣</button>
       <button id="overlaysToggle" type="button" title="Map overlays">☰</button>
+      <button id="offlineRegionToggle" class="omv2-bbox-button" type="button" title="Draw offline cache region" aria-label="Draw offline cache region">
+        <span class="omv2-bbox-button-box"></span>
+        <span class="omv2-bbox-button-plus">＋</span>
+      </button>
       <button id="legendToggle" type="button" title="Map legend">ⓘ</button>
       <button id="refreshData" type="button" title="Refresh map data">↻</button>
       <button id="inspectTile" type="button" title="Inspect PMTiles tile">?</button>
@@ -90,6 +94,7 @@
         <span class="eyebrow">Overlays</span>
         <a href="/mobile/map-packs.html">Settings</a>
       </div>
+      <label class="omv2-check omv2-check-compact"><input id="offlineOnlyToggle" type="checkbox"> Offline regions only</label>
       <div id="overlayList" class="omv2-folder-list"></div>
     </aside>
 
@@ -210,6 +215,31 @@
           <button id="closeTrackModeAction" class="omv2-link-button" type="button">Close</button>
         </div>
       </div>
+    </aside>
+
+    <aside id="offlineRegionModal" class="omv2-modal" hidden>
+      <form id="offlineRegionForm" class="omv2-modal-card omv2-edit-form">
+        <div class="omv2-panel-head">
+          <div>
+            <span class="eyebrow">Offline Overlays</span>
+            <strong id="offlineRegionTitle">Save offline region</strong>
+          </div>
+          <button id="closeOfflineRegionModal" type="button">×</button>
+        </div>
+        <input id="offlineRegionId" name="region_id" type="hidden">
+        <label><span>Name</span><input id="offlineRegionName" name="name" placeholder="Moab radar + topo" required></label>
+        <label class="is-stack"><span>BBox</span><input id="offlineRegionBbox" name="bbox" readonly></label>
+        <div class="omv2-offline-overlay-picker">
+          <span class="eyebrow">Cache These Overlays</span>
+          <div id="offlineRegionOverlayOptions" class="omv2-offline-overlay-options"></div>
+        </div>
+        <p class="omv2-hint">Only online raster overlays are supported in region caching right now. Cached regions stay available offline and can be tested with “Offline regions only”.</p>
+        <div class="omv2-edit-actions">
+          <button class="omv2-link-button" type="submit">Download</button>
+          <button id="refreshOfflineRegion" class="omv2-link-button" type="button">Update Cache</button>
+          <button id="deleteOfflineRegion" class="omv2-link-button is-danger" type="button">Clear Cache</button>
+        </div>
+      </form>
     </aside>
 
     <aside id="dataEditModal" class="omv2-modal" hidden>

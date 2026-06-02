@@ -294,6 +294,27 @@ input {
   color: #1a1300;
 }
 
+.omv2-bbox-button {
+  position: relative;
+}
+
+.omv2-bbox-button-box {
+  position: absolute;
+  inset: 13px 15px 15px 13px;
+  border: 2px solid currentColor;
+  border-radius: 4px;
+  opacity: 0.95;
+}
+
+.omv2-bbox-button-plus {
+  position: absolute;
+  right: 8px;
+  top: 6px;
+  font-size: 0.94rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
 .omv2-panel {
   position: absolute;
   z-index: 7;
@@ -373,6 +394,11 @@ input {
   align-items: center;
   gap: 10px;
   margin-bottom: 8px;
+}
+
+.omv2-check-compact {
+  margin-top: 10px;
+  margin-bottom: 2px;
 }
 
 .omv2-folder-list {
@@ -719,6 +745,32 @@ input {
 .omv2-hint {
   color: var(--om-muted);
   margin: 0 0 14px;
+}
+
+.omv2-offline-overlay-picker {
+  display: grid;
+  gap: 8px;
+}
+
+.omv2-offline-overlay-options {
+  display: grid;
+  gap: 8px;
+}
+
+.omv2-offline-overlay-option {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.omv2-offline-overlay-option small {
+  color: var(--om-muted);
+  font-weight: 800;
 }
 
 .omv2-type-grid {

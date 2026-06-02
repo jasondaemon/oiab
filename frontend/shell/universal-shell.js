@@ -731,6 +731,7 @@
   async function loadMapsSettings() {
     setSettingsMessage("mapsPacksMessage", "Loading map packs...");
     setSettingsMessage("mapsOverlaysMessage", "Loading overlays...");
+    setSettingsMessage("mapsOfflineRegionsMessage", "Loading offline regions...");
     try {
       const [installedResponse, catalogResponse, overlaysResponse] = await Promise.all([
         fetch("/api/maps/packs/installed", { cache: "no-store" }),
@@ -749,10 +750,12 @@
       renderMapsSettings();
       setSettingsMessage("mapsPacksMessage", "");
       setSettingsMessage("mapsOverlaysMessage", "");
+      setSettingsMessage("mapsOfflineRegionsMessage", "");
     } catch (error) {
       renderMapsSettings();
       setSettingsMessage("mapsPacksMessage", error.message, true);
       setSettingsMessage("mapsOverlaysMessage", error.message, true);
+      setSettingsMessage("mapsOfflineRegionsMessage", error.message, true);
     }
   }
 
@@ -762,6 +765,8 @@
     renderCatalogMapPacks();
     renderOverlaySummary();
     renderMapOverlays();
+    renderOfflineRegionSummary();
+    renderOfflineRegions();
   }
 
   function renderMapPackSummary() {
@@ -911,9 +916,55 @@
         ${badge(`${cached} cached`)}
         ${badge(`${onlineOnly} online only`)}
         ${badge(`${overlays.length} total`)}
+        ${badge(state.maps.overlays?.offline_regions_only ? "Offline regions only" : "Online fallback")}
       </div>
       <span class="uo-settings-item-subtitle">Visibility and opacity stay in the map layer menu. Data acquisition and refresh live here.</span>
     `;
+  }
+
+  function renderOfflineRegionSummary() {
+    const holder = $("mapsOfflineRegionsSummary");
+    if (!holder) return;
+    const regions = Array.isArray(state.maps.overlays?.offline_regions) ? state.maps.overlays.offline_regions : [];
+    const items = regions.flatMap((region) => Array.isArray(region.items) ? region.items : []);
+    const cachedTiles = items.reduce((sum, item) => sum + Number(item.cached_tiles || 0), 0);
+    const sizeBytes = items.reduce((sum, item) => sum + Number(item.size_bytes || 0), 0);
+    holder.hidden = false;
+    holder.innerHTML = `
+      <strong>${regions.length} offline region${regions.length === 1 ? "" : "s"}</strong>
+      <div class="uo-settings-item-meta">
+        ${badge(`${cachedTiles.toLocaleString()} tiles`)}
+        ${sizeBytes ? badge(formatBytes(sizeBytes)) : ""}
+        ${badge(state.maps.overlays?.offline_regions_only ? "Offline regions only" : "Online fallback")}
+      </div>
+      <label class="uo-switch-row">
+        <span>
+          <strong>Show only offline regions</strong>
+          <small>Hide online raster fallback so you can verify cached coverage.</small>
+        </span>
+        <input id="mapsOfflineOnlyRegions" type="checkbox" ${state.maps.overlays?.offline_regions_only ? "checked" : ""}>
+      </label>
+    `;
+    holder.querySelector("#mapsOfflineOnlyRegions")?.addEventListener("change", async (event) => {
+      try {
+        const response = await fetch("/api/maps/overlays/offline-only", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ enabled: event.target.checked }),
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || data.ok === false) throw new Error(data.error || "Offline region toggle failed");
+        state.maps.overlays = data;
+        renderOverlaySummary();
+        renderMapOverlays();
+        renderOfflineRegionSummary();
+        renderOfflineRegions();
+        setSettingsMessage("mapsOfflineRegionsMessage", event.target.checked ? "Offline-only testing enabled." : "Online fallback restored.");
+      } catch (error) {
+        event.target.checked = !event.target.checked;
+        setSettingsMessage("mapsOfflineRegionsMessage", error.message, true);
+      }
+    });
   }
 
   function renderMapOverlays() {
@@ -1051,6 +1102,76 @@
           setSettingsMessage("mapsOverlaysMessage", `${overlayId} ${action} complete.`);
         } catch (error) {
           setSettingsMessage("mapsOverlaysMessage", error.message, true);
+        }
+      });
+    });
+  }
+
+  function renderOfflineRegions() {
+    const holder = $("mapsOfflineRegionsList");
+    if (!holder) return;
+    const regions = Array.isArray(state.maps.overlays?.offline_regions) ? state.maps.overlays.offline_regions : [];
+    if (!regions.length) {
+      holder.innerHTML = `<div class="uo-settings-item"><div class="uo-settings-item-main"><p class="uo-settings-item-subtitle">No offline regions saved yet. Draw a bbox on the map with the offline cache button to create one.</p></div></div>`;
+      return;
+    }
+    holder.innerHTML = regions.map((region) => {
+      const items = Array.isArray(region.items) ? region.items : [];
+      const sizeBytes = items.reduce((sum, item) => sum + Number(item.size_bytes || 0), 0);
+      const tileCount = items.reduce((sum, item) => sum + Number(item.cached_tiles || 0), 0);
+      const bbox = Array.isArray(region.bbox) ? region.bbox.map((value) => Number(value).toFixed(4)).join(", ") : "";
+      return `
+        <article class="uo-settings-item">
+          <div class="uo-settings-item-main">
+            <div class="uo-settings-item-head">
+              <h3 class="uo-settings-item-title">${escapeHtml(region.name || region.id)}</h3>
+              <div class="uo-settings-item-meta">
+                ${badge(`${items.length} overlay${items.length === 1 ? "" : "s"}`)}
+                ${badge(`${tileCount.toLocaleString()} tiles`)}
+                ${sizeBytes ? badge(formatBytes(sizeBytes)) : ""}
+              </div>
+            </div>
+            <p class="uo-settings-item-subtitle">${escapeHtml(bbox)}</p>
+            <div class="uo-settings-item-meta">
+              ${items.map((item) => badge(`${item.overlay_name}: ${item.status || "pending"}`, item.status === "cached" ? "is-good" : item.status === "failed" ? "is-bad" : item.status === "refreshing" ? "is-warn" : "")).join("")}
+            </div>
+            <p class="uo-settings-item-subtitle">Updated ${escapeHtml(formatTimestamp(region.updated_at))}</p>
+          </div>
+          <div class="uo-settings-item-actions">
+            <button type="button" data-offline-region-action="refresh" data-region-id="${escapeHtml(region.id)}" class="is-primary">Update Cache</button>
+            <button type="button" data-offline-region-action="delete" data-region-id="${escapeHtml(region.id)}">Clear Cache</button>
+          </div>
+        </article>
+      `;
+    }).join("");
+    holder.querySelectorAll("[data-offline-region-action]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const regionId = String(button.dataset.regionId || "");
+        const action = String(button.dataset.offlineRegionAction || "");
+        const region = regions.find((item) => String(item.id || "") === regionId);
+        if (!region) return;
+        setSettingsMessage("mapsOfflineRegionsMessage", `${action} ${region.name || regionId}...`);
+        try {
+          const response = await fetch(action === "delete" ? "/api/maps/overlays/regions/delete" : "/api/maps/overlays/regions/refresh", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              region_id: region.id,
+              name: region.name,
+              bbox: region.bbox,
+              overlay_ids: (Array.isArray(region.items) ? region.items : []).map((item) => item.overlay_id).filter(Boolean),
+            }),
+          });
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok || data.ok === false) throw new Error(data.error || `${action} failed`);
+          state.maps.overlays = data;
+          renderOverlaySummary();
+          renderMapOverlays();
+          renderOfflineRegionSummary();
+          renderOfflineRegions();
+          setSettingsMessage("mapsOfflineRegionsMessage", `${region.name || regionId} ${action === "delete" ? "cleared" : "update started"}.`);
+        } catch (error) {
+          setSettingsMessage("mapsOfflineRegionsMessage", error.message, true);
         }
       });
     });

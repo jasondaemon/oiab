@@ -26,7 +26,9 @@
       "enabled": false,
       "opacity": 0.65,
       "layer_order": 20,
-      "sort_order": 20
+      "sort_order": 20,
+      "offline_cache_minzoom": 6,
+      "offline_cache_maxzoom": 15
     },
     {
       "id": "satellite_imagery",
@@ -52,7 +54,9 @@
       "enabled": false,
       "opacity": 0.78,
       "layer_order": 21,
-      "sort_order": 21
+      "sort_order": 21,
+      "offline_cache_minzoom": 8,
+      "offline_cache_maxzoom": 17
     },
     {
       "id": "usgs_topographic_contours",
@@ -272,6 +276,8 @@
       "opacity": 0.82,
       "layer_order": 81,
       "sort_order": 81,
+      "offline_cache_minzoom": 3,
+      "offline_cache_maxzoom": 10,
       "warning": "NOAA Radar uses the nowCOAST live base reflectivity mosaic and requires internet. It is a weather radar reflectivity view, not precipitation totals or forecast guidance."
     },
     {

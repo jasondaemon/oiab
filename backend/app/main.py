@@ -27,6 +27,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, quote, unquote, urlencode, urlparse
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
+from math import atan, pi, sinh, tan, log, asinh
 
 from .app_db import AppDB
 from .config import REPO_ROOT, SETTINGS, Settings, ensure_data_layout
@@ -2408,6 +2409,54 @@ def start_track_recorder(settings: Settings) -> threading.Thread:
     return thread
 
 
+def clamp_lat_mercator(lat: float) -> float:
+    return max(-85.05112878, min(85.05112878, lat))
+
+
+def lonlat_to_tile_xy(lon: float, lat: float, zoom: int) -> tuple[int, int]:
+    lat = clamp_lat_mercator(lat)
+    n = 2 ** zoom
+    x = int((lon + 180.0) / 360.0 * n)
+    lat_rad = lat * pi / 180.0
+    y = int((1.0 - asinh(tan(lat_rad)) / pi) / 2.0 * n)
+    return max(0, min(n - 1, x)), max(0, min(n - 1, y))
+
+
+def tile_ranges_for_bbox(bbox: tuple[float, float, float, float], zoom: int) -> tuple[range, range]:
+    min_lon, min_lat, max_lon, max_lat = bbox
+    x1, y1 = lonlat_to_tile_xy(min_lon, max_lat, zoom)
+    x2, y2 = lonlat_to_tile_xy(max_lon, min_lat, zoom)
+    return range(min(x1, x2), max(x1, x2) + 1), range(min(y1, y2), max(y1, y2) + 1)
+
+
+def tile_bbox_4326(z: int, x: int, y: int) -> tuple[float, float, float, float]:
+    n = 2 ** z
+    lon_left = x / n * 360.0 - 180.0
+    lon_right = (x + 1) / n * 360.0 - 180.0
+    lat_top = atan(sinh(pi * (1 - 2 * y / n))) * 180.0 / pi
+    lat_bottom = atan(sinh(pi * (1 - 2 * (y + 1) / n))) * 180.0 / pi
+    return lon_left, lat_bottom, lon_right, lat_top
+
+
+def lonlat_to_webmercator(lon: float, lat: float) -> tuple[float, float]:
+    lat = clamp_lat_mercator(lat)
+    radius = 6378137.0
+    x = radius * lon * pi / 180.0
+    y = radius * log(tan(pi / 4.0 + (lat * pi / 180.0) / 2.0))
+    return x, y
+
+
+def tile_bbox_3857(z: int, x: int, y: int) -> tuple[float, float, float, float]:
+    min_lon, min_lat, max_lon, max_lat = tile_bbox_4326(z, x, y)
+    min_x, min_y = lonlat_to_webmercator(min_lon, min_lat)
+    max_x, max_y = lonlat_to_webmercator(max_lon, max_lat)
+    return min_x, min_y, max_x, max_y
+
+
+def bboxes_intersect(a: tuple[float, float, float, float], b: tuple[float, float, float, float]) -> bool:
+    return not (a[2] <= b[0] or a[0] >= b[2] or a[3] <= b[1] or a[1] >= b[3])
+
+
 class OIABHandler(BaseHTTPRequestHandler):
     server_version = "OIAB/0.1"
     settings: Settings = SETTINGS
@@ -2453,8 +2502,22 @@ class OIABHandler(BaseHTTPRequestHandler):
             return self.send_json(self.app_db().map_overlay_catalog())
         if path in {"/api/maps/overlays", "/api/maps/overlays/installed", "/api/maps/overlays/status", "/maps-overlays"}:
             return self.send_json(self.map_overlays())
+        if path == "/api/maps/overlays/regions":
+            return self.send_json({"ok": True, "regions": self.app_db().offline_overlay_regions(), "offline_regions_only": bool(self.app_db().app_setting("maps.offline_regions_only", False))})
         if path == "/api/maps/overlays/jobs":
             return self.send_json({"ok": True, "jobs": overlay_job_snapshot()})
+        if path.startswith("/api/maps/overlays/cache/"):
+            parts = [part for part in path.split("/") if part]
+            if len(parts) != 8:
+                return self.send_error(HTTPStatus.NOT_FOUND, "Not found")
+            try:
+                _, _, _, _, overlay_id, z_raw, x_raw, y_raw = parts
+                z = int(z_raw)
+                x = int(x_raw)
+                y = int(y_raw)
+            except ValueError:
+                return self.send_json({"ok": False, "error": "Invalid tile coordinates."}, status=400)
+            return self.serve_overlay_cached_tile(overlay_id, z, x, y)
         if path.startswith("/api/maps/overlays/jobs/"):
             job_id = path.rstrip("/").rsplit("/", 1)[-1]
             job = overlay_job_snapshot(job_id)
@@ -3413,6 +3476,14 @@ PY
             return self.send_json(self.refresh_blm_wilderness_overlay(self.read_body()))
         if path == "/api/maps/overlays/contours/refresh":
             return self.send_json(self.refresh_contours_overlay(self.read_body()))
+        if path == "/api/maps/overlays/regions":
+            return self.send_json(self.start_offline_overlay_region_job(self.read_body()))
+        if path == "/api/maps/overlays/regions/delete":
+            return self.send_json(self.delete_offline_overlay_region(self.read_body()))
+        if path == "/api/maps/overlays/regions/refresh":
+            return self.send_json(self.start_offline_overlay_region_job(self.read_body()))
+        if path == "/api/maps/overlays/offline-only":
+            return self.send_json(self.set_offline_overlay_testing(self.read_body()))
         if path == "/api/maps/overlays/mvum/roads/install":
             job = start_mvum_install(self.settings, "roads")
             return self.send_json({"ok": True, "job": job, **self.map_overlays()})
@@ -4347,6 +4418,229 @@ PY
         if min_lon >= max_lon or min_lat >= max_lat:
             raise ValueError("bbox values are invalid.")
         return (min_lon, min_lat, max_lon, max_lat)
+
+    def offline_region_cache_root(self) -> Path:
+        root = self.settings.data_dir / "maps" / "cache" / "regions"
+        root.mkdir(parents=True, exist_ok=True)
+        return root
+
+    def cacheable_overlay(self, overlay_id: str) -> dict[str, object]:
+        overlays = self.app_db().map_overlay_registry().get("overlays", [])
+        overlay = next((item for item in overlays if str(item.get("id")) == str(overlay_id)), None)
+        if not overlay:
+            raise ValueError(f"Overlay not found: {overlay_id}")
+        if not overlay.get("cacheable_region"):
+            raise ValueError(f"{overlay.get('name') or overlay_id} does not support bbox offline caching.")
+        return overlay
+
+    def overlay_tile_mime(self, overlay: dict[str, object]) -> str:
+        if str(overlay.get("source_type") or "") == "raster_wms":
+            return "image/png"
+        return "image/jpeg"
+
+    def overlay_tile_url(self, overlay: dict[str, object], z: int, x: int, y: int) -> str:
+        source_type = str(overlay.get("source_type") or "")
+        template = ""
+        tiles = overlay.get("tiles")
+        if isinstance(tiles, list) and tiles:
+            template = str(tiles[0] or "")
+        if not template:
+            template = str(overlay.get("url_template") or overlay.get("source_url") or overlay.get("url") or "")
+        if not template:
+            raise ValueError(f"No tile template configured for {overlay.get('id') or 'overlay'}.")
+        if source_type == "arcgis_raster":
+            return template.replace("{z}", str(z)).replace("{x}", str(x)).replace("{y}", str(y))
+        if source_type == "raster_wms":
+            min_x, min_y, max_x, max_y = tile_bbox_3857(z, x, y)
+            return (
+                template
+                .replace("{bbox-epsg-3857}", f"{min_x},{min_y},{max_x},{max_y}")
+                .replace("{z}", str(z))
+                .replace("{x}", str(x))
+                .replace("{y}", str(y))
+            )
+        raise ValueError(f"Unsupported cacheable source type: {source_type}")
+
+    def tile_cache_path(self, region_id: str, overlay_id: str, z: int, x: int, y: int) -> Path:
+        return self.offline_region_cache_root() / region_id / overlay_id / str(z) / str(x) / f"{y}.tile"
+
+    def matching_offline_regions_for_tile(self, overlay_id: str, z: int, x: int, y: int) -> list[dict[str, object]]:
+        tile_bbox = tile_bbox_4326(z, x, y)
+        matches: list[dict[str, object]] = []
+        for region in self.app_db().offline_overlay_regions():
+            bbox = region.get("bbox")
+            if not isinstance(bbox, list) or len(bbox) != 4:
+                continue
+            try:
+                region_bbox = tuple(float(value) for value in bbox)
+            except (TypeError, ValueError):
+                continue
+            if not bboxes_intersect(tile_bbox, region_bbox):
+                continue
+            item = next((entry for entry in region.get("items", []) if str(entry.get("overlay_id")) == str(overlay_id)), None)
+            if item:
+                matches.append({"region": region, "item": item})
+        return matches
+
+    def fetch_remote_tile(self, overlay: dict[str, object], z: int, x: int, y: int) -> bytes:
+        url = self.overlay_tile_url(overlay, z, x, y)
+        request = Request(url, headers={"User-Agent": f"OIAB offline overlay cache ({self.settings.hostname})"})
+        with urlopen(request, timeout=90) as response:  # noqa: S310 - configured public raster source
+            data = response.read()
+        if not data:
+            raise ValueError("Remote overlay tile response was empty.")
+        return data
+
+    def serve_overlay_cached_tile(self, overlay_id: str, z: int, x: int, y: int) -> None:
+        overlay = self.cacheable_overlay(overlay_id)
+        offline_only = bool(self.app_db().app_setting("maps.offline_regions_only", False))
+        matches = self.matching_offline_regions_for_tile(overlay_id, z, x, y)
+        mime = self.overlay_tile_mime(overlay)
+        for match in matches:
+            cache_path = self.tile_cache_path(str(match["region"]["id"]), overlay_id, z, x, y)
+            if cache_path.exists() and cache_path.is_file():
+                return self.send_tile_bytes(cache_path.read_bytes(), mime)
+        if offline_only:
+            return self.send_json({"ok": False, "error": "Tile not present in offline cache."}, status=404)
+        data = self.fetch_remote_tile(overlay, z, x, y)
+        if matches:
+            cache_path = self.tile_cache_path(str(matches[0]["region"]["id"]), overlay_id, z, x, y)
+            cache_path.parent.mkdir(parents=True, exist_ok=True)
+            cache_path.write_bytes(data)
+        return self.send_tile_bytes(data, mime)
+
+    def send_tile_bytes(self, data: bytes, content_type: str) -> None:
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", content_type)
+        self.send_header("Content-Length", str(len(data)))
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        self.wfile.write(data)
+
+    def start_offline_overlay_region_job(self, payload: dict[str, object]) -> dict[str, object]:
+        name = str(payload.get("name") or "").strip() or "Offline Region"
+        bbox = self.parse_optional_bbox(payload.get("bbox"))
+        if not bbox:
+            raise ValueError("bbox is required for offline overlay caching.")
+        overlay_ids = [str(item).strip() for item in (payload.get("overlay_ids") or []) if str(item).strip()]
+        if not overlay_ids:
+            raise ValueError("Select at least one overlay to cache.")
+        region_id = str(payload.get("region_id") or "").strip() or None
+        valid_overlay_ids = []
+        for overlay_id in overlay_ids:
+            self.cacheable_overlay(overlay_id)
+            valid_overlay_ids.append(overlay_id)
+        region = self.app_db().save_offline_overlay_region(name=name, bbox=list(bbox), overlay_ids=valid_overlay_ids, region_id=region_id)
+        job_id = f"offline_region_{region['id']}"
+        current = overlay_job_snapshot(job_id)
+        if current.get("status") in {"pending", "running"}:
+            return {"ok": True, "job": current, **self.map_overlays()}
+        update_overlay_job(job_id, overlay_id=str(region["id"]), type="offline_region_cache", status="pending", step="queued", progress=0, error_message="", started_at=timestamp())
+        for overlay_id in valid_overlay_ids:
+            overlay = self.cacheable_overlay(overlay_id)
+            self.app_db().set_offline_overlay_region_item(
+                str(region["id"]),
+                overlay_id,
+                status="refreshing",
+                minzoom=int(overlay.get("offline_cache_minzoom") or overlay.get("minzoom") or 0),
+                maxzoom=int(overlay.get("offline_cache_maxzoom") or overlay.get("maxzoom") or 16),
+                tile_count=0,
+                cached_tiles=0,
+                size_bytes=0,
+                error_message="",
+            )
+
+        def worker() -> None:
+            failed = False
+            region_bbox = tuple(float(value) for value in region["bbox"])
+            try:
+                for index, overlay_id in enumerate(valid_overlay_ids, start=1):
+                    overlay = self.cacheable_overlay(overlay_id)
+                    minzoom = int(overlay.get("offline_cache_minzoom") or overlay.get("minzoom") or 0)
+                    maxzoom = int(overlay.get("offline_cache_maxzoom") or overlay.get("maxzoom") or 16)
+                    root = self.offline_region_cache_root() / str(region["id"]) / overlay_id
+                    shutil.rmtree(root, ignore_errors=True)
+                    root.mkdir(parents=True, exist_ok=True)
+                    tile_total = 0
+                    cached_total = 0
+                    size_total = 0
+                    overlay_progress_start = int(((index - 1) / max(len(valid_overlay_ids), 1)) * 100)
+                    overlay_progress_span = max(1, int(100 / max(len(valid_overlay_ids), 1)))
+                    for zoom in range(minzoom, maxzoom + 1):
+                        xs, ys = tile_ranges_for_bbox(region_bbox, zoom)
+                        coords = [(xv, yv) for xv in xs for yv in ys]
+                        for tile_index, (tile_x, tile_y) in enumerate(coords, start=1):
+                            tile_total += 1
+                            update_overlay_job(
+                                job_id,
+                                status="running",
+                                step=f"caching {overlay.get('name') or overlay_id} z{zoom}",
+                                progress=min(99, overlay_progress_start + int((tile_index / max(len(coords), 1)) * overlay_progress_span)),
+                                error_message="",
+                            )
+                            try:
+                                data = self.fetch_remote_tile(overlay, zoom, tile_x, tile_y)
+                            except HTTPError as exc:
+                                if exc.code == 404:
+                                    continue
+                                raise
+                            cache_path = self.tile_cache_path(str(region["id"]), overlay_id, zoom, tile_x, tile_y)
+                            cache_path.parent.mkdir(parents=True, exist_ok=True)
+                            cache_path.write_bytes(data)
+                            cached_total += 1
+                            size_total += len(data)
+                            self.app_db().set_offline_overlay_region_item(
+                                str(region["id"]),
+                                overlay_id,
+                                status="refreshing",
+                                minzoom=minzoom,
+                                maxzoom=maxzoom,
+                                tile_count=tile_total,
+                                cached_tiles=cached_total,
+                                size_bytes=size_total,
+                                error_message="",
+                            )
+                    self.app_db().set_offline_overlay_region_item(
+                        str(region["id"]),
+                        overlay_id,
+                        status="cached",
+                        minzoom=minzoom,
+                        maxzoom=maxzoom,
+                        tile_count=tile_total,
+                        cached_tiles=cached_total,
+                        size_bytes=size_total,
+                        error_message="",
+                    )
+                update_overlay_job(job_id, status="succeeded", step="offline cache ready", progress=100, error_message="")
+            except Exception as exc:  # noqa: BLE001 - background cache job boundary
+                failed = True
+                update_overlay_job(job_id, status="failed", step="offline cache failed", progress=100, error_message=str(exc))
+                for overlay_id in valid_overlay_ids:
+                    self.app_db().set_offline_overlay_region_item(
+                        str(region["id"]),
+                        overlay_id,
+                        status="failed",
+                        error_message=str(exc),
+                    )
+            finally:
+                if not failed:
+                    self.app_db().set_app_setting("maps.last_offline_region_id", str(region["id"]))
+
+        thread = threading.Thread(target=worker, name=f"oiab-offline-region-{region['id']}", daemon=True)
+        thread.start()
+        return {"ok": True, "job": overlay_job_snapshot(job_id), **self.map_overlays()}
+
+    def delete_offline_overlay_region(self, payload: dict[str, object]) -> dict[str, object]:
+        region_id = str(payload.get("region_id") or "").strip()
+        if not region_id:
+            raise ValueError("region_id is required.")
+        shutil.rmtree(self.offline_region_cache_root() / region_id, ignore_errors=True)
+        self.app_db().delete_offline_overlay_region(region_id)
+        return self.map_overlays()
+
+    def set_offline_overlay_testing(self, payload: dict[str, object]) -> dict[str, object]:
+        enabled = bool(payload.get("enabled"))
+        return self.app_db().set_offline_regions_only(enabled)
 
     def detect_ogr_layer_name(self, dataset_path: Path) -> str:
         result = subprocess.run(
