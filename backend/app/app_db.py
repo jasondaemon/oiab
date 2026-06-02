@@ -2078,6 +2078,8 @@ class AppDB:
             "mvum/pmtiles/mvum-trails-us.pmtiles",
             "public-lands/blm-sma-latest.geojson",
             "public-lands/blm-sma-latest.pmtiles",
+            "public-lands/blm-wilderness-latest.geojson",
+            "public-lands/blm-wilderness-latest.pmtiles",
             "contours/contours.raw.geojsonseq",
             "contours/contours.geojson",
             "contours/contours.pmtiles",

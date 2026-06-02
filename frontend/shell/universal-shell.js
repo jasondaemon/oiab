@@ -942,8 +942,8 @@
     };
     holder.innerHTML = overlays.map((overlay) => {
       const overlayId = String(overlay.id || "");
-      const canRefresh = ["firms_active_hotspots", "nws_active_alerts", "mvum_roads_us", "mvum_trails_us", "blm_sma_cached", "usgs_topographic_contours"].includes(overlayId);
-      const isInstall = ["mvum_roads_us", "mvum_trails_us", "blm_sma_cached", "usgs_topographic_contours"].includes(overlayId);
+      const canRefresh = ["firms_active_hotspots", "nws_active_alerts", "mvum_roads_us", "mvum_trails_us", "blm_sma_cached", "blm_wilderness_wsa_cached", "usgs_topographic_contours"].includes(overlayId);
+      const isInstall = ["mvum_roads_us", "mvum_trails_us", "blm_sma_cached", "blm_wilderness_wsa_cached", "usgs_topographic_contours"].includes(overlayId);
       const actionLabel = isInstall ? (overlay.exists || overlay.cache_status === "cached" ? "Update" : "Download") : "Refresh";
       const bboxValue = String(savedContourConfig.bbox || overlay.metadata?.bbox?.join(",") || "");
       const intervalValue = Number(savedContourConfig.interval_ft || overlay.metadata?.contour_interval_ft || 40);
@@ -1012,6 +1012,8 @@
               ? "/api/maps/overlays/mvum/roads/install"
               : overlayId === "mvum_trails_us"
                 ? "/api/maps/overlays/mvum/trails/install"
+                : overlayId === "blm_wilderness_wsa_cached"
+                  ? "/api/maps/overlays/blm-wilderness/refresh"
                 : overlayId === "usgs_topographic_contours"
                   ? "/api/maps/overlays/contours/refresh"
                   : "/api/maps/overlays/blm/refresh";
@@ -1038,6 +1040,8 @@
               ? "/api/maps/overlays/wildfire/refresh"
               : overlayId === "nws_active_alerts"
                 ? "/api/maps/overlays/weather/alerts/refresh"
+                : overlayId === "blm_wilderness_wsa_cached"
+                  ? "/api/maps/overlays/blm-wilderness/refresh"
                 : "/api/maps/overlays/blm/refresh";
             const response = await fetch(path, { method: "POST" });
             const data = await response.json().catch(() => ({}));

@@ -3409,6 +3409,8 @@ PY
             return self.send_json(self.refresh_weather_alerts_overlay())
         if path == "/api/maps/overlays/blm/refresh":
             return self.send_json(self.refresh_blm_overlay(self.read_body()))
+        if path == "/api/maps/overlays/blm-wilderness/refresh":
+            return self.send_json(self.refresh_blm_wilderness_overlay(self.read_body()))
         if path == "/api/maps/overlays/contours/refresh":
             return self.send_json(self.refresh_contours_overlay(self.read_body()))
         if path == "/api/maps/overlays/mvum/roads/install":
@@ -4137,6 +4139,8 @@ PY
                 return self.send_json(self.refresh_weather_alerts_overlay())
             if action in {"refresh-blm", "blm-refresh"}:
                 return self.send_json(self.refresh_blm_overlay(payload))
+            if action in {"refresh-blm-wilderness", "blm-wilderness-refresh"}:
+                return self.send_json(self.refresh_blm_wilderness_overlay(payload))
             if action in {"refresh-contours", "contours-refresh"}:
                 return self.send_json(self.refresh_contours_overlay(payload))
             if action in {"install-mvum-roads", "mvum-roads-install"}:
@@ -4221,28 +4225,60 @@ PY
 
     def fetch_arcgis_geojson(self, mapserver_url: str, kind: str, output_path: Path, job_id: str) -> int:
         layer_id = self.arcgis_layer_id(mapserver_url, kind)
+        return self.fetch_arcgis_geojson_layer(
+            mapserver_url,
+            layer_id,
+            output_path,
+            job_id,
+            source_label="USFS EDW_MVUM_01",
+        )
+
+    def fetch_arcgis_geojson_layer(
+        self,
+        mapserver_url: str,
+        layer_id: int,
+        output_path: Path,
+        job_id: str,
+        *,
+        source_label: str,
+        out_fields: str = "*",
+        bbox: tuple[float, float, float, float] | None = None,
+        page_size_env: str = "OIAB_MVUM_ARCGIS_PAGE_SIZE",
+        max_features_env: str = "OIAB_MVUM_ARCGIS_MAX_FEATURES",
+        timeout: int = 120,
+    ) -> int:
         base = mapserver_url.rstrip("/")
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        page_size = int(os.environ.get("OIAB_MVUM_ARCGIS_PAGE_SIZE", "2000"))
-        max_features = int(os.environ.get("OIAB_MVUM_ARCGIS_MAX_FEATURES", "0"))
+        page_size = int(os.environ.get(page_size_env, "2000"))
+        max_features = int(os.environ.get(max_features_env, "0"))
         offset = 0
         features: list[dict[str, object]] = []
         while True:
             params = {
                 "f": "geojson",
                 "where": "1=1",
-                "outFields": "*",
+                "outFields": out_fields,
                 "returnGeometry": "true",
                 "outSR": "4326",
                 "resultOffset": str(offset),
                 "resultRecordCount": str(page_size),
             }
+            if bbox:
+                min_lon, min_lat, max_lon, max_lat = bbox
+                params.update(
+                    {
+                        "geometry": f"{min_lon},{min_lat},{max_lon},{max_lat}",
+                        "geometryType": "esriGeometryEnvelope",
+                        "spatialRel": "esriSpatialRelIntersects",
+                        "inSR": "4326",
+                    }
+                )
             url = f"{base}/{layer_id}/query?{urlencode(params)}"
-            update_overlay_job(job_id, step=f"fetching USFS page {offset // page_size + 1}", progress=min(60, 8 + offset // max(1, page_size)))
-            payload = self.fetch_json_url(url, timeout=120)
+            update_overlay_job(job_id, step=f"fetching page {offset // page_size + 1}", progress=min(60, 8 + offset // max(1, page_size)))
+            payload = self.fetch_json_url(url, timeout=timeout)
             page_features = payload.get("features") if isinstance(payload, dict) else []
             if not isinstance(page_features, list):
-                raise ValueError("USFS MVUM ArcGIS query did not return a GeoJSON feature list.")
+                raise ValueError(f"{source_label} ArcGIS query did not return a GeoJSON feature list.")
             features.extend([feature for feature in page_features if isinstance(feature, dict)])
             if max_features and len(features) >= max_features:
                 features = features[:max_features]
@@ -4251,12 +4287,12 @@ PY
                 break
             offset += page_size
         if not features:
-            raise ValueError(f"USFS MVUM ArcGIS layer {layer_id} returned no {kind} features.")
+            raise ValueError(f"{source_label} layer {layer_id} returned no features.")
         output_path.write_text(json.dumps({
             "type": "FeatureCollection",
             "features": features,
             "properties": {
-                "source": "USFS EDW_MVUM_01",
+                "source": source_label,
                 "source_layer": layer_id,
                 "fetched_at": timestamp(),
             },
@@ -4362,6 +4398,66 @@ PY
                 first = False
                 feature_count += 1
             target.write("]}")
+        return feature_count
+
+    def normalize_blm_wilderness_geojson(
+        self,
+        wilderness_path: Path,
+        wsa_path: Path,
+        output_geojson: Path,
+    ) -> int:
+        output_geojson.parent.mkdir(parents=True, exist_ok=True)
+        feature_count = 0
+
+        def iter_features(path: Path, overlay_class: str) -> list[dict[str, object]]:
+            if not path.exists():
+                return []
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            features = payload.get("features") if isinstance(payload, dict) else []
+            if not isinstance(features, list):
+                return []
+            result = []
+            for feature in features:
+                if not isinstance(feature, dict) or not feature.get("geometry"):
+                    continue
+                props = feature.get("properties") if isinstance(feature.get("properties"), dict) else {}
+                if overlay_class == "wilderness_area":
+                    normalized = {
+                        "agency": "BLM",
+                        "class": overlay_class,
+                        "class_label": "Wilderness Area",
+                        "unit_name": props.get("NLCS_NAME") or "",
+                        "state": props.get("ADMIN_ST") or "",
+                        "source_object_id": feature.get("id") if feature.get("id") not in {None, ""} else props.get("OBJECTID"),
+                        "nlcs_id": props.get("NLCS_ID") or "",
+                        "casefile_no": props.get("CASEFILE_NO") or "",
+                        "designation_date": props.get("DESIG_DATE"),
+                    }
+                else:
+                    normalized = {
+                        "agency": "BLM",
+                        "class": overlay_class,
+                        "class_label": "Wilderness Study Area",
+                        "unit_name": props.get("NLCS_NAME") or "",
+                        "state": props.get("ADMIN_ST") or "",
+                        "source_object_id": feature.get("id") if feature.get("id") not in {None, ""} else props.get("OBJECTID"),
+                        "nlcs_id": props.get("NLCS_ID") or "",
+                        "casefile_no": props.get("CASEFILE_NO") or "",
+                        "recommendation": props.get("WSA_RCMND") or "",
+                        "rod_date": props.get("ROD_DATE"),
+                    }
+                result.append(
+                    {
+                        "type": "Feature",
+                        "geometry": feature["geometry"],
+                        "properties": normalized,
+                    }
+                )
+            return result
+
+        merged = iter_features(wilderness_path, "wilderness_area") + iter_features(wsa_path, "wilderness_study_area")
+        output_geojson.write_text(json.dumps({"type": "FeatureCollection", "features": merged}, separators=(",", ":")), encoding="utf-8")
+        feature_count = len(merged)
         return feature_count
 
     def tnm_dem_products(self, bbox: tuple[float, float, float, float]) -> list[dict[str, object]]:
@@ -4926,6 +5022,163 @@ PY
         except Exception as exc:  # noqa: BLE001 - remote data boundary
             registry = self.app_db().mark_overlay_refresh(overlay_id, output_path=output if output.exists() else None, ok=False, error=str(exc))
             update_overlay_job(job_id, status="failed", step="BLM refresh failed", progress=100, error_message=str(exc), output_path=str(output) if output.exists() else "")
+            return {**registry, "ok": False, "error": str(exc)}
+
+    def refresh_blm_wilderness_overlay(self, payload: dict | None = None) -> dict[str, object]:
+        overlay_id = "blm_wilderness_wsa_cached"
+        job_id = f"{overlay_id}_refresh"
+        payload = payload or {}
+        update_overlay_job(job_id, overlay_id=overlay_id, type="refresh", status="running", step="preparing BLM wilderness download", progress=5, error_message="", started_at=timestamp())
+        self.app_db().update_map_overlay_metadata(
+            overlay_id,
+            {
+                "cache_status": "refreshing",
+                "install_status": "refreshing",
+                "error_message": "",
+            },
+        )
+        output_dir = self.settings.data_dir / "maps" / "overlays" / "public-lands"
+        source_dir = output_dir / "source"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        source_dir.mkdir(parents=True, exist_ok=True)
+        wilderness_raw = source_dir / "blm-wilderness-area.arcgis.geojson"
+        wsa_raw = source_dir / "blm-wilderness-study-area.arcgis.geojson"
+        raw_geojson = output_dir / "blm-wilderness-latest.geojson"
+        mbtiles_output = output_dir / "blm-wilderness-latest.mbtiles"
+        output = output_dir / "blm-wilderness-latest.pmtiles"
+        mapserver_url = os.environ.get(
+            "OIAB_BLM_WILDERNESS_SERVICE_URL",
+            "https://gis.blm.gov/arcgis/rest/services/lands/BLM_Natl_NLCS_WLD_WSA/MapServer",
+        ).strip()
+        max_zoom = max(12, min(17, int(os.environ.get("OIAB_BLM_WILDERNESS_MAXZOOM", "16") or 16)))
+        bbox = self.parse_optional_bbox(payload.get("bbox"))
+        out_fields_wilderness = "NLCS_ID,NLCS_NAME,CASEFILE_NO,ADMIN_ST,DESIG_DATE"
+        out_fields_wsa = "NLCS_ID,NLCS_NAME,CASEFILE_NO,WSA_RCMND,ADMIN_ST,ROD_DATE"
+        try:
+            self.require_mvum_tools(("tippecanoe", "pmtiles"))
+            update_overlay_job(job_id, step="querying BLM wilderness areas", progress=18)
+            wilderness_count = self.fetch_arcgis_geojson_layer(
+                mapserver_url,
+                0,
+                wilderness_raw,
+                job_id,
+                source_label="BLM NLCS Wilderness",
+                out_fields=out_fields_wilderness,
+                bbox=bbox,
+                page_size_env="OIAB_BLM_WILDERNESS_PAGE_SIZE",
+                max_features_env="OIAB_BLM_WILDERNESS_MAX_FEATURES",
+            )
+
+            update_overlay_job(job_id, step="querying BLM wilderness study areas", progress=38)
+            wsa_count = self.fetch_arcgis_geojson_layer(
+                mapserver_url,
+                1,
+                wsa_raw,
+                job_id,
+                source_label="BLM NLCS Wilderness Study Areas",
+                out_fields=out_fields_wsa,
+                bbox=bbox,
+                page_size_env="OIAB_BLM_WILDERNESS_PAGE_SIZE",
+                max_features_env="OIAB_BLM_WILDERNESS_MAX_FEATURES",
+            )
+
+            update_overlay_job(job_id, step="normalizing wilderness fields", progress=58)
+            feature_count = self.normalize_blm_wilderness_geojson(wilderness_raw, wsa_raw, raw_geojson)
+            if feature_count <= 0:
+                raise ValueError("BLM wilderness source converted, but no polygon features were found.")
+
+            timeout_seconds = int(os.environ.get("OIAB_BLM_WILDERNESS_TIMEOUT_SECONDS", "14400"))
+            mbtiles_output.unlink(missing_ok=True)
+            output.unlink(missing_ok=True)
+            update_overlay_job(job_id, step="building BLM wilderness PMTiles overlay", progress=82)
+            tip = subprocess.run(
+                [
+                    "tippecanoe",
+                    "-o", str(mbtiles_output),
+                    "-l", "blm_wilderness",
+                    "-Z4",
+                    f"-z{max_zoom}",
+                    "--force",
+                    "-P",
+                    "-pf",
+                    "-pk",
+                    "--detect-shared-borders",
+                    "--no-simplification-of-shared-nodes",
+                    str(raw_geojson),
+                ],
+                text=True,
+                capture_output=True,
+                timeout=timeout_seconds,
+                check=False,
+            )
+            if tip.returncode != 0:
+                mbtiles_output.unlink(missing_ok=True)
+                output.unlink(missing_ok=True)
+                raise ValueError((tip.stderr or tip.stdout or "tippecanoe failed")[-1500:])
+            if not mbtiles_output.exists() or mbtiles_output.stat().st_size <= 0:
+                raise ValueError("tippecanoe did not create a usable MBTiles file.")
+
+            convert = subprocess.run(
+                ["pmtiles", "convert", str(mbtiles_output), str(output)],
+                text=True,
+                capture_output=True,
+                timeout=timeout_seconds,
+                check=False,
+            )
+            if convert.returncode != 0:
+                output.unlink(missing_ok=True)
+                raise ValueError((convert.stderr or convert.stdout or "pmtiles convert failed")[-1500:])
+            if not output.exists() or output.stat().st_size <= 0:
+                raise ValueError("pmtiles convert did not create a usable PMTiles file.")
+
+            output_url = self.app_db().overlay_public_url_for_path(output)
+            registry = self.app_db().mark_overlay_refresh(
+                overlay_id,
+                output_path=output,
+                ok=True,
+                extra={
+                    "feature_count": feature_count,
+                    "size_bytes": output.stat().st_size,
+                    "install_status": "cached",
+                },
+            )
+            registry = self.app_db().update_map_overlay_metadata(
+                overlay_id,
+                {
+                    "cache_status": "cached",
+                    "install_status": "cached",
+                    "error_message": "",
+                    "last_fetch_at": timestamp(),
+                    "feature_count": feature_count,
+                    "blm_service_url": mapserver_url,
+                    "size_bytes": output.stat().st_size,
+                    "wilderness_count": wilderness_count,
+                    "wsa_count": wsa_count,
+                    "maxzoom": max_zoom,
+                    "minzoom": 4,
+                    "style": "public_lands_blm_wilderness",
+                    "warning": "BLM Wilderness / WSA uses the official national generalized NLCS service; it is suitable for trip planning and orientation, not parcel-precision boundary interpretation.",
+                    "bbox": list(bbox) if bbox else None,
+                },
+                path=str(output),
+                source_url=output_url,
+                overlay_type="pmtiles",
+                source_layer="blm_wilderness",
+            )
+            update_overlay_job(
+                job_id,
+                status="succeeded",
+                step="cached BLM wilderness vector snapshot",
+                progress=100,
+                error_message="",
+                output_path=str(output),
+                feature_count=feature_count,
+                size_bytes=output.stat().st_size,
+            )
+            return {"ok": True, "feature_count": feature_count, "path": str(output), **registry}
+        except Exception as exc:  # noqa: BLE001 - remote data boundary
+            registry = self.app_db().mark_overlay_refresh(overlay_id, output_path=output if output.exists() else None, ok=False, error=str(exc))
+            update_overlay_job(job_id, status="failed", step="BLM wilderness refresh failed", progress=100, error_message=str(exc), output_path=str(output) if output.exists() else "")
             return {**registry, "ok": False, "error": str(exc)}
 
     def refresh_contours_overlay(self, payload: dict | None = None) -> dict[str, object]:

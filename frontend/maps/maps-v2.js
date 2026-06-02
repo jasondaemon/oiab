@@ -866,6 +866,118 @@
     ];
   }
 
+  function blmWildernessOverlayLayers(overlay, sourceId, sourceLayer = null) {
+    const opacity = overlayOpacity(overlay);
+    const minzoom = Number(overlay.minzoom ?? overlay.metadata?.minzoom ?? 0);
+    const maxzoom = Number(overlay.maxzoom ?? overlay.metadata?.maxzoom ?? 22);
+    const classExpr = ["coalesce", ["get", "class"], ""];
+    const fillColor = [
+      "match",
+      classExpr,
+      "wilderness_area",
+      "#e7b45a",
+      "wilderness_study_area",
+      "#8fb39a",
+      "#d6c086",
+    ];
+    const lineColor = [
+      "match",
+      classExpr,
+      "wilderness_area",
+      "#91641f",
+      "wilderness_study_area",
+      "#5a7d64",
+      "#8f7f52",
+    ];
+    const lineCasing = [
+      "match",
+      classExpr,
+      "wilderness_area",
+      "#f4dcc0",
+      "wilderness_study_area",
+      "#dce9df",
+      "#ece1b9",
+    ];
+    const shared = {
+      source: sourceId,
+      ...(sourceLayer ? { "source-layer": sourceLayer } : {}),
+      minzoom,
+      maxzoom,
+    };
+    return [
+      {
+        id: overlayLayerId(overlay, "wilderness-fill-far"),
+        type: "fill",
+        ...shared,
+        minzoom: Math.max(minzoom, 4),
+        maxzoom: Math.min(maxzoom, 9),
+        filter: ["==", ["geometry-type"], "Polygon"],
+        paint: {
+          "fill-color": fillColor,
+          "fill-opacity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            Math.max(minzoom, 4),
+            opacity * 0.14,
+            6,
+            opacity * 0.2,
+            9,
+            opacity * 0.28,
+          ],
+        },
+      },
+      {
+        id: overlayLayerId(overlay, "wilderness-fill-near"),
+        type: "fill",
+        ...shared,
+        minzoom: Math.max(minzoom, 9),
+        maxzoom,
+        filter: ["==", ["geometry-type"], "Polygon"],
+        paint: {
+          "fill-color": fillColor,
+          "fill-opacity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            9,
+            opacity * 0.3,
+            11,
+            opacity * 0.38,
+            13,
+            opacity * 0.46,
+            16,
+            opacity * 0.54,
+          ],
+        },
+      },
+      {
+        id: overlayLayerId(overlay, "wilderness-boundary-casing"),
+        type: "line",
+        ...shared,
+        minzoom: Math.max(minzoom, 10),
+        filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
+        paint: {
+          "line-color": lineCasing,
+          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1.4, 12, 2.1, 14, 2.8, 16, 3.6],
+          "line-opacity": ["interpolate", ["linear"], ["zoom"], 10, opacity * 0.28, 12, opacity * 0.44, 16, opacity * 0.7],
+        },
+      },
+      {
+        id: overlayLayerId(overlay, "wilderness-boundary"),
+        type: "line",
+        ...shared,
+        minzoom: Math.max(minzoom, 10),
+        filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
+        paint: {
+          "line-color": lineColor,
+          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.9, 12, 1.35, 14, 1.8, 16, 2.3],
+          "line-opacity": ["interpolate", ["linear"], ["zoom"], 10, opacity * 0.4, 12, opacity * 0.62, 16, opacity * 0.95],
+        },
+      },
+    ];
+  }
+
   function contourOverlayLayers(overlay, sourceId, sourceLayer = null) {
     const opacity = overlayOpacity(overlay);
     const minzoom = Number(overlay.minzoom ?? overlay.metadata?.minzoom ?? 9);
@@ -956,6 +1068,9 @@
     if (overlay.type === "geojson") {
       if (style === "usgs_contours" || overlay.id === "usgs_topographic_contours") {
         return contourOverlayLayers(overlay, sourceId);
+      }
+      if (style === "public_lands_blm_wilderness") {
+        return blmWildernessOverlayLayers(overlay, sourceId);
       }
       if (style === "public_lands_blm" || overlay.category === "public_lands") {
         return blmOverlayLayers(overlay, sourceId);
@@ -1056,6 +1171,9 @@
     if (overlay.type === "pmtiles" && overlay.source_layer) {
       if (style === "usgs_contours" || overlay.id === "usgs_topographic_contours") {
         return contourOverlayLayers(overlay, sourceId, overlay.source_layer);
+      }
+      if (style === "public_lands_blm_wilderness") {
+        return blmWildernessOverlayLayers(overlay, sourceId, overlay.source_layer);
       }
       if (style === "public_lands_blm" || overlay.category === "public_lands") {
         return blmOverlayLayers(overlay, sourceId, overlay.source_layer);
@@ -1697,6 +1815,8 @@
 
   function overlayFeatureTitle(props = {}, overlay = {}) {
     return props.route_name
+      || props.unit_name
+      || props.class_label
       || props.ADMIN_UNIT_NAME
       || props.ADMIN_UNIT_TYPE
       || props.label
@@ -1776,6 +1896,19 @@
         ["Expires", firstPresent(props, ["expires", "ends"])],
         ["Headline", firstPresent(props, ["headline"])],
         ["Instruction", firstPresent(props, ["instruction"])],
+      ]);
+    }
+    if (overlay.style === "public_lands_blm_wilderness") {
+      return compactDetails([
+        ["Class", firstPresent(props, ["class_label"])],
+        ["Unit", firstPresent(props, ["unit_name"])],
+        ["State", firstPresent(props, ["state"])],
+        ["NLCS ID", firstPresent(props, ["nlcs_id"])],
+        ["Case file", firstPresent(props, ["casefile_no"])],
+        ["Designation date", firstPresent(props, ["designation_date"])],
+        ["ROD date", firstPresent(props, ["rod_date"])],
+        ["Recommendation", firstPresent(props, ["recommendation"])],
+        ["Agency", firstPresent(props, ["agency"])],
       ]);
     }
     if (category === "public_lands" || overlay.style === "public_lands_blm") {
@@ -2592,6 +2725,8 @@
     const areas = [
       ["Park / Forest", "#9bd8ac"],
       ["BLM-Administered Land", "#efc96e"],
+      ["BLM Wilderness Area", "#e7b45a"],
+      ["BLM Wilderness Study Area", "#8fb39a"],
       ["Waterway / Waterbody", "#76d9e8"],
       ["Building / Structure", "#d7d1c5"],
       ["School / Campus", "#e9e2cb"],
