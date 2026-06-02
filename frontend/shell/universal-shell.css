@@ -1026,6 +1026,37 @@ button {
   min-width: 0;
 }
 
+.uo-settings-subitems {
+  display: grid;
+  gap: 0;
+  margin-top: 6px;
+  border-top: 1px solid var(--uo-line);
+}
+
+.uo-settings-subitem {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+
+.uo-settings-subitem:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.uo-settings-subitem-main {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+.uo-settings-subitem .uo-settings-item-title {
+  font-size: 1rem;
+}
+
 .uo-settings-item-head {
   display: flex;
   flex-wrap: wrap;
