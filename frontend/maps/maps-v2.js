@@ -1011,7 +1011,7 @@
   function contourOverlayLayers(overlay, sourceId, sourceLayer = null, variant = "") {
     const opacity = overlayOpacity(overlay);
     const minzoom = Number(overlay.minzoom ?? overlay.metadata?.minzoom ?? 9);
-    const maxzoom = Number(overlay.maxzoom ?? overlay.metadata?.maxzoom ?? 16);
+    const maxzoom = 24;
     const shared = {
       source: sourceId,
       ...(sourceLayer ? { "source-layer": sourceLayer } : {}),
@@ -1030,9 +1030,9 @@
           ["==", ["get", "contour_type"], "index"],
         ],
         paint: {
-          "line-color": "#7b6643",
-          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 0.7, 12, 1.1, 16, 1.8],
-          "line-opacity": ["interpolate", ["linear"], ["zoom"], 9, opacity * 0.45, 12, opacity * 0.62, 16, opacity * 0.78],
+          "line-color": "#3f2f1b",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1.05, 12, 1.6, 16, 2.45, 20, 3.15],
+          "line-opacity": ["interpolate", ["linear"], ["zoom"], 9, opacity * 0.74, 12, opacity * 0.88, 16, opacity, 20, opacity],
         },
       },
       {
@@ -1046,9 +1046,9 @@
           ["==", ["get", "contour_type"], "normal"],
         ],
         paint: {
-          "line-color": "#9a8460",
-          "line-width": ["interpolate", ["linear"], ["zoom"], 11, 0.45, 13, 0.72, 16, 1.05],
-          "line-opacity": ["interpolate", ["linear"], ["zoom"], 11, opacity * 0.22, 13, opacity * 0.36, 16, opacity * 0.5],
+          "line-color": "#6b5737",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 11, 0.72, 13, 1.05, 16, 1.55, 20, 2.05],
+          "line-opacity": ["interpolate", ["linear"], ["zoom"], 11, opacity * 0.5, 13, opacity * 0.68, 16, opacity * 0.86, 20, opacity * 0.92],
         },
       },
       {
@@ -1071,10 +1071,10 @@
           "text-keep-upright": true,
         },
         paint: {
-          "text-color": "#5a4a31",
-          "text-halo-color": "rgba(247, 245, 233, 0.85)",
-          "text-halo-width": 1.2,
-          "text-opacity": ["interpolate", ["linear"], ["zoom"], 12, opacity * 0.56, 16, opacity * 0.84],
+          "text-color": "#2f2415",
+          "text-halo-color": "rgba(249, 246, 231, 0.92)",
+          "text-halo-width": 1.6,
+          "text-opacity": ["interpolate", ["linear"], ["zoom"], 12, opacity * 0.74, 16, opacity, 20, opacity],
         },
       },
     ];
@@ -1691,14 +1691,6 @@
     state.map.on("click", "overland-waypoint-icons", showSavedPointPopup);
     state.map.on("click", "overland-track-lines", showSavedTrackPopup);
     state.map.on("click", "offline-region-icons", (event) => {
-      const regionId = event.features?.[0]?.properties?.id;
-      if (regionId && regionId !== "__draft__") openOfflineRegionById(regionId);
-    });
-    state.map.on("click", "offline-region-fills", (event) => {
-      const regionId = event.features?.[0]?.properties?.id;
-      if (regionId && regionId !== "__draft__") openOfflineRegionById(regionId);
-    });
-    state.map.on("click", "offline-region-lines", (event) => {
       const regionId = event.features?.[0]?.properties?.id;
       if (regionId && regionId !== "__draft__") openOfflineRegionById(regionId);
     });
@@ -2443,6 +2435,15 @@
     }
   }
 
+  function overlaySummary(overlay, status = "") {
+    if (overlay.id === "usgs_topographic_contours" || overlay.style === "usgs_contours") {
+      const count = Array.isArray(overlay.region_sources) ? overlay.region_sources.length : 0;
+      return `topo · offline regions only${count ? ` · ${count} region${count === 1 ? "" : "s"}` : ""}${status}`;
+    }
+    const cache = overlay.cache_status && overlay.cache_status !== "cached" ? ` · ${overlay.cache_status}` : "";
+    return `${overlay.category || "overlay"}${cache}`;
+  }
+
   function renderOverlayControls() {
     const node = $("overlayList");
     if (!node) return;
@@ -2460,7 +2461,7 @@
       row.innerHTML = `
         <label class="omv2-overlay-check">
           <input type="checkbox" ${overlay.enabled ? "checked" : ""}>
-          <span>${escapeHtml(overlay.name || overlay.id)}<br><small class="omv2-overlay-note">${escapeHtml(overlay.category || "overlay")}${escapeHtml(status)}</small></span>
+          <span>${escapeHtml(overlay.name || overlay.id)}<br><small class="omv2-overlay-note">${escapeHtml(overlaySummary(overlay, status))}</small></span>
         </label>
         <label class="omv2-overlay-opacity">
           <span>${Math.round(Number(overlay.opacity ?? 1) * 100)}%</span>
