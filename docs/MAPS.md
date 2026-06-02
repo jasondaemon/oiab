@@ -177,7 +177,8 @@ Current overlay direction:
 - MVUM is the first full-US offline overlay target. OIAB can fetch roads/trails from the USFS EDW `EDW_MVUM_01` ArcGIS MapServer, normalize them to GeoJSON, and generate PMTiles when `tippecanoe` is available. Manual converted files under `/data/oiab/maps/overlays/mvum` are still detected by rescan.
 - Wildfire hotspots use a cached NASA FIRMS GeoJSON snapshot. Live refresh requires `OIAB_FIRMS_MAP_KEY` when the selected FIRMS endpoint requires a key.
 - NWS weather alerts use a cached GeoJSON snapshot from `api.weather.gov`, rendered offline until stale.
-- NOAA radar is represented as a disabled placeholder for a later online raster layer.
+- NOAA Radar is available as an online-only nowCOAST raster overlay using the live base reflectivity mosaic.
+- It is not cached for offline use yet; later work will add bbox-based area caching.
 
 ## Current Gaps
 

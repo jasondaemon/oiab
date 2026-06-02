@@ -251,22 +251,28 @@
     {
       "id": "noaa_radar_online",
       "name": "NOAA Radar",
-      "description": "Placeholder for a future online radar overlay. Not implemented in this pass.",
+      "description": "Online NOAA nowCOAST weather radar base reflectivity mosaic. Live radar only; offline caching will come later via bbox-based area downloads.",
       "category": "weather",
       "type": "raster",
-      "source_type": "raster_xyz",
-      "source_url": "",
+      "source_type": "raster_wms",
+      "source_url": "https://nowcoast.noaa.gov/geoserver/ows?service=WMS&version=1.3.0&request=GetMap&layers=weather_radar:base_reflectivity_mosaic&styles=weather_radar_base_reflectivity&format=image/png&transparent=true&width=256&height=256&crs=EPSG:3857&bbox={bbox-epsg-3857}",
+      "tiles": [
+        "https://nowcoast.noaa.gov/geoserver/ows?service=WMS&version=1.3.0&request=GetMap&layers=weather_radar:base_reflectivity_mosaic&styles=weather_radar_base_reflectivity&format=image/png&transparent=true&width=256&height=256&crs=EPSG:3857&bbox={bbox-epsg-3857}"
+      ],
       "attribution": "NOAA/NWS",
+      "minzoom": 3,
+      "maxzoom": 13,
       "online_required": true,
-      "online_available": false,
+      "online_available": true,
       "offline_available": false,
       "cache_mode": "none",
       "cache_status": "not_cached",
-      "install_status": "not_implemented",
+      "install_status": "online_only",
       "enabled": false,
-      "opacity": 0.7,
-      "layer_order": 90,
-      "sort_order": 90
+      "opacity": 0.82,
+      "layer_order": 81,
+      "sort_order": 81,
+      "warning": "NOAA Radar uses the nowCOAST live base reflectivity mosaic and requires internet. It is a weather radar reflectivity view, not precipitation totals or forecast guidance."
     },
     {
       "id": "local_geojson",
