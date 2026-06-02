@@ -2170,13 +2170,26 @@
       },
     });
     state.map.addLayer({
+      id: "offline-region-icon-halo",
+      type: "circle",
+      source: "offline-regions",
+      filter: ["==", ["geometry-type"], "Point"],
+      paint: {
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 10, 10, 13, 14, 16],
+        "circle-color": "#7df28c",
+        "circle-opacity": 0.92,
+        "circle-stroke-color": "#06170f",
+        "circle-stroke-width": 2,
+      },
+    });
+    state.map.addLayer({
       id: "offline-region-icons",
       type: "symbol",
       source: "offline-regions",
       filter: ["==", ["geometry-type"], "Point"],
       layout: {
-        "text-field": ["case", ["==", ["get", "draft"], 1], "＋", "▣"],
-        "text-size": ["interpolate", ["linear"], ["zoom"], 4, 18, 10, 21, 14, 24],
+        "text-field": ["case", ["==", ["get", "draft"], 1], "+", "↧"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 4, 14, 10, 17, 14, 20],
         "text-font": ["Noto Sans Bold"],
         "text-allow-overlap": true,
         "text-ignore-placement": true,
@@ -2184,8 +2197,8 @@
       },
       paint: {
         "text-color": "#06170f",
-        "text-halo-color": "#7df28c",
-        "text-halo-width": 4,
+        "text-halo-color": "rgba(125, 242, 140, 0.0)",
+        "text-halo-width": 0,
       },
     });
     updateOfflineRegionSources();
