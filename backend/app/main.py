@@ -4349,7 +4349,7 @@ PY
                     "agency": properties.get("ADMIN_AGENCY_CODE") or properties.get("ADMIN_DEPT_CODE") or "BLM",
                     "unit_name": properties.get("ADMIN_UNIT_NAME") or "",
                     "state": properties.get("ADMIN_ST") or "",
-                    "source_object_id": properties.get("OBJECTID"),
+                    "source_object_id": feature.get("id") if feature.get("id") not in {None, ""} else properties.get("OBJECTID"),
                 }
                 cleaned = {
                     "type": "Feature",
@@ -4806,7 +4806,7 @@ PY
                 str(gdb_path),
                 layer_name,
                 "-t_srs", "EPSG:4326",
-                "-select", "OBJECTID,ADMIN_AGENCY_CODE,ADMIN_DEPT_CODE,ADMIN_UNIT_NAME,ADMIN_ST",
+                "-select", "ADMIN_AGENCY_CODE,ADMIN_DEPT_CODE,ADMIN_UNIT_NAME,ADMIN_ST",
             ]
             if bbox:
                 ogr_cmd.extend(["-clipsrc", *[str(value) for value in bbox]])
