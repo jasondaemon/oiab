@@ -2175,17 +2175,17 @@
       source: "offline-regions",
       filter: ["==", ["geometry-type"], "Point"],
       layout: {
-        "text-field": ["case", ["==", ["get", "draft"], 1], "▣ Save", "▣ Cache"],
-        "text-size": ["interpolate", ["linear"], ["zoom"], 4, 20, 10, 24, 14, 30],
+        "text-field": ["case", ["==", ["get", "draft"], 1], "＋", "▣"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 4, 18, 10, 21, 14, 24],
         "text-font": ["Noto Sans Bold"],
         "text-allow-overlap": true,
         "text-ignore-placement": true,
-        "text-anchor": "bottom-right",
+        "text-anchor": "center",
       },
       paint: {
         "text-color": "#06170f",
         "text-halo-color": "#7df28c",
-        "text-halo-width": 7,
+        "text-halo-width": 4,
       },
     });
     updateOfflineRegionSources();
