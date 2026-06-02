@@ -975,13 +975,6 @@
       holder.innerHTML = `<div class="uo-settings-item"><div class="uo-settings-item-main"><p class="uo-settings-item-subtitle">No overlays registered.</p></div></div>`;
       return;
     }
-    const savedContourConfig = (() => {
-      try {
-        return JSON.parse(localStorage.getItem("uo.contours.config") || "{}");
-      } catch {
-        return {};
-      }
-    })();
     const availabilityBadge = (overlay) => {
       if (overlay.online_required) return badge("Online", "is-warn");
       if (overlay.cache_mode === "offline_pack") {
@@ -993,12 +986,9 @@
     };
     holder.innerHTML = overlays.map((overlay) => {
       const overlayId = String(overlay.id || "");
-      const canRefresh = ["firms_active_hotspots", "nws_active_alerts", "mvum_roads_us", "mvum_trails_us", "blm_sma_cached", "blm_wilderness_wsa_cached", "usgs_topographic_contours"].includes(overlayId);
-      const isInstall = ["mvum_roads_us", "mvum_trails_us", "blm_sma_cached", "blm_wilderness_wsa_cached", "usgs_topographic_contours"].includes(overlayId);
+      const canRefresh = ["firms_active_hotspots", "nws_active_alerts", "mvum_roads_us", "mvum_trails_us", "blm_sma_cached", "blm_wilderness_wsa_cached"].includes(overlayId);
+      const isInstall = ["mvum_roads_us", "mvum_trails_us", "blm_sma_cached", "blm_wilderness_wsa_cached"].includes(overlayId);
       const actionLabel = isInstall ? (overlay.exists || overlay.cache_status === "cached" ? "Update" : "Download") : "Refresh";
-      const bboxValue = String(savedContourConfig.bbox || overlay.metadata?.bbox?.join(",") || "");
-      const intervalValue = Number(savedContourConfig.interval_ft || overlay.metadata?.contour_interval_ft || 40);
-      const indexIntervalValue = Number(savedContourConfig.index_interval_ft || overlay.metadata?.index_interval_ft || 200);
       return `
         <article class="uo-settings-item">
           <div class="uo-settings-item-main">
@@ -1015,21 +1005,7 @@
             <p class="uo-settings-item-subtitle">${escapeHtml(overlay.description || "")}</p>
             ${overlay.warning ? `<p class="uo-settings-item-subtitle is-warn">${escapeHtml(overlay.warning)}</p>` : ""}
             ${overlayId === "usgs_topographic_contours" ? `
-              <div class="uo-inline-form-grid">
-                <label class="uo-inline-form-field">
-                  <span>BBox</span>
-                  <input type="text" data-contour-config="bbox" value="${escapeHtml(bboxValue)}" placeholder="-109.8,38.2,-109.3,38.8">
-                </label>
-                <label class="uo-inline-form-field">
-                  <span>Interval (ft)</span>
-                  <input type="number" data-contour-config="interval_ft" value="${escapeHtml(String(intervalValue))}" min="5" step="5">
-                </label>
-                <label class="uo-inline-form-field">
-                  <span>Index (ft)</span>
-                  <input type="number" data-contour-config="index_interval_ft" value="${escapeHtml(String(indexIntervalValue))}" min="5" step="5">
-                </label>
-              </div>
-              <p class="uo-settings-item-subtitle">Use <code>minLon,minLat,maxLon,maxLat</code>. Example: <code>-109.8,38.2,-109.3,38.8</code> for Moab.</p>
+              <p class="uo-settings-item-subtitle">Generate contour packs from the map's <strong>Offline Data Regions</strong> workflow. Draw a bbox on the map, include <strong>USGS Topographic Contours</strong>, then download the region.</p>
             ` : ""}
             ${(overlay.last_fetch_at || overlay.error_message) ? `
               <p class="uo-settings-item-subtitle">
@@ -1065,20 +1041,8 @@
                 ? "/api/maps/overlays/mvum/trails/install"
                 : overlayId === "blm_wilderness_wsa_cached"
                   ? "/api/maps/overlays/blm-wilderness/refresh"
-                : overlayId === "usgs_topographic_contours"
-                  ? "/api/maps/overlays/contours/refresh"
                   : "/api/maps/overlays/blm/refresh";
-            const payload = overlayId === "usgs_topographic_contours"
-              ? (() => {
-                  const card = button.closest(".uo-settings-item");
-                  const bbox = card?.querySelector('[data-contour-config="bbox"]')?.value?.trim() || "";
-                  const interval_ft = card?.querySelector('[data-contour-config="interval_ft"]')?.value?.trim() || "";
-                  const index_interval_ft = card?.querySelector('[data-contour-config="index_interval_ft"]')?.value?.trim() || "";
-                  const config = { bbox, interval_ft, index_interval_ft };
-                  localStorage.setItem("uo.contours.config", JSON.stringify(config));
-                  return config;
-                })()
-              : null;
+            const payload = null;
             const response = await fetch(path, payload ? {
               method: "POST",
               headers: { "Content-Type": "application/json" },

@@ -4566,14 +4566,46 @@ PY
                     overlay = self.cacheable_overlay(overlay_id)
                     minzoom = int(overlay.get("offline_cache_minzoom") or overlay.get("minzoom") or 0)
                     maxzoom = int(overlay.get("offline_cache_maxzoom") or overlay.get("maxzoom") or 16)
+                    overlay_progress_start = int(((index - 1) / max(len(valid_overlay_ids), 1)) * 100)
+                    overlay_progress_end = min(99, int((index / max(len(valid_overlay_ids), 1)) * 100))
+                    if overlay_id == "usgs_topographic_contours":
+                        output_dir = self.settings.data_dir / "maps" / "overlays" / "contours" / "regions" / str(region["id"])
+                        output = output_dir / "contours.pmtiles"
+                        shutil.rmtree(output_dir, ignore_errors=True)
+                        output_dir.mkdir(parents=True, exist_ok=True)
+                        contour_result = self.build_contours_overlay(
+                            bbox=region_bbox,
+                            interval_ft=max(5, int(float(os.environ.get("OIAB_CONTOURS_INTERVAL_FT", "40")))),
+                            index_interval_ft=max(
+                                max(5, int(float(os.environ.get("OIAB_CONTOURS_INTERVAL_FT", "40")))),
+                                int(float(os.environ.get("OIAB_CONTOURS_INDEX_INTERVAL_FT", "200"))),
+                            ),
+                            min_zoom=minzoom,
+                            max_zoom=maxzoom,
+                            output_dir=output_dir,
+                            output=output,
+                            job_id=job_id,
+                            progress_window=(overlay_progress_start, overlay_progress_end),
+                        )
+                        self.app_db().set_offline_overlay_region_item(
+                            str(region["id"]),
+                            overlay_id,
+                            status="cached",
+                            minzoom=minzoom,
+                            maxzoom=maxzoom,
+                            tile_count=int(contour_result["feature_count"]),
+                            cached_tiles=int(contour_result["feature_count"]),
+                            size_bytes=int(contour_result["size_bytes"]),
+                            error_message="",
+                        )
+                        continue
                     root = self.offline_region_cache_root() / str(region["id"]) / overlay_id
                     shutil.rmtree(root, ignore_errors=True)
                     root.mkdir(parents=True, exist_ok=True)
                     tile_total = 0
                     cached_total = 0
                     size_total = 0
-                    overlay_progress_start = int(((index - 1) / max(len(valid_overlay_ids), 1)) * 100)
-                    overlay_progress_span = max(1, int(100 / max(len(valid_overlay_ids), 1)))
+                    overlay_progress_span = max(1, overlay_progress_end - overlay_progress_start)
                     for zoom in range(minzoom, maxzoom + 1):
                         xs, ys = tile_ranges_for_bbox(region_bbox, zoom)
                         coords = [(xv, yv) for xv in xs for yv in ys]
@@ -4643,6 +4675,7 @@ PY
         if not region_id:
             raise ValueError("region_id is required.")
         shutil.rmtree(self.offline_region_cache_root() / region_id, ignore_errors=True)
+        shutil.rmtree(self.settings.data_dir / "maps" / "overlays" / "contours" / "regions" / region_id, ignore_errors=True)
         self.app_db().delete_offline_overlay_region(region_id)
         return self.map_overlays()
 
@@ -4838,6 +4871,208 @@ PY
                 feature_count += 1
             target.write("]}")
         return feature_count
+
+    def build_contours_overlay(
+        self,
+        *,
+        bbox: tuple[float, float, float, float],
+        interval_ft: int,
+        index_interval_ft: int,
+        min_zoom: int,
+        max_zoom: int,
+        output_dir: Path,
+        output: Path,
+        job_id: str,
+        progress_window: tuple[int, int] = (10, 100),
+    ) -> dict[str, object]:
+        interval_m = interval_ft * 0.3048
+        source_dir = output_dir / "source"
+        dem_dir = output_dir / "dem"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        source_dir.mkdir(parents=True, exist_ok=True)
+        dem_dir.mkdir(parents=True, exist_ok=True)
+        merged_vrt = dem_dir / "merged.vrt"
+        clipped_tif = dem_dir / "contours-clipped.tif"
+        contours_gpkg = dem_dir / "contours.gpkg"
+        raw_seq = output_dir / "contours.raw.geojsonseq"
+        normalized_geojson = output_dir / "contours.geojson"
+        mbtiles_output = output_dir / "contours.mbtiles"
+        metadata_path = output.with_suffix(".metadata.json")
+        progress_start, progress_end = progress_window
+        span = max(1, progress_end - progress_start)
+
+        def progress_at(ratio: float) -> int:
+            return min(progress_end, progress_start + int(span * ratio))
+
+        self.require_mvum_tools(("gdalbuildvrt", "gdalwarp", "gdal_contour", "ogr2ogr", "tippecanoe", "pmtiles"))
+        update_overlay_job(job_id, step="querying USGS The National Map", progress=progress_at(0.0))
+        dem_items = self.tnm_dem_products(bbox)
+        tile_paths: list[Path] = []
+        total_tiles = len(dem_items)
+        for idx, item in enumerate(dem_items, start=1):
+            download_url = str(item.get("downloadURL") or item.get("downloadURLRaster") or "").strip()
+            if not download_url:
+                continue
+            filename = Path(urlparse(download_url).path).name or f"dem-{idx}.tif"
+            destination = source_dir / filename
+            if not destination.exists() or destination.stat().st_size <= 0:
+                update_overlay_job(job_id, step=f"downloading DEM tile {idx}/{total_tiles}", progress=progress_at(0.05 + (idx / max(total_tiles, 1)) * 0.2))
+                self.download_or_copy_overlay_source(download_url, destination, job_id)
+            tile_paths.append(destination)
+        if not tile_paths:
+            raise ValueError("No DEM tiles were downloaded for the requested bbox.")
+
+        update_overlay_job(job_id, step="building merged DEM", progress=progress_at(0.35))
+        merged_vrt.unlink(missing_ok=True)
+        vrt = subprocess.run(
+            ["gdalbuildvrt", str(merged_vrt), *[str(path) for path in tile_paths]],
+            text=True,
+            capture_output=True,
+            timeout=int(os.environ.get("OIAB_CONTOURS_BUILD_TIMEOUT_SECONDS", "43200")),
+            check=False,
+        )
+        if vrt.returncode != 0 or not merged_vrt.exists():
+            raise ValueError((vrt.stderr or vrt.stdout or "gdalbuildvrt failed")[-1500:])
+
+        update_overlay_job(job_id, step="clipping DEM to bbox", progress=progress_at(0.48))
+        clipped_tif.unlink(missing_ok=True)
+        warp = subprocess.run(
+            [
+                "gdalwarp",
+                "-overwrite",
+                "-t_srs", "EPSG:4326",
+                "-te_srs", "EPSG:4326",
+                "-te", *[str(value) for value in bbox],
+                "-co", "COMPRESS=DEFLATE",
+                "-co", "TILED=YES",
+                str(merged_vrt),
+                str(clipped_tif),
+            ],
+            text=True,
+            capture_output=True,
+            timeout=int(os.environ.get("OIAB_CONTOURS_BUILD_TIMEOUT_SECONDS", "43200")),
+            check=False,
+        )
+        if warp.returncode != 0 or not clipped_tif.exists():
+            raise ValueError((warp.stderr or warp.stdout or "gdalwarp failed")[-1500:])
+
+        update_overlay_job(job_id, step="generating contour vectors", progress=progress_at(0.62))
+        contours_gpkg.unlink(missing_ok=True)
+        contour = subprocess.run(
+            [
+                "gdal_contour",
+                "-i", str(interval_m),
+                "-a", "ele_m",
+                "-f", "GPKG",
+                str(clipped_tif),
+                str(contours_gpkg),
+            ],
+            text=True,
+            capture_output=True,
+            timeout=int(os.environ.get("OIAB_CONTOURS_BUILD_TIMEOUT_SECONDS", "43200")),
+            check=False,
+        )
+        if contour.returncode != 0 or not contours_gpkg.exists():
+            raise ValueError((contour.stderr or contour.stdout or "gdal_contour failed")[-1500:])
+
+        update_overlay_job(job_id, step="exporting contour GeoJSON", progress=progress_at(0.74))
+        raw_seq.unlink(missing_ok=True)
+        ogr = subprocess.run(
+            [
+                "ogr2ogr",
+                "-f", "GeoJSONSeq",
+                str(raw_seq),
+                str(contours_gpkg),
+                "-t_srs", "EPSG:4326",
+                "-select", "ele_m",
+            ],
+            text=True,
+            capture_output=True,
+            timeout=int(os.environ.get("OIAB_CONTOURS_BUILD_TIMEOUT_SECONDS", "43200")),
+            check=False,
+        )
+        if ogr.returncode != 0 or not raw_seq.exists():
+            raise ValueError((ogr.stderr or ogr.stdout or "ogr2ogr failed")[-1500:])
+
+        update_overlay_job(job_id, step="normalizing contour attributes", progress=progress_at(0.82))
+        feature_count = self.normalize_contour_geojsonseq(raw_seq, normalized_geojson, interval_ft=interval_ft, index_interval_ft=index_interval_ft)
+        if feature_count <= 0:
+            raise ValueError("Contour generation produced no usable lines for the requested bbox.")
+
+        update_overlay_job(job_id, step="building contour PMTiles overlay", progress=progress_at(0.92))
+        output.parent.mkdir(parents=True, exist_ok=True)
+        mbtiles_output.unlink(missing_ok=True)
+        output.unlink(missing_ok=True)
+        tip = subprocess.run(
+            [
+                "tippecanoe",
+                "-o", str(mbtiles_output),
+                "-l", "contours",
+                f"-Z{min_zoom}",
+                f"-z{max_zoom}",
+                "--force",
+                "-P",
+                "-pf",
+                "-pk",
+                "--no-simplification-of-shared-nodes",
+                str(normalized_geojson),
+            ],
+            text=True,
+            capture_output=True,
+            timeout=int(os.environ.get("OIAB_CONTOURS_BUILD_TIMEOUT_SECONDS", "43200")),
+            check=False,
+        )
+        if tip.returncode != 0:
+            mbtiles_output.unlink(missing_ok=True)
+            output.unlink(missing_ok=True)
+            raise ValueError((tip.stderr or tip.stdout or "tippecanoe failed")[-1500:])
+        if not mbtiles_output.exists() or mbtiles_output.stat().st_size <= 0:
+            raise ValueError("tippecanoe did not create a usable MBTiles file.")
+
+        convert = subprocess.run(
+            ["pmtiles", "convert", str(mbtiles_output), str(output)],
+            text=True,
+            capture_output=True,
+            timeout=int(os.environ.get("OIAB_CONTOURS_BUILD_TIMEOUT_SECONDS", "43200")),
+            check=False,
+        )
+        if convert.returncode != 0:
+            output.unlink(missing_ok=True)
+            raise ValueError((convert.stderr or convert.stdout or "pmtiles convert failed")[-1500:])
+        if not output.exists() or output.stat().st_size <= 0:
+            raise ValueError("pmtiles convert did not create a usable PMTiles file.")
+
+        metadata_payload = {
+            "source": "usgs_3dep",
+            "bbox": list(bbox),
+            "contour_interval_ft": interval_ft,
+            "index_interval_ft": index_interval_ft,
+            "created_at": timestamp(),
+            "dem_resolution": "1/3 arc-second (~10m)",
+            "commands": {
+                "tnm_dataset": os.environ.get("OIAB_CONTOURS_TNM_DATASET", "National Elevation Dataset (NED) 1/3 arc-second"),
+                "gdalbuildvrt": ["gdalbuildvrt", str(merged_vrt), *[str(path) for path in tile_paths]],
+                "gdalwarp": ["gdalwarp", "-overwrite", "-t_srs", "EPSG:4326", "-te_srs", "EPSG:4326", "-te", *[str(value) for value in bbox], "-co", "COMPRESS=DEFLATE", "-co", "TILED=YES", str(merged_vrt), str(clipped_tif)],
+                "gdal_contour": ["gdal_contour", "-i", str(interval_m), "-a", "ele_m", "-f", "GPKG", str(clipped_tif), str(contours_gpkg)],
+                "ogr2ogr": ["ogr2ogr", "-f", "GeoJSONSeq", str(raw_seq), str(contours_gpkg), "-t_srs", "EPSG:4326", "-select", "ele_m"],
+                "tippecanoe": ["tippecanoe", "-o", str(output), "-l", "contours", f"-Z{min_zoom}", f"-z{max_zoom}", "--force", "-P", "-pf", "-pk", "--no-simplification-of-shared-nodes", str(normalized_geojson)],
+            },
+            "dem_tiles": [{"title": item.get("title"), "download_url": item.get("downloadURL") or item.get("downloadURLRaster"), "size_bytes": item.get("sizeInBytes")} for item in dem_items],
+            "feature_count": feature_count,
+            "size_bytes": output.stat().st_size,
+        }
+        metadata_path.write_text(json.dumps(metadata_payload, indent=2), encoding="utf-8")
+        return {
+            "feature_count": feature_count,
+            "output": output,
+            "metadata_path": metadata_path,
+            "size_bytes": output.stat().st_size,
+            "bbox": list(bbox),
+            "minzoom": min_zoom,
+            "maxzoom": max_zoom,
+            "interval_ft": interval_ft,
+            "index_interval_ft": index_interval_ft,
+        }
 
     def contours_status(self) -> dict[str, object]:
         registry = self.map_overlays()
@@ -5497,196 +5732,35 @@ PY
         index_interval_ft = max(interval_ft, int(float(payload.get("index_interval_ft") or os.environ.get("OIAB_CONTOURS_INDEX_INTERVAL_FT", "200"))))
         min_zoom = max(0, min(22, int(payload.get("minzoom") or os.environ.get("OIAB_CONTOURS_MINZOOM", "9") or 9)))
         max_zoom = max(min_zoom, min(22, int(payload.get("maxzoom") or os.environ.get("OIAB_CONTOURS_MAXZOOM", "16") or 16)))
-        interval_m = interval_ft * 0.3048
         output_dir = self.settings.data_dir / "maps" / "overlays" / "contours"
-        source_dir = output_dir / "source"
-        dem_dir = output_dir / "dem"
-        output_dir.mkdir(parents=True, exist_ok=True)
-        source_dir.mkdir(parents=True, exist_ok=True)
-        dem_dir.mkdir(parents=True, exist_ok=True)
-        merged_vrt = dem_dir / "merged.vrt"
-        clipped_tif = dem_dir / "contours-clipped.tif"
-        contours_gpkg = dem_dir / "contours.gpkg"
-        raw_seq = output_dir / "contours.raw.geojsonseq"
-        normalized_geojson = output_dir / "contours.geojson"
-        mbtiles_output = output_dir / "contours.mbtiles"
         output = Path(os.environ.get("OIAB_CONTOURS_OUTPUT", str(output_dir / "contours.pmtiles")))
-        metadata_path = output.with_suffix(".metadata.json")
         try:
-            self.require_mvum_tools(("gdalbuildvrt", "gdalwarp", "gdal_contour", "ogr2ogr", "tippecanoe", "pmtiles"))
-            update_overlay_job(job_id, step="querying USGS The National Map", progress=10)
-            dem_items = self.tnm_dem_products(bbox)
-            tile_paths: list[Path] = []
-            total_tiles = len(dem_items)
-            for idx, item in enumerate(dem_items, start=1):
-                download_url = str(item.get("downloadURL") or item.get("downloadURLRaster") or "").strip()
-                if not download_url:
-                    continue
-                filename = Path(urlparse(download_url).path).name or f"dem-{idx}.tif"
-                destination = source_dir / filename
-                if not destination.exists() or destination.stat().st_size <= 0:
-                    update_overlay_job(job_id, step=f"downloading DEM tile {idx}/{total_tiles}", progress=10 + int((idx / max(total_tiles, 1)) * 20))
-                    self.download_or_copy_overlay_source(download_url, destination, job_id)
-                tile_paths.append(destination)
-            if not tile_paths:
-                raise ValueError("No DEM tiles were downloaded for the requested bbox.")
-
-            update_overlay_job(job_id, step="building merged DEM", progress=35)
-            merged_vrt.unlink(missing_ok=True)
-            vrt = subprocess.run(
-                ["gdalbuildvrt", str(merged_vrt), *[str(path) for path in tile_paths]],
-                text=True,
-                capture_output=True,
-                timeout=int(os.environ.get("OIAB_CONTOURS_BUILD_TIMEOUT_SECONDS", "43200")),
-                check=False,
+            result = self.build_contours_overlay(
+                bbox=bbox,
+                interval_ft=interval_ft,
+                index_interval_ft=index_interval_ft,
+                min_zoom=min_zoom,
+                max_zoom=max_zoom,
+                output_dir=output_dir,
+                output=output,
+                job_id=job_id,
             )
-            if vrt.returncode != 0 or not merged_vrt.exists():
-                raise ValueError((vrt.stderr or vrt.stdout or "gdalbuildvrt failed")[-1500:])
-
-            update_overlay_job(job_id, step="clipping DEM to bbox", progress=48)
-            clipped_tif.unlink(missing_ok=True)
-            warp = subprocess.run(
-                [
-                    "gdalwarp",
-                    "-overwrite",
-                    "-t_srs", "EPSG:4326",
-                    "-te_srs", "EPSG:4326",
-                    "-te", *[str(value) for value in bbox],
-                    "-co", "COMPRESS=DEFLATE",
-                    "-co", "TILED=YES",
-                    str(merged_vrt),
-                    str(clipped_tif),
-                ],
-                text=True,
-                capture_output=True,
-                timeout=int(os.environ.get("OIAB_CONTOURS_BUILD_TIMEOUT_SECONDS", "43200")),
-                check=False,
-            )
-            if warp.returncode != 0 or not clipped_tif.exists():
-                raise ValueError((warp.stderr or warp.stdout or "gdalwarp failed")[-1500:])
-
-            update_overlay_job(job_id, step="generating contour vectors", progress=62)
-            contours_gpkg.unlink(missing_ok=True)
-            contour = subprocess.run(
-                [
-                    "gdal_contour",
-                    "-i", str(interval_m),
-                    "-a", "ele_m",
-                    "-f", "GPKG",
-                    str(clipped_tif),
-                    str(contours_gpkg),
-                ],
-                text=True,
-                capture_output=True,
-                timeout=int(os.environ.get("OIAB_CONTOURS_BUILD_TIMEOUT_SECONDS", "43200")),
-                check=False,
-            )
-            if contour.returncode != 0 or not contours_gpkg.exists():
-                raise ValueError((contour.stderr or contour.stdout or "gdal_contour failed")[-1500:])
-
-            update_overlay_job(job_id, step="exporting contour GeoJSON", progress=74)
-            raw_seq.unlink(missing_ok=True)
-            ogr = subprocess.run(
-                [
-                    "ogr2ogr",
-                    "-f", "GeoJSONSeq",
-                    str(raw_seq),
-                    str(contours_gpkg),
-                    "-t_srs", "EPSG:4326",
-                    "-select", "ele_m",
-                ],
-                text=True,
-                capture_output=True,
-                timeout=int(os.environ.get("OIAB_CONTOURS_BUILD_TIMEOUT_SECONDS", "43200")),
-                check=False,
-            )
-            if ogr.returncode != 0 or not raw_seq.exists():
-                raise ValueError((ogr.stderr or ogr.stdout or "ogr2ogr failed")[-1500:])
-
-            update_overlay_job(job_id, step="normalizing contour attributes", progress=82)
-            feature_count = self.normalize_contour_geojsonseq(raw_seq, normalized_geojson, interval_ft=interval_ft, index_interval_ft=index_interval_ft)
-            if feature_count <= 0:
-                raise ValueError("Contour generation produced no usable lines for the requested bbox.")
-
-            update_overlay_job(job_id, step="building contour PMTiles overlay", progress=92)
-            output.parent.mkdir(parents=True, exist_ok=True)
-            mbtiles_output.unlink(missing_ok=True)
-            output.unlink(missing_ok=True)
-            tip = subprocess.run(
-                [
-                    "tippecanoe",
-                    "-o", str(mbtiles_output),
-                    "-l", "contours",
-                    f"-Z{min_zoom}",
-                    f"-z{max_zoom}",
-                    "--force",
-                    "-P",
-                    "-pf",
-                    "-pk",
-                    "--no-simplification-of-shared-nodes",
-                    str(normalized_geojson),
-                ],
-                text=True,
-                capture_output=True,
-                timeout=int(os.environ.get("OIAB_CONTOURS_BUILD_TIMEOUT_SECONDS", "43200")),
-                check=False,
-            )
-            if tip.returncode != 0:
-                mbtiles_output.unlink(missing_ok=True)
-                output.unlink(missing_ok=True)
-                raise ValueError((tip.stderr or tip.stdout or "tippecanoe failed")[-1500:])
-            if not mbtiles_output.exists() or mbtiles_output.stat().st_size <= 0:
-                raise ValueError("tippecanoe did not create a usable MBTiles file.")
-
-            convert = subprocess.run(
-                ["pmtiles", "convert", str(mbtiles_output), str(output)],
-                text=True,
-                capture_output=True,
-                timeout=int(os.environ.get("OIAB_CONTOURS_BUILD_TIMEOUT_SECONDS", "43200")),
-                check=False,
-            )
-            if convert.returncode != 0:
-                output.unlink(missing_ok=True)
-                raise ValueError((convert.stderr or convert.stdout or "pmtiles convert failed")[-1500:])
-            if not output.exists() or output.stat().st_size <= 0:
-                raise ValueError("pmtiles convert did not create a usable PMTiles file.")
-
-            metadata_payload = {
-                "source": "usgs_3dep",
-                "bbox": list(bbox),
-                "contour_interval_ft": interval_ft,
-                "index_interval_ft": index_interval_ft,
-                "created_at": timestamp(),
-                "dem_resolution": "1/3 arc-second (~10m)",
-                "commands": {
-                    "tnm_dataset": os.environ.get("OIAB_CONTOURS_TNM_DATASET", "National Elevation Dataset (NED) 1/3 arc-second"),
-                    "gdalbuildvrt": ["gdalbuildvrt", str(merged_vrt), *[str(path) for path in tile_paths]],
-                    "gdalwarp": ["gdalwarp", "-overwrite", "-t_srs", "EPSG:4326", "-te_srs", "EPSG:4326", "-te", *[str(value) for value in bbox], "-co", "COMPRESS=DEFLATE", "-co", "TILED=YES", str(merged_vrt), str(clipped_tif)],
-                    "gdal_contour": ["gdal_contour", "-i", str(interval_m), "-a", "ele_m", "-f", "GPKG", str(clipped_tif), str(contours_gpkg)],
-                    "ogr2ogr": ["ogr2ogr", "-f", "GeoJSONSeq", str(raw_seq), str(contours_gpkg), "-t_srs", "EPSG:4326", "-select", "ele_m"],
-                    "tippecanoe": ["tippecanoe", "-o", str(output), "-l", "contours", f"-Z{min_zoom}", f"-z{max_zoom}", "--force", "-P", "-pf", "-pk", "--no-simplification-of-shared-nodes", str(normalized_geojson)],
-                },
-                "dem_tiles": [{"title": item.get("title"), "download_url": item.get("downloadURL") or item.get("downloadURLRaster"), "size_bytes": item.get("sizeInBytes")} for item in dem_items],
-                "feature_count": feature_count,
-                "size_bytes": output.stat().st_size,
-            }
-            metadata_path.write_text(json.dumps(metadata_payload, indent=2), encoding="utf-8")
 
             registry = self.app_db().mark_overlay_refresh(
                 overlay_id,
                 output_path=output,
                 ok=True,
                 extra={
-                    "feature_count": feature_count,
+                    "feature_count": int(result["feature_count"]),
                     "install_status": "cached",
                     "cache_status": "cached",
                     "minzoom": min_zoom,
                     "maxzoom": max_zoom,
                     "bbox": list(bbox),
-                    "size_bytes": output.stat().st_size,
+                    "size_bytes": int(result["size_bytes"]),
                     "contour_interval_ft": interval_ft,
                     "index_interval_ft": index_interval_ft,
-                    "metadata_path": str(metadata_path),
+                    "metadata_path": str(result["metadata_path"]),
                     "source": "usgs_3dep",
                     "dem_resolution": "1/3 arc-second (~10m)",
                 },
@@ -5698,14 +5772,14 @@ PY
                     "install_status": "cached",
                     "error_message": "",
                     "last_fetch_at": timestamp(),
-                    "feature_count": feature_count,
-                    "size_bytes": output.stat().st_size,
+                    "feature_count": int(result["feature_count"]),
+                    "size_bytes": int(result["size_bytes"]),
                     "minzoom": min_zoom,
                     "maxzoom": max_zoom,
                     "bbox": list(bbox),
                     "contour_interval_ft": interval_ft,
                     "index_interval_ft": index_interval_ft,
-                    "metadata_path": str(metadata_path),
+                    "metadata_path": str(result["metadata_path"]),
                     "source": "usgs_3dep",
                     "dem_resolution": "1/3 arc-second (~10m)",
                 },
@@ -5714,8 +5788,8 @@ PY
                 overlay_type="pmtiles",
                 source_layer="contours",
             )
-            update_overlay_job(job_id, status="succeeded", step="cached contour vector snapshot", progress=100, error_message="", output_path=str(output), feature_count=feature_count, size_bytes=output.stat().st_size)
-            return {"ok": True, "feature_count": feature_count, "path": str(output), "metadata_path": str(metadata_path), **registry}
+            update_overlay_job(job_id, status="succeeded", step="cached contour vector snapshot", progress=100, error_message="", output_path=str(output), feature_count=int(result["feature_count"]), size_bytes=int(result["size_bytes"]))
+            return {"ok": True, "feature_count": int(result["feature_count"]), "path": str(output), "metadata_path": str(result["metadata_path"]), **registry}
         except Exception as exc:  # noqa: BLE001 - remote data boundary
             registry = self.app_db().mark_overlay_refresh(overlay_id, output_path=output if output.exists() else None, ok=False, error=str(exc))
             update_overlay_job(job_id, status="failed", step="contour refresh failed", progress=100, error_message=str(exc), output_path=str(output) if output.exists() else "")

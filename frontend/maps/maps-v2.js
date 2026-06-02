@@ -464,12 +464,13 @@
     return `pack-${String(pack.id || "map").replace(/[^a-z0-9_-]+/gi, "-")}`;
   }
 
-  function overlaySourceId(overlay) {
-    return `overlay-${String(overlay.id || "source").replace(/[^a-z0-9_-]+/gi, "-")}`;
+  function overlaySourceId(overlay, variant = "") {
+    const base = `overlay-${String(overlay.id || "source").replace(/[^a-z0-9_-]+/gi, "-")}`;
+    return variant ? `${base}-${String(variant).replace(/[^a-z0-9_-]+/gi, "-")}` : base;
   }
 
-  function overlayLayerId(overlay, suffix) {
-    return `${overlaySourceId(overlay)}-${suffix}`;
+  function overlayLayerId(overlay, suffix, variant = "") {
+    return `${overlaySourceId(overlay, variant)}-${suffix}`;
   }
 
   function poiImageId(key) {
@@ -622,7 +623,7 @@
     return Array.isArray(registry?.offline_regions) ? registry.offline_regions : [];
   }
 
-  function cacheableRasterOverlays(registry = state.overlayRegistry) {
+  function cacheableOfflineOverlays(registry = state.overlayRegistry) {
     return normalizeOverlayRegistry(registry).filter((overlay) => overlay?.cacheable_region);
   }
 
@@ -1002,7 +1003,7 @@
     ];
   }
 
-  function contourOverlayLayers(overlay, sourceId, sourceLayer = null) {
+  function contourOverlayLayers(overlay, sourceId, sourceLayer = null, variant = "") {
     const opacity = overlayOpacity(overlay);
     const minzoom = Number(overlay.minzoom ?? overlay.metadata?.minzoom ?? 9);
     const maxzoom = Number(overlay.maxzoom ?? overlay.metadata?.maxzoom ?? 16);
@@ -1014,7 +1015,7 @@
     };
     return [
       {
-        id: overlayLayerId(overlay, "contour-index"),
+        id: overlayLayerId(overlay, "contour-index", variant),
         type: "line",
         ...shared,
         minzoom: Math.max(minzoom, 9),
@@ -1030,7 +1031,7 @@
         },
       },
       {
-        id: overlayLayerId(overlay, "contour-normal"),
+        id: overlayLayerId(overlay, "contour-normal", variant),
         type: "line",
         ...shared,
         minzoom: Math.max(minzoom, 11),
@@ -1046,7 +1047,7 @@
         },
       },
       {
-        id: overlayLayerId(overlay, "contour-label"),
+        id: overlayLayerId(overlay, "contour-label", variant),
         type: "symbol",
         ...shared,
         minzoom: Math.max(minzoom, 12),
@@ -1074,14 +1075,14 @@
     ];
   }
 
-  function defaultOverlayLayers(overlay, sourceId) {
+  function defaultOverlayLayers(overlay, sourceId, variant = "") {
     const opacity = overlayOpacity(overlay);
     const style = overlay.style || overlay.category || "";
     const minzoom = Number(overlay.minzoom ?? overlay.metadata?.minzoom ?? 0);
     const maxzoom = Number(overlay.maxzoom ?? overlay.metadata?.maxzoom ?? 22);
     if (overlay.type === "raster") {
       return [{
-        id: overlayLayerId(overlay, "raster"),
+        id: overlayLayerId(overlay, "raster", variant),
         type: "raster",
         source: sourceId,
         minzoom,
@@ -1091,7 +1092,7 @@
     }
     if (overlay.type === "geojson") {
       if (style === "usgs_contours" || overlay.id === "usgs_topographic_contours") {
-        return contourOverlayLayers(overlay, sourceId);
+        return contourOverlayLayers(overlay, sourceId, null, variant);
       }
       if (style === "public_lands_blm_wilderness") {
         return blmWildernessOverlayLayers(overlay, sourceId);
@@ -1102,7 +1103,7 @@
       if (style === "weather_alerts") {
         return [
           {
-            id: overlayLayerId(overlay, "weather-fill"),
+          id: overlayLayerId(overlay, "weather-fill", variant),
             type: "fill",
             source: sourceId,
             minzoom,
@@ -1114,7 +1115,7 @@
             },
           },
           {
-            id: overlayLayerId(overlay, "weather-line"),
+            id: overlayLayerId(overlay, "weather-line", variant),
             type: "line",
             source: sourceId,
             minzoom,
@@ -1130,7 +1131,7 @@
       }
       if (style === "wildfire_hotspots") {
         return [{
-          id: overlayLayerId(overlay, "hotspots"),
+          id: overlayLayerId(overlay, "hotspots", variant),
           type: "circle",
           source: sourceId,
           minzoom,
@@ -1147,7 +1148,7 @@
       }
       if (style === "mvum_roads" || style === "mvum_trails" || overlay.category === "mvum") {
         return [{
-          id: overlayLayerId(overlay, "mvum-line"),
+          id: overlayLayerId(overlay, "mvum-line", variant),
           type: "line",
           source: sourceId,
           minzoom,
@@ -1158,7 +1159,7 @@
       }
       return [
         {
-          id: overlayLayerId(overlay, "fill"),
+          id: overlayLayerId(overlay, "fill", variant),
           type: "fill",
           source: sourceId,
           minzoom,
@@ -1167,7 +1168,7 @@
           paint: { "fill-color": "#ffcf45", "fill-opacity": opacity * 0.22 },
         },
         {
-          id: overlayLayerId(overlay, "line"),
+          id: overlayLayerId(overlay, "line", variant),
           type: "line",
           source: sourceId,
           minzoom,
@@ -1176,7 +1177,7 @@
           paint: { "line-color": "#ffcf45", "line-width": 2, "line-opacity": opacity },
         },
         {
-          id: overlayLayerId(overlay, "point"),
+          id: overlayLayerId(overlay, "point", variant),
           type: "circle",
           source: sourceId,
           minzoom,
@@ -1194,7 +1195,7 @@
     }
     if (overlay.type === "pmtiles" && overlay.source_layer) {
       if (style === "usgs_contours" || overlay.id === "usgs_topographic_contours") {
-        return contourOverlayLayers(overlay, sourceId, overlay.source_layer);
+        return contourOverlayLayers(overlay, sourceId, overlay.source_layer, variant);
       }
       if (style === "public_lands_blm_wilderness") {
         return blmWildernessOverlayLayers(overlay, sourceId, overlay.source_layer);
@@ -1204,7 +1205,7 @@
       }
       if (style === "mvum_roads" || style === "mvum_trails" || overlay.category === "mvum") {
         return [{
-          id: overlayLayerId(overlay, "mvum-line"),
+          id: overlayLayerId(overlay, "mvum-line", variant),
           type: "line",
           source: sourceId,
           "source-layer": overlay.source_layer,
@@ -1216,7 +1217,7 @@
       }
       return [
         {
-          id: overlayLayerId(overlay, "fill"),
+          id: overlayLayerId(overlay, "fill", variant),
           type: "fill",
           source: sourceId,
           "source-layer": overlay.source_layer,
@@ -1226,7 +1227,7 @@
           paint: { "fill-color": "#ffcf45", "fill-opacity": opacity * 0.22 },
         },
         {
-          id: overlayLayerId(overlay, "line"),
+          id: overlayLayerId(overlay, "line", variant),
           type: "line",
           source: sourceId,
           "source-layer": overlay.source_layer,
@@ -1236,7 +1237,7 @@
           paint: { "line-color": "#ffcf45", "line-width": 2, "line-opacity": opacity },
         },
         {
-          id: overlayLayerId(overlay, "point"),
+          id: overlayLayerId(overlay, "point", variant),
           type: "circle",
           source: sourceId,
           "source-layer": overlay.source_layer,
@@ -1257,11 +1258,15 @@
   }
 
   function overlayLayerIds(overlay) {
-    const sourceId = overlaySourceId(overlay);
+    const variants = Array.isArray(overlay.region_sources) && overlay.region_sources.length
+      ? overlay.region_sources.map((item) => ({ sourceId: overlaySourceId(overlay, item.region_id || item.region_name || "region"), variant: item.region_id || item.region_name || "region" }))
+      : [{ sourceId: overlaySourceId(overlay), variant: "" }];
     const customLayers = Array.isArray(overlay.layers) ? overlay.layers : [];
-    const layers = customLayers.length
-      ? customLayers.map((layer, index) => ({ ...layer, id: layer.id || overlayLayerId(overlay, `custom-${index}`) }))
-      : defaultOverlayLayers(overlay, sourceId);
+    const layers = variants.flatMap(({ sourceId, variant }) => (
+      customLayers.length
+        ? customLayers.map((layer, index) => ({ ...layer, id: layer.id || overlayLayerId(overlay, `custom-${index}`, variant) }))
+        : defaultOverlayLayers(overlay, sourceId, variant)
+    ));
     return layers
       .filter((layer) => layer && layer.id && layer.type !== "raster")
       .map((layer) => layer.id);
@@ -1275,6 +1280,19 @@
     for (const overlay of overlays) {
       const sourceId = overlaySourceId(overlay);
       const sourceUrl = overlay.url || overlay.source_url;
+      if (overlay.type === "pmtiles" && Array.isArray(overlay.region_sources) && overlay.region_sources.length) {
+        for (const regionSource of overlay.region_sources) {
+          const regionSourceId = overlaySourceId(overlay, regionSource.region_id || regionSource.region_name || "region");
+          style.sources[regionSourceId] = {
+            type: "vector",
+            url: `pmtiles://${new URL(regionSource.url, window.location.href).href}`,
+            attribution: overlay.attribution || "",
+          };
+          const layers = defaultOverlayLayers(overlay, regionSourceId, regionSource.region_id || regionSource.region_name || "region");
+          overlayLayers.push(...layers);
+        }
+        continue;
+      }
       if (overlay.type === "raster") {
         const tiles = overlay.cached_tile_url_template
           ? [`${overlay.cached_tile_url_template}?offline_only=${state.overlayRegistry?.offline_regions_only ? "1" : "0"}`]
@@ -1764,7 +1782,9 @@
     const sourceId = feature?.source || feature?.layer?.source || "";
     return (state.packSelection?.overlays || []).find((overlay) => {
       const overlaySource = overlaySourceId(overlay);
-      return sourceId === overlaySource || layerId.startsWith(`${overlaySource}-`);
+      return sourceId === overlaySource
+        || sourceId.startsWith(`${overlaySource}-`)
+        || layerId.startsWith(`${overlaySource}-`);
     }) || {};
   }
 
@@ -2278,7 +2298,7 @@
   function renderOfflineRegionOverlayOptions(selectedIds = new Set()) {
     const holder = $("offlineRegionOverlayOptions");
     if (!holder) return;
-    const overlays = cacheableRasterOverlays();
+    const overlays = cacheableOfflineOverlays();
     holder.innerHTML = overlays.map((overlay) => `
       <label class="omv2-offline-overlay-option">
         <input type="checkbox" value="${escapeHtml(String(overlay.id || ""))}" ${selectedIds.has(String(overlay.id || "")) ? "checked" : ""}>
@@ -2309,7 +2329,7 @@
     $("offlineRegionBbox").value = bboxToString(bbox);
     const selected = new Set((Array.isArray(region?.items) ? region.items : []).map((item) => String(item.overlay_id || "")).filter(Boolean));
     if (!selected.size) {
-      for (const overlay of cacheableRasterOverlays()) selected.add(String(overlay.id || ""));
+      for (const overlay of cacheableOfflineOverlays()) selected.add(String(overlay.id || ""));
     }
     renderOfflineRegionOverlayOptions(selected);
     $("refreshOfflineRegion").hidden = !region;
@@ -2716,6 +2736,7 @@
       .find((overlay) => {
         const sourceId = overlaySourceId(overlay);
         return source === sourceId
+          || source.startsWith(`${sourceId}-`)
           || layerId.startsWith(`${sourceId}-`)
           || (overlay.source_layer && sourceLayer === overlay.source_layer);
       }) || null;

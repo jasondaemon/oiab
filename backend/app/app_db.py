@@ -1956,6 +1956,15 @@ class AppDB:
         except (OSError, ValueError):
             return False
 
+    def offline_region_overlay_public_path(self, region_id: str, overlay_id: str) -> Path | None:
+        if overlay_id == "usgs_topographic_contours":
+            return self.settings.data_dir / "maps" / "overlays" / "contours" / "regions" / region_id / "contours.pmtiles"
+        return None
+
+    def offline_region_overlay_public_url(self, region_id: str, overlay_id: str) -> str:
+        path = self.offline_region_overlay_public_path(region_id, overlay_id)
+        return self.overlay_public_url_for_path(path) if path else ""
+
     def versioned_overlay_url(self, public_url: str, path: Path | None) -> str:
         base = urlsplit(str(public_url or "")).path
         if not base:
@@ -2273,14 +2282,18 @@ class AppDB:
             "updated": row["updated_at"],
         }
         item["cacheable_region"] = bool(
-            item["type"] == "raster"
-            and item["online_available"]
-            and item["source_type"] in {"arcgis_raster", "raster_wms"}
+            (
+                item["type"] == "raster"
+                and item["online_available"]
+                and item["source_type"] in {"arcgis_raster", "raster_wms"}
+            )
+            or item["id"] == "usgs_topographic_contours"
         )
         if item["cacheable_region"]:
             item["offline_cache_minzoom"] = int(metadata.get("offline_cache_minzoom", item.get("minzoom") or 0) or 0)
             item["offline_cache_maxzoom"] = int(metadata.get("offline_cache_maxzoom", item.get("maxzoom") or 16) or 16)
-            item["cached_tile_url_template"] = f"/api/maps/overlays/cache/{row['id']}/{{z}}/{{x}}/{{y}}"
+            if item["type"] == "raster":
+                item["cached_tile_url_template"] = f"/api/maps/overlays/cache/{row['id']}/{{z}}/{{x}}/{{y}}"
         if item["id"] in {"mvum_roads_us", "mvum_trails_us"}:
             explicit_url = self.settings.mvum_roads_url if item["id"] == "mvum_roads_us" else self.settings.mvum_trails_url
             source_download_url = explicit_url or self.settings.mvum_mapserver_url
@@ -2342,13 +2355,45 @@ class AppDB:
         with self.connect() as conn:
             rows = conn.execute("SELECT * FROM map_overlays ORDER BY sort_order, name COLLATE NOCASE").fetchall()
         overlays = [self.row_to_map_overlay(row) for row in rows]
+        regions = self.offline_overlay_regions()
+        for overlay in overlays:
+            if overlay.get("id") != "usgs_topographic_contours":
+                continue
+            region_sources = []
+            total_size = 0
+            for region in regions:
+                item = next((entry for entry in region.get("items", []) if str(entry.get("overlay_id")) == "usgs_topographic_contours"), None)
+                if not item:
+                    continue
+                public_url = self.offline_region_overlay_public_url(str(region["id"]), "usgs_topographic_contours")
+                public_path = self.offline_region_overlay_public_path(str(region["id"]), "usgs_topographic_contours")
+                if not public_url or not public_path or not public_path.exists():
+                    continue
+                region_sources.append(
+                    {
+                        "region_id": region["id"],
+                        "region_name": region["name"],
+                        "bbox": region.get("bbox", []),
+                        "url": self.versioned_overlay_url(public_url, public_path),
+                        "size_bytes": int(public_path.stat().st_size),
+                    }
+                )
+                total_size += int(public_path.stat().st_size)
+            if region_sources:
+                overlay["region_sources"] = region_sources
+                overlay["available"] = True
+                overlay["exists"] = True
+                overlay["offline_available"] = True
+                overlay["cache_status"] = "cached"
+                overlay["install_status"] = "cached"
+                overlay["size_bytes"] = total_size
         return {
             "ok": True,
             "overlays": overlays,
             "enabled_overlay_ids": [item["id"] for item in overlays if item["enabled"] and item["available"]],
             "storage_root": str(self.settings.data_dir / "maps" / "overlays"),
             "cache_root": str(self.settings.data_dir / "maps" / "cache"),
-            "offline_regions": self.offline_overlay_regions(),
+            "offline_regions": regions,
             "offline_regions_only": bool(self.app_setting("maps.offline_regions_only", False)),
         }
 
@@ -2381,6 +2426,11 @@ class AppDB:
                     "error_message": row["error_message"] or "",
                     "created_at": row["created_at"],
                     "updated_at": row["updated_at"],
+                    "public_url": self.versioned_overlay_url(
+                        self.offline_region_overlay_public_url(str(row["region_id"]), str(row["overlay_id"])),
+                        self.offline_region_overlay_public_path(str(row["region_id"]), str(row["overlay_id"])),
+                    ),
+                    "public_path": str(self.offline_region_overlay_public_path(str(row["region_id"]), str(row["overlay_id"])) or ""),
                 }
             )
         result: list[dict[str, Any]] = []
