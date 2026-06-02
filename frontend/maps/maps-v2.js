@@ -656,6 +656,11 @@
       last_fetch_at: overlay.last_fetch_at || "",
       expires_at: overlay.expires_at || "",
       size_bytes: Number(overlay.size_bytes || 0),
+      region_sources: (overlay.region_sources || []).map((region) => ({
+        id: region.region_id || "",
+        url: region.url || "",
+        size_bytes: Number(region.size_bytes || 0),
+      })),
     }));
   }
 

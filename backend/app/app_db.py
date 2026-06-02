@@ -2590,7 +2590,10 @@ class AppDB:
             if not row:
                 raise ValueError("Map overlay not found.")
             if enabled:
-                item = self.row_to_map_overlay(row)
+                registry = self.map_overlay_registry()
+                item = next((entry for entry in registry.get("overlays", []) if str(entry.get("id")) == str(overlay_id)), None)
+                if not item:
+                    item = self.row_to_map_overlay(row)
                 if not item["available"]:
                     detail = item.get("error_message") or item.get("install_status") or item.get("cache_status") or "overlay data is not installed"
                     raise ValueError(f"{item['name']} is not available: {detail}.")
