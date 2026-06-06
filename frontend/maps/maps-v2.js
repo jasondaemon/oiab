@@ -18,6 +18,7 @@
   const MAP_AUTO_RECORDING_KEY = "omv2.autoTrackRecording";
   const MAP_THEME_KEY = "omv2.mapTheme";
   const MAP_RIGHT_CONTROLS_COLLAPSED_KEY = "omv2.rightControlsCollapsed";
+  const MAP_DETAIL_OVERLAYS_KEY = "omv2.mapDetailOverlays";
   const FOLLOW_PITCH = 58;
   const FOLLOW_MIN_HEADING_SPEED_MPH = 1.2;
   const EMPTY = { type: "FeatureCollection", features: [] };
@@ -202,6 +203,44 @@
     ...Object.values(WAYPOINT_CATEGORY_TO_POI_ICON),
     "information",
   ])).sort();
+  const MAP_DETAIL_OVERLAY_DEFS = [
+    {
+      id: "map_detail_roads",
+      name: "Map Roads",
+      category: "map",
+      summary: "roads",
+      default_enabled: true,
+      default_opacity: 1,
+      default_sort_order: 32,
+    },
+    {
+      id: "map_detail_boundaries",
+      name: "Map Boundaries",
+      category: "map",
+      summary: "boundaries",
+      default_enabled: true,
+      default_opacity: 0.85,
+      default_sort_order: 34,
+    },
+    {
+      id: "map_detail_pois",
+      name: "Map POIs",
+      category: "map",
+      summary: "points",
+      default_enabled: true,
+      default_opacity: 1,
+      default_sort_order: 92,
+    },
+    {
+      id: "map_detail_labels",
+      name: "Map Labels",
+      category: "map",
+      summary: "labels",
+      default_enabled: true,
+      default_opacity: 1,
+      default_sort_order: 96,
+    },
+  ];
 
   const state = {
     map: null,
@@ -229,6 +268,7 @@
     packTimer: null,
     packSignature: "",
     overlayRegistry: null,
+    mapDetailLayersByOverlay: {},
     tileErrors: [],
     inspectTile: false,
     offlineRegionDraw: false,
@@ -413,19 +453,70 @@
   }
 
   async function setOverlayEnabled(id, enabled) {
+    if (isMapDetailOverlayId(id)) {
+      return updateMapDetailOverlay(id, { enabled: Boolean(enabled) });
+    }
     return postJson("/api/maps/overlays/set-enabled", { id, enabled });
   }
 
   async function setOverlayOpacity(id, opacity) {
+    if (isMapDetailOverlayId(id)) {
+      return updateMapDetailOverlay(id, { opacity: Number(opacity) });
+    }
     return postJson("/api/maps/overlays/set-opacity", { id, opacity });
   }
 
   async function setOverlayOrder(id, sortOrder) {
+    if (isMapDetailOverlayId(id)) {
+      return updateMapDetailOverlay(id, { sort_order: Number(sortOrder) });
+    }
     return postJson("/api/maps/overlays/set-order", { id, sort_order: sortOrder });
   }
 
   function clone(value) {
     return JSON.parse(JSON.stringify(value));
+  }
+
+  function readMapDetailOverlayState() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(MAP_DETAIL_OVERLAYS_KEY) || "{}");
+      return saved && typeof saved === "object" ? saved : {};
+    } catch {
+      return {};
+    }
+  }
+
+  function writeMapDetailOverlayState(next) {
+    localStorage.setItem(MAP_DETAIL_OVERLAYS_KEY, JSON.stringify(next || {}));
+  }
+
+  function isMapDetailOverlayId(id) {
+    return MAP_DETAIL_OVERLAY_DEFS.some((overlay) => overlay.id === id);
+  }
+
+  function mapDetailOverlays() {
+    const saved = readMapDetailOverlayState();
+    return MAP_DETAIL_OVERLAY_DEFS.map((def) => {
+      const item = saved[def.id] || {};
+      return {
+        ...def,
+        type: "map_detail",
+        source_type: "active_basemap",
+        available: true,
+        enabled: item.enabled === undefined ? def.default_enabled : Boolean(item.enabled),
+        opacity: Number.isFinite(Number(item.opacity)) ? Number(item.opacity) : def.default_opacity,
+        sort_order: Number.isFinite(Number(item.sort_order)) ? Number(item.sort_order) : def.default_sort_order,
+        cache_status: "active",
+      };
+    });
+  }
+
+  function updateMapDetailOverlay(id, patch) {
+    const saved = readMapDetailOverlayState();
+    const current = saved[id] || {};
+    saved[id] = { ...current, ...patch };
+    writeMapDetailOverlayState(saved);
+    return state.overlayRegistry || { overlays: [] };
   }
 
   function localizeStyle(style) {
@@ -470,6 +561,22 @@
 
   function sourceIdFor(pack) {
     return `pack-${String(pack.id || "map").replace(/[^a-z0-9_-]+/gi, "-")}`;
+  }
+
+  function mapDetailLayerGroup(layer) {
+    const id = String(layer?.id || "");
+    const sourceLayer = String(layer?.["source-layer"] || "");
+    if (!layer?.source) return "";
+    if (id.startsWith("roads_labels_")) return "map_detail_labels";
+    if (id.startsWith("roads_")) return "map_detail_roads";
+    if (id.startsWith("boundaries")) return "map_detail_boundaries";
+    if (sourceLayer === "pois" || id === "pois" || id.startsWith("oiab-travel-poi")) return "map_detail_pois";
+    if (layer.type === "symbol" && (sourceLayer === "places" || sourceLayer === "water")) return "map_detail_labels";
+    return "";
+  }
+
+  function mapDetailLayerId(overlayId, layerId) {
+    return `${overlayId}-${String(layerId || "layer").replace(/[^a-z0-9_-]+/gi, "-")}`;
   }
 
   function overlaySourceId(overlay, variant = "") {
@@ -623,7 +730,10 @@
   }
 
   function normalizeOverlayRegistry(registry) {
-    return (Array.isArray(registry?.overlays) ? registry.overlays : [])
+    return [
+      ...mapDetailOverlays(),
+      ...(Array.isArray(registry?.overlays) ? registry.overlays : []),
+    ]
       .sort((a, b) => Number(a.sort_order ?? 100) - Number(b.sort_order ?? 100));
   }
 
@@ -1272,6 +1382,9 @@
   }
 
   function overlayLayerIds(overlay) {
+    if (overlay.type === "map_detail") {
+      return (state.mapDetailLayersByOverlay?.[overlay.id] || []).map((layer) => layer.id);
+    }
     const variants = Array.isArray(overlay.region_sources) && overlay.region_sources.length
       ? overlay.region_sources.map((item) => ({ sourceId: overlaySourceId(overlay, item.region_id || item.region_name || "region"), variant: item.region_id || item.region_name || "region" }))
       : [{ sourceId: overlaySourceId(overlay), variant: "" }];
@@ -1286,12 +1399,17 @@
       .map((layer) => layer.id);
   }
 
-  function appendOverlaySourcesAndLayers(style, overlays) {
+  function appendOverlaySourcesAndLayers(style, overlays, mapDetailLayersByOverlay = {}) {
     if (!overlays.length) return;
     style.sources = style.sources || {};
     style.layers = Array.isArray(style.layers) ? style.layers : [];
     const overlayLayers = [];
     for (const overlay of overlays) {
+      if (overlay.type === "map_detail") {
+        const layers = (mapDetailLayersByOverlay[overlay.id] || []).map((layer) => applyOverlayOpacity(layer, overlayOpacity(overlay)));
+        overlayLayers.push(...layers);
+        continue;
+      }
       const sourceId = overlaySourceId(overlay);
       const sourceUrl = overlay.url || overlay.source_url;
       if (overlay.type === "pmtiles" && Array.isArray(overlay.region_sources) && overlay.region_sources.length) {
@@ -1365,6 +1483,7 @@
     const templateSource = clone(template.source || {});
     const sources = {};
     const layers = [];
+    const mapDetailLayersByOverlay = {};
     const pack = selection.base;
     const url = new URL(pack.url, window.location.href).href;
     const activeSourceId = sourceIdFor(pack);
@@ -1385,14 +1504,22 @@
         continue;
       }
       if (layer.source !== template.id) continue;
+      const mapDetailGroup = mapDetailLayerGroup(layer);
       const copy = clone(layer);
-      copy.id = layer.id;
       copy.source = activeSourceId;
+      if (mapDetailGroup) {
+        copy.id = mapDetailLayerId(mapDetailGroup, layer.id);
+        mapDetailLayersByOverlay[mapDetailGroup] = mapDetailLayersByOverlay[mapDetailGroup] || [];
+        mapDetailLayersByOverlay[mapDetailGroup].push(copy);
+        continue;
+      }
+      copy.id = layer.id;
       layers.push(copy);
     }
+    state.mapDetailLayersByOverlay = mapDetailLayersByOverlay;
     style.sources = sources;
     style.layers = layers;
-    appendOverlaySourcesAndLayers(style, selection.overlays || []);
+    appendOverlaySourcesAndLayers(style, selection.overlays || [], mapDetailLayersByOverlay);
     return style;
   }
 
@@ -1861,6 +1988,7 @@
     const layerId = feature?.layer?.id || "";
     const sourceId = feature?.source || feature?.layer?.source || "";
     return (state.packSelection?.overlays || []).find((overlay) => {
+      if (overlay.type === "map_detail") return layerId.startsWith(`${overlay.id}-`);
       const overlaySource = overlaySourceId(overlay);
       return sourceId === overlaySource
         || sourceId.startsWith(`${overlaySource}-`)
@@ -2532,6 +2660,9 @@
   }
 
   function overlaySummary(overlay, status = "") {
+    if (overlay.type === "map_detail") {
+      return overlay.summary || "map";
+    }
     if (overlay.id === "usgs_topographic_contours" || overlay.style === "usgs_contours") {
       const count = Array.isArray(overlay.region_sources) ? overlay.region_sources.length : 0;
       return `topo · offline regions only${count ? ` · ${count} region${count === 1 ? "" : "s"}` : ""}${status}`;
@@ -2906,6 +3037,7 @@
     const layerId = String(feature.layer?.id || "");
     return normalizeOverlayRegistry(state.overlayRegistry)
       .find((overlay) => {
+        if (overlay.type === "map_detail") return layerId.startsWith(`${overlay.id}-`);
         const sourceId = overlaySourceId(overlay);
         return source === sourceId
           || source.startsWith(`${sourceId}-`)
