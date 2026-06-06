@@ -269,6 +269,7 @@
     packSignature: "",
     overlayRegistry: null,
     mapDetailLayersByOverlay: {},
+    overlayDrag: null,
     tileErrors: [],
     inspectTile: false,
     offlineRegionDraw: false,
@@ -2685,11 +2686,16 @@
     const inactive = overlays.filter((overlay) => !overlay.enabled);
     const renderGroup = (title, group) => {
       if (!group.length) return;
+      const wrap = document.createElement("div");
+      wrap.className = "omv2-overlay-sort-group";
+      wrap.dataset.overlayGroup = title.toLowerCase();
       const heading = document.createElement("div");
       heading.className = "omv2-overlay-section-title";
       heading.textContent = title;
-      node.appendChild(heading);
-      for (const overlay of group) renderOverlayControlRow(node, overlay);
+      wrap.appendChild(heading);
+      bindOverlaySortGroup(wrap);
+      for (const overlay of group) renderOverlayControlRow(wrap, overlay);
+      node.appendChild(wrap);
     };
     renderGroup("Active", active);
     renderGroup("Inactive", inactive);
@@ -2698,7 +2704,6 @@
   function renderOverlayControlRow(node, overlay) {
       const row = document.createElement("div");
       row.className = "omv2-folder-row omv2-overlay-row";
-      row.draggable = true;
       row.dataset.overlayId = overlay.id;
       row.innerHTML = `
         <label class="omv2-overlay-check">
@@ -2710,7 +2715,7 @@
           <input type="range" min="0" max="1" step="0.05" value="${Number(overlay.opacity ?? 1)}">
         </label>
         ${overlay.category === "geopdf" ? `<button class="omv2-mini-button" type="button" data-zoom-overlay="${escapeHtml(overlay.id)}" title="Zoom to map">⌖</button>` : ""}
-        <span class="omv2-overlay-drag" title="Drag to reorder">☰</span>
+        <button class="omv2-overlay-drag" type="button" draggable="true" title="Drag to reorder" aria-label="Drag ${escapeHtml(overlay.name || overlay.id)} to reorder">☰</button>
       `;
       row.querySelector(".omv2-overlay-check input").addEventListener("change", async (event) => {
         try {
@@ -2733,37 +2738,102 @@
       if (zoomButton) {
         zoomButton.addEventListener("click", () => zoomToOverlayBounds(overlay));
       }
-      row.addEventListener("dragstart", (event) => {
+      const dragHandle = row.querySelector(".omv2-overlay-drag");
+      dragHandle.addEventListener("dragstart", (event) => {
         event.dataTransfer.effectAllowed = "move";
         event.dataTransfer.setData("text/plain", overlay.id);
+        state.overlayDrag = { row, sourceGroup: row.closest(".omv2-overlay-sort-group") };
         row.classList.add("is-dragging");
+        window.setTimeout(() => row.classList.add("is-dragging-active"), 0);
       });
-      row.addEventListener("dragend", () => row.classList.remove("is-dragging"));
-      row.addEventListener("dragover", (event) => {
+      dragHandle.addEventListener("dragend", () => finishOverlayReorder(row));
+      dragHandle.addEventListener("pointerdown", (event) => {
+        if (event.pointerType === "mouse") return;
+        state.overlayDrag = { row, sourceGroup: row.closest(".omv2-overlay-sort-group"), pointerId: event.pointerId };
+        dragHandle.setPointerCapture?.(event.pointerId);
+        row.classList.add("is-dragging", "is-dragging-active");
         event.preventDefault();
-        event.dataTransfer.dropEffect = "move";
       });
-      row.addEventListener("drop", async (event) => {
+      dragHandle.addEventListener("pointermove", (event) => {
+        if (!state.overlayDrag || state.overlayDrag.row !== row || state.overlayDrag.pointerId !== event.pointerId) return;
+        moveOverlayRowAtPoint(row, event.clientX, event.clientY);
         event.preventDefault();
-        const sourceId = event.dataTransfer.getData("text/plain");
-        const targetId = row.dataset.overlayId;
-        if (!sourceId || !targetId || sourceId === targetId) return;
-        try {
-          await moveOverlayBefore(sourceId, targetId);
-        } catch (error) {
-          toast(error.message || "Overlay order update failed.", true);
-        }
+      });
+      dragHandle.addEventListener("pointerup", (event) => {
+        if (!state.overlayDrag || state.overlayDrag.row !== row || state.overlayDrag.pointerId !== event.pointerId) return;
+        dragHandle.releasePointerCapture?.(event.pointerId);
+        finishOverlayReorder(row);
+        event.preventDefault();
+      });
+      dragHandle.addEventListener("pointercancel", (event) => {
+        if (!state.overlayDrag || state.overlayDrag.row !== row || state.overlayDrag.pointerId !== event.pointerId) return;
+        dragHandle.releasePointerCapture?.(event.pointerId);
+        finishOverlayReorder(row);
       });
       node.appendChild(row);
   }
 
-  async function moveOverlayBefore(sourceId, targetId) {
-    const ordered = normalizeOverlayRegistry(state.overlayRegistry).filter((overlay) => overlay.available);
-    const sourceIndex = ordered.findIndex((overlay) => overlay.id === sourceId);
-    const targetIndex = ordered.findIndex((overlay) => overlay.id === targetId);
-    if (sourceIndex < 0 || targetIndex < 0) return;
-    const [source] = ordered.splice(sourceIndex, 1);
-    ordered.splice(targetIndex > sourceIndex ? targetIndex - 1 : targetIndex, 0, source);
+  function bindOverlaySortGroup(group) {
+    group.addEventListener("dragover", (event) => {
+      if (!state.overlayDrag?.row || state.overlayDrag.sourceGroup !== group) return;
+      event.preventDefault();
+      event.dataTransfer.dropEffect = "move";
+      moveOverlayRowInGroup(group, state.overlayDrag.row, event.clientY);
+    });
+    group.addEventListener("drop", (event) => {
+      if (!state.overlayDrag?.row || state.overlayDrag.sourceGroup !== group) return;
+      event.preventDefault();
+      finishOverlayReorder(state.overlayDrag.row);
+    });
+  }
+
+  function moveOverlayRowAtPoint(row, x, y) {
+    const element = document.elementFromPoint(x, y);
+    const group = element?.closest?.(".omv2-overlay-sort-group");
+    if (!group || group !== state.overlayDrag?.sourceGroup) return;
+    moveOverlayRowInGroup(group, row, y);
+  }
+
+  function moveOverlayRowInGroup(group, row, y) {
+    const rows = [...group.querySelectorAll(".omv2-overlay-row:not(.is-dragging-active)")];
+    const after = rows.reduce((closest, item) => {
+      const box = item.getBoundingClientRect();
+      const offset = y - box.top - box.height / 2;
+      return offset < 0 && offset > closest.offset ? { offset, item } : closest;
+    }, { offset: Number.NEGATIVE_INFINITY, item: null }).item;
+    if (after) group.insertBefore(row, after);
+    else group.appendChild(row);
+  }
+
+  function overlayOrderFromDom() {
+    return [...document.querySelectorAll("#overlayList .omv2-overlay-row")]
+      .map((row) => row.dataset.overlayId)
+      .filter(Boolean);
+  }
+
+  async function finishOverlayReorder(row) {
+    const drag = state.overlayDrag;
+    if (!drag || drag.row !== row) return;
+    state.overlayDrag = null;
+    row.classList.remove("is-dragging", "is-dragging-active");
+    const orderedIds = overlayOrderFromDom();
+    const currentIds = normalizeOverlayRegistry(state.overlayRegistry)
+      .filter((overlay) => overlay.available)
+      .map((overlay) => overlay.id);
+    if (orderedIds.join("|") === currentIds.join("|")) return;
+    try {
+      await moveOverlaysToOrder(orderedIds);
+    } catch (error) {
+      renderOverlayControls();
+      toast(error.message || "Overlay order update failed.", true);
+    }
+  }
+
+  async function moveOverlaysToOrder(orderedIds) {
+    const byId = new Map(normalizeOverlayRegistry(state.overlayRegistry)
+      .filter((overlay) => overlay.available)
+      .map((overlay) => [overlay.id, overlay]));
+    const ordered = orderedIds.map((id) => byId.get(id)).filter(Boolean);
     for (let index = 0; index < ordered.length; index += 1) {
       await setOverlayOrder(ordered[index].id, (index + 1) * 10);
     }

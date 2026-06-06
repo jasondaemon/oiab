@@ -480,6 +480,12 @@ input {
   gap: 7px;
   padding: 7px 8px;
   border-radius: 12px;
+  transition: transform .14s ease, opacity .14s ease, border-color .14s ease, background .14s ease;
+}
+
+.omv2-overlay-sort-group {
+  display: grid;
+  gap: 7px;
 }
 
 .omv2-overlay-section-title {
@@ -544,6 +550,14 @@ input {
 }
 
 .omv2-overlay-drag {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
   color: var(--om-muted);
   cursor: grab;
   font-size: 0.92rem;
@@ -552,8 +566,18 @@ input {
   touch-action: none;
 }
 
+.omv2-overlay-drag:active {
+  cursor: grabbing;
+}
+
 .omv2-overlay-row.is-dragging {
   opacity: .55;
+  border-color: rgba(122, 232, 139, 0.72);
+  background: rgba(122, 232, 139, 0.14);
+}
+
+.omv2-overlay-row.is-dragging-active {
+  transform: scale(.985);
 }
 
 .omv2-folder-count {
