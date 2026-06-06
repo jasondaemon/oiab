@@ -107,7 +107,10 @@
       "install_status": "ready",
       "install_action": "mvum_roads_install",
       "tool_requirements": [],
-      "optional_tool_requirements": ["tippecanoe", "pmtiles"],
+      "optional_tool_requirements": [
+        "tippecanoe",
+        "pmtiles"
+      ],
       "enabled": false,
       "opacity": 0.95,
       "layer_order": 45,
@@ -136,7 +139,10 @@
       "install_status": "ready",
       "install_action": "mvum_trails_install",
       "tool_requirements": [],
-      "optional_tool_requirements": ["tippecanoe", "pmtiles"],
+      "optional_tool_requirements": [
+        "tippecanoe",
+        "pmtiles"
+      ],
       "enabled": false,
       "opacity": 0.95,
       "layer_order": 46,
@@ -279,6 +285,38 @@
       "offline_cache_minzoom": 3,
       "offline_cache_maxzoom": 10,
       "warning": "NOAA Radar uses the nowCOAST live base reflectivity mosaic and requires internet. It is a weather radar reflectivity view, not precipitation totals or forecast guidance."
+    },
+    {
+      "id": "temperature_forecast",
+      "name": "Temperature Forecast",
+      "description": "Online NOAA/NWS NDFD temperature forecast raster overlay with point forecast details from api.weather.gov. Cached point forecasts remain visible offline with an age warning.",
+      "category": "weather",
+      "type": "raster",
+      "source_type": "nws_temperature",
+      "source_url": "/api/maps/overlays/temperature/tile/{z}/{x}/{y}.png",
+      "url_template": "/api/maps/overlays/temperature/tile/{z}/{x}/{y}.png",
+      "tiles": [
+        "/api/maps/overlays/temperature/tile/{z}/{x}/{y}.png"
+      ],
+      "attribution": "NOAA/NWS National Digital Forecast Database",
+      "minzoom": 3,
+      "maxzoom": 12,
+      "tile_size": 256,
+      "online_required": true,
+      "online_available": true,
+      "offline_available": false,
+      "cache_mode": "none",
+      "cache_status": "not_cached",
+      "install_status": "online_only",
+      "enabled": false,
+      "opacity": 0.64,
+      "layer_order": 82,
+      "sort_order": 82,
+      "offline_cache_minzoom": 4,
+      "offline_cache_maxzoom": 10,
+      "weather_product": "temp",
+      "weather_period": "now",
+      "warning": "Temperature Forecast requires internet for live map tiles. Point forecast lookups are cached for limited offline review."
     },
     {
       "id": "local_geojson",

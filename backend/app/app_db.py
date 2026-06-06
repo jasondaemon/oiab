@@ -2330,7 +2330,7 @@ class AppDB:
             (
                 item["type"] == "raster"
                 and item["online_available"]
-                and item["source_type"] in {"arcgis_raster", "raster_wms"}
+                and item["source_type"] in {"arcgis_raster", "raster_wms", "nws_temperature"}
             )
             or item["id"] == "usgs_topographic_contours"
         )

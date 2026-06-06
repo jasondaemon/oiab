@@ -50,6 +50,8 @@ class Settings:
     geopdf_tile_size: int = int(os.environ.get("OIAB_GEOPDF_TILE_SIZE", "256"))
     geopdf_output_format: str = os.environ.get("OIAB_GEOPDF_OUTPUT_FORMAT", "png")
     nws_alerts_url: str = os.environ.get("OIAB_NWS_ALERTS_URL", "https://api.weather.gov/alerts/active?status=actual&message_type=alert")
+    nws_temperature_mapserver_url: str = os.environ.get("OIAB_NWS_TEMPERATURE_MAPSERVER_URL", "https://mapservices.weather.noaa.gov/raster/rest/services/NDFD/NDFD_temp/MapServer")
+    nws_forecast_cache_minutes: int = int(os.environ.get("OIAB_NWS_FORECAST_CACHE_MINUTES", "30"))
     mvum_mapserver_url: str = os.environ.get("OIAB_MVUM_MAPSERVER_URL", "https://apps.fs.usda.gov/arcx/rest/services/EDW/EDW_MVUM_01/MapServer")
     mvum_roads_url: str = os.environ.get("OIAB_MVUM_ROADS_URL", "")
     mvum_trails_url: str = os.environ.get("OIAB_MVUM_TRAILS_URL", "")

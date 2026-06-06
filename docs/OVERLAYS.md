@@ -295,6 +295,30 @@ https://api.weather.gov/alerts/active?status=actual&message_type=alert
 
 Cached alerts continue rendering offline and are marked stale after the configured refresh interval.
 
+## Temperature Forecast
+
+Temperature Forecast is an online NOAA/NWS raster overlay backed by the NDFD temperature MapServer:
+
+```text
+https://mapservices.weather.noaa.gov/raster/rest/services/NDFD/NDFD_temp/MapServer
+```
+
+The map overlay supports near-term temperature, max temperature, min temperature, and apparent / feels-like temperature when available from the NDFD service. Forecast period selection is exposed in the Maps v2 overlay panel.
+
+Point forecast cards use the NWS API:
+
+```text
+https://api.weather.gov/points/{lat},{lon}
+```
+
+OIAB caches the point-to-grid lookup and recent hourly/daily forecast payloads under:
+
+```text
+/data/oiab/maps/overlays/weather/forecast-cache
+```
+
+Live temperature map tiles require internet. Cached point forecast details can still display offline with a stale-data warning. Map tiles are optional raster overlays and are layered below routes, waypoints, and vehicle markers.
+
 ## Future Satellite / Corridor Imagery
 
 Full offline imagery is not implemented yet. The planned storage path for route-specific imagery caches is:

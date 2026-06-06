@@ -20,7 +20,7 @@ import tempfile
 import threading
 import time
 import zipfile
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from email.utils import formatdate
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -2810,6 +2810,54 @@ BLANK_PNG_TILE = base64.b64decode(
     "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAABFUlEQVR4nO3BMQEAAADCoPVP7WsIoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AwBPAABo9vSmwAAAABJRU5ErkJggg=="
 )
 
+NDFD_TEMPERATURE_PRODUCTS = {
+    "temp": {
+        "label": "Current / near-term temp",
+        "layer": 1,
+        "time_enabled": True,
+        "unit": "°F",
+    },
+    "max": {
+        "label": "Max temp",
+        "layers_by_period": {"now": 124, "tomorrow": 128, "day3": 132},
+        "fallback_layer": 132,
+        "unit": "°F",
+    },
+    "min": {
+        "label": "Min temp",
+        "layers_by_period": {"now": 137, "tomorrow": 141},
+        "fallback_layer": 141,
+        "unit": "°F",
+    },
+    "apparent": {
+        "label": "Apparent / feels-like temp",
+        "layer": 42,
+        "time_enabled": True,
+        "unit": "°F",
+    },
+}
+
+NDFD_TEMPERATURE_PERIODS = {
+    "now": {"label": "Now", "hours": 0},
+    "plus6": {"label": "+6h", "hours": 6},
+    "plus12": {"label": "+12h", "hours": 12},
+    "tomorrow": {"label": "Tomorrow", "hours": 24},
+    "day3": {"label": "Day 3", "hours": 72},
+    "day5": {"label": "Day 5", "hours": 120},
+    "day7": {"label": "Day 7", "hours": 168},
+}
+
+TEMPERATURE_LEGEND = [
+    {"value_f": -20, "color": "#5b21b6", "label": "-20°F"},
+    {"value_f": 0, "color": "#2563eb", "label": "0°F"},
+    {"value_f": 20, "color": "#06b6d4", "label": "20°F"},
+    {"value_f": 40, "color": "#22c55e", "label": "40°F"},
+    {"value_f": 60, "color": "#facc15", "label": "60°F"},
+    {"value_f": 80, "color": "#f97316", "label": "80°F"},
+    {"value_f": 100, "color": "#dc2626", "label": "100°F"},
+    {"value_f": 120, "color": "#7f1d1d", "label": "120°F"},
+]
+
 
 class OIABHandler(BaseHTTPRequestHandler):
     server_version = "OIAB/0.1"
@@ -2856,6 +2904,23 @@ class OIABHandler(BaseHTTPRequestHandler):
             return self.send_json(self.app_db().map_overlay_catalog())
         if path in {"/api/maps/overlays", "/api/maps/overlays/installed", "/api/maps/overlays/status", "/maps-overlays"}:
             return self.send_json(self.map_overlays())
+        if path == "/api/maps/overlays/temperature/options":
+            return self.send_json(self.temperature_overlay_options())
+        if path.startswith("/api/maps/overlays/temperature/tile/"):
+            parts = [part for part in path.split("/") if part]
+            if len(parts) != 8:
+                return self.send_error(HTTPStatus.NOT_FOUND, "Not found")
+            try:
+                _, _, _, _, _, z_raw, x_raw, y_raw = parts
+                y_raw = y_raw.removesuffix(".png")
+                z = int(z_raw)
+                x = int(x_raw)
+                y = int(y_raw)
+            except ValueError:
+                return self.send_json({"ok": False, "error": "Invalid tile coordinates."}, status=400)
+            return self.serve_temperature_tile(z, x, y, parse_qs(parsed.query))
+        if path == "/api/maps/weather/forecast":
+            return self.send_json(self.weather_point_forecast(parsed))
         if path == "/api/geopdf":
             return self.send_json({"ok": True, "maps": list_geopdfs(self.settings), **self.map_overlays()})
         if path.startswith("/api/geopdf/"):
@@ -2877,7 +2942,7 @@ class OIABHandler(BaseHTTPRequestHandler):
                 return self.send_json({"ok": False, "error": "Invalid tile coordinates."}, status=400)
             query = parse_qs(parsed.query)
             offline_only = str(query.get("offline_only", [""])[-1]).lower() in {"1", "true", "yes", "on"}
-            return self.serve_overlay_cached_tile(overlay_id, z, x, y, offline_only=offline_only)
+            return self.serve_overlay_cached_tile(overlay_id, z, x, y, offline_only=offline_only, query=query)
         if path.startswith("/tiles/geopdf/"):
             return self.serve_geopdf_tile(path)
         if path.startswith("/api/maps/overlays/jobs/"):
@@ -5095,6 +5160,174 @@ PY
         root.mkdir(parents=True, exist_ok=True)
         return root
 
+    def weather_cache_root(self) -> Path:
+        root = self.settings.data_dir / "maps" / "overlays" / "weather" / "forecast-cache"
+        root.mkdir(parents=True, exist_ok=True)
+        return root
+
+    def temperature_overlay_options(self) -> dict[str, object]:
+        metadata_path = self.weather_cache_root() / "temperature-service.json"
+        cached = read_json(metadata_path, {}) if metadata_path.exists() else {}
+        if not cached:
+            cached = {"service": self.settings.nws_temperature_mapserver_url, "cached_at": ""}
+        return {
+            "ok": True,
+            "service": self.settings.nws_temperature_mapserver_url,
+            "products": [
+                {"id": key, "label": value["label"], "unit": value.get("unit", "°F")}
+                for key, value in NDFD_TEMPERATURE_PRODUCTS.items()
+            ],
+            "periods": [
+                {"id": key, "label": value["label"], "hours": value["hours"]}
+                for key, value in NDFD_TEMPERATURE_PERIODS.items()
+            ],
+            "legend": TEMPERATURE_LEGEND,
+            "capabilities": cached,
+        }
+
+    def temperature_period_time(self, period: str) -> int:
+        hours = int(NDFD_TEMPERATURE_PERIODS.get(period, NDFD_TEMPERATURE_PERIODS["now"])["hours"])
+        target = datetime.now(timezone.utc) + timedelta(hours=hours)
+        # NDFD temperature rasters are published on 3-hour intervals.
+        rounded_hour = (target.hour // 3) * 3
+        target = target.replace(hour=rounded_hour, minute=0, second=0, microsecond=0)
+        return int(target.timestamp() * 1000)
+
+    def temperature_layer_id(self, product: str, period: str) -> int:
+        product_config = NDFD_TEMPERATURE_PRODUCTS.get(product) or NDFD_TEMPERATURE_PRODUCTS["temp"]
+        layers_by_period = product_config.get("layers_by_period")
+        if isinstance(layers_by_period, dict):
+            return int(layers_by_period.get(period) or layers_by_period.get("now") or product_config.get("fallback_layer") or 1)
+        return int(product_config.get("layer") or 1)
+
+    def temperature_export_url(self, z: int, x: int, y: int, query: dict[str, list[str]]) -> str:
+        product = str(query.get("product", ["temp"])[-1] or "temp").strip().lower()
+        period = str(query.get("period", ["now"])[-1] or "now").strip().lower()
+        if product not in NDFD_TEMPERATURE_PRODUCTS:
+            product = "temp"
+        if period not in NDFD_TEMPERATURE_PERIODS:
+            period = "now"
+        min_x, min_y, max_x, max_y = tile_bbox_3857(z, x, y)
+        product_config = NDFD_TEMPERATURE_PRODUCTS[product]
+        params = {
+            "f": "image",
+            "bbox": f"{min_x},{min_y},{max_x},{max_y}",
+            "bboxSR": "3857",
+            "imageSR": "3857",
+            "size": "256,256",
+            "format": "png32",
+            "transparent": "true",
+            "layers": f"show:{self.temperature_layer_id(product, period)}",
+        }
+        if product_config.get("time_enabled"):
+            timestamp_ms = self.temperature_period_time(period)
+            params["time"] = f"{timestamp_ms},{timestamp_ms}"
+        return f"{self.settings.nws_temperature_mapserver_url.rstrip('/')}/export?{urlencode(params)}"
+
+    def serve_temperature_tile(self, z: int, x: int, y: int, query: dict[str, list[str]]) -> None:
+        try:
+            url = self.temperature_export_url(z, x, y, query)
+            request = Request(url, headers={"User-Agent": f"OIAB temperature overlay ({self.settings.hostname})"})
+            with urlopen(request, timeout=45) as response:  # noqa: S310 - official NOAA/NWS public map service
+                data = response.read()
+            if not data:
+                return self.send_blank_overlay_tile()
+            return self.send_tile_bytes(data, "image/png")
+        except Exception as exc:  # noqa: BLE001 - optional weather overlay must not break the map.
+            if self.settings.dev_mode:
+                print(f"Temperature overlay tile failed {z}/{x}/{y}: {exc}")
+            return self.send_blank_overlay_tile()
+
+    def cache_json(self, path: Path, ttl_seconds: int) -> dict[str, object] | None:
+        try:
+            if not path.exists() or time.time() - path.stat().st_mtime > ttl_seconds:
+                return None
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            return payload if isinstance(payload, dict) else None
+        except (OSError, json.JSONDecodeError):
+            return None
+
+    def fetch_json_url(self, url: str, *, timeout: int = 35) -> dict[str, object]:
+        request = Request(
+            url,
+            headers={
+                "User-Agent": f"OIAB weather forecast ({self.settings.hostname})",
+                "Accept": "application/geo+json, application/json",
+            },
+        )
+        with urlopen(request, timeout=timeout) as response:  # noqa: S310 - official NWS public API
+            payload = json.loads(response.read().decode("utf-8", errors="replace"))
+        if not isinstance(payload, dict):
+            raise ValueError(f"{url} did not return a JSON object.")
+        return payload
+
+    def weather_point_forecast(self, parsed) -> dict[str, object]:
+        query = parse_qs(parsed.query)
+        try:
+            lat = float(query.get("lat", [""])[-1])
+            lon = float(query.get("lon", [""])[-1])
+        except ValueError as exc:
+            return {"ok": False, "error": "lat and lon query parameters are required."}
+        if not (-90 <= lat <= 90 and -180 <= lon <= 180):
+            return {"ok": False, "error": "lat/lon are out of range."}
+        rounded_key = f"{round(lat, 3):.3f}_{round(lon, 3):.3f}".replace("-", "m").replace(".", "p")
+        root = self.weather_cache_root()
+        points_path = root / f"points-{rounded_key}.json"
+        forecast_path = root / f"forecast-{rounded_key}.json"
+        cache_ttl = max(60, int(self.settings.nws_forecast_cache_minutes) * 60)
+        stale = False
+        try:
+            points = self.cache_json(points_path, 7 * 24 * 3600)
+            if points is None:
+                points = self.fetch_json_url(f"https://api.weather.gov/points/{lat:.5f},{lon:.5f}")
+                points_path.write_text(json.dumps(points, separators=(",", ":")), encoding="utf-8")
+            cached_forecast = self.cache_json(forecast_path, cache_ttl)
+            if cached_forecast is None:
+                props = points.get("properties") if isinstance(points.get("properties"), dict) else {}
+                hourly_url = str(props.get("forecastHourly") or "")
+                daily_url = str(props.get("forecast") or "")
+                if not hourly_url:
+                    raise ValueError("NWS point lookup did not include forecastHourly.")
+                hourly = self.fetch_json_url(hourly_url)
+                daily = self.fetch_json_url(daily_url) if daily_url else {}
+                cached_forecast = {
+                    "points": points,
+                    "hourly": hourly,
+                    "daily": daily,
+                    "fetched_at": timestamp(),
+                }
+                forecast_path.write_text(json.dumps(cached_forecast, separators=(",", ":")), encoding="utf-8")
+            else:
+                stale = time.time() - forecast_path.stat().st_mtime > cache_ttl
+        except Exception as exc:  # noqa: BLE001 - return stale cache if possible.
+            cached_forecast = self.cache_json(forecast_path, 365 * 24 * 3600)
+            if cached_forecast is None:
+                return {"ok": False, "error": str(exc), "lat": lat, "lon": lon}
+            stale = True
+        points = cached_forecast.get("points") if isinstance(cached_forecast.get("points"), dict) else {}
+        props = points.get("properties") if isinstance(points.get("properties"), dict) else {}
+        hourly_props = cached_forecast.get("hourly", {}).get("properties", {}) if isinstance(cached_forecast.get("hourly"), dict) else {}
+        daily_props = cached_forecast.get("daily", {}).get("properties", {}) if isinstance(cached_forecast.get("daily"), dict) else {}
+        hourly_periods = hourly_props.get("periods") if isinstance(hourly_props.get("periods"), list) else []
+        daily_periods = daily_props.get("periods") if isinstance(daily_props.get("periods"), list) else []
+        return {
+            "ok": True,
+            "lat": lat,
+            "lon": lon,
+            "grid": {
+                "office": props.get("gridId"),
+                "x": props.get("gridX"),
+                "y": props.get("gridY"),
+                "city": (props.get("relativeLocation") or {}).get("properties", {}).get("city") if isinstance(props.get("relativeLocation"), dict) else "",
+                "state": (props.get("relativeLocation") or {}).get("properties", {}).get("state") if isinstance(props.get("relativeLocation"), dict) else "",
+            },
+            "updated_at": cached_forecast.get("fetched_at") or timestamp(),
+            "stale": stale,
+            "current": hourly_periods[0] if hourly_periods else {},
+            "next_12_hours": hourly_periods[:12],
+            "daily": daily_periods[:14],
+        }
+
     def cacheable_overlay(self, overlay_id: str) -> dict[str, object]:
         # Tile requests are high-volume; never rescan/write the overlay registry here.
         overlays = self.app_db().map_overlay_registry(rescan=False).get("overlays", [])
@@ -5106,15 +5339,17 @@ PY
         return overlay
 
     def overlay_tile_mime(self, overlay: dict[str, object]) -> str:
-        if str(overlay.get("source_type") or "") == "raster_wms":
+        if str(overlay.get("source_type") or "") in {"raster_wms", "nws_temperature"}:
             return "image/png"
         return "image/jpeg"
 
     def send_blank_overlay_tile(self) -> None:
         self.send_tile_bytes(BLANK_PNG_TILE, "image/png")
 
-    def overlay_tile_url(self, overlay: dict[str, object], z: int, x: int, y: int) -> str:
+    def overlay_tile_url(self, overlay: dict[str, object], z: int, x: int, y: int, query: dict[str, list[str]] | None = None) -> str:
         source_type = str(overlay.get("source_type") or "")
+        if source_type == "nws_temperature":
+            return self.temperature_export_url(z, x, y, query or {})
         template = ""
         tiles = overlay.get("tiles")
         if isinstance(tiles, list) and tiles:
@@ -5136,8 +5371,23 @@ PY
             )
         raise ValueError(f"Unsupported cacheable source type: {source_type}")
 
-    def tile_cache_path(self, region_id: str, overlay_id: str, z: int, x: int, y: int) -> Path:
-        return self.offline_region_cache_root() / region_id / overlay_id / str(z) / str(x) / f"{y}.tile"
+    def overlay_tile_cache_variant(self, overlay: dict[str, object], query: dict[str, list[str]] | None = None) -> str:
+        if str(overlay.get("source_type") or "") != "nws_temperature":
+            return ""
+        query = query or {}
+        product = str(query.get("product", ["temp"])[-1] or "temp").strip().lower()
+        period = str(query.get("period", ["now"])[-1] or "now").strip().lower()
+        if product not in NDFD_TEMPERATURE_PRODUCTS:
+            product = "temp"
+        if period not in NDFD_TEMPERATURE_PERIODS:
+            period = "now"
+        return f"{product}-{period}"
+
+    def tile_cache_path(self, region_id: str, overlay_id: str, z: int, x: int, y: int, *, variant: str = "") -> Path:
+        root = self.offline_region_cache_root() / region_id / overlay_id
+        if variant:
+            root = root / variant
+        return root / str(z) / str(x) / f"{y}.tile"
 
     def matching_offline_regions_for_tile(self, overlay_id: str, z: int, x: int, y: int) -> list[dict[str, object]]:
         tile_bbox = tile_bbox_4326(z, x, y)
@@ -5157,8 +5407,8 @@ PY
                 matches.append({"region": region, "item": item})
         return matches
 
-    def fetch_remote_tile(self, overlay: dict[str, object], z: int, x: int, y: int) -> bytes:
-        url = self.overlay_tile_url(overlay, z, x, y)
+    def fetch_remote_tile(self, overlay: dict[str, object], z: int, x: int, y: int, query: dict[str, list[str]] | None = None) -> bytes:
+        url = self.overlay_tile_url(overlay, z, x, y, query)
         request = Request(url, headers={"User-Agent": f"OIAB offline overlay cache ({self.settings.hostname})"})
         with urlopen(request, timeout=90) as response:  # noqa: S310 - configured public raster source
             data = response.read()
@@ -5166,26 +5416,27 @@ PY
             raise ValueError("Remote overlay tile response was empty.")
         return data
 
-    def serve_overlay_cached_tile(self, overlay_id: str, z: int, x: int, y: int, *, offline_only: bool = False) -> None:
+    def serve_overlay_cached_tile(self, overlay_id: str, z: int, x: int, y: int, *, offline_only: bool = False, query: dict[str, list[str]] | None = None) -> None:
         try:
             overlay = self.cacheable_overlay(overlay_id)
             offline_only = offline_only or bool(self.app_db().app_setting("maps.offline_regions_only", False))
             matches = self.matching_offline_regions_for_tile(overlay_id, z, x, y)
             mime = self.overlay_tile_mime(overlay)
+            variant = self.overlay_tile_cache_variant(overlay, query)
             for match in matches:
-                cache_path = self.tile_cache_path(str(match["region"]["id"]), overlay_id, z, x, y)
+                cache_path = self.tile_cache_path(str(match["region"]["id"]), overlay_id, z, x, y, variant=variant)
                 if cache_path.exists() and cache_path.is_file():
                     return self.send_tile_bytes(cache_path.read_bytes(), mime)
             if offline_only:
                 return self.send_blank_overlay_tile()
             try:
-                data = self.fetch_remote_tile(overlay, z, x, y)
+                data = self.fetch_remote_tile(overlay, z, x, y, query)
             except Exception as exc:  # noqa: BLE001 - optional raster overlays should not break map rendering.
                 if self.settings.dev_mode:
                     print(f"Overlay tile fetch failed for {overlay_id} {z}/{x}/{y}: {exc}")
                 return self.send_blank_overlay_tile()
             if matches:
-                cache_path = self.tile_cache_path(str(matches[0]["region"]["id"]), overlay_id, z, x, y)
+                cache_path = self.tile_cache_path(str(matches[0]["region"]["id"]), overlay_id, z, x, y, variant=variant)
                 cache_path.parent.mkdir(parents=True, exist_ok=True)
                 cache_path.write_bytes(data)
             return self.send_tile_bytes(data, mime)

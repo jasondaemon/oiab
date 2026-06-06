@@ -588,6 +588,54 @@ input {
   cursor: grabbing;
 }
 
+.omv2-temperature-controls {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, .92fr) minmax(0, .82fr) auto auto;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 0 0 22px;
+}
+
+.omv2-temperature-controls select,
+.omv2-temperature-controls button {
+  min-width: 0;
+  min-height: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--om-text);
+  font-size: 0.66rem;
+  font-weight: 900;
+}
+
+.omv2-temperature-controls button {
+  padding: 0 7px;
+}
+
+.omv2-temperature-legend {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 8px;
+  color: var(--om-muted);
+  font-size: 0.58rem;
+  font-weight: 900;
+}
+
+.omv2-temperature-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.omv2-temperature-legend i {
+  display: inline-block;
+  width: 14px;
+  height: 6px;
+  border-radius: 999px;
+}
+
 .omv2-overlay-row.is-dragging {
   opacity: .55;
   border-color: rgba(122, 232, 139, 0.72);
@@ -1122,6 +1170,65 @@ input {
   margin: 0;
   color: rgba(23, 49, 37, 0.72);
   font-weight: 750;
+}
+
+.omv2-forecast-card h4 {
+  margin: 12px 0 5px;
+  color: #2d7d47;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.omv2-forecast-card dl {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+}
+
+.omv2-forecast-card dl div {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 8px;
+}
+
+.omv2-forecast-card dt {
+  color: rgba(23, 49, 37, 0.64);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.omv2-forecast-card dd {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.omv2-forecast-list {
+  display: grid;
+  gap: 5px;
+  max-height: 180px;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+}
+
+.omv2-forecast-list li {
+  display: grid;
+  gap: 2px;
+  padding: 5px 0;
+  border-top: 1px solid rgba(23, 49, 37, 0.12);
+}
+
+.omv2-forecast-list strong,
+.omv2-forecast-list span,
+.omv2-forecast-list small {
+  display: block;
+  font-size: 12px;
+  line-height: 1.2;
 }
 
 .omv2-poi-technical {

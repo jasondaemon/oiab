@@ -19,6 +19,7 @@
   const MAP_THEME_KEY = "omv2.mapTheme";
   const MAP_RIGHT_CONTROLS_COLLAPSED_KEY = "omv2.rightControlsCollapsed";
   const MAP_DETAIL_OVERLAYS_KEY = "omv2.mapDetailOverlays";
+  const TEMPERATURE_FORECAST_KEY = "omv2.temperatureForecast";
   const FOLLOW_PITCH = 58;
   const FOLLOW_MIN_HEADING_SPEED_MPH = 1.2;
   const EMPTY = { type: "FeatureCollection", features: [] };
@@ -283,6 +284,10 @@
     managerOpenFolders: new Set(),
     searchResults: [],
     manualRecording: false,
+    temperatureForecast: JSON.parse(localStorage.getItem(TEMPERATURE_FORECAST_KEY) || '{"product":"temp","period":"now"}'),
+    temperatureOptions: null,
+    temperatureDebounce: null,
+    temperaturePickMode: false,
   };
 
   function toast(message, error = false) {
@@ -812,6 +817,7 @@
       })),
       overlays: overlaySignature(selection?.overlays || []),
       offline_regions_only: Boolean(state.overlayRegistry?.offline_regions_only),
+      temperature_forecast: temperatureSettings(),
     });
   }
 
@@ -834,6 +840,48 @@
   function overlayOpacity(overlay) {
     const value = Number(overlay.opacity);
     return Number.isFinite(value) ? Math.max(0, Math.min(1, value)) : 1;
+  }
+
+  function isTemperatureOverlay(overlay) {
+    return overlay?.id === "temperature_forecast" || overlay?.source_type === "nws_temperature";
+  }
+
+  function temperatureSettings() {
+    const product = String(state.temperatureForecast?.product || "temp");
+    const period = String(state.temperatureForecast?.period || "now");
+    return { product, period };
+  }
+
+  function setTemperatureSettings(next) {
+    state.temperatureForecast = {
+      ...temperatureSettings(),
+      ...(next || {}),
+    };
+    localStorage.setItem(TEMPERATURE_FORECAST_KEY, JSON.stringify(state.temperatureForecast));
+  }
+
+  function temperatureTileTemplate(template) {
+    const settings = temperatureSettings();
+    const separator = String(template || "").includes("?") ? "&" : "?";
+    const cacheBust = `${settings.product}-${settings.period}`;
+    return `${template}${separator}product=${encodeURIComponent(settings.product)}&period=${encodeURIComponent(settings.period)}&v=${encodeURIComponent(cacheBust)}`;
+  }
+
+  function scheduleTemperatureReload() {
+    clearTimeout(state.temperatureDebounce);
+    state.temperatureDebounce = setTimeout(() => {
+      boot().catch((error) => toast(error.message || "Temperature overlay reload failed.", true));
+    }, 350);
+  }
+
+  async function loadTemperatureOptions() {
+    if (state.temperatureOptions) return state.temperatureOptions;
+    try {
+      state.temperatureOptions = await fetchJson("/api/maps/overlays/temperature/options", { ok: false, products: [], periods: [], legend: [] });
+    } catch (error) {
+      state.temperatureOptions = { ok: false, products: [], periods: [], legend: [], error: error.message };
+    }
+    return state.temperatureOptions;
   }
 
   function applyOverlayOpacity(layer, opacity) {
@@ -1430,9 +1478,12 @@
         continue;
       }
       if (overlay.type === "raster") {
-        const tiles = overlay.cached_tile_url_template
+        let tiles = overlay.cached_tile_url_template
           ? [`${overlay.cached_tile_url_template}?offline_only=${state.overlayRegistry?.offline_regions_only ? "1" : "0"}`]
           : Array.isArray(overlay.tiles) && overlay.tiles.length ? overlay.tiles : sourceUrl ? [sourceUrl] : [];
+        if (isTemperatureOverlay(overlay)) {
+          tiles = tiles.map((tile) => temperatureTileTemplate(tile));
+        }
         if (!tiles.length) continue;
         style.sources[sourceId] = {
           type: "raster",
@@ -1886,6 +1937,11 @@
         inspectTileAt(event.lngLat);
         return;
       }
+      if (state.temperaturePickMode) {
+        state.temperaturePickMode = false;
+        openTemperatureForecast(event.lngLat);
+        return;
+      }
       if (!state.addFromMap) return;
       state.modalPoint = { lat: event.lngLat.lat, lon: event.lngLat.lng, source: "map_click" };
       state.addFromMap = false;
@@ -2115,6 +2171,71 @@
       || (overlay.category === "public_lands" ? "BLM public land" : "")
       || (overlay.style === "usgs_contours" ? "Contour line" : "")
       || "Overlay feature";
+  }
+
+  function forecastPeriodHtml(period = {}) {
+    const temp = period.temperature != null ? `${period.temperature}°${period.temperatureUnit || "F"}` : "--";
+    const wind = [period.windSpeed, period.windDirection].filter(Boolean).join(" ");
+    const precip = period.probabilityOfPrecipitation?.value != null ? `${period.probabilityOfPrecipitation.value}% precip` : "";
+    return `
+      <li>
+        <strong>${escapeHtml(period.name || period.startTime || "Forecast")}</strong>
+        <span>${escapeHtml(temp)}${wind ? ` · ${escapeHtml(wind)}` : ""}${precip ? ` · ${escapeHtml(precip)}` : ""}</span>
+        ${period.shortForecast ? `<small>${escapeHtml(period.shortForecast)}</small>` : ""}
+      </li>
+    `;
+  }
+
+  function forecastCardHtml(data, coords) {
+    if (!data?.ok) {
+      return `
+        <article class="omv2-poi-card omv2-forecast-card">
+          <p class="omv2-poi-kicker">Temperature Forecast</p>
+          <h3>Forecast unavailable</h3>
+          <p>${escapeHtml(data?.error || "NWS forecast lookup failed.")}</p>
+        </article>
+      `;
+    }
+    const grid = data.grid || {};
+    const current = data.current || {};
+    const place = [grid.city, grid.state].filter(Boolean).join(", ") || `${Number(coords.lat).toFixed(4)}, ${Number(coords.lng).toFixed(4)}`;
+    const hourly = Array.isArray(data.next_12_hours) ? data.next_12_hours : [];
+    const daily = Array.isArray(data.daily) ? data.daily : [];
+    return `
+      <article class="omv2-poi-card omv2-forecast-card">
+        <p class="omv2-poi-kicker">NWS Temperature Forecast${data.stale ? " · cached" : ""}</p>
+        <h3>${escapeHtml(place)}</h3>
+        <dl>
+          <div><dt>Grid</dt><dd>${escapeHtml([grid.office, grid.x, grid.y].filter(Boolean).join(" / ") || "NWS")}</dd></div>
+          <div><dt>Now</dt><dd>${escapeHtml(current.temperature != null ? `${current.temperature}°${current.temperatureUnit || "F"}` : "--")}${current.shortForecast ? ` · ${escapeHtml(current.shortForecast)}` : ""}</dd></div>
+          <div><dt>Updated</dt><dd>${escapeHtml(data.updated_at || "")}${data.stale ? " · stale/offline cache" : ""}</dd></div>
+        </dl>
+        <h4>Next 12 hours</h4>
+        <ul class="omv2-forecast-list">${hourly.slice(0, 12).map(forecastPeriodHtml).join("")}</ul>
+        <h4>Daily</h4>
+        <ul class="omv2-forecast-list">${daily.slice(0, 8).map(forecastPeriodHtml).join("")}</ul>
+      </article>
+    `;
+  }
+
+  async function openTemperatureForecast(lngLat) {
+    if (!state.map || !lngLat) return;
+    const popup = new maplibregl.Popup({ className: "omv2-poi-popup", maxWidth: "430px" })
+      .setLngLat(lngLat)
+      .setHTML(`
+        <article class="omv2-poi-card omv2-forecast-card">
+          <p class="omv2-poi-kicker">Temperature Forecast</p>
+          <h3>Loading NWS forecast...</h3>
+        </article>
+      `)
+      .addTo(state.map);
+    try {
+      const url = `/api/maps/weather/forecast?lat=${encodeURIComponent(lngLat.lat)}&lon=${encodeURIComponent(lngLat.lng)}`;
+      const data = await fetchJson(url, { ok: false, error: "Forecast unavailable." }, { cache: "no-store" });
+      popup.setHTML(forecastCardHtml(data, lngLat));
+    } catch (error) {
+      popup.setHTML(forecastCardHtml({ ok: false, error: error.message }, lngLat));
+    }
   }
 
   function mvumRouteTypeLabel(value) {
@@ -2706,6 +2827,87 @@
     renderGroup("Inactive", inactive);
   }
 
+  function temperatureControlOptions(kind) {
+    const defaults = kind === "products"
+      ? [
+        { id: "temp", label: "Near-term" },
+        { id: "max", label: "Max" },
+        { id: "min", label: "Min" },
+        { id: "apparent", label: "Feels-like" },
+      ]
+      : [
+        { id: "now", label: "Now" },
+        { id: "plus6", label: "+6h" },
+        { id: "plus12", label: "+12h" },
+        { id: "tomorrow", label: "Tomorrow" },
+        { id: "day3", label: "Day 3" },
+        { id: "day5", label: "Day 5" },
+        { id: "day7", label: "Day 7" },
+      ];
+    const remote = state.temperatureOptions?.[kind];
+    return Array.isArray(remote) && remote.length ? remote : defaults;
+  }
+
+  function renderTemperatureControls(row, overlay) {
+    const settings = temperatureSettings();
+    const controls = document.createElement("div");
+    controls.className = "omv2-temperature-controls";
+    const products = temperatureControlOptions("products");
+    const periods = temperatureControlOptions("periods");
+    const legend = state.temperatureOptions?.legend || [];
+    controls.innerHTML = `
+      <select data-temperature-product aria-label="Temperature type">
+        ${products.map((item) => `<option value="${escapeHtml(item.id)}" ${item.id === settings.product ? "selected" : ""}>${escapeHtml(item.label)}</option>`).join("")}
+      </select>
+      <select data-temperature-period aria-label="Forecast period">
+        ${periods.map((item) => `<option value="${escapeHtml(item.id)}" ${item.id === settings.period ? "selected" : ""}>${escapeHtml(item.label)}</option>`).join("")}
+      </select>
+      <button type="button" data-temperature-gps title="Forecast at current GPS">GPS</button>
+      <button type="button" data-temperature-tap title="Tap map for forecast">Tap</button>
+      <div class="omv2-temperature-legend" aria-label="Temperature color legend">
+        ${(legend.length ? legend : [
+          { color: "#2563eb", label: "0°F" },
+          { color: "#06b6d4", label: "20°F" },
+          { color: "#22c55e", label: "40°F" },
+          { color: "#facc15", label: "60°F" },
+          { color: "#f97316", label: "80°F" },
+          { color: "#dc2626", label: "100°F" },
+        ]).map((item) => `<span><i style="background:${escapeHtml(item.color)}"></i>${escapeHtml(item.label)}</span>`).join("")}
+      </div>
+    `;
+    controls.querySelector("[data-temperature-product]").addEventListener("change", (event) => {
+      setTemperatureSettings({ product: event.target.value });
+      scheduleTemperatureReload();
+    });
+    controls.querySelector("[data-temperature-period]").addEventListener("change", (event) => {
+      setTemperatureSettings({ period: event.target.value });
+      scheduleTemperatureReload();
+    });
+    controls.querySelector("[data-temperature-gps]").addEventListener("click", () => {
+      const loc = state.currentLocation || {};
+      if (!validCoord(Number(loc.lat), Number(loc.lon))) {
+        toast("No current GPS position available for forecast.", true);
+        return;
+      }
+      openTemperatureForecast({ lat: Number(loc.lat), lng: Number(loc.lon) });
+    });
+    controls.querySelector("[data-temperature-tap]").addEventListener("click", () => {
+      state.temperaturePickMode = true;
+      state.addFromMap = false;
+      state.inspectTile = false;
+      $("addMapWaypoint").classList.remove("is-pending");
+      $("inspectTile").classList.remove("is-pending");
+      toast("Tap the map for an NWS temperature forecast.");
+    });
+    row.appendChild(controls);
+    if (!state.temperatureOptions) {
+      loadTemperatureOptions().then(() => {
+        if (!row.isConnected) return;
+        renderOverlayControls();
+      }).catch(() => {});
+    }
+  }
+
   function renderOverlayControlRow(node, overlay) {
       const row = document.createElement("div");
       row.className = "omv2-folder-row omv2-overlay-row";
@@ -2742,6 +2944,9 @@
       const zoomButton = row.querySelector("[data-zoom-overlay]");
       if (zoomButton) {
         zoomButton.addEventListener("click", () => zoomToOverlayBounds(overlay));
+      }
+      if (isTemperatureOverlay(overlay)) {
+        renderTemperatureControls(row, overlay);
       }
       const dragHandle = row.querySelector(".omv2-overlay-drag");
       dragHandle.addEventListener("dragstart", (event) => {
