@@ -1405,7 +1405,9 @@
     style.sources = style.sources || {};
     style.layers = Array.isArray(style.layers) ? style.layers : [];
     const overlayLayers = [];
-    for (const overlay of overlays) {
+    // The layer menu is a visual stack: first row is topmost. MapLibre draws
+    // later layers above earlier layers, so build render layers bottom-up.
+    for (const overlay of overlays.slice().reverse()) {
       if (overlay.type === "map_detail") {
         const layers = (mapDetailLayersByOverlay[overlay.id] || []).map((layer) => applyOverlayOpacity(layer, overlayOpacity(overlay)));
         overlayLayers.push(...layers);

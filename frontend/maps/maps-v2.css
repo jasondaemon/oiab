@@ -475,21 +475,21 @@ input {
 }
 
 .omv2-overlay-row {
-  grid-template-columns: minmax(0, 1fr) minmax(104px, 0.7fr) auto auto;
-  min-height: 38px;
-  gap: 7px;
-  padding: 7px 8px;
-  border-radius: 12px;
+  grid-template-columns: minmax(0, 1fr) minmax(94px, 0.62fr) auto auto;
+  min-height: 26px;
+  gap: 5px;
+  padding: 3px 5px 3px 7px;
+  border-radius: 9px;
   transition: transform .14s ease, opacity .14s ease, border-color .14s ease, background .14s ease;
 }
 
 .omv2-overlay-sort-group {
   display: grid;
-  gap: 7px;
+  gap: 4px;
 }
 
 .omv2-overlay-section-title {
-  margin: 10px 4px 2px;
+  margin: 8px 4px 1px;
   color: var(--om-green);
   font-size: 0.7rem;
   font-weight: 950;
@@ -518,17 +518,22 @@ input {
   min-width: 0;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  gap: 7px;
+  gap: 5px;
+}
+
+.omv2-overlay-check input {
+  width: 14px;
+  height: 14px;
 }
 
 .omv2-overlay-opacity {
-  grid-template-columns: 2.35rem minmax(56px, 1fr);
+  grid-template-columns: 2.15rem minmax(48px, 1fr);
 }
 
 .omv2-overlay-check span {
   min-width: 0;
   overflow: hidden;
-  font-size: 0.86rem;
+  font-size: 0.76rem;
   line-height: 1;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -536,7 +541,7 @@ input {
 
 .omv2-overlay-opacity span {
   color: var(--om-text);
-  font-size: 0.84rem;
+  font-size: 0.72rem;
   font-weight: 900;
   line-height: 1;
   text-align: right;
@@ -552,15 +557,15 @@ input {
 .omv2-overlay-drag {
   display: inline-grid;
   place-items: center;
-  width: 28px;
-  height: 28px;
+  width: 20px;
+  height: 20px;
   padding: 0;
   border: 0;
-  border-radius: 10px;
+  border-radius: 7px;
   background: transparent;
   color: var(--om-muted);
   cursor: grab;
-  font-size: 0.92rem;
+  font-size: 0.78rem;
   font-weight: 900;
   line-height: 1;
   touch-action: none;
