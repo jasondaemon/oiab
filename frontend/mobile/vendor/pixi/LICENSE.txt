@@ -1,0 +1,3 @@
+PixiJS v7.4.3
+https://pixijs.com/
+License: MIT

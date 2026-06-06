@@ -47,6 +47,7 @@
 
     <section id="mapSearch" class="omv2-search" aria-label="Map search">
       <button id="searchToggle" type="button" title="Search visible map">⌕</button>
+      <a id="mobileMapHome" class="omv2-mobile-home" href="/mobile/" title="Back to OIAB home" aria-label="Back to OIAB home">⌂</a>
       <form id="searchForm" class="omv2-search-box" hidden>
         <input id="searchInput" name="q" type="search" placeholder="Search visible map..." autocomplete="off">
         <div class="omv2-search-scope" aria-label="Search sources">
@@ -61,6 +62,7 @@
     </section>
 
     <section class="omv2-controls omv2-controls-right" aria-label="Map data and overlay controls">
+      <button id="rightControlsCollapse" type="button" title="Collapse map controls">☰</button>
       <button id="savedDataToggle" type="button" title="Saved waypoints, tracks, and folders">▣</button>
       <button id="overlaysToggle" type="button" title="Map overlays">☰</button>
       <button id="offlineRegionToggle" class="omv2-bbox-button" type="button" title="Draw offline cache region" aria-label="Draw offline cache region">
@@ -92,7 +94,7 @@
       </div>
       <div class="omv2-layer-subhead">
         <span class="eyebrow">Overlays</span>
-        <a href="/mobile/map-packs.html">Settings</a>
+        <a id="overlaySettingsLink" href="/?headunit=1&settings=maps">Settings</a>
       </div>
       <label class="omv2-check omv2-check-compact"><input id="offlineOnlyToggle" type="checkbox"> Offline regions only</label>
       <div id="overlayList" class="omv2-folder-list"></div>
@@ -211,7 +213,8 @@
         <p id="trackModeHint" class="omv2-hint">Auto recording starts above 2 mph. Manual recording keeps one route active until you stop it.</p>
         <div class="omv2-edit-actions">
           <button id="startManualTrack" class="omv2-link-button" type="button">Record Until Stopped</button>
-          <button id="stopManualTrack" class="omv2-link-button is-danger" type="button">Stop Recording</button>
+          <button id="autoTrackMode" class="omv2-link-button" type="button">Auto Record</button>
+          <button id="stopManualTrack" class="omv2-link-button is-danger" type="button">Recording Off</button>
           <button id="closeTrackModeAction" class="omv2-link-button" type="button">Close</button>
         </div>
       </div>

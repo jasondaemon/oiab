@@ -1,0 +1,1072 @@
+{
+  "category": "Television",
+  "slug": "television",
+  "version": 1,
+  "questions": [
+    {
+      "id": "television_easy_001",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What show involved Cylons as evil robots?",
+      "answers": [
+        "Alex Keaton",
+        "Full House",
+        "Illinois",
+        "Battlestar Galactica"
+      ],
+      "correct": 3,
+      "explanation": "Battlestar Galactica is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_002",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Michael J. Fox's character named in Family Ties?",
+      "answers": [
+        "Battlestar Galactica",
+        "Full House",
+        "Alex Keaton",
+        "Illinois"
+      ],
+      "correct": 2,
+      "explanation": "Alex Keaton is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_003",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which sitcom did Steve Urkel from Family Matters make a guest appearance on?",
+      "answers": [
+        "Battlestar Galactica",
+        "Full House",
+        "Alex Keaton",
+        "Illinois"
+      ],
+      "correct": 1,
+      "explanation": "Full House is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_004",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The Conner family of the television show Roseanne lives in what state?",
+      "answers": [
+        "Battlestar Galactica",
+        "Illinois",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "Illinois is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_005",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which character becomes a wanted fugitive during the final season of The Office?",
+      "answers": [
+        "Battlestar Galactica",
+        "Creed",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "Creed is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_006",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Frasier is actually a spin-off of another show. Can you name this show?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Cheers",
+        "Full House"
+      ],
+      "correct": 2,
+      "explanation": "Cheers is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_007",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was the name of Tim Taylor's neighbor in the sitcom Home Improvement?",
+      "answers": [
+        "Wilson",
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 0,
+      "explanation": "Wilson is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_008",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of the beautiful witch in the sitcom Bewitched?",
+      "answers": [
+        "Battlestar Galactica",
+        "Samantha",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "Samantha is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_009",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What actor starred in Lizzie McGuire?",
+      "answers": [
+        "Hilary Duff",
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 0,
+      "explanation": "Hilary Duff is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_010",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the Canadian character from How I Met Your Mother called?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "Robin Scherbatsky"
+      ],
+      "correct": 3,
+      "explanation": "Robin Scherbatsky is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_011",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which character in which show says the line 'there's always money in the banana stand'?",
+      "answers": [
+        "Battlestar Galactica",
+        "George Sr. from Arrested Development",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "George Sr. from Arrested Development is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_012",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the captain of The Love Boat?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "Captain Merrill Stubing"
+      ],
+      "correct": 3,
+      "explanation": "Captain Merrill Stubing is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_013",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "This show featured the main character having cousins called Carlton, Ashley, and Hilary. What's the show called?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "The Fresh Prince of Bel-Air"
+      ],
+      "correct": 3,
+      "explanation": "The Fresh Prince of Bel-Air is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_014",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which character from Big Bang Theory had a spinoff show created about his younger years?",
+      "answers": [
+        "Sheldon Cooper from Big Bang Theory",
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 0,
+      "explanation": "Sheldon Cooper from Big Bang Theory is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_015",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In which classic sitcom would you find characters called Jan, Mike, and Greg?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "The Brady Bunch"
+      ],
+      "correct": 3,
+      "explanation": "The Brady Bunch is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_016",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The hospital-situated comedy sitcom Scrubs had two lead female characters. What were they called?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "Elliot and Carla"
+      ],
+      "correct": 3,
+      "explanation": "Elliot and Carla is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_017",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Debra Messing stars as which titular character from which sitcom?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "She plays Grace from Will and Grace",
+        "Full House"
+      ],
+      "correct": 2,
+      "explanation": "She plays Grace from Will and Grace is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_018",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of the iconic sci-fi show that debuted in 1987?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "Star Trek – The Next Generation"
+      ],
+      "correct": 3,
+      "explanation": "Star Trek – The Next Generation is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_019",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In M*A*S*H, what do the characters call the senior staff members' tent?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "The Swamp"
+      ],
+      "correct": 3,
+      "explanation": "The Swamp is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_020",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Matthew Perry's character name in Friends?",
+      "answers": [
+        "Battlestar Galactica",
+        "Chandler Bing",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "Chandler Bing is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_021",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of the TV show that featured Charlie Sheen, Angus T Jones, and Jon Cryer?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "Two and a Half Men"
+      ],
+      "correct": 3,
+      "explanation": "Two and a Half Men is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_022",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where did Laverne and Shirley live?",
+      "answers": [
+        "730 Hampton Street",
+        "728",
+        "729",
+        "731"
+      ],
+      "correct": 0,
+      "explanation": "730 Hampton Street is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_023",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What sitcom features the line 'we were on a break', and which character says it?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Ross from Friends",
+        "Full House"
+      ],
+      "correct": 2,
+      "explanation": "Ross from Friends is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_024",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which TV series uses the song Second Time Around as their theme song?",
+      "answers": [
+        "Battlestar Galactica",
+        "Step by Step",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "Step by Step is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_025",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which comic book featured the title character from Sabrina the Teenage Witch?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Archie's Madhouse",
+        "Full House"
+      ],
+      "correct": 2,
+      "explanation": "Archie's Madhouse is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_026",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What character was the President of the USA in The West Wing?",
+      "answers": [
+        "Josiah Bartlet",
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 0,
+      "explanation": "Josiah Bartlet is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_027",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where is the sitcom New Girl set?",
+      "answers": [
+        "Battlestar Galactica",
+        "Los Angeles",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "Los Angeles is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_028",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Peter Falk played a detective in which long-running show?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "Columbo"
+      ],
+      "correct": 3,
+      "explanation": "Columbo is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_029",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where did the show The Wire take place?",
+      "answers": [
+        "Battlestar Galactica",
+        "Baltimore",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "Baltimore is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_030",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which show was originally called Friends of Mine?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Ellen",
+        "Full House"
+      ],
+      "correct": 2,
+      "explanation": "Ellen is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_031",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which hit TV sitcom takes place in and around Princeton Plainsboro Teaching Hospital?",
+      "answers": [
+        "House",
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 0,
+      "explanation": "House is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_032",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which sitcom is based on an older sitcom called Love American Style?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "Happy Days"
+      ],
+      "correct": 3,
+      "explanation": "Happy Days is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_033",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Can you name the actor who played Thing in The Addams Family?",
+      "answers": [
+        "Battlestar Galactica",
+        "Ted Cassidy",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "Ted Cassidy is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_034",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What role does the character of Harry the Hat play in the sitcom Cheers?",
+      "answers": [
+        "Battlestar Galactica",
+        "He is the resident con artist",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "He is the resident con artist is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_035",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where do the Simpsons live?",
+      "answers": [
+        "Battlestar Galactica",
+        "Springfield",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "Springfield is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_036",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which 1950s sitcom starred a red-headed woman married to a bandleader?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "I Love Lucy",
+        "Full House"
+      ],
+      "correct": 2,
+      "explanation": "I Love Lucy is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_037",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Joey Tribbiani from Friends has an iconic line. What is it?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "How YOU doin'?"
+      ],
+      "correct": 3,
+      "explanation": "How YOU doin'? is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_038",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which character from Star Trek often said 'make it so'?",
+      "answers": [
+        "Battlestar Galactica",
+        "Captain Picard",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "Captain Picard is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_039",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was Danno from Hawaii 5-0 always being told to do?",
+      "answers": [
+        "Battlestar Galactica",
+        "Book 'em'",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "Book 'em' is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_040",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What actress lied about her age to get a part in That '70s Show?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "Mila Kunis"
+      ],
+      "correct": 3,
+      "explanation": "Mila Kunis is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_041",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What record-breaking amount of Emmys did the Mary Tyler Moore show win?",
+      "answers": [
+        "27",
+        "28",
+        "30",
+        "29"
+      ],
+      "correct": 3,
+      "explanation": "29 is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_042",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What iconic line did Columbo say before he broke a case wide open?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "'Just one more thing'"
+      ],
+      "correct": 3,
+      "explanation": "'Just one more thing' is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_043",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which character from which show often exclaimed 'dy-no-mite'?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "JJ from Good Times"
+      ],
+      "correct": 3,
+      "explanation": "JJ from Good Times is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_044",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the stock sound of someone screaming that is often used in sitcoms, often as a joke?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "The Wilhelm Scream",
+        "Full House"
+      ],
+      "correct": 2,
+      "explanation": "The Wilhelm Scream is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_045",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does Barney on The Andy Griffith Show keep in his shirt pocket?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "A bullet"
+      ],
+      "correct": 3,
+      "explanation": "A bullet is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_046",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which shows were a sitcom spin-off of The Mary Tyler Moore Show?",
+      "answers": [
+        "Rhoda, Phyllis, and Lou Grant",
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 0,
+      "explanation": "Rhoda, Phyllis, and Lou Grant is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_047",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What actress played Janet Treago, the bank secretary in The Beverly Hillbillies?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "Sharon Tate"
+      ],
+      "correct": 3,
+      "explanation": "Sharon Tate is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_048",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In 2021, which Netflix drama became its biggest ever show?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Bridgerton",
+        "Full House"
+      ],
+      "correct": 2,
+      "explanation": "Bridgerton is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_049",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The Goldbergs is set in which decade?",
+      "answers": [
+        "The 1980s",
+        "1979",
+        "1981",
+        "1975"
+      ],
+      "correct": 0,
+      "explanation": "The 1980s is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_050",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who has a bed-wetting problem as a child in Everybody Loves Raymond?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Robert",
+        "Full House"
+      ],
+      "correct": 2,
+      "explanation": "Robert is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_051",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does sitcom stand for?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "Situation comedy"
+      ],
+      "correct": 3,
+      "explanation": "Situation comedy is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_052",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In season 3 of My Name is Earl, the location was changed. Where was the show set after the 3rd season?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "In prison",
+        "Full House"
+      ],
+      "correct": 2,
+      "explanation": "In prison is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_053",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of the coffee shop where the characters from Friends hang out?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "Central Perk"
+      ],
+      "correct": 3,
+      "explanation": "Central Perk is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_054",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of Michael Fox's character in Family Ties?",
+      "answers": [
+        "Battlestar Galactica",
+        "Full House",
+        "Alex Keaton",
+        "Illinois"
+      ],
+      "correct": 2,
+      "explanation": "Alex Keaton is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_055",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The Connor family of the television show Roseanne lives in what state?",
+      "answers": [
+        "Battlestar Galactica",
+        "Illinois",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "Illinois is the correct screen trivia answer."
+    },
+    {
+      "id": "television_easy_056",
+      "category": "Television",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "One of the earliest sitcoms from the 50s featured a wacky red-headed lady who was married to a bandleader. What was it called?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "I Love Lucy",
+        "Full House"
+      ],
+      "correct": 2,
+      "explanation": "I Love Lucy is the correct screen trivia answer."
+    },
+    {
+      "id": "television_medium_001",
+      "category": "Television",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the most-watched episode of Friends?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "\"The One After The Super Bowl.\""
+      ],
+      "correct": 3,
+      "explanation": "\"The One After The Super Bowl.\" is the correct screen trivia answer."
+    },
+    {
+      "id": "television_medium_002",
+      "category": "Television",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which superhero was referenced or shown in every episode of Seinfeld?",
+      "answers": [
+        "Battlestar Galactica",
+        "Superman",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "Superman is the correct screen trivia answer."
+    },
+    {
+      "id": "television_medium_003",
+      "category": "Television",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the title of the final episode of M*A*S*H?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "Goodbye, Farewell and Amen"
+      ],
+      "correct": 3,
+      "explanation": "Goodbye, Farewell and Amen is the correct screen trivia answer."
+    },
+    {
+      "id": "television_medium_004",
+      "category": "Television",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What series was the first television drama in American history?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "The Queen's Messenger",
+        "Full House"
+      ],
+      "correct": 2,
+      "explanation": "The Queen's Messenger is the correct screen trivia answer."
+    },
+    {
+      "id": "television_medium_005",
+      "category": "Television",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What iconic sitcom featuring a prehistoric family first debuted in 1960?",
+      "answers": [
+        "The Flintstones",
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 0,
+      "explanation": "The Flintstones is the correct screen trivia answer."
+    },
+    {
+      "id": "television_medium_006",
+      "category": "Television",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What famous 1968 Star Trek episode included a kiss between Captain Kirk and Uhura?",
+      "answers": [
+        "Battlestar Galactica",
+        "Plato's Stepchildren",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "Plato's Stepchildren is the correct screen trivia answer."
+    },
+    {
+      "id": "television_medium_007",
+      "category": "Television",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which show featured the first-ever interracial kiss to feature on TV?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Star Trek",
+        "Full House"
+      ],
+      "correct": 2,
+      "explanation": "Star Trek is the correct screen trivia answer."
+    },
+    {
+      "id": "television_medium_008",
+      "category": "Television",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which sitcom, first released in the late 60s, features a blended family?",
+      "answers": [
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House",
+        "The Brady Bunch"
+      ],
+      "correct": 3,
+      "explanation": "The Brady Bunch is the correct screen trivia answer."
+    },
+    {
+      "id": "television_medium_009",
+      "category": "Television",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the first-ever soap opera, broadcast in 1956 on CBS?",
+      "answers": [
+        "Battlestar Galactica",
+        "As The World Turns",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "As The World Turns is the correct screen trivia answer."
+    },
+    {
+      "id": "television_medium_010",
+      "category": "Television",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first actor to be nominated for an Emmy for the same character on three different sitcoms?",
+      "answers": [
+        "Kelsey Grammer",
+        "Battlestar Galactica",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 0,
+      "explanation": "Kelsey Grammer is the correct screen trivia answer."
+    },
+    {
+      "id": "television_medium_011",
+      "category": "Television",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which superhero had a reference or an unwitting cameo in every episode of Seinfeld?",
+      "answers": [
+        "Battlestar Galactica",
+        "Superman",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "Superman is the correct screen trivia answer."
+    },
+    {
+      "id": "television_hard_001",
+      "category": "Television",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many different actors played Topanga's parents on Boy Meets World?",
+      "answers": [
+        "Battlestar Galactica",
+        "Five different actors",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "Five different actors is the correct screen trivia answer."
+    },
+    {
+      "id": "television_hard_002",
+      "category": "Television",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "On Gilligan's Island, how many castaways were there?",
+      "answers": [
+        "Battlestar Galactica",
+        "Seven",
+        "Alex Keaton",
+        "Full House"
+      ],
+      "correct": 1,
+      "explanation": "Seven is the correct screen trivia answer."
+    },
+    {
+      "id": "television_hard_003",
+      "category": "Television",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many episodes of Happy Days were made?",
+      "answers": [
+        "253",
+        "254",
+        "255",
+        "256"
+      ],
+      "correct": 2,
+      "explanation": "255 is the correct screen trivia answer."
+    },
+    {
+      "id": "television_hard_004",
+      "category": "Television",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many hours worth of TV did 24 run for?",
+      "answers": [
+        "190",
+        "192 hours",
+        "191",
+        "193"
+      ],
+      "correct": 1,
+      "explanation": "192 hours is the correct screen trivia answer."
+    }
+  ]
+}

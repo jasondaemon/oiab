@@ -1,0 +1,397 @@
+{
+  "category": "American History",
+  "slug": "american-history",
+  "version": 1,
+  "questions": [
+    {
+      "id": "american-history_easy_001",
+      "category": "American History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What U.S. president was inducted into Oklahoma's Wrestling Hall of Fame?",
+      "answers": [
+        "Sacagawea",
+        "Richard Nixon",
+        "The Anasazi",
+        "Abraham Lincoln"
+      ],
+      "correct": 3,
+      "explanation": "Abraham Lincoln is the historical answer for this question."
+    },
+    {
+      "id": "american-history_easy_002",
+      "category": "American History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What Native American served as a guide for explorers Lewis and Clark?",
+      "answers": [
+        "Abraham Lincoln",
+        "Richard Nixon",
+        "The Anasazi",
+        "Sacagawea"
+      ],
+      "correct": 3,
+      "explanation": "Sacagawea is the historical answer for this question."
+    },
+    {
+      "id": "american-history_easy_003",
+      "category": "American History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was Dwight D. Eisenhower's vice president?",
+      "answers": [
+        "Abraham Lincoln",
+        "Richard Nixon",
+        "Sacagawea",
+        "The Anasazi"
+      ],
+      "correct": 1,
+      "explanation": "Richard Nixon is the historical answer for this question."
+    },
+    {
+      "id": "american-history_easy_004",
+      "category": "American History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Native Americans were known for their complex pueblos?",
+      "answers": [
+        "Abraham Lincoln",
+        "Sacagawea",
+        "The Anasazi",
+        "Richard Nixon"
+      ],
+      "correct": 2,
+      "explanation": "The Anasazi is the historical answer for this question."
+    },
+    {
+      "id": "american-history_easy_005",
+      "category": "American History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which trail stretches from Missouri to Oregon and was used by early American pioneers to emigrate west?",
+      "answers": [
+        "Abraham Lincoln",
+        "The Oregon Trail",
+        "Sacagawea",
+        "Richard Nixon"
+      ],
+      "correct": 1,
+      "explanation": "The Oregon Trail is the historical answer for this question."
+    },
+    {
+      "id": "american-history_easy_006",
+      "category": "American History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was the name of John Adams' wife?",
+      "answers": [
+        "Abraham Lincoln",
+        "Abigail Adams",
+        "Sacagawea",
+        "Richard Nixon"
+      ],
+      "correct": 1,
+      "explanation": "Abigail Adams is the historical answer for this question."
+    },
+    {
+      "id": "american-history_easy_007",
+      "category": "American History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was discovered at Sutter's Mill in 1848?",
+      "answers": [
+        "Gold",
+        "Abraham Lincoln",
+        "Sacagawea",
+        "Richard Nixon"
+      ],
+      "correct": 0,
+      "explanation": "Gold is the historical answer for this question."
+    },
+    {
+      "id": "american-history_easy_008",
+      "category": "American History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Beginning in the 1920s, what period marked a surge of creative expression in art and literature within the Black community?",
+      "answers": [
+        "The Harlem Renaissance",
+        "Abraham Lincoln",
+        "Sacagawea",
+        "Richard Nixon"
+      ],
+      "correct": 0,
+      "explanation": "The Harlem Renaissance is the historical answer for this question."
+    },
+    {
+      "id": "american-history_easy_009",
+      "category": "American History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What ecological disaster struck the Great Plains in the 1930s?",
+      "answers": [
+        "Abraham Lincoln",
+        "The Dust Bowl",
+        "Sacagawea",
+        "Richard Nixon"
+      ],
+      "correct": 1,
+      "explanation": "The Dust Bowl is the historical answer for this question."
+    },
+    {
+      "id": "american-history_easy_010",
+      "category": "American History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What divine notion promoted the westward expansion of U.S. territory including the Louisiana Purchase?",
+      "answers": [
+        "Abraham Lincoln",
+        "Manifest Destiny",
+        "Sacagawea",
+        "Richard Nixon"
+      ],
+      "correct": 1,
+      "explanation": "Manifest Destiny is the historical answer for this question."
+    },
+    {
+      "id": "american-history_easy_011",
+      "category": "American History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The Montgomery Bus Boycott was a response to the arrest of what key Civil Rights figure?",
+      "answers": [
+        "Rosa Parks",
+        "Abraham Lincoln",
+        "Sacagawea",
+        "Richard Nixon"
+      ],
+      "correct": 0,
+      "explanation": "Rosa Parks is the historical answer for this question."
+    },
+    {
+      "id": "american-history_easy_012",
+      "category": "American History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Constitution amendment guarantees the right to a speedy and public trial by an impartial jury?",
+      "answers": [
+        "The Sixth Amendment",
+        "Abraham Lincoln",
+        "Sacagawea",
+        "Richard Nixon"
+      ],
+      "correct": 0,
+      "explanation": "The Sixth Amendment is the historical answer for this question."
+    },
+    {
+      "id": "american-history_easy_013",
+      "category": "American History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Martin Luther King Jr.'s hometown?",
+      "answers": [
+        "Abraham Lincoln",
+        "Atlanta, Georgia",
+        "Sacagawea",
+        "Richard Nixon"
+      ],
+      "correct": 1,
+      "explanation": "Atlanta, Georgia is the historical answer for this question."
+    },
+    {
+      "id": "american-history_easy_014",
+      "category": "American History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the U.S. president during the stock market crash of 1929?",
+      "answers": [
+        "Abraham Lincoln",
+        "Sacagawea",
+        "Richard Nixon",
+        "Herbert Hoover"
+      ],
+      "correct": 3,
+      "explanation": "Herbert Hoover is the historical answer for this question."
+    },
+    {
+      "id": "american-history_medium_001",
+      "category": "American History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first Black U.S. senator?",
+      "answers": [
+        "Hiram Revels",
+        "Abraham Lincoln",
+        "Sacagawea",
+        "Richard Nixon"
+      ],
+      "correct": 0,
+      "explanation": "Hiram Revels is the historical answer for this question."
+    },
+    {
+      "id": "american-history_medium_002",
+      "category": "American History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first Black U.S. president?",
+      "answers": [
+        "Barack Obama",
+        "Abraham Lincoln",
+        "Sacagawea",
+        "Richard Nixon"
+      ],
+      "correct": 0,
+      "explanation": "Barack Obama is the historical answer for this question."
+    },
+    {
+      "id": "american-history_medium_003",
+      "category": "American History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first Black woman to receive her pilot's license?",
+      "answers": [
+        "Bessie Coleman",
+        "Abraham Lincoln",
+        "Sacagawea",
+        "Richard Nixon"
+      ],
+      "correct": 0,
+      "explanation": "Bessie Coleman is the historical answer for this question."
+    },
+    {
+      "id": "american-history_medium_004",
+      "category": "American History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The Treaty of Paris officially ended what war?",
+      "answers": [
+        "Abraham Lincoln",
+        "Sacagawea",
+        "The American Revolution",
+        "Richard Nixon"
+      ],
+      "correct": 2,
+      "explanation": "The American Revolution is the historical answer for this question."
+    },
+    {
+      "id": "american-history_medium_005",
+      "category": "American History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who fought in the War of 1812?",
+      "answers": [
+        "Abraham Lincoln",
+        "Sacagawea",
+        "Richard Nixon",
+        "The United States and Great Britain"
+      ],
+      "correct": 3,
+      "explanation": "The United States and Great Britain is the historical answer for this question."
+    },
+    {
+      "id": "american-history_medium_006",
+      "category": "American History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Whose signature is first on the Declaration of Independence?",
+      "answers": [
+        "John Hancock",
+        "Abraham Lincoln",
+        "Sacagawea",
+        "Richard Nixon"
+      ],
+      "correct": 0,
+      "explanation": "John Hancock is the historical answer for this question."
+    },
+    {
+      "id": "american-history_medium_007",
+      "category": "American History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What suffragette is the first woman on a U.S. coin?",
+      "answers": [
+        "Abraham Lincoln",
+        "Susan B. Anthony",
+        "Sacagawea",
+        "Richard Nixon"
+      ],
+      "correct": 1,
+      "explanation": "Susan B. Anthony is the historical answer for this question."
+    },
+    {
+      "id": "american-history_medium_008",
+      "category": "American History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Where did the Pilgrims land first upon arriving in America?",
+      "answers": [
+        "Provincetown, Massachusetts",
+        "Abraham Lincoln",
+        "Sacagawea",
+        "Richard Nixon"
+      ],
+      "correct": 0,
+      "explanation": "Provincetown, Massachusetts is the historical answer for this question."
+    },
+    {
+      "id": "american-history_medium_009",
+      "category": "American History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What classic novel about a teen floating down the Mississippi River did Mark Twain write?",
+      "answers": [
+        "Abraham Lincoln",
+        "Sacagawea",
+        "Richard Nixon",
+        "\"Adventures of Huckleberry Finn\""
+      ],
+      "correct": 3,
+      "explanation": "\"Adventures of Huckleberry Finn\" is the historical answer for this question."
+    },
+    {
+      "id": "american-history_medium_010",
+      "category": "American History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who invented the polio vaccine?",
+      "answers": [
+        "Abraham Lincoln",
+        "Sacagawea",
+        "Dr. Jonas Salk",
+        "Richard Nixon"
+      ],
+      "correct": 2,
+      "explanation": "Dr. Jonas Salk is the historical answer for this question."
+    },
+    {
+      "id": "american-history_hard_001",
+      "category": "American History",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many stars are on the original American flag?",
+      "answers": [
+        "Abraham Lincoln",
+        "Sacagawea",
+        "Richard Nixon",
+        "Thirteen"
+      ],
+      "correct": 3,
+      "explanation": "Thirteen is the historical answer for this question."
+    },
+    {
+      "id": "american-history_hard_002",
+      "category": "American History",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What year did the U.S. enter World War II?",
+      "answers": [
+        "1940",
+        "1941",
+        "1942",
+        "1936"
+      ],
+      "correct": 1,
+      "explanation": "1941 is the historical answer for this question."
+    }
+  ]
+}

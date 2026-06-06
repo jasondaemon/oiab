@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Dice Roller">
+  <defs>
+    <linearGradient id="bg" x1="32" y1="24" x2="226" y2="226" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#183b28"/>
+      <stop offset="1" stop-color="#07130d"/>
+    </linearGradient>
+    <linearGradient id="die" x1="78" y1="58" x2="184" y2="190" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f7fff1"/>
+      <stop offset="1" stop-color="#80f08a"/>
+    </linearGradient>
+  </defs>
+  <rect x="18" y="18" width="220" height="220" rx="46" fill="url(#bg)" stroke="#80f08a" stroke-width="8"/>
+  <path d="M128 38 205 88v82l-77 48-77-48V88z" fill="url(#die)" stroke="#07130d" stroke-width="9" stroke-linejoin="round"/>
+  <path d="M51 88 128 132l77-44M128 132v86" fill="none" stroke="#07130d" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity=".68"/>
+  <circle cx="94" cy="93" r="9" fill="#07130d"/>
+  <circle cx="128" cy="112" r="9" fill="#07130d"/>
+  <circle cx="162" cy="93" r="9" fill="#07130d"/>
+  <circle cx="101" cy="157" r="9" fill="#07130d"/>
+  <circle cx="155" cy="157" r="9" fill="#07130d"/>
+  <text x="128" y="198" text-anchor="middle" font-family="Avenir Next, Arial, sans-serif" font-size="36" font-weight="900" fill="#07130d">D20</text>
+</svg>

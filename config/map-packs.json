@@ -1,16 +1,15 @@
 {
   "version": 1,
-  "active_basemap": "protomaps_conus",
+  "active_basemap": "us_conus",
   "basemaps": [
     {
-      "id": "protomaps_conus",
-      "name": "Protomaps CONUS",
+      "id": "us_conus",
+      "name": "United States / CONUS",
       "type": "pmtiles",
-      "url": "/maps/packs/protomaps-conus.pmtiles",
+      "url": "/maps/packs/us-conus.pmtiles",
       "style": "/maps-v2/map-style.json",
-      "attribution": "© OpenStreetMap contributors"
+      "attribution": "© OpenStreetMap contributors; Protomaps"
     }
   ],
   "overlays": []
 }
-

@@ -16,4 +16,4 @@ data_path: /data/oiab/content/zim
 content_path: /data/oiab/content/zim
 notes: Uses the existing trailer ZIM directory when OIAB_ZIM_DIR points at /srv/trailer/iiab/zims.
 ports:
-  - 8081
+  - 8092

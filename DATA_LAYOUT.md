@@ -53,6 +53,7 @@ Primary durable state is SQLite:
 - OIAB map/user/settings database: `/data/oiab/db/oiab.sqlite`
 - active games, score history, player identity merges, and license plates: `/data/oiab/games/oiab-games.sqlite3`
 - trivia question packs: `/data/oiab/trivia/questions/*.json`
+- bundled default trivia packs: copied from `config/trivia/questions/*.json` into `/data/oiab/trivia/questions` on startup when missing
 - music cache: `/data/oiab/media/music-library.json`
 - uploaded local content:
   - music: `/data/oiab/media/music`

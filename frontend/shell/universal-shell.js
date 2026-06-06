@@ -7,6 +7,7 @@
   const RECENT_KEY = "iiab-overland-universal-recents-v1";
   const MAP_3D_BUILDINGS_KEY = "omv2.show3dBuildings";
   const MAP_AUTO_RECORDING_KEY = "omv2.autoTrackRecording";
+  const MAP_THEME_KEY = "omv2.mapTheme";
   const FALLBACK_ART = "/maps/overland/tunes.png";
   const NUMBER_FMT = new Intl.NumberFormat();
   const DEFAULT_LAYOUT = {
@@ -14,7 +15,7 @@
     settingsPassword: "314159",
     hiddenAppIds: ["legacy-home", "legacy-admin", "https-settings", "service-manager", "audio-test", "minecraft"],
     folders: [
-      { id: "games", title: "Games", icon: "/maps/overland/overland-folder-games.svg", protected: false, appIds: ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "minecraft-map", "drums", "trivia", "tic-tac-toe", "license-plates"] },
+      { id: "games", title: "Games", icon: "/maps/overland/overland-folder-games.svg", protected: false, appIds: ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "sinkhole-city", "blank-slate", "starts-ends", "dice-roller", "word-tile-arena", "connect-four", "burst", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "minecraft-map", "drums", "trivia", "tic-tac-toe", "license-plates"] },
     ],
   };
   const HOST_PREFIXES = ["mobile", "maps", "music", "iiab", "files", "jellyfin", "monitor", "maps-admin", "minecraft-map", "minecraft-admin", "mindustry"];
@@ -37,7 +38,7 @@
     ["photo", "Photo", "photo"],
     ["place", "Other", "pin"],
   ];
-  const MUSIC_VISUALIZER_TYPES = ["particles", "bars", "waveform", "radial", "imagefloat", "off"];
+  const MUSIC_VISUALIZER_TYPES = ["particles", "aurora", "bokeh", "liquid", "imagekaleidoscope", "imagefloat", "particula", "motion", "led", "mirror", "bars", "waveform", "radial", "rings", "tunnel", "kaleidoscope", "off"];
   const MUSIC_VISUALIZER_STYLES = ["drift", "pulse", "nebula"];
   const MUSIC_VISUALIZER_FOCUS = ["soft", "sharp", "dream"];
   const INTERNAL_SETTINGS_APP_IDS = new Set(["file-uploads", "map-packs", "map-data", "game-data", "service-manager"]);
@@ -99,13 +100,14 @@
       browserParentPath: null,
       browserSelectedPath: "",
     },
-    settingsSection: "music",
+    settingsSection: sessionStorage.getItem("oiab:settings-section") || "music",
     services: [],
     containers: { available: false, containers: [], error: "" },
     maps: {
       installed: { active: "", basemaps: [] },
       catalog: { packs: [] },
       overlays: { overlays: [] },
+      geopdfs: { maps: [] },
     },
   };
 
@@ -435,6 +437,7 @@
   }
 
   function openSettingsProtected(section = "music") {
+    sessionStorage.removeItem("oiab:settings-section");
     if (state.layout.settingsPassword) {
       state.passwordFolder = null;
       state.passwordAction = () => {
@@ -611,6 +614,7 @@
       const enabled = Boolean(service.enabled);
       const running = Boolean(service.running || service.active || service.state === "active" || service.state === "running");
       const launcher = service.launcher_url ? `<a href="${escapeHtml(service.launcher_url)}"${String(service.id) === "minecraft" ? ` data-open-app="minecraft"` : ""}>Open</a>` : "";
+      const adminLauncher = service.admin_url ? `<a href="${escapeHtml(service.admin_url)}">Admin</a>` : "";
       return `
         <article class="uo-settings-item">
           <div class="uo-settings-item-main">
@@ -637,6 +641,7 @@
             <button type="button" data-service-action="restart" data-service-id="${escapeHtml(service.id)}"${running ? "" : " disabled"}>Restart</button>
             <button type="button" data-service-action="remove" data-service-id="${escapeHtml(service.id)}" class="is-danger">Remove</button>
             ${launcher}
+            ${adminLauncher}
           </div>
         </article>
       `;
@@ -732,30 +737,37 @@
     setSettingsMessage("mapsPacksMessage", "Loading map packs...");
     setSettingsMessage("mapsOverlaysMessage", "Loading overlays...");
     setSettingsMessage("mapsOfflineRegionsMessage", "Loading offline regions...");
+    setSettingsMessage("geopdfMessage", "Loading GeoPDF maps...");
     try {
-      const [installedResponse, catalogResponse, overlaysResponse] = await Promise.all([
+      const [installedResponse, catalogResponse, overlaysResponse, geopdfResponse] = await Promise.all([
         fetch("/api/maps/packs/installed", { cache: "no-store" }),
         fetch("/api/maps/packs/catalog", { cache: "no-store" }),
         fetch("/api/maps/overlays", { cache: "no-store" }),
+        fetch("/api/geopdf", { cache: "no-store" }),
       ]);
       const installed = await installedResponse.json().catch(() => ({}));
       const catalog = await catalogResponse.json().catch(() => ({}));
       const overlays = await overlaysResponse.json().catch(() => ({}));
+      const geopdfs = await geopdfResponse.json().catch(() => ({}));
       if (!installedResponse.ok || installed.ok === false) throw new Error(installed.error || `packs ${installedResponse.status}`);
       if (!catalogResponse.ok || catalog.ok === false) throw new Error(catalog.error || `catalog ${catalogResponse.status}`);
       if (!overlaysResponse.ok || overlays.ok === false) throw new Error(overlays.error || `overlays ${overlaysResponse.status}`);
+      if (!geopdfResponse.ok || geopdfs.ok === false) throw new Error(geopdfs.error || `geopdf ${geopdfResponse.status}`);
       state.maps.installed = installed;
       state.maps.catalog = catalog;
       state.maps.overlays = overlays;
+      state.maps.geopdfs = geopdfs;
       renderMapsSettings();
       setSettingsMessage("mapsPacksMessage", "");
       setSettingsMessage("mapsOverlaysMessage", "");
       setSettingsMessage("mapsOfflineRegionsMessage", "");
+      setSettingsMessage("geopdfMessage", "");
     } catch (error) {
       renderMapsSettings();
       setSettingsMessage("mapsPacksMessage", error.message, true);
       setSettingsMessage("mapsOverlaysMessage", error.message, true);
       setSettingsMessage("mapsOfflineRegionsMessage", error.message, true);
+      setSettingsMessage("geopdfMessage", error.message, true);
     }
   }
 
@@ -765,6 +777,7 @@
     renderCatalogMapPacks();
     renderOverlaySummary();
     renderMapOverlays();
+    renderGeoPdfMaps();
     renderOfflineRegionSummary();
     renderOfflineRegions();
   }
@@ -1108,6 +1121,103 @@
         }
       });
     });
+  }
+
+  function geopdfStatusBadge(map) {
+    const status = String(map.processing_status || map.status || map.metadata?.processing_status || "unknown");
+    if (status === "complete") return badge("Ready", "is-good");
+    if (status === "processing" || status === "pending") return badge(status, "is-warn");
+    if (status === "failed") return badge("Failed", "is-bad");
+    return badge(status);
+  }
+
+  function renderGeoPdfMaps() {
+    const holder = $("geopdfList");
+    if (!holder) return;
+    const maps = Array.isArray(state.maps.geopdfs?.maps) ? state.maps.geopdfs.maps : [];
+    if (!maps.length) {
+      holder.innerHTML = `
+        <article class="uo-settings-item">
+          <div class="uo-settings-item-main">
+            <p class="uo-settings-item-subtitle">No GeoPDF maps imported yet. Choose a georeferenced PDF and import it here.</p>
+          </div>
+        </article>
+      `;
+      return;
+    }
+    holder.innerHTML = maps.map((map) => {
+      const id = String(map.id || "");
+      const name = String(map.display_name || map.original_filename || id);
+      const bounds = Array.isArray(map.bounds) ? map.bounds.map((value) => Number(value).toFixed(5)).join(", ") : "";
+      const error = map.error_message || map.error || "";
+      const updated = map.updated_at || map.updated || map.created_at || "";
+      return `
+        <article class="uo-settings-item">
+          <div class="uo-settings-item-main">
+            <div class="uo-settings-item-head">
+              <h3 class="uo-settings-item-title">${escapeHtml(name)}</h3>
+              <div class="uo-settings-item-meta">
+                ${geopdfStatusBadge(map)}
+                ${map.size_bytes ? badge(formatBytes(map.size_bytes)) : ""}
+                ${map.minZoom != null && map.maxZoom != null ? badge(`z${map.minZoom}-${map.maxZoom}`) : ""}
+              </div>
+            </div>
+            ${bounds ? `<p class="uo-settings-item-subtitle">Bounds: ${escapeHtml(bounds)}</p>` : ""}
+            ${updated ? `<p class="uo-settings-item-subtitle">Updated ${escapeHtml(formatTimestamp(updated))}</p>` : ""}
+            ${error ? `<p class="uo-settings-item-subtitle is-warn">Error: ${escapeHtml(error)}</p>` : ""}
+          </div>
+          <div class="uo-settings-item-actions">
+            <button type="button" data-geopdf-action="rebuild" data-geopdf-id="${escapeHtml(id)}">Rebuild</button>
+            <button type="button" data-geopdf-action="delete" data-geopdf-id="${escapeHtml(id)}" class="is-danger">Delete</button>
+          </div>
+        </article>
+      `;
+    }).join("");
+    holder.querySelectorAll("[data-geopdf-action]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const mapId = button.dataset.geopdfId || "";
+        const action = button.dataset.geopdfAction || "";
+        if (!mapId) return;
+        if (action === "delete" && !window.confirm("Delete this GeoPDF overlay and its tile cache?")) return;
+        setSettingsMessage("geopdfMessage", `${action} ${mapId}...`);
+        try {
+          const response = await fetch(`/api/geopdf/${encodeURIComponent(mapId)}/${encodeURIComponent(action)}`, { method: "POST" });
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok || data.ok === false) throw new Error(data.error || `${action} failed`);
+          await loadMapsSettings();
+          setSettingsMessage("geopdfMessage", action === "rebuild" ? "GeoPDF rebuild started." : "GeoPDF deleted.");
+        } catch (error) {
+          setSettingsMessage("geopdfMessage", error.message, true);
+        }
+      });
+    });
+  }
+
+  async function importGeoPdf(event) {
+    event.preventDefault();
+    const input = $("geopdfImportFile");
+    const button = $("geopdfImportButton");
+    const file = input?.files?.[0];
+    if (!file) {
+      setSettingsMessage("geopdfMessage", "Choose a georeferenced PDF first.", true);
+      return;
+    }
+    const body = new FormData();
+    body.append("file", file);
+    if (button) button.disabled = true;
+    setSettingsMessage("geopdfMessage", `Importing ${file.name}...`);
+    try {
+      const response = await fetch("/api/geopdf/import", { method: "POST", body });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data.ok === false) throw new Error(data.error || `GeoPDF import failed (${response.status})`);
+      if (input) input.value = "";
+      await loadMapsSettings();
+      setSettingsMessage("geopdfMessage", "GeoPDF processing started. It will appear as an overlay when ready.");
+    } catch (error) {
+      setSettingsMessage("geopdfMessage", error.message, true);
+    } finally {
+      if (button) button.disabled = false;
+    }
   }
 
   function renderOfflineRegions() {
@@ -1519,6 +1629,67 @@
       ctx.stroke();
       return;
     }
+    if (["aurora", "liquid"].includes(state.music.visualizer)) {
+      const t = Date.now() / 900;
+      for (let i = 0; i < 5; i += 1) {
+        const gradient = ctx.createLinearGradient(0, height * (i / 5), width, height * ((i + 1) / 5));
+        gradient.addColorStop(0, `rgba(98, 217, 232, ${0.08 + pulse * 0.08})`);
+        gradient.addColorStop(.5, `rgba(131, 220, 140, ${0.16 + pulse * 0.12})`);
+        gradient.addColorStop(1, `rgba(192, 132, 252, ${0.08 + pulse * 0.08})`);
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = (state.music.visualizer === "liquid" ? 12 : 7) * dpr;
+        ctx.beginPath();
+        for (let x = 0; x <= width; x += width / 36) {
+          const y = height * (0.18 + i * 0.16) + Math.sin(t + i * 1.7 + x / width * 5.5) * height * 0.08;
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+      return;
+    }
+    if (["rings", "tunnel"].includes(state.music.visualizer)) {
+      const cx = width / 2;
+      const cy = height / 2;
+      const max = Math.min(width, height) * .52;
+      for (let i = 0; i < 9; i += 1) {
+        const r = (((Date.now() / 44) + i * max / 8) % max) + max * .08;
+        ctx.strokeStyle = `rgba(131, 220, 140, ${0.12 + (1 - r / max) * .5})`;
+        ctx.lineWidth = (state.music.visualizer === "tunnel" ? 3.5 : 2) * dpr;
+        ctx.beginPath();
+        ctx.arc(cx, cy, r * (1 + pulse * .08), 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      return;
+    }
+    if (["kaleidoscope", "imagekaleidoscope", "mirror"].includes(state.music.visualizer)) {
+      const t = Date.now() / 1000;
+      const cx = width / 2;
+      const cy = height / 2;
+      for (let i = 0; i < 12; i += 1) {
+        const angle = i * Math.PI / 6 + t * .3;
+        ctx.strokeStyle = `rgba(${i % 2 ? "98,217,232" : "131,220,140"}, ${0.22 + pulse * .28})`;
+        ctx.lineWidth = 2 * dpr;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + Math.cos(angle) * width * .55, cy + Math.sin(angle) * height * .55);
+        ctx.stroke();
+      }
+      return;
+    }
+    if (["bokeh", "led", "motion", "particula"].includes(state.music.visualizer)) {
+      const size = state.music.visualizer === "led" ? 10 * dpr : 18 * dpr;
+      for (let y = 0; y < height; y += size * 1.45) {
+        for (let x = 0; x < width; x += size * 1.45) {
+          const sample = .2 + Math.abs(Math.sin(Date.now() / 360 + x * .01 + y * .013)) * pulse;
+          ctx.fillStyle = `rgba(131, 220, 140, ${0.05 + sample * .28})`;
+          ctx.beginPath();
+          ctx.arc(x, y, size * (state.music.visualizer === "led" ? .28 : .5), 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      return;
+    }
     if (state.music.visualizer === "radial") {
       const cx = width / 2;
       const cy = height / 2;
@@ -1553,6 +1724,7 @@
   function animationLoop() {
     drawMusicCanvas("dashMusicCanvas");
     drawMusicCanvas("musicVisualizer");
+    drawMusicCanvas("musicVisualizerPreview");
     requestAnimationFrame(animationLoop);
   }
 
@@ -1797,6 +1969,10 @@
         return;
       }
       if (data.type !== "oiab:open-app") return;
+      if (String(data.appId || "") === "overland-settings") {
+        openSettingsProtected(data.settingsSection || "music");
+        return;
+      }
       const app = state.appById.get(String(data.appId || ""));
       if (app) openApp(app);
     });
@@ -1857,6 +2033,12 @@
       $("map3dBuildings").checked = JSON.parse(localStorage.getItem(MAP_3D_BUILDINGS_KEY) || "false");
       $("map3dBuildings").addEventListener("change", () => {
         localStorage.setItem(MAP_3D_BUILDINGS_KEY, JSON.stringify($("map3dBuildings").checked));
+      });
+    }
+    if ($("mapColorScheme")) {
+      $("mapColorScheme").value = localStorage.getItem(MAP_THEME_KEY) === "dark" ? "dark" : "light";
+      $("mapColorScheme").addEventListener("change", () => {
+        localStorage.setItem(MAP_THEME_KEY, $("mapColorScheme").value === "dark" ? "dark" : "light");
       });
     }
     if ($("mapAutoRecording")) {
@@ -1933,6 +2115,7 @@
         setSettingsMessage("mapsOverlaysMessage", error.message, true);
       }
     });
+    $("geopdfImportForm")?.addEventListener("submit", importGeoPdf);
     $("storageBrowserRoots")?.addEventListener("change", () => browseStoragePath($("storageBrowserRoots").value));
     $("storageBrowserUp")?.addEventListener("click", () => {
       if (state.storage.browserParentPath) browseStoragePath(state.storage.browserParentPath);
@@ -1976,6 +2159,11 @@
     renderDock();
     renderApps();
     renderDockSettings();
+    const initialSettingsSection = sessionStorage.getItem("oiab:settings-section") || new URLSearchParams(window.location.search).get("settings");
+    if (initialSettingsSection) {
+      state.settingsSection = initialSettingsSection;
+      openSettingsProtected(initialSettingsSection);
+    }
     loadOpenGames();
     setInterval(loadOpenGames, 7000);
     loadGps();

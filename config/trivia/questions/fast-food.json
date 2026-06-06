@@ -1,0 +1,547 @@
+{
+  "category": "Fast Food",
+  "slug": "fast-food",
+  "version": 1,
+  "questions": [
+    {
+      "id": "fast-food_easy_001",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "When did McDonald's introduce Ronald McDonald?",
+      "answers": [
+        "1962",
+        "1963",
+        "1964",
+        "1958"
+      ],
+      "correct": 1,
+      "explanation": "1963 is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_002",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where, according to the slogan, can you \"Eat Fresh\"?",
+      "answers": [
+        "1963",
+        "White Castle",
+        "Panera Bread",
+        "Subway Restaurants"
+      ],
+      "correct": 3,
+      "explanation": "Subway Restaurants is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_003",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which restaurant is the home of the original small, square hamburger?",
+      "answers": [
+        "1963",
+        "White Castle",
+        "Subway Restaurants",
+        "Panera Bread"
+      ],
+      "correct": 1,
+      "explanation": "White Castle is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_004",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "ccording to Health magazine, what's the healthiest fast-food chain in the United States?",
+      "answers": [
+        "1963",
+        "Panera Bread",
+        "Subway Restaurants",
+        "White Castle"
+      ],
+      "correct": 1,
+      "explanation": "Panera Bread is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_005",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which of the following McDonald's menu items have 1,320 calories?",
+      "answers": [
+        "1963",
+        "Subway Restaurants",
+        "White Castle",
+        "Big Mac"
+      ],
+      "correct": 3,
+      "explanation": "Big Mac is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_006",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the most common pizza topping?",
+      "answers": [
+        "Pepperoni",
+        "1963",
+        "Subway Restaurants",
+        "White Castle"
+      ],
+      "correct": 0,
+      "explanation": "Pepperoni is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_007",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How much of your plate should you fill with fruits and veggies?",
+      "answers": [
+        "1/2",
+        "2",
+        "3",
+        "6"
+      ],
+      "correct": 0,
+      "explanation": "1/2 is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_008",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which fruit contains an enzyme that aids digestion and also helps tenderize meat?",
+      "answers": [
+        "1963",
+        "Subway Restaurants",
+        "Papaya",
+        "White Castle"
+      ],
+      "correct": 2,
+      "explanation": "Papaya is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_009",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Japanese sake is made from which food?",
+      "answers": [
+        "1963",
+        "Rice",
+        "Subway Restaurants",
+        "White Castle"
+      ],
+      "correct": 1,
+      "explanation": "Rice is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_010",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which candy bar is named after the Mars' family horse?",
+      "answers": [
+        "Snickers",
+        "1963",
+        "Subway Restaurants",
+        "White Castle"
+      ],
+      "correct": 0,
+      "explanation": "Snickers is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_011",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the only fruit to have seeds on the outside?",
+      "answers": [
+        "1963",
+        "Strawberry",
+        "Subway Restaurants",
+        "White Castle"
+      ],
+      "correct": 1,
+      "explanation": "Strawberry is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_012",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which ice cream treat is Dairy Queen famous for?",
+      "answers": [
+        "Blizzard",
+        "1963",
+        "Subway Restaurants",
+        "White Castle"
+      ],
+      "correct": 0,
+      "explanation": "Blizzard is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_013",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who insists that they have \"Better ingredients, better pizza\"?",
+      "answers": [
+        "1963",
+        "Papa John's",
+        "Subway Restaurants",
+        "White Castle"
+      ],
+      "correct": 1,
+      "explanation": "Papa John's is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_014",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What should you have in your diet that may benefit your digestion and reduce your risk of chronic disease?",
+      "answers": [
+        "Fiber",
+        "1963",
+        "Subway Restaurants",
+        "White Castle"
+      ],
+      "correct": 0,
+      "explanation": "Fiber is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_015",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What important mineral is found in dairy foods such as milk and cheese?",
+      "answers": [
+        "Calcium",
+        "1963",
+        "Subway Restaurants",
+        "White Castle"
+      ],
+      "correct": 0,
+      "explanation": "Calcium is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_016",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Foods rich in starch such as pasta and bread are often known by what word starting with the letter C?",
+      "answers": [
+        "1963",
+        "Carbohydrates",
+        "Subway Restaurants",
+        "White Castle"
+      ],
+      "correct": 1,
+      "explanation": "Carbohydrates is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_017",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How often should one eat fish each week?",
+      "answers": [
+        "1963",
+        "Subway Restaurants",
+        "Two times",
+        "White Castle"
+      ],
+      "correct": 2,
+      "explanation": "Two times is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_018",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the main ingredient of drink atole?",
+      "answers": [
+        "Corn",
+        "1963",
+        "Subway Restaurants",
+        "White Castle"
+      ],
+      "correct": 0,
+      "explanation": "Corn is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_019",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What restaurant chain has commercials with the slogan \"Eatin' Good in the Neighborhood\"?",
+      "answers": [
+        "Applebee's",
+        "1963",
+        "Subway Restaurants",
+        "White Castle"
+      ],
+      "correct": 0,
+      "explanation": "Applebee's is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_020",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which chain is named after its founder's dog?",
+      "answers": [
+        "Raising Cane's",
+        "1963",
+        "Subway Restaurants",
+        "White Castle"
+      ],
+      "correct": 0,
+      "explanation": "Raising Cane's is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_021",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What fast food restaurant boasts that you can \"Have it your way\"?",
+      "answers": [
+        "1963",
+        "Subway Restaurants",
+        "Burger King",
+        "White Castle"
+      ],
+      "correct": 2,
+      "explanation": "Burger King is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_022",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What sub shop is famous for its frozen fruit drinks?",
+      "answers": [
+        "1963",
+        "Eegee's",
+        "Subway Restaurants",
+        "White Castle"
+      ],
+      "correct": 1,
+      "explanation": "Eegee's is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_023",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What percentage of all American restaurants are pizzerias?",
+      "answers": [
+        "15",
+        "16",
+        "18",
+        "17 percent"
+      ],
+      "correct": 3,
+      "explanation": "17 percent is the correct answer."
+    },
+    {
+      "id": "fast-food_easy_024",
+      "category": "Fast Food",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which fast-food chain got its start in a Shell gas station?",
+      "answers": [
+        "KFC",
+        "1963",
+        "Subway Restaurants",
+        "White Castle"
+      ],
+      "correct": 0,
+      "explanation": "KFC is the correct answer."
+    },
+    {
+      "id": "fast-food_medium_001",
+      "category": "Fast Food",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Coca-Cola was first sold in which state?",
+      "answers": [
+        "1963",
+        "Subway Restaurants",
+        "Georgia",
+        "White Castle"
+      ],
+      "correct": 2,
+      "explanation": "Georgia is the correct answer."
+    },
+    {
+      "id": "fast-food_medium_002",
+      "category": "Fast Food",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In which state was the chocolate chip cookie invented?",
+      "answers": [
+        "1963",
+        "Subway Restaurants",
+        "Massachusetts",
+        "White Castle"
+      ],
+      "correct": 2,
+      "explanation": "Massachusetts is the correct answer."
+    },
+    {
+      "id": "fast-food_medium_003",
+      "category": "Fast Food",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What were chicken nuggets called when they were first invented?",
+      "answers": [
+        "1963",
+        "Subway Restaurants",
+        "White Castle",
+        "Chicken Crispies"
+      ],
+      "correct": 3,
+      "explanation": "Chicken Crispies is the correct answer."
+    },
+    {
+      "id": "fast-food_medium_004",
+      "category": "Fast Food",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What did McDonald's restaurants first introduce in 1968?",
+      "answers": [
+        "1963",
+        "Subway Restaurants",
+        "White Castle",
+        "Big Mac"
+      ],
+      "correct": 3,
+      "explanation": "Big Mac is the correct answer."
+    },
+    {
+      "id": "fast-food_medium_005",
+      "category": "Fast Food",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Where was the first Pizza Hut built?",
+      "answers": [
+        "Wichita, Kansas",
+        "1963",
+        "Subway Restaurants",
+        "White Castle"
+      ],
+      "correct": 0,
+      "explanation": "Wichita, Kansas is the correct answer."
+    },
+    {
+      "id": "fast-food_medium_006",
+      "category": "Fast Food",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the first fast-food restaurant to offer a complete \"lite\" menu?",
+      "answers": [
+        "Arby's",
+        "1963",
+        "Subway Restaurants",
+        "White Castle"
+      ],
+      "correct": 0,
+      "explanation": "Arby's is the correct answer."
+    },
+    {
+      "id": "fast-food_medium_007",
+      "category": "Fast Food",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What fast-food restaurant was first envisioned during a figure skating competition?",
+      "answers": [
+        "1963",
+        "Subway Restaurants",
+        "White Castle",
+        "Buffalo Wild Wings"
+      ],
+      "correct": 3,
+      "explanation": "Buffalo Wild Wings is the correct answer."
+    },
+    {
+      "id": "fast-food_medium_008",
+      "category": "Fast Food",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which famous takeout container was invented by Frederick Weeks Wilcox in 1894?",
+      "answers": [
+        "1963",
+        "Chinese Takeout Box",
+        "Subway Restaurants",
+        "White Castle"
+      ],
+      "correct": 1,
+      "explanation": "Chinese Takeout Box is the correct answer."
+    },
+    {
+      "id": "fast-food_hard_001",
+      "category": "Fast Food",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What year did the first Taco Bell open?",
+      "answers": [
+        "1962",
+        "1961",
+        "1963",
+        "1957"
+      ],
+      "correct": 0,
+      "explanation": "1962 is the correct answer."
+    },
+    {
+      "id": "fast-food_hard_002",
+      "category": "Fast Food",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many pounds is the $350 bacon cheeseburger featured at Mallie's Sports Grill and Bar in Detroit, Michigan?",
+      "answers": [
+        "132",
+        "133",
+        "135",
+        "134 pounds"
+      ],
+      "correct": 3,
+      "explanation": "134 pounds is the correct answer."
+    },
+    {
+      "id": "fast-food_hard_003",
+      "category": "Fast Food",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many McDonald's restaurants are located around the world?",
+      "answers": [
+        "28",
+        "30,000",
+        "29",
+        "31"
+      ],
+      "correct": 1,
+      "explanation": "30,000 is the correct answer."
+    },
+    {
+      "id": "fast-food_hard_004",
+      "category": "Fast Food",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many ingredients were included in the Big Mac?",
+      "answers": [
+        "65",
+        "67",
+        "66",
+        "68"
+      ],
+      "correct": 1,
+      "explanation": "67 is the correct answer."
+    }
+  ]
+}

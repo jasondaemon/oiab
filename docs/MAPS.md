@@ -161,11 +161,16 @@ POST /api/maps/overlays/mvum/roads/install
 POST /api/maps/overlays/mvum/trails/install
 GET  /api/maps/overlays/jobs
 GET  /api/maps/overlays/jobs/<job_id>
+GET  /api/geopdf
+POST /api/geopdf/import
+POST /api/geopdf/<id>/rebuild
+DELETE /api/geopdf/<id>
 ```
 
 Supported overlay source types:
 
 - `raster_xyz` / `arcgis_raster`: tiled raster overlay such as USGS topo. USGS Topo is online-only for now.
+- `geopdf_tiles`: locally rendered raster tiles from an imported georeferenced PDF.
 - `geojson` / `cached_geojson`: local or cached GeoJSON rendered with default or overlay-specific styling.
 - `pmtiles_vector` / `generated_pmtiles`: independent vector PMTiles overlay. PMTiles overlays need a known `source_layer`.
 
@@ -179,6 +184,7 @@ Current overlay direction:
 - NWS weather alerts use a cached GeoJSON snapshot from `api.weather.gov`, rendered offline until stale.
 - NOAA Radar is available as an online-only nowCOAST raster overlay using the live base reflectivity mosaic.
 - It is not cached for offline use yet; later work will add bbox-based area caching.
+- GeoPDF maps are imported through File Uploads → GeoPDF Maps. GDAL detects geospatial metadata, rejects non-georeferenced PDFs, and renders local tiles under `/data/oiab/geopdf/processed`.
 
 ## Current Gaps
 

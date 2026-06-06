@@ -1783,6 +1783,16 @@ class AppDB:
             )
             found += 1
         with self.connect() as conn:
+            legacy = conn.execute("SELECT id, active, enabled FROM map_packs WHERE id = 'protomaps_conus'").fetchone()
+            current = conn.execute("SELECT id FROM map_packs WHERE id = 'us_conus'").fetchone()
+            if legacy and current:
+                if legacy["active"]:
+                    conn.execute("UPDATE map_packs SET active = CASE WHEN id = 'us_conus' THEN 1 ELSE active END")
+                if legacy["enabled"]:
+                    conn.execute("UPDATE map_packs SET enabled = CASE WHEN id = 'us_conus' THEN 1 ELSE enabled END")
+                conn.execute("DELETE FROM map_packs WHERE id = 'protomaps_conus'")
+            elif legacy and not current:
+                conn.execute("UPDATE map_packs SET id = 'us_conus', name = 'United States / CONUS' WHERE id = 'protomaps_conus'")
             active = conn.execute("SELECT id FROM map_packs WHERE active = 1 AND installed = 1 LIMIT 1").fetchone()
             if not active:
                 world = conn.execute("SELECT id FROM map_packs WHERE id = 'world_overview' AND installed = 1 LIMIT 1").fetchone()
@@ -2042,6 +2052,8 @@ class AppDB:
                     and not path_value
                     and not local_path
                 )
+                if str(metadata.get("source_type") or overlay.get("source_type") or "") == "geopdf_tiles" and str(metadata.get("install_status") or "") in {"complete", "failed"}:
+                    preserve_runtime_status = False
                 preserved_keys = ["last_fetch_at", "expires_at", "local_path", "size_bytes"]
                 if preserve_runtime_status:
                     preserved_keys.extend(["cache_status", "install_status", "error_message"])
@@ -2216,13 +2228,32 @@ class AppDB:
     def row_to_map_overlay(self, row: sqlite3.Row) -> dict[str, Any]:
         path = self.resolve_overlay_path(row["path"] or row["source_url"])
         source_url = str(row["source_url"] or "")
+        metadata = json_loads(row["metadata_json"], {})
+        is_geopdf = str(metadata.get("source_type") or "") == "geopdf_tiles"
+        if is_geopdf and row["path"]:
+            path = Path(str(row["path"]))
+            if path.exists() and path.is_file():
+                try:
+                    file_metadata = json.loads(path.read_text(encoding="utf-8"))
+                    if isinstance(file_metadata, dict):
+                        metadata.update(file_metadata)
+                except (OSError, json.JSONDecodeError):
+                    pass
         public_path = self.overlay_path_is_public(path) if (row["path"] or str(source_url).startswith("/maps/overlays/")) else False
         exists = path.exists() and public_path if row["path"] or str(source_url).startswith("/maps/overlays/") else False
+        if is_geopdf:
+            geopdf_root = (self.settings.data_dir / "geopdf" / "processed").resolve()
+            try:
+                path.resolve().relative_to(geopdf_root)
+                exists = path.exists() and path.is_file()
+                public_path = True
+            except (OSError, ValueError):
+                exists = False
+                public_path = False
         if source_url.startswith("/maps/overlays/") and not public_path:
             source_url = ""
         if exists and source_url.startswith("/maps/overlays/"):
             source_url = self.versioned_overlay_url(source_url, path)
-        metadata = json_loads(row["metadata_json"], {})
         cache_status = str(metadata.get("cache_status") or ("cached" if exists else "not_cached"))
         if exists and cache_status == "not_cached":
             cache_status = "cached"
@@ -2284,6 +2315,17 @@ class AppDB:
             "created": row["created_at"],
             "updated": row["updated_at"],
         }
+        if is_geopdf:
+            item["local_path"] = row["path"]
+            item["offline_available"] = bool(row["offline_available"] and exists)
+            item["available"] = bool(row["offline_available"] and exists and item["cache_status"] != "failed")
+            item["size_bytes"] = int(metadata.get("size_bytes") or item["size_bytes"] or 0)
+            if exists and item["cache_status"] in {"complete", "processing"}:
+                item["cache_status"] = "cached"
+            if isinstance(metadata.get("bounds"), list):
+                item["bounds"] = metadata.get("bounds")
+            if metadata.get("tile_template"):
+                item["tiles"] = [str(metadata["tile_template"])]
         item["cacheable_region"] = bool(
             (
                 item["type"] == "raster"
@@ -2353,8 +2395,9 @@ class AppDB:
                 item["error_message"] = ""
         return item
 
-    def map_overlay_registry(self) -> dict[str, Any]:
-        self.rescan_map_overlays()
+    def map_overlay_registry(self, *, rescan: bool = True) -> dict[str, Any]:
+        if rescan:
+            self.rescan_map_overlays()
         with self.connect() as conn:
             rows = conn.execute("SELECT * FROM map_overlays ORDER BY sort_order, name COLLATE NOCASE").fetchall()
         overlays = [self.row_to_map_overlay(row) for row in rows]
@@ -2676,6 +2719,22 @@ class AppDB:
                         root / "pmtiles" / f"{base}.pmtiles",
                     ]
                 )
+            metadata = json_loads(row["metadata_json"], {})
+            if str(metadata.get("source_type") or "") == "geopdf_tiles":
+                processed_root = (self.settings.data_dir / "geopdf" / "processed").resolve()
+                cache_root = (processed_root / overlay_id).resolve()
+                try:
+                    cache_root.relative_to(processed_root)
+                    if cache_root.exists():
+                        shutil.rmtree(cache_root)
+                        removed.append(str(cache_root))
+                except (OSError, ValueError):
+                    pass
+                conn.execute("DELETE FROM map_overlays WHERE id = ?", (overlay_id,))
+                conn.commit()
+                result = self.map_overlay_registry()
+                result["removed"] = removed
+                return result
             for path in paths:
                 if not self.overlay_path_is_public(path):
                     continue
@@ -2683,7 +2742,6 @@ class AppDB:
                     path.unlink()
                     removed.append(str(path))
 
-            metadata = json_loads(row["metadata_json"], {})
             metadata.update(
                 {
                     "cache_status": "not_cached",

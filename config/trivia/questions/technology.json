@@ -1,0 +1,4837 @@
+{
+  "category": "Technology",
+  "slug": "technology",
+  "version": 1,
+  "questions": [
+    {
+      "id": "technology_easy_001",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does Wi-Fi let devices do?",
+      "answers": [
+        "Devices and accessories",
+        "Protecting access",
+        "Location",
+        "Connect wirelessly to a network"
+      ],
+      "correct": 3,
+      "explanation": "Wi-Fi is wireless networking."
+    },
+    {
+      "id": "technology_easy_002",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does USB commonly connect?",
+      "answers": [
+        "Devices and accessories",
+        "Connect wirelessly to a network",
+        "Protecting access",
+        "Location"
+      ],
+      "correct": 0,
+      "explanation": "USB connects peripherals and transfers power/data."
+    },
+    {
+      "id": "technology_easy_003",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a password used for?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Protecting access",
+        "Devices and accessories",
+        "Location"
+      ],
+      "correct": 1,
+      "explanation": "Passwords help control access."
+    },
+    {
+      "id": "technology_easy_004",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does GPS help find?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Location",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "GPS helps determine position."
+    },
+    {
+      "id": "technology_easy_005",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a web browser used for?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "Viewing websites"
+      ],
+      "correct": 3,
+      "explanation": "Browsers display web content."
+    },
+    {
+      "id": "technology_easy_006",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does a router help do?",
+      "answers": [
+        "Move data between networks",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "Routers forward network traffic."
+    },
+    {
+      "id": "technology_easy_007",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a touchscreen?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "A display you can tap",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "Touchscreens accept touch input."
+    },
+    {
+      "id": "technology_easy_008",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What stores files long-term?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Storage drive",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "Storage drives keep files."
+    },
+    {
+      "id": "technology_easy_009",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_easy_010",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_easy_011",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: device that prints documents?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_easy_012",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: malicious software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_easy_013",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: copy kept for recovery?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_easy_014",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: secret code that unlocks encrypted data?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_easy_015",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: software that runs hardware and apps?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_easy_016",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: small text file used by websites?",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_easy_017",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: graphics processor?",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_easy_018",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: network address name service?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_easy_019",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_easy_020",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_easy_021",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: device that prints documents?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_easy_022",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: malicious software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_easy_023",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: copy kept for recovery?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_easy_024",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: secret code that unlocks encrypted data?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_easy_025",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: software that runs hardware and apps?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_easy_026",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: small text file used by websites?",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_easy_027",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: graphics processor?",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_easy_028",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: network address name service?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_easy_029",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_easy_030",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_easy_031",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: device that prints documents?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_easy_032",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: malicious software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_easy_033",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: copy kept for recovery?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_easy_034",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: secret code that unlocks encrypted data?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_easy_035",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: software that runs hardware and apps?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_easy_036",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: small text file used by websites?",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_easy_037",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: graphics processor?",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_easy_038",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: network address name service?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_easy_039",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_easy_040",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_easy_041",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: device that prints documents?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_easy_042",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: malicious software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_easy_043",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: copy kept for recovery?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_easy_044",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: secret code that unlocks encrypted data?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_easy_045",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: software that runs hardware and apps?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_easy_046",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: small text file used by websites?",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_easy_047",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: graphics processor?",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_easy_048",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: network address name service?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_easy_049",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_easy_050",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_easy_051",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: device that prints documents?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_easy_052",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: malicious software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_easy_053",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: copy kept for recovery?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_easy_054",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: secret code that unlocks encrypted data?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_easy_055",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: software that runs hardware and apps?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_easy_056",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: small text file used by websites?",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_easy_057",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: graphics processor?",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_easy_058",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: network address name service?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_easy_059",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_easy_060",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_easy_061",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: device that prints documents?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_easy_062",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: malicious software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_easy_063",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: copy kept for recovery?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_easy_064",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: secret code that unlocks encrypted data?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_easy_065",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: software that runs hardware and apps?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_easy_066",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: small text file used by websites?",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_easy_067",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: graphics processor?",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_easy_068",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: network address name service?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_easy_069",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_easy_070",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_easy_071",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: device that prints documents?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_easy_072",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: malicious software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_easy_073",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: copy kept for recovery?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_easy_074",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: secret code that unlocks encrypted data?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_easy_075",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: software that runs hardware and apps?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_easy_076",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: small text file used by websites?",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_easy_077",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: graphics processor?",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_easy_078",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: network address name service?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_easy_079",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_easy_080",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_easy_081",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: device that prints documents?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_easy_082",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: malicious software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_easy_083",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: copy kept for recovery?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_easy_084",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: secret code that unlocks encrypted data?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_easy_085",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: software that runs hardware and apps?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_easy_086",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: small text file used by websites?",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_easy_087",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: graphics processor?",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_easy_088",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: network address name service?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_easy_089",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_easy_090",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_easy_091",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: device that prints documents?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_easy_092",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: malicious software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_easy_093",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: copy kept for recovery?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_easy_094",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: secret code that unlocks encrypted data?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_easy_095",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: software that runs hardware and apps?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_easy_096",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: small text file used by websites?",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_easy_097",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: graphics processor?",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_easy_098",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: network address name service?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_easy_099",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_easy_100",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_easy_101",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What year was the first iPhone released?",
+      "answers": [
+        "2006",
+        "2007",
+        "2008",
+        "2002"
+      ],
+      "correct": 1,
+      "explanation": "Apple released the first iPhone in 2007."
+    },
+    {
+      "id": "technology_easy_102",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What acronym described the 2000 computer bug scare?",
+      "answers": [
+        "1",
+        "3",
+        "Y2K",
+        "4"
+      ],
+      "correct": 2,
+      "explanation": "Y2K referred to the year 2000 date problem."
+    },
+    {
+      "id": "technology_easy_103",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "NASA’s Curiosity rover landed on which planet?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Mars",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "Curiosity landed on Mars in 2012."
+    },
+    {
+      "id": "technology_easy_104",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What year was Facebook created?",
+      "answers": [
+        "2003",
+        "2005",
+        "2004",
+        "1999"
+      ],
+      "correct": 2,
+      "explanation": "Facebook launched in 2004."
+    },
+    {
+      "id": "technology_easy_105",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What year did Google launch?",
+      "answers": [
+        "1997",
+        "1999",
+        "1993",
+        "1998"
+      ],
+      "correct": 3,
+      "explanation": "Google launched in 1998."
+    },
+    {
+      "id": "technology_easy_106",
+      "category": "Technology",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who greatly improved the steam engine in the 1700s?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "James Watt",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "James Watt is the correct answer."
+    },
+    {
+      "id": "technology_medium_001",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does HTML mainly define?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Web page structure",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "HTML structures web pages."
+    },
+    {
+      "id": "technology_medium_002",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is two-factor authentication?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Login using two proofs",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "2FA requires two forms of verification."
+    },
+    {
+      "id": "technology_medium_003",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does an IP address identify?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "A device or service on a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "IP addresses identify network endpoints."
+    },
+    {
+      "id": "technology_medium_004",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is open-source software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Software with source code available",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "Open source allows code inspection and modification."
+    },
+    {
+      "id": "technology_medium_005",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does encryption protect?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Readable data by scrambling it",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "Encryption makes data unreadable without a key."
+    },
+    {
+      "id": "technology_medium_006",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is a firewall used for?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "Filtering network traffic"
+      ],
+      "correct": 3,
+      "explanation": "Firewalls filter traffic."
+    },
+    {
+      "id": "technology_medium_007",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is Bluetooth used for?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "Short-range wireless connections"
+      ],
+      "correct": 3,
+      "explanation": "Bluetooth connects nearby devices."
+    },
+    {
+      "id": "technology_medium_008",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does CPU stand for?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Central processing unit",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "CPU means central processing unit."
+    },
+    {
+      "id": "technology_medium_009",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_medium_010",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_medium_011",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as device that prints documents?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_medium_012",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as malicious software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_medium_013",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as copy kept for recovery?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_medium_014",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as secret code that unlocks encrypted data?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_medium_015",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as software that runs hardware and apps?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_medium_016",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as small text file used by websites?",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_medium_017",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as graphics processor?",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_medium_018",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as network address name service?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_medium_019",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_medium_020",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_medium_021",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as device that prints documents?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_medium_022",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as malicious software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_medium_023",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as copy kept for recovery?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_medium_024",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as secret code that unlocks encrypted data?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_medium_025",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as software that runs hardware and apps?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_medium_026",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as small text file used by websites?",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_medium_027",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as graphics processor?",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_medium_028",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as network address name service?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_medium_029",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_medium_030",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_medium_031",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as device that prints documents?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_medium_032",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as malicious software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_medium_033",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as copy kept for recovery?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_medium_034",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as secret code that unlocks encrypted data?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_medium_035",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as software that runs hardware and apps?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_medium_036",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as small text file used by websites?",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_medium_037",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as graphics processor?",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_medium_038",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as network address name service?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_medium_039",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_medium_040",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_medium_041",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as device that prints documents?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_medium_042",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as malicious software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_medium_043",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as copy kept for recovery?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_medium_044",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as secret code that unlocks encrypted data?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_medium_045",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as software that runs hardware and apps?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_medium_046",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as small text file used by websites?",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_medium_047",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as graphics processor?",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_medium_048",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as network address name service?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_medium_049",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_medium_050",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_medium_051",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as device that prints documents?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_medium_052",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as malicious software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_medium_053",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as copy kept for recovery?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_medium_054",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as secret code that unlocks encrypted data?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_medium_055",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as software that runs hardware and apps?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_medium_056",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as small text file used by websites?",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_medium_057",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as graphics processor?",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_medium_058",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as network address name service?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_medium_059",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_medium_060",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_medium_061",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as device that prints documents?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_medium_062",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as malicious software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_medium_063",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as copy kept for recovery?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_medium_064",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as secret code that unlocks encrypted data?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_medium_065",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as software that runs hardware and apps?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_medium_066",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as small text file used by websites?",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_medium_067",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as graphics processor?",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_medium_068",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as network address name service?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_medium_069",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_medium_070",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_medium_071",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as device that prints documents?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_medium_072",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as malicious software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_medium_073",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as copy kept for recovery?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_medium_074",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as secret code that unlocks encrypted data?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_medium_075",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as software that runs hardware and apps?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_medium_076",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as small text file used by websites?",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_medium_077",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as graphics processor?",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_medium_078",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as network address name service?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_medium_079",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_medium_080",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_medium_081",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as device that prints documents?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_medium_082",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as malicious software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_medium_083",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as copy kept for recovery?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_medium_084",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as secret code that unlocks encrypted data?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_medium_085",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as software that runs hardware and apps?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_medium_086",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as small text file used by websites?",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_medium_087",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as graphics processor?",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_medium_088",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as network address name service?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_medium_089",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_medium_090",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_medium_091",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as device that prints documents?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_medium_092",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as malicious software?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_medium_093",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as copy kept for recovery?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_medium_094",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as secret code that unlocks encrypted data?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_medium_095",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as software that runs hardware and apps?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_medium_096",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as small text file used by websites?",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_medium_097",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as graphics processor?",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_medium_098",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as network address name service?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_medium_099",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as brain of a computer?",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_medium_100",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Technology, which option is best described as temporary working memory?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_medium_101",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the name of the first cloned adult mammal?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Dolly",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "Dolly the sheep was cloned from an adult somatic cell."
+    },
+    {
+      "id": "technology_medium_102",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What year did the web become publicly available?",
+      "answers": [
+        "1992",
+        "1994",
+        "1993",
+        "1988"
+      ],
+      "correct": 2,
+      "explanation": "The World Wide Web became broadly available to the public in the early 1990s."
+    },
+    {
+      "id": "technology_medium_103",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the name of the first Space Shuttle to go into space?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "Space Shuttle Columbia"
+      ],
+      "correct": 3,
+      "explanation": "Space Shuttle Columbia is the correct answer."
+    },
+    {
+      "id": "technology_medium_104",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "When did the first Space Shuttle go into space?",
+      "answers": [
+        "April 12th, 1981",
+        "11",
+        "13",
+        "7"
+      ],
+      "correct": 0,
+      "explanation": "April 12th, 1981 is the correct answer."
+    },
+    {
+      "id": "technology_medium_105",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Russian astronaut was the first man to conduct a spacewalk?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "Alexey Leonov"
+      ],
+      "correct": 3,
+      "explanation": "Alexey Leonov is the correct answer."
+    },
+    {
+      "id": "technology_medium_106",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the name of the first female Hispanic astronaut?",
+      "answers": [
+        "Ellen Ochoa",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "Ellen Ochoa is the correct answer."
+    },
+    {
+      "id": "technology_medium_107",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who invented the telephone?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "Alexander Graham Bell"
+      ],
+      "correct": 3,
+      "explanation": "Alexander Graham Bell is the correct answer."
+    },
+    {
+      "id": "technology_medium_108",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who created the first successful printing press?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Johannes Gutenberg",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "Johannes Gutenberg is the correct answer."
+    },
+    {
+      "id": "technology_medium_109",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the name of the first computer?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "ENIAC",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "ENIAC is the correct answer."
+    },
+    {
+      "id": "technology_medium_110",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who invented Penicillin?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Alexander Fleming",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "Alexander Fleming is the correct answer."
+    },
+    {
+      "id": "technology_medium_111",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which 19th-century scientist is known for creating the first vaccine?",
+      "answers": [
+        "Louis Pasteur",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "Louis Pasteur is the correct answer."
+    },
+    {
+      "id": "technology_medium_112",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who invented the vaccine for Polio?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Jonas Salk",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "Jonas Salk is the correct answer."
+    },
+    {
+      "id": "technology_medium_113",
+      "category": "Technology",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "To whom was the first internet domain registered?",
+      "answers": [
+        "Symbolics.com",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "Symbolics.com is the correct answer."
+    },
+    {
+      "id": "technology_hard_001",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is a hash function commonly used for?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "Creating a fixed fingerprint of data"
+      ],
+      "correct": 3,
+      "explanation": "Hashes produce fixed-size digests."
+    },
+    {
+      "id": "technology_hard_002",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is containerization?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Packaging apps with dependencies",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "Containers bundle app runtime dependencies."
+    },
+    {
+      "id": "technology_hard_003",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does DNS translate?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Names to IP addresses",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "DNS maps domain names to IP addresses."
+    },
+    {
+      "id": "technology_hard_004",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is latency?",
+      "answers": [
+        "Delay before data responds",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "Latency is delay."
+    },
+    {
+      "id": "technology_hard_005",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is an API?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "A way software talks to software",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "APIs define software interactions."
+    },
+    {
+      "id": "technology_hard_006",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is RAID commonly used for?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Combining disks for performance or redundancy",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "RAID organizes multiple disks."
+    },
+    {
+      "id": "technology_hard_007",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is a sandbox in computing?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "An isolated test environment",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "Sandboxes isolate code or tests."
+    },
+    {
+      "id": "technology_hard_008",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is packet loss?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "Data packets failing to arrive"
+      ],
+      "correct": 3,
+      "explanation": "Packet loss means network packets are dropped."
+    },
+    {
+      "id": "technology_hard_009",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: brain of a computer.",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_hard_010",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: temporary working memory.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_hard_011",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: device that prints documents.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_hard_012",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: malicious software.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_hard_013",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: copy kept for recovery.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_hard_014",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: secret code that unlocks encrypted data.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_hard_015",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: software that runs hardware and apps.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_hard_016",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: small text file used by websites.",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_hard_017",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: graphics processor.",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_hard_018",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: network address name service.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_hard_019",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: brain of a computer.",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_hard_020",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: temporary working memory.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_hard_021",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: device that prints documents.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_hard_022",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: malicious software.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_hard_023",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: copy kept for recovery.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_hard_024",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: secret code that unlocks encrypted data.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_hard_025",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: software that runs hardware and apps.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_hard_026",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: small text file used by websites.",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_hard_027",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: graphics processor.",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_hard_028",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: network address name service.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_hard_029",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: brain of a computer.",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_hard_030",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: temporary working memory.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_hard_031",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: device that prints documents.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_hard_032",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: malicious software.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_hard_033",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: copy kept for recovery.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_hard_034",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: secret code that unlocks encrypted data.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_hard_035",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: software that runs hardware and apps.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_hard_036",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: small text file used by websites.",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_hard_037",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: graphics processor.",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_hard_038",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: network address name service.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_hard_039",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: brain of a computer.",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_hard_040",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: temporary working memory.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_hard_041",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: device that prints documents.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_hard_042",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: malicious software.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_hard_043",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: copy kept for recovery.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_hard_044",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: secret code that unlocks encrypted data.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_hard_045",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: software that runs hardware and apps.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_hard_046",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: small text file used by websites.",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_hard_047",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: graphics processor.",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_hard_048",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: network address name service.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_hard_049",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: brain of a computer.",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_hard_050",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: temporary working memory.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_hard_051",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: device that prints documents.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_hard_052",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: malicious software.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_hard_053",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: copy kept for recovery.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_hard_054",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: secret code that unlocks encrypted data.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_hard_055",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: software that runs hardware and apps.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_hard_056",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: small text file used by websites.",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_hard_057",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: graphics processor.",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_hard_058",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: network address name service.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_hard_059",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: brain of a computer.",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_hard_060",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: temporary working memory.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_hard_061",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: device that prints documents.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_hard_062",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: malicious software.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_hard_063",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: copy kept for recovery.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_hard_064",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: secret code that unlocks encrypted data.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_hard_065",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: software that runs hardware and apps.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_hard_066",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: small text file used by websites.",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_hard_067",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: graphics processor.",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_hard_068",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: network address name service.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_hard_069",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: brain of a computer.",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_hard_070",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: temporary working memory.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_hard_071",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: device that prints documents.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_hard_072",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: malicious software.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_hard_073",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: copy kept for recovery.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_hard_074",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: secret code that unlocks encrypted data.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_hard_075",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: software that runs hardware and apps.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_hard_076",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: small text file used by websites.",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_hard_077",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: graphics processor.",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_hard_078",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: network address name service.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_hard_079",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: brain of a computer.",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_hard_080",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: temporary working memory.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_hard_081",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: device that prints documents.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_hard_082",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: malicious software.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_hard_083",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: copy kept for recovery.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_hard_084",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: secret code that unlocks encrypted data.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_hard_085",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: software that runs hardware and apps.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_hard_086",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: small text file used by websites.",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_hard_087",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: graphics processor.",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_hard_088",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: network address name service.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_hard_089",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: brain of a computer.",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_hard_090",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: temporary working memory.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_hard_091",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: device that prints documents.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "printer",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is printer."
+    },
+    {
+      "id": "technology_hard_092",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: malicious software.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "malware",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is malware."
+    },
+    {
+      "id": "technology_hard_093",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: copy kept for recovery.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "backup",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is backup."
+    },
+    {
+      "id": "technology_hard_094",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: secret code that unlocks encrypted data.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "key"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is key."
+    },
+    {
+      "id": "technology_hard_095",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: software that runs hardware and apps.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "operating system",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is operating system."
+    },
+    {
+      "id": "technology_hard_096",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: small text file used by websites.",
+      "answers": [
+        "cookie",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is cookie."
+    },
+    {
+      "id": "technology_hard_097",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: graphics processor.",
+      "answers": [
+        "GPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is GPU."
+    },
+    {
+      "id": "technology_hard_098",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: network address name service.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "DNS",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is DNS."
+    },
+    {
+      "id": "technology_hard_099",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: brain of a computer.",
+      "answers": [
+        "CPU",
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is CPU."
+    },
+    {
+      "id": "technology_hard_100",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Technology clue, identify: temporary working memory.",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "RAM",
+        "Protecting access"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is RAM."
+    },
+    {
+      "id": "technology_hard_101",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who leaked NSA classified documents in 2013?",
+      "answers": [
+        "Connect wirelessly to a network",
+        "Devices and accessories",
+        "Protecting access",
+        "Edward Snowden"
+      ],
+      "correct": 3,
+      "explanation": "Edward Snowden leaked classified NSA materials in 2013."
+    },
+    {
+      "id": "technology_hard_102",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "In what year did humans put the first satellite into orbit?",
+      "answers": [
+        "1956",
+        "1958",
+        "1957",
+        "1952"
+      ],
+      "correct": 2,
+      "explanation": "1957 is the correct answer."
+    },
+    {
+      "id": "technology_hard_103",
+      "category": "Technology",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What year was the first internet domain registered?",
+      "answers": [
+        "1984",
+        "1985",
+        "1986",
+        "1980"
+      ],
+      "correct": 1,
+      "explanation": "1985 is the correct answer."
+    }
+  ]
+}

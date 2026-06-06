@@ -51,6 +51,7 @@ fi
 if [[ -f /etc/nginx/sites-available/overland-trusted-https.conf ]]; then
   python3 - <<'PY'
 from pathlib import Path
+import re
 
 path = Path("/etc/nginx/sites-available/overland-trusted-https.conf")
 text = path.read_text(encoding="utf-8")
@@ -58,6 +59,14 @@ marker = "    location ^~ /apps/filebrowser/ {\n"
 block = """    location ^~ /apps/raspap/ {\n        proxy_http_version 1.1;\n        proxy_set_header Host $host;\n        proxy_set_header X-Real-IP $remote_addr;\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header X-Forwarded-Proto https;\n        proxy_set_header X-Forwarded-Host $http_host;\n        proxy_pass http://127.0.0.1:8097/;\n        proxy_redirect ~^/(.*)$ /apps/raspap/$1;\n        proxy_cookie_path / /apps/raspap/;\n        sub_filter_once off;\n        sub_filter_types text/css application/javascript;\n        sub_filter 'href=\"/' 'href=\"/apps/raspap/';\n        sub_filter 'src=\"/' 'src=\"/apps/raspap/';\n        sub_filter 'action=\"/' 'action=\"/apps/raspap/';\n    }\n\n"""
 if block not in text and marker in text:
     text = text.replace(marker, block + marker, 1)
+filebrowser_block = """    location ^~ /apps/filebrowser/ {\n        client_max_body_size 10000M;\n        proxy_http_version 1.1;\n        proxy_request_buffering off;\n        proxy_buffering off;\n        proxy_connect_timeout 600;\n        proxy_send_timeout 600;\n        proxy_read_timeout 600;\n        send_timeout 600;\n        proxy_set_header Host $host;\n        proxy_set_header X-Real-IP $remote_addr;\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header X-Forwarded-Proto https;\n        proxy_set_header X-Forwarded-Host $http_host;\n        proxy_set_header X-Auth-User admin;\n        proxy_pass http://127.0.0.1:8091/;\n    }\n"""
+text = re.sub(
+    r"    location \^~ /apps/filebrowser/ \{\n(?:        .*\n)*?    \}\n",
+    filebrowser_block,
+    text,
+    count=1,
+)
+if text != path.read_text(encoding="utf-8"):
     path.write_text(text, encoding="utf-8")
 PY
   nginx -t

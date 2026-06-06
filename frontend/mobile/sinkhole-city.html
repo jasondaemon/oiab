@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#102a1c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Sinkhole City">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Sinkhole City | OIAB</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/mobile/overland-touch-icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
+  <link rel="manifest" href="/mobile/manifest.webmanifest">
+  <link rel="stylesheet" href="/mobile/sinkhole-city.css">
+</head>
+<body>
+  <main class="sh-shell">
+    <canvas id="gameCanvas" aria-label="Sinkhole City game canvas"></canvas>
+
+    <section id="hud" class="sh-hud" aria-live="polite">
+      <div><span>Time</span><strong id="timeText">2:00</strong></div>
+      <div><span>Score</span><strong id="scoreText">0</strong></div>
+      <div><span>Size</span><strong id="sizeText">Pothole</strong></div>
+      <div id="comboText" class="combo" hidden>Combo x1</div>
+    </section>
+
+    <div class="sh-actions">
+      <a class="sh-icon" href="/mobile/" aria-label="Back to games">‹</a>
+      <button id="pauseButton" class="sh-icon" type="button" aria-label="Pause">Ⅱ</button>
+    </div>
+
+    <div id="joystick" class="sh-joystick" hidden>
+      <div id="joystickKnob"></div>
+    </div>
+
+    <section id="startScreen" class="sh-panel sh-start">
+      <p class="eyebrow">OIAB Arcade</p>
+      <h1>Sinkhole City</h1>
+      <p class="subtitle">Eat the Basecamp. Swallow cones, coolers, cars, cabins, and anything else small enough to fit.</p>
+      <div class="sh-menu">
+        <button id="soloButton" class="primary" type="button">Solo Run</button>
+        <button id="cpuButton" type="button">CPU Battle</button>
+        <button id="multiButton" type="button">Multiplayer</button>
+        <button id="howButton" type="button">How to Play</button>
+      </div>
+      <p class="hint">Touch-drag anywhere, or use WASD / arrow keys.</p>
+    </section>
+
+    <section id="howScreen" class="sh-panel" hidden>
+      <p class="eyebrow">How to Play</p>
+      <h2>Grow before the clock runs out.</h2>
+      <p>Move your sinkhole around the town. Swallow smaller objects to grow. Bigger size means bigger targets. Chain objects together for combo points.</p>
+      <p>Objects with a red bounce are too large. Come back after eating smaller targets.</p>
+      <button id="howBackButton" class="primary" type="button">Back</button>
+    </section>
+
+    <section id="multiplayerScreen" class="sh-panel" hidden>
+      <p class="eyebrow">Multiplayer</p>
+      <h2>LAN sinkhole battle.</h2>
+      <label class="sh-field">
+        <span>Mode</span>
+        <select id="multiVariant">
+          <option value="objects">Object Battle</option>
+          <option value="swallow">PvP Swallow</option>
+        </select>
+      </label>
+      <div class="sh-menu">
+        <button id="createMultiButton" class="primary" type="button">Create Game</button>
+        <button id="refreshMultiButton" type="button">Refresh</button>
+      </div>
+      <div id="openGames" class="sh-open-games"></div>
+      <button id="multiBackButton" class="primary" type="button">Back</button>
+    </section>
+
+    <section id="cpuScreen" class="sh-panel" hidden>
+      <p class="eyebrow">CPU Battle</p>
+      <h2>Computer opponent.</h2>
+      <label class="sh-field">
+        <span>Difficulty</span>
+        <select id="cpuDifficulty">
+          <option value="easy">Easy</option>
+          <option value="medium" selected>Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </label>
+      <label class="sh-field">
+        <span>Mode</span>
+        <select id="cpuVariant">
+          <option value="objects">Object Battle</option>
+          <option value="swallow">PvP Swallow</option>
+        </select>
+      </label>
+      <div class="sh-menu">
+        <button id="startCpuButton" class="primary" type="button">Start CPU Battle</button>
+        <button id="cpuBackButton" type="button">Back</button>
+      </div>
+    </section>
+
+    <section id="countdownScreen" class="sh-countdown" hidden>3</section>
+
+    <section id="endScreen" class="sh-panel sh-end" hidden>
+      <p class="eyebrow">Run Complete</p>
+      <h2 id="endRank">Sinkhole</h2>
+      <div class="sh-results">
+        <div><span>Final Score</span><strong id="finalScore">0</strong></div>
+        <div><span>Largest Size</span><strong id="finalSize">0</strong></div>
+        <div><span>Objects Swallowed</span><strong id="finalEaten">0</strong></div>
+      </div>
+      <div id="scoreCompare" class="sh-score-compare" aria-live="polite">
+        <strong>High Scores</strong>
+        <span>Loading rankings...</span>
+      </div>
+      <p id="scoreMessage" class="hint"></p>
+      <div class="sh-menu">
+        <button id="againButton" class="primary" type="button">Game Menu</button>
+        <a href="/mobile/" class="button-link">Games</a>
+      </div>
+    </section>
+  </main>
+  <script src="/mobile/sinkhole-city.js"></script>
+</body>
+</html>

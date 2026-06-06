@@ -1,0 +1,4522 @@
+{
+  "category": "Automotive",
+  "slug": "automotive",
+  "version": 1,
+  "questions": [
+    {
+      "id": "automotive_easy_001",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What part of a car is used to steer it?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Battery"
+      ],
+      "correct": 0,
+      "explanation": "The steering wheel turns the front wheels through the steering system."
+    },
+    {
+      "id": "automotive_easy_002",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which pedal slows or stops most cars?",
+      "answers": [
+        "Steering wheel",
+        "Fuel amount",
+        "Battery",
+        "Brake pedal"
+      ],
+      "correct": 3,
+      "explanation": "The brake pedal applies the braking system to slow the vehicle."
+    },
+    {
+      "id": "automotive_easy_003",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does the fuel gauge show?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Battery"
+      ],
+      "correct": 2,
+      "explanation": "The fuel gauge estimates how much fuel remains in the tank."
+    },
+    {
+      "id": "automotive_easy_004",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which car part stores electrical power for starting?",
+      "answers": [
+        "Steering wheel",
+        "Battery",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "The battery supplies power to start the engine and run electronics."
+    },
+    {
+      "id": "automotive_easy_005",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What do headlights help a driver do?",
+      "answers": [
+        "See at night",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Headlights light the road and make the vehicle easier to see."
+    },
+    {
+      "id": "automotive_easy_006",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which fluid helps keep an engine from overheating?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Coolant",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Coolant carries heat away from the engine to the radiator."
+    },
+    {
+      "id": "automotive_easy_007",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the main job of tires?",
+      "answers": [
+        "Steering wheel",
+        "Grip the road",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Tires provide traction, support the vehicle, and absorb bumps."
+    },
+    {
+      "id": "automotive_easy_008",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does ABS stand for in car safety?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Anti-lock Braking System"
+      ],
+      "correct": 3,
+      "explanation": "ABS helps prevent wheels from locking during hard braking."
+    },
+    {
+      "id": "automotive_easy_009",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which light warns other drivers you are turning?",
+      "answers": [
+        "Steering wheel",
+        "Turn signal",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Turn signals communicate planned turns or lane changes."
+    },
+    {
+      "id": "automotive_easy_010",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does the speedometer display?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Vehicle speed"
+      ],
+      "correct": 3,
+      "explanation": "The speedometer shows how fast the vehicle is moving."
+    },
+    {
+      "id": "automotive_easy_011",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which part cleans rain from the windshield?",
+      "answers": [
+        "Wipers",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Windshield wipers sweep water and debris from the glass."
+    },
+    {
+      "id": "automotive_easy_012",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does the odometer measure?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Miles driven",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "The odometer tracks the total distance a vehicle has traveled."
+    },
+    {
+      "id": "automotive_easy_013",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which system reduces exhaust noise?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Muffler"
+      ],
+      "correct": 3,
+      "explanation": "The muffler quiets exhaust pulses before they leave the tailpipe."
+    },
+    {
+      "id": "automotive_easy_014",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does a seat belt mainly help do?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Hold occupants safely"
+      ],
+      "correct": 3,
+      "explanation": "Seat belts help keep people restrained during sudden stops or crashes."
+    },
+    {
+      "id": "automotive_easy_015",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a spare tire used for?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Temporary tire replacement"
+      ],
+      "correct": 3,
+      "explanation": "A spare tire can replace a flat tire until a repair is made."
+    },
+    {
+      "id": "automotive_easy_016",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which dashboard symbol often looks like an oil can?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Low oil warning",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "The oil can icon usually warns about oil pressure or oil level."
+    },
+    {
+      "id": "automotive_easy_017",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which vehicle type has an open cargo bed?",
+      "answers": [
+        "Steering wheel",
+        "Pickup truck",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "A pickup truck has an open bed behind the passenger cabin."
+    },
+    {
+      "id": "automotive_easy_018",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does 4WD help with?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Traction off-road",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Four-wheel drive can send power to all four wheels for more traction."
+    },
+    {
+      "id": "automotive_easy_019",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which brand makes the Mustang?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Ford"
+      ],
+      "correct": 3,
+      "explanation": "The Mustang is a famous Ford model introduced in the 1960s."
+    },
+    {
+      "id": "automotive_easy_020",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which brand makes the Corolla?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Toyota",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "The Corolla is one of Toyota’s best-known compact cars."
+    },
+    {
+      "id": "automotive_easy_021",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which company is known for the Wrangler?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Jeep",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "The Jeep Wrangler is known for off-road capability."
+    },
+    {
+      "id": "automotive_easy_022",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What kind of vehicle is a minivan?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Family passenger van"
+      ],
+      "correct": 3,
+      "explanation": "Minivans are designed for passengers, cargo space, and family use."
+    },
+    {
+      "id": "automotive_easy_023",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does EV usually mean for a car?",
+      "answers": [
+        "Steering wheel",
+        "Electric vehicle",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "EV stands for electric vehicle, powered by batteries and motors."
+    },
+    {
+      "id": "automotive_easy_024",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which part charges the battery while driving?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Alternator",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "The alternator generates electricity while the engine runs."
+    },
+    {
+      "id": "automotive_easy_025",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the engine air filter for?",
+      "answers": [
+        "Steering wheel",
+        "Filtering air to engine",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "The air filter keeps dust and debris out of engine intake air."
+    },
+    {
+      "id": "automotive_easy_026",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the purpose of motor oil?",
+      "answers": [
+        "Steering wheel",
+        "Lubricate engine parts",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Motor oil reduces friction and helps protect moving engine parts."
+    },
+    {
+      "id": "automotive_easy_027",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which part helps cool engine coolant?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Radiator",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "The radiator releases heat from coolant into the air."
+    },
+    {
+      "id": "automotive_easy_028",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What should you check when a tire looks low?",
+      "answers": [
+        "Steering wheel",
+        "Tire pressure",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Low tire pressure can hurt handling, tire life, and fuel economy."
+    },
+    {
+      "id": "automotive_easy_029",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which car feature may inflate in a crash?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Airbag",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Airbags deploy to help cushion occupants during certain crashes."
+    },
+    {
+      "id": "automotive_easy_030",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does a backup camera help with?",
+      "answers": [
+        "Seeing behind the car",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "A backup camera gives a rear view when reversing."
+    },
+    {
+      "id": "automotive_easy_031",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which fluid cleans the windshield?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Washer fluid",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Washer fluid sprays onto the windshield to help clean it."
+    },
+    {
+      "id": "automotive_easy_032",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a hybrid car?",
+      "answers": [
+        "Steering wheel",
+        "Gas and electric powered",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "A hybrid combines an engine with an electric motor system."
+    },
+    {
+      "id": "automotive_easy_033",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which part creates spark in many gas engines?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Spark plug"
+      ],
+      "correct": 3,
+      "explanation": "Spark plugs ignite the air-fuel mixture in gasoline engines."
+    },
+    {
+      "id": "automotive_easy_034",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does an exhaust pipe carry away?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Exhaust gases"
+      ],
+      "correct": 3,
+      "explanation": "The exhaust pipe carries combustion gases away from the engine."
+    },
+    {
+      "id": "automotive_easy_035",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which item is used to lift a car for tire changes?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Jack"
+      ],
+      "correct": 3,
+      "explanation": "A jack lifts part of a vehicle so a wheel can be removed safely."
+    },
+    {
+      "id": "automotive_easy_036",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is cruise control used for?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Holding a set speed"
+      ],
+      "correct": 3,
+      "explanation": "Cruise control helps maintain a selected speed on suitable roads."
+    },
+    {
+      "id": "automotive_easy_037",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which road vehicle usually has two wheels?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Motorcycle"
+      ],
+      "correct": 3,
+      "explanation": "A motorcycle is a powered two-wheeled vehicle."
+    },
+    {
+      "id": "automotive_easy_038",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which car part helps change gears?",
+      "answers": [
+        "Transmission",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "The transmission changes gear ratios between the engine and wheels."
+    },
+    {
+      "id": "automotive_easy_039",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does the horn do?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Warn with sound"
+      ],
+      "correct": 3,
+      "explanation": "The horn makes a warning sound to alert others."
+    },
+    {
+      "id": "automotive_easy_040",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which mirror helps see traffic behind the car?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Rearview mirror",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "The rearview mirror helps the driver see traffic behind the vehicle."
+    },
+    {
+      "id": "automotive_easy_041",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a dashboard?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Front control panel",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "The dashboard holds gauges, controls, vents, and warning lights."
+    },
+    {
+      "id": "automotive_easy_042",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does low tire tread reduce?",
+      "answers": [
+        "Traction",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Worn tread reduces grip, especially on wet roads."
+    },
+    {
+      "id": "automotive_easy_043",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which system helps steering feel easier?",
+      "answers": [
+        "Power steering",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Power steering assists the driver when turning the wheel."
+    },
+    {
+      "id": "automotive_easy_044",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does a gas cap seal?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel filler opening",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "The gas cap seals the fuel filler neck and helps contain vapors."
+    },
+    {
+      "id": "automotive_easy_045",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which part helps stop a wheel when braking?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Brake pad",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Brake pads press against rotors to create stopping friction."
+    },
+    {
+      "id": "automotive_easy_046",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a VIN?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Vehicle ID number",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "A VIN is a unique vehicle identification number."
+    },
+    {
+      "id": "automotive_easy_047",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which vehicle is built to carry many passengers?",
+      "answers": [
+        "Bus",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "A bus is designed to carry groups of passengers."
+    },
+    {
+      "id": "automotive_easy_048",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does a check engine light usually mean?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "A fault may exist"
+      ],
+      "correct": 3,
+      "explanation": "The check engine light means the vehicle detected a possible fault."
+    },
+    {
+      "id": "automotive_easy_049",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which part helps keep passengers warm?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Heater"
+      ],
+      "correct": 3,
+      "explanation": "The heater uses warm air to raise cabin temperature."
+    },
+    {
+      "id": "automotive_easy_050",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does air conditioning do in a car?",
+      "answers": [
+        "Steering wheel",
+        "Cools cabin air",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Air conditioning cools and dries air inside the cabin."
+    },
+    {
+      "id": "automotive_easy_051",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which part lets air into the cabin?",
+      "answers": [
+        "Steering wheel",
+        "Vent",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Vents direct heated or cooled air into the cabin."
+    },
+    {
+      "id": "automotive_easy_052",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does the tachometer show?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Engine RPM"
+      ],
+      "correct": 3,
+      "explanation": "A tachometer shows engine speed in revolutions per minute."
+    },
+    {
+      "id": "automotive_easy_053",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which vehicle is known for towing trailers?",
+      "answers": [
+        "Steering wheel",
+        "Pickup truck",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Pickup trucks are often built with towing and hauling in mind."
+    },
+    {
+      "id": "automotive_easy_054",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What should drivers use before changing lanes?",
+      "answers": [
+        "Steering wheel",
+        "Turn signal",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Turn signals warn others before lane changes or turns."
+    },
+    {
+      "id": "automotive_easy_055",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which light warns that brakes are being used?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Brake light"
+      ],
+      "correct": 3,
+      "explanation": "Brake lights turn on when the driver presses the brake pedal."
+    },
+    {
+      "id": "automotive_easy_056",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does the parking brake help do?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Hold a parked vehicle"
+      ],
+      "correct": 3,
+      "explanation": "The parking brake helps keep a vehicle from rolling when parked."
+    },
+    {
+      "id": "automotive_easy_057",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the trunk used for?",
+      "answers": [
+        "Steering wheel",
+        "Cargo storage",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "The trunk is a storage area for luggage or cargo."
+    },
+    {
+      "id": "automotive_easy_058",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which part protects occupants from wind?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Windshield"
+      ],
+      "correct": 3,
+      "explanation": "The windshield blocks wind and debris while allowing forward view."
+    },
+    {
+      "id": "automotive_easy_059",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a convertible?",
+      "answers": [
+        "Steering wheel",
+        "Car with folding roof",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "A convertible has a roof that can open or fold away."
+    },
+    {
+      "id": "automotive_easy_060",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which vehicle type is often tall with cargo room?",
+      "answers": [
+        "SUV",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "An SUV usually has higher ride height and flexible cargo space."
+    },
+    {
+      "id": "automotive_easy_061",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What powers most traditional cars?",
+      "answers": [
+        "Gasoline engine",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Most traditional cars use gasoline engines for power."
+    },
+    {
+      "id": "automotive_easy_062",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does diesel fuel power?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Diesel engines"
+      ],
+      "correct": 3,
+      "explanation": "Diesel fuel is used in compression-ignition diesel engines."
+    },
+    {
+      "id": "automotive_easy_063",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which company makes the Civic?",
+      "answers": [
+        "Honda",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "The Civic is a long-running compact car from Honda."
+    },
+    {
+      "id": "automotive_easy_064",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which company makes the F-150?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Ford"
+      ],
+      "correct": 3,
+      "explanation": "The F-150 is Ford’s best-known full-size pickup."
+    },
+    {
+      "id": "automotive_easy_065",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which brand is famous for the 911 sports car?",
+      "answers": [
+        "Porsche",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "The 911 is Porsche’s iconic rear-engine sports car."
+    },
+    {
+      "id": "automotive_easy_066",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is NASCAR best known for?",
+      "answers": [
+        "Stock car racing",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "NASCAR is famous for stock car racing, especially on oval tracks."
+    },
+    {
+      "id": "automotive_easy_067",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Formula 1?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Open-wheel racing",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Formula 1 is a top international open-wheel racing series."
+    },
+    {
+      "id": "automotive_easy_068",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which safety item should children use if needed?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Car seat"
+      ],
+      "correct": 3,
+      "explanation": "Children should use the right car seat or booster for their size."
+    },
+    {
+      "id": "automotive_easy_069",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does a roof rack carry?",
+      "answers": [
+        "Extra cargo",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "A roof rack can carry bikes, luggage, kayaks, or cargo boxes."
+    },
+    {
+      "id": "automotive_easy_070",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a trailer hitch used for?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Towing",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "A hitch connects a vehicle to a trailer or hitch-mounted carrier."
+    },
+    {
+      "id": "automotive_easy_071",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which part connects wheels across a vehicle?",
+      "answers": [
+        "Axle",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "An axle supports wheels and may transmit power to them."
+    },
+    {
+      "id": "automotive_easy_072",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the hood of a car?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Engine cover"
+      ],
+      "correct": 3,
+      "explanation": "The hood is the front cover over the engine bay on many cars."
+    },
+    {
+      "id": "automotive_easy_073",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the purpose of a bumper?",
+      "answers": [
+        "Steering wheel",
+        "Absorb minor impacts",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Bumpers help absorb low-speed impacts and protect body parts."
+    },
+    {
+      "id": "automotive_easy_074",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which tool measures tire pressure?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Pressure gauge",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "A tire pressure gauge measures air pressure in a tire."
+    },
+    {
+      "id": "automotive_easy_075",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which tire marking often shows wheel diameter?",
+      "answers": [
+        "Steering wheel",
+        "Rim size",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Tire sidewalls include sizing information such as wheel diameter."
+    },
+    {
+      "id": "automotive_easy_076",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does all-wheel drive usually do?",
+      "answers": [
+        "Powers all wheels as needed",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "AWD can send power to front and rear wheels for traction."
+    },
+    {
+      "id": "automotive_easy_077",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a sedan?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Four-door passenger car"
+      ],
+      "correct": 3,
+      "explanation": "A sedan is usually a passenger car with four doors and a trunk."
+    },
+    {
+      "id": "automotive_easy_078",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a coupe often known for?",
+      "answers": [
+        "Two-door body style",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "A coupe is commonly a sporty two-door car body style."
+    },
+    {
+      "id": "automotive_easy_079",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a service interval?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Scheduled maintenance time"
+      ],
+      "correct": 3,
+      "explanation": "Service intervals tell when maintenance should be performed."
+    },
+    {
+      "id": "automotive_easy_080",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Why rotate tires?",
+      "answers": [
+        "Steering wheel",
+        "Even out tire wear",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Tire rotation helps tires wear more evenly over time."
+    },
+    {
+      "id": "automotive_easy_081",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which fluid helps hydraulic brakes work?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Brake fluid"
+      ],
+      "correct": 3,
+      "explanation": "Brake fluid transfers pedal force through hydraulic brake lines."
+    },
+    {
+      "id": "automotive_easy_082",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the purpose of a fuse?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Protect circuits"
+      ],
+      "correct": 3,
+      "explanation": "A fuse protects an electrical circuit by breaking if current is too high."
+    },
+    {
+      "id": "automotive_easy_083",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a dashboard warning light for?",
+      "answers": [
+        "Steering wheel",
+        "Alerting the driver",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Warning lights notify the driver about vehicle conditions or faults."
+    },
+    {
+      "id": "automotive_easy_084",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which part rolls on the road?",
+      "answers": [
+        "Tire",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Tires are the rubber parts that contact the road surface."
+    },
+    {
+      "id": "automotive_easy_085",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does the ignition start?",
+      "answers": [
+        "Engine or drive system",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "The ignition starts a gas engine or readies a vehicle to drive."
+    },
+    {
+      "id": "automotive_easy_086",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does a key fob often control?",
+      "answers": [
+        "Locks and alarm",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "A key fob can lock, unlock, and sometimes start a vehicle."
+    },
+    {
+      "id": "automotive_easy_087",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which feature helps with slippery starts?",
+      "answers": [
+        "Steering wheel",
+        "Traction control",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Traction control reduces wheel spin on slippery surfaces."
+    },
+    {
+      "id": "automotive_easy_088",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does stability control help prevent?",
+      "answers": [
+        "Steering wheel",
+        "Loss of control",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Stability control can help correct skids in certain situations."
+    },
+    {
+      "id": "automotive_easy_089",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which part opens to access the engine bay?",
+      "answers": [
+        "Hood",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Opening the hood gives access to many engine-bay components."
+    },
+    {
+      "id": "automotive_easy_090",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does a fuel pump move?",
+      "answers": [
+        "Fuel to the engine",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "The fuel pump moves fuel from the tank toward the engine."
+    },
+    {
+      "id": "automotive_easy_091",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What do lug nuts hold on?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Wheel"
+      ],
+      "correct": 3,
+      "explanation": "Lug nuts fasten the wheel to the vehicle hub."
+    },
+    {
+      "id": "automotive_easy_092",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a hubcap used for?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Wheel cover",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "A hubcap covers part of a wheel, often for looks or protection."
+    },
+    {
+      "id": "automotive_easy_093",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which item helps jump-start a weak battery?",
+      "answers": [
+        "Steering wheel",
+        "Jumper cables",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Jumper cables can connect a weak battery to another power source."
+    },
+    {
+      "id": "automotive_easy_094",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does a tow truck do?",
+      "answers": [
+        "Steering wheel",
+        "Moves disabled vehicles",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Tow trucks move vehicles that cannot or should not be driven."
+    },
+    {
+      "id": "automotive_easy_095",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is road salt mainly used for?",
+      "answers": [
+        "Steering wheel",
+        "Melting ice",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Road salt helps melt ice but can also contribute to rust."
+    },
+    {
+      "id": "automotive_easy_096",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is rust?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Metal corrosion"
+      ],
+      "correct": 3,
+      "explanation": "Rust is corrosion that forms on iron or steel when exposed to moisture and oxygen."
+    },
+    {
+      "id": "automotive_easy_097",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which vehicle is often used off-road for trails?",
+      "answers": [
+        "Jeep Wrangler",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "The Jeep Wrangler is a common trail and off-road vehicle."
+    },
+    {
+      "id": "automotive_easy_098",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does payload mean for a vehicle?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Weight it can carry",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Payload is the weight a vehicle can safely carry in or on it."
+    },
+    {
+      "id": "automotive_easy_099",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is towing capacity?",
+      "answers": [
+        "Steering wheel",
+        "Weight it can tow",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Towing capacity is the trailer weight a vehicle is rated to pull."
+    },
+    {
+      "id": "automotive_easy_100",
+      "category": "Automotive",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does a blind spot mirror help reveal?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Hidden nearby vehicles",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Blind spot mirrors widen the view beside and behind the vehicle."
+    },
+    {
+      "id": "automotive_medium_001",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which drivetrain layout sends power to the rear wheels?",
+      "answers": [
+        "Rear-wheel drive",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Rear-wheel drive sends engine or motor power mainly to the rear wheels."
+    },
+    {
+      "id": "automotive_medium_002",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does turbocharging use to boost engine air?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Exhaust energy",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "A turbocharger uses exhaust flow to spin a compressor for intake air."
+    },
+    {
+      "id": "automotive_medium_003",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which part turns engine motion into wheel motion?",
+      "answers": [
+        "Driveshaft",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "A driveshaft transfers rotating power toward the axle or differential."
+    },
+    {
+      "id": "automotive_medium_004",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does the differential allow during a turn?",
+      "answers": [
+        "Different wheel speeds",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "A differential lets left and right wheels rotate at different speeds."
+    },
+    {
+      "id": "automotive_medium_005",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which brake part is squeezed by pads on many cars?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Rotor",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Disc brake pads squeeze the rotor to create stopping friction."
+    },
+    {
+      "id": "automotive_medium_006",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does traction control usually reduce?",
+      "answers": [
+        "Steering wheel",
+        "Wheel spin",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Traction control cuts power or applies brakes to reduce wheel spin."
+    },
+    {
+      "id": "automotive_medium_007",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which system uses sensors to help prevent skids?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Stability control",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Stability control compares vehicle motion with steering input."
+    },
+    {
+      "id": "automotive_medium_008",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does octane rating describe?",
+      "answers": [
+        "Steering wheel",
+        "Knock resistance",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Octane measures a fuel’s resistance to knock in gasoline engines."
+    },
+    {
+      "id": "automotive_medium_009",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which fluid helps an automatic gearbox shift?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Transmission fluid",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Automatic transmissions use fluid for pressure, cooling, and lubrication."
+    },
+    {
+      "id": "automotive_medium_010",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does a catalytic converter reduce?",
+      "answers": [
+        "Exhaust pollutants",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "A catalytic converter helps change harmful exhaust gases into less harmful ones."
+    },
+    {
+      "id": "automotive_medium_011",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which part meters fuel into many engines?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel injector",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Fuel injectors spray measured fuel into the intake or cylinder."
+    },
+    {
+      "id": "automotive_medium_012",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does a timing belt or chain coordinate?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Valves and crankshaft"
+      ],
+      "correct": 3,
+      "explanation": "Timing systems keep camshafts synchronized with the crankshaft."
+    },
+    {
+      "id": "automotive_medium_013",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which maintenance item commonly uses viscosity numbers?",
+      "answers": [
+        "Engine oil",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Oil labels such as 5W-30 describe viscosity behavior."
+    },
+    {
+      "id": "automotive_medium_014",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does TPMS monitor?",
+      "answers": [
+        "Steering wheel",
+        "Tire pressure",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "TPMS warns when tire pressure is low or outside range."
+    },
+    {
+      "id": "automotive_medium_015",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which alignment angle tilts a wheel inward or outward?",
+      "answers": [
+        "Camber",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Camber is the inward or outward tilt of a wheel from vertical."
+    },
+    {
+      "id": "automotive_medium_016",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does wheel alignment mainly affect?",
+      "answers": [
+        "Steering wheel",
+        "Tire wear and tracking",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Alignment helps a vehicle track straight and reduces uneven tire wear."
+    },
+    {
+      "id": "automotive_medium_017",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which part absorbs bumps with the spring?",
+      "answers": [
+        "Shock absorber",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Shocks damp spring movement so the vehicle does not keep bouncing."
+    },
+    {
+      "id": "automotive_medium_018",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is unsprung weight?",
+      "answers": [
+        "Steering wheel",
+        "Weight not held by springs",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Wheels, tires, and some suspension parts are unsprung weight."
+    },
+    {
+      "id": "automotive_medium_019",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which vehicle system includes control arms?",
+      "answers": [
+        "Steering wheel",
+        "Suspension",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Control arms locate wheels as the suspension moves."
+    },
+    {
+      "id": "automotive_medium_020",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does a serpentine belt often drive?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Engine accessories",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "A serpentine belt can drive the alternator, pump, and compressor."
+    },
+    {
+      "id": "automotive_medium_021",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which component starts the engine spinning?",
+      "answers": [
+        "Starter motor",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "The starter motor turns the engine until it can run on its own."
+    },
+    {
+      "id": "automotive_medium_022",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does a radiator fan help do?",
+      "answers": [
+        "Move cooling air",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Radiator fans pull or push air through the radiator at low speeds."
+    },
+    {
+      "id": "automotive_medium_023",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which part filters fuel before it reaches the engine?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel filter",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "A fuel filter catches debris that could clog injectors or carburetors."
+    },
+    {
+      "id": "automotive_medium_024",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does a cabin air filter clean?",
+      "answers": [
+        "Steering wheel",
+        "Air entering cabin",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Cabin filters reduce dust and pollen in the heating and AC system."
+    },
+    {
+      "id": "automotive_medium_025",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which sensor helps measure oxygen in exhaust?",
+      "answers": [
+        "1",
+        "3",
+        "4",
+        "O2 sensor"
+      ],
+      "correct": 3,
+      "explanation": "Oxygen sensors help the engine computer adjust fuel mixture."
+    },
+    {
+      "id": "automotive_medium_026",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does OBD-II help technicians read?",
+      "answers": [
+        "Steering wheel",
+        "Vehicle trouble codes",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "OBD-II provides standardized diagnostic data and fault codes."
+    },
+    {
+      "id": "automotive_medium_027",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which part connects steering to front wheels?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Tie rod"
+      ],
+      "correct": 3,
+      "explanation": "Tie rods transmit steering movement to the wheels."
+    },
+    {
+      "id": "automotive_medium_028",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does a ball joint allow?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Suspension pivoting"
+      ],
+      "correct": 3,
+      "explanation": "Ball joints let suspension parts move while supporting steering angles."
+    },
+    {
+      "id": "automotive_medium_029",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which part stores fuel vapor for emissions control?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Charcoal canister",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "A charcoal canister traps fuel vapors so they can be burned later."
+    },
+    {
+      "id": "automotive_medium_030",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does regenerative braking recover?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Energy while slowing",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Regenerative braking turns some motion energy back into electricity."
+    },
+    {
+      "id": "automotive_medium_031",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which vehicle commonly uses a transfer case?",
+      "answers": [
+        "Four-wheel-drive truck",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "A transfer case sends power to front and rear axles in 4WD systems."
+    },
+    {
+      "id": "automotive_medium_032",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does low range help with off-road?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Slow torque control",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Low range multiplies torque for crawling and steep terrain."
+    },
+    {
+      "id": "automotive_medium_033",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which tire feature improves mud traction?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Deep tread lugs"
+      ],
+      "correct": 3,
+      "explanation": "Deep tread lugs can bite into loose dirt and mud."
+    },
+    {
+      "id": "automotive_medium_034",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is approach angle about?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Climbing without bumper hit"
+      ],
+      "correct": 3,
+      "explanation": "Approach angle measures how steep an obstacle a front bumper can clear."
+    },
+    {
+      "id": "automotive_medium_035",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does ground clearance measure?",
+      "answers": [
+        "Steering wheel",
+        "Height under vehicle",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Ground clearance is space between the lowest vehicle area and ground."
+    },
+    {
+      "id": "automotive_medium_036",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which off-road aid can lock axle speed side to side?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Differential locker"
+      ],
+      "correct": 3,
+      "explanation": "A locker forces wheels on an axle to turn together for traction."
+    },
+    {
+      "id": "automotive_medium_037",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is a winch used for?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Pulling a stuck vehicle",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "A winch can pull a vehicle or object using a powered cable."
+    },
+    {
+      "id": "automotive_medium_038",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which item helps lower tire pressure for trails?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Tire deflator"
+      ],
+      "correct": 3,
+      "explanation": "Deflators make airing down quicker and more controlled."
+    },
+    {
+      "id": "automotive_medium_039",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Why air down tires off-road?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Increase contact patch",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Lower pressure can improve traction and ride on rough surfaces."
+    },
+    {
+      "id": "automotive_medium_040",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What should refill tires after trails?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Air compressor"
+      ],
+      "correct": 3,
+      "explanation": "A portable compressor restores safe road pressure after airing down."
+    },
+    {
+      "id": "automotive_medium_041",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which recovery point should be used?",
+      "answers": [
+        "Rated tow point",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Recovery loads should attach only to rated recovery points."
+    },
+    {
+      "id": "automotive_medium_042",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does GVWR mean?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Max loaded vehicle weight"
+      ],
+      "correct": 3,
+      "explanation": "GVWR is the maximum safe total weight of a loaded vehicle."
+    },
+    {
+      "id": "automotive_medium_043",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does tongue weight describe?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Trailer weight on hitch",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Tongue weight is the downward load a trailer places on the hitch."
+    },
+    {
+      "id": "automotive_medium_044",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which trailer issue can cause swaying?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Poor weight balance",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Improper trailer loading can make sway more likely."
+    },
+    {
+      "id": "automotive_medium_045",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does a brake controller operate?",
+      "answers": [
+        "Steering wheel",
+        "Trailer brakes",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "A brake controller sends braking commands to trailer brakes."
+    },
+    {
+      "id": "automotive_medium_046",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which connector often powers trailer lights?",
+      "answers": [
+        "Steering wheel",
+        "Trailer wiring plug",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Trailer plugs connect turn signals, brake lights, and sometimes brakes."
+    },
+    {
+      "id": "automotive_medium_047",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is payload reduced by?",
+      "answers": [
+        "Passengers and cargo",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Passengers, cargo, and accessories count against payload capacity."
+    },
+    {
+      "id": "automotive_medium_048",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which vehicle is Toyota’s long-running off-road SUV?",
+      "answers": [
+        "Land Cruiser",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "The Land Cruiser is known globally for durability and off-road use."
+    },
+    {
+      "id": "automotive_medium_049",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which model name is tied to Ford’s pony car?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Mustang"
+      ],
+      "correct": 3,
+      "explanation": "The Mustang helped define the pony car segment."
+    },
+    {
+      "id": "automotive_medium_050",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Chevrolet sports car has used the Corvette name?",
+      "answers": [
+        "Corvette",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "The Corvette is Chevrolet’s long-running American sports car."
+    },
+    {
+      "id": "automotive_medium_051",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What engine layout is Subaru famous for?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Flat boxer"
+      ],
+      "correct": 3,
+      "explanation": "Subaru is known for horizontally opposed boxer engines."
+    },
+    {
+      "id": "automotive_medium_052",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which company popularized mass production with the Model T?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Ford"
+      ],
+      "correct": 3,
+      "explanation": "Ford’s Model T and assembly-line methods changed car manufacturing."
+    },
+    {
+      "id": "automotive_medium_053",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which brand uses the prancing horse logo?",
+      "answers": [
+        "Steering wheel",
+        "Ferrari",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Ferrari’s logo features a prancing horse."
+    },
+    {
+      "id": "automotive_medium_054",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Italian brand made the Countach and Aventador?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Lamborghini",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Lamborghini produced the Countach and Aventador supercars."
+    },
+    {
+      "id": "automotive_medium_055",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does SUV stand for?",
+      "answers": [
+        "Sport Utility Vehicle",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "SUV stands for Sport Utility Vehicle."
+    },
+    {
+      "id": "automotive_medium_056",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which vehicle class blends car and SUV traits?",
+      "answers": [
+        "Crossover",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Crossovers usually blend car-like platforms with SUV-style utility."
+    },
+    {
+      "id": "automotive_medium_057",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is a hatchback known for?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Rear liftgate cargo access",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "A hatchback has a rear door that opens upward for cargo access."
+    },
+    {
+      "id": "automotive_medium_058",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which transmission uses a clutch pedal?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Manual transmission",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Manual transmissions use a clutch pedal and gear selector."
+    },
+    {
+      "id": "automotive_medium_059",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does CVT stand for?",
+      "answers": [
+        "Continuously Variable Transmission",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "A CVT changes ratios smoothly instead of using fixed gears."
+    },
+    {
+      "id": "automotive_medium_060",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does oversteer mean?",
+      "answers": [
+        "Rear loses grip first",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Oversteer happens when the rear of the vehicle rotates more than intended."
+    },
+    {
+      "id": "automotive_medium_061",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does understeer mean?",
+      "answers": [
+        "Front pushes wide",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Understeer happens when the front tires do not turn enough."
+    },
+    {
+      "id": "automotive_medium_062",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which factor can cause hydroplaning?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Water under tires",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Hydroplaning occurs when tires ride on water instead of road surface."
+    },
+    {
+      "id": "automotive_medium_063",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is brake fade?",
+      "answers": [
+        "Reduced braking from heat",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Brake fade happens when heat reduces braking effectiveness."
+    },
+    {
+      "id": "automotive_medium_064",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which part holds brake pads around a rotor?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Caliper",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "The caliper squeezes brake pads against the rotor."
+    },
+    {
+      "id": "automotive_medium_065",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does engine displacement measure?",
+      "answers": [
+        "Cylinder volume",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Displacement is the total swept volume of engine cylinders."
+    },
+    {
+      "id": "automotive_medium_066",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which cylinder layout is called a V8?",
+      "answers": [
+        "Eight cylinders in a V",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "A V8 has eight cylinders arranged in two banks."
+    },
+    {
+      "id": "automotive_medium_067",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is torque useful for?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Twisting force",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Torque is rotational force, useful for launching, towing, and climbing."
+    },
+    {
+      "id": "automotive_medium_068",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does horsepower describe?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Rate of doing work"
+      ],
+      "correct": 3,
+      "explanation": "Horsepower measures how quickly work can be done."
+    },
+    {
+      "id": "automotive_medium_069",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which part mixed air and fuel on older engines?",
+      "answers": [
+        "Steering wheel",
+        "Carburetor",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Carburetors were common before electronic fuel injection."
+    },
+    {
+      "id": "automotive_medium_070",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What replaced carburetors on most modern cars?",
+      "answers": [
+        "Steering wheel",
+        "Fuel injection",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Fuel injection meters fuel more precisely than most carburetors."
+    },
+    {
+      "id": "automotive_medium_071",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which fluid cools many automatic transmissions?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "ATF"
+      ],
+      "correct": 3,
+      "explanation": "Automatic transmission fluid handles pressure, cooling, and lubrication."
+    },
+    {
+      "id": "automotive_medium_072",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does a clutch do in a manual car?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Connects engine to gearbox",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "The clutch disconnects and reconnects engine power during shifts."
+    },
+    {
+      "id": "automotive_medium_073",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which component reduces engine vibration?",
+      "answers": [
+        "Steering wheel",
+        "Engine mount",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Engine mounts secure the engine and absorb vibration."
+    },
+    {
+      "id": "automotive_medium_074",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is an intercooler used with?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Turbo or supercharger",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Intercoolers cool compressed intake air before it enters the engine."
+    },
+    {
+      "id": "automotive_medium_075",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which device compresses air using engine power?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Supercharger"
+      ],
+      "correct": 3,
+      "explanation": "A supercharger is mechanically driven to force more air into the engine."
+    },
+    {
+      "id": "automotive_medium_076",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is engine braking?",
+      "answers": [
+        "Slowing by drivetrain drag",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Engine braking uses drivetrain resistance to slow the vehicle."
+    },
+    {
+      "id": "automotive_medium_077",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which part stores engine oil?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Oil pan"
+      ],
+      "correct": 3,
+      "explanation": "The oil pan sits below the engine and holds oil for circulation."
+    },
+    {
+      "id": "automotive_medium_078",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does the dipstick check?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Oil level",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "A dipstick shows the engine oil level on many vehicles."
+    },
+    {
+      "id": "automotive_medium_079",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which system keeps cabin glass clear in cold weather?",
+      "answers": [
+        "Defroster",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Defrosters direct warm air to clear fog or frost from glass."
+    },
+    {
+      "id": "automotive_medium_080",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does blind-spot monitoring detect?",
+      "answers": [
+        "Steering wheel",
+        "Vehicles beside rear corners",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Blind-spot systems watch areas beside and behind the vehicle."
+    },
+    {
+      "id": "automotive_medium_081",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which driver aid keeps distance on highways?",
+      "answers": [
+        "Adaptive cruise control",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Adaptive cruise can adjust speed to maintain following distance."
+    },
+    {
+      "id": "automotive_medium_082",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does lane keep assist try to do?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Help stay in lane"
+      ],
+      "correct": 3,
+      "explanation": "Lane keep assist can gently steer or warn if drifting from a lane."
+    },
+    {
+      "id": "automotive_medium_083",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which part turns fuel energy into motion?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Engine",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Engines convert fuel energy into mechanical motion."
+    },
+    {
+      "id": "automotive_medium_084",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does a heat shield protect against?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Exhaust heat",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Heat shields protect nearby parts from high exhaust temperatures."
+    },
+    {
+      "id": "automotive_medium_085",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which component recirculates exhaust gas?",
+      "answers": [
+        "EGR valve",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "An EGR valve sends some exhaust back into the intake to reduce emissions."
+    },
+    {
+      "id": "automotive_medium_086",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does a mass airflow sensor measure?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Air entering engine",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "MAF sensors measure intake air so fuel can be metered correctly."
+    },
+    {
+      "id": "automotive_medium_087",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which part supports the wheel and lets it spin?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Wheel bearing"
+      ],
+      "correct": 3,
+      "explanation": "Wheel bearings support rotating wheels with low friction."
+    },
+    {
+      "id": "automotive_medium_088",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is a wheelbase?",
+      "answers": [
+        "Distance between axles",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Wheelbase is the distance between front and rear axles."
+    },
+    {
+      "id": "automotive_medium_089",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does curb weight mean?",
+      "answers": [
+        "Vehicle weight without cargo",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Curb weight is the vehicle’s weight with standard equipment and fluids."
+    },
+    {
+      "id": "automotive_medium_090",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which road surface usually gives less grip?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Ice"
+      ],
+      "correct": 3,
+      "explanation": "Ice greatly reduces tire traction compared with dry roads."
+    },
+    {
+      "id": "automotive_medium_091",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is a recall?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Safety or defect repair notice"
+      ],
+      "correct": 3,
+      "explanation": "A recall tells owners that a safety or defect repair is needed."
+    },
+    {
+      "id": "automotive_medium_092",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does maintenance history help show?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Care over time",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Maintenance records can show how well a vehicle was cared for."
+    },
+    {
+      "id": "automotive_medium_093",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which document proves legal vehicle ownership?",
+      "answers": [
+        "Title",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "A vehicle title is the legal ownership document in many places."
+    },
+    {
+      "id": "automotive_medium_094",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is registration for?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Legal road use record"
+      ],
+      "correct": 3,
+      "explanation": "Registration records a vehicle for legal use on public roads."
+    },
+    {
+      "id": "automotive_medium_095",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which insurance coverage pays others for damage you cause?",
+      "answers": [
+        "Steering wheel",
+        "Liability",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Liability coverage helps pay for injury or damage you cause to others."
+    },
+    {
+      "id": "automotive_medium_096",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does a deductible mean in insurance?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Amount you pay first"
+      ],
+      "correct": 3,
+      "explanation": "A deductible is the amount you pay before insurance covers a claim."
+    },
+    {
+      "id": "automotive_medium_097",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which gauge warns of engine heat problems?",
+      "answers": [
+        "Steering wheel",
+        "Temperature gauge",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "A temperature gauge helps show when an engine is running too hot."
+    },
+    {
+      "id": "automotive_medium_098",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which item helps prevent battery terminal corrosion?",
+      "answers": [
+        "Terminal protectant",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Battery terminals need clean contact to carry starting current."
+    },
+    {
+      "id": "automotive_medium_099",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does balancing a wheel reduce?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Vibration",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Wheel balancing helps reduce vibration at road speeds."
+    },
+    {
+      "id": "automotive_medium_100",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which device measures engine compression?",
+      "answers": [
+        "Steering wheel",
+        "Compression tester",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "A compression tester checks cylinder sealing pressure."
+    },
+    {
+      "id": "automotive_medium_101",
+      "category": "Automotive",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is often called the first practical automobile?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Benz Patent-Motorwagen"
+      ],
+      "correct": 3,
+      "explanation": "Benz Patent-Motorwagen is the correct answer."
+    },
+    {
+      "id": "automotive_hard_001",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Mercedes model used gullwing doors in the 1950s?",
+      "answers": [
+        "298",
+        "299",
+        "300 SL",
+        "301"
+      ],
+      "correct": 2,
+      "explanation": "The Mercedes-Benz 300 SL is famous for its gullwing doors."
+    },
+    {
+      "id": "automotive_hard_002",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does DOHC mean on an engine?",
+      "answers": [
+        "Steering wheel",
+        "Dual Overhead Cam",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "DOHC engines use two camshafts above each cylinder bank."
+    },
+    {
+      "id": "automotive_hard_003",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which company created the rotary-powered RX-7?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Mazda"
+      ],
+      "correct": 3,
+      "explanation": "Mazda is strongly associated with Wankel rotary sports cars."
+    },
+    {
+      "id": "automotive_hard_004",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What type of engine is a Wankel?",
+      "answers": [
+        "Steering wheel",
+        "Rotary engine",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "A Wankel uses a rotating triangular rotor instead of pistons."
+    },
+    {
+      "id": "automotive_hard_005",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which suspension layout uses a strut as a main member?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "MacPherson strut",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "MacPherson struts combine spring, damper, and locating structure."
+    },
+    {
+      "id": "automotive_hard_006",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does a limited-slip differential reduce?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "One-wheel spin",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Limited-slip differentials help share torque when one wheel slips."
+    },
+    {
+      "id": "automotive_hard_007",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which term describes controlled sideways driving?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Drifting"
+      ],
+      "correct": 3,
+      "explanation": "Drifting intentionally holds a slide through a corner."
+    },
+    {
+      "id": "automotive_hard_008",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which racing event is held near Le Mans, France?",
+      "answers": [
+        "22",
+        "23",
+        "24 Hours of Le Mans",
+        "25"
+      ],
+      "correct": 2,
+      "explanation": "Le Mans is a famous endurance race run over 24 hours."
+    },
+    {
+      "id": "automotive_hard_009",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is the Nürburgring Nordschleife known as?",
+      "answers": [
+        "Steering wheel",
+        "Long German track",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "The Nordschleife is a long, demanding circuit in Germany."
+    },
+    {
+      "id": "automotive_hard_010",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Ford won Le Mans in the 1960s?",
+      "answers": [
+        "38",
+        "GT40",
+        "39",
+        "41"
+      ],
+      "correct": 1,
+      "explanation": "The Ford GT40 famously beat Ferrari at Le Mans."
+    },
+    {
+      "id": "automotive_hard_011",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does homologation mean in racing?",
+      "answers": [
+        "Road version for rules",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Some race classes require road cars to qualify a design."
+    },
+    {
+      "id": "automotive_hard_012",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Porsche model is known for rear-engine layout?",
+      "answers": [
+        "909",
+        "911",
+        "910",
+        "912"
+      ],
+      "correct": 1,
+      "explanation": "The Porsche 911 keeps its engine behind the rear axle."
+    },
+    {
+      "id": "automotive_hard_013",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is a boxer engine?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Flat opposed pistons"
+      ],
+      "correct": 3,
+      "explanation": "Boxer pistons move horizontally opposed to each other."
+    },
+    {
+      "id": "automotive_hard_014",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which device measures air-fuel ratio in exhaust?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Wideband oxygen sensor",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Wideband sensors read mixture more precisely than narrowband sensors."
+    },
+    {
+      "id": "automotive_hard_015",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does stoichiometric mean for gasoline engines?",
+      "answers": [
+        "Ideal air-fuel balance",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Stoichiometric mixture burns fuel with chemically balanced air."
+    },
+    {
+      "id": "automotive_hard_016",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which emissions system catches fuel vapors?",
+      "answers": [
+        "Steering wheel",
+        "EVAP system",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "EVAP systems store and later burn fuel vapors."
+    },
+    {
+      "id": "automotive_hard_017",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does EGR mainly help reduce?",
+      "answers": [
+        "Steering wheel",
+        "NOx emissions",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Exhaust gas recirculation lowers combustion temperature to reduce NOx."
+    },
+    {
+      "id": "automotive_hard_018",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which sensor tells the ECU crank position?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Crankshaft sensor"
+      ],
+      "correct": 3,
+      "explanation": "The crankshaft sensor reports engine position and speed."
+    },
+    {
+      "id": "automotive_hard_019",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does a MAP sensor measure?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Intake manifold pressure"
+      ],
+      "correct": 3,
+      "explanation": "MAP sensors read manifold absolute pressure for engine control."
+    },
+    {
+      "id": "automotive_hard_020",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which term means the engine runs too lean?",
+      "answers": [
+        "Steering wheel",
+        "Too much air",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "A lean mixture has more air relative to fuel than intended."
+    },
+    {
+      "id": "automotive_hard_021",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is detonation in an engine?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Abnormal combustion"
+      ],
+      "correct": 3,
+      "explanation": "Detonation is uncontrolled combustion that can damage engines."
+    },
+    {
+      "id": "automotive_hard_022",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which component can reduce engine knock timing?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Knock sensor",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Knock sensors detect vibration from knock so timing can be adjusted."
+    },
+    {
+      "id": "automotive_hard_023",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does variable valve timing change?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Valve timing",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "VVT changes when valves open and close for efficiency or power."
+    },
+    {
+      "id": "automotive_hard_024",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which part opens and closes intake flow in many engines?",
+      "answers": [
+        "Throttle body",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "The throttle body controls airflow into many gasoline engines."
+    },
+    {
+      "id": "automotive_hard_025",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does a wastegate control?",
+      "answers": [
+        "Steering wheel",
+        "Turbo boost",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "A wastegate bypasses exhaust around a turbo to control boost."
+    },
+    {
+      "id": "automotive_hard_026",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which turbo problem causes delayed power response?",
+      "answers": [
+        "Turbo lag",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Turbo lag is delay while the turbo builds boost."
+    },
+    {
+      "id": "automotive_hard_027",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does an intercooler lower?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Intake air temperature",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Cooler intake air is denser and can help performance."
+    },
+    {
+      "id": "automotive_hard_028",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which drivetrain term means equal front and rear axle speed?",
+      "answers": [
+        "Locked center differential",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "A locked center differential forces front and rear outputs together."
+    },
+    {
+      "id": "automotive_hard_029",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does crawl ratio help describe?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Low-speed gearing"
+      ],
+      "correct": 3,
+      "explanation": "Crawl ratio combines gearing to show slow-speed torque multiplication."
+    },
+    {
+      "id": "automotive_hard_030",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which axle design has a solid beam across both wheels?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Solid axle"
+      ],
+      "correct": 3,
+      "explanation": "A solid axle connects left and right wheels in one housing."
+    },
+    {
+      "id": "automotive_hard_031",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which suspension lets each wheel move separately?",
+      "answers": [
+        "Steering wheel",
+        "Independent suspension",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Independent suspension allows one wheel to move without directly moving the other."
+    },
+    {
+      "id": "automotive_hard_032",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is a leaf spring?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Stacked spring strips"
+      ],
+      "correct": 3,
+      "explanation": "Leaf springs use curved metal strips to support weight."
+    },
+    {
+      "id": "automotive_hard_033",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which link locates a solid axle side to side?",
+      "answers": [
+        "Steering wheel",
+        "Panhard bar",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "A Panhard bar controls lateral axle movement."
+    },
+    {
+      "id": "automotive_hard_034",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is a sway bar also called?",
+      "answers": [
+        "Steering wheel",
+        "Anti-roll bar",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "A sway bar reduces body roll during cornering."
+    },
+    {
+      "id": "automotive_hard_035",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does caster affect in steering?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Self-centering feel",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Caster angle influences straight-line stability and steering return."
+    },
+    {
+      "id": "automotive_hard_036",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which wheel term describes side-to-side tire angle?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Toe",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Toe is whether wheels point inward or outward from above."
+    },
+    {
+      "id": "automotive_hard_037",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does offset describe on a wheel?",
+      "answers": [
+        "Steering wheel",
+        "Mounting face position",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Wheel offset is the hub mounting face position relative to centerline."
+    },
+    {
+      "id": "automotive_hard_038",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which term describes tire sidewall height ratio?",
+      "answers": [
+        "Steering wheel",
+        "Aspect ratio",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Aspect ratio is sidewall height as a percent of tire width."
+    },
+    {
+      "id": "automotive_hard_039",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does LT on a tire often indicate?",
+      "answers": [
+        "Steering wheel",
+        "Light Truck",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "LT tires are designed for light truck use."
+    },
+    {
+      "id": "automotive_hard_040",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which tire construction is most common today?",
+      "answers": [
+        "Steering wheel",
+        "Radial",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Radial tires are standard on most modern vehicles."
+    },
+    {
+      "id": "automotive_hard_041",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is beadlock hardware used for?",
+      "answers": [
+        "Steering wheel",
+        "Holding tire bead",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Beadlocks help keep a tire bead seated at low pressure."
+    },
+    {
+      "id": "automotive_hard_042",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which safety system is called SRS?",
+      "answers": [
+        "Steering wheel",
+        "Airbag restraint system",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "SRS refers to supplemental restraint systems such as airbags."
+    },
+    {
+      "id": "automotive_hard_043",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does ESC stand for in safety systems?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Electronic Stability Control",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "ESC helps correct skids using brakes and engine control."
+    },
+    {
+      "id": "automotive_hard_044",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does AEB usually mean?",
+      "answers": [
+        "Automatic Emergency Braking",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "AEB can brake automatically if a collision risk is detected."
+    },
+    {
+      "id": "automotive_hard_045",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which charging standard is used by many EV fast chargers?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "CCS"
+      ],
+      "correct": 3,
+      "explanation": "CCS is a common combined charging system for EVs."
+    },
+    {
+      "id": "automotive_hard_046",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does kWh measure in an EV battery?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Stored energy"
+      ],
+      "correct": 3,
+      "explanation": "Kilowatt-hours measure the energy capacity of a battery."
+    },
+    {
+      "id": "automotive_hard_047",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which EV part changes DC battery power for the motor?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Inverter"
+      ],
+      "correct": 3,
+      "explanation": "An inverter converts DC battery power to AC for many EV motors."
+    },
+    {
+      "id": "automotive_hard_048",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does regenerative braking feed?",
+      "answers": [
+        "Steering wheel",
+        "Battery",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Regeneration sends recovered electrical energy back to the battery."
+    },
+    {
+      "id": "automotive_hard_049",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which battery chemistry is common in EVs?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Lithium-ion"
+      ],
+      "correct": 3,
+      "explanation": "Lithium-ion batteries are common because of energy density."
+    },
+    {
+      "id": "automotive_hard_050",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does thermal management protect in EVs?",
+      "answers": [
+        "Steering wheel",
+        "Battery temperature",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "EV batteries need temperature control for life and performance."
+    },
+    {
+      "id": "automotive_hard_051",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which hybrid layout can drive on electric power alone?",
+      "answers": [
+        "Steering wheel",
+        "Full hybrid",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Full hybrids can move using electric power under some conditions."
+    },
+    {
+      "id": "automotive_hard_052",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does a mild hybrid usually assist?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Engine start and boost",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Mild hybrids assist but usually cannot drive far on electric power alone."
+    },
+    {
+      "id": "automotive_hard_053",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which early mass-market hybrid was Toyota’s model?",
+      "answers": [
+        "Steering wheel",
+        "Prius",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "The Prius made hybrid cars familiar to many drivers."
+    },
+    {
+      "id": "automotive_hard_054",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is trail braking?",
+      "answers": [
+        "Braking into a corner",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Trail braking gradually releases brake pressure while turning in."
+    },
+    {
+      "id": "automotive_hard_055",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is heel-and-toe shifting for?",
+      "answers": [
+        "Steering wheel",
+        "Rev-matched downshifts",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Heel-and-toe lets a driver brake and match revs while downshifting."
+    },
+    {
+      "id": "automotive_hard_056",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does rev matching reduce?",
+      "answers": [
+        "Shift shock",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Rev matching aligns engine and gearbox speeds during downshifts."
+    },
+    {
+      "id": "automotive_hard_057",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which part in an automatic multiplies torque at launch?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Torque converter",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "A torque converter transfers and can multiply torque using fluid."
+    },
+    {
+      "id": "automotive_hard_058",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is final drive ratio?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Axle gear ratio",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Final drive is the gear reduction between transmission and wheels."
+    },
+    {
+      "id": "automotive_hard_059",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which term means engine cylinder diameter?",
+      "answers": [
+        "Bore",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Bore is the diameter of an engine cylinder."
+    },
+    {
+      "id": "automotive_hard_060",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which term means piston travel distance?",
+      "answers": [
+        "Stroke",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Stroke is how far the piston travels in the cylinder."
+    },
+    {
+      "id": "automotive_hard_061",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does compression ratio compare?",
+      "answers": [
+        "Steering wheel",
+        "Cylinder volumes",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Compression ratio compares cylinder volume before and after compression."
+    },
+    {
+      "id": "automotive_hard_062",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which engine layout has cylinders in one row?",
+      "answers": [
+        "Steering wheel",
+        "Inline engine",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Inline engines arrange cylinders in a straight line."
+    },
+    {
+      "id": "automotive_hard_063",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which layout uses two cylinder banks at an angle?",
+      "answers": [
+        "V engine",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "V engines use two angled cylinder banks sharing a crankshaft."
+    },
+    {
+      "id": "automotive_hard_064",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does forced induction mean?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Compressed intake air"
+      ],
+      "correct": 3,
+      "explanation": "Forced induction uses a turbo or supercharger to increase intake air."
+    },
+    {
+      "id": "automotive_hard_065",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does naturally aspirated mean?",
+      "answers": [
+        "Steering wheel",
+        "No forced induction",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Naturally aspirated engines breathe without turbo or supercharger boost."
+    },
+    {
+      "id": "automotive_hard_066",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which part seals the gap between piston and cylinder?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Piston ring"
+      ],
+      "correct": 3,
+      "explanation": "Piston rings seal combustion pressure and control oil."
+    },
+    {
+      "id": "automotive_hard_067",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does a head gasket seal?",
+      "answers": [
+        "Block to cylinder head",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "The head gasket seals coolant, oil, and combustion between block and head."
+    },
+    {
+      "id": "automotive_hard_068",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which failure can mix coolant and oil?",
+      "answers": [
+        "Steering wheel",
+        "Head gasket failure",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "A failed head gasket can let fluids mix or combustion leak."
+    },
+    {
+      "id": "automotive_hard_069",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is pre-ignition?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel ignites too early",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Pre-ignition occurs before the intended spark timing."
+    },
+    {
+      "id": "automotive_hard_070",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which system uses a compressor to cool cabin air?",
+      "answers": [
+        "Steering wheel",
+        "Air conditioning",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Automotive AC uses a compressor, condenser, and evaporator."
+    },
+    {
+      "id": "automotive_hard_071",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does a condenser do in AC?",
+      "answers": [
+        "Rejects heat",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "The condenser releases heat from refrigerant to outside air."
+    },
+    {
+      "id": "automotive_hard_072",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which AC part cools air inside the cabin?",
+      "answers": [
+        "Steering wheel",
+        "Evaporator",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "The evaporator absorbs heat from cabin air."
+    },
+    {
+      "id": "automotive_hard_073",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does a thermostat regulate?",
+      "answers": [
+        "Coolant flow",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "A thermostat opens and closes to manage engine temperature."
+    },
+    {
+      "id": "automotive_hard_074",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which cooling problem can a stuck thermostat cause?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Overheating",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "A stuck thermostat can block coolant flow and overheat an engine."
+    },
+    {
+      "id": "automotive_hard_075",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does brake bias describe?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Front-rear brake force",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Brake bias is how braking force is split between front and rear."
+    },
+    {
+      "id": "automotive_hard_076",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which motorsport starts from a timed light tree?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Drag racing",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Drag racing starts often use a sequence of staging lights."
+    },
+    {
+      "id": "automotive_hard_077",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is autocross usually run against?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Clock",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Autocross is a timed course, often in a parking lot or open area."
+    },
+    {
+      "id": "automotive_hard_078",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which motorsport uses co-drivers and pace notes?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Rally",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Rally teams use pace notes to describe the road ahead."
+    },
+    {
+      "id": "automotive_hard_079",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is drafting in racing?",
+      "answers": [
+        "Following in reduced air",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Drafting uses another vehicle’s wake to reduce aerodynamic drag."
+    },
+    {
+      "id": "automotive_hard_080",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does downforce increase?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Tire grip",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Downforce pushes a vehicle toward the road to improve grip."
+    },
+    {
+      "id": "automotive_hard_081",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which part can create downforce at the rear?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Wing"
+      ],
+      "correct": 3,
+      "explanation": "A rear wing can shape airflow to add downforce."
+    },
+    {
+      "id": "automotive_hard_082",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does aerodynamic drag resist?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Vehicle motion",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Drag is air resistance opposing a vehicle’s movement."
+    },
+    {
+      "id": "automotive_hard_083",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which shape usually lowers drag?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Streamlined body",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Streamlined shapes help air flow with less resistance."
+    },
+    {
+      "id": "automotive_hard_084",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does a spoiler often disrupt?",
+      "answers": [
+        "Unwanted airflow",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Spoilers can change airflow to reduce lift or improve stability."
+    },
+    {
+      "id": "automotive_hard_085",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which car is associated with the term pony car?",
+      "answers": [
+        "Ford Mustang",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "The Mustang helped launch the pony car category."
+    },
+    {
+      "id": "automotive_hard_086",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which vehicle is a famous military-derived off-roader?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Jeep",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Jeep’s image is tied to military utility vehicles and off-road use."
+    },
+    {
+      "id": "automotive_hard_087",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which German brand uses the roundel badge?",
+      "answers": [
+        "BMW",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "BMW’s circular badge is often called the roundel."
+    },
+    {
+      "id": "automotive_hard_088",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which brand uses four interlocking rings?",
+      "answers": [
+        "Steering wheel",
+        "Audi",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Audi’s logo uses four interlocking rings."
+    },
+    {
+      "id": "automotive_hard_089",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Swedish brand is known for safety reputation?",
+      "answers": [
+        "Volvo",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Volvo has long marketed and engineered around safety."
+    },
+    {
+      "id": "automotive_hard_090",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Japanese brand made the Skyline GT-R?",
+      "answers": [
+        "Nissan",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Nissan’s Skyline GT-R became a famous performance car."
+    },
+    {
+      "id": "automotive_hard_091",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Mazda roadster is also called the MX-5?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Miata",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "The MX-5 Miata is a lightweight two-seat roadster."
+    },
+    {
+      "id": "automotive_hard_092",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Dodge model name is tied to a muscle car?",
+      "answers": [
+        "Steering wheel",
+        "Challenger",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "The Challenger is one of Dodge’s muscle car names."
+    },
+    {
+      "id": "automotive_hard_093",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Chevrolet pony car competed with Mustang?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount",
+        "Camaro"
+      ],
+      "correct": 3,
+      "explanation": "The Camaro was introduced as Chevrolet’s Mustang rival."
+    },
+    {
+      "id": "automotive_hard_094",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Pontiac model was a classic muscle car?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "GTO",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "The Pontiac GTO helped define the muscle car era."
+    },
+    {
+      "id": "automotive_hard_095",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does restomod mean?",
+      "answers": [
+        "Restored with modern upgrades",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Restomods blend classic looks with modern parts or performance."
+    },
+    {
+      "id": "automotive_hard_096",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is a transaxle?",
+      "answers": [
+        "Combined gearbox and axle",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "A transaxle combines transmission and differential functions."
+    },
+    {
+      "id": "automotive_hard_097",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which layout places engine behind passengers?",
+      "answers": [
+        "Steering wheel",
+        "Mid-engine",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 1,
+      "explanation": "Mid-engine cars place the engine behind seats but ahead of the rear axle."
+    },
+    {
+      "id": "automotive_hard_098",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does torque vectoring adjust?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Power side to side",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Torque vectoring changes wheel torque to help cornering and traction."
+    },
+    {
+      "id": "automotive_hard_099",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which device records crash event data?",
+      "answers": [
+        "Steering wheel",
+        "Brake pedal",
+        "Event data recorder",
+        "Fuel amount"
+      ],
+      "correct": 2,
+      "explanation": "Event data recorders can store crash-related vehicle data."
+    },
+    {
+      "id": "automotive_hard_100",
+      "category": "Automotive",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is brake bedding?",
+      "answers": [
+        "Mating pads and rotors",
+        "Steering wheel",
+        "Brake pedal",
+        "Fuel amount"
+      ],
+      "correct": 0,
+      "explanation": "Bedding helps new pads and rotors transfer material evenly."
+    }
+  ]
+}

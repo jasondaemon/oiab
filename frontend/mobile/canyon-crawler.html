@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#102a1c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Canyon Crawler">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Canyon Crawler | OIAB</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/mobile/overland-touch-icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
+  <link rel="manifest" href="/mobile/manifest.webmanifest">
+  <link rel="stylesheet" href="/mobile/oiab-arcade.css?v=20260605">
+</head>
+<body>
+  <main class="arcade-shell">
+    <div id="stage" class="arcade-stage"></div>
+    <section class="arcade-hud" aria-live="polite">
+      <div><span>Score</span><strong id="score">0</strong></div>
+      <div><span>Level</span><strong id="level">1</strong></div>
+      <div><span>Lives</span><strong id="lives">3</strong></div>
+      <div><span>Goal</span><strong id="modeText">Ready</strong></div>
+    </section>
+    <div class="arcade-actions">
+      <a class="arcade-icon" href="/mobile/" aria-label="Back to games">‹</a>
+      <button id="pauseButton" class="arcade-icon" type="button" aria-label="Pause">Ⅱ</button>
+    </div>
+    <p id="message" class="arcade-message" hidden></p>
+    <section id="startPanel" class="arcade-panel">
+      <p class="eyebrow">OIAB Arcade</p>
+      <h1>Canyon Crawler</h1>
+      <p class="subtitle">Blast segmented trail worms before they reach your rover. Destroy cacti, rocks, crates, and cones to clear the wash.</p>
+      <label class="arcade-field">Run Mode
+        <select id="runMode">
+          <option value="solo">Solo Run</option>
+          <option value="coop">Local Co-op</option>
+          <option value="race">Score Race Seed</option>
+        </select>
+      </label>
+      <div class="arcade-menu">
+        <button id="startButton" class="primary" type="button">Start</button>
+        <button id="helpButton" type="button">How to Play</button>
+      </div>
+    </section>
+    <section id="helpPanel" class="arcade-panel" hidden>
+      <p class="eyebrow">How to Play</p>
+      <h2>Clear every crawler.</h2>
+      <p>Drag in the lower half of the screen or use WASD/arrow keys. The rover auto-fires while moving. Segments split into smaller crawlers when hit.</p>
+      <p>Spider, flea, and scorpion enemies create pressure in the lower zone. Clear all crawler segments to advance.</p>
+      <div class="arcade-menu"><button id="helpBack" class="primary" type="button">Back</button></div>
+    </section>
+    <section id="endPanel" class="arcade-panel" hidden>
+      <p class="eyebrow">Run Complete</p>
+      <h2 id="endTitle">Crawler Cleared</h2>
+      <p id="endSummary"></p>
+      <div class="arcade-menu">
+        <button id="againButton" class="primary" type="button">Game Menu</button>
+        <a href="/mobile/">Games</a>
+      </div>
+    </section>
+  </main>
+  <script src="/mobile/vendor/pixi/pixi.min.js"></script>
+  <script src="/mobile/canyon-crawler.js?v=20260606-rebound"></script>
+</body>
+</html>

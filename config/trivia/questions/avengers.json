@@ -1,0 +1,727 @@
+{
+  "category": "Avengers",
+  "slug": "avengers",
+  "version": 1,
+  "questions": [
+    {
+      "id": "avengers_easy_001",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which villain is responsible for the original formation of the Avengers?",
+      "answers": [
+        "Jarvis",
+        "Loki",
+        "Maria Rambeau",
+        "The Black Panther"
+      ],
+      "correct": 1,
+      "explanation": "Loki is the correct answer."
+    },
+    {
+      "id": "avengers_easy_002",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of the Avengers' butler?",
+      "answers": [
+        "Loki",
+        "Maria Rambeau",
+        "The Black Panther",
+        "Jarvis"
+      ],
+      "correct": 3,
+      "explanation": "Jarvis is the correct answer."
+    },
+    {
+      "id": "avengers_easy_003",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who founded S.W.O.R.D.?",
+      "answers": [
+        "Loki",
+        "Maria Rambeau",
+        "Jarvis",
+        "The Black Panther"
+      ],
+      "correct": 1,
+      "explanation": "Maria Rambeau is the correct answer."
+    },
+    {
+      "id": "avengers_easy_004",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Avenger is the king of Wakanda?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "The Black Panther",
+        "Maria Rambeau"
+      ],
+      "correct": 2,
+      "explanation": "The Black Panther is the correct answer."
+    },
+    {
+      "id": "avengers_easy_005",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which of her fellow Avengers does the Scarlet Witch marry?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau",
+        "Wanda and the Vision"
+      ],
+      "correct": 3,
+      "explanation": "Wanda and the Vision is the correct answer."
+    },
+    {
+      "id": "avengers_easy_006",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What did Thor call to Phill Coulson in the movie 'Thor'?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Son of Coul",
+        "Maria Rambeau"
+      ],
+      "correct": 2,
+      "explanation": "Son of Coul is the correct answer."
+    },
+    {
+      "id": "avengers_easy_007",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Avenger was originally meant to be the bride of Ultron?",
+      "answers": [
+        "Loki",
+        "Jocasta",
+        "Jarvis",
+        "Maria Rambeau"
+      ],
+      "correct": 1,
+      "explanation": "Jocasta is the correct answer."
+    },
+    {
+      "id": "avengers_easy_008",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who serves as the Avengers' liaison to the United States National Security Council?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Gyrich",
+        "Maria Rambeau"
+      ],
+      "correct": 2,
+      "explanation": "Gyrich is the correct answer."
+    },
+    {
+      "id": "avengers_easy_009",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Avenger has a dark side called the Void?",
+      "answers": [
+        "Loki",
+        "Sentry",
+        "Jarvis",
+        "Maria Rambeau"
+      ],
+      "correct": 1,
+      "explanation": "Sentry is the correct answer."
+    },
+    {
+      "id": "avengers_easy_010",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What real-life celebrity is Tony Stark based on?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau",
+        "Howard Hughes"
+      ],
+      "correct": 3,
+      "explanation": "Howard Hughes is the correct answer."
+    },
+    {
+      "id": "avengers_easy_011",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where did Peggy tell Steve she wants to meet him for a dance?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "The Stork Club",
+        "Maria Rambeau"
+      ],
+      "correct": 2,
+      "explanation": "The Stork Club is the correct answer."
+    },
+    {
+      "id": "avengers_easy_012",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What kind of necklace does Peter buy for MJ in 'Spider Man: Far from Home'?",
+      "answers": [
+        "black dahlia necklace",
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau"
+      ],
+      "correct": 0,
+      "explanation": "black dahlia necklace is the correct answer."
+    },
+    {
+      "id": "avengers_easy_013",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was responsible for King T'Chaka's death?",
+      "answers": [
+        "Loki",
+        "Zemo",
+        "Jarvis",
+        "Maria Rambeau"
+      ],
+      "correct": 1,
+      "explanation": "Zemo is the correct answer."
+    },
+    {
+      "id": "avengers_easy_014",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who quoted the famous line of Avengers, \"Whatever it takes\"?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Captain America",
+        "Maria Rambeau"
+      ],
+      "correct": 2,
+      "explanation": "Captain America is the correct answer."
+    },
+    {
+      "id": "avengers_easy_015",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In which movie does Captain America finally say, \"Avengers Assemble\"?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "'Avengers Endgame'",
+        "Maria Rambeau"
+      ],
+      "correct": 2,
+      "explanation": "'Avengers Endgame' is the correct answer."
+    },
+    {
+      "id": "avengers_easy_016",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Tony Stark's daughter's name?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau",
+        "Morgan Stark"
+      ],
+      "correct": 3,
+      "explanation": "Morgan Stark is the correct answer."
+    },
+    {
+      "id": "avengers_easy_017",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Star Lord's mother's name?",
+      "answers": [
+        "Meredith",
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau"
+      ],
+      "correct": 0,
+      "explanation": "Meredith is the correct answer."
+    },
+    {
+      "id": "avengers_easy_018",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which antagonist said, \"Reality is often disappointing\"?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau",
+        "Thanos"
+      ],
+      "correct": 3,
+      "explanation": "Thanos is the correct answer."
+    },
+    {
+      "id": "avengers_easy_019",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which superhero's fight backline was \"I can do this all day\"?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Captain America",
+        "Maria Rambeau"
+      ],
+      "correct": 2,
+      "explanation": "Captain America is the correct answer."
+    },
+    {
+      "id": "avengers_easy_020",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which character claimed that he is burdened with glorious purposes?",
+      "answers": [
+        "Jarvis",
+        "Loki",
+        "Maria Rambeau",
+        "The Black Panther"
+      ],
+      "correct": 1,
+      "explanation": "Loki is the correct answer."
+    },
+    {
+      "id": "avengers_easy_021",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who commented on Loki as \"Puny God\"?",
+      "answers": [
+        "Hulk",
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau"
+      ],
+      "correct": 0,
+      "explanation": "Hulk is the correct answer."
+    },
+    {
+      "id": "avengers_easy_022",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "To which realm does Loki originally belong?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau",
+        "Jotunheim"
+      ],
+      "correct": 3,
+      "explanation": "Jotunheim is the correct answer."
+    },
+    {
+      "id": "avengers_easy_023",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What color does Hawkeye's change into when Loki's scepter touches him in 'Avengers'?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Blue",
+        "Maria Rambeau"
+      ],
+      "correct": 2,
+      "explanation": "Blue is the correct answer."
+    },
+    {
+      "id": "avengers_easy_024",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which of the infinity stones did Redskull keep?",
+      "answers": [
+        "Soul Stone",
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau"
+      ],
+      "correct": 0,
+      "explanation": "Soul Stone is the correct answer."
+    },
+    {
+      "id": "avengers_easy_025",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Captain Marvel lived with which alien race from 1989 to 1995?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "The Kree",
+        "Maria Rambeau"
+      ],
+      "correct": 2,
+      "explanation": "The Kree is the correct answer."
+    },
+    {
+      "id": "avengers_easy_026",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was Scott Lang's job before he became the superhero, Ant Man?",
+      "answers": [
+        "He was a petty criminal",
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau"
+      ],
+      "correct": 0,
+      "explanation": "He was a petty criminal is the correct answer."
+    },
+    {
+      "id": "avengers_easy_027",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In 'Avengers Infinity Wars', in which hand does Thanos wear the gauntlet?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "His left hand",
+        "Maria Rambeau"
+      ],
+      "correct": 2,
+      "explanation": "His left hand is the correct answer."
+    },
+    {
+      "id": "avengers_easy_028",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who made the Infinity Gauntlet?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau",
+        "Eitri"
+      ],
+      "correct": 3,
+      "explanation": "Eitri is the correct answer."
+    },
+    {
+      "id": "avengers_easy_029",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How did Bucky' die'?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau",
+        "He fell off a freight train"
+      ],
+      "correct": 3,
+      "explanation": "He fell off a freight train is the correct answer."
+    },
+    {
+      "id": "avengers_easy_030",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which of the infinity stones did give Wanda her powers?",
+      "answers": [
+        "Loki",
+        "Mind Stone",
+        "Jarvis",
+        "Maria Rambeau"
+      ],
+      "correct": 1,
+      "explanation": "Mind Stone is the correct answer."
+    },
+    {
+      "id": "avengers_easy_031",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which of the infinity stones was with Ronan for a short time?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Power Stone",
+        "Maria Rambeau"
+      ],
+      "correct": 2,
+      "explanation": "Power Stone is the correct answer."
+    },
+    {
+      "id": "avengers_easy_032",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Everett Ross worked for which organization?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau",
+        "CIA"
+      ],
+      "correct": 3,
+      "explanation": "CIA is the correct answer."
+    },
+    {
+      "id": "avengers_easy_033",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Thor played what video game in Avengers: Endgame ?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau",
+        "Fortnite"
+      ],
+      "correct": 3,
+      "explanation": "Fortnite is the correct answer."
+    },
+    {
+      "id": "avengers_easy_034",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the superhero within a loop of dialogue of \"I came to bargain\"?",
+      "answers": [
+        "Loki",
+        "Doctor Strange",
+        "Jarvis",
+        "Maria Rambeau"
+      ],
+      "correct": 1,
+      "explanation": "Doctor Strange is the correct answer."
+    },
+    {
+      "id": "avengers_easy_035",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Wanda and her brother Pietro are from where?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Sokovia",
+        "Maria Rambeau"
+      ],
+      "correct": 2,
+      "explanation": "Sokovia is the correct answer."
+    },
+    {
+      "id": "avengers_easy_036",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who directed 'Thor: The Dark World'?",
+      "answers": [
+        "Loki",
+        "Alan Taylor",
+        "Jarvis",
+        "Maria Rambeau"
+      ],
+      "correct": 1,
+      "explanation": "Alan Taylor is the correct answer."
+    },
+    {
+      "id": "avengers_easy_037",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where do Sif and Volstagg hide the Reality Stone at the end of the movie?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "On Vormir",
+        "Maria Rambeau"
+      ],
+      "correct": 2,
+      "explanation": "On Vormir is the correct answer."
+    },
+    {
+      "id": "avengers_easy_038",
+      "category": "Avengers",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Natalie Portman plays which character in Thor?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Jane",
+        "Maria Rambeau"
+      ],
+      "correct": 2,
+      "explanation": "Jane is the correct answer."
+    },
+    {
+      "id": "avengers_medium_001",
+      "category": "Avengers",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who is the first Avenger to quit the team?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau",
+        "The Hulk"
+      ],
+      "correct": 3,
+      "explanation": "The Hulk is the correct answer."
+    },
+    {
+      "id": "avengers_medium_002",
+      "category": "Avengers",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who is the first new member to join the team?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Captain America",
+        "Maria Rambeau"
+      ],
+      "correct": 2,
+      "explanation": "Captain America is the correct answer."
+    },
+    {
+      "id": "avengers_medium_003",
+      "category": "Avengers",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which supergroup do the Avengers battle on Earth-712?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau",
+        "The Squadron Supreme"
+      ],
+      "correct": 3,
+      "explanation": "The Squadron Supreme is the correct answer."
+    },
+    {
+      "id": "avengers_medium_004",
+      "category": "Avengers",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which villain creates Wonder Man to battle the Avengers?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau",
+        "Baron Zemo"
+      ],
+      "correct": 3,
+      "explanation": "Baron Zemo is the correct answer."
+    },
+    {
+      "id": "avengers_medium_005",
+      "category": "Avengers",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the character to give the philosophical learning, \"Death is what gives life meaning\"?",
+      "answers": [
+        "Loki",
+        "The Ancient One",
+        "Jarvis",
+        "Maria Rambeau"
+      ],
+      "correct": 1,
+      "explanation": "The Ancient One is the correct answer."
+    },
+    {
+      "id": "avengers_medium_006",
+      "category": "Avengers",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In which movie did Groot first say \"We are Groot\"?",
+      "answers": [
+        "2",
+        "'Guardian of the Galaxy Vol 1'",
+        "3",
+        "6"
+      ],
+      "correct": 1,
+      "explanation": "'Guardian of the Galaxy Vol 1' is the correct answer."
+    },
+    {
+      "id": "avengers_medium_007",
+      "category": "Avengers",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In 'Avengers Endgame', who kills Thanos in the first half of the movie?",
+      "answers": [
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau",
+        "Thor"
+      ],
+      "correct": 3,
+      "explanation": "Thor is the correct answer."
+    },
+    {
+      "id": "avengers_medium_008",
+      "category": "Avengers",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the only Guardian of the Galaxy to survive the bloop in 'Avengers: Infinity War'?",
+      "answers": [
+        "Rocket",
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau"
+      ],
+      "correct": 0,
+      "explanation": "Rocket is the correct answer."
+    },
+    {
+      "id": "avengers_medium_009",
+      "category": "Avengers",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What do the Avengers eat at the post-credit scene in the first Avengers movie?",
+      "answers": [
+        "Shawarma",
+        "Loki",
+        "Jarvis",
+        "Maria Rambeau"
+      ],
+      "correct": 0,
+      "explanation": "Shawarma is the correct answer."
+    },
+    {
+      "id": "avengers_hard_001",
+      "category": "Avengers",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "In the first Avengers movie, how many avengers do we see?",
+      "answers": [
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "correct": 2,
+      "explanation": "6 is the correct answer."
+    }
+  ]
+}

@@ -8,6 +8,12 @@ import { Chess } from "./vendor/chess.js";
     bp: "♟", bn: "♞", bb: "♝", br: "♜", bq: "♛", bk: "♚",
   };
   const pieceValues = { p: 1, n: 3, b: 3, r: 5, q: 9, k: 0 };
+  const pieceScores = { p: 100, n: 320, b: 330, r: 500, q: 900, k: 0 };
+  const cpuProfiles = {
+    easy: { depth: 1, maxNodes: 350, randomMoveChance: 0.32, scoreNoise: 100, topBand: 180 },
+    medium: { depth: 2, maxNodes: 2600, randomMoveChance: 0.06, scoreNoise: 28, topBand: 45 },
+    hard: { depth: 3, maxNodes: 14000, randomMoveChance: 0, scoreNoise: 0, topBand: 8 },
+  };
   const $ = (id) => document.getElementById(id);
   const state = {
     playerId: "",
@@ -18,8 +24,14 @@ import { Chess } from "./vendor/chess.js";
     difficulty: "medium",
     game: null,
     chess: new Chess(),
+    board: null,
+    orientation: "white",
     selected: "",
     poll: null,
+    undoStack: [],
+    redoStack: [],
+    lastMove: null,
+    theme: "classic",
   };
 
   function randomId() {
@@ -68,6 +80,7 @@ import { Chess } from "./vendor/chess.js";
       state.mark = saved.mark || "";
       state.mode = saved.mode || "pvp";
       state.difficulty = saved.difficulty || "medium";
+      state.theme = saved.theme || "classic";
     } catch {
       state.playerId = profileId();
       state.playerName = profileName();
@@ -77,6 +90,8 @@ import { Chess } from "./vendor/chess.js";
     const modeInput = document.querySelector(`input[name="gameMode"][value="${state.mode}"]`);
     if (modeInput) modeInput.checked = true;
     $("difficulty").value = state.difficulty || "medium";
+    if ($("boardTheme")) $("boardTheme").value = state.theme || "classic";
+    document.body.dataset.boardTheme = state.theme || "classic";
     updateModeUi();
   }
 
@@ -88,6 +103,7 @@ import { Chess } from "./vendor/chess.js";
       mark: state.mark,
       mode: state.mode,
       difficulty: state.difficulty,
+      theme: state.theme,
     }));
   }
 
@@ -157,6 +173,16 @@ import { Chess } from "./vendor/chess.js";
     state.chess = fen && fen !== "start" ? new Chess(fen) : new Chess();
   }
 
+  function ensureBoard() {
+    if (state.board || !window.Chessboard) return;
+    state.board = window.Chessboard("board", {
+      draggable: false,
+      position: "start",
+      pieceTheme: "/mobile/vendor/chessboardjs/img/chesspieces/wikipedia/{piece}.png",
+    });
+    window.addEventListener("resize", () => state.board?.resize?.());
+  }
+
   function showGame(game) {
     state.game = game;
     loadChess(game.fen);
@@ -183,6 +209,7 @@ import { Chess } from "./vendor/chess.js";
     $("gameStatus").textContent = headline;
     renderPlayers(players, currentSide);
     renderBoard();
+    renderSidePanels();
   }
 
   function renderPlayers(players, turn) {
@@ -195,33 +222,21 @@ import { Chess } from "./vendor/chess.js";
     }));
   }
 
-  function boardSquares() {
-    const files = ["a", "b", "c", "d", "e", "f", "g", "h"];
-    const ranks = ["8", "7", "6", "5", "4", "3", "2", "1"];
-    return ranks.flatMap((rank) => files.map((file) => `${file}${rank}`));
-  }
-
   function legalTargets(from) {
     if (!from) return new Map();
     return new Map(state.chess.moves({ square: from, verbose: true }).map((move) => [move.to, move]));
   }
 
   function renderBoard() {
-    const legal = legalTargets(state.selected);
-    $("board").replaceChildren(...boardSquares().map((square) => {
-      const piece = state.chess.get(square);
-      const button = document.createElement("button");
-      const file = square.charCodeAt(0) - 97;
-      const rank = Number(square[1]);
-      const isLight = (file + rank) % 2 === 1;
-      const move = legal.get(square);
-      button.type = "button";
-      button.className = `square ${isLight ? "light" : "dark"}${state.selected === square ? " selected" : ""}${move ? " legal" : ""}${move?.captured ? " capture" : ""}`;
-      button.textContent = piece ? pieceGlyphs[`${piece.color}${piece.type}`] : "";
-      button.disabled = !canMove();
-      button.addEventListener("click", () => onSquare(square));
-      return button;
-    }));
+    ensureBoard();
+    if (state.board) {
+      state.board.orientation(state.orientation);
+      state.board.position(state.chess.fen(), false);
+      window.setTimeout(() => {
+        bindBoardTapHandlers();
+        updateBoardHighlights();
+      }, 0);
+    }
   }
 
   function canMove() {
@@ -230,23 +245,96 @@ import { Chess } from "./vendor/chess.js";
     return side === state.mark;
   }
 
-  function onSquare(square) {
+  function bindBoardTapHandlers() {
+    window.jQuery?.("#board .square-55d63").each((_, squareEl) => {
+      const square = squareFromClass(squareEl);
+      if (!square || squareEl.dataset.tapBound === "true") return;
+      squareEl.dataset.tapBound = "true";
+      squareEl.setAttribute("role", "button");
+      squareEl.setAttribute("aria-label", `Square ${square}`);
+      squareEl.addEventListener("click", () => onSquareTap(square));
+    });
+  }
+
+  function squareFromClass(element) {
+    for (const className of element.classList || []) {
+      if (/^square-[a-h][1-8]$/.test(className)) return className.slice("square-".length);
+    }
+    return "";
+  }
+
+  function onSquareTap(square) {
     if (!canMove()) return;
     const piece = state.chess.get(square);
     const ownColor = state.mark === "white" ? "w" : "b";
     if (state.selected) {
+      if (square === state.selected) {
+        state.selected = "";
+        updateBoardHighlights();
+        return;
+      }
       const move = legalTargets(state.selected).get(square);
       if (move) {
-        makeMove(move);
+        if (needsPromotion(move)) {
+          choosePromotion().then((promotion) => {
+            if (promotion) makeMove({ ...move, promotion });
+          });
+        } else {
+          makeMove(move);
+        }
         return;
       }
     }
-    if (piece && piece.color === ownColor) {
-      state.selected = square;
-      renderBoard();
-    } else {
-      state.selected = "";
-      renderBoard();
+    state.selected = piece?.color === ownColor ? square : "";
+    updateBoardHighlights();
+  }
+
+  function needsPromotion(move) {
+    const piece = state.chess.get(move.from);
+    return piece?.type === "p" && (move.to.endsWith("8") || move.to.endsWith("1"));
+  }
+
+  function choosePromotion() {
+    const dialog = $("promotionDialog");
+    if (!dialog?.showModal) return Promise.resolve("q");
+    return new Promise((resolve) => {
+      const handler = () => {
+        dialog.removeEventListener("close", handler);
+        resolve(["q", "r", "b", "n"].includes(dialog.returnValue) ? dialog.returnValue : "q");
+      };
+      dialog.addEventListener("close", handler);
+      dialog.showModal();
+    });
+  }
+
+  function removeBoardHighlights() {
+    window.jQuery?.("#board .square-55d63").removeClass("highlight-source highlight-target highlight-capture highlight-last highlight-check");
+  }
+
+  function addSquareClass(square, className) {
+    if (!square) return;
+    window.jQuery?.(`#board .square-${square}`).addClass(className);
+  }
+
+  function updateBoardHighlights() {
+    if (!window.jQuery) return;
+    removeBoardHighlights();
+    if (state.lastMove) {
+      addSquareClass(state.lastMove.from, "highlight-last");
+      addSquareClass(state.lastMove.to, "highlight-last");
+    }
+    if (state.selected) {
+      addSquareClass(state.selected, "highlight-source");
+      for (const [square, move] of legalTargets(state.selected).entries()) {
+        addSquareClass(square, move.captured ? "highlight-capture" : "highlight-target");
+      }
+    }
+    if (state.chess.isCheck()) {
+      const color = state.chess.turn();
+      for (const square of Object.keys(state.board?.position() || {})) {
+        const piece = state.chess.get(square);
+        if (piece?.type === "k" && piece.color === color) addSquareClass(square, "highlight-check");
+      }
     }
   }
 
@@ -262,14 +350,17 @@ import { Chess } from "./vendor/chess.js";
 
   async function submitMove(move, playerId = state.playerId) {
     const beforeTurn = state.chess.turn();
+    state.undoStack.push(state.chess.fen());
+    state.redoStack = [];
     const applied = state.chess.move({ from: move.from, to: move.to, promotion: move.promotion || "q" });
     if (!applied) return;
+    state.lastMove = { from: applied.from, to: applied.to };
     const result = gameResult(state.chess, beforeTurn);
     const data = await api({
       action: "move",
       gameId: state.gameId,
       playerId,
-      move: `${applied.from}${applied.to}${applied.promotion || ""}`,
+      move: applied.san || `${applied.from}${applied.to}${applied.promotion || ""}`,
       fen: state.chess.fen(),
       turn: state.chess.turn(),
       check: state.chess.isCheck(),
@@ -295,44 +386,180 @@ import { Chess } from "./vendor/chess.js";
   function chooseCpuMove(chess, difficulty) {
     const moves = chess.moves({ verbose: true });
     if (!moves.length) return null;
-    if (difficulty === "easy") return moves[Math.floor(Math.random() * moves.length)];
-    const captures = moves.filter((move) => move.captured);
-    const checks = moves.filter((move) => {
+    const profile = cpuProfiles[difficulty] || cpuProfiles.medium;
+    const cpuColor = chess.turn();
+    if (Math.random() < profile.randomMoveChance) return randomChoice(moves);
+
+    const budget = { nodes: 0, maxNodes: profile.maxNodes };
+    const candidates = [];
+    for (const move of orderMoves(chess, moves)) {
       const test = new Chess(chess.fen());
-      test.move({ from: move.from, to: move.to, promotion: move.promotion || "q" });
-      return test.isCheck();
-    });
-    if (difficulty === "medium") {
-      const pool = captures.length ? captures : checks.length ? checks : moves;
-      return pool[Math.floor(Math.random() * pool.length)];
+      applyVerboseMove(test, move);
+      const rawScore = minimax(test, profile.depth - 1, -Infinity, Infinity, cpuColor, budget);
+      const score = rawScore + ((Math.random() - 0.5) * profile.scoreNoise);
+      candidates.push({ move, score });
+      if (budget.nodes >= budget.maxNodes) break;
     }
-    let best = null;
-    let bestScore = -999;
-    for (const move of moves) {
-      const test = new Chess(chess.fen());
-      test.move({ from: move.from, to: move.to, promotion: move.promotion || "q" });
-      let score = evaluateBoard(test);
-      if (test.isCheckmate()) score += 100;
-      if (test.isCheck()) score += 2;
-      if (move.captured) score += pieceValues[move.captured] || 0;
-      if (score > bestScore) {
-        bestScore = score;
-        best = move;
-      }
-    }
-    return best || moves[Math.floor(Math.random() * moves.length)];
+    candidates.sort((left, right) => right.score - left.score);
+    const bestScore = candidates[0]?.score ?? 0;
+    const pool = candidates.filter((item) => bestScore - item.score <= profile.topBand);
+    return (randomChoice(pool) || candidates[0] || { move: randomChoice(moves) }).move;
   }
 
-  function evaluateBoard(chess) {
+  function minimax(chess, depth, alpha, beta, cpuColor, budget) {
+    budget.nodes += 1;
+    if (depth <= 0 || budget.nodes >= budget.maxNodes || chess.isGameOver()) {
+      return evaluatePosition(chess, cpuColor, depth);
+    }
+
+    const maximizing = chess.turn() === cpuColor;
+    const moves = orderMoves(chess, chess.moves({ verbose: true }));
+    if (!moves.length) return evaluatePosition(chess, cpuColor, depth);
+
+    if (maximizing) {
+      let best = -Infinity;
+      for (const move of moves) {
+        const test = new Chess(chess.fen());
+        applyVerboseMove(test, move);
+        best = Math.max(best, minimax(test, depth - 1, alpha, beta, cpuColor, budget));
+        alpha = Math.max(alpha, best);
+        if (beta <= alpha || budget.nodes >= budget.maxNodes) break;
+      }
+      return best;
+    }
+
+    let best = Infinity;
+    for (const move of moves) {
+      const test = new Chess(chess.fen());
+      applyVerboseMove(test, move);
+      best = Math.min(best, minimax(test, depth - 1, alpha, beta, cpuColor, budget));
+      beta = Math.min(beta, best);
+      if (beta <= alpha || budget.nodes >= budget.maxNodes) break;
+    }
+    return best;
+  }
+
+  function evaluatePosition(chess, cpuColor, depth = 0) {
+    if (chess.isCheckmate()) return chess.turn() === cpuColor ? -100000 - depth : 100000 + depth;
+    if (chess.isDraw()) return 0;
+
     let score = 0;
-    for (const row of chess.board()) {
-      for (const piece of row) {
+    let cpuBishops = 0;
+    let opponentBishops = 0;
+    const board = chess.board();
+    for (let rowIndex = 0; rowIndex < board.length; rowIndex += 1) {
+      const row = board[rowIndex];
+      for (let colIndex = 0; colIndex < row.length; colIndex += 1) {
+        const piece = row[colIndex];
         if (!piece) continue;
-        const value = pieceValues[piece.type] || 0;
-        score += piece.color === "b" ? value : -value;
+        const sign = piece.color === cpuColor ? 1 : -1;
+        score += sign * ((pieceScores[piece.type] || 0) + pieceSquareBonus(piece, rowIndex, colIndex));
+        if (piece.type === "b") {
+          if (piece.color === cpuColor) cpuBishops += 1;
+          else opponentBishops += 1;
+        }
       }
     }
+    if (cpuBishops >= 2) score += 35;
+    if (opponentBishops >= 2) score -= 35;
+    if (chess.isCheck()) score += chess.turn() === cpuColor ? -35 : 35;
     return score;
+  }
+
+  function applyVerboseMove(chess, move) {
+    return chess.move({ from: move.from, to: move.to, promotion: move.promotion || "q" });
+  }
+
+  function randomChoice(items) {
+    return items[Math.floor(Math.random() * items.length)];
+  }
+
+  function orderMoves(chess, moves) {
+    return moves
+      .map((move) => ({ move, priority: movePriority(chess, move) }))
+      .sort((left, right) => right.priority - left.priority)
+      .map((item) => item.move);
+  }
+
+  function movePriority(chess, move) {
+    let score = 0;
+    if (move.captured) score += 1000 + ((pieceScores[move.captured] || 0) - ((pieceScores[move.piece] || 0) / 10));
+    if (move.promotion) score += pieceScores[move.promotion] || 800;
+    const test = new Chess(chess.fen());
+    applyVerboseMove(test, move);
+    if (test.isCheckmate()) score += 100000;
+    else if (test.isCheck()) score += 120;
+    return score;
+  }
+
+  const pieceSquareTables = {
+    p: [
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [50, 50, 50, 50, 50, 50, 50, 50],
+      [10, 10, 20, 30, 30, 20, 10, 10],
+      [5, 5, 10, 25, 25, 10, 5, 5],
+      [0, 0, 0, 20, 20, 0, 0, 0],
+      [5, -5, -10, 0, 0, -10, -5, 5],
+      [5, 10, 10, -20, -20, 10, 10, 5],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+    ],
+    n: [
+      [-50, -40, -30, -30, -30, -30, -40, -50],
+      [-40, -20, 0, 5, 5, 0, -20, -40],
+      [-30, 5, 10, 15, 15, 10, 5, -30],
+      [-30, 0, 15, 20, 20, 15, 0, -30],
+      [-30, 5, 15, 20, 20, 15, 5, -30],
+      [-30, 0, 10, 15, 15, 10, 0, -30],
+      [-40, -20, 0, 0, 0, 0, -20, -40],
+      [-50, -40, -30, -30, -30, -30, -40, -50],
+    ],
+    b: [
+      [-20, -10, -10, -10, -10, -10, -10, -20],
+      [-10, 5, 0, 0, 0, 0, 5, -10],
+      [-10, 10, 10, 10, 10, 10, 10, -10],
+      [-10, 0, 10, 10, 10, 10, 0, -10],
+      [-10, 5, 5, 10, 10, 5, 5, -10],
+      [-10, 0, 5, 10, 10, 5, 0, -10],
+      [-10, 0, 0, 0, 0, 0, 0, -10],
+      [-20, -10, -10, -10, -10, -10, -10, -20],
+    ],
+    r: [
+      [0, 0, 0, 5, 5, 0, 0, 0],
+      [5, 10, 10, 10, 10, 10, 10, 5],
+      [-5, 0, 0, 0, 0, 0, 0, -5],
+      [-5, 0, 0, 0, 0, 0, 0, -5],
+      [-5, 0, 0, 0, 0, 0, 0, -5],
+      [-5, 0, 0, 0, 0, 0, 0, -5],
+      [-5, 0, 0, 0, 0, 0, 0, -5],
+      [0, 0, 0, 5, 5, 0, 0, 0],
+    ],
+    q: [
+      [-20, -10, -10, -5, -5, -10, -10, -20],
+      [-10, 0, 5, 0, 0, 0, 0, -10],
+      [-10, 5, 5, 5, 5, 5, 0, -10],
+      [0, 0, 5, 5, 5, 5, 0, -5],
+      [-5, 0, 5, 5, 5, 5, 0, -5],
+      [-10, 0, 5, 5, 5, 5, 0, -10],
+      [-10, 0, 0, 0, 0, 0, 0, -10],
+      [-20, -10, -10, -5, -5, -10, -10, -20],
+    ],
+    k: [
+      [-30, -40, -40, -50, -50, -40, -40, -30],
+      [-30, -40, -40, -50, -50, -40, -40, -30],
+      [-30, -40, -40, -50, -50, -40, -40, -30],
+      [-30, -40, -40, -50, -50, -40, -40, -30],
+      [-20, -30, -30, -40, -40, -30, -30, -20],
+      [-10, -20, -20, -20, -20, -20, -20, -10],
+      [20, 20, 0, 0, 0, 0, 20, 20],
+      [20, 30, 10, 0, 0, 10, 30, 20],
+    ],
+  };
+
+  function pieceSquareBonus(piece, rowIndex, colIndex) {
+    const table = pieceSquareTables[piece.type];
+    if (!table) return 0;
+    const row = piece.color === "w" ? rowIndex : 7 - rowIndex;
+    return table[row]?.[colIndex] || 0;
   }
 
   async function cpuTurn() {
@@ -399,6 +626,9 @@ import { Chess } from "./vendor/chess.js";
   async function resetGame() {
     try {
       const data = await api({ action: "reset", gameId: state.gameId, playerId: state.playerId });
+      state.undoStack = [];
+      state.redoStack = [];
+      state.lastMove = null;
       showGame(data.game);
       message("New board started.");
     } catch (error) {
@@ -450,6 +680,88 @@ import { Chess } from "./vendor/chess.js";
     saveLocal();
   }
 
+  function materialCounts() {
+    const counts = { w: { p: 8, n: 2, b: 2, r: 2, q: 1 }, b: { p: 8, n: 2, b: 2, r: 2, q: 1 } };
+    for (const row of state.chess.board()) {
+      for (const piece of row) {
+        if (piece && counts[piece.color]?.[piece.type] !== undefined) counts[piece.color][piece.type] -= 1;
+      }
+    }
+    return counts;
+  }
+
+  function capturedGlyphs(color, missing) {
+    return Object.entries(missing)
+      .flatMap(([type, count]) => Array.from({ length: Math.max(0, count) }, () => type))
+      .map((type) => pieceGlyphs[`${color}${type}`] || "")
+      .join(" ");
+  }
+
+  function renderSidePanels() {
+    const missing = materialCounts();
+    if ($("capturedWhite")) $("capturedWhite").textContent = `White lost: ${capturedGlyphs("w", missing.w) || "none"}`;
+    if ($("capturedBlack")) $("capturedBlack").textContent = `Black lost: ${capturedGlyphs("b", missing.b) || "none"}`;
+    const history = Array.isArray(state.game?.history) ? state.game.history : [];
+    if ($("moveHistory")) {
+      $("moveHistory").replaceChildren(...history.map((move, index) => {
+        const item = document.createElement("li");
+        item.textContent = `${index + 1}. ${move}`;
+        return item;
+      }));
+    }
+    if ($("moveCount")) {
+      $("moveCount").textContent = `${history.length} ${history.length === 1 ? "move" : "moves"}`;
+    }
+  }
+
+  async function copyText(value, label) {
+    try {
+      await navigator.clipboard.writeText(value);
+      message(`${label} copied.`);
+    } catch {
+      message(`${label}: ${value}`);
+    }
+  }
+
+  async function localFenUpdate(fen, note) {
+    if (!state.gameId || !canMove()) {
+      message("Undo/redo is only available on your active turn.", true);
+      return;
+    }
+    loadChess(fen);
+    const data = await api({
+      action: "move",
+      gameId: state.gameId,
+      playerId: state.playerId,
+      move: note,
+      fen: state.chess.fen(),
+      turn: state.chess.turn(),
+      check: state.chess.isCheck(),
+      status: "active",
+    });
+    showGame(data.game);
+  }
+
+  async function undoMove() {
+    const previous = state.undoStack.pop();
+    if (!previous) {
+      message("No local move to undo.", true);
+      return;
+    }
+    state.redoStack.push(state.chess.fen());
+    await localFenUpdate(previous, "undo");
+  }
+
+  async function redoMove() {
+    const next = state.redoStack.pop();
+    if (!next) {
+      message("No local move to redo.", true);
+      return;
+    }
+    state.undoStack.push(state.chess.fen());
+    await localFenUpdate(next, "redo");
+  }
+
   async function main() {
     loadLocal();
     const requestedGame = gameFromUrl();
@@ -465,9 +777,26 @@ import { Chess } from "./vendor/chess.js";
 
   $("createGame").addEventListener("click", createGame);
   $("refreshGame").addEventListener("click", () => state.gameId ? refreshCurrent() : loadOpenGames());
+  $("settingsToggle").addEventListener("click", () => {
+    const panel = $("settingsPanel");
+    panel.hidden = !panel.hidden;
+  });
   $("leaveGame").addEventListener("click", () => leaveGame());
   $("resetGame").addEventListener("click", resetGame);
   $("closeGame").addEventListener("click", closeGame);
+  $("flipBoard").addEventListener("click", () => {
+    state.orientation = state.orientation === "white" ? "black" : "white";
+    state.board?.orientation(state.orientation);
+  });
+  $("undoMove").addEventListener("click", undoMove);
+  $("redoMove").addEventListener("click", redoMove);
+  $("copyFen").addEventListener("click", () => copyText(state.chess.fen(), "FEN"));
+  $("copyPgn").addEventListener("click", () => copyText((state.game?.history || []).join(" "), "PGN"));
+  $("boardTheme").addEventListener("change", () => {
+    state.theme = $("boardTheme").value || "classic";
+    document.body.dataset.boardTheme = state.theme;
+    saveLocal();
+  });
   document.querySelectorAll('input[name="gameMode"]').forEach((input) => input.addEventListener("change", updateModeUi));
   $("difficulty").addEventListener("change", updateModeUi);
   window.addEventListener("beforeunload", stopPolling);

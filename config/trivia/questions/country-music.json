@@ -1,0 +1,1072 @@
+{
+  "category": "Country Music",
+  "slug": "country-music",
+  "version": 1,
+  "questions": [
+    {
+      "id": "country-music_easy_001",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which river became a crossroad for country music?",
+      "answers": [
+        "Nashville",
+        "Mississippi River",
+        "Brad Paisley",
+        "Shania Twain"
+      ],
+      "correct": 1,
+      "explanation": "Mississippi River is the correct answer."
+    },
+    {
+      "id": "country-music_easy_002",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In which city is there a famous mural celebrating country legends?",
+      "answers": [
+        "Mississippi River",
+        "Brad Paisley",
+        "Nashville",
+        "Shania Twain"
+      ],
+      "correct": 2,
+      "explanation": "Nashville is the correct answer."
+    },
+    {
+      "id": "country-music_easy_003",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who replaced Taylor Swift on the Nashville mural that celebrated country legends?",
+      "answers": [
+        "Brad Paisley",
+        "Mississippi River",
+        "Nashville",
+        "Shania Twain"
+      ],
+      "correct": 0,
+      "explanation": "Brad Paisley is the correct answer."
+    },
+    {
+      "id": "country-music_easy_004",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is the best-selling female artist in country music history?",
+      "answers": [
+        "Mississippi River",
+        "Shania Twain",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 1,
+      "explanation": "Shania Twain is the correct answer."
+    },
+    {
+      "id": "country-music_easy_005",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In 1980, which country legend had a number one hit with \"He Stopped Loving Her Today\"?",
+      "answers": [
+        "Mississippi River",
+        "Nashville",
+        "George Jones",
+        "Brad Paisley"
+      ],
+      "correct": 2,
+      "explanation": "George Jones is the correct answer."
+    },
+    {
+      "id": "country-music_easy_006",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is popularly called the birthplace of country music?",
+      "answers": [
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley",
+        "Bristol, Tennessee"
+      ],
+      "correct": 3,
+      "explanation": "Bristol, Tennessee is the correct answer."
+    },
+    {
+      "id": "country-music_easy_007",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who recorded two of his best-selling albums in prison?",
+      "answers": [
+        "Mississippi River",
+        "Johnny Cash",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 1,
+      "explanation": "Johnny Cash is the correct answer."
+    },
+    {
+      "id": "country-music_easy_008",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Loretta Lynn song inspired a 1980 biographical film of the same name?",
+      "answers": [
+        "Mississippi River",
+        "Nashville",
+        "Coal Miner's Daughter",
+        "Brad Paisley"
+      ],
+      "correct": 2,
+      "explanation": "Coal Miner's Daughter is the correct answer."
+    },
+    {
+      "id": "country-music_easy_009",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The dissatisfaction with Nashville music and the aftermath of the British invasion resulted in which crossbred genre?",
+      "answers": [
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley",
+        "Country rock"
+      ],
+      "correct": 3,
+      "explanation": "Country rock is the correct answer."
+    },
+    {
+      "id": "country-music_easy_010",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which country star was known as \"The Singing Brakeman\"?",
+      "answers": [
+        "Mississippi River",
+        "Jimmie Rodgers",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 1,
+      "explanation": "Jimmie Rodgers is the correct answer."
+    },
+    {
+      "id": "country-music_easy_011",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "When was the genre of 'neo country disco music' popularized?",
+      "answers": [
+        "The 80s",
+        "78",
+        "79",
+        "81"
+      ],
+      "correct": 0,
+      "explanation": "The 80s is the correct answer."
+    },
+    {
+      "id": "country-music_easy_012",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In which decade did country music truly attain worldwide fame and popularity?",
+      "answers": [
+        "88",
+        "The 90s",
+        "89",
+        "91"
+      ],
+      "correct": 1,
+      "explanation": "The 90s is the correct answer."
+    },
+    {
+      "id": "country-music_easy_013",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which are the dominant instruments in honky-tonk country music?",
+      "answers": [
+        "Mississippi River",
+        "Nashville",
+        "Steel guitar and fiddle",
+        "Brad Paisley"
+      ],
+      "correct": 2,
+      "explanation": "Steel guitar and fiddle is the correct answer."
+    },
+    {
+      "id": "country-music_easy_014",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who released the 1938 music record 'Honky Tonk Music'?",
+      "answers": [
+        "Jelly Roll Morton",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "Jelly Roll Morton is the correct answer."
+    },
+    {
+      "id": "country-music_easy_015",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which country legend duetted with Julio Iglesias on the 1984 single, \"To All the Girls I've Loved Before\"?",
+      "answers": [
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley",
+        "Willie Nelson"
+      ],
+      "correct": 3,
+      "explanation": "Willie Nelson is the correct answer."
+    },
+    {
+      "id": "country-music_easy_016",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which singer holds the record for the largest indoor concert in North America?",
+      "answers": [
+        "George Strait",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "George Strait is the correct answer."
+    },
+    {
+      "id": "country-music_easy_017",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "When did Ernest Tubb release his sixth release for Decca called 'Walking The Floor Over You'?",
+      "answers": [
+        "1940",
+        "1941",
+        "1942",
+        "1936"
+      ],
+      "correct": 1,
+      "explanation": "1941 is the correct answer."
+    },
+    {
+      "id": "country-music_easy_018",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is known as the King of the so-called 'Singing Cowboys'?",
+      "answers": [
+        "Gene Autry",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "Gene Autry is the correct answer."
+    },
+    {
+      "id": "country-music_easy_019",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was the name of James Gideon Tanner's band which was popular in the 30s country music scene?",
+      "answers": [
+        "Mississippi River",
+        "James Tanner headed the Skillet Lickers",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 1,
+      "explanation": "James Tanner headed the Skillet Lickers is the correct answer."
+    },
+    {
+      "id": "country-music_easy_020",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "When did country musicians begin playing boogie woogie?",
+      "answers": [
+        "1938",
+        "1940",
+        "1939",
+        "1934"
+      ],
+      "correct": 2,
+      "explanation": "1939 is the correct answer."
+    },
+    {
+      "id": "country-music_easy_021",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which city is considered the Country Music Capital of the World?",
+      "answers": [
+        "Mississippi River",
+        "Brad Paisley",
+        "Nashville",
+        "Shania Twain"
+      ],
+      "correct": 2,
+      "explanation": "Nashville is the correct answer."
+    },
+    {
+      "id": "country-music_easy_022",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which is the only TV channel that is dedicated to country music in Canada?",
+      "answers": [
+        "Mississippi River",
+        "Nashville",
+        "CMT",
+        "Brad Paisley"
+      ],
+      "correct": 2,
+      "explanation": "CMT is the correct answer."
+    },
+    {
+      "id": "country-music_easy_023",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In which country music festival held in Chennai will you find Anglo Indian musicians?",
+      "answers": [
+        "Blazing Guitars",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "Blazing Guitars is the correct answer."
+    },
+    {
+      "id": "country-music_easy_024",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Taylor Swift album spent 275 weeks on the Billboard 200?",
+      "answers": [
+        "Mississippi River",
+        "'Fearless'",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 1,
+      "explanation": "'Fearless' is the correct answer."
+    },
+    {
+      "id": "country-music_easy_025",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which band popularized an electro-pop version of the classic southern song 'Cotton Eyed Joe'?",
+      "answers": [
+        "Rednex",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "Rednex is the correct answer."
+    },
+    {
+      "id": "country-music_easy_026",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Whose version of 'Cotton Eyed Joe' won a Grammy Award in 1985?",
+      "answers": [
+        "The Moody Brothers",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "The Moody Brothers is the correct answer."
+    },
+    {
+      "id": "country-music_easy_027",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Blues musician gave Hank Williams guitar lessons in exchange for meals?",
+      "answers": [
+        "Rufus Payne",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "Rufus Payne is the correct answer."
+    },
+    {
+      "id": "country-music_easy_028",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who originally recorded Garth Brooks' 1991 hit \"The Thunder Rolls\"?",
+      "answers": [
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley",
+        "Tanya Tucker"
+      ],
+      "correct": 3,
+      "explanation": "Tanya Tucker is the correct answer."
+    },
+    {
+      "id": "country-music_easy_029",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was Hank Williams' backup band called?",
+      "answers": [
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley",
+        "Drifting Cowboys"
+      ],
+      "correct": 3,
+      "explanation": "Drifting Cowboys is the correct answer."
+    },
+    {
+      "id": "country-music_easy_030",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which was the only song with country airplay to reach number one on the pop charts in the late 80s?",
+      "answers": [
+        "Billy Vera's 'At This Moment",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "Billy Vera's 'At This Moment is the correct answer."
+    },
+    {
+      "id": "country-music_easy_031",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is the female country artist with the most number-one hits on the Billboard Hot Country Songs list?",
+      "answers": [
+        "Mississippi River",
+        "Carrie Underwood",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 1,
+      "explanation": "Carrie Underwood is the correct answer."
+    },
+    {
+      "id": "country-music_easy_032",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which country-influenced album by Kylie Minogue reached number one in Scotland?",
+      "answers": [
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley",
+        "'Golden'"
+      ],
+      "correct": 3,
+      "explanation": "'Golden' is the correct answer."
+    },
+    {
+      "id": "country-music_easy_033",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which country duo won the Country Music Association Award for top vocal duo every single year from 1972 to 1975?",
+      "answers": [
+        "Mississippi River",
+        "Lynn and Twitty",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 1,
+      "explanation": "Lynn and Twitty is the correct answer."
+    },
+    {
+      "id": "country-music_easy_034",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Australian country song artist uses music to communicate about Aboriginal rights issues?",
+      "answers": [
+        "Mississippi River",
+        "Troy Cassar-Daley",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 1,
+      "explanation": "Troy Cassar-Daley is the correct answer."
+    },
+    {
+      "id": "country-music_easy_035",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which track took the Scrumpy and Western music genre to number one in both the UK and Ireland?",
+      "answers": [
+        "'The Combine Harvester'",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "'The Combine Harvester' is the correct answer."
+    },
+    {
+      "id": "country-music_easy_036",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which country singer was honored by the National Italian American Foundation in 2004?",
+      "answers": [
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley",
+        "Tim McGraw"
+      ],
+      "correct": 3,
+      "explanation": "Tim McGraw is the correct answer."
+    },
+    {
+      "id": "country-music_easy_037",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which famous country singer is Miley Cyrus' godmother?",
+      "answers": [
+        "Dolly Parton",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "Dolly Parton is the correct answer."
+    },
+    {
+      "id": "country-music_easy_038",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which country-inspired song by Miley Cyrus was featured in the 'Hannah Montana' movie?",
+      "answers": [
+        "'The Climb'",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "'The Climb' is the correct answer."
+    },
+    {
+      "id": "country-music_easy_039",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which song by Billy Ray Cyrus helped to popularize line dance again?",
+      "answers": [
+        "Mississippi River",
+        "'Achy Breaky Heart'",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 1,
+      "explanation": "'Achy Breaky Heart' is the correct answer."
+    },
+    {
+      "id": "country-music_easy_040",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which singer/songwriter reportedly landed a helicopter on the lawn of Johnny Cash to hand-deliver a music demo?",
+      "answers": [
+        "Mississippi River",
+        "Kristofferson",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 1,
+      "explanation": "Kristofferson is the correct answer."
+    },
+    {
+      "id": "country-music_easy_041",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who wrote 'New York, New York', which pays tribute to NYC in an alt-country fashion?",
+      "answers": [
+        "Ryan Adams",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "Ryan Adams is the correct answer."
+    },
+    {
+      "id": "country-music_easy_042",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which country music singer parlayed the success of his 1961 hit 'Big Bad John' into a sausage empire?",
+      "answers": [
+        "Jimmy Dean",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "Jimmy Dean is the correct answer."
+    },
+    {
+      "id": "country-music_easy_043",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Keith Urban album is his highest-selling, certified 4x Platinum?",
+      "answers": [
+        "Mississippi River",
+        "'Be Here'",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 1,
+      "explanation": "'Be Here' is the correct answer."
+    },
+    {
+      "id": "country-music_easy_044",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which country singer was a construction worker and a fishing guide before making best-selling music?",
+      "answers": [
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley",
+        "Clint Black"
+      ],
+      "correct": 3,
+      "explanation": "Clint Black is the correct answer."
+    },
+    {
+      "id": "country-music_easy_045",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which song by Beyonce in her iconic album 'Lemonade' was a throwback to her country roots?",
+      "answers": [
+        "'Daddy Lesson'",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "'Daddy Lesson' is the correct answer."
+    },
+    {
+      "id": "country-music_easy_046",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was Loretta Lynn's 2018 album called?",
+      "answers": [
+        "Mississippi River",
+        "'Wouldn't It Be Great.'",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 1,
+      "explanation": "'Wouldn't It Be Great.' is the correct answer."
+    },
+    {
+      "id": "country-music_easy_047",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where was Brad Paisley born?",
+      "answers": [
+        "Mississippi River",
+        "Glen Dale, West Virginia, United States",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 1,
+      "explanation": "Glen Dale, West Virginia, United States is the correct answer."
+    },
+    {
+      "id": "country-music_easy_048",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which was Brad Paisley's debut single called?",
+      "answers": [
+        "1998",
+        "2000",
+        "1994",
+        "'Who Needs Pictures' in 1999"
+      ],
+      "correct": 3,
+      "explanation": "'Who Needs Pictures' in 1999 is the correct answer."
+    },
+    {
+      "id": "country-music_easy_049",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What kind of music did Cliff Carlisle produce in the 20s?",
+      "answers": [
+        "He mostly recorded Blues songs",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "He mostly recorded Blues songs is the correct answer."
+    },
+    {
+      "id": "country-music_easy_050",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which country singer has been involved in activism involving biofuels?",
+      "answers": [
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley",
+        "Willie Nelson"
+      ],
+      "correct": 3,
+      "explanation": "Willie Nelson is the correct answer."
+    },
+    {
+      "id": "country-music_easy_051",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How did Patsy Cline tragically die?",
+      "answers": [
+        "She died in 1953 in a plane crash",
+        "1952",
+        "1954",
+        "1948"
+      ],
+      "correct": 0,
+      "explanation": "She died in 1953 in a plane crash is the correct answer."
+    },
+    {
+      "id": "country-music_easy_052",
+      "category": "Country Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In which decade did Patsy Cline become an official member of The Opry?",
+      "answers": [
+        "58",
+        "59",
+        "The 60s",
+        "61"
+      ],
+      "correct": 2,
+      "explanation": "The 60s is the correct answer."
+    },
+    {
+      "id": "country-music_medium_001",
+      "category": "Country Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which singer recorded the first country song to sell one million copies?",
+      "answers": [
+        "Vernon Dalhart",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "Vernon Dalhart is the correct answer."
+    },
+    {
+      "id": "country-music_medium_002",
+      "category": "Country Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which city in the 20s gave rise to the first generation of country music's earliest recording artists?",
+      "answers": [
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley",
+        "Atlanta"
+      ],
+      "correct": 3,
+      "explanation": "Atlanta is the correct answer."
+    },
+    {
+      "id": "country-music_medium_003",
+      "category": "Country Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first artist to play the electric guitar at the 'Grand Ole Opry'?",
+      "answers": [
+        "Ernest Tubb",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "Ernest Tubb is the correct answer."
+    },
+    {
+      "id": "country-music_medium_004",
+      "category": "Country Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first country musician known to add an electric guitar to his band?",
+      "answers": [
+        "Mississippi River",
+        "Nashville",
+        "Bob Wills",
+        "Brad Paisley"
+      ],
+      "correct": 2,
+      "explanation": "Bob Wills is the correct answer."
+    },
+    {
+      "id": "country-music_medium_005",
+      "category": "Country Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was Taylor Swift's first song in the world of country music called?",
+      "answers": [
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley",
+        "'Tim McGraw'"
+      ],
+      "correct": 3,
+      "explanation": "'Tim McGraw' is the correct answer."
+    },
+    {
+      "id": "country-music_medium_006",
+      "category": "Country Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which was the first American country music video cable channel?",
+      "answers": [
+        "Mississippi River",
+        "The Nashville Network",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 1,
+      "explanation": "The Nashville Network is the correct answer."
+    },
+    {
+      "id": "country-music_medium_007",
+      "category": "Country Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which artist's record was first officially released as 'Hillbilly Music' by Okeh Records?",
+      "answers": [
+        "Fiddlin' John Carson",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "Fiddlin' John Carson is the correct answer."
+    },
+    {
+      "id": "country-music_medium_008",
+      "category": "Country Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was Billy Ray Cyrus' first studio album called?",
+      "answers": [
+        "'Some Gave All' (1992)",
+        "1991",
+        "1993",
+        "1987"
+      ],
+      "correct": 0,
+      "explanation": "'Some Gave All' (1992) is the correct answer."
+    },
+    {
+      "id": "country-music_medium_009",
+      "category": "Country Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who is the first woman to have won the Country Music Association Awards' Album of the Year twice?",
+      "answers": [
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley",
+        "Miranda Lambert"
+      ],
+      "correct": 3,
+      "explanation": "Miranda Lambert is the correct answer."
+    },
+    {
+      "id": "country-music_medium_010",
+      "category": "Country Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "At what age did Taylor Swift win an Album of the Year award for the first time?",
+      "answers": [
+        "18",
+        "19",
+        "20",
+        "21"
+      ],
+      "correct": 2,
+      "explanation": "20 is the correct answer."
+    },
+    {
+      "id": "country-music_medium_011",
+      "category": "Country Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was Blake Shelton's first single called?",
+      "answers": [
+        "Mississippi River",
+        "Nashville",
+        "'Austin'",
+        "Brad Paisley"
+      ],
+      "correct": 2,
+      "explanation": "'Austin' is the correct answer."
+    },
+    {
+      "id": "country-music_medium_012",
+      "category": "Country Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which song was the first number-one single that got Keith Urban on the Hot Country Songs chart?",
+      "answers": [
+        "'But For The Grace Of God'",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "'But For The Grace Of God' is the correct answer."
+    },
+    {
+      "id": "country-music_medium_013",
+      "category": "Country Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was Clint Black's first album called?",
+      "answers": [
+        "'Killin Time.'",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "'Killin Time.' is the correct answer."
+    },
+    {
+      "id": "country-music_medium_014",
+      "category": "Country Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was Patsy Cline's first release under Decca?",
+      "answers": [
+        "'I Fall To Pieces'",
+        "Mississippi River",
+        "Nashville",
+        "Brad Paisley"
+      ],
+      "correct": 0,
+      "explanation": "'I Fall To Pieces' is the correct answer."
+    },
+    {
+      "id": "country-music_hard_001",
+      "category": "Country Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many records has Shania Twain sold?",
+      "answers": [
+        "98",
+        "99",
+        "101",
+        "More than 100 million"
+      ],
+      "correct": 3,
+      "explanation": "More than 100 million is the correct answer."
+    },
+    {
+      "id": "country-music_hard_002",
+      "category": "Country Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "In which year did James Gideon Tanner, one of the first stars of country music, die?",
+      "answers": [
+        "1959",
+        "1961",
+        "1960",
+        "1955"
+      ],
+      "correct": 2,
+      "explanation": "1960 is the correct answer."
+    },
+    {
+      "id": "country-music_hard_003",
+      "category": "Country Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "In which year was Luke Bryan named Entertainer of the Year by the Academy of Country Music Awards (ACMA)?",
+      "answers": [
+        "2013",
+        "2012",
+        "2014",
+        "2008"
+      ],
+      "correct": 0,
+      "explanation": "2013 is the correct answer."
+    },
+    {
+      "id": "country-music_hard_004",
+      "category": "Country Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many times has Loretta Lynn been nominated for the Grammy Awards?",
+      "answers": [
+        "16",
+        "17",
+        "19",
+        "18 times"
+      ],
+      "correct": 3,
+      "explanation": "18 times is the correct answer."
+    },
+    {
+      "id": "country-music_hard_005",
+      "category": "Country Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many studio albums did Merle Haggard release?",
+      "answers": [
+        "54",
+        "56",
+        "55",
+        "57"
+      ],
+      "correct": 1,
+      "explanation": "56 is the correct answer."
+    }
+  ]
+}

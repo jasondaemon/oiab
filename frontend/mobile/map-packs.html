@@ -423,6 +423,7 @@
         wildfire: "Wildfire",
         weather: "Weather",
         public_lands: "Public Lands",
+        geopdf: "GeoPDF Maps",
         user: "User Overlays"
       })[category || "user"] || String(category || "User Overlays").replace(/_/g, " ");
     }
@@ -514,7 +515,7 @@
     }
 
     function renderOverlays() {
-      const groups = ["topo", "mvum", "wildfire", "weather", "public_lands", "user"]
+      const groups = ["topo", "mvum", "wildfire", "weather", "public_lands", "geopdf", "user"]
         .map(category => [category, overlaySources.filter(overlay => (overlay.category || "user") === category)])
         .filter(([, items]) => items.length);
       overlaysNode.innerHTML = groups.length ? groups.map(([category, overlays]) => `

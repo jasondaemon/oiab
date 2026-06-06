@@ -44,8 +44,16 @@ ENVEOF
 fi
 
 DOCKER_GID=\$(stat -c '%g' /var/run/docker.sock 2>/dev/null || echo 998)
+I2C_GID=\$(getent group i2c 2>/dev/null | awk -F: '{print \$3}' || true)
+if [ -z "\$I2C_GID" ]; then
+  I2C_GID=988
+fi
+I2C_DEVICE_HOST="/dev/null"
+if [ -e /dev/i2c-1 ]; then
+  I2C_DEVICE_HOST="/dev/i2c-1"
+fi
 
-python3 - "$REMOTE_ENV_PATH" "$REMOTE_PORT" "\$DOCKER_GID" <<'PY'
+python3 - "$REMOTE_ENV_PATH" "$REMOTE_PORT" "\$DOCKER_GID" "\$I2C_GID" "\$I2C_DEVICE_HOST" <<'PY'
 from pathlib import Path
 import secrets
 import sys
@@ -53,6 +61,8 @@ import sys
 env_path = Path(sys.argv[1])
 remote_port = sys.argv[2]
 docker_gid = sys.argv[3]
+i2c_gid = sys.argv[4]
+i2c_device_host = sys.argv[5]
 lines = env_path.read_text().splitlines() if env_path.exists() else []
 
 entries: dict[str, str] = {}
@@ -84,6 +94,15 @@ ensure("FILEBROWSER_ADMIN_USER", "admin")
 if "OIAB_DOCKER_GID" not in entries:
     order.append("OIAB_DOCKER_GID")
 entries["OIAB_DOCKER_GID"] = docker_gid
+if "OIAB_I2C_GID" not in entries:
+    order.append("OIAB_I2C_GID")
+entries["OIAB_I2C_GID"] = i2c_gid
+if "OIAB_I2C_DEVICE_HOST" not in entries:
+    order.append("OIAB_I2C_DEVICE_HOST")
+entries["OIAB_I2C_DEVICE_HOST"] = i2c_device_host
+ensure("OIAB_I2C_DEVICE", "/dev/i2c-1")
+ensure("OIAB_I2C_BUS", "1")
+ensure("OIAB_I2C_ADDRESS", "0x36")
 
 output: list[str] = []
 if passthrough:
@@ -92,6 +111,24 @@ for key in order:
     output.append(f"{key}={entries[key]}")
 env_path.write_text("\\n".join(output).strip() + "\\n")
 PY
+
+mkdir -p /srv/trailer/data/oiab/services/komga/config
+if [ -f /srv/trailer/komga/config/reader-auth.env ] && [ ! -f /srv/trailer/data/oiab/services/komga/config/reader-auth.env ]; then
+  sudo cp /srv/trailer/komga/config/reader-auth.env /srv/trailer/data/oiab/services/komga/config/reader-auth.env
+fi
+if [ -f /srv/trailer/data/oiab/services/komga/config/reader-auth.env ]; then
+  sudo chgrp 0 /srv/trailer/data/oiab/services/komga/config/reader-auth.env 2>/dev/null || true
+  sudo chmod 0644 /srv/trailer/data/oiab/services/komga/config/reader-auth.env
+fi
+for komga_auth_file in admin-auth.env admin-reset.env; do
+  if [ -f "/srv/trailer/komga/config/\$komga_auth_file" ] && [ ! -f "/srv/trailer/data/oiab/services/komga/config/\$komga_auth_file" ]; then
+    sudo cp "/srv/trailer/komga/config/\$komga_auth_file" "/srv/trailer/data/oiab/services/komga/config/\$komga_auth_file"
+  fi
+  if [ -f "/srv/trailer/data/oiab/services/komga/config/\$komga_auth_file" ]; then
+    sudo chgrp 0 "/srv/trailer/data/oiab/services/komga/config/\$komga_auth_file" 2>/dev/null || true
+    sudo chmod 0644 "/srv/trailer/data/oiab/services/komga/config/\$komga_auth_file"
+  fi
+done
 
 docker compose --env-file "$REMOTE_ENV_PATH" build oiab-core
 docker compose --env-file "$REMOTE_ENV_PATH" up -d --force-recreate oiab-core filebrowser

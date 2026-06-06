@@ -1,0 +1,1792 @@
+{
+  "category": "U.S. Geography",
+  "slug": "u-s-geography",
+  "version": 1,
+  "questions": [
+    {
+      "id": "u-s-geography_easy_001",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Measured from base to summit, which mountain is often called the tallest?",
+      "answers": [
+        "Maine",
+        "Columbia",
+        "Alaska",
+        "Mauna Kea in Hawaii"
+      ],
+      "correct": 3,
+      "explanation": "Mauna Kea is often called tallest by base-to-summit measurement."
+    },
+    {
+      "id": "u-s-geography_easy_002",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which state is the closest to Africa?",
+      "answers": [
+        "Maine",
+        "Mauna Kea in Hawaii",
+        "Columbia",
+        "Alaska"
+      ],
+      "correct": 0,
+      "explanation": "Maine is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_003",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What's the capital of South Carolina?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Alaska"
+      ],
+      "correct": 2,
+      "explanation": "Columbia is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_004",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which state has the most water within it?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Alaska"
+      ],
+      "correct": 3,
+      "explanation": "Alaska is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_005",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What state is the Statue of Liberty in?",
+      "answers": [
+        "New Jersey",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "New Jersey is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_006",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What's the least populated state?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Wyoming",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "Wyoming is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_007",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the longest river in the United States?",
+      "answers": [
+        "Then Missouri River",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "Then Missouri River is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_008",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the largest state in landmass?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Alaska"
+      ],
+      "correct": 3,
+      "explanation": "Alaska is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_009",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which state has the highest population density (people per square mile)?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Washington, D.C"
+      ],
+      "correct": 3,
+      "explanation": "Washington, D.C is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_010",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the westernmost state capital in the mainland United States?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Salem in Oregon"
+      ],
+      "correct": 3,
+      "explanation": "Salem in Oregon is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_011",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What's the easternmost state in the US?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Alaska"
+      ],
+      "correct": 3,
+      "explanation": "Alaska is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_012",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which US state has the longest coastline?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Alaska"
+      ],
+      "correct": 3,
+      "explanation": "Alaska is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_013",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which two states share borders with eight other states each?",
+      "answers": [
+        "Missouri and Tennessee",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "Missouri and Tennessee is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_014",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the deepest lake in the United States?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Crater Lake in Oregon"
+      ],
+      "correct": 3,
+      "explanation": "Crater Lake in Oregon is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_015",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the capital city of Alaska?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Juneau",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "Juneau is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_016",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which popular tourist attraction is Arizona known for?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "The Grand Canyon",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "The Grand Canyon is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_017",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which animal is featured on the state flag of California?",
+      "answers": [
+        "bear",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "bear is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_018",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the capital city of Delaware?",
+      "answers": [
+        "Dover is the capital city of Delaware",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "Dover is the capital city of Delaware is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_019",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which state is Lake Winnebago situated in?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Wisconsin"
+      ],
+      "correct": 3,
+      "explanation": "Wisconsin is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_020",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where does the Rio Grande river rise from?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "San Juan Mountains",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "San Juan Mountains is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_021",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In which city is the Bristlecone pine found?",
+      "answers": [
+        "California",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "California is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_022",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In which state is Mount Rushmore is located?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Munt Rushmore is located in South Dakota",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Munt Rushmore is located in South Dakota is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_023",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In which U.S. State the Atlantic City is located?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "tlantic City is located in New Jersey",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "tlantic City is located in New Jersey is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_024",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which city shares the border with Canada?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Montana shares the border with Canada"
+      ],
+      "correct": 3,
+      "explanation": "Montana shares the border with Canada is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_025",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where is Crater Lake situated?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "In Oregon"
+      ],
+      "correct": 3,
+      "explanation": "In Oregon is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_026",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Is Columbia a state or a district?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "District",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "District is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_027",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which U.S. state has the highest number of endangered species?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Hawaii is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_028",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which place has 43 buildings with their own zip code?",
+      "answers": [
+        "Manhattan, NY City",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "Manhattan, NY City is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_029",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which two states do not share a border with any other U.S. state?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Alaska and Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Alaska and Hawaii is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_030",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which state is the second-largest by population?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Los Angeles",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Los Angeles is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_031",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which U.S. state touches only one state?",
+      "answers": [
+        "Maine",
+        "Mauna Kea in Hawaii",
+        "Columbia",
+        "Alaska"
+      ],
+      "correct": 0,
+      "explanation": "Maine is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_032",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Name the highest point of the country?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Denali",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Denali is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_033",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the capital of South Dakota?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Pierre"
+      ],
+      "correct": 3,
+      "explanation": "Pierre is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_034",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where is Lake Okeechobee situated?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Florida",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Florida is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_035",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which State is the northernmost community of New England?",
+      "answers": [
+        "Maine",
+        "Mauna Kea in Hawaii",
+        "Columbia",
+        "Alaska"
+      ],
+      "correct": 0,
+      "explanation": "Maine is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_036",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which two states donated land for the creation of Washington D.C?",
+      "answers": [
+        "Maryland and Virginia",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "Maryland and Virginia is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_037",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How much oxygen of the world is supplied by the Amazon rainforest?",
+      "answers": [
+        "18",
+        "19",
+        "21",
+        "20 percent"
+      ],
+      "correct": 3,
+      "explanation": "20 percent is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_038",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which U.S. city has the largest population of Polish?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Chicago",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "Chicago is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_039",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which U.S. state is known as the Garden state?",
+      "answers": [
+        "New Jersey",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "New Jersey is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_040",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which mountains of South America are growing higher?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Mountain Andes",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "Mountain Andes is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_041",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which river flows through the great Canyon?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Colorado River",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Colorado River is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_042",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What state is bordered by Nebraska, Kansas, Oklahoma, New Mexico, Utah, and Wyoming?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Colorado"
+      ],
+      "correct": 3,
+      "explanation": "Colorado is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_043",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the only state to border just one other state?",
+      "answers": [
+        "Maine",
+        "Mauna Kea in Hawaii",
+        "Columbia",
+        "Alaska"
+      ],
+      "correct": 0,
+      "explanation": "Maine is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_044",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which of the Great Lakes is located entirely within the U.S. border?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Lake Michigan",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Lake Michigan is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_045",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What national park spreads across Wyoming, Montana, and Idaho?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Yellowstone National Park"
+      ],
+      "correct": 3,
+      "explanation": "Yellowstone National Park is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_046",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which river ended up flowing backwards after three earthquakes in the 1800s?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "The Mississippi River",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "The Mississippi River is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_047",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What U.S. state is home to no documented poisonous snakes?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Alaska"
+      ],
+      "correct": 3,
+      "explanation": "Alaska is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_048",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What's the longest river system in North America?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "The Mississippi-Missouri river system"
+      ],
+      "correct": 3,
+      "explanation": "The Mississippi-Missouri river system is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_049",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Name the only state that enters the Eastern Hemisphere ?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Alaska"
+      ],
+      "correct": 3,
+      "explanation": "Alaska is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_050",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the state bird of North Carolina?",
+      "answers": [
+        "Cardinal",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "Cardinal is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_051",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where would you find Lake Okeechobee?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "South Florida",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "South Florida is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_052",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is New York City's nickname ?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "The Big Apple"
+      ],
+      "correct": 3,
+      "explanation": "The Big Apple is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_053",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which is the only continent that straddles the Northern and Western hemispheres?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "North America"
+      ],
+      "correct": 3,
+      "explanation": "North America is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_054",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the largest lake in the US?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Lake Superior",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "Lake Superior is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_055",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which continent is home to the Great Bear Lake ?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "North America"
+      ],
+      "correct": 3,
+      "explanation": "North America is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_056",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the largest city in Florida (population)?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Jacksonville"
+      ],
+      "correct": 3,
+      "explanation": "Jacksonville is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_057",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where can you find the Great Canyon Park ?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "rizona",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "rizona is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_058",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What are the only two U.S. state capitals with rhyming names?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Boston and Austin",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "Boston and Austin is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_059",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the largest island on Lake Superior called?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Isle Royale",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Isle Royale is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_060",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which two lakes are connected by Niagara Falls?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Lake Erie and Lake Ontario",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "Lake Erie and Lake Ontario is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_061",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of the world's shortest river, and where can you find it?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "The Roe River is found in Montana",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "The Roe River is found in Montana is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_062",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the third-largest continent in the world?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "North America"
+      ],
+      "correct": 3,
+      "explanation": "North America is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_063",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What desert is Las Vegas located in?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "The Mojave Desert",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "The Mojave Desert is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_064",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What river runs through the Grand Canyon?",
+      "answers": [
+        "The Colorado River",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "The Colorado River is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_065",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which ocean borders the East Coast of the US?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "The Atlantic Ocean",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "The Atlantic Ocean is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_066",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What peak in Washington state , also known as Mount Tacoma, last erupted about 150 years ago?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Mount Rainier",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Mount Rainier is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_067",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What state is known as the Ocean State?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Rhode Island",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Rhode Island is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_068",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What American city is the Golden Gate Bridge located in?",
+      "answers": [
+        "San Fransisco",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "San Fransisco is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_069",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What's the third-largest US state?",
+      "answers": [
+        "California",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "California is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_070",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "'Alaska' was named after the Aleut word 'Alyeska'. What does Alyeska mean?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "The Great Land",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "The Great Land is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_071",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which mountain range in eastern North America is about 480 million years old?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "The Appalachian Mountains",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "The Appalachian Mountains is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_072",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Idaho follows Mountain Time, but what time does the Idaho Panhandle north of Salmon River observe?",
+      "answers": [
+        "Pacific Time",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "Pacific Time is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_073",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was the temporary US capital from 1790 to 1800?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Philadelphia",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Philadelphia is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_074",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Georgia has been in a dispute about state borders with which state since the 19th century?",
+      "answers": [
+        "Tennessee",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "Tennessee is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_075",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In which state was the historic city of Tombstone, where the O.K. Corral gunfight took place between the Cowboys and lawmen?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "rizona",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "rizona is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_076",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which National Forest was created across 5 counties in Arkansas by President Roosevelt in 1908?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "The Ozark National Forest"
+      ],
+      "correct": 3,
+      "explanation": "The Ozark National Forest is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_077",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Is the Kentucky Bend in the extreme northwestern or southwestern corner of Kentucky?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Southwestern",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Southwestern is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_078",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which state has rivers forming its complete east and west borders?",
+      "answers": [
+        "Iowa",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "Iowa is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_079",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which US city has the most people living in it?",
+      "answers": [
+        "New York City",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "New York City is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_080",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "labama is known as the Yellowhammer State, Heart of Dixie, and the Cotton State. What is a Yellowhammer?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "The state bird",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "The state bird is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_081",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which US state was bought from Russia in 1867?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Alaska"
+      ],
+      "correct": 3,
+      "explanation": "Alaska is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_082",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the capital of the state of Mississippi?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Jackson",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Jackson is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_083",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which state has the fewest counties ?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Delaware"
+      ],
+      "correct": 3,
+      "explanation": "Delaware is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_084",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which state is bordered by Rhode Island, Massachusetts, New York, and Long Island Sound?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Connecticut",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Connecticut is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_085",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which US territory was won in a 30-minute bloodless standoff between a US ship and the Spanish living on the island in 1898?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Guam",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "Guam is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_086",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "ustralia lies between which two oceans?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "The Pacific Ocean and the Indian Ocean",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "The Pacific Ocean and the Indian Ocean is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_087",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What country has the most natural lakes?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Canada",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "Canada is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_088",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What Canadian province boasts the longest freshwater beach in the world?",
+      "answers": [
+        "Ontario",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "Ontario is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_089",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What razor-thin country accounts for more than half of the western coastline of South America?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Chile",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Chile is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_090",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which ocean is the state of Hawaii in?",
+      "answers": [
+        "The Pacific Ocean",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "The Pacific Ocean is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_091",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which country is slightly larger than West Virginia?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Latvia",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Latvia is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_092",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the largest country in the world?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Russia",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Russia is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_093",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which canal connects the Red and Mediterranean Sea ?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Suez Canal",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "Suez Canal is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_094",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which city is closer to the North Pole – Rome or New York?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Rome",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Rome is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_095",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Name the smallest ocean in the world?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "The Arctic Ocean"
+      ],
+      "correct": 3,
+      "explanation": "The Arctic Ocean is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_096",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How much Titicaca is above sea level ?",
+      "answers": [
+        "1",
+        "2,500 feet",
+        "3",
+        "4"
+      ],
+      "correct": 1,
+      "explanation": "2,500 feet is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_097",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does 'Canada' mean?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Indian village"
+      ],
+      "correct": 3,
+      "explanation": "Indian village is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_098",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What country occupies the southern end of the Arabian Peninsula ?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Yemen",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "Yemen is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_099",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which country has the largest population in the world?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "China"
+      ],
+      "correct": 3,
+      "explanation": "China is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_100",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of the river that flows through the Brazil rainforest?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Tha Amazon",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Tha Amazon is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_101",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the coldest place on Earth?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "ntarctica",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "ntarctica is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_102",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What present-day Italian city does Mt. Vesuvius overlook?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Naples"
+      ],
+      "correct": 3,
+      "explanation": "Naples is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_103",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the capital of Thailand?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Bangkok"
+      ],
+      "correct": 3,
+      "explanation": "Bangkok is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_104",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where are the Spanish Steps located?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Rome, Italy",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "Rome, Italy is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_105",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of the largest city in Australia?",
+      "answers": [
+        "Brisbane",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "Brisbane is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_106",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What type of leaf is on the Canadian flag?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maple",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Maple is the correct answer."
+    },
+    {
+      "id": "u-s-geography_easy_107",
+      "category": "U.S. Geography",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where is the world's longest road tunnel?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Norway",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "Norway is the correct answer."
+    },
+    {
+      "id": "u-s-geography_medium_001",
+      "category": "U.S. Geography",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What state is called 'The First State'?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Delaware"
+      ],
+      "correct": 3,
+      "explanation": "Delaware is the correct answer."
+    },
+    {
+      "id": "u-s-geography_hard_001",
+      "category": "U.S. Geography",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many states have a border with Mexico?",
+      "answers": [
+        "4 states have a border with Mexico",
+        "2",
+        "3",
+        "5"
+      ],
+      "correct": 0,
+      "explanation": "4 states have a border with Mexico is the correct answer."
+    },
+    {
+      "id": "u-s-geography_hard_002",
+      "category": "U.S. Geography",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How long is the Niagara Fall Channel?",
+      "answers": [
+        "36-miles long",
+        "34",
+        "35",
+        "37"
+      ],
+      "correct": 0,
+      "explanation": "36-miles long is the correct answer."
+    },
+    {
+      "id": "u-s-geography_hard_003",
+      "category": "U.S. Geography",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many U.S. states are landlocked?",
+      "answers": [
+        "25",
+        "27",
+        "26",
+        "28"
+      ],
+      "correct": 1,
+      "explanation": "Twenty-seven U.S. states have no ocean coastline."
+    },
+    {
+      "id": "u-s-geography_hard_004",
+      "category": "U.S. Geography",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many States does the United States consist of?",
+      "answers": [
+        "Fifty",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "Fifty is the correct answer."
+    },
+    {
+      "id": "u-s-geography_hard_005",
+      "category": "U.S. Geography",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many large islands make up the main islands of Hawaii?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "North America"
+      ],
+      "correct": 3,
+      "explanation": "North America is the correct answer."
+    },
+    {
+      "id": "u-s-geography_hard_006",
+      "category": "U.S. Geography",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many countries does the US share land borders with?",
+      "answers": [
+        "Two",
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 0,
+      "explanation": "Two is the correct answer."
+    },
+    {
+      "id": "u-s-geography_hard_007",
+      "category": "U.S. Geography",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many oceans does the US border?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Three",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "Three is the correct answer."
+    },
+    {
+      "id": "u-s-geography_hard_008",
+      "category": "U.S. Geography",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many of the seven continents does the equator pass through?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Three",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "Three is the correct answer."
+    },
+    {
+      "id": "u-s-geography_hard_009",
+      "category": "U.S. Geography",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many Finger Lakes are there?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Columbia",
+        "Eleven lakes"
+      ],
+      "correct": 3,
+      "explanation": "Eleven lakes is the correct answer."
+    },
+    {
+      "id": "u-s-geography_hard_010",
+      "category": "U.S. Geography",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many time zones does Russia have?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Eleven",
+        "Maine",
+        "Columbia"
+      ],
+      "correct": 1,
+      "explanation": "Eleven is the correct answer."
+    },
+    {
+      "id": "u-s-geography_hard_011",
+      "category": "U.S. Geography",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many time zones does France use, with its international territories?",
+      "answers": [
+        "Mauna Kea in Hawaii",
+        "Maine",
+        "Twelve. The highest in the world",
+        "Columbia"
+      ],
+      "correct": 2,
+      "explanation": "Twelve. The highest in the world is the correct answer."
+    }
+  ]
+}

@@ -4,12 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#123822">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="IIAB Overland">
+  <meta name="apple-mobile-web-app-title" content="OIAB">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>IIAB Overland Mobile</title>
+  <title>OIAB Mobile</title>
   <link rel="apple-touch-icon" sizes="180x180" href="/mobile/overland-touch-icon-180.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
+  <link rel="canonical" href="https://mobile.daemonadventures.net/mobile/">
   <link rel="manifest" href="/mobile/manifest.webmanifest">
   <script>
     if (window.parent && window.parent !== window) {
@@ -21,12 +23,12 @@
       setTimeout(goHome, 750);
     }
   </script>
-  <link rel="stylesheet" href="mobile-shell.css">
+  <link rel="stylesheet" href="/mobile/mobile-shell.css">
 </head>
 <body>
-  <main class="mobile-shell" aria-label="IIAB Overland mobile launcher">
+  <main class="mobile-shell" aria-label="Overland In A Box mobile launcher">
     <section class="mobile-welcome" aria-label="Player profile">
-      <span>Welcome to another adventure,</span>
+      <span>Overland In A Box</span>
       <button id="editPlayerName" type="button">Player</button>
     </section>
 
@@ -42,13 +44,13 @@
 
     <section class="quick-panel" aria-label="All apps">
       <div class="section-title">
-        <button id="appsBack" class="back-button" type="button" hidden>‹ Apps</button>
-        <span id="appsFolderTitle"></span>
+        <h2>Apps</h2>
+        <a class="headunit-link" href="/?headunit=1">Headunit UI</a>
         <button id="refreshApps" class="icon-button" type="button" aria-label="Refresh apps">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.7 6.3A8 8 0 0 0 4.3 10H2l3.6 4.1L9.2 10H6.4a6 6 0 0 1 10.2-2.2 6 6 0 0 1 .1 8.4 5.9 5.9 0 0 1-4.2 1.8 6 6 0 0 1-4.4-2l-1.5 1.4A8 8 0 1 0 17.7 6.3z"></path></svg>
         </button>
       </div>
-      <div id="appsGrid" class="app-grid"></div>
+      <div id="appsGrid" class="mobile-app-sections"></div>
     </section>
   </main>
   <dialog id="playerNameDialog" class="player-name-dialog">
@@ -58,6 +60,6 @@
     <div id="playerNameError" class="password-error"></div>
     <button id="savePlayerName" class="password-submit" type="button">Save Name</button>
   </dialog>
-  <script src="mobile-shell.js"></script>
+  <script src="/mobile/mobile-shell.js"></script>
 </body>
 </html>

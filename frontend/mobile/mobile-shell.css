@@ -102,6 +102,20 @@ button {
   margin: 0;
 }
 
+.headunit-link,
+.mobile-back-link {
+  color: #102018;
+  text-decoration: none;
+  background: var(--green);
+  border-radius: 999px;
+  font-weight: 750;
+}
+
+.headunit-link {
+  min-height: 38px;
+  padding: 10px 14px;
+}
+
 .quick-panel {
   margin-top: 14px;
   padding: 14px;
@@ -176,6 +190,25 @@ button {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
   gap: 13px;
+}
+
+.mobile-app-sections {
+  display: grid;
+  gap: 18px;
+}
+
+.mobile-app-section {
+  display: grid;
+  gap: 10px;
+}
+
+.mobile-app-section h3 {
+  margin: 0;
+  color: var(--green);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .compact-grid {
@@ -308,6 +341,76 @@ button.app-card {
 
 .app-card small {
   display: none;
+}
+
+.mobile-settings-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 6px 0 16px;
+}
+
+.mobile-settings-header div {
+  display: grid;
+  gap: 2px;
+}
+
+.mobile-settings-header span {
+  color: var(--green);
+  font-size: 0.76rem;
+  font-weight: 850;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.mobile-settings-header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 12vw, 3.8rem);
+  line-height: 0.9;
+}
+
+.mobile-back-link {
+  display: inline-grid;
+  min-width: 78px;
+  min-height: 48px;
+  place-items: center;
+  padding: 0 16px;
+}
+
+.settings-module-list {
+  display: grid;
+  gap: 10px;
+}
+
+.settings-module-list a {
+  display: grid;
+  gap: 5px;
+  min-height: 74px;
+  align-content: center;
+  padding: 14px 16px;
+  color: var(--text);
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.075);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 18px;
+}
+
+.settings-module-list a:active {
+  transform: scale(0.98);
+  background: var(--panel-strong);
+}
+
+.settings-module-list strong {
+  font-size: 1.05rem;
+  font-weight: 850;
+}
+
+.settings-module-list span {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.25;
+  text-overflow: ellipsis;
 }
 
 .app-card.game-card {

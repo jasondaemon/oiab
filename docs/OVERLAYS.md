@@ -11,6 +11,8 @@ OIAB overlays are independent MapLibre sources layered over the active PMTiles b
 /data/oiab/maps/overlays/mvum/pmtiles
 /data/oiab/maps/overlays/wildfire
 /data/oiab/maps/overlays/weather
+/data/oiab/geopdf/originals
+/data/oiab/geopdf/processed
 /data/oiab/maps/cache
 ```
 
@@ -25,6 +27,7 @@ Overlay types are intentionally separate:
 - Display-only overlays: online raster layers such as USGS Topo.
 - Refreshable snapshot overlays: wildfire and weather GeoJSON caches.
 - Install/generated overlays: MVUM source data converted into normalized GeoJSON and PMTiles, plus offline USGS contour generation.
+- Imported map overlays: georeferenced PDFs rendered into local raster tiles.
 
 ## USGS Topo
 
@@ -77,6 +80,66 @@ Contour display behavior:
 - normal contours visible from z11+
 - contour labels visible from z12+
 - contours remain an optional overlay and do not modify the basemap
+
+## GeoPDF Maps
+
+OIAB can import georeferenced PDF maps and render them as individual raster tile overlays.
+
+Workflow:
+
+1. Open File Manager / File Uploads.
+2. Choose `GeoPDF Maps`.
+3. Upload a PDF that contains geospatial metadata.
+4. OIAB stores the original under `/data/oiab/geopdf/originals`.
+5. GDAL reads the georeferencing metadata and renders tiles under `/data/oiab/geopdf/processed/<map_id>/tiles`.
+6. The PDF appears as its own overlay in Maps v2 and can be enabled, disabled, faded, zoomed to, rebuilt, or cleared.
+
+GeoPDF API:
+
+```text
+GET    /api/geopdf
+POST   /api/geopdf/import
+GET    /api/geopdf/<id>
+POST   /api/geopdf/<id>/rebuild
+POST   /api/geopdf/<id>/update
+POST   /api/geopdf/<id>/delete
+PATCH  /api/geopdf/<id>
+DELETE /api/geopdf/<id>
+GET    /tiles/geopdf/<id>/<z>/<x>/<y>.png
+```
+
+Processing requires GDAL tools inside the OIAB runtime:
+
+```text
+gdalinfo
+gdalwarp
+gdal2tiles.py
+```
+
+The Docker image installs `gdal-bin`. If a host or custom image is missing GDAL, imports fail with a clear `GDAL is not installed` message.
+
+Supported PDFs are those GDAL can read as georeferenced PDFs, including common Adobe GeoPDF/LGIDict and ISO geospatial PDF metadata. Non-georeferenced PDFs are rejected and are not added to the overlay list.
+
+Useful configuration:
+
+```text
+OIAB_GEOPDF_MIN_ZOOM=8
+OIAB_GEOPDF_MAX_ZOOM=16
+OIAB_GEOPDF_RENDER_DPI=300
+OIAB_GEOPDF_TILE_SIZE=256
+OIAB_GEOPDF_OUTPUT_FORMAT=png
+```
+
+`OIAB_GEOPDF_RENDER_DPI` controls how GDAL rasterizes vector/PDF content before tiling. The default is `300`; low values such as `72` produce visibly pixelated overlays when zoomed in. Scanned PDFs with low-resolution embedded imagery cannot be sharpened beyond their source image quality.
+
+Troubleshooting:
+
+- `PDF is not georeferenced`: the PDF has no usable geospatial metadata.
+- `Could not determine GeoPDF bounds`: GDAL read the file but did not expose WGS84 bounds.
+- `GDAL is not installed`: rebuild or update the runtime with GDAL tools.
+- `Tile generation failed`: inspect `/api/maps/overlays/jobs` for the exact GDAL command stderr.
+- Rebuild tiles with `POST /api/geopdf/<id>/rebuild`.
+- Clear a tile cache from Settings → Maps → Overlays or `DELETE /api/geopdf/<id>`.
 
 ## MVUM
 

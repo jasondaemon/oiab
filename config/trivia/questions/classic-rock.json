@@ -1,0 +1,697 @@
+{
+  "category": "Classic Rock",
+  "slug": "classic-rock",
+  "version": 1,
+  "questions": [
+    {
+      "id": "classic-rock_medium_001",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the first rock-n-roll song to hit #1 on the charts?",
+      "answers": [
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon",
+        "His four extra teeth",
+        "\"Rock Around the Clock\""
+      ],
+      "correct": 3,
+      "explanation": "\"Rock Around the Clock\" is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_002",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Aerosmith song was nominated for both Best Original Song and Worst Original Song?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon",
+        "His four extra teeth"
+      ],
+      "correct": 1,
+      "explanation": "\"I Don't Want to Miss a Thing\" is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_003",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which classic rock album is sometimes said to be a soundtrack to The Wizard of Oz?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "His four extra teeth",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 3,
+      "explanation": "Pink Floyd's The Dark Side of the Moon is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_004",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What did Queen vocalist Freddie Mercury attribute his enhanced vocal range to?",
+      "answers": [
+        "His four extra teeth",
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 0,
+      "explanation": "His four extra teeth is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_005",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "'We Will Rock You' is a hit song by the famous band, Queen. What's the real name of its singer Freddie Mercury?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon",
+        "Farrokh Bulsara"
+      ],
+      "correct": 3,
+      "explanation": "Farrokh Bulsara is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_006",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The Led Zeppelin hit 'Stairway to Heaven' was played live for the very first time in which city?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "Belfast",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 1,
+      "explanation": "Belfast is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_007",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Whose son became the Who's drummer in 1996?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Ringo Starr's son Zak Starkey",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 2,
+      "explanation": "Ringo Starr's son Zak Starkey is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_008",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the name of the Muppet modeled after Bruce Springsteen?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Bruce Stringbean",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 2,
+      "explanation": "Bruce Stringbean is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_009",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The album 'On An Island' was released by which Pink Floyd member?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "David Gilmour",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 1,
+      "explanation": "David Gilmour is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_010",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What rock star once broke into Graceland?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "Bruce Springsteen",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 1,
+      "explanation": "Bruce Springsteen is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_011",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who dances with Bruce Springsteen in the music video for \"Dancing in the Dark\"?",
+      "answers": [
+        "Courteney Cox",
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 0,
+      "explanation": "Courteney Cox is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_012",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which androgynous musician is known for his album 'Purple Rain'?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon",
+        "Prince"
+      ],
+      "correct": 3,
+      "explanation": "Prince is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_013",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "How old was Jim Morrison when he died?",
+      "answers": [
+        "25",
+        "27",
+        "26",
+        "28"
+      ],
+      "correct": 1,
+      "explanation": "Jim Morrison died at age 27, a well-known classic rock fact."
+    },
+    {
+      "id": "classic-rock_medium_014",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which hotel chain banned the Who for life?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "Holiday Inn",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 1,
+      "explanation": "Holiday Inn is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_015",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who recorded the 1973 album, titled \"Tres Hombres\"?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon",
+        "ZZ Top"
+      ],
+      "correct": 3,
+      "explanation": "ZZ Top is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_016",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Why was Nirvana thrown out of their own record release party for Nevermind?",
+      "answers": [
+        "They started a food fight",
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 0,
+      "explanation": "They started a food fight is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_017",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the name of the airplane Buddy Holly last flew in?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon",
+        "merican Pie"
+      ],
+      "correct": 3,
+      "explanation": "merican Pie is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_018",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which group had a top ten hit in 1970 with \"Lola\"?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon",
+        "The Kinks"
+      ],
+      "correct": 3,
+      "explanation": "The Kinks is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_019",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Imagine Dragons caught their first big break when the lead singer of which band fell sick?",
+      "answers": [
+        "Train",
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 0,
+      "explanation": "Train is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_020",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What band's lead singer is credited with popularizing stage diving?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "Iggy Pop of the Stooges",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 1,
+      "explanation": "Iggy Pop of the Stooges is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_021",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Guns n Roses guitarist performs the guitar solo on 'Sweet Child O' Mine'?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "Slash",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 1,
+      "explanation": "Slash is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_022",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which group recorded the song \"Pictures of Lily\" in 1967?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon",
+        "The Who"
+      ],
+      "correct": 3,
+      "explanation": "The Who is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_023",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Pink Floyd recording became the first rock album to be played in space?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "Delicate Sound of Thunder",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 1,
+      "explanation": "Delicate Sound of Thunder is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_024",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What English rock band produced three legendary guitarists: Jeff Beck, Jimmy Page, and Eric Clapton?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon",
+        "The Yardbirds"
+      ],
+      "correct": 3,
+      "explanation": "The Yardbirds is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_025",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which American pop-rock band was wildly popular in Japan?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Cheap Trick",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 2,
+      "explanation": "Cheap Trick is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_026",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the only song Led Zeppelin ever recorded with a guest vocalist?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"The Battle of Evermore\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 1,
+      "explanation": "\"The Battle of Evermore\" is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_027",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who once kicked Jimi Hendrix out of his band?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "Little Richard",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 1,
+      "explanation": "Little Richard is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_028",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "When was the first-ever album of Aerosmith released?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon",
+        "The Hindu goddess Kali"
+      ],
+      "correct": 3,
+      "explanation": "The Hindu goddess Kali is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_029",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which goddess inspired the Rolling Stones' logo?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon",
+        "The Hindu goddess Kali"
+      ],
+      "correct": 3,
+      "explanation": "The Hindu goddess Kali is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_030",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Dusty Springfield recommended Led Zeppelin to a Records label. Which label was it?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon",
+        "tlantic Records"
+      ],
+      "correct": 3,
+      "explanation": "tlantic Records is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_031",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who is the only member of ZZ Top who doesn't have a beard?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "The drummer, Frank Beard",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 1,
+      "explanation": "The drummer, Frank Beard is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_032",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What did MUSE stand for?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon",
+        "Musicians United for Safe Energy"
+      ],
+      "correct": 3,
+      "explanation": "Musicians United for Safe Energy is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_033",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who brought us the song \"Live Wire\"?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "Motley Crue",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 1,
+      "explanation": "Motley Crue is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_034",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which famous Queen song is notably remembered from the movie \"Wayne's World\"?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon",
+        "Bohemian Rhapsody"
+      ],
+      "correct": 3,
+      "explanation": "Bohemian Rhapsody is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_035",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Beatle crossed Abbey Road barefoot?",
+      "answers": [
+        "Paul",
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 0,
+      "explanation": "Paul is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_036",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who sang Old Time Rock & Roll?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "Bob Seger and the Silver Bullet Band",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 1,
+      "explanation": "Bob Seger and the Silver Bullet Band is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_037",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What band features brothers Eddie and Alex Van Halen on guitar and drums, respectively?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon",
+        "Van Halen"
+      ],
+      "correct": 3,
+      "explanation": "Van Halen is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_038",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who wrote the Eric Clapton hit \"I Shot The Sheriff\"?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "Bob Marley",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 1,
+      "explanation": "Bob Marley is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_039",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What famous guitar virtuoso played the guitar solo on the Beatles song While My Guitar Gently Weeps?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Eric Clapton",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 2,
+      "explanation": "Eric Clapton is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_040",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who sang Midnight Rider?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "The Allman Brothers Band",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 2,
+      "explanation": "The Allman Brothers Band is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_041",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who financed Van Halen's first demo?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon",
+        "Gene Simmons"
+      ],
+      "correct": 3,
+      "explanation": "Gene Simmons is the correct answer."
+    },
+    {
+      "id": "classic-rock_medium_042",
+      "category": "Classic Rock",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Chuck Berry song was covered by both The Beatles and The Beach Boys?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Rock And Roll Music",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 2,
+      "explanation": "Rock And Roll Music is the correct answer."
+    },
+    {
+      "id": "classic-rock_hard_001",
+      "category": "Classic Rock",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many times was Linkin Park rejected by record labels?",
+      "answers": [
+        "42",
+        "43",
+        "44 times",
+        "45"
+      ],
+      "correct": 2,
+      "explanation": "44 times is the correct answer."
+    },
+    {
+      "id": "classic-rock_hard_002",
+      "category": "Classic Rock",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many studio albums did Nirvana release?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Three albums",
+        "Pink Floyd's The Dark Side of the Moon"
+      ],
+      "correct": 2,
+      "explanation": "Three albums is the correct answer."
+    },
+    {
+      "id": "classic-rock_hard_003",
+      "category": "Classic Rock",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many drummers have played for the famous band AC/DC?",
+      "answers": [
+        "\"Rock Around the Clock\"",
+        "\"I Don't Want to Miss a Thing\"",
+        "Pink Floyd's The Dark Side of the Moon",
+        "Twelve"
+      ],
+      "correct": 3,
+      "explanation": "Twelve is the correct answer."
+    },
+    {
+      "id": "classic-rock_hard_004",
+      "category": "Classic Rock",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many different instruments did Prince play on his debut album?",
+      "answers": [
+        "25",
+        "27 instruments",
+        "26",
+        "28"
+      ],
+      "correct": 1,
+      "explanation": "27 instruments is the correct answer."
+    }
+  ]
+}

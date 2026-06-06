@@ -45,7 +45,7 @@
       gap: clamp(10px, 1.1vw, 16px);
       align-items: start;
     }
-    #disks { display: contents; }
+    #disks, #batteryCards { display: contents; }
     .card, .dial, .panel, .fuel-card, .clock-card {
       background:
         linear-gradient(180deg, rgba(255,255,255,.05), transparent 34%),
@@ -308,6 +308,7 @@
       <article id="netInGauge" class="dial network square"><i class="needle" aria-hidden="true"></i><div class="dial-face"><div class="dial-value"><span id="netInValue">--</span><span class="dial-unit">Kbps</span></div><div class="dial-label">Net In</div></div></article>
       <article id="netOutGauge" class="dial network square"><i class="needle" aria-hidden="true"></i><div class="dial-face"><div class="dial-value"><span id="netOutValue">--</span><span class="dial-unit">Kbps</span></div><div class="dial-label">Net Out</div></div></article>
       <div id="disks" class="cluster"></div>
+      <div id="batteryCards" class="cluster"></div>
       <article class="clock-card square" aria-label="Clock">
         <div id="clockDate" class="clock-date">---</div>
         <div id="clockValue" class="clock-time">--:--</div>
@@ -346,6 +347,22 @@
       const empty = 100 - used;
       const label = disk.label || (index === 0 || disk.path === "/" ? "System SD" : "SSD Data");
       return `<article class="fuel-card square"><div class="fuel-meter" style="--empty:${empty}"></div><div><h3>${label}</h3><div class="fuel-value">${used.toFixed(0)}%</div><div class="small"><strong><code>${disk.path}</code></strong><br>${gb(disk.used)} / ${gb(disk.total)} used<br>${gb(disk.free)} free</div></div></article>`;
+    }
+
+    function batteryLevelCard(battery) {
+      if (!battery?.available) {
+        return `<article class="fuel-card square"><div class="fuel-meter" style="--empty:100"></div><div><h3>Battery</h3><div class="fuel-value">--</div><div class="small">UPS not detected<br>${battery?.error || "Battery unavailable"}</div></div></article>`;
+      }
+      const level = pct(battery.percentage);
+      const empty = 100 - level;
+      const voltage = Number(battery.voltage || 0);
+      return `<article class="fuel-card square"><div class="fuel-meter" style="--empty:${empty}"></div><div><h3>Battery</h3><div class="fuel-value">${level.toFixed(0)}%</div><div class="small">${voltage ? `${voltage.toFixed(2)}V cell` : "Voltage unavailable"}<br>X1206 UPS</div></div></article>`;
+    }
+
+    function batteryPowerCard(battery) {
+      const label = battery?.available ? (battery.label || "Battery available") : "Unknown";
+      const subtext = battery?.available ? "X1206 UPS" : "UPS not detected";
+      return `<article class="fuel-card square"><div class="fuel-meter" style="--empty:${battery?.available ? 12 : 100}"></div><div><h3>Power</h3><div class="fuel-value">${label}</div><div class="small">${subtext}<br>${battery?.chargingStatus || battery?.error || "Unavailable"}</div></div></article>`;
     }
 
     function formatKbps(value) {
@@ -399,6 +416,7 @@
       updateClock(data.timestamp);
 
       $("disks").innerHTML = (data.disks || []).slice(0, 3).map(fuelCard).join("");
+      $("batteryCards").innerHTML = `${batteryLevelCard(data.battery || {})}${batteryPowerCard(data.battery || {})}`;
       $("services").innerHTML = (data.services || []).map((service) => {
         const active = Boolean(service.running || service.enabled);
         return `<div class="row"><i class="dot ${active ? "active" : ""}"></i><strong title="${service.name || service.id}">${service.name || service.id}</strong></div>`;

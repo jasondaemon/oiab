@@ -585,6 +585,224 @@ body.result-loss {
   line-height: 1.05;
 }
 
+.game-note {
+  margin-top: 10px;
+  padding: 10px 12px;
+  color: var(--muted);
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+.burst-wrap {
+  display: grid;
+  gap: 10px;
+}
+
+.burst-readout {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.24);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.burst-readout span,
+.burst-pile h3,
+.burst-hand h3 {
+  display: block;
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.burst-readout strong {
+  color: var(--gold);
+  font-size: clamp(2.8rem, 13vw, 5.2rem);
+  line-height: 0.9;
+}
+
+.burst-readout small,
+.burst-readout p,
+.burst-empty {
+  margin: 0;
+  color: var(--muted);
+}
+
+.burst-readout p {
+  grid-column: 1 / -1;
+  font-size: 0.86rem;
+}
+
+.burst-pressure {
+  height: 26px;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(245, 251, 239, 0.1) 1px, transparent 1px) 0 0 / 12.5% 100%,
+    rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(245, 251, 239, 0.16);
+  border-radius: 999px;
+}
+
+.burst-pressure i {
+  display: block;
+  width: var(--burst-pct);
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--gold) 70%, var(--red));
+  border-radius: inherit;
+}
+
+.burst-pile,
+.burst-hand,
+.burst-scores {
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.burst-pile-cards,
+.burst-hand-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.burst-pile-cards span {
+  width: clamp(46px, 14vw, 72px);
+  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
+}
+
+.burst-pile-cards span.removed {
+  opacity: 0.34;
+  filter: grayscale(1);
+  position: relative;
+}
+
+.burst-pile-cards span.removed::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-top: 3px solid rgba(255, 80, 80, 0.9);
+  transform: rotate(-28deg);
+}
+
+.burst-card {
+  width: clamp(76px, 24vw, 126px);
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.32);
+}
+
+.burst-card:disabled {
+  opacity: 0.55;
+}
+
+.burst-card-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.burst-actions {
+  justify-content: stretch;
+}
+
+.burst-actions button {
+  width: 100%;
+}
+
+.burst-scores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+}
+
+.burst-scores div {
+  display: grid;
+  gap: 3px;
+  padding: 8px;
+  background: rgba(245, 251, 239, 0.06);
+  border: 1px solid rgba(245, 251, 239, 0.1);
+  border-radius: 12px;
+}
+
+.burst-scores div.current {
+  border-color: rgba(128, 240, 138, 0.62);
+}
+
+.burst-scores strong {
+  color: var(--text);
+}
+
+.burst-scores span {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.burst-choice-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(10px);
+}
+
+.burst-choice-panel {
+  width: min(420px, 100%);
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  color: var(--text);
+  background: rgba(12, 36, 24, 0.96);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.48);
+}
+
+.burst-choice-panel h2,
+.burst-choice-panel p {
+  margin: 0;
+}
+
+.burst-choice-panel p {
+  color: var(--muted);
+}
+
+.burst-choice-row {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.burst-choice-row select {
+  width: 100%;
+  padding: 12px;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.24);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.burst-rules {
+  line-height: 1.35;
+}
+
 @media (max-width: 520px) {
   .ship-wrap,
   .word-lists,

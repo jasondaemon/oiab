@@ -73,6 +73,57 @@ Maps v2 includes local glyph PBF files for Noto Sans Regular/Bold. Noto fonts ar
 
 The mobile chess game includes `frontend/mobile/vendor/chess.js` and its license file.
 
+## three.js
+
+The Dice Roller app includes local vendored copies of Three.js for lightweight WebGL dice rendering.
+
+- Project: https://threejs.org/
+- Source: https://github.com/mrdoob/three.js
+- License: MIT
+- Local license file: `frontend/mobile/vendor/three-LICENSE`
+- Local runtime files: `frontend/mobile/vendor/three.min.js`, `frontend/mobile/vendor/three.module.js`
+
+## dice-box-threejs
+
+The Dice Roller app includes `@3d-dice/dice-box-threejs` for supported tabletop dice physics and rendering.
+
+- Project: https://github.com/3d-dice/dice-box-threejs
+- Package: https://www.npmjs.com/package/@3d-dice/dice-box-threejs
+- License: MIT
+- Local license file: `frontend/mobile/vendor/dice-box-threejs/LICENSE`
+- Local runtime/assets: `frontend/mobile/vendor/dice-box-threejs/`
+- Vendored builds: `dice-box-threejs.es.js`, `dice-box-threejs.umd.js`
+
+## PixiJS
+
+The Canyon Crawler and Orbit Run arcade games use a locally vendored PixiJS runtime for offline 2D canvas/WebGL rendering.
+
+- Project: https://pixijs.com/
+- Source: https://github.com/pixijs/pixijs
+- License: MIT
+- Local license file: `frontend/mobile/vendor/pixi/LICENSE.txt`
+- Local runtime file: `frontend/mobile/vendor/pixi/pixi.min.js`
+
+## chessboard.js
+
+The Chess app uses chessboard.js for draggable board rendering. Chess rules remain handled by the separately vendored chess.js rules engine.
+
+- Project: https://chessboardjs.com/
+- Source: https://github.com/oakmac/chessboardjs
+- License: MIT
+- Local license file: `frontend/mobile/vendor/chessboardjs/LICENSE.txt`
+- Local runtime/style/assets: `frontend/mobile/vendor/chessboardjs/`
+
+## jQuery
+
+chessboard.js depends on jQuery, so a local jQuery runtime is included for the Chess app only.
+
+- Project: https://jquery.com/
+- Source: https://github.com/jquery/jquery
+- License: MIT
+- Local license file: `frontend/mobile/vendor/jquery/LICENSE.txt`
+- Local runtime file: `frontend/mobile/vendor/jquery/jquery-3.7.1.min.js`
+
 ## Particula-Inspired Visualizer
 
 The music visualizer includes an original local canvas mode inspired by the MIT-licensed Particula project:

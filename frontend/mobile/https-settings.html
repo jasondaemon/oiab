@@ -117,10 +117,10 @@
       <div class="grid">
         <label>Base Domain <input id="domain" placeholder="overland.daemonadventures.net"></label>
         <label>Pi LAN IP <input id="piLanIp" placeholder="192.168.8.2"></label>
-        <label>Certificate Domains <input id="certDomains" placeholder="overland.daemonadventures.net,*.overland.daemonadventures.net"></label>
+        <label>Certificate Domains <input id="certDomains" placeholder="overland.daemonadventures.net,*.overland.daemonadventures.net,mobile.daemonadventures.net"></label>
         <label>ACME Email <input id="email" placeholder="you@example.com"></label>
         <label>Maps Host <input id="mapsHost" placeholder="maps.overland.daemonadventures.net"></label>
-        <label>Mobile Host <input id="mobileHost" placeholder="mobile.overland.daemonadventures.net"></label>
+        <label>Mobile Host <input id="mobileHost" placeholder="mobile.daemonadventures.net"></label>
         <label>Music Host <input id="musicHost" placeholder="music.overland.daemonadventures.net"></label>
         <label>Files Host <input id="filesHost" placeholder="files.overland.daemonadventures.net"></label>
         <label>Jellyfin Host <input id="jellyfinHost" placeholder="jellyfin.overland.daemonadventures.net"></label>
@@ -183,7 +183,12 @@
     }
 
     function defaultish(value) {
-      return !value || /^(maps|mobile|music|files|jellyfin|komga|wiki|monitor|minecraft-map|minecraft-admin)\.overland\.daemonadventures\.net$/i.test(value);
+      return !value || /^mobile\.daemonadventures\.net$/i.test(value) || /^(maps|mobile|music|files|jellyfin|komga|wiki|monitor|minecraft-map|minecraft-admin)\.overland\.daemonadventures\.net$/i.test(value);
+    }
+
+    function siblingHost(domain, prefix) {
+      const parts = String(domain || "").split(".");
+      return parts.length > 2 ? `${prefix}.${parts.slice(1).join(".")}` : `${prefix}.${domain}`;
     }
 
     function applyDomainDefaults() {
@@ -191,11 +196,12 @@
       if (!domain) return;
       const certField = document.getElementById("certDomains");
       if (certField && defaultish(certField.value)) {
-        certField.value = `${domain},*.${domain}`;
+        certField.value = `${domain},*.${domain},${siblingHost(domain, "mobile")}`;
       }
       Object.entries(hostDefaults).forEach(([id, prefix]) => {
         const field = document.getElementById(id);
-        if (field && defaultish(field.value)) field.value = `${prefix}.${domain}`;
+        if (!field || !defaultish(field.value)) return;
+        field.value = id === "mobileHost" ? siblingHost(domain, "mobile") : `${prefix}.${domain}`;
       });
     }
 

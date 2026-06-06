@@ -1,0 +1,442 @@
+{
+  "category": "World History",
+  "slug": "world-history",
+  "version": 1,
+  "questions": [
+    {
+      "id": "world-history_easy_001",
+      "category": "World History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which leader helped liberate much of South America?",
+      "answers": [
+        "Samurai",
+        "Simon Bolivar",
+        "India",
+        "The Vikings"
+      ],
+      "correct": 1,
+      "explanation": "Simon Bolivar is the historical answer for this question."
+    },
+    {
+      "id": "world-history_easy_002",
+      "category": "World History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What were Japan's warrior class called?",
+      "answers": [
+        "Samurai",
+        "Simon Bolivar",
+        "India",
+        "The Vikings"
+      ],
+      "correct": 0,
+      "explanation": "Samurai is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_001",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In which modern country did Buddhism first develop?",
+      "answers": [
+        "Simon Bolivar",
+        "Samurai",
+        "The Vikings",
+        "India"
+      ],
+      "correct": 3,
+      "explanation": "India is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_002",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What Scandinavians were known for their longboats and violent plunders during the Middle Ages?",
+      "answers": [
+        "Simon Bolivar",
+        "Samurai",
+        "The Vikings",
+        "India"
+      ],
+      "correct": 2,
+      "explanation": "The Vikings is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_003",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What major European conflict preceded the French Revolution?",
+      "answers": [
+        "The Seven Years War",
+        "Simon Bolivar",
+        "Samurai",
+        "India"
+      ],
+      "correct": 0,
+      "explanation": "The Seven Years War is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_004",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Russian president had a distinct port-wine stain on his head?",
+      "answers": [
+        "Simon Bolivar",
+        "Samurai",
+        "Mikhail Gorbachev",
+        "India"
+      ],
+      "correct": 2,
+      "explanation": "Mikhail Gorbachev is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_005",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The bubonic plague, which spread throughout Europe in the 1300s, was dubbed what?",
+      "answers": [
+        "The Black Death",
+        "Simon Bolivar",
+        "Samurai",
+        "India"
+      ],
+      "correct": 0,
+      "explanation": "The Black Death is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_006",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which notable French leader in the Hundred Years War was tried for heresy and witchcraft, then burned at the stake?",
+      "answers": [
+        "Simon Bolivar",
+        "Samurai",
+        "India",
+        "Joan of Arc"
+      ],
+      "correct": 3,
+      "explanation": "Joan of Arc is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_007",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which British monarch abdicated the throne in 1936 in order to marry an American divorcee?",
+      "answers": [
+        "Edward VIII",
+        "Simon Bolivar",
+        "Samurai",
+        "India"
+      ],
+      "correct": 0,
+      "explanation": "Edward VIII is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_008",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What's the oldest university in the English-speaking world?",
+      "answers": [
+        "Simon Bolivar",
+        "Samurai",
+        "Oxford University",
+        "India"
+      ],
+      "correct": 2,
+      "explanation": "Oxford University is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_009",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The 1954 Geneva Accords used the 17th parallel to divide one country into two. What country?",
+      "answers": [
+        "Vietnam",
+        "Simon Bolivar",
+        "Samurai",
+        "India"
+      ],
+      "correct": 0,
+      "explanation": "Vietnam is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_010",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What country won the FIFA World Cup in 2010?",
+      "answers": [
+        "Simon Bolivar",
+        "Spain",
+        "Samurai",
+        "India"
+      ],
+      "correct": 1,
+      "explanation": "Spain is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_011",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What ancient queen was married to two of her brothers?",
+      "answers": [
+        "Simon Bolivar",
+        "Samurai",
+        "India",
+        "Cleopatra"
+      ],
+      "correct": 3,
+      "explanation": "Cleopatra is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_012",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What European kingdom was disbanded in 1947 and is now a part of northern Germany and Poland?",
+      "answers": [
+        "Simon Bolivar",
+        "Samurai",
+        "India",
+        "Prussia"
+      ],
+      "correct": 3,
+      "explanation": "Prussia is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_013",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Where did student-led protests in Beijing turn deadly in June of 1989?",
+      "answers": [
+        "Simon Bolivar",
+        "Samurai",
+        "Tiananmen Square",
+        "India"
+      ],
+      "correct": 2,
+      "explanation": "Tiananmen Square is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_014",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Where were the first modern-day Olympics held?",
+      "answers": [
+        "Simon Bolivar",
+        "Samurai",
+        "Athens, Greece",
+        "India"
+      ],
+      "correct": 2,
+      "explanation": "Athens, Greece is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_015",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was king during the French Revolution?",
+      "answers": [
+        "Simon Bolivar",
+        "Louis XVI",
+        "Samurai",
+        "India"
+      ],
+      "correct": 1,
+      "explanation": "Louis XVI is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_016",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What scientist discovered penicillin in 1928?",
+      "answers": [
+        "Simon Bolivar",
+        "Samurai",
+        "Alexander Fleming",
+        "India"
+      ],
+      "correct": 2,
+      "explanation": "Alexander Fleming is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_017",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who is the primary inventor of the light bulb?",
+      "answers": [
+        "Thomas Edison",
+        "Simon Bolivar",
+        "Samurai",
+        "India"
+      ],
+      "correct": 0,
+      "explanation": "Thomas Edison is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_018",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which U.S. president helped broker the Camp David Accords, otherwise known as the Mideast Peace Treaty?",
+      "answers": [
+        "Simon Bolivar",
+        "Jimmy Carter",
+        "Samurai",
+        "India"
+      ],
+      "correct": 1,
+      "explanation": "Jimmy Carter is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_019",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In 1991, the first internet website was introduced with the \"WWW\" prefix. What does WWW stand for?",
+      "answers": [
+        "Simon Bolivar",
+        "World Wide Web",
+        "Samurai",
+        "India"
+      ],
+      "correct": 1,
+      "explanation": "World Wide Web is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_020",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What playwright wrote \"As You Like It\"?",
+      "answers": [
+        "Simon Bolivar",
+        "William Shakespeare",
+        "Samurai",
+        "India"
+      ],
+      "correct": 1,
+      "explanation": "William Shakespeare is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_021",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What Italian physicist and engineer gave rise to the modern study of astronomy in the 1500s?",
+      "answers": [
+        "Simon Bolivar",
+        "Samurai",
+        "India",
+        "Galileo"
+      ],
+      "correct": 3,
+      "explanation": "Galileo is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_022",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Where was the first permanent English settlement in the U.S.?",
+      "answers": [
+        "Simon Bolivar",
+        "Jamestown, Virginia",
+        "Samurai",
+        "India"
+      ],
+      "correct": 1,
+      "explanation": "Jamestown, Virginia is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_023",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the first vegetable to be grown in space?",
+      "answers": [
+        "Simon Bolivar",
+        "Samurai",
+        "The potato",
+        "India"
+      ],
+      "correct": 2,
+      "explanation": "The potato is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_024",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What artist painted the ceiling in the Vatican's Sistine Chapel?",
+      "answers": [
+        "Simon Bolivar",
+        "Samurai",
+        "Michelangelo",
+        "India"
+      ],
+      "correct": 2,
+      "explanation": "Michelangelo is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_025",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What nuclear power plant was catastrophically damaged in the 2011 Japan earthquake?",
+      "answers": [
+        "Simon Bolivar",
+        "Fukushima",
+        "Samurai",
+        "India"
+      ],
+      "correct": 1,
+      "explanation": "Fukushima is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_026",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first two people to climb Mount Everest?",
+      "answers": [
+        "Simon Bolivar",
+        "Samurai",
+        "Edmund Hillary and Tenzing Norgay",
+        "India"
+      ],
+      "correct": 2,
+      "explanation": "Edmund Hillary and Tenzing Norgay is the historical answer for this question."
+    },
+    {
+      "id": "world-history_medium_027",
+      "category": "World History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who is the longest-reigning monarch in British history?",
+      "answers": [
+        "Simon Bolivar",
+        "Samurai",
+        "Queen Elizabeth II",
+        "India"
+      ],
+      "correct": 2,
+      "explanation": "Queen Elizabeth II is the historical answer for this question."
+    }
+  ]
+}

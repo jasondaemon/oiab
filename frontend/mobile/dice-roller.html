@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#123822">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="OIAB">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Dice Roller | OIAB</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/mobile/overland-touch-icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
+  <link rel="manifest" href="/mobile/manifest.webmanifest">
+  <link rel="stylesheet" href="dice-roller.css?v=dice-mixed-20260605">
+</head>
+<body>
+  <main class="dr-shell" data-theme="classic">
+    <header class="dr-header">
+      <a class="icon-button" href="/mobile/" aria-label="Back to mobile launcher">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 5.2 8 12l6.8 6.8-1.8 1.8L5.4 13a1.4 1.4 0 0 1 0-2L13 3.4l1.8 1.8z"></path></svg>
+      </a>
+      <h1>Dice Roller</h1>
+      <button id="settingsToggle" class="icon-button" type="button" aria-label="Dice settings">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.4 13.5c.1-.5.1-1 .1-1.5s0-1-.1-1.5l2-1.5-2-3.5-2.4 1a8 8 0 0 0-2.6-1.5L14 2h-4l-.4 2.5A8 8 0 0 0 7 6L4.6 5 2.6 8.5l2 1.5a9 9 0 0 0 0 3l-2 1.5 2 3.5L7 17a8 8 0 0 0 2.6 1.5L10 21h4l.4-2.5A8 8 0 0 0 17 17l2.4 1 2-3.5-2-1.5ZM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5Z"></path></svg>
+      </button>
+    </header>
+
+    <section id="settingsPanel" class="panel settings-panel" hidden>
+      <label>
+        Theme
+        <select id="themeSelect">
+          <option value="classic">Classic tabletop</option>
+          <option value="neon">Neon arcade</option>
+          <option value="overland">Overland map</option>
+          <option value="contrast">High contrast</option>
+          <option value="minimal">Minimal</option>
+        </select>
+      </label>
+      <label>
+        Animation speed
+        <select id="speedSelect">
+          <option value="fast">Fast</option>
+          <option value="normal">Normal</option>
+          <option value="dramatic">Dramatic</option>
+        </select>
+      </label>
+      <div class="toggle-row">
+        <label><input id="soundToggle" type="checkbox"> Sound</label>
+        <label><input id="hapticsToggle" type="checkbox"> Haptics</label>
+      </div>
+    </section>
+
+    <section class="panel roll-panel">
+      <div class="dice-field">
+        <div id="rollSummaryOverlay" class="roll-summary-overlay" hidden></div>
+        <div id="diceBoxStage" class="dice-box-stage" hidden aria-hidden="true"></div>
+        <div id="diceStage" class="dice-stage" aria-live="polite"></div>
+      </div>
+      <button id="rollButton" class="roll-button" type="button">Roll</button>
+      <div id="rowTotals" class="row-totals" hidden></div>
+      <div class="total-card" hidden>
+        <span>Grand total</span>
+        <strong id="grandTotal">--</strong>
+      </div>
+    </section>
+
+    <section class="panel builder-panel">
+      <div class="panel-title">
+        <div>
+          <span>Dice setup</span>
+          <strong id="formulaLabel">1D20</strong>
+        </div>
+        <button id="addRow" type="button">+ Row</button>
+      </div>
+
+      <div class="quick-row" aria-label="Quick dice">
+        <button data-quick-side="4" type="button">D4</button>
+        <button data-quick-side="6" type="button">D6</button>
+        <button data-quick-side="8" type="button">D8</button>
+        <button data-quick-side="10" type="button">D10</button>
+        <button data-quick-side="12" type="button">D12</button>
+        <button data-quick-side="20" type="button">D20</button>
+        <button data-quick-side="100" type="button">D100</button>
+      </div>
+
+      <div class="preset-row" aria-label="Common rolls">
+        <button data-preset="1d20" type="button">1D20</button>
+        <button data-preset="2d6" type="button">2D6</button>
+        <button data-preset="4d6drop" type="button">4D6 drop lowest</button>
+        <button data-preset="1d100" type="button">1D100</button>
+      </div>
+
+      <div id="diceRows" class="dice-rows"></div>
+
+      <details class="formula-panel">
+        <summary>Formula input</summary>
+        <div class="formula-row">
+          <input id="formulaInput" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="2d6+1d20+3">
+          <button id="rollFormula" type="button">Roll Formula</button>
+        </div>
+      </details>
+    </section>
+
+    <details class="panel history-panel">
+      <summary class="panel-title">
+        <div>
+          <span>History</span>
+          <strong>Last 20 rolls</strong>
+        </div>
+      </summary>
+      <div class="history-actions">
+        <button id="clearHistory" type="button">Clear</button>
+      </div>
+      <div id="historyList" class="history-list"></div>
+    </details>
+
+    <p id="message" class="message" role="status"></p>
+  </main>
+  <script src="dice-roller.js?v=dice-mixed-20260605"></script>
+</body>
+</html>

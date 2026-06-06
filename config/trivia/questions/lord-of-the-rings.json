@@ -1,0 +1,1087 @@
+{
+  "category": "Lord of the Rings",
+  "slug": "lord-of-the-rings",
+  "version": 1,
+  "questions": [
+    {
+      "id": "lord-of-the-rings_easy_001",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who tries to destroy the Ring at the Council of Elrond?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "Mount Doom"
+      ],
+      "correct": 0,
+      "explanation": "Gimli is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_002",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who released King Theoden from the spell of Saruman, which caused him to look much older than he is?",
+      "answers": [
+        "Gimli",
+        "Stuart Townsend",
+        "Mount Doom",
+        "Gandalf"
+      ],
+      "correct": 3,
+      "explanation": "Gandalf is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_003",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What actor was originally cast as Aragorn?",
+      "answers": [
+        "Gimli",
+        "Stuart Townsend",
+        "Gandalf",
+        "Mount Doom"
+      ],
+      "correct": 1,
+      "explanation": "Stuart Townsend is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_004",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The only way to destroy the Ring of Power is to throw it into the fires of _________?",
+      "answers": [
+        "Mount Doom",
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 0,
+      "explanation": "Mount Doom is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_005",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does Gollum call the Ring of Power?",
+      "answers": [
+        "My precious",
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 0,
+      "explanation": "My precious is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_006",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "For what special occasion does Gandalf return to the Shire?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "Bilbo's birthday"
+      ],
+      "correct": 3,
+      "explanation": "Bilbo's birthday is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_007",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of the Ent who carries Pippin and Merry through Fangorn Forest?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Treebeard",
+        "Stuart Townsend"
+      ],
+      "correct": 2,
+      "explanation": "Treebeard is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_008",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "While traveling through the mines of Moria, which member of the Fellowship of the Ring is killed by the Balrog?",
+      "answers": [
+        "Gimli",
+        "Stuart Townsend",
+        "Mount Doom",
+        "Gandalf"
+      ],
+      "correct": 3,
+      "explanation": "Gandalf is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_009",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "During Bilbo's birthday party, who was tasked to wash the dishes for stealing some fireworks from the back of Gandalf's wagon?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Merry and Pippin",
+        "Stuart Townsend"
+      ],
+      "correct": 2,
+      "explanation": "Merry and Pippin is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_010",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In ' The Hobbit ,' what was the name of Thorin's Elven sword that originally came from Gondolin?",
+      "answers": [
+        "Orcrist",
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 0,
+      "explanation": "Orcrist is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_011",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What do Merry and Pippin steal from Gandalf?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "giant dragon firecracker"
+      ],
+      "correct": 3,
+      "explanation": "giant dragon firecracker is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_012",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In The Return of the King , who kills the Witch King?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Eowyn",
+        "Stuart Townsend"
+      ],
+      "correct": 2,
+      "explanation": "Eowyn is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_013",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who does Sam marry at the end of The Return of the King?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "Rosie Cotton"
+      ],
+      "correct": 3,
+      "explanation": "Rosie Cotton is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_014",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In The Two Towers, who is Saruman's spy in Rohan?",
+      "answers": [
+        "Gimli",
+        "Grima Wormtongue",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 1,
+      "explanation": "Grima Wormtongue is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_015",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which hero tries to steal the Ring from Frodo?",
+      "answers": [
+        "Boromir",
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 0,
+      "explanation": "Boromir is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_016",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was sent to Rivendell by Denethor to find answers about a dream he had?",
+      "answers": [
+        "Boromir",
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 0,
+      "explanation": "Boromir is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_017",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which actor played Samwise Gamgee?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Sean Astin",
+        "Stuart Townsend"
+      ],
+      "correct": 2,
+      "explanation": "Sean Astin is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_018",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Bilbo's relation to Frodo?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "Frodo is Bilbo's second cousin"
+      ],
+      "correct": 3,
+      "explanation": "Frodo is Bilbo's second cousin is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_019",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In Mordor, what kind of food does Frodo say he can't remember the taste of?",
+      "answers": [
+        "Gimli",
+        "Strawberries",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 1,
+      "explanation": "Strawberries is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_020",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In 'The Lord Of The Rings: The Return Of The King,' which army does Aragorn summon using the Sword of Elendil?",
+      "answers": [
+        "The Army of the Dead",
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 0,
+      "explanation": "The Army of the Dead is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_021",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who rides ahead with Frodo to Rivendell after he is hit at Weathertop?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "rwen",
+        "Stuart Townsend"
+      ],
+      "correct": 2,
+      "explanation": "rwen is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_022",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which hobbit steals a palantir?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Pippin",
+        "Stuart Townsend"
+      ],
+      "correct": 2,
+      "explanation": "Pippin is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_023",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where does the Fellowship of the Ring break up?",
+      "answers": [
+        "Gimli",
+        "mon Hen",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 1,
+      "explanation": "mon Hen is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_024",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of the local pub in Hobbiton?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "The Green Dragon"
+      ],
+      "correct": 3,
+      "explanation": "The Green Dragon is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_025",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of the Elven character with the blonde hair and blue eyes who was lethal with a bow and charming with his looks?",
+      "answers": [
+        "Gimli",
+        "Legolas",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 1,
+      "explanation": "Legolas is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_026",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How does Boromir meet his end?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "rrows"
+      ],
+      "correct": 3,
+      "explanation": "rrows is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_027",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of the remade version of \"the sword that was broken\"?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "nduril",
+        "Stuart Townsend"
+      ],
+      "correct": 2,
+      "explanation": "nduril is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_028",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Samwise's last name?",
+      "answers": [
+        "Gamgee",
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 0,
+      "explanation": "Gamgee is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_029",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of Gandalf's horse?",
+      "answers": [
+        "Gimli",
+        "Shadowfax",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 1,
+      "explanation": "Shadowfax is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_030",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "With which members of the Fellowship does Aragorn hunt orcs in The Two Towers?",
+      "answers": [
+        "Legolas and Gimli",
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 0,
+      "explanation": "Legolas and Gimli is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_031",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What race did the Nazgul used to be?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Men",
+        "Stuart Townsend"
+      ],
+      "correct": 2,
+      "explanation": "Men is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_032",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the title of the second movie in the trilogy?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "The Lord of the Rings: The Two Towers",
+        "Stuart Townsend"
+      ],
+      "correct": 2,
+      "explanation": "The Lord of the Rings: The Two Towers is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_033",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which hobbit family is known for being more adventurous than the rest?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "Took"
+      ],
+      "correct": 3,
+      "explanation": "Took is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_034",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Legolas's last name?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "Greenleaf"
+      ],
+      "correct": 3,
+      "explanation": "Greenleaf is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_035",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "From which direction did the men who joined Sauron come from?",
+      "answers": [
+        "Gimli",
+        "South",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 1,
+      "explanation": "South is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_036",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In \"The Fellowship of the Ring\", what is the name of the ferry the hobbits use to escape the Black Riders?",
+      "answers": [
+        "Bucklebury Ferry",
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 0,
+      "explanation": "Bucklebury Ferry is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_037",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What feature do dwarf women share with male dwarves?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "Beards"
+      ],
+      "correct": 3,
+      "explanation": "Beards is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_038",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What causes Merry and Pippin to grow taller than other hobbits?",
+      "answers": [
+        "The water in Fangorn",
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 0,
+      "explanation": "The water in Fangorn is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_039",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where are the Entwives?",
+      "answers": [
+        "Lost",
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 0,
+      "explanation": "Lost is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_040",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where was the entire trilogy of the \"Lord of the Rings\" filmed?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "New Zealand"
+      ],
+      "correct": 3,
+      "explanation": "New Zealand is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_041",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In which decade of life is Aragorn?",
+      "answers": [
+        "78",
+        "79",
+        "81",
+        "80s"
+      ],
+      "correct": 3,
+      "explanation": "80s is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_042",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How does Frodo know Sam?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "Sam is Frodo's gardener"
+      ],
+      "correct": 3,
+      "explanation": "Sam is Frodo's gardener is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_043",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which famous animator created the \"Lord of the Rings\" animated movie?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "Ralph Bakshi"
+      ],
+      "correct": 3,
+      "explanation": "Ralph Bakshi is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_044",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who directed the Lord of the Rings trilogy?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "Peter Jackson"
+      ],
+      "correct": 3,
+      "explanation": "Peter Jackson is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_045",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who played Saruman in the Lord of the Rings?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "Christopher Lee"
+      ],
+      "correct": 3,
+      "explanation": "Christopher Lee is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_046",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who played Gandalf in the Lord of the Rings?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "Ian McKellen"
+      ],
+      "correct": 3,
+      "explanation": "Ian McKellen is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_047",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who produced the Lord of the Rings trilogy?",
+      "answers": [
+        "Gimli",
+        "New Line Cinema",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 1,
+      "explanation": "New Line Cinema is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_048",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What two animals are seen when the Hobbits are in the 'Inn of the Prancing Pony '?",
+      "answers": [
+        "cat and a ferret",
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 0,
+      "explanation": "cat and a ferret is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_049",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is 'never late, nor is he early. He arrives precisely when he means to'?",
+      "answers": [
+        "Gimli",
+        "Gandalf the Grey",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 1,
+      "explanation": "Gandalf the Grey is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_050",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which woman was Sam talking about in The Green Dragon?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "Rosie Cotton"
+      ],
+      "correct": 3,
+      "explanation": "Rosie Cotton is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_051",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What frightened the Orcs in the Mines of Moria?",
+      "answers": [
+        "Gimli",
+        "Balrog",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 1,
+      "explanation": "Balrog is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_052",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of the fictional metal that the armored chain shirt of Frodo is made from?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "Mithril"
+      ],
+      "correct": 3,
+      "explanation": "Mithril is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_053",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who used to own the Ring of Power until Bilbo Baggins picked it up in the cave?",
+      "answers": [
+        "Gimli",
+        "Gollum/Sméagol",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 1,
+      "explanation": "Gollum/Sméagol is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_054",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was the name of Boromir's brother who died en route to Mordor When the Fellowship was torn?",
+      "answers": [
+        "Faramir",
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 0,
+      "explanation": "Faramir is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_055",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "When the Elves leave Middle Earth in 'The Lord Of The Rings: The Two Towers.' where do they go?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "The Undying Lands/Valinor"
+      ],
+      "correct": 3,
+      "explanation": "The Undying Lands/Valinor is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_easy_056",
+      "category": "Lord of the Rings",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What injury did Viggo Mortensen (Aragorn) get?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "He broke two of his toes",
+        "Stuart Townsend"
+      ],
+      "correct": 2,
+      "explanation": "He broke two of his toes is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_medium_001",
+      "category": "Lord of the Rings",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The Lord of the Rings movies are based on a novel by what author?",
+      "answers": [
+        "J.R.R. Tolkien",
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 0,
+      "explanation": "J.R.R. Tolkien is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_medium_002",
+      "category": "Lord of the Rings",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the first voice we hear in The Fellowship of the Ring?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "Galadriel"
+      ],
+      "correct": 3,
+      "explanation": "Galadriel is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_medium_003",
+      "category": "Lord of the Rings",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who are the two War of the Ring heroes?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "Boromir and Faramir"
+      ],
+      "correct": 3,
+      "explanation": "Boromir and Faramir is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_medium_004",
+      "category": "Lord of the Rings",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does Aragorn say right before charging into the last battle in Mordor?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "For Frodo"
+      ],
+      "correct": 3,
+      "explanation": "For Frodo is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_medium_005",
+      "category": "Lord of the Rings",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who became King of Rohan after Theoden met his demise in battle?",
+      "answers": [
+        "Eomer",
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 0,
+      "explanation": "Eomer is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_medium_006",
+      "category": "Lord of the Rings",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What causes the Ents to march to war?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "The harvesting of Fangorn by Saruman",
+        "Stuart Townsend"
+      ],
+      "correct": 2,
+      "explanation": "The harvesting of Fangorn by Saruman is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_medium_007",
+      "category": "Lord of the Rings",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the name of the first movie in the trilogy?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "The Fellowship of the Ring",
+        "Stuart Townsend"
+      ],
+      "correct": 2,
+      "explanation": "The Fellowship of the Ring is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_medium_008",
+      "category": "Lord of the Rings",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "ragorn first met Frodo where?",
+      "answers": [
+        "Bree",
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 0,
+      "explanation": "Bree is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_medium_009",
+      "category": "Lord of the Rings",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which ancient sword is known to be made by Telchar of Nogrod?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Angrist",
+        "Stuart Townsend"
+      ],
+      "correct": 2,
+      "explanation": "Angrist is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_medium_010",
+      "category": "Lord of the Rings",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the name of the bridge that Gandalf destroys in the battle with Balrog?",
+      "answers": [
+        "Gimli",
+        "Khazad-dum Bridge",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 1,
+      "explanation": "Khazad-dum Bridge is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_medium_011",
+      "category": "Lord of the Rings",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which armies participated in the Battle of Isengard, also known as the Destruction of Isengard?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "The Ents vs. Sauron's forces",
+        "Stuart Townsend"
+      ],
+      "correct": 2,
+      "explanation": "The Ents vs. Sauron's forces is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_hard_001",
+      "category": "Lord of the Rings",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many Academy Awards did The Lord of the Rings trilogy win?",
+      "answers": [
+        "Gimli",
+        "Seventeen Academy Awards",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 1,
+      "explanation": "Seventeen Academy Awards is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_hard_002",
+      "category": "Lord of the Rings",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many hobbits INITIALLY set out from the Shire?",
+      "answers": [
+        "Two",
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend"
+      ],
+      "correct": 0,
+      "explanation": "Two is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_hard_003",
+      "category": "Lord of the Rings",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many wizards are there in Middle Earth ?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Five",
+        "Stuart Townsend"
+      ],
+      "correct": 2,
+      "explanation": "Five is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_hard_004",
+      "category": "Lord of the Rings",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many Nazgul are there?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Nine",
+        "Stuart Townsend"
+      ],
+      "correct": 2,
+      "explanation": "Nine is the correct answer."
+    },
+    {
+      "id": "lord-of-the-rings_hard_005",
+      "category": "Lord of the Rings",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many members of the Fellowship died during the adventure in the trilogy?",
+      "answers": [
+        "Gimli",
+        "Gandalf",
+        "Stuart Townsend",
+        "Two: Boromir and Aragorn"
+      ],
+      "correct": 3,
+      "explanation": "Two: Boromir and Aragorn is the correct answer."
+    }
+  ]
+}

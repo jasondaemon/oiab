@@ -1,13 +1,10 @@
 (() => {
-  const appConfigUrls = ["/overland/apps.json", "/maps/overland/apps.json"];
+  const appConfigUrls = ["/api/apps", "/overland/apps.json", "/maps/overland/apps.json"];
   const defaultAppLayout = {
     schema: 1,
     settingsPassword: "",
-    hiddenAppIds: ["legacy-home", "legacy-admin"],
-    folders: [
-      { id: "games", title: "Games", icon: "/maps/overland/overland-folder-games.svg", protected: false, appIds: ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "minecraft", "minecraft-map", "drums", "trivia", "tic-tac-toe", "license-plates"] },
-      { id: "settings", title: "Settings", icon: "/maps/overland/overland-folder-settings.svg", protected: true, appIds: ["overland-settings", "https-settings", "map-packs", "service-manager", "game-data", "audio-test"] },
-    ],
+    hiddenAppIds: ["legacy-home", "legacy-admin", "https-settings", "service-manager", "file-uploads", "map-packs", "map-data", "game-data", "audio-test", "minecraft"],
+    folders: [],
   };
   let currentConfig = null;
   let currentLayout = defaultAppLayout;
@@ -19,8 +16,21 @@
     drums: "/mobile/drums.html",
     "license-plates": "/mobile/license-plates.html",
     trivia: "/mobile/trivia.html",
-    "overland-settings": "/mobile/admin.html",
+    "overland-settings": "/mobile/settings.html",
+    "gps-status": "/mobile/gps-status.html",
+    "maps-v2": "/maps-v2/?mobile=1",
+    "system-monitor": "/system-monitor/",
   };
+  const mobileHiddenIds = new Set(defaultAppLayout.hiddenAppIds);
+  const categoryOrder = [
+    ["core", "Core Apps"],
+    ["games", "Games"],
+    ["media", "Media"],
+    ["library", "Library"],
+    ["learning", "Learning"],
+    ["travel", "Travel"],
+    ["tools", "Tools"],
+  ];
   const hostPrefixes = [
     "mobile",
     "maps",
@@ -28,6 +38,8 @@
     "iiab",
     "files",
     "jellyfin",
+    "komga",
+    "wiki",
     "monitor",
     "maps-admin",
     "minecraft-map",
@@ -119,8 +131,8 @@
       const separator = url.includes("?") ? "&" : "?";
       return `${url}${separator}playerId=${encodeURIComponent(profile.id)}&playerName=${encodeURIComponent(profile.name || "Player")}`;
     };
-    if (app.id === "maps") {
-      return "/maps/?dock=0";
+    if (app.id === "maps" || app.id === "maps-v2") {
+      return "/maps-v2/?mobile=1";
     }
     if (app.id === "tic-tac-toe") {
       return join("/mobile/tic-tac-toe.html");
@@ -131,7 +143,7 @@
     if (app.id === "dots-and-boxes") {
       return join("/mobile/dots-and-boxes.html");
     }
-    if (["minesweeper", "blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "hangman", "word-grid", "pattern-match"].includes(app.id)) {
+    if (["minesweeper", "blockfall", "claimline", "sinkhole-city", "canyon-crawler", "orbit-run", "blank-slate", "starts-ends", "word-tile-arena", "connect-four", "burst", "battleship", "hangman", "word-grid", "pattern-match"].includes(app.id)) {
       return join(`/mobile/${app.id}.html`);
     }
     if (standaloneUrls[app.id]) {
@@ -175,7 +187,7 @@
   }
 
   function visibleApps() {
-    const hidden = new Set(currentLayout.hiddenAppIds || []);
+    const hidden = new Set([...(currentLayout.hiddenAppIds || []), ...mobileHiddenIds]);
     return (currentConfig?.apps || []).filter((app) => !hidden.has(app.id));
   }
 
@@ -187,6 +199,18 @@
   function looseApps() {
     const assigned = new Set((currentLayout.folders || []).flatMap((folder) => folder.appIds || []));
     return visibleApps().filter((app) => !assigned.has(app.id));
+  }
+
+  function sectionKey(app) {
+    const id = String(app.id || "");
+    const category = String(app.category || "").toLowerCase();
+    if (id === "maps-v2" || id === "gps-status" || id === "overland-settings" || id === "system-monitor") return "core";
+    if (category === "games") return "games";
+    if (category === "media") return "media";
+    if (category === "library") return "library";
+    if (category === "learning") return "learning";
+    if (category === "travel") return "travel";
+    return "tools";
   }
 
   function appCard(app, game = false) {
@@ -222,20 +246,31 @@
   }
 
   function renderTopLevel() {
-    const grid = $("appsGrid");
-    grid.replaceChildren();
-    (currentLayout.folders || []).forEach((folder) => {
-      if (appsForFolder(folder).length) grid.append(folderCard(folder));
+    const root = $("appsGrid");
+    root.replaceChildren();
+    const groups = new Map(categoryOrder.map(([key]) => [key, []]));
+    visibleApps().forEach((app) => {
+      const key = sectionKey(app);
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(app);
     });
-    looseApps().forEach((app) => grid.append(appCard(app)));
-    $("appsBack").hidden = true;
-    $("appsFolderTitle").textContent = "";
+    categoryOrder.forEach(([key, title]) => {
+      const apps = groups.get(key) || [];
+      if (!apps.length) return;
+      const section = document.createElement("section");
+      section.className = "mobile-app-section";
+      const heading = document.createElement("h3");
+      heading.textContent = title;
+      const grid = document.createElement("div");
+      grid.className = "app-grid";
+      apps.forEach((app) => grid.append(appCard(app)));
+      section.append(heading, grid);
+      root.append(section);
+    });
   }
 
   function renderFolder(folder) {
     $("appsGrid").replaceChildren(...appsForFolder(folder).map((app) => appCard(app)));
-    $("appsBack").hidden = false;
-    $("appsFolderTitle").textContent = folder.title;
   }
 
   function openFolder(folder) {
@@ -297,13 +332,17 @@
       chess: "/mobile/chess.html",
       checkers: "/mobile/checkers.html",
       "blank-slate": "/mobile/blank-slate.html",
+      "starts-ends": "/mobile/starts-ends.html",
       "word-tile-arena": "/mobile/word-tile-arena.html",
       "dots-and-boxes": "/mobile/dots-and-boxes.html",
       "connect-four": "/mobile/connect-four.html",
+      burst: "/mobile/burst.html",
       battleship: "/mobile/battleship.html",
       hangman: "/mobile/hangman.html",
       "word-grid": "/mobile/word-grid.html",
       "pattern-match": "/mobile/pattern-match.html",
+      "canyon-crawler": "/mobile/canyon-crawler.html",
+      "orbit-run": "/mobile/orbit-run.html",
       minesweeper: "/mobile/minesweeper.html",
       claimline: "/mobile/claimline.html",
       blockfall: "/mobile/blockfall.html",
@@ -314,13 +353,17 @@
       chess: "/maps/overland/overland-chess.svg",
       checkers: "/maps/overland/overland-checkers.svg",
       "blank-slate": "/maps/overland/overland-blank-slate.svg",
+      "starts-ends": "/maps/overland/overland-starts-ends.svg",
       "word-tile-arena": "/maps/overland/overland-word-tile-arena.svg",
       "dots-and-boxes": "/maps/overland/overland-dots-boxes.svg",
       "connect-four": "/maps/overland/overland-connect-four.svg",
+      burst: "/maps/overland/overland-burst.svg",
       battleship: "/maps/overland/overland-battleship.svg",
       hangman: "/maps/overland/overland-hangman.svg",
       "word-grid": "/maps/overland/overland-word-grid.svg",
       "pattern-match": "/maps/overland/overland-pattern-match.svg",
+      "canyon-crawler": "/maps/overland/overland-canyon-crawler.svg",
+      "orbit-run": "/maps/overland/overland-orbit-run.svg",
       blockfall: "/maps/overland/overland-blockfall.svg",
     }[game.type] || "/mobile/tic-tac-toe.svg";
     img.alt = "";
@@ -390,7 +433,6 @@
 
   $("refreshApps").addEventListener("click", main);
   $("refreshGames").addEventListener("click", loadOpenGames);
-  $("appsBack").addEventListener("click", renderTopLevel);
   $("editPlayerName").addEventListener("click", () => openPlayerNameDialog(false));
   setInterval(loadOpenGames, 5000);
   main();

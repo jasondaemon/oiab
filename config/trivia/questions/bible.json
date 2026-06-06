@@ -1,0 +1,5842 @@
+{
+  "category": "Bible",
+  "slug": "bible",
+  "version": 1,
+  "questions": [
+    {
+      "id": "bible_easy_001",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who built the ark in Genesis?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "David"
+      ],
+      "correct": 0,
+      "explanation": "Genesis records Noah building the ark before the flood."
+    },
+    {
+      "id": "bible_easy_002",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who led Israel out of Egypt?",
+      "answers": [
+        "Noah",
+        "Red Sea",
+        "David",
+        "Moses"
+      ],
+      "correct": 3,
+      "explanation": "Moses led the Israelites during the Exodus."
+    },
+    {
+      "id": "bible_easy_003",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What sea did Israel cross after leaving Egypt?",
+      "answers": [
+        "Red Sea",
+        "Noah",
+        "Moses",
+        "David"
+      ],
+      "correct": 0,
+      "explanation": "Exodus describes Israel crossing the Red Sea."
+    },
+    {
+      "id": "bible_easy_004",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who defeated Goliath with a sling?",
+      "answers": [
+        "David",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "David defeated Goliath before he became king."
+    },
+    {
+      "id": "bible_easy_005",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was thrown into a den of lions?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Daniel"
+      ],
+      "correct": 3,
+      "explanation": "Daniel was protected by God in the lions' den."
+    },
+    {
+      "id": "bible_easy_006",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was swallowed by a great fish?",
+      "answers": [
+        "Jonah",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Jonah was in the great fish for three days and nights."
+    },
+    {
+      "id": "bible_easy_007",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where was Jesus born?",
+      "answers": [
+        "Bethlehem",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "The Gospels place Jesus' birth in Bethlehem."
+    },
+    {
+      "id": "bible_easy_008",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was Jesus' earthly mother?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Mary"
+      ],
+      "correct": 3,
+      "explanation": "Mary was chosen to be the mother of Jesus."
+    },
+    {
+      "id": "bible_easy_009",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who baptized Jesus?",
+      "answers": [
+        "Noah",
+        "John the Baptist",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "John baptized Jesus in the Jordan River."
+    },
+    {
+      "id": "bible_easy_010",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which disciple denied Jesus three times?",
+      "answers": [
+        "Peter",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Peter denied knowing Jesus before the rooster crowed."
+    },
+    {
+      "id": "bible_easy_011",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who betrayed Jesus to the authorities?",
+      "answers": [
+        "Noah",
+        "Judas Iscariot",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Judas betrayed Jesus for silver."
+    },
+    {
+      "id": "bible_easy_012",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the first book of the Bible?",
+      "answers": [
+        "Genesis",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Genesis opens with creation and the early patriarchs."
+    },
+    {
+      "id": "bible_easy_013",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the last book of the Bible?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Revelation"
+      ],
+      "correct": 3,
+      "explanation": "Revelation is the final book in the Bible."
+    },
+    {
+      "id": "bible_easy_014",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How many commandments were given to Moses?",
+      "answers": [
+        "Noah",
+        "Ten",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "The Ten Commandments were given at Mount Sinai."
+    },
+    {
+      "id": "bible_easy_015",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which book contains many songs and prayers?",
+      "answers": [
+        "Psalms",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Psalms is a collection of worship songs and prayers."
+    },
+    {
+      "id": "bible_easy_016",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the first man in Genesis?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Adam"
+      ],
+      "correct": 3,
+      "explanation": "Adam is presented as the first man."
+    },
+    {
+      "id": "bible_easy_017",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the first woman in Genesis?",
+      "answers": [
+        "Eve",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Eve is presented as the first woman."
+    },
+    {
+      "id": "bible_easy_018",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who received a coat of many colors?",
+      "answers": [
+        "Noah",
+        "Joseph",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Joseph received the special coat from his father Jacob."
+    },
+    {
+      "id": "bible_easy_019",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who interpreted Pharaoh's dreams?",
+      "answers": [
+        "Noah",
+        "Joseph",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Joseph interpreted dreams while in Egypt."
+    },
+    {
+      "id": "bible_easy_020",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who became king after Saul?",
+      "answers": [
+        "David",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "David became Israel's king after Saul."
+    },
+    {
+      "id": "bible_easy_021",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who asked God for wisdom as king?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Solomon"
+      ],
+      "correct": 3,
+      "explanation": "Solomon asked God for wisdom to lead the people."
+    },
+    {
+      "id": "bible_easy_022",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was David's son known for wisdom?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Solomon"
+      ],
+      "correct": 3,
+      "explanation": "Solomon was David's son and Israel's wise king."
+    },
+    {
+      "id": "bible_easy_023",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which woman became queen and saved her people?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Esther"
+      ],
+      "correct": 3,
+      "explanation": "Esther risked her life to help the Jewish people."
+    },
+    {
+      "id": "bible_easy_024",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was Ruth's mother-in-law?",
+      "answers": [
+        "Naomi",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Ruth stayed loyal to Naomi."
+    },
+    {
+      "id": "bible_easy_025",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the strong judge with long hair?",
+      "answers": [
+        "Noah",
+        "Samson",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Samson's story connects his strength with his Nazirite vow."
+    },
+    {
+      "id": "bible_easy_026",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who led Israel after Moses died?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Joshua",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Joshua led Israel into the promised land."
+    },
+    {
+      "id": "bible_easy_027",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What city walls fell after Israel marched?",
+      "answers": [
+        "Jericho",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Jericho's walls fell in the book of Joshua."
+    },
+    {
+      "id": "bible_easy_028",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the prophet taken up in a whirlwind?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Elijah"
+      ],
+      "correct": 3,
+      "explanation": "Elijah was taken up before Elisha received his mantle."
+    },
+    {
+      "id": "bible_easy_029",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was Elijah's successor?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Elisha",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Elisha followed Elijah as a prophet."
+    },
+    {
+      "id": "bible_easy_030",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who heard God call him as a boy?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Samuel"
+      ],
+      "correct": 3,
+      "explanation": "Samuel heard the Lord call him while serving at the tabernacle."
+    },
+    {
+      "id": "bible_easy_031",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the first king of Israel?",
+      "answers": [
+        "Noah",
+        "Saul",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Saul was chosen as Israel's first king."
+    },
+    {
+      "id": "bible_easy_032",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was called the father of many nations?",
+      "answers": [
+        "Abraham",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "God made a covenant promise to Abraham."
+    },
+    {
+      "id": "bible_easy_033",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was Abraham's wife?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Sarah"
+      ],
+      "correct": 3,
+      "explanation": "Sarah was Abraham's wife and Isaac's mother."
+    },
+    {
+      "id": "bible_easy_034",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who were twin sons of Isaac and Rebekah?",
+      "answers": [
+        "Jacob and Esau",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Jacob and Esau struggled even before birth."
+    },
+    {
+      "id": "bible_easy_035",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What name was Jacob later given?",
+      "answers": [
+        "Israel",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Jacob was given the name Israel."
+    },
+    {
+      "id": "bible_easy_036",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which brother sold his birthright?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Esau",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Esau sold his birthright to Jacob."
+    },
+    {
+      "id": "bible_easy_037",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What food did God provide in the wilderness?",
+      "answers": [
+        "Noah",
+        "Manna",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Manna fed Israel during the wilderness journey."
+    },
+    {
+      "id": "bible_easy_038",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What river did Jesus get baptized in?",
+      "answers": [
+        "Jordan River",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Jesus was baptized in the Jordan River."
+    },
+    {
+      "id": "bible_easy_039",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What miracle did Jesus do at Cana?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Water to wine"
+      ],
+      "correct": 3,
+      "explanation": "John records Jesus turning water into wine at Cana."
+    },
+    {
+      "id": "bible_easy_040",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who climbed a tree to see Jesus?",
+      "answers": [
+        "Noah",
+        "Zacchaeus",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Zacchaeus climbed a sycamore tree to see Jesus."
+    },
+    {
+      "id": "bible_easy_041",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was raised from the dead after four days?",
+      "answers": [
+        "Lazarus",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Jesus raised Lazarus from the tomb."
+    },
+    {
+      "id": "bible_easy_042",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which disciple doubted until he saw Jesus?",
+      "answers": [
+        "Thomas",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Thomas wanted to see Jesus' wounds."
+    },
+    {
+      "id": "bible_easy_043",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who wrote many New Testament letters?",
+      "answers": [
+        "Paul",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Paul wrote many letters to churches and leaders."
+    },
+    {
+      "id": "bible_easy_044",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who traveled with Paul on early journeys?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Barnabas",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Barnabas joined Paul in missionary work."
+    },
+    {
+      "id": "bible_easy_045",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who wrote the book of Acts?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Luke"
+      ],
+      "correct": 3,
+      "explanation": "Luke wrote both the Gospel of Luke and Acts."
+    },
+    {
+      "id": "bible_easy_046",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Gospel begins with Jesus' genealogy?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Matthew",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Matthew begins by tracing Jesus' family line."
+    },
+    {
+      "id": "bible_easy_047",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Gospel is shortest?",
+      "answers": [
+        "Noah",
+        "Mark",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Mark is the shortest of the four Gospels."
+    },
+    {
+      "id": "bible_easy_048",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which book tells about the early church?",
+      "answers": [
+        "Noah",
+        "Acts",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Acts records the spread of the gospel after Jesus' resurrection."
+    },
+    {
+      "id": "bible_easy_049",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What day did Jesus rise from the dead?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Third day"
+      ],
+      "correct": 3,
+      "explanation": "The New Testament says Jesus rose on the third day."
+    },
+    {
+      "id": "bible_easy_050",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was forced to carry Jesus' cross?",
+      "answers": [
+        "Noah",
+        "Simon of Cyrene",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Simon of Cyrene carried the cross for Jesus."
+    },
+    {
+      "id": "bible_easy_051",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who buried Jesus in his own tomb?",
+      "answers": [
+        "Joseph of Arimathea",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Joseph of Arimathea provided the tomb."
+    },
+    {
+      "id": "bible_easy_052",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does gospel mean?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Good news",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Gospel means good news, especially about Jesus."
+    },
+    {
+      "id": "bible_easy_053",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is prayer?",
+      "answers": [
+        "Talking with God",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Prayer is speaking to God and seeking Him."
+    },
+    {
+      "id": "bible_easy_054",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is sin?",
+      "answers": [
+        "Noah",
+        "Disobeying God",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Sin is rebellion against God's will."
+    },
+    {
+      "id": "bible_easy_055",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is grace?",
+      "answers": [
+        "Noah",
+        "Undeserved favor",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Grace is God's undeserved favor."
+    },
+    {
+      "id": "bible_easy_056",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is faith?",
+      "answers": [
+        "Noah",
+        "Trust in God",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Faith means trusting God and His promises."
+    },
+    {
+      "id": "bible_easy_057",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which book has wisdom sayings?",
+      "answers": [
+        "Noah",
+        "Proverbs",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Proverbs contains many short wisdom sayings."
+    },
+    {
+      "id": "bible_easy_058",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which book follows Genesis?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Exodus",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Exodus comes immediately after Genesis."
+    },
+    {
+      "id": "bible_easy_059",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which book follows Matthew?",
+      "answers": [
+        "Noah",
+        "Mark",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Mark is the second book of the New Testament."
+    },
+    {
+      "id": "bible_easy_060",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was Moses' brother?",
+      "answers": [
+        "Noah",
+        "Aaron",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Aaron helped Moses speak to Pharaoh."
+    },
+    {
+      "id": "bible_easy_061",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was Moses' sister?",
+      "answers": [
+        "Noah",
+        "Miriam",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Miriam was Moses' sister."
+    },
+    {
+      "id": "bible_easy_062",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who found baby Moses in a basket?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Pharaoh's daughter"
+      ],
+      "correct": 3,
+      "explanation": "Pharaoh's daughter found Moses near the Nile."
+    },
+    {
+      "id": "bible_easy_063",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What animal spoke to Balaam?",
+      "answers": [
+        "Donkey",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Balaam's donkey spoke after God opened its mouth."
+    },
+    {
+      "id": "bible_easy_064",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which prophet confronted King David?",
+      "answers": [
+        "Nathan",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Nathan confronted David after David's sin."
+    },
+    {
+      "id": "bible_easy_065",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was known as a man after God's heart?",
+      "answers": [
+        "David",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "David is described this way in Scripture."
+    },
+    {
+      "id": "bible_easy_066",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the mother of Samuel?",
+      "answers": [
+        "Hannah",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Hannah prayed for a son and dedicated Samuel to the Lord."
+    },
+    {
+      "id": "bible_easy_067",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was John the Baptist's mother?",
+      "answers": [
+        "Elizabeth",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Elizabeth was the mother of John the Baptist."
+    },
+    {
+      "id": "bible_easy_068",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was John the Baptist's father?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Zechariah"
+      ],
+      "correct": 3,
+      "explanation": "Zechariah served as a priest."
+    },
+    {
+      "id": "bible_easy_069",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who visited Jesus at night in John 3?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Nicodemus"
+      ],
+      "correct": 3,
+      "explanation": "Nicodemus came to speak with Jesus at night."
+    },
+    {
+      "id": "bible_easy_070",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who washed Jesus' feet with her hair?",
+      "answers": [
+        "Noah",
+        "Mary of Bethany",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Mary of Bethany showed costly devotion to Jesus."
+    },
+    {
+      "id": "bible_easy_071",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who hosted Jesus with her sister Mary?",
+      "answers": [
+        "Noah",
+        "Martha",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Martha welcomed Jesus into her home."
+    },
+    {
+      "id": "bible_easy_072",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which tax collector became a disciple?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Matthew",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Matthew was called from his tax booth."
+    },
+    {
+      "id": "bible_easy_073",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was called the beloved physician?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Luke"
+      ],
+      "correct": 3,
+      "explanation": "Paul refers to Luke as the beloved physician."
+    },
+    {
+      "id": "bible_easy_074",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was a tentmaker with Paul?",
+      "answers": [
+        "Noah",
+        "Aquila",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Aquila and Priscilla worked with Paul."
+    },
+    {
+      "id": "bible_easy_075",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who helped teach Apollos more accurately?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Priscilla and Aquila"
+      ],
+      "correct": 3,
+      "explanation": "Priscilla and Aquila explained the way of God to Apollos."
+    },
+    {
+      "id": "bible_easy_076",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was stoned after preaching in Acts?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Stephen"
+      ],
+      "correct": 3,
+      "explanation": "Stephen was the first recorded Christian martyr."
+    },
+    {
+      "id": "bible_easy_077",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who met Jesus on the road to Damascus?",
+      "answers": [
+        "Noah",
+        "Saul",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Saul encountered the risen Jesus and became Paul."
+    },
+    {
+      "id": "bible_easy_078",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was a young coworker of Paul?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Timothy",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Timothy served with Paul and received two letters."
+    },
+    {
+      "id": "bible_easy_079",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was a seller of purple cloth in Acts?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Lydia"
+      ],
+      "correct": 3,
+      "explanation": "Lydia listened to Paul's message in Philippi."
+    },
+    {
+      "id": "bible_easy_080",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What city did Jonah try to avoid?",
+      "answers": [
+        "Noah",
+        "Nineveh",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Jonah was sent to Nineveh."
+    },
+    {
+      "id": "bible_easy_081",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What tower did people build in Genesis 11?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Babel",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "The tower of Babel story explains scattered languages."
+    },
+    {
+      "id": "bible_easy_082",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What garden did Adam and Eve live in?",
+      "answers": [
+        "Eden",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Genesis places Adam and Eve in the garden of Eden."
+    },
+    {
+      "id": "bible_easy_083",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where did Jesus pray before His arrest?",
+      "answers": [
+        "Noah",
+        "Gethsemane",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Jesus prayed in Gethsemane before being arrested."
+    },
+    {
+      "id": "bible_easy_084",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was the occupation of Peter and Andrew?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Fishermen"
+      ],
+      "correct": 3,
+      "explanation": "Peter and Andrew were fishermen when Jesus called them."
+    },
+    {
+      "id": "bible_easy_085",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What did Jesus feed the five thousand with?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Loaves and fish"
+      ],
+      "correct": 3,
+      "explanation": "Jesus multiplied loaves and fish to feed the crowd."
+    },
+    {
+      "id": "bible_easy_086",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What did Jesus calm on the Sea of Galilee?",
+      "answers": [
+        "Noah",
+        "Storm",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Jesus calmed the storm while His disciples were afraid."
+    },
+    {
+      "id": "bible_easy_087",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who walked on water toward Jesus?",
+      "answers": [
+        "Peter",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Peter walked on water briefly before becoming afraid."
+    },
+    {
+      "id": "bible_easy_088",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What happened at Pentecost in Acts 2?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "The Spirit came",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "The Holy Spirit came upon believers at Pentecost."
+    },
+    {
+      "id": "bible_easy_089",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which fruit is named in Galatians 5?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Love",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Love is listed as part of the fruit of the Spirit."
+    },
+    {
+      "id": "bible_easy_090",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What armor item is faith compared to?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Shield"
+      ],
+      "correct": 3,
+      "explanation": "Ephesians calls faith the shield of faith."
+    },
+    {
+      "id": "bible_easy_091",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the sword of the Spirit?",
+      "answers": [
+        "Noah",
+        "Word of God",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Ephesians identifies the sword of the Spirit as God's word."
+    },
+    {
+      "id": "bible_easy_092",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who wrote Revelation?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "John"
+      ],
+      "correct": 3,
+      "explanation": "Revelation names John as its writer."
+    },
+    {
+      "id": "bible_easy_093",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What island is linked to Revelation?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Patmos",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "John received Revelation while on Patmos."
+    },
+    {
+      "id": "bible_easy_094",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the Roman governor at Jesus' trial?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Pontius Pilate"
+      ],
+      "correct": 3,
+      "explanation": "Pontius Pilate sentenced Jesus to be crucified."
+    },
+    {
+      "id": "bible_easy_095",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was released instead of Jesus?",
+      "answers": [
+        "Barabbas",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "The crowd chose Barabbas to be released."
+    },
+    {
+      "id": "bible_easy_096",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was blind near Jericho and healed?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Bartimaeus"
+      ],
+      "correct": 3,
+      "explanation": "Jesus healed blind Bartimaeus near Jericho."
+    },
+    {
+      "id": "bible_easy_097",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was a Roman centurion in Acts 10?",
+      "answers": [
+        "Cornelius",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Cornelius was a Gentile centurion who heard Peter preach."
+    },
+    {
+      "id": "bible_easy_098",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who fell asleep during Paul's long sermon?",
+      "answers": [
+        "Eutychus",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Eutychus fell from a window while Paul was preaching."
+    },
+    {
+      "id": "bible_easy_099",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was Philemon's runaway servant?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Onesimus"
+      ],
+      "correct": 3,
+      "explanation": "Paul appealed to Philemon concerning Onesimus."
+    },
+    {
+      "id": "bible_easy_100",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which book tells of rebuilding Jerusalem's wall?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Nehemiah"
+      ],
+      "correct": 3,
+      "explanation": "Nehemiah led work to rebuild Jerusalem's wall."
+    },
+    {
+      "id": "bible_easy_101",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does the name Isaiah mean?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "\"Salvation of the Lord\"",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "\"Salvation of the Lord\" is the correct answer."
+    },
+    {
+      "id": "bible_easy_102",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What object did God instruct Moses to make and mount on a pole so the Israelites could be healed?",
+      "answers": [
+        "A bronze serpent",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "A bronze serpent is the correct answer."
+    },
+    {
+      "id": "bible_easy_103",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who washed Jesus's feet?",
+      "answers": [
+        "Noah",
+        "Mary Magdalene",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Mary Magdalene is the correct answer."
+    },
+    {
+      "id": "bible_easy_104",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who did Jesus heal from blindness?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Bartimaeus"
+      ],
+      "correct": 3,
+      "explanation": "Bartimaeus is the correct answer."
+    },
+    {
+      "id": "bible_easy_105",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What did bread and wine represent at the Last Supper?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Jesus's body and blood"
+      ],
+      "correct": 3,
+      "explanation": "Jesus's body and blood is the correct answer."
+    },
+    {
+      "id": "bible_easy_106",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was the name of Adam and Eve's third son?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Seth",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Seth is the correct answer."
+    },
+    {
+      "id": "bible_easy_107",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was Abraham's wife?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Sarah"
+      ],
+      "correct": 3,
+      "explanation": "Sarah is the correct answer."
+    },
+    {
+      "id": "bible_easy_108",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is another name for the Red Sea?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Sea of Reeds"
+      ],
+      "correct": 3,
+      "explanation": "Sea of Reeds is the correct answer."
+    },
+    {
+      "id": "bible_easy_109",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What did God provide as a substitute sacrifice in place of Isaac?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "ram",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "ram is the correct answer."
+    },
+    {
+      "id": "bible_easy_110",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where did Moses receive the Ten Commandments?",
+      "answers": [
+        "Noah",
+        "Mount Sinai",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Mount Sinai is the correct answer."
+    },
+    {
+      "id": "bible_easy_111",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does the word \"holy\" mean in Hebrew (\"kadosh\")?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Set apart or separate",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Set apart or separate is the correct answer."
+    },
+    {
+      "id": "bible_easy_112",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who were the two spies who brought back a good report about the Promised Land?",
+      "answers": [
+        "Joshua and Caleb",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Joshua and Caleb is the correct answer."
+    },
+    {
+      "id": "bible_easy_113",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "On which mountain did Moses die before the Israelites entered the Promised Land?",
+      "answers": [
+        "Noah",
+        "Mount Nebo",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Mount Nebo is the correct answer."
+    },
+    {
+      "id": "bible_easy_114",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What famous prayer begins with, \"Hear, O Israel: the Lord our God, the Lord is one\"?",
+      "answers": [
+        "Noah",
+        "Shema Yisrael",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Shema Yisrael is the correct answer."
+    },
+    {
+      "id": "bible_easy_115",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Bible verse says, \"For we walk by faith, not by sight\"?",
+      "answers": [
+        "2 Corinthians 5:7",
+        "1",
+        "3",
+        "4"
+      ],
+      "correct": 0,
+      "explanation": "2 Corinthians 5:7 is the correct answer."
+    },
+    {
+      "id": "bible_easy_116",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who succeeded Moses as the leader of Israel?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Joshua",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Joshua is the correct answer."
+    },
+    {
+      "id": "bible_easy_117",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who sank while walking on the water with Jesus?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "A) Peter B) Matthews C) John D) Luke"
+      ],
+      "correct": 3,
+      "explanation": "A) Peter B) Matthews C) John D) Luke is the correct answer."
+    },
+    {
+      "id": "bible_easy_118",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In what language was the New Testament written?",
+      "answers": [
+        "Greek",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Greek is the correct answer."
+    },
+    {
+      "id": "bible_easy_119",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who else was in prison with Joseph?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "The king's butler and baker",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "The king's butler and baker is the correct answer."
+    },
+    {
+      "id": "bible_easy_120",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Of what material was Noah's Ark made?",
+      "answers": [
+        "Gopher wood",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Gopher wood is the correct answer."
+    },
+    {
+      "id": "bible_easy_121",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the wisest man in the world?",
+      "answers": [
+        "King Solomon",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "King Solomon is the correct answer."
+    },
+    {
+      "id": "bible_easy_122",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who pulled down the pillars of the Philistine temple, killing himself and others?",
+      "answers": [
+        "Noah",
+        "Samson",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Samson is the correct answer."
+    },
+    {
+      "id": "bible_easy_123",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Job cursed the day he was born and then wished what?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "That he had never been born",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "That he had never been born is the correct answer."
+    },
+    {
+      "id": "bible_easy_124",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where did Abraham take Isaac to be sacrificed?",
+      "answers": [
+        "mountain in the region of Moriah",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "mountain in the region of Moriah is the correct answer."
+    },
+    {
+      "id": "bible_easy_125",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Beside what river is baby Moses hidden in a blanket to escape the Pharaoh's decree?",
+      "answers": [
+        "Noah",
+        "The Nile River",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "The Nile River is the correct answer."
+    },
+    {
+      "id": "bible_easy_126",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What happened to Lot's wife after she looked back at Sodom in the story of Sodom and Gomorrah?",
+      "answers": [
+        "Noah",
+        "She was turned into a pillar of salt",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "She was turned into a pillar of salt is the correct answer."
+    },
+    {
+      "id": "bible_easy_127",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where did Mary live before Jesus's conception?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Nazareth"
+      ],
+      "correct": 3,
+      "explanation": "Nazareth is the correct answer."
+    },
+    {
+      "id": "bible_easy_128",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was King David's great-grandmother?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Ruth"
+      ],
+      "correct": 3,
+      "explanation": "Ruth is the correct answer."
+    },
+    {
+      "id": "bible_easy_129",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Joseph's coat commonly called?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "The coat of many colors",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "The coat of many colors is the correct answer."
+    },
+    {
+      "id": "bible_easy_130",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which prophet was taken up to heaven in a whirlwind in the book of 2 Kings?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Elijah"
+      ],
+      "correct": 3,
+      "explanation": "Elijah is the correct answer."
+    },
+    {
+      "id": "bible_easy_131",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which book precedes Psalms in the Bible?",
+      "answers": [
+        "Noah",
+        "Job",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Job is the correct answer."
+    },
+    {
+      "id": "bible_easy_132",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who did Cain kill in the Bible?",
+      "answers": [
+        "Noah",
+        "bel",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "bel is the correct answer."
+    },
+    {
+      "id": "bible_easy_133",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What color cloth did Lydia sell?",
+      "answers": [
+        "Purple",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Purple is the correct answer."
+    },
+    {
+      "id": "bible_easy_134",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the angel that visited Mary in the Annunciation?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Gabriel",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Gabriel is the correct answer."
+    },
+    {
+      "id": "bible_easy_135",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What food did Jesus feed the 5,000?",
+      "answers": [
+        "Noah",
+        "Loaves and fishes",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Loaves and fishes is the correct answer."
+    },
+    {
+      "id": "bible_easy_136",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What gifts did the three wise men give to Jesus?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Gold, frankincense and myrrh",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Gold, frankincense and myrrh is the correct answer."
+    },
+    {
+      "id": "bible_easy_137",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What body of water did the Israelites cross to escape Egypt?",
+      "answers": [
+        "Noah",
+        "The Red Sea",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "The Red Sea is the correct answer."
+    },
+    {
+      "id": "bible_easy_138",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who killed Goliath with a slingshot?",
+      "answers": [
+        "David",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "David is the correct answer."
+    },
+    {
+      "id": "bible_easy_139",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who built an ark to escape the flood?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "David"
+      ],
+      "correct": 0,
+      "explanation": "Noah is the correct answer."
+    },
+    {
+      "id": "bible_easy_140",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the last book of the Bible?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Revelation"
+      ],
+      "correct": 3,
+      "explanation": "Revelation is the correct answer."
+    },
+    {
+      "id": "bible_easy_141",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was king when Jesus was born?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Harod",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Harod is the correct answer."
+    },
+    {
+      "id": "bible_easy_142",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who freed the Israelites from Egypt?",
+      "answers": [
+        "Noah",
+        "Red Sea",
+        "David",
+        "Moses"
+      ],
+      "correct": 3,
+      "explanation": "Moses is the correct answer."
+    },
+    {
+      "id": "bible_easy_143",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How did Delilah steal Samson's strength?",
+      "answers": [
+        "Noah",
+        "She cut off his hair",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "She cut off his hair is the correct answer."
+    },
+    {
+      "id": "bible_easy_144",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was Jesus's mother?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Mary"
+      ],
+      "correct": 3,
+      "explanation": "Mary is the correct answer."
+    },
+    {
+      "id": "bible_easy_145",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What animal did Jesus ride into Jerusalem?",
+      "answers": [
+        "donkey",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "donkey is the correct answer."
+    },
+    {
+      "id": "bible_easy_146",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who betrayed Jesus after the Last Supper?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Judas"
+      ],
+      "correct": 3,
+      "explanation": "Judas is the correct answer."
+    },
+    {
+      "id": "bible_easy_147",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What body part did God create Eve out of?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "rib"
+      ],
+      "correct": 3,
+      "explanation": "rib is the correct answer."
+    },
+    {
+      "id": "bible_easy_148",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What mysterious food fell from the sky to feed the Israelites?",
+      "answers": [
+        "Noah",
+        "Manna",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Manna is the correct answer."
+    },
+    {
+      "id": "bible_easy_149",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What did Jesus convert water into in one of his miracles?",
+      "answers": [
+        "Noah",
+        "Wine",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Wine is the correct answer."
+    },
+    {
+      "id": "bible_easy_150",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was swallowed by a whale?",
+      "answers": [
+        "Jonah",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Jonah is the correct answer."
+    },
+    {
+      "id": "bible_easy_151",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where was Jesus born?",
+      "answers": [
+        "Noah",
+        "In a manger in Bethlehem",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "In a manger in Bethlehem is the correct answer."
+    },
+    {
+      "id": "bible_easy_152",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who were Adam and Eve's sons?",
+      "answers": [
+        "Cain, Abel and Seth",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Cain, Abel and Seth is the correct answer."
+    },
+    {
+      "id": "bible_easy_153",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Roman governor sentenced Jesus to death?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Pontius Pilate"
+      ],
+      "correct": 3,
+      "explanation": "Pontius Pilate is the correct answer."
+    },
+    {
+      "id": "bible_easy_154",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What miracle does Jesus perform for Lazarus?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "He raises Lazarus from the dead"
+      ],
+      "correct": 3,
+      "explanation": "He raises Lazarus from the dead is the correct answer."
+    },
+    {
+      "id": "bible_easy_155",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What language was the Old Testament written in?",
+      "answers": [
+        "Noah",
+        "Hebrew",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Hebrew is the correct answer."
+    },
+    {
+      "id": "bible_easy_156",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where was Jesus when he was arrested by the Romans?",
+      "answers": [
+        "The Garden of Gethsemane",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "The Garden of Gethsemane is the correct answer."
+    },
+    {
+      "id": "bible_easy_157",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which angel appeared to Mary before Jesus's birth?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Gabriel",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Gabriel is the correct answer."
+    },
+    {
+      "id": "bible_easy_158",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What idol did the Israelites create in the desert?",
+      "answers": [
+        "Noah",
+        "golden calf",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "golden calf is the correct answer."
+    },
+    {
+      "id": "bible_easy_159",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which three men were saved from the fiery furnace?",
+      "answers": [
+        "Noah",
+        "Shadrach, Meshach and Abednego",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Shadrach, Meshach and Abednego is the correct answer."
+    },
+    {
+      "id": "bible_easy_160",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which king was known for being wise?",
+      "answers": [
+        "King Solomon",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "King Solomon is the correct answer."
+    },
+    {
+      "id": "bible_easy_161",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who wrestles with an angel?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Jacob"
+      ],
+      "correct": 3,
+      "explanation": "Jacob is the correct answer."
+    },
+    {
+      "id": "bible_easy_162",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was Jesus's earthly father?",
+      "answers": [
+        "Noah",
+        "Joseph",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Joseph is the correct answer."
+    },
+    {
+      "id": "bible_easy_163",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which apostle is described as \"doubting\"?",
+      "answers": [
+        "Thomas",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Thomas is the correct answer."
+    },
+    {
+      "id": "bible_easy_164",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who baptized Jesus?",
+      "answers": [
+        "Noah",
+        "John the Baptist",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "John the Baptist is the correct answer."
+    },
+    {
+      "id": "bible_easy_165",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "On which day did God create man?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "The sixth day"
+      ],
+      "correct": 3,
+      "explanation": "The sixth day is the correct answer."
+    },
+    {
+      "id": "bible_easy_166",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which animal tempted Adam and Eve in Eden?",
+      "answers": [
+        "snake",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "snake is the correct answer."
+    },
+    {
+      "id": "bible_easy_167",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which apostle disowned Jesus three times?",
+      "answers": [
+        "Peter",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Peter is the correct answer."
+    },
+    {
+      "id": "bible_easy_168",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the shortest Bible verse?",
+      "answers": [
+        "9",
+        "10",
+        "12",
+        "\"Jesus wept.\" (John 11:35"
+      ],
+      "correct": 3,
+      "explanation": "\"Jesus wept.\" (John 11:35 is the correct answer."
+    },
+    {
+      "id": "bible_easy_169",
+      "category": "Bible",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How did God appear to Moses?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "From a burning bush",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "From a burning bush is the correct answer."
+    },
+    {
+      "id": "bible_medium_001",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What sign did God give after the flood?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Rainbow",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "The rainbow was given as a covenant sign after the flood."
+    },
+    {
+      "id": "bible_medium_002",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which son of Abraham was born to Sarah?",
+      "answers": [
+        "Noah",
+        "Isaac",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Isaac was the promised son born to Sarah."
+    },
+    {
+      "id": "bible_medium_003",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who wrestled with Jacob at night?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "A man from God"
+      ],
+      "correct": 3,
+      "explanation": "Genesis describes Jacob wrestling before being renamed Israel."
+    },
+    {
+      "id": "bible_medium_004",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which son of Jacob became ancestor of kings?",
+      "answers": [
+        "Judah",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "The royal line of David and Jesus is traced through Judah."
+    },
+    {
+      "id": "bible_medium_005",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who protected the spies in Jericho?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Rahab",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Rahab hid the Israelite spies and was spared."
+    },
+    {
+      "id": "bible_medium_006",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What did Gideon use to confirm God's call?",
+      "answers": [
+        "Noah",
+        "A fleece",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Gideon asked for signs involving a fleece."
+    },
+    {
+      "id": "bible_medium_007",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who defeated Sisera in Judges?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Jael",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Jael killed Sisera after he fled from battle."
+    },
+    {
+      "id": "bible_medium_008",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which judge was also a prophetess?",
+      "answers": [
+        "Noah",
+        "Deborah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Deborah judged Israel and gave prophetic guidance."
+    },
+    {
+      "id": "bible_medium_009",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What did Samuel use to anoint David?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Oil",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Samuel anointed David with oil in Bethlehem."
+    },
+    {
+      "id": "bible_medium_010",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was David's loyal friend?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Jonathan"
+      ],
+      "correct": 3,
+      "explanation": "Jonathan, Saul's son, was loyal to David."
+    },
+    {
+      "id": "bible_medium_011",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which king built the first temple?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Solomon"
+      ],
+      "correct": 3,
+      "explanation": "Solomon built the temple in Jerusalem."
+    },
+    {
+      "id": "bible_medium_012",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who visited Solomon to test his wisdom?",
+      "answers": [
+        "Queen of Sheba",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "The queen of Sheba came with hard questions."
+    },
+    {
+      "id": "bible_medium_013",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which prophet challenged Baal's prophets?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Elijah"
+      ],
+      "correct": 3,
+      "explanation": "Elijah confronted Baal's prophets on Mount Carmel."
+    },
+    {
+      "id": "bible_medium_014",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Where did Elijah challenge Baal's prophets?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Mount Carmel"
+      ],
+      "correct": 3,
+      "explanation": "Mount Carmel was the site of Elijah's public challenge."
+    },
+    {
+      "id": "bible_medium_015",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was healed after washing in the Jordan?",
+      "answers": [
+        "Naaman",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Naaman was healed of leprosy after obeying Elisha's word."
+    },
+    {
+      "id": "bible_medium_016",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which king saw writing on the wall?",
+      "answers": [
+        "Belshazzar",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Daniel interpreted the message for Belshazzar."
+    },
+    {
+      "id": "bible_medium_017",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who interpreted Nebuchadnezzar's dream?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Daniel"
+      ],
+      "correct": 3,
+      "explanation": "Daniel gave the interpretation by God's wisdom."
+    },
+    {
+      "id": "bible_medium_018",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who rebuilt the altar after exile?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Zerubbabel",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Zerubbabel helped lead early return and temple work."
+    },
+    {
+      "id": "bible_medium_019",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who read the Law to returned exiles?",
+      "answers": [
+        "Ezra",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Ezra read and taught the Law to the people."
+    },
+    {
+      "id": "bible_medium_020",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who opposed Esther's people in Persia?",
+      "answers": [
+        "Noah",
+        "Haman",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Haman plotted against the Jewish people."
+    },
+    {
+      "id": "bible_medium_021",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which book says, 'The Lord is my shepherd'?",
+      "answers": [
+        "21",
+        "22",
+        "Psalm 23",
+        "24"
+      ],
+      "correct": 2,
+      "explanation": "Psalm 23 begins with the Lord as shepherd."
+    },
+    {
+      "id": "bible_medium_022",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which book says there is a time for everything?",
+      "answers": [
+        "Ecclesiastes",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Ecclesiastes reflects on seasons and timing in life."
+    },
+    {
+      "id": "bible_medium_023",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who suffered great loss but kept faith?",
+      "answers": [
+        "Noah",
+        "Job",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Job wrestled with suffering while still seeking God."
+    },
+    {
+      "id": "bible_medium_024",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which prophet saw dry bones restored?",
+      "answers": [
+        "Noah",
+        "Ezekiel",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Ezekiel saw the valley of dry bones vision."
+    },
+    {
+      "id": "bible_medium_025",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which prophet spoke of a suffering servant?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Isaiah"
+      ],
+      "correct": 3,
+      "explanation": "Isaiah includes the servant songs, including Isaiah 53."
+    },
+    {
+      "id": "bible_medium_026",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which prophet bought a field during siege?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Jeremiah"
+      ],
+      "correct": 3,
+      "explanation": "Jeremiah bought a field as a sign of future restoration."
+    },
+    {
+      "id": "bible_medium_027",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which prophet married Gomer?",
+      "answers": [
+        "Hosea",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Hosea's marriage illustrated Israel's unfaithfulness."
+    },
+    {
+      "id": "bible_medium_028",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which prophet was a shepherd from Tekoa?",
+      "answers": [
+        "Amos",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Amos was from Tekoa and spoke against injustice."
+    },
+    {
+      "id": "bible_medium_029",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which prophet asked God why evil seemed to win?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Habakkuk",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Habakkuk brought honest questions before God."
+    },
+    {
+      "id": "bible_medium_030",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which prophet said Bethlehem would be important?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Micah",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Micah 5 points to Bethlehem in a messianic promise."
+    },
+    {
+      "id": "bible_medium_031",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who announced Jesus' birth to Mary?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Gabriel",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Gabriel brought the announcement to Mary."
+    },
+    {
+      "id": "bible_medium_032",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was Caesar when Jesus was born?",
+      "answers": [
+        "Noah",
+        "Augustus",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Luke names Caesar Augustus in the birth account."
+    },
+    {
+      "id": "bible_medium_033",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who recognized baby Jesus at the temple?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Simeon"
+      ],
+      "correct": 3,
+      "explanation": "Simeon praised God when he saw the child Jesus."
+    },
+    {
+      "id": "bible_medium_034",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which prophetess saw Jesus at the temple?",
+      "answers": [
+        "Anna",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Anna spoke about Jesus to those awaiting redemption."
+    },
+    {
+      "id": "bible_medium_035",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What wilderness temptation involved stones?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Make bread",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Satan tempted Jesus to turn stones into bread."
+    },
+    {
+      "id": "bible_medium_036",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the Sermon on the Mount's opening section?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Beatitudes",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "The Beatitudes open Jesus' Sermon on the Mount."
+    },
+    {
+      "id": "bible_medium_037",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What prayer did Jesus teach His disciples?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Lord's Prayer",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Jesus taught His disciples to pray what is often called the Lord's Prayer."
+    },
+    {
+      "id": "bible_medium_038",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which parable includes a Samaritan helper?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Good Samaritan"
+      ],
+      "correct": 3,
+      "explanation": "The Good Samaritan helped the wounded man."
+    },
+    {
+      "id": "bible_medium_039",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which parable features a returning son?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Prodigal Son",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "The prodigal son returned to his father in repentance."
+    },
+    {
+      "id": "bible_medium_040",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which parable compares hearts to soil?",
+      "answers": [
+        "Sower",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "The parable of the sower describes seed falling on different soils."
+    },
+    {
+      "id": "bible_medium_041",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which miracle happened at Bethany?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Raising Lazarus"
+      ],
+      "correct": 3,
+      "explanation": "Lazarus was raised at Bethany."
+    },
+    {
+      "id": "bible_medium_042",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which disciple was a tax collector before following Jesus?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Matthew",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Matthew was called from tax collecting."
+    },
+    {
+      "id": "bible_medium_043",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which disciple was called the Zealot?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Simon",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "One disciple is identified as Simon the Zealot."
+    },
+    {
+      "id": "bible_medium_044",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which disciple was brother of John?",
+      "answers": [
+        "James",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "James and John were sons of Zebedee."
+    },
+    {
+      "id": "bible_medium_045",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who asked Jesus about being born again?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Nicodemus"
+      ],
+      "correct": 3,
+      "explanation": "Jesus spoke to Nicodemus about new birth in John 3."
+    },
+    {
+      "id": "bible_medium_046",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Where did Jesus meet the Samaritan woman?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "At a well",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Jesus spoke with her beside Jacob's well."
+    },
+    {
+      "id": "bible_medium_047",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which pool is linked to a healing in John 5?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Bethesda",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Jesus healed a man at the pool of Bethesda."
+    },
+    {
+      "id": "bible_medium_048",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which blind man washed in Siloam?",
+      "answers": [
+        "Man born blind",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "In John 9, the man born blind washed in Siloam."
+    },
+    {
+      "id": "bible_medium_049",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which feast remembered Israel leaving Egypt?",
+      "answers": [
+        "Noah",
+        "Passover",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Passover remembers the Exodus from Egypt."
+    },
+    {
+      "id": "bible_medium_050",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What meal did Jesus share before His arrest?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Last Supper"
+      ],
+      "correct": 3,
+      "explanation": "Jesus ate the Last Supper with His disciples."
+    },
+    {
+      "id": "bible_medium_051",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who cut off a servant's ear at Jesus' arrest?",
+      "answers": [
+        "Peter",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Peter struck the servant before Jesus healed the ear."
+    },
+    {
+      "id": "bible_medium_052",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was high priest during Jesus' trial?",
+      "answers": [
+        "Caiaphas",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Caiaphas was high priest in the trial narratives."
+    },
+    {
+      "id": "bible_medium_053",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which hill name is linked to the crucifixion?",
+      "answers": [
+        "Noah",
+        "Golgotha",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Golgotha means Place of a Skull."
+    },
+    {
+      "id": "bible_medium_054",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who first found the empty tomb in John's Gospel?",
+      "answers": [
+        "Noah",
+        "Mary Magdalene",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "John highlights Mary Magdalene at the empty tomb."
+    },
+    {
+      "id": "bible_medium_055",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Where did two disciples meet the risen Jesus?",
+      "answers": [
+        "Noah",
+        "Road to Emmaus",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Jesus walked with two disciples on the road to Emmaus."
+    },
+    {
+      "id": "bible_medium_056",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What did Jesus tell Peter to feed?",
+      "answers": [
+        "Noah",
+        "His sheep",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Jesus told Peter to feed and tend His sheep."
+    },
+    {
+      "id": "bible_medium_057",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What happened before Pentecost in Acts 1?",
+      "answers": [
+        "Noah",
+        "Jesus ascended",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Acts 1 records Jesus' ascension."
+    },
+    {
+      "id": "bible_medium_058",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who replaced Judas among the apostles?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Matthias"
+      ],
+      "correct": 3,
+      "explanation": "Matthias was chosen to take Judas' place."
+    },
+    {
+      "id": "bible_medium_059",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who lied about a gift in Acts 5?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Ananias and Sapphira",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Ananias and Sapphira lied about the proceeds of land."
+    },
+    {
+      "id": "bible_medium_060",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who explained Isaiah to an Ethiopian official?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Philip",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Philip met the Ethiopian official on the road."
+    },
+    {
+      "id": "bible_medium_061",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who prayed for Saul after Damascus?",
+      "answers": [
+        "Noah",
+        "Ananias",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Ananias was sent to Saul after his conversion."
+    },
+    {
+      "id": "bible_medium_062",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which city first called believers Christians?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Antioch",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Acts says disciples were first called Christians at Antioch."
+    },
+    {
+      "id": "bible_medium_063",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was freed from prison by an angel?",
+      "answers": [
+        "Peter",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Peter was delivered from prison in Acts 12."
+    },
+    {
+      "id": "bible_medium_064",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Where were Paul and Silas jailed?",
+      "answers": [
+        "Noah",
+        "Philippi",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Paul and Silas sang in prison at Philippi."
+    },
+    {
+      "id": "bible_medium_065",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which city had an altar to an unknown god?",
+      "answers": [
+        "Noah",
+        "Athens",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Paul referred to the altar while speaking in Athens."
+    },
+    {
+      "id": "bible_medium_066",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Where did Paul preach about the unknown god?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Areopagus"
+      ],
+      "correct": 3,
+      "explanation": "Paul addressed thinkers at the Areopagus in Athens."
+    },
+    {
+      "id": "bible_medium_067",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which couple worked with Paul in Corinth?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Aquila and Priscilla"
+      ],
+      "correct": 3,
+      "explanation": "Aquila and Priscilla were tentmakers with Paul."
+    },
+    {
+      "id": "bible_medium_068",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which city had a riot about Artemis?",
+      "answers": [
+        "Noah",
+        "Ephesus",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Ephesus had a riot connected to Artemis worship."
+    },
+    {
+      "id": "bible_medium_069",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who warned Paul with a belt prophecy?",
+      "answers": [
+        "Noah",
+        "Agabus",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Agabus used Paul's belt to warn of coming arrest."
+    },
+    {
+      "id": "bible_medium_070",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Where was Paul shipwrecked in Acts?",
+      "answers": [
+        "Noah",
+        "Malta",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Paul was shipwrecked and came ashore on Malta."
+    },
+    {
+      "id": "bible_medium_071",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which letter explains justification by faith?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Romans",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Romans strongly teaches righteousness by faith."
+    },
+    {
+      "id": "bible_medium_072",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which chapter describes love as patient?",
+      "answers": [
+        "2",
+        "1 Corinthians 13",
+        "3",
+        "6"
+      ],
+      "correct": 1,
+      "explanation": "1 Corinthians 13 describes love in famous terms."
+    },
+    {
+      "id": "bible_medium_073",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which chapter is known for the armor of God?",
+      "answers": [
+        "4",
+        "5",
+        "Ephesians 6",
+        "7"
+      ],
+      "correct": 2,
+      "explanation": "Ephesians 6 describes the armor of God."
+    },
+    {
+      "id": "bible_medium_074",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which book emphasizes faith and works?",
+      "answers": [
+        "James",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "James teaches that living faith shows itself in works."
+    },
+    {
+      "id": "bible_medium_075",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which book calls Jesus our great high priest?",
+      "answers": [
+        "Hebrews",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Hebrews presents Jesus as the great high priest."
+    },
+    {
+      "id": "bible_medium_076",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which book says faith is assurance of things hoped for?",
+      "answers": [
+        "Hebrews",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Hebrews 11 gives a well-known description of faith."
+    },
+    {
+      "id": "bible_medium_077",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which book warns about taming the tongue?",
+      "answers": [
+        "James",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "James compares the tongue to a small but powerful fire."
+    },
+    {
+      "id": "bible_medium_078",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which apostle wrote letters to scattered believers?",
+      "answers": [
+        "Peter",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Peter wrote to believers facing hardship and exile."
+    },
+    {
+      "id": "bible_medium_079",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which short letter appeals for Onesimus?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Philemon",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Philemon is Paul's appeal about Onesimus."
+    },
+    {
+      "id": "bible_medium_080",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which book has messages to seven churches?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Revelation"
+      ],
+      "correct": 3,
+      "explanation": "Revelation opens with messages to seven churches."
+    },
+    {
+      "id": "bible_medium_081",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which church is told it left its first love?",
+      "answers": [
+        "Noah",
+        "Ephesus",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Revelation 2 tells Ephesus it left its first love."
+    },
+    {
+      "id": "bible_medium_082",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which church is called lukewarm?",
+      "answers": [
+        "Laodicea",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Laodicea is warned about being lukewarm."
+    },
+    {
+      "id": "bible_medium_083",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the Great Commission about?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Making disciples"
+      ],
+      "correct": 3,
+      "explanation": "Jesus commanded His followers to make disciples of all nations."
+    },
+    {
+      "id": "bible_medium_084",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is baptism a public sign of?",
+      "answers": [
+        "Following Christ",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Baptism publicly identifies a believer with Christ."
+    },
+    {
+      "id": "bible_medium_085",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does communion remember?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Jesus' sacrifice",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "The Lord's Supper remembers Jesus' body and blood."
+    },
+    {
+      "id": "bible_medium_086",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is repentance?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Turning from sin"
+      ],
+      "correct": 3,
+      "explanation": "Repentance means turning from sin toward God."
+    },
+    {
+      "id": "bible_medium_087",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is worship?",
+      "answers": [
+        "Honoring God",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Worship gives honor and praise to God."
+    },
+    {
+      "id": "bible_medium_088",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is mercy?",
+      "answers": [
+        "Noah",
+        "Compassion shown",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Mercy is compassion shown to someone in need."
+    },
+    {
+      "id": "bible_medium_089",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is forgiveness?",
+      "answers": [
+        "Noah",
+        "Pardoning wrong",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Forgiveness releases a debt or wrong."
+    },
+    {
+      "id": "bible_medium_090",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which commandment concerns parents?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Honor them",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "One commandment says to honor father and mother."
+    },
+    {
+      "id": "bible_medium_091",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which commandment forbids false witness?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Do not lie",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Bearing false witness means giving dishonest testimony."
+    },
+    {
+      "id": "bible_medium_092",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Old Testament book is mostly law?",
+      "answers": [
+        "Leviticus",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Leviticus contains priestly laws and worship instructions."
+    },
+    {
+      "id": "bible_medium_093",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which book records Israel's wilderness census?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Numbers",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Numbers includes censuses and wilderness events."
+    },
+    {
+      "id": "bible_medium_094",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which book retells the law before Canaan?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Deuteronomy"
+      ],
+      "correct": 3,
+      "explanation": "Deuteronomy records Moses' final teaching before entry."
+    },
+    {
+      "id": "bible_medium_095",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which book follows Judges?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Ruth"
+      ],
+      "correct": 3,
+      "explanation": "Ruth follows Judges in the Old Testament order."
+    },
+    {
+      "id": "bible_medium_096",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which books tell about Israel's kings?",
+      "answers": [
+        "Samuel and Kings",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Samuel and Kings record major events of Israel's monarchy."
+    },
+    {
+      "id": "bible_medium_097",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which book is a love poem collection?",
+      "answers": [
+        "Song of Songs",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Song of Songs is poetic love literature."
+    },
+    {
+      "id": "bible_medium_098",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which book mourns Jerusalem's fall?",
+      "answers": [
+        "Noah",
+        "Lamentations",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Lamentations grieves the destruction of Jerusalem."
+    },
+    {
+      "id": "bible_medium_099",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which prophet is shortest by chapter count?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Obadiah",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Obadiah has only one chapter."
+    },
+    {
+      "id": "bible_medium_100",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which prophet ends the Old Testament?",
+      "answers": [
+        "Noah",
+        "Malachi",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Malachi is the final book in the Old Testament order."
+    },
+    {
+      "id": "bible_medium_101",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which tribe of Israel was set apart to serve as priests in ancient Israel?",
+      "answers": [
+        "The tribe of Levi",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "The tribe of Levi is the correct answer."
+    },
+    {
+      "id": "bible_medium_102",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the name of the garden where God created the first humans?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "The Garden of Eden"
+      ],
+      "correct": 3,
+      "explanation": "The Garden of Eden is the correct answer."
+    },
+    {
+      "id": "bible_medium_103",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was David's first wife?",
+      "answers": [
+        "Michal",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Michal is the correct answer."
+    },
+    {
+      "id": "bible_medium_104",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who were the first two humans?",
+      "answers": [
+        "Noah",
+        "dam and Eve",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "dam and Eve is the correct answer."
+    },
+    {
+      "id": "bible_medium_105",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the first book of the Bible?",
+      "answers": [
+        "Genesis",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Genesis is the correct answer."
+    },
+    {
+      "id": "bible_medium_106",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first Biblical king of Israel?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "King Saul",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "King Saul is the correct answer."
+    },
+    {
+      "id": "bible_medium_107",
+      "category": "Bible",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who fought the battle of Jericho?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Joshua",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Joshua is the correct answer."
+    },
+    {
+      "id": "bible_hard_001",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which son of Noah was ancestor of Canaan?",
+      "answers": [
+        "Ham",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Genesis connects Canaan with the line of Ham."
+    },
+    {
+      "id": "bible_hard_002",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who was Abraham's nephew?",
+      "answers": [
+        "Noah",
+        "Lot",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Lot traveled with Abraham before settling near Sodom."
+    },
+    {
+      "id": "bible_hard_003",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What king met Abraham with bread and wine?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Melchizedek"
+      ],
+      "correct": 3,
+      "explanation": "Melchizedek was king of Salem and priest of God Most High."
+    },
+    {
+      "id": "bible_hard_004",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which mountain is linked to Isaac's binding?",
+      "answers": [
+        "Moriah",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Genesis 22 identifies the region of Moriah."
+    },
+    {
+      "id": "bible_hard_005",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who was Isaac's wife?",
+      "answers": [
+        "Rebekah",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Rebekah became Isaac's wife after Abraham's servant found her."
+    },
+    {
+      "id": "bible_hard_006",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who was Jacob's uncle and father-in-law?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Laban",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Laban was Rebekah's brother and father of Leah and Rachel."
+    },
+    {
+      "id": "bible_hard_007",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which son of Jacob received the birthright blessing?",
+      "answers": [
+        "Noah",
+        "Joseph",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "1 Chronicles says Joseph received the birthright."
+    },
+    {
+      "id": "bible_hard_008",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which tribe served as priests and temple workers?",
+      "answers": [
+        "Levi",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "The Levites were set apart for tabernacle and temple service."
+    },
+    {
+      "id": "bible_hard_009",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Egyptian office did Joseph hold?",
+      "answers": [
+        "Second to Pharaoh",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Joseph was elevated to rule under Pharaoh."
+    },
+    {
+      "id": "bible_hard_010",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who was Moses' father-in-law?",
+      "answers": [
+        "Jethro",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Jethro advised Moses to appoint judges."
+    },
+    {
+      "id": "bible_hard_011",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which plague came first in Egypt?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Water to blood",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "The first plague turned Nile water to blood."
+    },
+    {
+      "id": "bible_hard_012",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which item was inside the ark of the covenant?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Stone tablets",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Hebrews names the tablets among items linked to the ark."
+    },
+    {
+      "id": "bible_hard_013",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What tribe was Moses from?",
+      "answers": [
+        "Levi",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Moses and Aaron were from the tribe of Levi."
+    },
+    {
+      "id": "bible_hard_014",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who rebelled against Moses and was judged?",
+      "answers": [
+        "Noah",
+        "Korah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Korah led a rebellion against Moses' leadership."
+    },
+    {
+      "id": "bible_hard_015",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who was allowed to enter Canaan with Joshua?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Caleb"
+      ],
+      "correct": 3,
+      "explanation": "Caleb and Joshua trusted God's promise about the land."
+    },
+    {
+      "id": "bible_hard_016",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which mountain did Moses view Canaan from?",
+      "answers": [
+        "Nebo",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Moses viewed the promised land from Mount Nebo."
+    },
+    {
+      "id": "bible_hard_017",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which city became David's capital?",
+      "answers": [
+        "Jerusalem",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "David captured Jerusalem and made it his capital."
+    },
+    {
+      "id": "bible_hard_018",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who was David's commander?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Joab",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Joab served as David's military commander."
+    },
+    {
+      "id": "bible_hard_019",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who was Bathsheba's first husband?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Uriah"
+      ],
+      "correct": 3,
+      "explanation": "Uriah the Hittite was Bathsheba's husband."
+    },
+    {
+      "id": "bible_hard_020",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which son rebelled against David?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Absalom"
+      ],
+      "correct": 3,
+      "explanation": "Absalom led a rebellion against his father David."
+    },
+    {
+      "id": "bible_hard_021",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who asked David for Abigail as wife?",
+      "answers": [
+        "David",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "David married Abigail after Nabal's death."
+    },
+    {
+      "id": "bible_hard_022",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which king divided the kingdom by harsh advice?",
+      "answers": [
+        "Noah",
+        "Rehoboam",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Rehoboam's response helped split Israel and Judah."
+    },
+    {
+      "id": "bible_hard_023",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who set up golden calves in the north?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Jeroboam"
+      ],
+      "correct": 3,
+      "explanation": "Jeroboam set up calves at Bethel and Dan."
+    },
+    {
+      "id": "bible_hard_024",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which king was married to Jezebel?",
+      "answers": [
+        "Ahab",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Ahab and Jezebel promoted Baal worship in Israel."
+    },
+    {
+      "id": "bible_hard_025",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who coveted Naboth's vineyard?",
+      "answers": [
+        "Ahab",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Ahab wanted Naboth's vineyard near his palace."
+    },
+    {
+      "id": "bible_hard_026",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which king found the Law during temple repairs?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Josiah",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Josiah's reforms followed the discovery of the Book of the Law."
+    },
+    {
+      "id": "bible_hard_027",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which king prayed when Assyria threatened Jerusalem?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Hezekiah"
+      ],
+      "correct": 3,
+      "explanation": "Hezekiah prayed when Sennacherib threatened Jerusalem."
+    },
+    {
+      "id": "bible_hard_028",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which prophet advised Hezekiah?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Isaiah"
+      ],
+      "correct": 3,
+      "explanation": "Isaiah ministered during Hezekiah's reign."
+    },
+    {
+      "id": "bible_hard_029",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which prophet was from Anathoth?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Jeremiah"
+      ],
+      "correct": 3,
+      "explanation": "Jeremiah is identified as a priest from Anathoth."
+    },
+    {
+      "id": "bible_hard_030",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which empire destroyed Jerusalem in 586 BC?",
+      "answers": [
+        "Noah",
+        "Babylon",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Babylon destroyed Jerusalem and the first temple."
+    },
+    {
+      "id": "bible_hard_031",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who was Babylon's king during Jerusalem's fall?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Nebuchadnezzar",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Nebuchadnezzar ruled Babylon during Judah's exile."
+    },
+    {
+      "id": "bible_hard_032",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Persian king allowed Jewish return?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Cyrus",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Cyrus issued a decree allowing exiles to return."
+    },
+    {
+      "id": "bible_hard_033",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who was Esther's cousin and guardian?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Mordecai",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Mordecai raised Esther and advised her."
+    },
+    {
+      "id": "bible_hard_034",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which feast celebrates Esther's deliverance story?",
+      "answers": [
+        "Noah",
+        "Purim",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Purim remembers deliverance from Haman's plot."
+    },
+    {
+      "id": "bible_hard_035",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which prophet called for rebuilding the temple?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Haggai"
+      ],
+      "correct": 3,
+      "explanation": "Haggai urged the returned exiles to rebuild the temple."
+    },
+    {
+      "id": "bible_hard_036",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which prophet saw a flying scroll?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Zechariah"
+      ],
+      "correct": 3,
+      "explanation": "Zechariah's visions include a flying scroll."
+    },
+    {
+      "id": "bible_hard_037",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which prophet said the just shall live by faith?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Habakkuk",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Habakkuk 2:4 is quoted in the New Testament."
+    },
+    {
+      "id": "bible_hard_038",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which book says God requires justice, mercy, humility?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Micah",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Micah 6:8 summarizes faithful living."
+    },
+    {
+      "id": "bible_hard_039",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which prophet focuses on Edom's judgment?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Obadiah",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Obadiah is a short prophecy against Edom."
+    },
+    {
+      "id": "bible_hard_040",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which prophet mentions the valley of decision?",
+      "answers": [
+        "Joel",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Joel uses the phrase valley of decision."
+    },
+    {
+      "id": "bible_hard_041",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which prophet has a sign of a coming messenger?",
+      "answers": [
+        "Noah",
+        "Malachi",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Malachi speaks of a messenger preparing the way."
+    },
+    {
+      "id": "bible_hard_042",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Psalm is the longest chapter?",
+      "answers": [
+        "Psalm 119",
+        "117",
+        "118",
+        "120"
+      ],
+      "correct": 0,
+      "explanation": "Psalm 119 is the longest chapter in the Bible."
+    },
+    {
+      "id": "bible_hard_043",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Gospel emphasizes Jesus as the Word?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "John"
+      ],
+      "correct": 3,
+      "explanation": "John opens by calling Jesus the Word."
+    },
+    {
+      "id": "bible_hard_044",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Gospel was written by Paul's coworker?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Luke"
+      ],
+      "correct": 3,
+      "explanation": "Luke was a coworker of Paul and wrote Luke-Acts."
+    },
+    {
+      "id": "bible_hard_045",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Gospel often uses 'immediately'?",
+      "answers": [
+        "Noah",
+        "Mark",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Mark is known for a fast-moving style using immediately."
+    },
+    {
+      "id": "bible_hard_046",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Gospel strongly highlights fulfillment?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Matthew",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Matthew often points to Old Testament fulfillment."
+    },
+    {
+      "id": "bible_hard_047",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who was tetrarch during John the Baptist's ministry?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Herod Antipas",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Herod Antipas imprisoned John the Baptist."
+    },
+    {
+      "id": "bible_hard_048",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which ruler ordered infants killed near Bethlehem?",
+      "answers": [
+        "Herod the Great",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Matthew records Herod's violent order after the magi came."
+    },
+    {
+      "id": "bible_hard_049",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which group asked Jesus about resurrection?",
+      "answers": [
+        "Noah",
+        "Sadducees",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Sadducees denied resurrection and questioned Jesus about it."
+    },
+    {
+      "id": "bible_hard_050",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which group was known for strict law traditions?",
+      "answers": [
+        "Pharisees",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "The Pharisees were known for detailed religious traditions."
+    },
+    {
+      "id": "bible_hard_051",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which tax collector hosted Jesus in Jericho?",
+      "answers": [
+        "Noah",
+        "Zacchaeus",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Zacchaeus welcomed Jesus and promised restitution."
+    },
+    {
+      "id": "bible_hard_052",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which friend of Jesus had sisters Mary and Martha?",
+      "answers": [
+        "Lazarus",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Lazarus lived in Bethany with Mary and Martha."
+    },
+    {
+      "id": "bible_hard_053",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which disciple brought his brother to Jesus?",
+      "answers": [
+        "Noah",
+        "Andrew",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Andrew brought Simon Peter to Jesus."
+    },
+    {
+      "id": "bible_hard_054",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which disciple said, 'My Lord and my God'?",
+      "answers": [
+        "Thomas",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Thomas confessed faith after seeing the risen Jesus."
+    },
+    {
+      "id": "bible_hard_055",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who asked for Jesus' body after crucifixion?",
+      "answers": [
+        "Joseph of Arimathea",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Joseph of Arimathea requested Jesus' body from Pilate."
+    },
+    {
+      "id": "bible_hard_056",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which council warned the apostles in Acts?",
+      "answers": [
+        "Sanhedrin",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "The Sanhedrin questioned and warned the apostles."
+    },
+    {
+      "id": "bible_hard_057",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who advised caution about persecuting apostles?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Gamaliel",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Gamaliel warned that opposing God's work would fail."
+    },
+    {
+      "id": "bible_hard_058",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who was killed by Herod in Acts 12?",
+      "answers": [
+        "James",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "James the brother of John was killed by Herod."
+    },
+    {
+      "id": "bible_hard_059",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which missionary helped Paul after others feared him?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Barnabas",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Barnabas vouched for Saul before the apostles."
+    },
+    {
+      "id": "bible_hard_060",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which city sent Paul and Barnabas out?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Antioch",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "The church at Antioch sent them on mission."
+    },
+    {
+      "id": "bible_hard_061",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which council addressed Gentile believers?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Jerusalem Council"
+      ],
+      "correct": 3,
+      "explanation": "Acts 15 records the Jerusalem Council."
+    },
+    {
+      "id": "bible_hard_062",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who joined Paul after the split with Barnabas?",
+      "answers": [
+        "Silas",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Silas traveled with Paul after Paul and Barnabas separated."
+    },
+    {
+      "id": "bible_hard_063",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which young man joined Paul at Lystra?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Timothy",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Timothy joined Paul's mission team at Lystra."
+    },
+    {
+      "id": "bible_hard_064",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Macedonian city had Lydia as convert?",
+      "answers": [
+        "Noah",
+        "Philippi",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Lydia became a believer in Philippi."
+    },
+    {
+      "id": "bible_hard_065",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which city was praised for examining Scripture?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Berea"
+      ],
+      "correct": 3,
+      "explanation": "The Bereans examined the Scriptures daily."
+    },
+    {
+      "id": "bible_hard_066",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who was an eloquent teacher from Alexandria?",
+      "answers": [
+        "Apollos",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Apollos was mighty in the Scriptures."
+    },
+    {
+      "id": "bible_hard_067",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which governor heard Paul's defense in Caesarea?",
+      "answers": [
+        "Felix",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Paul gave a defense before Felix."
+    },
+    {
+      "id": "bible_hard_068",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which king heard Paul's testimony in Acts 26?",
+      "answers": [
+        "Agrippa",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Paul testified before King Agrippa."
+    },
+    {
+      "id": "bible_hard_069",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which island official welcomed Paul after shipwreck?",
+      "answers": [
+        "Publius",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Publius welcomed Paul and others on Malta."
+    },
+    {
+      "id": "bible_hard_070",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which letter was sent to a church in Macedonia?",
+      "answers": [
+        "Noah",
+        "Philippians",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Philippians was written to believers in Philippi."
+    },
+    {
+      "id": "bible_hard_071",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which letter addresses runaway-slave reconciliation?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Philemon",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Philemon concerns Onesimus and reconciliation."
+    },
+    {
+      "id": "bible_hard_072",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which pastoral letter was sent to Crete?",
+      "answers": [
+        "Noah",
+        "Titus",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Paul left Titus in Crete to appoint elders."
+    },
+    {
+      "id": "bible_hard_073",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which chapter lists the fruit of the Spirit?",
+      "answers": [
+        "3",
+        "4",
+        "6",
+        "Galatians 5"
+      ],
+      "correct": 3,
+      "explanation": "Galatians 5 contrasts flesh and Spirit."
+    },
+    {
+      "id": "bible_hard_074",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which chapter says there is no condemnation?",
+      "answers": [
+        "6",
+        "7",
+        "Romans 8",
+        "9"
+      ],
+      "correct": 2,
+      "explanation": "Romans 8 opens with no condemnation for those in Christ."
+    },
+    {
+      "id": "bible_hard_075",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which chapter teaches one body with many members?",
+      "answers": [
+        "1 Corinthians 12",
+        "2",
+        "3",
+        "6"
+      ],
+      "correct": 0,
+      "explanation": "1 Corinthians 12 uses the body image for the church."
+    },
+    {
+      "id": "bible_hard_076",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which passage names Scripture as God-breathed?",
+      "answers": [
+        "1",
+        "3",
+        "4",
+        "2 Timothy 3"
+      ],
+      "correct": 3,
+      "explanation": "2 Timothy 3:16 describes Scripture as God-breathed."
+    },
+    {
+      "id": "bible_hard_077",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which book emphasizes Jesus' supremacy?",
+      "answers": [
+        "Colossians",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Colossians strongly presents Christ's supremacy."
+    },
+    {
+      "id": "bible_hard_078",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which letter includes the kenosis hymn?",
+      "answers": [
+        "Noah",
+        "Philippians",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Philippians 2 describes Christ's humility and exaltation."
+    },
+    {
+      "id": "bible_hard_079",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which book says God is love?",
+      "answers": [
+        "2",
+        "3",
+        "1 John",
+        "6"
+      ],
+      "correct": 2,
+      "explanation": "1 John repeatedly teaches that God is love."
+    },
+    {
+      "id": "bible_hard_080",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which book warns against false teachers with examples?",
+      "answers": [
+        "Jude",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Jude gives strong warnings using biblical examples."
+    },
+    {
+      "id": "bible_hard_081",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which letter praises Gaius for hospitality?",
+      "answers": [
+        "3 John",
+        "1",
+        "2",
+        "4"
+      ],
+      "correct": 0,
+      "explanation": "3 John commends Gaius for faithful hospitality."
+    },
+    {
+      "id": "bible_hard_082",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which book contains the hall of faith?",
+      "answers": [
+        "Hebrews",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Hebrews 11 is often called the hall of faith."
+    },
+    {
+      "id": "bible_hard_083",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What term means being declared righteous?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Justification",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Justification is God's declaring sinners righteous in Christ."
+    },
+    {
+      "id": "bible_hard_084",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What term means growth in holiness?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Sanctification"
+      ],
+      "correct": 3,
+      "explanation": "Sanctification is the believer's growth in holiness."
+    },
+    {
+      "id": "bible_hard_085",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What term means being brought into God's family?",
+      "answers": [
+        "Adoption",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Adoption describes believers received as God's children."
+    },
+    {
+      "id": "bible_hard_086",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What term means turning away God's wrath?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Propitiation",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Propitiation concerns satisfaction of righteous wrath."
+    },
+    {
+      "id": "bible_hard_087",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What term means God preserving believers?",
+      "answers": [
+        "Noah",
+        "Perseverance",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Perseverance teaches God's people continue by His grace."
+    },
+    {
+      "id": "bible_hard_088",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which doctrine teaches one God in three persons?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Trinity"
+      ],
+      "correct": 3,
+      "explanation": "The Trinity is Father, Son, and Holy Spirit as one God."
+    },
+    {
+      "id": "bible_hard_089",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What doctrine says the Son became human?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Incarnation",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "The incarnation means the eternal Son took on humanity."
+    },
+    {
+      "id": "bible_hard_090",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which office did Jesus fulfill as mediator?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Prophet, priest, king",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Christian theology often speaks of Christ's three offices."
+    },
+    {
+      "id": "bible_hard_091",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which covenant sign was given to Abraham?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Circumcision",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Circumcision was given as a sign of the Abrahamic covenant."
+    },
+    {
+      "id": "bible_hard_092",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which covenant is linked to Sinai?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Mosaic",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "The Mosaic covenant was made with Israel at Sinai."
+    },
+    {
+      "id": "bible_hard_093",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which covenant promised David a lasting throne?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Davidic",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "God promised David a lasting royal line."
+    },
+    {
+      "id": "bible_hard_094",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which prophet announced a new covenant?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Red Sea",
+        "Jeremiah"
+      ],
+      "correct": 3,
+      "explanation": "Jeremiah 31 promises a new covenant."
+    },
+    {
+      "id": "bible_hard_095",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Bible language is most of the Old Testament?",
+      "answers": [
+        "Noah",
+        "Hebrew",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Most of the Old Testament was written in Hebrew."
+    },
+    {
+      "id": "bible_hard_096",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Bible language is most of the New Testament?",
+      "answers": [
+        "Greek",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "The New Testament was written mostly in Greek."
+    },
+    {
+      "id": "bible_hard_097",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which empire ruled Judea during Jesus' ministry?",
+      "answers": [
+        "Noah",
+        "Rome",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Rome governed Judea in the New Testament period."
+    },
+    {
+      "id": "bible_hard_098",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which lake is also called Sea of Tiberias?",
+      "answers": [
+        "Noah",
+        "Sea of Galilee",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "John also calls Galilee the Sea of Tiberias."
+    },
+    {
+      "id": "bible_hard_099",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which city was Paul from?",
+      "answers": [
+        "Tarsus",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Paul identified himself as from Tarsus in Cilicia."
+    },
+    {
+      "id": "bible_hard_100",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which tribe was Paul from?",
+      "answers": [
+        "Benjamin",
+        "Noah",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 0,
+      "explanation": "Paul says he was from the tribe of Benjamin."
+    },
+    {
+      "id": "bible_hard_101",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How long did it rain during the great flood depicted in the story of Noah's Ark?",
+      "answers": [
+        "38",
+        "39",
+        "41",
+        "40 days and 40 nights"
+      ],
+      "correct": 3,
+      "explanation": "40 days and 40 nights is the correct answer."
+    },
+    {
+      "id": "bible_hard_102",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many years did the Israelites wander in the desert?",
+      "answers": [
+        "38",
+        "39",
+        "40 years",
+        "41"
+      ],
+      "correct": 2,
+      "explanation": "40 years is the correct answer."
+    },
+    {
+      "id": "bible_hard_103",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many books are in the New Testament?",
+      "answers": [
+        "3",
+        "A) 5 B) 27 C) 105 D) 29",
+        "4",
+        "6"
+      ],
+      "correct": 1,
+      "explanation": "A) 5 B) 27 C) 105 D) 29 is the correct answer."
+    },
+    {
+      "id": "bible_hard_104",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many stones did David take from the brook to fight Goliath?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Five",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Five is the correct answer."
+    },
+    {
+      "id": "bible_hard_105",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How long did Nebuchadnezzar live like an animal as part of his punishment for arrogance?",
+      "answers": [
+        "Noah",
+        "Seven years",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Seven years is the correct answer."
+    },
+    {
+      "id": "bible_hard_106",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many books of the Maccabees are there in the Bible?",
+      "answers": [
+        "Noah",
+        "Moses",
+        "Four",
+        "Red Sea"
+      ],
+      "correct": 2,
+      "explanation": "Four is the correct answer."
+    },
+    {
+      "id": "bible_hard_107",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many commandments did Moses receive?",
+      "answers": [
+        "8",
+        "9",
+        "11",
+        "10"
+      ],
+      "correct": 3,
+      "explanation": "10 is the correct answer."
+    },
+    {
+      "id": "bible_hard_108",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many days did it take God to create the world?",
+      "answers": [
+        "Noah",
+        "Seven",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Seven is the correct answer."
+    },
+    {
+      "id": "bible_hard_109",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many disciples did Jesus have?",
+      "answers": [
+        "10",
+        "12",
+        "11",
+        "13"
+      ],
+      "correct": 1,
+      "explanation": "12 is the correct answer."
+    },
+    {
+      "id": "bible_hard_110",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many sons did Jacob have?",
+      "answers": [
+        "10",
+        "12",
+        "11",
+        "13"
+      ],
+      "correct": 1,
+      "explanation": "12 is the correct answer."
+    },
+    {
+      "id": "bible_hard_111",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many plagues did God send to Egypt?",
+      "answers": [
+        "8",
+        "9",
+        "11",
+        "10"
+      ],
+      "correct": 3,
+      "explanation": "10 is the correct answer."
+    },
+    {
+      "id": "bible_hard_112",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How long did Jesus remain in the tomb before the resurrection?",
+      "answers": [
+        "Noah",
+        "Three days",
+        "Moses",
+        "Red Sea"
+      ],
+      "correct": 1,
+      "explanation": "Three days is the correct answer."
+    },
+    {
+      "id": "bible_hard_113",
+      "category": "Bible",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How long was Jesus tempted in the wilderness?",
+      "answers": [
+        "38",
+        "39",
+        "41",
+        "40 days and 40 nights"
+      ],
+      "correct": 3,
+      "explanation": "40 days and 40 nights is the correct answer."
+    }
+  ]
+}

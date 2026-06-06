@@ -1,0 +1,787 @@
+{
+  "category": "Cats",
+  "slug": "cats",
+  "version": 1,
+  "questions": [
+    {
+      "id": "cats_easy_001",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "All cats are born with what color eyes?",
+      "answers": [
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story",
+        "They are all born with blue eyes",
+        "The cat inherited 13 million dollars"
+      ],
+      "correct": 2,
+      "explanation": "They are all born with blue eyes is the correct answer."
+    },
+    {
+      "id": "cats_easy_002",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which smell is so gross to cats that they'll stay away from it?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Edgar Allen Poe wrote this story",
+        "The cat inherited 13 million dollars",
+        "Cats stay away from oranges"
+      ],
+      "correct": 3,
+      "explanation": "Cats stay away from oranges is the correct answer."
+    },
+    {
+      "id": "cats_easy_003",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which American writer and poet had a cat called Catarina, who was the inspiration for his story \"The Black Cat\"?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "The cat inherited 13 million dollars",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 3,
+      "explanation": "Edgar Allen Poe wrote this story is the correct answer."
+    },
+    {
+      "id": "cats_easy_004",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "A cat named Tommaso inherited how much money from his owner when she passed away?",
+      "answers": [
+        "The cat inherited 13 million dollars",
+        "11",
+        "12",
+        "14"
+      ],
+      "correct": 0,
+      "explanation": "The cat inherited 13 million dollars is the correct answer."
+    },
+    {
+      "id": "cats_easy_005",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the extreme fear of cats called?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Ailurophobia is an extreme fear of cats",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 2,
+      "explanation": "Ailurophobia is an extreme fear of cats is the correct answer."
+    },
+    {
+      "id": "cats_easy_006",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which part of a cat's body can appear and disappear?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story",
+        "Cat claws can appear and disappear"
+      ],
+      "correct": 3,
+      "explanation": "Cat claws can appear and disappear is the correct answer."
+    },
+    {
+      "id": "cats_easy_007",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where was a green cat born?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story",
+        "A green cat was born in Denmark"
+      ],
+      "correct": 3,
+      "explanation": "A green cat was born in Denmark is the correct answer."
+    },
+    {
+      "id": "cats_easy_008",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Among indoor and outdoor cats who can survive longer?",
+      "answers": [
+        "Indoor cats are able to survive longer",
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 0,
+      "explanation": "Indoor cats are able to survive longer is the correct answer."
+    },
+    {
+      "id": "cats_easy_009",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "True or false: The average cat can spend two-thirds of its life sleeping?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story",
+        "This statement is true"
+      ],
+      "correct": 3,
+      "explanation": "This statement is true is the correct answer."
+    },
+    {
+      "id": "cats_easy_010",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What cat is distinguished by the extreme depression of the skull, which extends along the nose to the extremity of the muzzle?",
+      "answers": [
+        "Flat-headed cats look like this",
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 0,
+      "explanation": "Flat-headed cats look like this is the correct answer."
+    },
+    {
+      "id": "cats_easy_011",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Tabby cats are named after a neighborhood in what city?",
+      "answers": [
+        "They are all born with blue eyes",
+        "They are named after a city in Baghdad",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 1,
+      "explanation": "They are named after a city in Baghdad is the correct answer."
+    },
+    {
+      "id": "cats_easy_012",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What percentage of a cat's bones are in its tail?",
+      "answers": [
+        "8",
+        "9",
+        "10% of a cat's bones are in its tail",
+        "11"
+      ],
+      "correct": 2,
+      "explanation": "10% of a cat's bones are in its tail is the correct answer."
+    },
+    {
+      "id": "cats_easy_013",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is it called when a cat kneads the ground?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "This is called snurgling",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 2,
+      "explanation": "This is called snurgling is the correct answer."
+    },
+    {
+      "id": "cats_easy_014",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What cat has fur so dense you can draw patterns in its coat?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "A Russian Blue has dense fur",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 2,
+      "explanation": "A Russian Blue has dense fur is the correct answer."
+    },
+    {
+      "id": "cats_easy_015",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of Homer Simpson's cat?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Their cat's name is Snowball",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 1,
+      "explanation": "Their cat's name is Snowball is the correct answer."
+    },
+    {
+      "id": "cats_easy_016",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How fast can domesticated cats run?",
+      "answers": [
+        "28",
+        "They can run 30 miles per",
+        "29",
+        "31"
+      ],
+      "correct": 1,
+      "explanation": "They can run 30 miles per is the correct answer."
+    },
+    {
+      "id": "cats_easy_017",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "True or false: Cats communicate with other cats via meowing?",
+      "answers": [
+        "This statement is false",
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 0,
+      "explanation": "This statement is false is the correct answer."
+    },
+    {
+      "id": "cats_easy_018",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a group of cats called?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "They are called a clowder",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 2,
+      "explanation": "They are called a clowder is the correct answer."
+    },
+    {
+      "id": "cats_easy_019",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What do cats have on their front legs, but not on their hind legs?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "A dewclaw",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 2,
+      "explanation": "A dewclaw is the correct answer."
+    },
+    {
+      "id": "cats_easy_020",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How much did the world's heaviest cat weigh?",
+      "answers": [
+        "47 pounds (21 kg)",
+        "45",
+        "46",
+        "48"
+      ],
+      "correct": 0,
+      "explanation": "47 pounds (21 kg) is the correct answer."
+    },
+    {
+      "id": "cats_easy_021",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the smallest breed of cat?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Singapura",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 2,
+      "explanation": "Singapura is the correct answer."
+    },
+    {
+      "id": "cats_easy_022",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the largest breed of cat?",
+      "answers": [
+        "Maine Coons",
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 0,
+      "explanation": "Maine Coons is the correct answer."
+    },
+    {
+      "id": "cats_easy_023",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What breed of domestic cat has the longest fur?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story",
+        "The Persian cat"
+      ],
+      "correct": 3,
+      "explanation": "The Persian cat is the correct answer."
+    },
+    {
+      "id": "cats_easy_024",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the earliest known ancestor of the modern cat?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Proailurus",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 2,
+      "explanation": "Proailurus is the correct answer."
+    },
+    {
+      "id": "cats_easy_025",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where do cats have most of their sweat glands?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Paws",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 1,
+      "explanation": "Paws is the correct answer."
+    },
+    {
+      "id": "cats_easy_026",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a female cat called?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Queen",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 2,
+      "explanation": "Queen is the correct answer."
+    },
+    {
+      "id": "cats_easy_027",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What percent of people identify as cat people?",
+      "answers": [
+        "9",
+        "10",
+        "11.5%",
+        "12"
+      ],
+      "correct": 2,
+      "explanation": "11.5% is the correct answer."
+    },
+    {
+      "id": "cats_easy_028",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which poet wrote the collection of poems called \"Old Possum's Book of Practical Cats\"?",
+      "answers": [
+        "T. S. Eliot",
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 0,
+      "explanation": "T. S. Eliot is the correct answer."
+    },
+    {
+      "id": "cats_easy_029",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where are a cat's whiskers located?",
+      "answers": [
+        "Their cheeks, eyes, ears, and forelegs",
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 0,
+      "explanation": "Their cheeks, eyes, ears, and forelegs is the correct answer."
+    },
+    {
+      "id": "cats_easy_030",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What Catholic Pope condemned cats as evil?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story",
+        "Pope Innocent VIII"
+      ],
+      "correct": 3,
+      "explanation": "Pope Innocent VIII is the correct answer."
+    },
+    {
+      "id": "cats_easy_031",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What skill do cats develop when playing with yarn/toys?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Hunting",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 1,
+      "explanation": "Hunting is the correct answer."
+    },
+    {
+      "id": "cats_easy_032",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What breed of cat has no tail?",
+      "answers": [
+        "They are all born with blue eyes",
+        "The Manx",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 1,
+      "explanation": "The Manx is the correct answer."
+    },
+    {
+      "id": "cats_easy_033",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How old was the world's oldest cat?",
+      "answers": [
+        "36",
+        "37",
+        "38 years and 3 days",
+        "39"
+      ],
+      "correct": 2,
+      "explanation": "38 years and 3 days is the correct answer."
+    },
+    {
+      "id": "cats_easy_034",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which country has more cats per person than any other country in the world?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story",
+        "New Zealand"
+      ],
+      "correct": 3,
+      "explanation": "New Zealand is the correct answer."
+    },
+    {
+      "id": "cats_easy_035",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the normal body temperature of a cat?",
+      "answers": [
+        "100",
+        "102° Fahrenheit",
+        "101",
+        "103"
+      ],
+      "correct": 1,
+      "explanation": "102° Fahrenheit is the correct answer."
+    },
+    {
+      "id": "cats_easy_036",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What breed of cat has a reputation for being cross-eyed?",
+      "answers": [
+        "Siamese cats",
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 0,
+      "explanation": "Siamese cats is the correct answer."
+    },
+    {
+      "id": "cats_easy_037",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "If a male cat is both orange and black, he is probably …?",
+      "answers": [
+        "Sterile",
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 0,
+      "explanation": "Sterile is the correct answer."
+    },
+    {
+      "id": "cats_easy_038",
+      "category": "Cats",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "True or false: Spaying and neutering can extend a cat's life?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story",
+        "This statement is true"
+      ],
+      "correct": 3,
+      "explanation": "This statement is true is the correct answer."
+    },
+    {
+      "id": "cats_medium_001",
+      "category": "Cats",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What Cat Goddess did ancient Egyptians worship?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "They worshipped Bastet",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 2,
+      "explanation": "They worshipped Bastet is the correct answer."
+    },
+    {
+      "id": "cats_medium_002",
+      "category": "Cats",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "How did ancient Egyptians mourn when a family cat died?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story",
+        "Shave their eyebrows"
+      ],
+      "correct": 3,
+      "explanation": "Shave their eyebrows is the correct answer."
+    },
+    {
+      "id": "cats_medium_003",
+      "category": "Cats",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first cartoon cat?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story",
+        "Felix the Cat"
+      ],
+      "correct": 3,
+      "explanation": "Felix the Cat is the correct answer."
+    },
+    {
+      "id": "cats_hard_001",
+      "category": "Cats",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many cats did Abraham Lincoln have in the White House?",
+      "answers": [
+        "He had four pet cats",
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 0,
+      "explanation": "He had four pet cats is the correct answer."
+    },
+    {
+      "id": "cats_hard_002",
+      "category": "Cats",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many teeth does an adult cat have?",
+      "answers": [
+        "Adult cats have 30 teeth",
+        "28",
+        "29",
+        "31"
+      ],
+      "correct": 0,
+      "explanation": "Adult cats have 30 teeth is the correct answer."
+    },
+    {
+      "id": "cats_hard_003",
+      "category": "Cats",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many hairs does a cat have per square inch on its belly?",
+      "answers": [
+        "118",
+        "120,000 hairs are on its belly",
+        "119",
+        "121"
+      ],
+      "correct": 1,
+      "explanation": "120,000 hairs are on its belly is the correct answer."
+    },
+    {
+      "id": "cats_hard_004",
+      "category": "Cats",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many feet can a cat jump on average?",
+      "answers": [
+        "They are all born with blue eyes",
+        "Cats stay away from oranges",
+        "Cats can jump four to five feet",
+        "Edgar Allen Poe wrote this story"
+      ],
+      "correct": 2,
+      "explanation": "Cats can jump four to five feet is the correct answer."
+    },
+    {
+      "id": "cats_hard_005",
+      "category": "Cats",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many whiskers does a cat have?",
+      "answers": [
+        "24 whiskers",
+        "22",
+        "23",
+        "25"
+      ],
+      "correct": 0,
+      "explanation": "24 whiskers is the correct answer."
+    },
+    {
+      "id": "cats_hard_006",
+      "category": "Cats",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many hours do cats sleep each day?",
+      "answers": [
+        "16 to 20 hours a day",
+        "14",
+        "15",
+        "17"
+      ],
+      "correct": 0,
+      "explanation": "16 to 20 hours a day is the correct answer."
+    },
+    {
+      "id": "cats_hard_007",
+      "category": "Cats",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many kittens can a single pair of cats and their offspring produce in 7 years?",
+      "answers": [
+        "370,000 kittens",
+        "368",
+        "369",
+        "371"
+      ],
+      "correct": 0,
+      "explanation": "370,000 kittens is the correct answer."
+    },
+    {
+      "id": "cats_hard_008",
+      "category": "Cats",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many muscles does a cat have in each ear?",
+      "answers": [
+        "30",
+        "31",
+        "33",
+        "32"
+      ],
+      "correct": 3,
+      "explanation": "32 is the correct answer."
+    },
+    {
+      "id": "cats_hard_009",
+      "category": "Cats",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many different sounds can a cat make?",
+      "answers": [
+        "98",
+        "99",
+        "100 different sounds",
+        "101"
+      ],
+      "correct": 2,
+      "explanation": "100 different sounds is the correct answer."
+    },
+    {
+      "id": "cats_hard_010",
+      "category": "Cats",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many breeds of domestic cats are there worldwide?",
+      "answers": [
+        "68",
+        "70 breeds of domestic cat",
+        "69",
+        "71"
+      ],
+      "correct": 1,
+      "explanation": "70 breeds of domestic cat is the correct answer."
+    },
+    {
+      "id": "cats_hard_011",
+      "category": "Cats",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What year was the first major cat show held in the United States?",
+      "answers": [
+        "1894",
+        "May of 1895",
+        "1896",
+        "1890"
+      ],
+      "correct": 1,
+      "explanation": "May of 1895 is the correct answer."
+    }
+  ]
+}

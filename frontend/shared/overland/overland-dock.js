@@ -17,7 +17,7 @@
         settingsPassword: "",
         hiddenAppIds: ["legacy-home", "legacy-admin"],
         folders: [
-            {id: "games", title: "Games", icon: "/maps/overland/overland-folder-games.svg", protected: false, appIds: ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "drums", "trivia", "tic-tac-toe", "license-plates"]},
+            {id: "games", title: "Games", icon: "/maps/overland/overland-folder-games.svg", protected: false, appIds: ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "sinkhole-city", "blank-slate", "word-tile-arena", "connect-four", "burst", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "drums", "trivia", "tic-tac-toe", "license-plates"]},
             {id: "reading", title: "Reading", icon: "/maps/overland/overland-folder-reading.svg", protected: false, appIds: ["wikipedia", "books", "komga"]},
             {id: "settings", title: "Settings", icon: "/maps/overland/overland-folder-settings.svg", protected: true, appIds: ["overland-settings", "gps-status", "file-uploads", "map-packs", "service-manager", "game-data", "audio-test"]},
         ],
@@ -410,10 +410,10 @@
                             <div class="od-https-grid">
                                 <label>Base Domain <input id="odHttpsDomain" placeholder="overland.daemonadventures.net"></label>
                                 <label>Pi LAN IP <input id="odHttpsPiIp" placeholder="192.168.8.2"></label>
-                                <label>Certificate Domains <input id="odHttpsCertDomains" placeholder="overland.daemonadventures.net,*.overland.daemonadventures.net"></label>
+                                <label>Certificate Domains <input id="odHttpsCertDomains" placeholder="overland.daemonadventures.net,*.overland.daemonadventures.net,mobile.daemonadventures.net"></label>
                                 <label>ACME Email <input id="odHttpsEmail" placeholder="you@example.com"></label>
                                 <label>Maps Host <input id="odHttpsMapsHost" placeholder="maps.overland.daemonadventures.net"></label>
-                                <label>Mobile Host <input id="odHttpsMobileHost" placeholder="mobile.overland.daemonadventures.net"></label>
+                                <label>Mobile Host <input id="odHttpsMobileHost" placeholder="mobile.daemonadventures.net"></label>
                                 <label>IIAB Host <input id="odHttpsIiabHost" placeholder="iiab.overland.daemonadventures.net"></label>
                                 <label>Files Host <input id="odHttpsFilesHost" placeholder="files.overland.daemonadventures.net"></label>
                                 <label>Jellyfin Host <input id="odHttpsJellyfinHost" placeholder="jellyfin.overland.daemonadventures.net"></label>
@@ -750,7 +750,12 @@
 
     function defaultishHttpsValue(value) {
         const text = String(value || "").trim().toLowerCase()
-        return !text || text.includes("example.com")
+        return !text || text.includes("example.com") || text === "mobile.overland.daemonadventures.net"
+    }
+
+    function siblingHttpsHost(domain, prefix) {
+        const parts = String(domain || "").split(".")
+        return parts.length > 2 ? `${prefix}.${parts.slice(1).join(".")}` : `${prefix}.${domain}`
     }
 
     function applyHttpsDomainDefaults() {
@@ -762,7 +767,7 @@
         const certField = document.getElementById("odHttpsCertDomains")
         const certValue = certField?.value || ""
         if (certField && defaultishHttpsValue(certValue)) {
-            certField.value = `${domain},*.${domain}`
+            certField.value = `${domain},*.${domain},${siblingHttpsHost(domain, "mobile")}`
         } else if (certField) {
             const parts = certValue.split(",").map(part => part.trim().toLowerCase()).filter(Boolean)
             if (parts.includes(`*.${domain}`) && !parts.includes(domain)) {
@@ -779,7 +784,9 @@
         }
         Object.entries(hostDefaults).forEach(([id, prefix]) => {
             const field = document.getElementById(id)
-            if (field && defaultishHttpsValue(field.value)) field.value = `${prefix}.${domain}`
+            if (field && defaultishHttpsValue(field.value)) {
+                field.value = id === "odHttpsMobileHost" ? siblingHttpsHost(domain, "mobile") : `${prefix}.${domain}`
+            }
         })
     }
 

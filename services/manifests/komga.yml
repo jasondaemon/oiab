@@ -10,6 +10,7 @@ compose_service: komga
 external_container: trailer-komga
 systemd_unit: oiab-komga.service
 launcher_url: /apps/komga/
+admin_url: /books-admin
 installed_marker: /data/oiab/services/komga
 install_command: docker compose --env-file config/oiab.env --profile komga up -d komga
 data_path: /data/oiab/services/komga

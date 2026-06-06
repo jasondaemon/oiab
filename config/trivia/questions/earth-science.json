@@ -1,0 +1,5857 @@
+{
+  "category": "Earth Science",
+  "slug": "earth-science",
+  "version": 1,
+  "questions": [
+    {
+      "id": "earth-science_easy_001",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What instrument measures temperature?",
+      "answers": [
+        "Igneous",
+        "The Moon’s gravity",
+        "Thermometer",
+        "The Sun"
+      ],
+      "correct": 2,
+      "explanation": "A thermometer measures temperature."
+    },
+    {
+      "id": "earth-science_easy_002",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What type of rock forms from cooled lava?",
+      "answers": [
+        "Igneous",
+        "Thermometer",
+        "The Moon’s gravity",
+        "The Sun"
+      ],
+      "correct": 0,
+      "explanation": "Igneous rock forms from cooled magma or lava."
+    },
+    {
+      "id": "earth-science_easy_003",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What causes most tides?",
+      "answers": [
+        "The Moon’s gravity",
+        "Thermometer",
+        "Igneous",
+        "The Sun"
+      ],
+      "correct": 0,
+      "explanation": "The Moon’s gravity is the main driver of tides."
+    },
+    {
+      "id": "earth-science_easy_004",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the water cycle powered mainly by?",
+      "answers": [
+        "Thermometer",
+        "The Sun",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Solar energy drives evaporation."
+    },
+    {
+      "id": "earth-science_easy_005",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What tool shows direction?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Compass",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "A compass shows direction."
+    },
+    {
+      "id": "earth-science_easy_006",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a fossil?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Preserved remains or traces of life"
+      ],
+      "correct": 3,
+      "explanation": "Fossils preserve remains or traces."
+    },
+    {
+      "id": "earth-science_easy_007",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is magma called when it reaches the surface?",
+      "answers": [
+        "Lava",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "Lava is magma at the surface."
+    },
+    {
+      "id": "earth-science_easy_008",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does a rain gauge measure?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Rainfall"
+      ],
+      "correct": 3,
+      "explanation": "Rain gauges measure precipitation."
+    },
+    {
+      "id": "earth-science_easy_009",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_easy_010",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_easy_011",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: layer of gases around Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_easy_012",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_easy_013",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: instrument measuring wind speed?",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_easy_014",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: process of water vapor becoming liquid?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_easy_015",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: main gas in Earth’s atmosphere?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_easy_016",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: molten rock underground?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_easy_017",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: study of weather?",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_easy_018",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: frozen river of ice?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_easy_019",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_easy_020",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_easy_021",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: layer of gases around Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_easy_022",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_easy_023",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: instrument measuring wind speed?",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_easy_024",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: process of water vapor becoming liquid?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_easy_025",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: main gas in Earth’s atmosphere?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_easy_026",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: molten rock underground?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_easy_027",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: study of weather?",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_easy_028",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: frozen river of ice?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_easy_029",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_easy_030",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_easy_031",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: layer of gases around Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_easy_032",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_easy_033",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: instrument measuring wind speed?",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_easy_034",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: process of water vapor becoming liquid?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_easy_035",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: main gas in Earth’s atmosphere?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_easy_036",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: molten rock underground?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_easy_037",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: study of weather?",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_easy_038",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: frozen river of ice?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_easy_039",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_easy_040",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_easy_041",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: layer of gases around Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_easy_042",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_easy_043",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: instrument measuring wind speed?",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_easy_044",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: process of water vapor becoming liquid?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_easy_045",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: main gas in Earth’s atmosphere?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_easy_046",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: molten rock underground?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_easy_047",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: study of weather?",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_easy_048",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: frozen river of ice?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_easy_049",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_easy_050",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_easy_051",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: layer of gases around Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_easy_052",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_easy_053",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: instrument measuring wind speed?",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_easy_054",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: process of water vapor becoming liquid?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_easy_055",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: main gas in Earth’s atmosphere?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_easy_056",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: molten rock underground?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_easy_057",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: study of weather?",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_easy_058",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: frozen river of ice?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_easy_059",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_easy_060",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_easy_061",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: layer of gases around Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_easy_062",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_easy_063",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: instrument measuring wind speed?",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_easy_064",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: process of water vapor becoming liquid?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_easy_065",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: main gas in Earth’s atmosphere?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_easy_066",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: molten rock underground?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_easy_067",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: study of weather?",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_easy_068",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: frozen river of ice?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_easy_069",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_easy_070",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_easy_071",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: layer of gases around Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_easy_072",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_easy_073",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: instrument measuring wind speed?",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_easy_074",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: process of water vapor becoming liquid?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_easy_075",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: main gas in Earth’s atmosphere?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_easy_076",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: molten rock underground?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_easy_077",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: study of weather?",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_easy_078",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: frozen river of ice?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_easy_079",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_easy_080",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_easy_081",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: layer of gases around Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_easy_082",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_easy_083",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: instrument measuring wind speed?",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_easy_084",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: process of water vapor becoming liquid?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_easy_085",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: main gas in Earth’s atmosphere?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_easy_086",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: molten rock underground?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_easy_087",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: study of weather?",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_easy_088",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: frozen river of ice?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_easy_089",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_easy_090",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_easy_091",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: layer of gases around Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_easy_092",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_easy_093",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: instrument measuring wind speed?",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_easy_094",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: process of water vapor becoming liquid?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_easy_095",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: main gas in Earth’s atmosphere?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_easy_096",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: molten rock underground?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_easy_097",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: study of weather?",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_easy_098",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: frozen river of ice?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_easy_099",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_easy_100",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_easy_101",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which planet was reclassified as a dwarf planet in 2006?",
+      "answers": [
+        "Pluto",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "Pluto was reclassified as a dwarf planet in 2006."
+    },
+    {
+      "id": "earth-science_easy_102",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In which country was the largest known T-Rex skeleton found?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Canada",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Canada is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_103",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of the disease that ravaged and killed a third of Europe's population in the 14th century?",
+      "answers": [
+        "Thermometer",
+        "The Bubonic Plague",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The Bubonic Plague is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_104",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "There have been four eons since the Earth's beginning. What is the name of the eon we are living in?",
+      "answers": [
+        "Phanerozoic Eon",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "Phanerozoic Eon is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_105",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What category was Hurricane Katrina when it made landfall in 2005?",
+      "answers": [
+        "1",
+        "2",
+        "4",
+        "Category 3"
+      ],
+      "correct": 3,
+      "explanation": "Category 3 is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_106",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What dinosaur name means \"fast thief\" and lived during the Cretaceous period?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Velociraptor",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Velociraptor is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_107",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "On which continent have the most dinosaur fossils been found?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "North America"
+      ],
+      "correct": 3,
+      "explanation": "North America is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_108",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does the word \"dinosaur\" mean?",
+      "answers": [
+        "Thermometer",
+        "Terrible lizard",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Terrible lizard is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_109",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What dinosaur fossil was originally mistaken for a type of bison?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Triceratops",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Triceratops is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_110",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the only dinosaur lineage to survive the mass extinction event?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Birds",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Birds is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_111",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was known as the biggest dinosaur?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Dreadnoughtus"
+      ],
+      "correct": 3,
+      "explanation": "Dreadnoughtus is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_112",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which dinosaur had a giraffe-like neck?",
+      "answers": [
+        "Thermometer",
+        "Brachiosaurus",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Brachiosaurus is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_113",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the nickname of the most complete T-rex specimen ever discovered?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Sue"
+      ],
+      "correct": 3,
+      "explanation": "Sue is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_114",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which continents have dinosaur fossils been found on?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "All seven continents"
+      ],
+      "correct": 3,
+      "explanation": "All seven continents is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_115",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What dinosaur genus was originally named from a single feather?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Archaeopteryx"
+      ],
+      "correct": 3,
+      "explanation": "Archaeopteryx is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_116",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Deinonychus was most similar to which dinosaur in the Jurassic Park films?",
+      "answers": [
+        "Thermometer",
+        "Velociraptors",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Velociraptors is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_117",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which dinosaur name means \"hopping foot\"?",
+      "answers": [
+        "Thermometer",
+        "Saltopus",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Saltopus is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_118",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who outbid Leonardo DiCaprio in an auction for a dinosaur skull?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Nicolas Cage"
+      ],
+      "correct": 3,
+      "explanation": "Nicolas Cage is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_119",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What are the spikes on the end of a dinosaur's tail called?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "A thagomizer"
+      ],
+      "correct": 3,
+      "explanation": "A thagomizer is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_120",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What kind of dinosaur is Fred Flintstone's pet Dino?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Snorkasaurus"
+      ],
+      "correct": 3,
+      "explanation": "Snorkasaurus is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_121",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The discovery of what dinosaur ushered in the age of the giant Sauropods?",
+      "answers": [
+        "Diplodocus",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "Diplodocus is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_122",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which dinosaur is considered a transitional form between bipedal prosauropods and the giant quadrupedal sauropods?",
+      "answers": [
+        "Aardonyx",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "Aardonyx is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_123",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In what country were dinosaur fossils thought to be dragon bones?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "China"
+      ],
+      "correct": 3,
+      "explanation": "China is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_124",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where were the oldest dinosaur fossils in Canada found?",
+      "answers": [
+        "Thermometer",
+        "Nova Scotia",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Nova Scotia is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_125",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which dinosaur had the smallest brain for its body size?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Stegosaurus"
+      ],
+      "correct": 3,
+      "explanation": "Stegosaurus is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_126",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the official state dinosaur of Colorado?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Stegosaurus"
+      ],
+      "correct": 3,
+      "explanation": "Stegosaurus is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_127",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which dinosaur was named after a commercial airline?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Qantassaurus"
+      ],
+      "correct": 3,
+      "explanation": "Qantassaurus is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_128",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was the lifespan of a T. Rex?",
+      "answers": [
+        "18",
+        "19",
+        "20-30 years",
+        "21"
+      ],
+      "correct": 2,
+      "explanation": "20-30 years is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_129",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What dinosaur was, for many years, mistakenly called a Brontosaurus?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Apatosaurus",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Apatosaurus is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_130",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which dinosaur had fifteen horns?",
+      "answers": [
+        "Kosmoceratops",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "Kosmoceratops is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_131",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which planet has a hexagonal-shaped storm?",
+      "answers": [
+        "Thermometer",
+        "Saturn",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Saturn is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_132",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Why isn't it possible to walk on Jupiter, Saturn, Uranus, or Neptune?",
+      "answers": [
+        "Thermometer",
+        "Because they do not have solid surfaces",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Because they do not have solid surfaces is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_133",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which planet has the largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Jupiter",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Jupiter is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_134",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the only planet not named after a God?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Earth",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Earth is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_135",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which astronaut is famous for having written his daughter's initials on the moon?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Gene Cernan",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Gene Cernan is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_136",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How far away is the nearest star, not the sun?",
+      "answers": [
+        "About 4.22 light-years from Earth",
+        "2",
+        "3",
+        "5"
+      ],
+      "correct": 0,
+      "explanation": "About 4.22 light-years from Earth is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_137",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the minimum speed of a meteoroid when it enters Earth's atmosphere?",
+      "answers": [
+        "23",
+        "24",
+        "25,000 miles per hour",
+        "26"
+      ],
+      "correct": 2,
+      "explanation": "25,000 miles per hour is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_138",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the third astronaut to walk on the moon?",
+      "answers": [
+        "Thermometer",
+        "Pete Conrad",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Pete Conrad is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_139",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who described Saturn's rings as the \"ears of a teacup?",
+      "answers": [
+        "Thermometer",
+        "\" Galileo",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "\" Galileo is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_140",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How is the distance between the sun and Earth measured?",
+      "answers": [
+        "Thermometer",
+        "In Astronomical Units (AU)",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "In Astronomical Units (AU) is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_141",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which planet is known as the Morning Star?",
+      "answers": [
+        "Thermometer",
+        "Venus",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Venus is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_142",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How does a meteor become a meteorite?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "It hits the Earth's surface"
+      ],
+      "correct": 3,
+      "explanation": "It hits the Earth's surface is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_143",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which star is nearest to Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Alpha Centauri"
+      ],
+      "correct": 3,
+      "explanation": "Alpha Centauri is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_144",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What causes the moon to shine?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Reflected sunlight",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Reflected sunlight is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_145",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the third brightest celestial object in our sky?",
+      "answers": [
+        "Thermometer",
+        "Venus",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Venus is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_146",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which planet is known as the Evening Star?",
+      "answers": [
+        "Thermometer",
+        "Venus",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Venus is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_147",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which planets have rings around them?",
+      "answers": [
+        "Jupiter, Saturn, Uranus, and Neptune",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "Jupiter, Saturn, Uranus, and Neptune is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_148",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which is the smallest planet within our solar system?",
+      "answers": [
+        "Thermometer",
+        "Mercury",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Mercury is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_149",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which is the oldest planet in our solar system?",
+      "answers": [
+        "Thermometer",
+        "Jupiter",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Jupiter is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_150",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which planet is larger, Neptune or Saturn?",
+      "answers": [
+        "Thermometer",
+        "Saturn",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Saturn is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_151",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which is the densest planet in our solar system?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Earth",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Earth is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_152",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What color is Saturn?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Pale yellow",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Pale yellow is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_153",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What are the names of Jupiter's four largest moons?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Europa, Ganymede, Callisto, and Io",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Europa, Ganymede, Callisto, and Io is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_154",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which are the four \"terrestrial\" planets?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Mercury, Venus, Mars, and Earth",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Mercury, Venus, Mars, and Earth is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_155",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which planet rotates on its side?",
+      "answers": [
+        "Uranus",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "Uranus is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_156",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which are the four \"gas giant\" planets?",
+      "answers": [
+        "Jupiter, Saturn, Uranus, and Neptune",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "Jupiter, Saturn, Uranus, and Neptune is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_157",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which is the second smallest planet within our solar system?",
+      "answers": [
+        "Thermometer",
+        "Mars",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Mars is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_158",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which planet spins backward relative to the others?",
+      "answers": [
+        "Thermometer",
+        "Venus",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Venus is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_159",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which planet has the most volcanoes?",
+      "answers": [
+        "Thermometer",
+        "Venus",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Venus is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_160",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What protects Earth from meteoroids and radiation from the sun?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Its atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Its atmosphere is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_161",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which is the brightest planet in the night's sky?",
+      "answers": [
+        "Thermometer",
+        "Venus",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Venus is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_162",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "If you weighed 200 pounds on Earth, how much would you weigh on Mars?",
+      "answers": [
+        "76 pounds",
+        "74",
+        "75",
+        "77"
+      ],
+      "correct": 0,
+      "explanation": "76 pounds is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_163",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The moon called Titan orbits which planet?",
+      "answers": [
+        "Thermometer",
+        "Saturn",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Saturn is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_164",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of Pluto's largest moon?",
+      "answers": [
+        "Thermometer",
+        "Charon",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Charon is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_165",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What manned U.S. space program eventually put 12 men on the Moon?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Apollo"
+      ],
+      "correct": 3,
+      "explanation": "Apollo is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_166",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "From 1978 to 1999, which planet was farthest from the Sun?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Neptune"
+      ],
+      "correct": 3,
+      "explanation": "Neptune is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_167",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "There have been more missions to this planet versus any other planet?",
+      "answers": [
+        "Thermometer",
+        "Mars",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Mars is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_168",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which planet has a two-tone moon?",
+      "answers": [
+        "Thermometer",
+        "Saturn",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Saturn is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_169",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which of Jupiter's moons has about 400 active volcanos?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Io",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Io is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_170",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Phobos and Deimos are the Moons of which planet?",
+      "answers": [
+        "Thermometer",
+        "Mars",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Mars is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_171",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which planet is closest in size to Earth?",
+      "answers": [
+        "Thermometer",
+        "Venus",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Venus is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_172",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which planet has the most moons?",
+      "answers": [
+        "Thermometer",
+        "Saturn",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Saturn is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_173",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which planets have no moons?",
+      "answers": [
+        "Thermometer",
+        "Mercury and Venus",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Mercury and Venus is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_174",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which planet has supersonic winds?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Neptune"
+      ],
+      "correct": 3,
+      "explanation": "Neptune is the correct answer."
+    },
+    {
+      "id": "earth-science_easy_175",
+      "category": "Earth Science",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which theory involves a passing star pulling dust and debris from the forming sun?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Tidal Theory",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The Tidal Theory is the correct answer."
+    },
+    {
+      "id": "earth-science_medium_001",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What cloud type often brings thunderstorms?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Cumulonimbus"
+      ],
+      "correct": 3,
+      "explanation": "Cumulonimbus clouds are storm clouds."
+    },
+    {
+      "id": "earth-science_medium_002",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does a barometer measure?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Air pressure"
+      ],
+      "correct": 3,
+      "explanation": "A barometer measures atmospheric pressure."
+    },
+    {
+      "id": "earth-science_medium_003",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is erosion?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Movement of rock or soil"
+      ],
+      "correct": 3,
+      "explanation": "Erosion moves sediment by water, wind, ice, or gravity."
+    },
+    {
+      "id": "earth-science_medium_004",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What scale measures earthquake magnitude?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Moment magnitude scale",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Moment magnitude is commonly used for earthquakes."
+    },
+    {
+      "id": "earth-science_medium_005",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is an aquifer?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Underground water-bearing rock",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Aquifers store or transmit groundwater."
+    },
+    {
+      "id": "earth-science_medium_006",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is weathering?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Breaking down rocks in place"
+      ],
+      "correct": 3,
+      "explanation": "Weathering breaks material down."
+    },
+    {
+      "id": "earth-science_medium_007",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the rock cycle?",
+      "answers": [
+        "Thermometer",
+        "Processes changing rocks over time",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The rock cycle describes changes among rock types."
+    },
+    {
+      "id": "earth-science_medium_008",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is a watershed?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Land draining to one outlet"
+      ],
+      "correct": 3,
+      "explanation": "Watersheds drain water to a common point."
+    },
+    {
+      "id": "earth-science_medium_009",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_medium_010",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_medium_011",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as layer of gases around Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_medium_012",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_medium_013",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as instrument measuring wind speed?",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_medium_014",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as process of water vapor becoming liquid?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_medium_015",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as main gas in Earth’s atmosphere?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_medium_016",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as molten rock underground?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_medium_017",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as study of weather?",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_medium_018",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as frozen river of ice?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_medium_019",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_medium_020",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_medium_021",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as layer of gases around Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_medium_022",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_medium_023",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as instrument measuring wind speed?",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_medium_024",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as process of water vapor becoming liquid?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_medium_025",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as main gas in Earth’s atmosphere?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_medium_026",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as molten rock underground?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_medium_027",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as study of weather?",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_medium_028",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as frozen river of ice?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_medium_029",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_medium_030",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_medium_031",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as layer of gases around Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_medium_032",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_medium_033",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as instrument measuring wind speed?",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_medium_034",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as process of water vapor becoming liquid?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_medium_035",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as main gas in Earth’s atmosphere?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_medium_036",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as molten rock underground?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_medium_037",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as study of weather?",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_medium_038",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as frozen river of ice?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_medium_039",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_medium_040",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_medium_041",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as layer of gases around Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_medium_042",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_medium_043",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as instrument measuring wind speed?",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_medium_044",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as process of water vapor becoming liquid?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_medium_045",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as main gas in Earth’s atmosphere?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_medium_046",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as molten rock underground?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_medium_047",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as study of weather?",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_medium_048",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as frozen river of ice?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_medium_049",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_medium_050",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_medium_051",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as layer of gases around Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_medium_052",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_medium_053",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as instrument measuring wind speed?",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_medium_054",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as process of water vapor becoming liquid?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_medium_055",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as main gas in Earth’s atmosphere?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_medium_056",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as molten rock underground?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_medium_057",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as study of weather?",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_medium_058",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as frozen river of ice?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_medium_059",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_medium_060",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_medium_061",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as layer of gases around Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_medium_062",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_medium_063",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as instrument measuring wind speed?",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_medium_064",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as process of water vapor becoming liquid?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_medium_065",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as main gas in Earth’s atmosphere?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_medium_066",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as molten rock underground?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_medium_067",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as study of weather?",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_medium_068",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as frozen river of ice?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_medium_069",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_medium_070",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_medium_071",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as layer of gases around Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_medium_072",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_medium_073",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as instrument measuring wind speed?",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_medium_074",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as process of water vapor becoming liquid?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_medium_075",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as main gas in Earth’s atmosphere?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_medium_076",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as molten rock underground?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_medium_077",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as study of weather?",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_medium_078",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as frozen river of ice?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_medium_079",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_medium_080",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_medium_081",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as layer of gases around Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_medium_082",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_medium_083",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as instrument measuring wind speed?",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_medium_084",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as process of water vapor becoming liquid?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_medium_085",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as main gas in Earth’s atmosphere?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_medium_086",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as molten rock underground?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_medium_087",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as study of weather?",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_medium_088",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as frozen river of ice?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_medium_089",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_medium_090",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_medium_091",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as layer of gases around Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_medium_092",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as largest ocean?",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_medium_093",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as instrument measuring wind speed?",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_medium_094",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as process of water vapor becoming liquid?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_medium_095",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as main gas in Earth’s atmosphere?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_medium_096",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as molten rock underground?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_medium_097",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as study of weather?",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_medium_098",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as frozen river of ice?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_medium_099",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as hardest common mineral on Mohs scale?",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_medium_100",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Earth Science, which option is best described as gas plants take in for photosynthesis?",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_medium_101",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Category 5 hurricane devastated New Orleans in 2005?",
+      "answers": [
+        "Thermometer",
+        "Hurricane Katrina",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "Hurricane Katrina struck the Gulf Coast in 2005."
+    },
+    {
+      "id": "earth-science_medium_102",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "How was the ancient Roman city of Pompeii destroyed?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Volcano",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Volcano is the correct answer."
+    },
+    {
+      "id": "earth-science_medium_103",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the first carnivorous dinosaur to be discovered in Antarctica?",
+      "answers": [
+        "Cryolophosaurus",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "Cryolophosaurus is the correct answer."
+    },
+    {
+      "id": "earth-science_medium_104",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the first mounted dinosaur skeleton?",
+      "answers": [
+        "Hadrosaurus foulkii",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "Hadrosaurus foulkii is the correct answer."
+    },
+    {
+      "id": "earth-science_medium_105",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who discovered the first fossilized dinosaur eggs?",
+      "answers": [
+        "Jean-Jacques Poech",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "Jean-Jacques Poech is the correct answer."
+    },
+    {
+      "id": "earth-science_medium_106",
+      "category": "Earth Science",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the first dinosaur to be discovered?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Megalosaurus",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Megalosaurus is the correct answer."
+    },
+    {
+      "id": "earth-science_hard_001",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What mineral property is tested by the Mohs scale?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Hardness",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Mohs scale ranks mineral hardness."
+    },
+    {
+      "id": "earth-science_hard_002",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What boundary forms where plates move apart?",
+      "answers": [
+        "Divergent boundary",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "Divergent boundaries spread apart."
+    },
+    {
+      "id": "earth-science_hard_003",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is a rain shadow?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Dry area behind mountains",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Mountains can block moist air, making a dry side."
+    },
+    {
+      "id": "earth-science_hard_004",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does “relative dating” compare?",
+      "answers": [
+        "Order of rock layers or events",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "Relative dating places rocks/events in sequence."
+    },
+    {
+      "id": "earth-science_hard_005",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What are index fossils used for?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Matching rock layers",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Index fossils help correlate rock layers."
+    },
+    {
+      "id": "earth-science_hard_006",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is isostasy?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Crust floating in balance on mantle",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Isostasy describes buoyant balance of crust."
+    },
+    {
+      "id": "earth-science_hard_007",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is a turbidity current?",
+      "answers": [
+        "Underwater sediment flow",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "Turbidity currents move sediment underwater."
+    },
+    {
+      "id": "earth-science_hard_008",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does paleomagnetism study?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "Ancient magnetic records in rocks"
+      ],
+      "correct": 3,
+      "explanation": "Paleomagnetism studies magnetic signatures in rocks."
+    },
+    {
+      "id": "earth-science_hard_009",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: hardest common mineral on Mohs scale.",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_hard_010",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: gas plants take in for photosynthesis.",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_hard_011",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: layer of gases around Earth.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_hard_012",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: largest ocean.",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_hard_013",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: instrument measuring wind speed.",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_hard_014",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: process of water vapor becoming liquid.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_hard_015",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: main gas in Earth’s atmosphere.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_hard_016",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: molten rock underground.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_hard_017",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: study of weather.",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_hard_018",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: frozen river of ice.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_hard_019",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: hardest common mineral on Mohs scale.",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_hard_020",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: gas plants take in for photosynthesis.",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_hard_021",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: layer of gases around Earth.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_hard_022",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: largest ocean.",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_hard_023",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: instrument measuring wind speed.",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_hard_024",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: process of water vapor becoming liquid.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_hard_025",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: main gas in Earth’s atmosphere.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_hard_026",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: molten rock underground.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_hard_027",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: study of weather.",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_hard_028",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: frozen river of ice.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_hard_029",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: hardest common mineral on Mohs scale.",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_hard_030",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: gas plants take in for photosynthesis.",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_hard_031",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: layer of gases around Earth.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_hard_032",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: largest ocean.",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_hard_033",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: instrument measuring wind speed.",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_hard_034",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: process of water vapor becoming liquid.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_hard_035",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: main gas in Earth’s atmosphere.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_hard_036",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: molten rock underground.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_hard_037",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: study of weather.",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_hard_038",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: frozen river of ice.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_hard_039",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: hardest common mineral on Mohs scale.",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_hard_040",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: gas plants take in for photosynthesis.",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_hard_041",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: layer of gases around Earth.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_hard_042",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: largest ocean.",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_hard_043",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: instrument measuring wind speed.",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_hard_044",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: process of water vapor becoming liquid.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_hard_045",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: main gas in Earth’s atmosphere.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_hard_046",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: molten rock underground.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_hard_047",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: study of weather.",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_hard_048",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: frozen river of ice.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_hard_049",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: hardest common mineral on Mohs scale.",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_hard_050",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: gas plants take in for photosynthesis.",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_hard_051",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: layer of gases around Earth.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_hard_052",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: largest ocean.",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_hard_053",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: instrument measuring wind speed.",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_hard_054",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: process of water vapor becoming liquid.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_hard_055",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: main gas in Earth’s atmosphere.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_hard_056",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: molten rock underground.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_hard_057",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: study of weather.",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_hard_058",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: frozen river of ice.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_hard_059",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: hardest common mineral on Mohs scale.",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_hard_060",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: gas plants take in for photosynthesis.",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_hard_061",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: layer of gases around Earth.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_hard_062",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: largest ocean.",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_hard_063",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: instrument measuring wind speed.",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_hard_064",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: process of water vapor becoming liquid.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_hard_065",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: main gas in Earth’s atmosphere.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_hard_066",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: molten rock underground.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_hard_067",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: study of weather.",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_hard_068",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: frozen river of ice.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_hard_069",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: hardest common mineral on Mohs scale.",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_hard_070",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: gas plants take in for photosynthesis.",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_hard_071",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: layer of gases around Earth.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_hard_072",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: largest ocean.",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_hard_073",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: instrument measuring wind speed.",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_hard_074",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: process of water vapor becoming liquid.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_hard_075",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: main gas in Earth’s atmosphere.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_hard_076",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: molten rock underground.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_hard_077",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: study of weather.",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_hard_078",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: frozen river of ice.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_hard_079",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: hardest common mineral on Mohs scale.",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_hard_080",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: gas plants take in for photosynthesis.",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_hard_081",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: layer of gases around Earth.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_hard_082",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: largest ocean.",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_hard_083",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: instrument measuring wind speed.",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_hard_084",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: process of water vapor becoming liquid.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_hard_085",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: main gas in Earth’s atmosphere.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_hard_086",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: molten rock underground.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_hard_087",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: study of weather.",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_hard_088",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: frozen river of ice.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_hard_089",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: hardest common mineral on Mohs scale.",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_hard_090",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: gas plants take in for photosynthesis.",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_hard_091",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: layer of gases around Earth.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "atmosphere",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is atmosphere."
+    },
+    {
+      "id": "earth-science_hard_092",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: largest ocean.",
+      "answers": [
+        "Thermometer",
+        "Pacific",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Pacific."
+    },
+    {
+      "id": "earth-science_hard_093",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: instrument measuring wind speed.",
+      "answers": [
+        "Thermometer",
+        "anemometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is anemometer."
+    },
+    {
+      "id": "earth-science_hard_094",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: process of water vapor becoming liquid.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "condensation"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is condensation."
+    },
+    {
+      "id": "earth-science_hard_095",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: main gas in Earth’s atmosphere.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "nitrogen",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is nitrogen."
+    },
+    {
+      "id": "earth-science_hard_096",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: molten rock underground.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "magma"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is magma."
+    },
+    {
+      "id": "earth-science_hard_097",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: study of weather.",
+      "answers": [
+        "meteorology",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is meteorology."
+    },
+    {
+      "id": "earth-science_hard_098",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: frozen river of ice.",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity",
+        "glacier"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is glacier."
+    },
+    {
+      "id": "earth-science_hard_099",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: hardest common mineral on Mohs scale.",
+      "answers": [
+        "diamond",
+        "Thermometer",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is diamond."
+    },
+    {
+      "id": "earth-science_hard_100",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Earth Science clue, identify: gas plants take in for photosynthesis.",
+      "answers": [
+        "Thermometer",
+        "carbon dioxide",
+        "Igneous",
+        "The Moon’s gravity"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is carbon dioxide."
+    },
+    {
+      "id": "earth-science_hard_101",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For how many years did dinosaurs rule the earth?",
+      "answers": [
+        "163",
+        "164",
+        "165 million years",
+        "166"
+      ],
+      "correct": 2,
+      "explanation": "165 million years is the correct answer."
+    },
+    {
+      "id": "earth-science_hard_102",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many fossils are necessary to identify a new dinosaur species?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "One",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "One is the correct answer."
+    },
+    {
+      "id": "earth-science_hard_103",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How long does each season last on Neptune?",
+      "answers": [
+        "38",
+        "39",
+        "More than 40 years",
+        "41"
+      ],
+      "correct": 2,
+      "explanation": "More than 40 years is the correct answer."
+    },
+    {
+      "id": "earth-science_hard_104",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How long does it take the moon to orbit the Earth?",
+      "answers": [
+        "26",
+        "27",
+        "29",
+        "28 days"
+      ],
+      "correct": 3,
+      "explanation": "28 days is the correct answer."
+    },
+    {
+      "id": "earth-science_hard_105",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How long does it take the moon to pass through all its phases?",
+      "answers": [
+        "29 days",
+        "27",
+        "28",
+        "30"
+      ],
+      "correct": 0,
+      "explanation": "29 days is the correct answer."
+    },
+    {
+      "id": "earth-science_hard_106",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many volcanoes are there on the surface of Venus?",
+      "answers": [
+        "2",
+        "3",
+        "6",
+        "More than 1,600 volcanoes"
+      ],
+      "correct": 3,
+      "explanation": "More than 1,600 volcanoes is the correct answer."
+    },
+    {
+      "id": "earth-science_hard_107",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "In what year did Pluto become reclassified as a dwarf planet?",
+      "answers": [
+        "2006",
+        "2005",
+        "2007",
+        "2001"
+      ],
+      "correct": 0,
+      "explanation": "2006 is the correct answer."
+    },
+    {
+      "id": "earth-science_hard_108",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How long does it take the sun's rays to reach Earth?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "Eight minutes",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "Eight minutes is the correct answer."
+    },
+    {
+      "id": "earth-science_hard_109",
+      "category": "Earth Science",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many moons does Earth have?",
+      "answers": [
+        "Thermometer",
+        "Igneous",
+        "One",
+        "The Moon’s gravity"
+      ],
+      "correct": 2,
+      "explanation": "One is the correct answer."
+    }
+  ]
+}

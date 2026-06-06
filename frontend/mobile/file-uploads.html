@@ -336,7 +336,7 @@
             <strong>${file.name}</strong>
             <small>${formatSize(file.size)} · ${file.updated || ""}</small>
           </div>
-          <a class="button secondary" href="${file.url}">Open</a>
+          ${file.url ? `<a class="button secondary" href="${file.url}">Open</a>` : `<span class="button secondary" aria-disabled="true">Managed</span>`}
         </article>
       `).join("") : `<div class="empty">No files in ${target.title} yet.</div>`;
     }
@@ -361,7 +361,8 @@
         const data = await response.json().catch(() => ({}));
         if (!response.ok || data.ok === false) throw new Error(data.error || `Upload failed: ${response.status}`);
         els.file.value = "";
-        setMessage(`${data.file} uploaded to ${target.title}.`);
+        const jobText = data.job ? " Processing started." : "";
+        setMessage(`${data.file} uploaded to ${target.title}.${jobText}`);
         await loadFiles();
       } catch (error) {
         setMessage(error.message, true);

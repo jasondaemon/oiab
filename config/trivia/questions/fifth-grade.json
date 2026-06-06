@@ -1,0 +1,1552 @@
+{
+  "category": "Fifth Grade",
+  "slug": "fifth-grade",
+  "version": 1,
+  "questions": [
+    {
+      "id": "fifth-grade_easy_001",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Other than \"The Last Supper,\" what famous artwork did Leonardo da Vinci paint?",
+      "answers": [
+        "The printing press",
+        "The Mona Lisa",
+        "The Suez Canal",
+        "The Boston Tea Party"
+      ],
+      "correct": 1,
+      "explanation": "The Mona Lisa is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_002",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In 1440, Johannes Gutenberg developed what revolutionary mechanical device?",
+      "answers": [
+        "The Mona Lisa",
+        "The Suez Canal",
+        "The Boston Tea Party",
+        "The printing press"
+      ],
+      "correct": 3,
+      "explanation": "The printing press is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_003",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What man-made waterway connecting the Mediterranean Sea and Red Sea was completed in 1869?",
+      "answers": [
+        "The Mona Lisa",
+        "The Suez Canal",
+        "The printing press",
+        "The Boston Tea Party"
+      ],
+      "correct": 1,
+      "explanation": "The Suez Canal is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_004",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What political protest took place in Boston Harbor in December of 1773?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Boston Tea Party",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "The Boston Tea Party is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_005",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In the 19th century, Charles Babbage developed the concept of what revolutionary invention?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The computer",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "The computer is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_006",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who developed the Theory of Relativity?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "Albert Einstein"
+      ],
+      "correct": 3,
+      "explanation": "Albert Einstein is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_007",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The smallest unit of matter is what?",
+      "answers": [
+        "An atom",
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 0,
+      "explanation": "An atom is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_008",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "A group of stars in the sky form a what?",
+      "answers": [
+        "A constellation",
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 0,
+      "explanation": "A constellation is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_009",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the longest river in the world?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "The Nile"
+      ],
+      "correct": 3,
+      "explanation": "The Nile is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_010",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the capital of Kansas?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Topeka",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Topeka is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_011",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the largest hot desert in the world?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "The Sahara"
+      ],
+      "correct": 3,
+      "explanation": "The Sahara is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_012",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the study of landforms and how they change over time?",
+      "answers": [
+        "The Mona Lisa",
+        "Geomorphology",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 1,
+      "explanation": "Geomorphology is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_013",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The site of one of the largest-known comet impacts on earth, the Chicxulub crater, is located in what country?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "Mexico"
+      ],
+      "correct": 3,
+      "explanation": "Mexico is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_014",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The mouth of the Mississippi River can be found in what U.S. state?",
+      "answers": [
+        "The Mona Lisa",
+        "Louisiana",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 1,
+      "explanation": "Louisiana is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_015",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "John goes out to lunch. His bill is $33. If he wants to leave a 20 percent tip, how much money should he add?",
+      "answers": [
+        "4",
+        "5",
+        "$6.60",
+        "7"
+      ],
+      "correct": 2,
+      "explanation": "$6.60 is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_016",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the only bird that can fly backwards?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "A hummingbird"
+      ],
+      "correct": 3,
+      "explanation": "A hummingbird is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_017",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What breed of dog is born white, then develops its signature black spots as it ages?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "Dalmatian"
+      ],
+      "correct": 3,
+      "explanation": "Dalmatian is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_018",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which is the only continent that doesn't have bees?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Antarctica",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Antarctica is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_019",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is stored in a camel's hump?",
+      "answers": [
+        "The Mona Lisa",
+        "Fat",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 1,
+      "explanation": "Fat is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_020",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What do caterpillars turn into before becoming butterflies?",
+      "answers": [
+        "The Mona Lisa",
+        "Pupa or chrysalis",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 1,
+      "explanation": "Pupa or chrysalis is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_021",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In a sentence, the predicate contains what type of action word?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "Verb"
+      ],
+      "correct": 3,
+      "explanation": "Verb is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_022",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Pick which definition best fits the word \"bewildered.\" Satisfied, bored, puzzled or lazy?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Puzzled",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Puzzled is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_023",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In a letter, email or correspondence, what is another word for \"greeting?",
+      "answers": [
+        "Salutation",
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 0,
+      "explanation": "Salutation is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_024",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the plural form of the word \"deer?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Deer",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Deer is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_025",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the proper contraction for \"it is?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "It's"
+      ],
+      "correct": 3,
+      "explanation": "It's is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_026",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The \"Iliad\" and \"Odyssey\" are two epic poems written by what famous Greek storyteller?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "Homer"
+      ],
+      "correct": 3,
+      "explanation": "Homer is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_027",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What queen ruled Egypt from 51 BC to 30 BC?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "Cleopatra"
+      ],
+      "correct": 3,
+      "explanation": "Cleopatra is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_028",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What structure that divided Germany's capital city for more than 28 years was dismantled in 1989?",
+      "answers": [
+        "The Mona Lisa",
+        "The Berlin Wall",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 1,
+      "explanation": "The Berlin Wall is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_029",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The Pleistocene Epoch period is more commonly known as what?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "The Ice Age"
+      ],
+      "correct": 3,
+      "explanation": "The Ice Age is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_030",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "On the Periodic Table, Fe stands for what?",
+      "answers": [
+        "Iron",
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 0,
+      "explanation": "Iron is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_031",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What renowned biologist developed the Theory of Evolution by natural selection?",
+      "answers": [
+        "The Mona Lisa",
+        "Charles Darwin",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 1,
+      "explanation": "Charles Darwin is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_032",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the most abundant gas in the atmosphere?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Nitrogen",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Nitrogen is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_033",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What force pulls objects toward the center of the earth?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Gravity",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Gravity is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_034",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What do plants require from the air to complete photosynthesis?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "Carbon dioxide"
+      ],
+      "correct": 3,
+      "explanation": "Carbon dioxide is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_035",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the the human body's largest organ?",
+      "answers": [
+        "The skin",
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 0,
+      "explanation": "The skin is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_036",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the process called that turns liquid into gas?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Evaporation",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Evaporation is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_037",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which four planets in the solar system have rings?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Saturn, Jupiter, Neptune and Uranus",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Saturn, Jupiter, Neptune and Uranus is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_038",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What time of day does the sun reach the highest point in the sky?",
+      "answers": [
+        "Noon",
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 0,
+      "explanation": "Noon is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_039",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "All living things contain what element?",
+      "answers": [
+        "The Mona Lisa",
+        "Carbon",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 1,
+      "explanation": "Carbon is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_040",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where is the majority of the earth's freshwater found?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "In the glaciers and icecaps"
+      ],
+      "correct": 3,
+      "explanation": "In the glaciers and icecaps is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_041",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What system is responsible for taking in oxygen and removing carbon dioxide from the body?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Respiratory",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Respiratory is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_042",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The potential testable answer to a scientific question is known as a what?",
+      "answers": [
+        "Hypothesis",
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 0,
+      "explanation": "Hypothesis is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_043",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Gravity and friction are examples of what?",
+      "answers": [
+        "Forces",
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 0,
+      "explanation": "Forces is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_044",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the longest mountain range in the U.S.?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "The Rocky Mountains"
+      ],
+      "correct": 3,
+      "explanation": "The Rocky Mountains is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_045",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Mount Rushmore National Memorial is located in which U.S. state?",
+      "answers": [
+        "The Mona Lisa",
+        "South Dakota",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 1,
+      "explanation": "South Dakota is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_046",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Great Lake is located the furthest north?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Lake Superior",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Lake Superior is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_047",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What do you call a piece of land that is almost entirely surrounded by water?",
+      "answers": [
+        "The Mona Lisa",
+        "peninsula",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 1,
+      "explanation": "peninsula is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_048",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which is the world's tallest uninterrupted waterfall?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "Angel Falls in Venezuela"
+      ],
+      "correct": 3,
+      "explanation": "Angel Falls in Venezuela is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_049",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which capital city in Europe is the largest?",
+      "answers": [
+        "The Mona Lisa",
+        "Moscow, Russia",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 1,
+      "explanation": "Moscow, Russia is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_050",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The statue \"Christ the Redeemer\" can be found in what Brazilian city?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "Rio de Janeiro"
+      ],
+      "correct": 3,
+      "explanation": "Rio de Janeiro is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_051",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What Venetian merchant and explorer notably traveled from Europe to Asia in the 13th century?",
+      "answers": [
+        "Marco Polo",
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 0,
+      "explanation": "Marco Polo is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_052",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In math, what does Pi equal?",
+      "answers": [
+        "14158",
+        "14160",
+        "14159",
+        "14154"
+      ],
+      "correct": 2,
+      "explanation": "14159 is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_053",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the circumference of a circle?",
+      "answers": [
+        "360 degrees",
+        "358",
+        "359",
+        "361"
+      ],
+      "correct": 0,
+      "explanation": "360 degrees is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_054",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What do you call a mathematical phrase without an equal sign?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "An expression"
+      ],
+      "correct": 3,
+      "explanation": "An expression is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_055",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How do you calculate the area of a rectangle?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Multiply the length times the width",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Multiply the length times the width is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_056",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What instrument is used to measure angles in degrees?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "protractor",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "protractor is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_057",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does 4/9 times 3/4 equal?",
+      "answers": [
+        "2",
+        "1/3",
+        "3",
+        "6"
+      ],
+      "correct": 1,
+      "explanation": "1/3 is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_058",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What type of number can only be divided evenly by the number itself or the number 1?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "Prime"
+      ],
+      "correct": 3,
+      "explanation": "Prime is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_059",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the bottom number of a fraction called?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Denominator",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Denominator is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_060",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which of these animals lays eggs: Reptile or mammal?",
+      "answers": [
+        "The Mona Lisa",
+        "Reptile",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 1,
+      "explanation": "Reptile is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_061",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the fastest swimming fish in the ocean?",
+      "answers": [
+        "The sailfish",
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 0,
+      "explanation": "The sailfish is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_062",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the main diet of a panda bear?",
+      "answers": [
+        "Bamboo",
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 0,
+      "explanation": "Bamboo is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_063",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What fish can emit a shock of up to 800 volts?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "Electric eel"
+      ],
+      "correct": 3,
+      "explanation": "Electric eel is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_064",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Tabby, shorthair, Siamese and Maine Coon are all different types of what?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "House cats"
+      ],
+      "correct": 3,
+      "explanation": "House cats is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_065",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What type of butterfly notably migrates from North America to Mexico and back each year?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Monarch",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Monarch is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_066",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What do you call a group of lions?",
+      "answers": [
+        "pride",
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 0,
+      "explanation": "pride is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_067",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What do caterpillars turn into before becoming butterflies?",
+      "answers": [
+        "The Mona Lisa",
+        "Pupa or chrysalis",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 1,
+      "explanation": "Pupa or chrysalis is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_068",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The words \"and,\" \"but,\" \"or,\" \"nor,\" \"for,\" \"yet\" and \"so\" are all examples of what?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "Conjunctions"
+      ],
+      "correct": 3,
+      "explanation": "Conjunctions is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_069",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Does a helping verb come before or after the main verb in a sentence?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "Before"
+      ],
+      "correct": 3,
+      "explanation": "Before is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_070",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What letter of the alphabet can be used as both a vowel and a consonant?",
+      "answers": [
+        "The Mona Lisa",
+        "Y",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 1,
+      "explanation": "Y is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_071",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does the word \"hydro\" mean?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "Water"
+      ],
+      "correct": 3,
+      "explanation": "Water is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_072",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which word describes the prime municipality or city of a state: capitol or capital?",
+      "answers": [
+        "Capital",
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 0,
+      "explanation": "Capital is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_073",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does solar mean?",
+      "answers": [
+        "Sun",
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 0,
+      "explanation": "Sun is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_074",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The words \"they're,\" \"aren't,\" \"can't\" and \"shouldn't\" are all examples of what?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "Contractions"
+      ],
+      "correct": 3,
+      "explanation": "Contractions is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_075",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which classical composer wrote \"Ode to Joy\"?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "Ludwig van Beethoven"
+      ],
+      "correct": 3,
+      "explanation": "Ludwig van Beethoven is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_076",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What artist painted \"Starry Night\"?",
+      "answers": [
+        "The Mona Lisa",
+        "Vincent van Gogh",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 1,
+      "explanation": "Vincent van Gogh is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_077",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The main tune of a song is called what?",
+      "answers": [
+        "The Mona Lisa",
+        "The melody",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 1,
+      "explanation": "The melody is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_078",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In a piece of music, the symbol that stands for an absence of music or no notes is known as what?",
+      "answers": [
+        "rest",
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 0,
+      "explanation": "rest is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_079",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What are the three primary colors?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Red, yellow and blue",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Red, yellow and blue is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_080",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What Italian Renaissance artist sculpted the marble statue of David?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Michelangelo",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Michelangelo is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_081",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In music, a crescendo indicates a gradual increase or decrease in volume?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Increase",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Increase is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_082",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Clarinet, violin, oboe or flute?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "Violin"
+      ],
+      "correct": 3,
+      "explanation": "Violin is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_083",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Snare, bass, tenor and timpani are all different kinds of what?",
+      "answers": [
+        "The Mona Lisa",
+        "Drums",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 1,
+      "explanation": "Drums is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_084",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who leads a choir or orchestra?",
+      "answers": [
+        "The Mona Lisa",
+        "conductor",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 1,
+      "explanation": "conductor is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_085",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The orchestral piece of music played at the beginning of an opera, play, musical or ballet is known as what?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "The overture"
+      ],
+      "correct": 3,
+      "explanation": "The overture is the correct answer."
+    },
+    {
+      "id": "fifth-grade_easy_086",
+      "category": "Fifth Grade",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Pablo Picasso is most closely associated with what kind of modern-art technique?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "Cubism"
+      ],
+      "correct": 3,
+      "explanation": "Cubism is the correct answer."
+    },
+    {
+      "id": "fifth-grade_medium_001",
+      "category": "Fifth Grade",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The assassination of Archduke Franz Ferdinand triggered what world event?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "World War I"
+      ],
+      "correct": 3,
+      "explanation": "World War I is the correct answer."
+    },
+    {
+      "id": "fifth-grade_medium_002",
+      "category": "Fifth Grade",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "\"We the people\" are the first three words of what U.S. document?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Constitution",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "The Constitution is the correct answer."
+    },
+    {
+      "id": "fifth-grade_medium_003",
+      "category": "Fifth Grade",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What are the first 10 amendments to the U.S. Constitution called?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Bill of Rights",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "The Bill of Rights is the correct answer."
+    },
+    {
+      "id": "fifth-grade_medium_004",
+      "category": "Fifth Grade",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first American to go into space?",
+      "answers": [
+        "lan Shepard",
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 0,
+      "explanation": "lan Shepard is the correct answer."
+    },
+    {
+      "id": "fifth-grade_medium_005",
+      "category": "Fifth Grade",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What 1783 treaty ended the American Revolution?",
+      "answers": [
+        "The Treaty of Paris",
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 0,
+      "explanation": "The Treaty of Paris is the correct answer."
+    },
+    {
+      "id": "fifth-grade_medium_006",
+      "category": "Fifth Grade",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What French military general ascended the ranks during the French Revolution, crowning himself emperor in 1804?",
+      "answers": [
+        "Napoleon Bonaparte",
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 0,
+      "explanation": "Napoleon Bonaparte is the correct answer."
+    },
+    {
+      "id": "fifth-grade_medium_007",
+      "category": "Fifth Grade",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Where were the first-ever Olympic games held?",
+      "answers": [
+        "The Mona Lisa",
+        "Greece",
+        "The printing press",
+        "The Suez Canal"
+      ],
+      "correct": 1,
+      "explanation": "Greece is the correct answer."
+    },
+    {
+      "id": "fifth-grade_medium_008",
+      "category": "Fifth Grade",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "John, Paul, Ringo and George are the first names of what 20th century rock band?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "The Suez Canal",
+        "The Beatles"
+      ],
+      "correct": 3,
+      "explanation": "The Beatles is the correct answer."
+    },
+    {
+      "id": "fifth-grade_medium_009",
+      "category": "Fifth Grade",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first woman to be inducted into the Rock & Roll Hall of Fame?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Aretha Franklin",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Aretha Franklin is the correct answer."
+    },
+    {
+      "id": "fifth-grade_hard_001",
+      "category": "Fifth Grade",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many degrees is a right angle?",
+      "answers": [
+        "88",
+        "89",
+        "91",
+        "90"
+      ],
+      "correct": 3,
+      "explanation": "90 is the correct answer."
+    },
+    {
+      "id": "fifth-grade_hard_002",
+      "category": "Fifth Grade",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Twelve weeks equals how many days?",
+      "answers": [
+        "84",
+        "82",
+        "83",
+        "85"
+      ],
+      "correct": 0,
+      "explanation": "84 is the correct answer."
+    },
+    {
+      "id": "fifth-grade_hard_003",
+      "category": "Fifth Grade",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many consonants are in the alphabet?",
+      "answers": [
+        "19",
+        "20",
+        "22",
+        "21"
+      ],
+      "correct": 3,
+      "explanation": "21 is the correct answer."
+    },
+    {
+      "id": "fifth-grade_hard_004",
+      "category": "Fifth Grade",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Women in the U.S. were granted the right vote in what year?",
+      "answers": [
+        "1919",
+        "1921",
+        "1920",
+        "1915"
+      ],
+      "correct": 2,
+      "explanation": "1920 is the correct answer."
+    },
+    {
+      "id": "fifth-grade_hard_005",
+      "category": "Fifth Grade",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many centimeters are in a meter?",
+      "answers": [
+        "98",
+        "100",
+        "99",
+        "101"
+      ],
+      "correct": 1,
+      "explanation": "100 is the correct answer."
+    },
+    {
+      "id": "fifth-grade_hard_006",
+      "category": "Fifth Grade",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "A group of 125 students are going on a field trip. Each bus can fit 48 students. How many buses will be needed for the trip?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Three",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Three is the correct answer."
+    },
+    {
+      "id": "fifth-grade_hard_007",
+      "category": "Fifth Grade",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Mary bakes 72 cookies. She keeps 1/4 of them for herself and gives the rest away. How many cookies did Mary give away?",
+      "answers": [
+        "52",
+        "53",
+        "55",
+        "54"
+      ],
+      "correct": 3,
+      "explanation": "54 is the correct answer."
+    },
+    {
+      "id": "fifth-grade_hard_008",
+      "category": "Fifth Grade",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many lines are there in a Haiku poem?",
+      "answers": [
+        "The Mona Lisa",
+        "The printing press",
+        "Three",
+        "The Suez Canal"
+      ],
+      "correct": 2,
+      "explanation": "Three is the correct answer."
+    }
+  ]
+}

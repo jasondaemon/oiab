@@ -1,0 +1,1282 @@
+{
+  "category": "Comics",
+  "slug": "comics",
+  "version": 1,
+  "questions": [
+    {
+      "id": "comics_easy_001",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Peter Parker lives in a cruddy apartment on what street in New York City?",
+      "answers": [
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Chrystie Street",
+        "March 21, 1970"
+      ],
+      "correct": 2,
+      "explanation": "Chrystie Street is the correct answer."
+    },
+    {
+      "id": "comics_easy_002",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Superman is the most famous DC comics character. What is his real name?",
+      "answers": [
+        "Kal-El, but he goes by Clark Kent",
+        "Chrystie Street",
+        "Stan Lee",
+        "March 21, 1970"
+      ],
+      "correct": 0,
+      "explanation": "Kal-El, but he goes by Clark Kent is the correct answer."
+    },
+    {
+      "id": "comics_easy_003",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who wrote the original Spiderman comics?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "March 21, 1970"
+      ],
+      "correct": 2,
+      "explanation": "Stan Lee is the correct answer."
+    },
+    {
+      "id": "comics_easy_004",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "When did Comic Con start?",
+      "answers": [
+        "20",
+        "22",
+        "16",
+        "March 21, 1970"
+      ],
+      "correct": 3,
+      "explanation": "March 21, 1970 is the correct answer."
+    },
+    {
+      "id": "comics_easy_005",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the real name of Green Goblin?",
+      "answers": [
+        "Norman Osborn",
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 0,
+      "explanation": "Norman Osborn is the correct answer."
+    },
+    {
+      "id": "comics_easy_006",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was Elvis Presley's favorite superhero?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Captain Marvel Jr"
+      ],
+      "correct": 3,
+      "explanation": "Captain Marvel Jr is the correct answer."
+    },
+    {
+      "id": "comics_easy_007",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of Iron Man's loyal assistant?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Pepper Potts",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "Pepper Potts is the correct answer."
+    },
+    {
+      "id": "comics_easy_008",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "At the end of the Incredible Hulk movie, what does Tony tell Thaddeus Ross?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "They are putting a team together"
+      ],
+      "correct": 3,
+      "explanation": "They are putting a team together is the correct answer."
+    },
+    {
+      "id": "comics_easy_009",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Batman's real name?",
+      "answers": [
+        "Chrystie Street",
+        "Bruce Wayne",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 1,
+      "explanation": "Bruce Wayne is the correct answer."
+    },
+    {
+      "id": "comics_easy_010",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who would you call if Mr. Freeze attacked?",
+      "answers": [
+        "Chrystie Street",
+        "Batman",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 1,
+      "explanation": "Batman is the correct answer."
+    },
+    {
+      "id": "comics_easy_011",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is the superhero twin brother of Scarlet Witch?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Quicksilver",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "Quicksilver is the correct answer."
+    },
+    {
+      "id": "comics_easy_012",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Superman's weakness?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Kryptonite"
+      ],
+      "correct": 3,
+      "explanation": "Kryptonite is the correct answer."
+    },
+    {
+      "id": "comics_easy_013",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How did Spiderman get his superpowers?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "He was bitten by a radioactive spider",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "He was bitten by a radioactive spider is the correct answer."
+    },
+    {
+      "id": "comics_easy_014",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who killed Thomas and Martha Wayne?",
+      "answers": [
+        "Joe Chill",
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 0,
+      "explanation": "Joe Chill is the correct answer."
+    },
+    {
+      "id": "comics_easy_015",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of Wonder Woman's mother?",
+      "answers": [
+        "Hippolyta",
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 0,
+      "explanation": "Hippolyta is the correct answer."
+    },
+    {
+      "id": "comics_easy_016",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What African country is Nakia operating in as a spy before T'Challa arrived and brought her back to Wakanda?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Nigeria"
+      ],
+      "correct": 3,
+      "explanation": "Nigeria is the correct answer."
+    },
+    {
+      "id": "comics_easy_017",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which superhero has the magic lasso and bullet-proof bracelets?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Wonder Woman"
+      ],
+      "correct": 3,
+      "explanation": "Wonder Woman is the correct answer."
+    },
+    {
+      "id": "comics_easy_018",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who has an indestructible shield?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Captain America",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "Captain America is the correct answer."
+    },
+    {
+      "id": "comics_easy_019",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is the superhero who can no longer transform back into human form anymore?",
+      "answers": [
+        "Chrystie Street",
+        "The Thing",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 1,
+      "explanation": "The Thing is the correct answer."
+    },
+    {
+      "id": "comics_easy_020",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is Raymond Palmer's alter ego?",
+      "answers": [
+        "The Atom",
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 0,
+      "explanation": "The Atom is the correct answer."
+    },
+    {
+      "id": "comics_easy_021",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The Beast is the medical doctor for which superhero movie?",
+      "answers": [
+        "Chrystie Street",
+        "X-Men",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 1,
+      "explanation": "X-Men is the correct answer."
+    },
+    {
+      "id": "comics_easy_022",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who gets his power from a ring?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "The Green Lantern",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "The Green Lantern is the correct answer."
+    },
+    {
+      "id": "comics_easy_023",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which superhero was created by Joe Simon and Jack Kirby?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Captain America",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "Captain America is the correct answer."
+    },
+    {
+      "id": "comics_easy_024",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What color of Kryptonite is not harmful to Superman?",
+      "answers": [
+        "Chrystie Street",
+        "White",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 1,
+      "explanation": "White is the correct answer."
+    },
+    {
+      "id": "comics_easy_025",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who portrays the Scare Crow in Batman?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Cillian Murphy"
+      ],
+      "correct": 3,
+      "explanation": "Cillian Murphy is the correct answer."
+    },
+    {
+      "id": "comics_easy_026",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who played Harley Quinn in Batman?",
+      "answers": [
+        "Chrystie Street",
+        "Margot Robbie",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 1,
+      "explanation": "Margot Robbie is the correct answer."
+    },
+    {
+      "id": "comics_easy_027",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Company Does Iron Man Run?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Stark Industries"
+      ],
+      "correct": 3,
+      "explanation": "Stark Industries is the correct answer."
+    },
+    {
+      "id": "comics_easy_028",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where is the Time Stone hidden in Doctor Strange?",
+      "answers": [
+        "Eye of Agamotto",
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 0,
+      "explanation": "Eye of Agamotto is the correct answer."
+    },
+    {
+      "id": "comics_easy_029",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The villain Deadshot who is also known as the world's greatest marksman is from which comic book publisher?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "DC Comic",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "DC Comic is the correct answer."
+    },
+    {
+      "id": "comics_easy_030",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What species is Loki?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Frost Giant"
+      ],
+      "correct": 3,
+      "explanation": "Frost Giant is the correct answer."
+    },
+    {
+      "id": "comics_easy_031",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the real name of Deadpool?",
+      "answers": [
+        "Chrystie Street",
+        "Wade Wilson",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 1,
+      "explanation": "Wade Wilson is the correct answer."
+    },
+    {
+      "id": "comics_easy_032",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What type of Doctor is Stephen Strange?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Neurosurgeon",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "Neurosurgeon is the correct answer."
+    },
+    {
+      "id": "comics_easy_033",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In Ant-Man, what animal did Darren Cross unsuccessfully shrink?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Sheep"
+      ],
+      "correct": 3,
+      "explanation": "Sheep is the correct answer."
+    },
+    {
+      "id": "comics_easy_034",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who killed Tony Stark's parents?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "The Winter Soldier",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "The Winter Soldier is the correct answer."
+    },
+    {
+      "id": "comics_easy_035",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which city does Hawkeye and Black Widow often reminisce about?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Budapest",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "Budapest is the correct answer."
+    },
+    {
+      "id": "comics_easy_036",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which island does Wonder Woman come from?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Paradise Island",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "Paradise Island is the correct answer."
+    },
+    {
+      "id": "comics_easy_037",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of the newspaper company Peter Parker works for?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "The Daily Bugle"
+      ],
+      "correct": 3,
+      "explanation": "The Daily Bugle is the correct answer."
+    },
+    {
+      "id": "comics_easy_038",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What did Hellboy do when he attempted to look normal?",
+      "answers": [
+        "File down his horns",
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 0,
+      "explanation": "File down his horns is the correct answer."
+    },
+    {
+      "id": "comics_easy_039",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How did the Fantastic Four get their superpowers?",
+      "answers": [
+        "Chrystie Street",
+        "Cosmic rays",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 1,
+      "explanation": "Cosmic rays is the correct answer."
+    },
+    {
+      "id": "comics_easy_040",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which character is resurrected in X-men: The Last Stand?",
+      "answers": [
+        "Chrystie Street",
+        "Jean Grey",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 1,
+      "explanation": "Jean Grey is the correct answer."
+    },
+    {
+      "id": "comics_easy_041",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is the second-most trusted hero in the Justice League?",
+      "answers": [
+        "Dick Grayson",
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 0,
+      "explanation": "Dick Grayson is the correct answer."
+    },
+    {
+      "id": "comics_easy_042",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the sidekick of Aquaman?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Aqualad"
+      ],
+      "correct": 3,
+      "explanation": "Aqualad is the correct answer."
+    },
+    {
+      "id": "comics_easy_043",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of Batman's butler?",
+      "answers": [
+        "Alfred Pennyworth",
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 0,
+      "explanation": "Alfred Pennyworth is the correct answer."
+    },
+    {
+      "id": "comics_easy_044",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is the arch-nemesis of Daredevil?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Kingpin",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "Kingpin is the correct answer."
+    },
+    {
+      "id": "comics_easy_045",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In X-Men: Days of Future Past, which mutant can time travel?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Kitty Pryde"
+      ],
+      "correct": 3,
+      "explanation": "Kitty Pryde is the correct answer."
+    },
+    {
+      "id": "comics_easy_046",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is the character usually romantically paired with Batman?",
+      "answers": [
+        "Catwoman",
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 0,
+      "explanation": "Catwoman is the correct answer."
+    },
+    {
+      "id": "comics_easy_047",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where does Iron Man's origin story begin?",
+      "answers": [
+        "Vietnam",
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 0,
+      "explanation": "Vietnam is the correct answer."
+    },
+    {
+      "id": "comics_easy_048",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is the flammable superhero?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Human Torch"
+      ],
+      "correct": 3,
+      "explanation": "Human Torch is the correct answer."
+    },
+    {
+      "id": "comics_easy_049",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is the leader of The Fantastic Four?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Reed Richards",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "Reed Richards is the correct answer."
+    },
+    {
+      "id": "comics_easy_050",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the online handle of Bruce Wayne?",
+      "answers": [
+        "295",
+        "296",
+        "298",
+        "JonDoe297"
+      ],
+      "correct": 3,
+      "explanation": "JonDoe297 is the correct answer."
+    },
+    {
+      "id": "comics_easy_051",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Clark Kent, is a mild-mannered reporter for which newspaper?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "The Daily Planet",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "The Daily Planet is the correct answer."
+    },
+    {
+      "id": "comics_easy_052",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Captain America's shield made of?",
+      "answers": [
+        "Chrystie Street",
+        "Vibranium",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 1,
+      "explanation": "Vibranium is the correct answer."
+    },
+    {
+      "id": "comics_easy_053",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of Thor's hammer?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Mjolnir"
+      ],
+      "correct": 3,
+      "explanation": "Mjolnir is the correct answer."
+    },
+    {
+      "id": "comics_easy_054",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the real name of the Scarlet Witch?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Wanda Maximoff",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "Wanda Maximoff is the correct answer."
+    },
+    {
+      "id": "comics_easy_055",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is Black Panther's sister?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Shuri"
+      ],
+      "correct": 3,
+      "explanation": "Shuri is the correct answer."
+    },
+    {
+      "id": "comics_easy_056",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of Mr. Freeze's wife?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Nora Fries"
+      ],
+      "correct": 3,
+      "explanation": "Nora Fries is the correct answer."
+    },
+    {
+      "id": "comics_easy_057",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of the villain Egghead?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Vincent Prince",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "Vincent Prince is the correct answer."
+    },
+    {
+      "id": "comics_easy_058",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What city does Batman protect?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Gotham City"
+      ],
+      "correct": 3,
+      "explanation": "Gotham City is the correct answer."
+    },
+    {
+      "id": "comics_easy_059",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was Tony Stark's favorite band?",
+      "answers": [
+        "AC/DC",
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 0,
+      "explanation": "AC/DC is the correct answer."
+    },
+    {
+      "id": "comics_easy_060",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the real name of Iron Man's A.I. butler?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "JARVIS"
+      ],
+      "correct": 3,
+      "explanation": "JARVIS is the correct answer."
+    },
+    {
+      "id": "comics_easy_061",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is that one Marvel film that doesn't have a post-credit scene?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Avengers: Endgame",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "Avengers: Endgame is the correct answer."
+    },
+    {
+      "id": "comics_easy_062",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of X-Men's plane?",
+      "answers": [
+        "X-Jet, Blackbird",
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 0,
+      "explanation": "X-Jet, Blackbird is the correct answer."
+    },
+    {
+      "id": "comics_easy_063",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What are the names The Green Lantern uses to conceal his identity?",
+      "answers": [
+        "Chrystie Street",
+        "Hal Jordan, Alan Scott, and Kyle Rayner",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 1,
+      "explanation": "Hal Jordan, Alan Scott, and Kyle Rayner is the correct answer."
+    },
+    {
+      "id": "comics_easy_064",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In the DC Universe, who has a higher IQ than Batman?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Lex Luthor"
+      ],
+      "correct": 3,
+      "explanation": "Lex Luthor is the correct answer."
+    },
+    {
+      "id": "comics_easy_065",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is the archenemy of Aquaman?",
+      "answers": [
+        "Chrystie Street",
+        "Malefic",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 1,
+      "explanation": "Malefic is the correct answer."
+    },
+    {
+      "id": "comics_easy_066",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which villain got his distinct appearance from toxic chemicals at a plant?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Joker"
+      ],
+      "correct": 3,
+      "explanation": "Joker is the correct answer."
+    },
+    {
+      "id": "comics_easy_067",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What kind of creature was Starro?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Starfish",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "Starfish is the correct answer."
+    },
+    {
+      "id": "comics_easy_068",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What German airport does the clash of Avengers take place in?",
+      "answers": [
+        "Leipzig",
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 0,
+      "explanation": "Leipzig is the correct answer."
+    },
+    {
+      "id": "comics_easy_069",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is the superhero who can manipulate and resist the weather?",
+      "answers": [
+        "Chrystie Street",
+        "Storm",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 1,
+      "explanation": "Storm is the correct answer."
+    },
+    {
+      "id": "comics_easy_070",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who can calm The Hulk?",
+      "answers": [
+        "Natasha",
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 0,
+      "explanation": "Natasha is the correct answer."
+    },
+    {
+      "id": "comics_easy_071",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In Batman Forever, which villain did Jim Carrey play?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Riddler",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "Riddler is the correct answer."
+    },
+    {
+      "id": "comics_easy_072",
+      "category": "Comics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is Scarlet Speedster?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "The Flash"
+      ],
+      "correct": 3,
+      "explanation": "The Flash is the correct answer."
+    },
+    {
+      "id": "comics_medium_001",
+      "category": "Comics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In which comic did Wonder Woman make her first appearance?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "All Star comics"
+      ],
+      "correct": 3,
+      "explanation": "All Star comics is the correct answer."
+    },
+    {
+      "id": "comics_medium_002",
+      "category": "Comics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Famous Funnies is considered the first true comic book– who published this landmark series?",
+      "answers": [
+        "1932",
+        "1934",
+        "1928",
+        "Eastern Color Printing In 1933"
+      ],
+      "correct": 3,
+      "explanation": "Eastern Color Printing In 1933 is the correct answer."
+    },
+    {
+      "id": "comics_medium_003",
+      "category": "Comics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What comic did Green Lantern first appear in?",
+      "answers": [
+        "All-American's Comics",
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 0,
+      "explanation": "All-American's Comics is the correct answer."
+    },
+    {
+      "id": "comics_medium_004",
+      "category": "Comics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who is the first Super Villain in Superman?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Ultra Humanite"
+      ],
+      "correct": 3,
+      "explanation": "Ultra Humanite is the correct answer."
+    },
+    {
+      "id": "comics_medium_005",
+      "category": "Comics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who is the first Robin?",
+      "answers": [
+        "Dick Grayson",
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 0,
+      "explanation": "Dick Grayson is the correct answer."
+    },
+    {
+      "id": "comics_medium_006",
+      "category": "Comics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first superhero ever?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "The Phantom",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "The Phantom is the correct answer."
+    },
+    {
+      "id": "comics_medium_007",
+      "category": "Comics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first super villain Spider-Man encountered?",
+      "answers": [
+        "Supercharger, the living battery",
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 0,
+      "explanation": "Supercharger, the living battery is the correct answer."
+    },
+    {
+      "id": "comics_medium_008",
+      "category": "Comics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first female superhero to appear in the title of an MCU film?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee",
+        "Wasp"
+      ],
+      "correct": 3,
+      "explanation": "Wasp is the correct answer."
+    },
+    {
+      "id": "comics_medium_009",
+      "category": "Comics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which film's post-credit scene did Thanos first appear in?",
+      "answers": [
+        "The Avengers",
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Stan Lee"
+      ],
+      "correct": 0,
+      "explanation": "The Avengers is the correct answer."
+    },
+    {
+      "id": "comics_hard_001",
+      "category": "Comics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What year was the first modern comic book printed?",
+      "answers": [
+        "1933",
+        "1932",
+        "1934",
+        "1928"
+      ],
+      "correct": 0,
+      "explanation": "1933 is the correct answer."
+    },
+    {
+      "id": "comics_hard_002",
+      "category": "Comics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What year was the first Iron Movie movie released?",
+      "answers": [
+        "2007",
+        "2009",
+        "2008",
+        "2003"
+      ],
+      "correct": 2,
+      "explanation": "2008 is the correct answer."
+    },
+    {
+      "id": "comics_hard_003",
+      "category": "Comics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many Infinity Stones are there?",
+      "answers": [
+        "Chrystie Street",
+        "Kal-El, but he goes by Clark Kent",
+        "Six",
+        "Stan Lee"
+      ],
+      "correct": 2,
+      "explanation": "Six is the correct answer."
+    },
+    {
+      "id": "comics_hard_004",
+      "category": "Comics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many superhero movies have been made since 2000-2021?",
+      "answers": [
+        "34",
+        "36 superhero films",
+        "35",
+        "37"
+      ],
+      "correct": 1,
+      "explanation": "36 superhero films is the correct answer."
+    }
+  ]
+}

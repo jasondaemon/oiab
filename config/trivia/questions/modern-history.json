@@ -1,0 +1,352 @@
+{
+  "category": "Modern History",
+  "slug": "modern-history",
+  "version": 1,
+  "questions": [
+    {
+      "id": "modern-history_easy_001",
+      "category": "Modern History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What early version of this soft drink contained small amounts of cocaine?",
+      "answers": [
+        "Coca-Cola",
+        "Albert Einstein",
+        "Pablo Picasso and Georges Braque",
+        "Margaret Court"
+      ],
+      "correct": 0,
+      "explanation": "Coca-Cola is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_easy_002",
+      "category": "Modern History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who developed the theory of relativity?",
+      "answers": [
+        "Coca-Cola",
+        "Pablo Picasso and Georges Braque",
+        "Margaret Court",
+        "Albert Einstein"
+      ],
+      "correct": 3,
+      "explanation": "Albert Einstein is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_easy_003",
+      "category": "Modern History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which two artists founded the Cubist movement in modern art?",
+      "answers": [
+        "Coca-Cola",
+        "Albert Einstein",
+        "Margaret Court",
+        "Pablo Picasso and Georges Braque"
+      ],
+      "correct": 3,
+      "explanation": "Pablo Picasso and Georges Braque is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_easy_004",
+      "category": "Modern History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who holds the record for most Grand Slam singles titles in women's tennis?",
+      "answers": [
+        "Margaret Court",
+        "Coca-Cola",
+        "Albert Einstein",
+        "Pablo Picasso and Georges Braque"
+      ],
+      "correct": 0,
+      "explanation": "Margaret Court is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_easy_005",
+      "category": "Modern History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What Icelandic volcano notably erupted in 2010, disrupting air traffic over Europe?",
+      "answers": [
+        "Coca-Cola",
+        "Albert Einstein",
+        "Pablo Picasso and Georges Braque",
+        "Eyjafjallajökull"
+      ],
+      "correct": 3,
+      "explanation": "Eyjafjallajökull is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_easy_006",
+      "category": "Modern History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is the highest scoring NBA player of all time?",
+      "answers": [
+        "LeBron James",
+        "Coca-Cola",
+        "Albert Einstein",
+        "Pablo Picasso and Georges Braque"
+      ],
+      "correct": 0,
+      "explanation": "LeBron James is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_easy_007",
+      "category": "Modern History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is the current president of China?",
+      "answers": [
+        "Coca-Cola",
+        "Albert Einstein",
+        "Xi Jinping",
+        "Pablo Picasso and Georges Braque"
+      ],
+      "correct": 2,
+      "explanation": "Xi Jinping is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_easy_008",
+      "category": "Modern History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What National Security agent leaked classified documents regarding global surveillance?",
+      "answers": [
+        "Coca-Cola",
+        "Albert Einstein",
+        "Pablo Picasso and Georges Braque",
+        "Edward Snowden"
+      ],
+      "correct": 3,
+      "explanation": "Edward Snowden is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_easy_009",
+      "category": "Modern History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In 1853, what country opened its borders to foreigners after being closed for more than 200 years?",
+      "answers": [
+        "Coca-Cola",
+        "Albert Einstein",
+        "Japan",
+        "Pablo Picasso and Georges Braque"
+      ],
+      "correct": 2,
+      "explanation": "Japan is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_easy_010",
+      "category": "Modern History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What nickname was Ronald Reagan's 1983 missile defense system given?",
+      "answers": [
+        "Answer? \"Star Wars\"",
+        "Coca-Cola",
+        "Albert Einstein",
+        "Pablo Picasso and Georges Braque"
+      ],
+      "correct": 0,
+      "explanation": "Answer? \"Star Wars\" is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_easy_011",
+      "category": "Modern History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What peace activist successfully campaigned for India's independence from British rule?",
+      "answers": [
+        "Coca-Cola",
+        "Albert Einstein",
+        "Mahatma Gandhi",
+        "Pablo Picasso and Georges Braque"
+      ],
+      "correct": 2,
+      "explanation": "Mahatma Gandhi is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_easy_012",
+      "category": "Modern History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What artist used pen and ink to create the Vitruvian Man illustration?",
+      "answers": [
+        "Coca-Cola",
+        "Albert Einstein",
+        "Leonardo da Vinci",
+        "Pablo Picasso and Georges Braque"
+      ],
+      "correct": 2,
+      "explanation": "Leonardo da Vinci is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_easy_013",
+      "category": "Modern History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In 1521, what explorer discovered the Philippines?",
+      "answers": [
+        "Coca-Cola",
+        "Albert Einstein",
+        "Ferdinand Magellan",
+        "Pablo Picasso and Georges Braque"
+      ],
+      "correct": 2,
+      "explanation": "Ferdinand Magellan is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_easy_014",
+      "category": "Modern History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In 1903, the U.S. acquired what artificial waterway in Central America?",
+      "answers": [
+        "Coca-Cola",
+        "Albert Einstein",
+        "The Panama Canal",
+        "Pablo Picasso and Georges Braque"
+      ],
+      "correct": 2,
+      "explanation": "The Panama Canal is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_medium_001",
+      "category": "Modern History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first host of Saturday Night Live?",
+      "answers": [
+        "Coca-Cola",
+        "Albert Einstein",
+        "George Carlin",
+        "Pablo Picasso and Georges Braque"
+      ],
+      "correct": 2,
+      "explanation": "George Carlin is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_medium_002",
+      "category": "Modern History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who invented the radio?",
+      "answers": [
+        "Guglielmo Marconi",
+        "Coca-Cola",
+        "Albert Einstein",
+        "Pablo Picasso and Georges Braque"
+      ],
+      "correct": 0,
+      "explanation": "Guglielmo Marconi is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_medium_003",
+      "category": "Modern History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first American to orbit the earth?",
+      "answers": [
+        "Coca-Cola",
+        "Albert Einstein",
+        "Pablo Picasso and Georges Braque",
+        "John Glenn"
+      ],
+      "correct": 3,
+      "explanation": "John Glenn is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_medium_004",
+      "category": "Modern History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The 1914 assassination of Archduke Franz Ferdinand and his wife led to what global event?",
+      "answers": [
+        "Coca-Cola",
+        "Albert Einstein",
+        "Pablo Picasso and Georges Braque",
+        "World War I"
+      ],
+      "correct": 3,
+      "explanation": "World War I is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_medium_005",
+      "category": "Modern History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first woman to receive a Nobel Prize?",
+      "answers": [
+        "Coca-Cola",
+        "Albert Einstein",
+        "Marie Curie",
+        "Pablo Picasso and Georges Braque"
+      ],
+      "correct": 2,
+      "explanation": "Marie Curie is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_medium_006",
+      "category": "Modern History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the first movie to ever win an Academy Award for Best Picture?",
+      "answers": [
+        "\"Wings\"",
+        "Coca-Cola",
+        "Albert Einstein",
+        "Pablo Picasso and Georges Braque"
+      ],
+      "correct": 0,
+      "explanation": "\"Wings\" is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_medium_007",
+      "category": "Modern History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What period of history is known for major advancements in technology and shift to machine manufacturing?",
+      "answers": [
+        "Coca-Cola",
+        "Albert Einstein",
+        "Pablo Picasso and Georges Braque",
+        "The Industrial Revolution"
+      ],
+      "correct": 3,
+      "explanation": "The Industrial Revolution is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_hard_001",
+      "category": "Modern History",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What year did Britain's Prince Charles and Lady Diana Spencer marry?",
+      "answers": [
+        "1980",
+        "1981",
+        "1982",
+        "1976"
+      ],
+      "correct": 1,
+      "explanation": "1981 is the historical answer for this question."
+    },
+    {
+      "id": "modern-history_hard_002",
+      "category": "Modern History",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What year did Facebook launch?",
+      "answers": [
+        "2003",
+        "2005",
+        "2004",
+        "1999"
+      ],
+      "correct": 2,
+      "explanation": "2004 is the historical answer for this question."
+    }
+  ]
+}

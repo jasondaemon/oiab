@@ -143,11 +143,51 @@
       "category": "Games"
     },
     {
+      "id": "sinkhole-city",
+      "title": "Sinkhole City",
+      "description": "Offline arcade sinkhole run through an overland town.",
+      "url": "/mobile/sinkhole-city.html",
+      "icon": "/maps/overland/overland-sinkhole-city.svg",
+      "category": "Games"
+    },
+    {
+      "id": "canyon-crawler",
+      "title": "Canyon Crawler",
+      "description": "Centipede-inspired rover shooter with segmented trail worms.",
+      "url": "/mobile/canyon-crawler.html",
+      "icon": "/maps/overland/overland-canyon-crawler.svg",
+      "category": "Games"
+    },
+    {
+      "id": "orbit-run",
+      "title": "Orbit Run",
+      "description": "Radial tunnel shooter inspired by classic orbit arcade games.",
+      "url": "/mobile/orbit-run.html",
+      "icon": "/maps/overland/overland-orbit-run.svg",
+      "category": "Games"
+    },
+    {
       "id": "blank-slate",
       "title": "Blank Slate",
       "description": "Family party word-matching game.",
       "url": "/mobile/blank-slate.html",
       "icon": "/maps/overland/overland-blank-slate.svg",
+      "category": "Games"
+    },
+    {
+      "id": "starts-ends",
+      "title": "Starts / Ends",
+      "description": "Fast multiplayer word race using starting and ending letters.",
+      "url": "/mobile/starts-ends.html",
+      "icon": "/maps/overland/overland-starts-ends.svg",
+      "category": "Games"
+    },
+    {
+      "id": "dice-roller",
+      "title": "Dice Roller",
+      "description": "Custom tabletop dice roller with mixed dice, themes, animation, and roll history.",
+      "url": "/mobile/dice-roller.html",
+      "icon": "/maps/overland/overland-dice-roller.svg",
       "category": "Games"
     },
     {
@@ -164,6 +204,14 @@
       "description": "Two-player or computer vertical checker game.",
       "url": "/mobile/connect-four.html",
       "icon": "/maps/overland/overland-connect-four.svg",
+      "category": "Games"
+    },
+    {
+      "id": "burst",
+      "title": "Burst",
+      "description": "2-4 player pressure card game.",
+      "url": "/mobile/burst.html",
+      "icon": "/maps/overland/overland-burst.svg",
       "category": "Games"
     },
     {
@@ -307,9 +355,10 @@
       "title": "Minecraft Map",
       "description": "Live web map for the local Minecraft world.",
       "url": "/apps/minecraft-map/",
-      "icon": "/maps/overland/overland-folder-games.svg",
+      "icon": "/maps/overland/overland-minecraft-map.svg",
       "category": "Games",
-      "optionalService": "minecraft"
+      "optionalService": "minecraft",
+      "openMode": "external"
     }
   ]
 }

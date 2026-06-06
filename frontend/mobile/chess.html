@@ -11,7 +11,8 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/mobile/overland-touch-icon-180.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
   <link rel="manifest" href="/mobile/manifest.webmanifest">
-  <link rel="stylesheet" href="chess.css">
+  <link rel="stylesheet" href="/mobile/vendor/chessboardjs/chessboard-1.0.0.min.css">
+  <link rel="stylesheet" href="chess.css?v=chess-layout-20260606">
 </head>
 <body>
   <main class="ch-shell">
@@ -20,10 +21,22 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 5.2 8 12l6.8 6.8-1.8 1.8L5.4 13a1.4 1.4 0 0 1 0-2L13 3.4l1.8 1.8z"></path></svg>
       </a>
       <h1>Chess</h1>
-      <button id="refreshGame" class="icon-button" type="button" aria-label="Refresh">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.7 6.3A8 8 0 0 0 4.3 10H2l3.6 4.1L9.2 10H6.4a6 6 0 0 1 10.2-2.2 6 6 0 0 1 .1 8.4 5.9 5.9 0 0 1-4.2 1.8 6 6 0 0 1-4.4-2l-1.5 1.4A8 8 0 1 0 17.7 6.3z"></path></svg>
+      <button id="settingsToggle" class="icon-button" type="button" aria-label="Chess settings">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.4 13.5c.1-.5.1-1 .1-1.5s0-1-.1-1.5l2-1.5-2-3.5-2.4 1a8 8 0 0 0-2.6-1.5L14 2h-4l-.4 2.5A8 8 0 0 0 7 6L4.6 5 2.6 8.5l2 1.5a9 9 0 0 0 0 3l-2 1.5 2 3.5L7 17a8 8 0 0 0 2.6 1.5L10 21h4l.4-2.5A8 8 0 0 0 17 17l2.4 1 2-3.5-2-1.5ZM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5Z"></path></svg>
       </button>
     </header>
+
+    <section id="settingsPanel" class="panel settings-panel" hidden>
+      <label>
+        Board theme
+        <select id="boardTheme">
+          <option value="classic">Classic Wood</option>
+          <option value="dark">Dark Tactical</option>
+          <option value="desert">Desert Map</option>
+          <option value="contrast">High Contrast</option>
+        </select>
+      </label>
+    </section>
 
     <section id="lobby" class="panel">
       <div class="profile-chip">Playing as <strong id="playerNameLabel">Player</strong></div>
@@ -61,7 +74,29 @@
         <button id="leaveGame" class="small-pill" type="button">Leave</button>
       </div>
       <div id="players" class="players"></div>
-      <div id="board" class="ch-board" aria-label="Chess board"></div>
+      <div class="ch-play-area">
+        <div id="board" class="ch-board" aria-label="Chess board"></div>
+      </div>
+      <div class="ch-toolbar">
+        <button id="refreshGame" type="button">Refresh</button>
+        <button id="flipBoard" type="button">Flip</button>
+        <button id="undoMove" type="button">Undo</button>
+        <button id="redoMove" type="button">Redo</button>
+        <button id="copyFen" type="button">Copy FEN</button>
+        <button id="copyPgn" type="button">Copy PGN</button>
+      </div>
+      <section class="captured-card">
+        <h3>Captured</h3>
+        <div id="capturedWhite" class="captured"></div>
+        <div id="capturedBlack" class="captured"></div>
+      </section>
+      <details class="move-panel">
+        <summary>
+          <span>Move history</span>
+          <strong id="moveCount">0 moves</strong>
+        </summary>
+        <ol id="moveHistory" class="move-history"></ol>
+      </details>
       <div class="actions">
         <button id="resetGame" type="button">New Board</button>
         <button id="closeGame" type="button" class="danger">Close Game</button>
@@ -70,6 +105,19 @@
 
     <p id="message" class="message" role="status"></p>
   </main>
-  <script type="module" src="chess.js"></script>
+  <dialog id="promotionDialog" class="promotion-dialog">
+    <form method="dialog">
+      <h2>Promote pawn</h2>
+      <div class="promotion-options">
+        <button value="q">Queen</button>
+        <button value="r">Rook</button>
+        <button value="b">Bishop</button>
+        <button value="n">Knight</button>
+      </div>
+    </form>
+  </dialog>
+  <script src="/mobile/vendor/jquery/jquery-3.7.1.min.js"></script>
+  <script src="/mobile/vendor/chessboardjs/chessboard-1.0.0.min.js"></script>
+  <script type="module" src="chess.js?v=chess-ai-20260606"></script>
 </body>
 </html>

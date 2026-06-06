@@ -44,6 +44,11 @@ class Settings:
     auto_install_world_map: bool = env_bool("OIAB_AUTO_INSTALL_WORLD_MAP", True)
     firms_map_key: str = os.environ.get("OIAB_FIRMS_MAP_KEY", "")
     firms_source: str = os.environ.get("OIAB_FIRMS_SOURCE", "VIIRS_SNPP_NRT")
+    geopdf_max_zoom: int = int(os.environ.get("OIAB_GEOPDF_MAX_ZOOM", "16"))
+    geopdf_min_zoom: int = int(os.environ.get("OIAB_GEOPDF_MIN_ZOOM", "8"))
+    geopdf_render_dpi: int = int(os.environ.get("OIAB_GEOPDF_RENDER_DPI", "300"))
+    geopdf_tile_size: int = int(os.environ.get("OIAB_GEOPDF_TILE_SIZE", "256"))
+    geopdf_output_format: str = os.environ.get("OIAB_GEOPDF_OUTPUT_FORMAT", "png")
     nws_alerts_url: str = os.environ.get("OIAB_NWS_ALERTS_URL", "https://api.weather.gov/alerts/active?status=actual&message_type=alert")
     mvum_mapserver_url: str = os.environ.get("OIAB_MVUM_MAPSERVER_URL", "https://apps.fs.usda.gov/arcx/rest/services/EDW/EDW_MVUM_01/MapServer")
     mvum_roads_url: str = os.environ.get("OIAB_MVUM_ROADS_URL", "")
@@ -107,6 +112,9 @@ DATA_SUBDIRS = [
     "maps/overlays/contours/source",
     "maps/overlays/contours/dem",
     "maps/overlays/imagery/routes",
+    "geopdf/originals",
+    "geopdf/processed",
+    "geopdf/tmp",
     "maps/cache",
     "maps/styles",
     "maps/sprites",

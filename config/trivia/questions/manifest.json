@@ -1,0 +1,325 @@
+{
+  "version": 1,
+  "categories": [
+    {
+      "category": "American History",
+      "slug": "american-history",
+      "file": "american-history.json",
+      "questionCount": 26,
+      "difficulties": {
+        "easy": 14,
+        "medium": 10,
+        "hard": 2
+      }
+    },
+    {
+      "category": "Ancient History",
+      "slug": "ancient-history",
+      "file": "ancient-history.json",
+      "questionCount": 22,
+      "difficulties": {
+        "easy": 1,
+        "medium": 21,
+        "hard": 0
+      }
+    },
+    {
+      "category": "Automotive",
+      "slug": "automotive",
+      "file": "automotive.json",
+      "questionCount": 301,
+      "difficulties": {
+        "easy": 100,
+        "medium": 101,
+        "hard": 100
+      }
+    },
+    {
+      "category": "Avengers",
+      "slug": "avengers",
+      "file": "avengers.json",
+      "questionCount": 48,
+      "difficulties": {
+        "easy": 38,
+        "medium": 9,
+        "hard": 1
+      }
+    },
+    {
+      "category": "Bible",
+      "slug": "bible",
+      "file": "bible.json",
+      "questionCount": 389,
+      "difficulties": {
+        "easy": 169,
+        "medium": 107,
+        "hard": 113
+      }
+    },
+    {
+      "category": "Cats",
+      "slug": "cats",
+      "file": "cats.json",
+      "questionCount": 52,
+      "difficulties": {
+        "easy": 38,
+        "medium": 3,
+        "hard": 11
+      }
+    },
+    {
+      "category": "Classic Rock",
+      "slug": "classic-rock",
+      "file": "classic-rock.json",
+      "questionCount": 46,
+      "difficulties": {
+        "easy": 0,
+        "medium": 42,
+        "hard": 4
+      }
+    },
+    {
+      "category": "Comics",
+      "slug": "comics",
+      "file": "comics.json",
+      "questionCount": 85,
+      "difficulties": {
+        "easy": 72,
+        "medium": 9,
+        "hard": 4
+      }
+    },
+    {
+      "category": "Country Music",
+      "slug": "country-music",
+      "file": "country-music.json",
+      "questionCount": 71,
+      "difficulties": {
+        "easy": 52,
+        "medium": 14,
+        "hard": 5
+      }
+    },
+    {
+      "category": "Earth Science",
+      "slug": "earth-science",
+      "file": "earth-science.json",
+      "questionCount": 390,
+      "difficulties": {
+        "easy": 175,
+        "medium": 106,
+        "hard": 109
+      }
+    },
+    {
+      "category": "Fast Food",
+      "slug": "fast-food",
+      "file": "fast-food.json",
+      "questionCount": 36,
+      "difficulties": {
+        "easy": 24,
+        "medium": 8,
+        "hard": 4
+      }
+    },
+    {
+      "category": "Fifth Grade",
+      "slug": "fifth-grade",
+      "file": "fifth-grade.json",
+      "questionCount": 103,
+      "difficulties": {
+        "easy": 86,
+        "medium": 9,
+        "hard": 8
+      }
+    },
+    {
+      "category": "Film & TV",
+      "slug": "film-tv",
+      "file": "film-tv.json",
+      "questionCount": 312,
+      "difficulties": {
+        "easy": 106,
+        "medium": 106,
+        "hard": 100
+      }
+    },
+    {
+      "category": "General Knowledge",
+      "slug": "general-knowledge",
+      "file": "general-knowledge.json",
+      "questionCount": 490,
+      "difficulties": {
+        "easy": 362,
+        "medium": 62,
+        "hard": 66
+      }
+    },
+    {
+      "category": "History",
+      "slug": "history",
+      "file": "history.json",
+      "questionCount": 686,
+      "difficulties": {
+        "easy": 250,
+        "medium": 263,
+        "hard": 173
+      }
+    },
+    {
+      "category": "Literature",
+      "slug": "literature",
+      "file": "literature.json",
+      "questionCount": 125,
+      "difficulties": {
+        "easy": 46,
+        "medium": 69,
+        "hard": 10
+      }
+    },
+    {
+      "category": "Lord of the Rings",
+      "slug": "lord-of-the-rings",
+      "file": "lord-of-the-rings.json",
+      "questionCount": 72,
+      "difficulties": {
+        "easy": 56,
+        "medium": 11,
+        "hard": 5
+      }
+    },
+    {
+      "category": "Modern History",
+      "slug": "modern-history",
+      "file": "modern-history.json",
+      "questionCount": 23,
+      "difficulties": {
+        "easy": 14,
+        "medium": 7,
+        "hard": 2
+      }
+    },
+    {
+      "category": "Music",
+      "slug": "music",
+      "file": "music.json",
+      "questionCount": 303,
+      "difficulties": {
+        "easy": 103,
+        "medium": 100,
+        "hard": 100
+      }
+    },
+    {
+      "category": "Olympics",
+      "slug": "olympics",
+      "file": "olympics.json",
+      "questionCount": 100,
+      "difficulties": {
+        "easy": 30,
+        "medium": 35,
+        "hard": 35
+      }
+    },
+    {
+      "category": "Physics",
+      "slug": "physics",
+      "file": "physics.json",
+      "questionCount": 300,
+      "difficulties": {
+        "easy": 100,
+        "medium": 100,
+        "hard": 100
+      }
+    },
+    {
+      "category": "Social Studies",
+      "slug": "social-studies",
+      "file": "social-studies.json",
+      "questionCount": 342,
+      "difficulties": {
+        "easy": 117,
+        "medium": 116,
+        "hard": 109
+      }
+    },
+    {
+      "category": "Sports",
+      "slug": "sports",
+      "file": "sports.json",
+      "questionCount": 313,
+      "difficulties": {
+        "easy": 103,
+        "medium": 108,
+        "hard": 102
+      }
+    },
+    {
+      "category": "Star Trek",
+      "slug": "star-trek",
+      "file": "star-trek.json",
+      "questionCount": 19,
+      "difficulties": {
+        "easy": 16,
+        "medium": 2,
+        "hard": 1
+      }
+    },
+    {
+      "category": "Taylor Swift",
+      "slug": "taylor-swift",
+      "file": "taylor-swift.json",
+      "questionCount": 44,
+      "difficulties": {
+        "easy": 37,
+        "medium": 3,
+        "hard": 4
+      }
+    },
+    {
+      "category": "Technology",
+      "slug": "technology",
+      "file": "technology.json",
+      "questionCount": 322,
+      "difficulties": {
+        "easy": 106,
+        "medium": 113,
+        "hard": 103
+      }
+    },
+    {
+      "category": "Television",
+      "slug": "television",
+      "file": "television.json",
+      "questionCount": 71,
+      "difficulties": {
+        "easy": 56,
+        "medium": 11,
+        "hard": 4
+      }
+    },
+    {
+      "category": "U.S. Geography",
+      "slug": "u-s-geography",
+      "file": "u-s-geography.json",
+      "questionCount": 119,
+      "difficulties": {
+        "easy": 107,
+        "medium": 1,
+        "hard": 11
+      }
+    },
+    {
+      "category": "World History",
+      "slug": "world-history",
+      "file": "world-history.json",
+      "questionCount": 29,
+      "difficulties": {
+        "easy": 2,
+        "medium": 27,
+        "hard": 0
+      }
+    }
+  ],
+  "totalQuestions": 5239
+}

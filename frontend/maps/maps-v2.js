@@ -16,6 +16,10 @@
   };
   const MAP_3D_BUILDINGS_KEY = "omv2.show3dBuildings";
   const MAP_AUTO_RECORDING_KEY = "omv2.autoTrackRecording";
+  const MAP_THEME_KEY = "omv2.mapTheme";
+  const MAP_RIGHT_CONTROLS_COLLAPSED_KEY = "omv2.rightControlsCollapsed";
+  const FOLLOW_PITCH = 58;
+  const FOLLOW_MIN_HEADING_SPEED_MPH = 1.2;
   const EMPTY = { type: "FeatureCollection", features: [] };
   const WAYPOINT_TYPES = [
     ["gas", "Gas", "gas-station-ev-station"],
@@ -414,6 +418,10 @@
 
   async function setOverlayOpacity(id, opacity) {
     return postJson("/api/maps/overlays/set-opacity", { id, opacity });
+  }
+
+  async function setOverlayOrder(id, sortOrder) {
+    return postJson("/api/maps/overlays/set-order", { id, sort_order: sortOrder });
   }
 
   function clone(value) {
@@ -1639,6 +1647,66 @@
     }
   }
 
+  function mapTheme() {
+    return localStorage.getItem(MAP_THEME_KEY) === "dark" ? "dark" : "light";
+  }
+
+  function applyMapTheme() {
+    const root = $("mapRoot");
+    if (root) root.dataset.mapTheme = mapTheme();
+  }
+
+  function collapseAttribution() {
+    requestAnimationFrame(() => {
+      document.querySelectorAll(".maplibregl-ctrl-attrib").forEach((node) => {
+        node.classList.remove("maplibregl-compact-show");
+      });
+    });
+  }
+
+  function locationHeading(location = {}) {
+    const candidates = [
+      location.heading_deg,
+      location.course_deg,
+      location.bearing,
+      location.stable?.heading_deg,
+      location.stable?.course_deg,
+    ];
+    for (const value of candidates) {
+      const numberValue = Number(value);
+      if (Number.isFinite(numberValue)) return ((numberValue % 360) + 360) % 360;
+    }
+    return null;
+  }
+
+  function applyFollowCamera(location, immediate = false) {
+    if (!state.map || !state.follow || !location || !validCoord(location.lat, location.lon)) return;
+    const speed = Number(location.speed_mph ?? location.stable?.speed_mph ?? 0);
+    const heading = locationHeading(location);
+    const options = {
+      center: [Number(location.lon), Number(location.lat)],
+      zoom: Math.max(state.map.getZoom(), 15),
+      pitch: FOLLOW_PITCH,
+      duration: immediate ? 0 : 650,
+      essential: true,
+    };
+    if (heading !== null && speed >= FOLLOW_MIN_HEADING_SPEED_MPH) {
+      options.bearing = heading;
+    }
+    state.map.easeTo(options);
+  }
+
+  function setFollowMode(enabled) {
+    state.follow = Boolean(enabled);
+    $("followToggle")?.classList.toggle("is-active", state.follow);
+    if (!state.map) return;
+    if (state.follow) {
+      applyFollowCamera(state.currentLocation, true);
+    } else {
+      state.map.easeTo({ pitch: 0, bearing: 0, duration: 500, essential: true });
+    }
+  }
+
   function initMap(style) {
     clearPollers();
     if (state.map) state.map.remove();
@@ -1657,9 +1725,12 @@
     });
     state.map.addControl(new maplibregl.ScaleControl({ maxWidth: 120, unit: "imperial" }), "bottom-left");
     state.map.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-right");
+    collapseAttribution();
     state.map.on("error", logMapError);
     state.map.on("moveend", saveMapView);
     state.map.on("load", async () => {
+      collapseAttribution();
+      applyMapTheme();
       applyBuildingDisplayMode();
       await loadPoiImages();
       addMilitaryHatchLayer();
@@ -1675,6 +1746,7 @@
       state.trackTimer = setInterval(pollTrack, 4000);
       state.packTimer = setInterval(checkPackChange, 30000);
     });
+    state.map.on("idle", collapseAttribution);
     state.map.on("click", (event) => {
       if (state.offlineRegionDraw) return;
       if (state.inspectTile) {
@@ -2478,19 +2550,36 @@
       node.innerHTML = '<div class="omv2-overlay-note">No downloaded overlays yet. Use Settings → Map Packs to download overlay data.</div>';
       return;
     }
-    for (const overlay of overlays) {
+    const active = overlays.filter((overlay) => overlay.enabled);
+    const inactive = overlays.filter((overlay) => !overlay.enabled);
+    const renderGroup = (title, group) => {
+      if (!group.length) return;
+      const heading = document.createElement("div");
+      heading.className = "omv2-overlay-section-title";
+      heading.textContent = title;
+      node.appendChild(heading);
+      for (const overlay of group) renderOverlayControlRow(node, overlay);
+    };
+    renderGroup("Active", active);
+    renderGroup("Inactive", inactive);
+  }
+
+  function renderOverlayControlRow(node, overlay) {
       const row = document.createElement("div");
       row.className = "omv2-folder-row omv2-overlay-row";
-      const status = overlay.cache_status && overlay.cache_status !== "cached" ? ` · ${overlay.cache_status}` : "";
+      row.draggable = true;
+      row.dataset.overlayId = overlay.id;
       row.innerHTML = `
         <label class="omv2-overlay-check">
           <input type="checkbox" ${overlay.enabled ? "checked" : ""}>
-          <span>${escapeHtml(overlay.name || overlay.id)}<br><small class="omv2-overlay-note">${escapeHtml(overlaySummary(overlay, status))}</small></span>
+          <span>${escapeHtml(overlay.name || overlay.id)}</span>
         </label>
         <label class="omv2-overlay-opacity">
           <span>${Math.round(Number(overlay.opacity ?? 1) * 100)}%</span>
           <input type="range" min="0" max="1" step="0.05" value="${Number(overlay.opacity ?? 1)}">
         </label>
+        ${overlay.category === "geopdf" ? `<button class="omv2-mini-button" type="button" data-zoom-overlay="${escapeHtml(overlay.id)}" title="Zoom to map">⌖</button>` : ""}
+        <span class="omv2-overlay-drag" title="Drag to reorder">☰</span>
       `;
       row.querySelector(".omv2-overlay-check input").addEventListener("change", async (event) => {
         try {
@@ -2509,8 +2598,60 @@
           toast(error.message, true);
         }
       });
+      const zoomButton = row.querySelector("[data-zoom-overlay]");
+      if (zoomButton) {
+        zoomButton.addEventListener("click", () => zoomToOverlayBounds(overlay));
+      }
+      row.addEventListener("dragstart", (event) => {
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", overlay.id);
+        row.classList.add("is-dragging");
+      });
+      row.addEventListener("dragend", () => row.classList.remove("is-dragging"));
+      row.addEventListener("dragover", (event) => {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "move";
+      });
+      row.addEventListener("drop", async (event) => {
+        event.preventDefault();
+        const sourceId = event.dataTransfer.getData("text/plain");
+        const targetId = row.dataset.overlayId;
+        if (!sourceId || !targetId || sourceId === targetId) return;
+        try {
+          await moveOverlayBefore(sourceId, targetId);
+        } catch (error) {
+          toast(error.message || "Overlay order update failed.", true);
+        }
+      });
       node.appendChild(row);
+  }
+
+  async function moveOverlayBefore(sourceId, targetId) {
+    const ordered = normalizeOverlayRegistry(state.overlayRegistry).filter((overlay) => overlay.available);
+    const sourceIndex = ordered.findIndex((overlay) => overlay.id === sourceId);
+    const targetIndex = ordered.findIndex((overlay) => overlay.id === targetId);
+    if (sourceIndex < 0 || targetIndex < 0) return;
+    const [source] = ordered.splice(sourceIndex, 1);
+    ordered.splice(targetIndex > sourceIndex ? targetIndex - 1 : targetIndex, 0, source);
+    for (let index = 0; index < ordered.length; index += 1) {
+      await setOverlayOrder(ordered[index].id, (index + 1) * 10);
     }
+    state.overlayRegistry = await fetchJson(API.overlays);
+    renderOverlayControls();
+    await boot();
+  }
+
+  function zoomToOverlayBounds(overlay) {
+    const bbox = Array.isArray(overlay.bounds) ? overlay.bounds : Array.isArray(overlay.metadata?.bounds) ? overlay.metadata.bounds : null;
+    if (!state.map || !bbox || bbox.length !== 4) {
+      toast("No bounds available for this overlay.", true);
+      return;
+    }
+    state.map.fitBounds([[Number(bbox[0]), Number(bbox[1])], [Number(bbox[2]), Number(bbox[3])]], {
+      padding: 64,
+      duration: 650,
+      maxZoom: 15,
+    });
   }
 
   function setManagerStatus(message = "", error = false) {
@@ -2773,6 +2914,85 @@
       }) || null;
   }
 
+  function featureKey(feature, title, point) {
+    return `${feature.source || ""}:${feature.sourceLayer || feature.layer?.id || ""}:${title}:${point.map((value) => Number(value).toFixed(4)).join(",")}`;
+  }
+
+  function addSearchFeature(results, seen, feature, sourceLabel, sourceType, overlay = null) {
+    if (!matchesSearch(feature, state.searchNeedles || [])) return;
+    const point = pointForFeature(feature);
+    if (!point) return;
+    if (state.searchBounds && !state.searchBounds.contains({ lng: Number(point[0]), lat: Number(point[1]) })) return;
+    const title = searchResultTitle(feature, "Map item");
+    const key = featureKey(feature, title, point);
+    if (seen.has(key)) return;
+    seen.add(key);
+    results.push({
+      feature,
+      point,
+      title,
+      subtitle: searchResultSubtitle(feature, sourceLabel),
+      source: sourceType,
+      overlay,
+    });
+  }
+
+  function querySourceFeatures(sourceId, sourceLayers = []) {
+    if (!state.map || !sourceId || !state.map.getSource(sourceId)) return [];
+    const layerNames = Array.from(new Set(sourceLayers.filter(Boolean)));
+    const results = [];
+    if (!layerNames.length) {
+      try {
+        results.push(...state.map.querySourceFeatures(sourceId));
+      } catch {
+        // Some source types require a source-layer; skip them below.
+      }
+    }
+    for (const sourceLayer of layerNames) {
+      try {
+        results.push(...state.map.querySourceFeatures(sourceId, { sourceLayer }));
+      } catch {
+        // Missing source layers are expected for mixed overlay types.
+      }
+    }
+    return results;
+  }
+
+  function searchLoadedSourceFeatures({ includeBase, includeOverlays, results, seen }) {
+    const style = state.map?.getStyle();
+    if (!style?.layers) return;
+    const sourceLayersBySource = new Map();
+    for (const layer of style.layers) {
+      if (!layer.source || !layer["source-layer"]) continue;
+      if (!sourceLayersBySource.has(layer.source)) sourceLayersBySource.set(layer.source, new Set());
+      sourceLayersBySource.get(layer.source).add(layer["source-layer"]);
+    }
+    if (includeBase && state.packSelection?.base) {
+      const baseSource = sourceIdFor(state.packSelection.base);
+      const baseLayers = Array.from(sourceLayersBySource.get(baseSource) || []);
+      for (const feature of querySourceFeatures(baseSource, baseLayers)) {
+        addSearchFeature(results, seen, feature, feature.sourceLayer || "Map", "map");
+      }
+    }
+    if (!includeOverlays) return;
+    for (const overlay of normalizeOverlayRegistry(state.overlayRegistry).filter((item) => item.enabled)) {
+      const sourceId = overlaySourceId(overlay);
+      const layers = Array.from(sourceLayersBySource.get(sourceId) || []);
+      if (overlay.source_layer) layers.push(overlay.source_layer);
+      for (const feature of querySourceFeatures(sourceId, layers)) {
+        addSearchFeature(results, seen, feature, overlay.name || overlay.id, "overlay", overlay);
+      }
+      for (const region of overlay.region_sources || []) {
+        const regionSourceId = overlaySourceId(overlay, region.region_id || region.region_name || "region");
+        const regionLayers = Array.from(sourceLayersBySource.get(regionSourceId) || []);
+        if (overlay.source_layer) regionLayers.push(overlay.source_layer);
+        for (const feature of querySourceFeatures(regionSourceId, regionLayers)) {
+          addSearchFeature(results, seen, feature, overlay.name || overlay.id, "overlay", overlay);
+        }
+      }
+    }
+  }
+
   function runMapSearch(query) {
     const q = String(query || "").trim().toLowerCase();
     if (!state.map || !q) {
@@ -2807,10 +3027,12 @@
       return;
     }
     const needles = searchNeedles(q);
+    state.searchNeedles = needles;
     const includeBase = $("searchBase")?.checked !== false;
     const includeOverlays = $("searchOverlays")?.checked !== false;
     const includeSaved = $("searchSaved")?.checked !== false;
     const bounds = state.map.getBounds();
+    state.searchBounds = bounds;
     const results = [];
     const seen = new Set();
     if (includeSaved) {
@@ -2849,6 +3071,7 @@
         overlay,
       });
     }
+    searchLoadedSourceFeatures({ includeBase, includeOverlays, results, seen });
     state.searchResults = results;
     renderSearchResults(results);
   }
@@ -2916,7 +3139,7 @@
       if (location) {
         state.currentLocation = location;
         updateVehicle(location);
-        if (state.follow) state.map.easeTo({ center: [location.lon, location.lat], duration: 450 });
+        if (state.follow) applyFollowCamera(location);
       } else if (!payload.valid) {
         maybeStartBrowserWatch();
       }
@@ -3023,12 +3246,16 @@
   }
 
   function openTrackModeModal() {
-    $("trackModeTitle").textContent = state.manualRecording ? "Continuous recording active" : "Recording options";
+    const autoEnabled = localStorage.getItem(MAP_AUTO_RECORDING_KEY) !== "false";
+    $("trackModeTitle").textContent = state.manualRecording ? "Full recording active" : autoEnabled ? "Auto recording active" : "Track recording off";
     $("trackModeHint").textContent = state.manualRecording
-      ? "This route will continue recording until you stop it. Auto 2 mph recording is bypassed while continuous recording is active."
-      : "Auto recording starts above 2 mph. Continuous recording keeps a single route active until you stop it.";
-    $("startManualTrack").hidden = state.manualRecording;
-    $("stopManualTrack").hidden = !state.manualRecording;
+      ? "Full recording keeps a single route active until you switch back to auto or off."
+      : autoEnabled
+        ? "Auto recording starts above 2 mph. Full recording records continuously until stopped."
+        : "Recording is disabled. Choose auto or full recording to save tracks.";
+    $("startManualTrack").classList.toggle("is-active", state.manualRecording);
+    $("autoTrackMode").classList.toggle("is-active", autoEnabled && !state.manualRecording);
+    $("stopManualTrack").classList.toggle("is-active", !autoEnabled && !state.manualRecording);
     $("trackModeModal").hidden = false;
   }
 
@@ -3048,6 +3275,21 @@
     const status = state.track && state.track.status ? state.track.status : "inactive";
     updateTrackDot(status, payload.track_mode || "auto");
     $("trackStatus").textContent = `Track ${status}${state.track && state.track.point_count ? ` · ${state.track.point_count} pts` : ""}`;
+    return payload;
+  }
+
+  async function setAutoTrackRecording(enabled) {
+    localStorage.setItem(MAP_AUTO_RECORDING_KEY, JSON.stringify(Boolean(enabled)));
+    const response = await fetch("/api/settings/app", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ map_auto_recording: Boolean(enabled) }),
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok || payload.ok === false) {
+      throw new Error(payload.error || "Auto recording update failed.");
+    }
+    await pollTrack();
     return payload;
   }
 
@@ -3330,13 +3572,17 @@
   function bindControls() {
     $("zoomIn").addEventListener("click", () => state.map && state.map.zoomIn());
     $("zoomOut").addEventListener("click", () => state.map && state.map.zoomOut());
-    $("followToggle").addEventListener("click", () => {
-      state.follow = !state.follow;
-      $("followToggle").classList.toggle("is-active", state.follow);
-      if (state.follow && state.currentLocation && state.map) {
-        state.map.easeTo({ center: [state.currentLocation.lon, state.currentLocation.lat], zoom: Math.max(state.map.getZoom(), 14), duration: 650 });
-      }
-    });
+    $("followToggle").addEventListener("click", () => setFollowMode(!state.follow));
+    const rightControls = document.querySelector(".omv2-controls-right");
+    if (rightControls) {
+      const collapsed = localStorage.getItem(MAP_RIGHT_CONTROLS_COLLAPSED_KEY) === "true";
+      rightControls.classList.toggle("is-collapsed", collapsed);
+      $("rightControlsCollapse")?.addEventListener("click", () => {
+        const next = !rightControls.classList.contains("is-collapsed");
+        rightControls.classList.toggle("is-collapsed", next);
+        localStorage.setItem(MAP_RIGHT_CONTROLS_COLLAPSED_KEY, JSON.stringify(next));
+      });
+    }
     $("addCurrentWaypoint").addEventListener("click", () => {
       state.modalPoint = null;
       openWaypointModal("Save current location");
@@ -3437,18 +3683,30 @@
     $("closeTrackModeAction").addEventListener("click", closeTrackModeModal);
     $("startManualTrack").addEventListener("click", async () => {
       try {
+        await setAutoTrackRecording(true);
         await setManualTrackRecording(true);
         closeTrackModeModal();
-        toast("Continuous recording started.");
+        toast("Full recording started.");
       } catch (error) {
         toast(error.message || "Track start failed.", true);
+      }
+    });
+    $("autoTrackMode").addEventListener("click", async () => {
+      try {
+        await setManualTrackRecording(false);
+        await setAutoTrackRecording(true);
+        closeTrackModeModal();
+        toast("Auto recording enabled.");
+      } catch (error) {
+        toast(error.message || "Auto recording update failed.", true);
       }
     });
     $("stopManualTrack").addEventListener("click", async () => {
       try {
         await setManualTrackRecording(false);
+        await setAutoTrackRecording(false);
         closeTrackModeModal();
-        toast("Continuous recording stopped.");
+        toast("Track recording disabled.");
       } catch (error) {
         toast(error.message || "Track stop failed.", true);
       }
@@ -3488,11 +3746,21 @@
     });
     $("openMapPackSettings").addEventListener("click", () => {
       if (window.parent && window.parent !== window) {
-        window.parent.postMessage({ type: "oiab:open-app", appId: "map-packs" }, window.location.origin);
+        window.parent.postMessage({ type: "oiab:open-app", appId: "overland-settings", settingsSection: "maps" }, window.location.origin);
       } else if (window.top && window.top !== window) {
-        window.top.postMessage({ type: "oiab:open-app", appId: "map-packs" }, window.location.origin);
+        window.top.postMessage({ type: "oiab:open-app", appId: "overland-settings", settingsSection: "maps" }, window.location.origin);
       } else {
-        window.location.href = "/mobile/map-packs.html";
+        window.location.href = "/?headunit=1&settings=maps";
+      }
+    });
+    $("overlaySettingsLink")?.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: "oiab:open-app", appId: "overland-settings", settingsSection: "maps" }, window.location.origin);
+      } else if (window.top && window.top !== window) {
+        window.top.postMessage({ type: "oiab:open-app", appId: "overland-settings", settingsSection: "maps" }, window.location.origin);
+      } else {
+        window.location.href = "/?headunit=1&settings=maps";
       }
     });
     $("closeWaypointModal").addEventListener("click", closeWaypointModal);
@@ -3606,6 +3874,14 @@
       if (event.data?.type === "oiab:close-map-data-manager") closeDataManagerModal();
     });
     document.addEventListener("click", (event) => {
+      if (!$("savedDataPanel").hidden || !$("overlaysPanel").hidden || !$("dataManagerPanel").hidden) {
+        const floating = event.target.closest("#savedDataPanel, #overlaysPanel, #dataManagerPanel, #savedDataToggle, #overlaysToggle, [data-open-map-data-manager], .maplibregl-popup, .omv2-modal");
+        if (!floating) {
+          $("savedDataPanel").hidden = true;
+          $("overlaysPanel").hidden = true;
+          $("dataManagerPanel").hidden = true;
+        }
+      }
       const managerLink = event.target.closest("[data-open-map-data-manager]");
       if (managerLink) {
         event.preventDefault();
@@ -3673,9 +3949,12 @@
   renderWaypointTypes();
   populateIconSelect();
   window.addEventListener("storage", (event) => {
-    if (event.key !== MAP_3D_BUILDINGS_KEY) return;
-    state.show3dBuildings = JSON.parse(event.newValue || "false");
-    applyBuildingDisplayMode();
+    if (event.key === MAP_3D_BUILDINGS_KEY) {
+      state.show3dBuildings = JSON.parse(event.newValue || "false");
+      applyBuildingDisplayMode();
+    }
+    if (event.key === MAP_THEME_KEY) applyMapTheme();
   });
+  applyMapTheme();
   boot();
 })();

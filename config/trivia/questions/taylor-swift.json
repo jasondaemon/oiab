@@ -1,0 +1,667 @@
+{
+  "category": "Taylor Swift",
+  "slug": "taylor-swift",
+  "version": 1,
+  "questions": [
+    {
+      "id": "taylor-swift_easy_001",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Taylor Swift's lucky number?",
+      "answers": [
+        "Her middle name is Alison",
+        "Thirteen is her favorite number",
+        "Kanye West",
+        "5 feet 10 inches"
+      ],
+      "correct": 1,
+      "explanation": "Thirteen is her favorite number is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_002",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Taylor Swift's middle name?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Kanye West",
+        "5 feet 10 inches",
+        "Her middle name is Alison"
+      ],
+      "correct": 3,
+      "explanation": "Her middle name is Alison is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_003",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What famous rapper interrupted Taylor Swift's speech at the 2009 VMA's?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "5 feet 10 inches",
+        "Kanye West"
+      ],
+      "correct": 3,
+      "explanation": "Kanye West is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_004",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How tall is Taylor Swift?",
+      "answers": [
+        "3",
+        "4",
+        "5 feet 10 inches",
+        "6"
+      ],
+      "correct": 2,
+      "explanation": "5 feet 10 inches is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_005",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of Taylor's childhood best friend?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "bigail Anderson",
+        "Kanye West"
+      ],
+      "correct": 2,
+      "explanation": "bigail Anderson is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_006",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What song earned Taylor a \"Best Lyrics\" award at the 2015 iHeartRadio Music Awards?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "\"Blank Space\"",
+        "Kanye West"
+      ],
+      "correct": 2,
+      "explanation": "\"Blank Space\" is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_007",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was Taylor named for?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Kanye West",
+        "James Taylor"
+      ],
+      "correct": 3,
+      "explanation": "James Taylor is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_008",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of Taylor's brother?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Kanye West",
+        "ustin"
+      ],
+      "correct": 3,
+      "explanation": "ustin is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_009",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who did Taylor write \"We Are Never Ever Getting Back Together\" about?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Jake Gyllenhaal",
+        "Kanye West"
+      ],
+      "correct": 2,
+      "explanation": "Jake Gyllenhaal is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_010",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What service did Taylor remove her music from?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Spotify",
+        "Kanye West"
+      ],
+      "correct": 2,
+      "explanation": "Spotify is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_011",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In what song does Taylor sing: \"Cause the players gonna play, play, play, play, play\"?",
+      "answers": [
+        "\"Shake It Off\"",
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Kanye West"
+      ],
+      "correct": 0,
+      "explanation": "\"Shake It Off\" is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_012",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who did Taylor write \" I Knew You Were Trouble \" about?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Harry Styles",
+        "Kanye West"
+      ],
+      "correct": 2,
+      "explanation": "Harry Styles is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_013",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "When is Taylor's birthday?",
+      "answers": [
+        "12",
+        "14",
+        "8",
+        "Dec. 13, 1989"
+      ],
+      "correct": 3,
+      "explanation": "Dec. 13, 1989 is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_014",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What show did Taylor appear on in 2009?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "CSI",
+        "Her middle name is Alison",
+        "Kanye West"
+      ],
+      "correct": 1,
+      "explanation": "CSI is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_015",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What are Taylor's cat's names?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Olivia Benson and Meredith Grey",
+        "Her middle name is Alison",
+        "Kanye West"
+      ],
+      "correct": 1,
+      "explanation": "Olivia Benson and Meredith Grey is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_016",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where did Taylor move at the age of 14?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Nashville, Tennessee",
+        "Kanye West"
+      ],
+      "correct": 2,
+      "explanation": "Nashville, Tennessee is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_017",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Taylor is the godmother of which celebrity's kid?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Kanye West",
+        "Jaime King"
+      ],
+      "correct": 3,
+      "explanation": "Jaime King is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_018",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In what song does Taylor sing: \"He's got a one-hand feel on the steering wheel, the other on my heart\"?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Kanye West",
+        "\"Our Song\""
+      ],
+      "correct": 3,
+      "explanation": "\"Our Song\" is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_019",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who taught Taylor how to play the guitar?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Kanye West",
+        "repairman"
+      ],
+      "correct": 3,
+      "explanation": "repairman is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_020",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What artist covered the entire \"1989\" album?",
+      "answers": [
+        "Ryan Adams",
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Kanye West"
+      ],
+      "correct": 0,
+      "explanation": "Ryan Adams is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_021",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Taylor donated $50,000 to whom in 2014?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "The Seattle Symphony",
+        "Kanye West"
+      ],
+      "correct": 2,
+      "explanation": "The Seattle Symphony is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_022",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where was Taylor born?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Pennsylvania",
+        "Kanye West"
+      ],
+      "correct": 2,
+      "explanation": "Pennsylvania is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_023",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Taylor's second album?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Kanye West",
+        "Fearless"
+      ],
+      "correct": 3,
+      "explanation": "Fearless is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_024",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What are the names of Taylor's parents?",
+      "answers": [
+        "Scott and Andrea Swift",
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Kanye West"
+      ],
+      "correct": 0,
+      "explanation": "Scott and Andrea Swift is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_025",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What song did Taylor write for her high school talent show?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Our Song",
+        "Her middle name is Alison",
+        "Kanye West"
+      ],
+      "correct": 1,
+      "explanation": "Our Song is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_026",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What film has two Taylor-written songs on the soundtrack?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "\" Hannah Montana : The Movie\"",
+        "Her middle name is Alison",
+        "Kanye West"
+      ],
+      "correct": 1,
+      "explanation": "\" Hannah Montana : The Movie\" is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_027",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Taylor was nominated for Best New Artist at the 2008 Grammys. Who won?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "my Winehouse",
+        "Her middle name is Alison",
+        "Kanye West"
+      ],
+      "correct": 1,
+      "explanation": "my Winehouse is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_028",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In what song does Taylor sing: \"I guess you didn't care, and I guess I liked that\"?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "\"I Knew You Were Trouble\"",
+        "Her middle name is Alison",
+        "Kanye West"
+      ],
+      "correct": 1,
+      "explanation": "\"I Knew You Were Trouble\" is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_029",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In what song does Taylor sing: \"She wears high heels, I wear sneakers…\"?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "\"You Belong with Me\"",
+        "Kanye West"
+      ],
+      "correct": 2,
+      "explanation": "\"You Belong with Me\" is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_030",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where did Taylor spend her early years?",
+      "answers": [
+        "Pennsylvania Christmas tree farm",
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Kanye West"
+      ],
+      "correct": 0,
+      "explanation": "Pennsylvania Christmas tree farm is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_031",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Taylor Swift met actor Taylor Lautner on the set of what movie?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Valentine's Day",
+        "Kanye West"
+      ],
+      "correct": 2,
+      "explanation": "Valentine's Day is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_032",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Taylor Swift's favorite color?",
+      "answers": [
+        "Purple",
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Kanye West"
+      ],
+      "correct": 0,
+      "explanation": "Purple is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_033",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Taylor was the spokesperson for what NHL team?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Nashville Predators",
+        "Kanye West"
+      ],
+      "correct": 2,
+      "explanation": "Nashville Predators is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_034",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was the lead single on Taylor Swift's debut album?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Kanye West",
+        "\"Tim McGraw\""
+      ],
+      "correct": 3,
+      "explanation": "\"Tim McGraw\" is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_035",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which singer collaborated with Swift on the single The Last Time?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Kanye West",
+        "Gary Lightbody"
+      ],
+      "correct": 3,
+      "explanation": "Gary Lightbody is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_036",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Taylor's brother is a graduate of what college?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Kanye West",
+        "Notre Dame"
+      ],
+      "correct": 3,
+      "explanation": "Notre Dame is the correct answer."
+    },
+    {
+      "id": "taylor-swift_easy_037",
+      "category": "Taylor Swift",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Taylor likes putting hidden messages in the lyric books of her albums. For which song was this the hidden message?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "'You Thought I Would Forget'?",
+        "Kanye West"
+      ],
+      "correct": 2,
+      "explanation": "'You Thought I Would Forget'? is the correct answer."
+    },
+    {
+      "id": "taylor-swift_medium_001",
+      "category": "Taylor Swift",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "When did Taylor release her first album?",
+      "answers": [
+        "October 2006",
+        "2005",
+        "2007",
+        "2001"
+      ],
+      "correct": 0,
+      "explanation": "October 2006 is the correct answer."
+    },
+    {
+      "id": "taylor-swift_medium_002",
+      "category": "Taylor Swift",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What record label did Taylor Swift first sign with?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Big Machine Records",
+        "Her middle name is Alison",
+        "Kanye West"
+      ],
+      "correct": 1,
+      "explanation": "Big Machine Records is the correct answer."
+    },
+    {
+      "id": "taylor-swift_medium_003",
+      "category": "Taylor Swift",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Taylor's first broadcast performance of \"Tim McGraw\" was on what show?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Good Morning America",
+        "Her middle name is Alison",
+        "Kanye West"
+      ],
+      "correct": 1,
+      "explanation": "Good Morning America is the correct answer."
+    },
+    {
+      "id": "taylor-swift_hard_001",
+      "category": "Taylor Swift",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What year was Taylor born?",
+      "answers": [
+        "She was born in 1989",
+        "1988",
+        "1990",
+        "1984"
+      ],
+      "correct": 0,
+      "explanation": "She was born in 1989 is the correct answer."
+    },
+    {
+      "id": "taylor-swift_hard_002",
+      "category": "Taylor Swift",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many Grammys did Taylor win in 2010?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Kanye West",
+        "She won four Grammy awards"
+      ],
+      "correct": 3,
+      "explanation": "She won four Grammy awards is the correct answer."
+    },
+    {
+      "id": "taylor-swift_hard_003",
+      "category": "Taylor Swift",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many singles were released from Taylor's first album?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Kanye West",
+        "Five singles"
+      ],
+      "correct": 3,
+      "explanation": "Five singles is the correct answer."
+    },
+    {
+      "id": "taylor-swift_hard_004",
+      "category": "Taylor Swift",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many songs did Taylor write or co-write on her debut album?",
+      "answers": [
+        "Thirteen is her favorite number",
+        "Her middle name is Alison",
+        "Every song",
+        "Kanye West"
+      ],
+      "correct": 2,
+      "explanation": "Every song is the correct answer."
+    }
+  ]
+}

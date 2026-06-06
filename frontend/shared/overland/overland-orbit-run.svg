@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Orbit Run">
+  <rect width="128" height="128" rx="28" fill="#081421"/>
+  <circle cx="64" cy="64" r="42" fill="none" stroke="#2f6b63" stroke-width="7"/>
+  <circle cx="64" cy="64" r="25" fill="none" stroke="#7ee58b" stroke-width="3" opacity=".7"/>
+  <path d="M93 32 78 72l15-7 15 7z" fill="#ffd451" stroke="#071109" stroke-width="4" stroke-linejoin="round" transform="rotate(22 93 52)"/>
+  <g fill="#ff6868">
+    <circle cx="63" cy="63" r="7"/>
+    <circle cx="49" cy="50" r="5"/>
+    <circle cx="80" cy="74" r="5"/>
+  </g>
+  <path d="M25 101c18-15 45-15 78 0" fill="none" stroke="#66d9ef" stroke-width="5" stroke-linecap="round" opacity=".85"/>
+</svg>

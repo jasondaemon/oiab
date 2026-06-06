@@ -1,0 +1,4507 @@
+{
+  "category": "Physics",
+  "slug": "physics",
+  "version": 1,
+  "questions": [
+    {
+      "id": "physics_easy_001",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What force pulls objects toward Earth?",
+      "answers": [
+        "Lever",
+        "Ampere",
+        "Gravity",
+        "Light"
+      ],
+      "correct": 2,
+      "explanation": "Gravity pulls masses toward each other."
+    },
+    {
+      "id": "physics_easy_002",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What simple machine is a seesaw?",
+      "answers": [
+        "Gravity",
+        "Ampere",
+        "Lever",
+        "Light"
+      ],
+      "correct": 2,
+      "explanation": "A seesaw works as a lever."
+    },
+    {
+      "id": "physics_easy_003",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the unit of electric current?",
+      "answers": [
+        "Ampere",
+        "Gravity",
+        "Lever",
+        "Light"
+      ],
+      "correct": 0,
+      "explanation": "Current is measured in amperes."
+    },
+    {
+      "id": "physics_easy_004",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What travels faster: light or sound?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Light",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "Light travels faster than sound."
+    },
+    {
+      "id": "physics_easy_005",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does a magnet attract most strongly?",
+      "answers": [
+        "Iron",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "Iron is strongly attracted to magnets."
+    },
+    {
+      "id": "physics_easy_006",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What simple machine uses a wheel and rope?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "Pulley"
+      ],
+      "correct": 3,
+      "explanation": "A pulley uses a wheel and rope."
+    },
+    {
+      "id": "physics_easy_007",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What form of energy is stored in a stretched rubber band?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Potential energy",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "A stretched band stores elastic potential energy."
+    },
+    {
+      "id": "physics_easy_008",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What slows a rolling ball on carpet?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Friction",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "Friction resists motion."
+    },
+    {
+      "id": "physics_easy_009",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_easy_010",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_easy_011",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of power?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_easy_012",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: opposition to electric current?",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_easy_013",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: material that lets electricity flow easily?",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_easy_014",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: bending of light around corners or edges?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_easy_015",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: bouncing of light?",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_easy_016",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: transfer of heat through touch?",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_easy_017",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: push or pull?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_easy_018",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: amount of matter?",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_easy_019",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_easy_020",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_easy_021",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of power?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_easy_022",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: opposition to electric current?",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_easy_023",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: material that lets electricity flow easily?",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_easy_024",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: bending of light around corners or edges?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_easy_025",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: bouncing of light?",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_easy_026",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: transfer of heat through touch?",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_easy_027",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: push or pull?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_easy_028",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: amount of matter?",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_easy_029",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_easy_030",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_easy_031",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of power?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_easy_032",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: opposition to electric current?",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_easy_033",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: material that lets electricity flow easily?",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_easy_034",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: bending of light around corners or edges?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_easy_035",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: bouncing of light?",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_easy_036",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: transfer of heat through touch?",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_easy_037",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: push or pull?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_easy_038",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: amount of matter?",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_easy_039",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_easy_040",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_easy_041",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of power?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_easy_042",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: opposition to electric current?",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_easy_043",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: material that lets electricity flow easily?",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_easy_044",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: bending of light around corners or edges?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_easy_045",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: bouncing of light?",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_easy_046",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: transfer of heat through touch?",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_easy_047",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: push or pull?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_easy_048",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: amount of matter?",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_easy_049",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_easy_050",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_easy_051",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of power?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_easy_052",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: opposition to electric current?",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_easy_053",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: material that lets electricity flow easily?",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_easy_054",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: bending of light around corners or edges?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_easy_055",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: bouncing of light?",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_easy_056",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: transfer of heat through touch?",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_easy_057",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: push or pull?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_easy_058",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: amount of matter?",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_easy_059",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_easy_060",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_easy_061",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of power?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_easy_062",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: opposition to electric current?",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_easy_063",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: material that lets electricity flow easily?",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_easy_064",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: bending of light around corners or edges?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_easy_065",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: bouncing of light?",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_easy_066",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: transfer of heat through touch?",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_easy_067",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: push or pull?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_easy_068",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: amount of matter?",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_easy_069",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_easy_070",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_easy_071",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of power?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_easy_072",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: opposition to electric current?",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_easy_073",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: material that lets electricity flow easily?",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_easy_074",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: bending of light around corners or edges?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_easy_075",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: bouncing of light?",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_easy_076",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: transfer of heat through touch?",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_easy_077",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: push or pull?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_easy_078",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: amount of matter?",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_easy_079",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_easy_080",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_easy_081",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of power?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_easy_082",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: opposition to electric current?",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_easy_083",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: material that lets electricity flow easily?",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_easy_084",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: bending of light around corners or edges?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_easy_085",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: bouncing of light?",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_easy_086",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: transfer of heat through touch?",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_easy_087",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: push or pull?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_easy_088",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: amount of matter?",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_easy_089",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_easy_090",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_easy_091",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of power?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_easy_092",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: opposition to electric current?",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_easy_093",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: material that lets electricity flow easily?",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_easy_094",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: bending of light around corners or edges?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_easy_095",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: bouncing of light?",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_easy_096",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: transfer of heat through touch?",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_easy_097",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: push or pull?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_easy_098",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: amount of matter?",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_easy_099",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_easy_100",
+      "category": "Physics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_medium_001",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does Newton’s first law describe?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Inertia",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "Objects tend to keep their motion unless acted on."
+    },
+    {
+      "id": "physics_medium_002",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is voltage often compared to?",
+      "answers": [
+        "Gravity",
+        "Electrical pressure",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "Voltage is like electrical potential difference."
+    },
+    {
+      "id": "physics_medium_003",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What happens to light in refraction?",
+      "answers": [
+        "Gravity",
+        "It bends entering a new material",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "Refraction is bending due to speed change."
+    },
+    {
+      "id": "physics_medium_004",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is kinetic energy?",
+      "answers": [
+        "Gravity",
+        "Energy of motion",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "Kinetic energy is motion energy."
+    },
+    {
+      "id": "physics_medium_005",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does frequency measure?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Cycles per second",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "Frequency is cycles per second, measured in hertz."
+    },
+    {
+      "id": "physics_medium_006",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is acceleration?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "Change in velocity over time"
+      ],
+      "correct": 3,
+      "explanation": "Acceleration is change in velocity."
+    },
+    {
+      "id": "physics_medium_007",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does density compare?",
+      "answers": [
+        "Gravity",
+        "Mass to volume",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "Density is mass per volume."
+    },
+    {
+      "id": "physics_medium_008",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is resonance?",
+      "answers": [
+        "Large vibration at a natural frequency",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "Resonance occurs at natural frequencies."
+    },
+    {
+      "id": "physics_medium_009",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_medium_010",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_medium_011",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of power?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_medium_012",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as opposition to electric current?",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_medium_013",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as material that lets electricity flow easily?",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_medium_014",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as bending of light around corners or edges?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_medium_015",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as bouncing of light?",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_medium_016",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as transfer of heat through touch?",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_medium_017",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as push or pull?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_medium_018",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as amount of matter?",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_medium_019",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_medium_020",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_medium_021",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of power?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_medium_022",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as opposition to electric current?",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_medium_023",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as material that lets electricity flow easily?",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_medium_024",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as bending of light around corners or edges?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_medium_025",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as bouncing of light?",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_medium_026",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as transfer of heat through touch?",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_medium_027",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as push or pull?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_medium_028",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as amount of matter?",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_medium_029",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_medium_030",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_medium_031",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of power?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_medium_032",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as opposition to electric current?",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_medium_033",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as material that lets electricity flow easily?",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_medium_034",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as bending of light around corners or edges?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_medium_035",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as bouncing of light?",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_medium_036",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as transfer of heat through touch?",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_medium_037",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as push or pull?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_medium_038",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as amount of matter?",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_medium_039",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_medium_040",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_medium_041",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of power?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_medium_042",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as opposition to electric current?",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_medium_043",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as material that lets electricity flow easily?",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_medium_044",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as bending of light around corners or edges?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_medium_045",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as bouncing of light?",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_medium_046",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as transfer of heat through touch?",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_medium_047",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as push or pull?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_medium_048",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as amount of matter?",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_medium_049",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_medium_050",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_medium_051",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of power?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_medium_052",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as opposition to electric current?",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_medium_053",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as material that lets electricity flow easily?",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_medium_054",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as bending of light around corners or edges?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_medium_055",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as bouncing of light?",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_medium_056",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as transfer of heat through touch?",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_medium_057",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as push or pull?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_medium_058",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as amount of matter?",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_medium_059",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_medium_060",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_medium_061",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of power?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_medium_062",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as opposition to electric current?",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_medium_063",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as material that lets electricity flow easily?",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_medium_064",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as bending of light around corners or edges?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_medium_065",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as bouncing of light?",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_medium_066",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as transfer of heat through touch?",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_medium_067",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as push or pull?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_medium_068",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as amount of matter?",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_medium_069",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_medium_070",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_medium_071",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of power?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_medium_072",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as opposition to electric current?",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_medium_073",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as material that lets electricity flow easily?",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_medium_074",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as bending of light around corners or edges?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_medium_075",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as bouncing of light?",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_medium_076",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as transfer of heat through touch?",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_medium_077",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as push or pull?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_medium_078",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as amount of matter?",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_medium_079",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_medium_080",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_medium_081",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of power?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_medium_082",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as opposition to electric current?",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_medium_083",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as material that lets electricity flow easily?",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_medium_084",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as bending of light around corners or edges?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_medium_085",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as bouncing of light?",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_medium_086",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as transfer of heat through touch?",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_medium_087",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as push or pull?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_medium_088",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as amount of matter?",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_medium_089",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_medium_090",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_medium_091",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of power?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_medium_092",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as opposition to electric current?",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_medium_093",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as material that lets electricity flow easily?",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_medium_094",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as bending of light around corners or edges?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_medium_095",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as bouncing of light?",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_medium_096",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as transfer of heat through touch?",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_medium_097",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as push or pull?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_medium_098",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as amount of matter?",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_medium_099",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of force?",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_medium_100",
+      "category": "Physics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Physics, which option is best described as unit of energy?",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_hard_001",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is conservation of momentum useful for?",
+      "answers": [
+        "Analyzing collisions",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "Momentum conservation helps solve collision problems."
+    },
+    {
+      "id": "physics_hard_002",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is Ohm’s law relationship?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "Voltage equals current times resistance"
+      ],
+      "correct": 3,
+      "explanation": "Ohm’s law is V = IR."
+    },
+    {
+      "id": "physics_hard_003",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does entropy often measure in physics?",
+      "answers": [
+        "Energy dispersal or disorder",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "Entropy is linked to dispersal of energy and disorder."
+    },
+    {
+      "id": "physics_hard_004",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is centripetal force directed toward?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "The center of a circular path",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "Centripetal force points inward."
+    },
+    {
+      "id": "physics_hard_005",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does a transformer change in AC circuits?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Voltage level",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "Transformers step AC voltage up or down."
+    },
+    {
+      "id": "physics_hard_006",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is Bernoulli’s principle about?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "Fluid speed and pressure"
+      ],
+      "correct": 3,
+      "explanation": "Faster fluid can have lower pressure."
+    },
+    {
+      "id": "physics_hard_007",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is electromagnetic induction?",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "Changing magnetism creating voltage"
+      ],
+      "correct": 3,
+      "explanation": "Induction creates voltage from changing magnetic fields."
+    },
+    {
+      "id": "physics_hard_008",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is torque?",
+      "answers": [
+        "Gravity",
+        "Rotational force effect",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "Torque describes turning effect."
+    },
+    {
+      "id": "physics_hard_009",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of force.",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_hard_010",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of energy.",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_hard_011",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of power.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_hard_012",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: opposition to electric current.",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_hard_013",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: material that lets electricity flow easily.",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_hard_014",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: bending of light around corners or edges.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_hard_015",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: bouncing of light.",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_hard_016",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: transfer of heat through touch.",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_hard_017",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: push or pull.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_hard_018",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: amount of matter.",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_hard_019",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of force.",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_hard_020",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of energy.",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_hard_021",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of power.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_hard_022",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: opposition to electric current.",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_hard_023",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: material that lets electricity flow easily.",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_hard_024",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: bending of light around corners or edges.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_hard_025",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: bouncing of light.",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_hard_026",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: transfer of heat through touch.",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_hard_027",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: push or pull.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_hard_028",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: amount of matter.",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_hard_029",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of force.",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_hard_030",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of energy.",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_hard_031",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of power.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_hard_032",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: opposition to electric current.",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_hard_033",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: material that lets electricity flow easily.",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_hard_034",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: bending of light around corners or edges.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_hard_035",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: bouncing of light.",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_hard_036",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: transfer of heat through touch.",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_hard_037",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: push or pull.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_hard_038",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: amount of matter.",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_hard_039",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of force.",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_hard_040",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of energy.",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_hard_041",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of power.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_hard_042",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: opposition to electric current.",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_hard_043",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: material that lets electricity flow easily.",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_hard_044",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: bending of light around corners or edges.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_hard_045",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: bouncing of light.",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_hard_046",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: transfer of heat through touch.",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_hard_047",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: push or pull.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_hard_048",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: amount of matter.",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_hard_049",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of force.",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_hard_050",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of energy.",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_hard_051",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of power.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_hard_052",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: opposition to electric current.",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_hard_053",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: material that lets electricity flow easily.",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_hard_054",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: bending of light around corners or edges.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_hard_055",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: bouncing of light.",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_hard_056",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: transfer of heat through touch.",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_hard_057",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: push or pull.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_hard_058",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: amount of matter.",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_hard_059",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of force.",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_hard_060",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of energy.",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_hard_061",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of power.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_hard_062",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: opposition to electric current.",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_hard_063",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: material that lets electricity flow easily.",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_hard_064",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: bending of light around corners or edges.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_hard_065",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: bouncing of light.",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_hard_066",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: transfer of heat through touch.",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_hard_067",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: push or pull.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_hard_068",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: amount of matter.",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_hard_069",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of force.",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_hard_070",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of energy.",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_hard_071",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of power.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_hard_072",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: opposition to electric current.",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_hard_073",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: material that lets electricity flow easily.",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_hard_074",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: bending of light around corners or edges.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_hard_075",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: bouncing of light.",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_hard_076",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: transfer of heat through touch.",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_hard_077",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: push or pull.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_hard_078",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: amount of matter.",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_hard_079",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of force.",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_hard_080",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of energy.",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_hard_081",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of power.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_hard_082",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: opposition to electric current.",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_hard_083",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: material that lets electricity flow easily.",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_hard_084",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: bending of light around corners or edges.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_hard_085",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: bouncing of light.",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_hard_086",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: transfer of heat through touch.",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_hard_087",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: push or pull.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_hard_088",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: amount of matter.",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_hard_089",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of force.",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_hard_090",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of energy.",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    },
+    {
+      "id": "physics_hard_091",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of power.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "watt",
+        "Ampere"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is watt."
+    },
+    {
+      "id": "physics_hard_092",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: opposition to electric current.",
+      "answers": [
+        "Gravity",
+        "resistance",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is resistance."
+    },
+    {
+      "id": "physics_hard_093",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: material that lets electricity flow easily.",
+      "answers": [
+        "Gravity",
+        "conductor",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is conductor."
+    },
+    {
+      "id": "physics_hard_094",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: bending of light around corners or edges.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "diffraction"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is diffraction."
+    },
+    {
+      "id": "physics_hard_095",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: bouncing of light.",
+      "answers": [
+        "Gravity",
+        "reflection",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is reflection."
+    },
+    {
+      "id": "physics_hard_096",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: transfer of heat through touch.",
+      "answers": [
+        "conduction",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is conduction."
+    },
+    {
+      "id": "physics_hard_097",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: push or pull.",
+      "answers": [
+        "Gravity",
+        "Lever",
+        "Ampere",
+        "force"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is force."
+    },
+    {
+      "id": "physics_hard_098",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: amount of matter.",
+      "answers": [
+        "mass",
+        "Gravity",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is mass."
+    },
+    {
+      "id": "physics_hard_099",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of force.",
+      "answers": [
+        "Gravity",
+        "newton",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is newton."
+    },
+    {
+      "id": "physics_hard_100",
+      "category": "Physics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Physics clue, identify: unit of energy.",
+      "answers": [
+        "Gravity",
+        "joule",
+        "Lever",
+        "Ampere"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is joule."
+    }
+  ]
+}

@@ -1,0 +1,292 @@
+{
+  "category": "Star Trek",
+  "slug": "star-trek",
+  "version": 1,
+  "questions": [
+    {
+      "id": "star-trek_easy_001",
+      "category": "Star Trek",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In Gene Roddenberry's original treatment for Star Trek , what was the name of the Starship?",
+      "answers": [
+        "Helmsman",
+        "Starship Yorktown",
+        "Jean-Luc Picard",
+        "Nausicaan"
+      ],
+      "correct": 1,
+      "explanation": "Starship Yorktown is the correct answer."
+    },
+    {
+      "id": "star-trek_easy_002",
+      "category": "Star Trek",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Sulu's primary position on the U.S.S. Enterprise?",
+      "answers": [
+        "Starship Yorktown",
+        "Jean-Luc Picard",
+        "Nausicaan",
+        "Helmsman"
+      ],
+      "correct": 3,
+      "explanation": "Helmsman is the correct answer."
+    },
+    {
+      "id": "star-trek_easy_003",
+      "category": "Star Trek",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Star Trek captain has an artificial heart?",
+      "answers": [
+        "Jean-Luc Picard",
+        "Starship Yorktown",
+        "Helmsman",
+        "Nausicaan"
+      ],
+      "correct": 0,
+      "explanation": "Jean-Luc Picard is the correct answer."
+    },
+    {
+      "id": "star-trek_easy_004",
+      "category": "Star Trek",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Captain Picard has an artificial heart because a member of what species stabbed him?",
+      "answers": [
+        "Starship Yorktown",
+        "Nausicaan",
+        "Helmsman",
+        "Jean-Luc Picard"
+      ],
+      "correct": 1,
+      "explanation": "Nausicaan is the correct answer."
+    },
+    {
+      "id": "star-trek_easy_005",
+      "category": "Star Trek",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "NBC rejected the pilot for \"Star Trek.\" What famous comedian got them to take another look?",
+      "answers": [
+        "Starship Yorktown",
+        "Lucille Ball",
+        "Helmsman",
+        "Jean-Luc Picard"
+      ],
+      "correct": 1,
+      "explanation": "Lucille Ball is the correct answer."
+    },
+    {
+      "id": "star-trek_easy_006",
+      "category": "Star Trek",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is Deanna Troi's favorite food?",
+      "answers": [
+        "Chocolate",
+        "Starship Yorktown",
+        "Helmsman",
+        "Jean-Luc Picard"
+      ],
+      "correct": 0,
+      "explanation": "Chocolate is the correct answer."
+    },
+    {
+      "id": "star-trek_easy_007",
+      "category": "Star Trek",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What weapon did Kirk and Spock use when they fought for possession of T'Pring during Spock's Pon farr ritual in \"Amok Time\"?",
+      "answers": [
+        "Starship Yorktown",
+        "Helmsman",
+        "lirpa",
+        "Jean-Luc Picard"
+      ],
+      "correct": 2,
+      "explanation": "lirpa is the correct answer."
+    },
+    {
+      "id": "star-trek_easy_008",
+      "category": "Star Trek",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was originally cast as Captain Janeway?",
+      "answers": [
+        "Starship Yorktown",
+        "Helmsman",
+        "Jean-Luc Picard",
+        "Geneviève Bujold"
+      ],
+      "correct": 3,
+      "explanation": "Geneviève Bujold is the correct answer."
+    },
+    {
+      "id": "star-trek_easy_009",
+      "category": "Star Trek",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which character serves as the head of security for the space station Deep Space Nine?",
+      "answers": [
+        "Starship Yorktown",
+        "Helmsman",
+        "Odo",
+        "Jean-Luc Picard"
+      ],
+      "correct": 2,
+      "explanation": "Odo is the correct answer."
+    },
+    {
+      "id": "star-trek_easy_010",
+      "category": "Star Trek",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who created the Bajoran wormhole?",
+      "answers": [
+        "Starship Yorktown",
+        "Helmsman",
+        "The Prophets",
+        "Jean-Luc Picard"
+      ],
+      "correct": 2,
+      "explanation": "The Prophets is the correct answer."
+    },
+    {
+      "id": "star-trek_easy_011",
+      "category": "Star Trek",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What type of weapons technology does a phaser use?",
+      "answers": [
+        "Starship Yorktown",
+        "Particle-beam weapons",
+        "Helmsman",
+        "Jean-Luc Picard"
+      ],
+      "correct": 1,
+      "explanation": "Particle-beam weapons is the correct answer."
+    },
+    {
+      "id": "star-trek_easy_012",
+      "category": "Star Trek",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In which Star Trek series did writer Larry Niven introduce the cat-like alien race, the Kzinti, into the Star Trek universe?",
+      "answers": [
+        "Starship Yorktown",
+        "Helmsman",
+        "Jean-Luc Picard",
+        "Star Trek: The Animated Series"
+      ],
+      "correct": 3,
+      "explanation": "Star Trek: The Animated Series is the correct answer."
+    },
+    {
+      "id": "star-trek_easy_013",
+      "category": "Star Trek",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What species, known to the Borg as \"species 329\", were deemed unworthy of assimilation?",
+      "answers": [
+        "The Kazon",
+        "Starship Yorktown",
+        "Helmsman",
+        "Jean-Luc Picard"
+      ],
+      "correct": 0,
+      "explanation": "The Kazon is the correct answer."
+    },
+    {
+      "id": "star-trek_easy_014",
+      "category": "Star Trek",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In the Mirror universe, what has replaced the United Federation of Planets?",
+      "answers": [
+        "Starship Yorktown",
+        "Helmsman",
+        "Terran Empire",
+        "Jean-Luc Picard"
+      ],
+      "correct": 2,
+      "explanation": "Terran Empire is the correct answer."
+    },
+    {
+      "id": "star-trek_easy_015",
+      "category": "Star Trek",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Data had a cat. What was its name?",
+      "answers": [
+        "Starship Yorktown",
+        "Helmsman",
+        "Spot",
+        "Jean-Luc Picard"
+      ],
+      "correct": 2,
+      "explanation": "Spot is the correct answer."
+    },
+    {
+      "id": "star-trek_easy_016",
+      "category": "Star Trek",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What character was adopted by the Vulcan ambassador Sarek?",
+      "answers": [
+        "Michael Burnham",
+        "Starship Yorktown",
+        "Helmsman",
+        "Jean-Luc Picard"
+      ],
+      "correct": 0,
+      "explanation": "Michael Burnham is the correct answer."
+    },
+    {
+      "id": "star-trek_medium_001",
+      "category": "Star Trek",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first actor to play a member of all three of the major alien races in Star Trek ?",
+      "answers": [
+        "Starship Yorktown",
+        "Helmsman",
+        "Jean-Luc Picard",
+        "Mark Lenard"
+      ],
+      "correct": 3,
+      "explanation": "Mark Lenard is the correct answer."
+    },
+    {
+      "id": "star-trek_medium_002",
+      "category": "Star Trek",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first real astronaut to appear in any Star Trek episode?",
+      "answers": [
+        "Starship Yorktown",
+        "Helmsman",
+        "Jean-Luc Picard",
+        "Mae C. Jemison"
+      ],
+      "correct": 3,
+      "explanation": "Mae C. Jemison is the correct answer."
+    },
+    {
+      "id": "star-trek_hard_001",
+      "category": "Star Trek",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many different characters has actor Jeffrey Combs played in the \"Star Trek\" universe?",
+      "answers": [
+        "Starship Yorktown",
+        "Helmsman",
+        "Jean-Luc Picard",
+        "Eight"
+      ],
+      "correct": 3,
+      "explanation": "Eight is the correct answer."
+    }
+  ]
+}

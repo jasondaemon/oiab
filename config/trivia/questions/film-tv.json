@@ -1,0 +1,4687 @@
+{
+  "category": "Film & TV",
+  "slug": "film-tv",
+  "version": 1,
+  "questions": [
+    {
+      "id": "film-tv_easy_001",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which movie features a talking snowman named Olaf?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "The Simpsons"
+      ],
+      "correct": 0,
+      "explanation": "Olaf is from Frozen."
+    },
+    {
+      "id": "film-tv_easy_002",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who trains Luke Skywalker in The Empire Strikes Back?",
+      "answers": [
+        "Frozen",
+        "The Lion King",
+        "The Simpsons",
+        "Yoda"
+      ],
+      "correct": 3,
+      "explanation": "Yoda trains Luke on Dagobah."
+    },
+    {
+      "id": "film-tv_easy_003",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which film features a young lion named Simba?",
+      "answers": [
+        "The Lion King",
+        "Frozen",
+        "Yoda",
+        "The Simpsons"
+      ],
+      "correct": 0,
+      "explanation": "Simba is the main lion in The Lion King."
+    },
+    {
+      "id": "film-tv_easy_004",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which TV family lives in Springfield?",
+      "answers": [
+        "Frozen",
+        "The Simpsons",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The Simpsons live in Springfield."
+    },
+    {
+      "id": "film-tv_easy_005",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which movie has a cowboy toy named Woody?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "Woody is from Toy Story."
+    },
+    {
+      "id": "film-tv_easy_006",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which movie features Lightning McQueen?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Cars"
+      ],
+      "correct": 3,
+      "explanation": "Lightning McQueen is from Cars."
+    },
+    {
+      "id": "film-tv_easy_007",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which bear loves honey in classic cartoons?",
+      "answers": [
+        "Frozen",
+        "Winnie the Pooh",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "Winnie the Pooh loves honey."
+    },
+    {
+      "id": "film-tv_easy_008",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which movie features a rat who cooks?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Ratatouille",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "Ratatouille features Remy the rat chef."
+    },
+    {
+      "id": "film-tv_easy_009",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_easy_010",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_easy_011",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: wizard school headmaster early in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_easy_012",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: fish searched for in Pixar film?",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_easy_013",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: robot who compacts trash?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_easy_014",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: classic movie with George Bailey?",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_easy_015",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: archaeologist hero with a fedora?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_easy_016",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: family from Bedrock?",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_easy_017",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: TV show with a Mandalorian bounty hunter?",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_easy_018",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: movie about toys coming alive?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_easy_019",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_easy_020",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_easy_021",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: wizard school headmaster early in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_easy_022",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: fish searched for in Pixar film?",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_easy_023",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: robot who compacts trash?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_easy_024",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: classic movie with George Bailey?",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_easy_025",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: archaeologist hero with a fedora?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_easy_026",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: family from Bedrock?",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_easy_027",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: TV show with a Mandalorian bounty hunter?",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_easy_028",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: movie about toys coming alive?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_easy_029",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_easy_030",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_easy_031",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: wizard school headmaster early in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_easy_032",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: fish searched for in Pixar film?",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_easy_033",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: robot who compacts trash?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_easy_034",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: classic movie with George Bailey?",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_easy_035",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: archaeologist hero with a fedora?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_easy_036",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: family from Bedrock?",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_easy_037",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: TV show with a Mandalorian bounty hunter?",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_easy_038",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: movie about toys coming alive?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_easy_039",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_easy_040",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_easy_041",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: wizard school headmaster early in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_easy_042",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: fish searched for in Pixar film?",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_easy_043",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: robot who compacts trash?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_easy_044",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: classic movie with George Bailey?",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_easy_045",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: archaeologist hero with a fedora?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_easy_046",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: family from Bedrock?",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_easy_047",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: TV show with a Mandalorian bounty hunter?",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_easy_048",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: movie about toys coming alive?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_easy_049",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_easy_050",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_easy_051",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: wizard school headmaster early in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_easy_052",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: fish searched for in Pixar film?",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_easy_053",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: robot who compacts trash?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_easy_054",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: classic movie with George Bailey?",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_easy_055",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: archaeologist hero with a fedora?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_easy_056",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: family from Bedrock?",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_easy_057",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: TV show with a Mandalorian bounty hunter?",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_easy_058",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: movie about toys coming alive?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_easy_059",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_easy_060",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_easy_061",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: wizard school headmaster early in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_easy_062",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: fish searched for in Pixar film?",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_easy_063",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: robot who compacts trash?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_easy_064",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: classic movie with George Bailey?",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_easy_065",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: archaeologist hero with a fedora?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_easy_066",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: family from Bedrock?",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_easy_067",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: TV show with a Mandalorian bounty hunter?",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_easy_068",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: movie about toys coming alive?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_easy_069",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_easy_070",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_easy_071",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: wizard school headmaster early in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_easy_072",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: fish searched for in Pixar film?",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_easy_073",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: robot who compacts trash?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_easy_074",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: classic movie with George Bailey?",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_easy_075",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: archaeologist hero with a fedora?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_easy_076",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: family from Bedrock?",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_easy_077",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: TV show with a Mandalorian bounty hunter?",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_easy_078",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: movie about toys coming alive?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_easy_079",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_easy_080",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_easy_081",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: wizard school headmaster early in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_easy_082",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: fish searched for in Pixar film?",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_easy_083",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: robot who compacts trash?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_easy_084",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: classic movie with George Bailey?",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_easy_085",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: archaeologist hero with a fedora?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_easy_086",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: family from Bedrock?",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_easy_087",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: TV show with a Mandalorian bounty hunter?",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_easy_088",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: movie about toys coming alive?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_easy_089",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_easy_090",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_easy_091",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: wizard school headmaster early in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_easy_092",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: fish searched for in Pixar film?",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_easy_093",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: robot who compacts trash?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_easy_094",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: classic movie with George Bailey?",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_easy_095",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: archaeologist hero with a fedora?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_easy_096",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: family from Bedrock?",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_easy_097",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: TV show with a Mandalorian bounty hunter?",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_easy_098",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: movie about toys coming alive?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_easy_099",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_easy_100",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_easy_101",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the breed of Snoopy in the highly successful comic strip?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Beagle",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "Beagle is the correct screen trivia answer."
+    },
+    {
+      "id": "film-tv_easy_102",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the inventor of the television?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Philo Taylor Farnsworth"
+      ],
+      "correct": 3,
+      "explanation": "Philo Taylor Farnsworth is the correct screen trivia answer."
+    },
+    {
+      "id": "film-tv_easy_103",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which movie star married the Prince of Monaco on April 18th, 1956?",
+      "answers": [
+        "Frozen",
+        "Grace Kelly",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "Grace Kelly is the correct screen trivia answer."
+    },
+    {
+      "id": "film-tv_easy_104",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the Hollywood star who became the governor of California in 2003?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Arnold Schwarzenegger"
+      ],
+      "correct": 3,
+      "explanation": "Arnold Schwarzenegger is the correct screen trivia answer."
+    },
+    {
+      "id": "film-tv_easy_105",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What dinosaur-themed book was turned into a blockbuster movie in 1993?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Jurassic Park",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "Jurassic Park is the correct screen trivia answer."
+    },
+    {
+      "id": "film-tv_easy_106",
+      "category": "Film & TV",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was the name of the Tyrannosaurus in the TV series Land of the Lost (1974-76)?",
+      "answers": [
+        "Grumpy",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "Grumpy is the correct screen trivia answer."
+    },
+    {
+      "id": "film-tv_medium_001",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which director is known for Jurassic Park and E.T.?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Steven Spielberg",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "Spielberg directed Jurassic Park and E.T."
+    },
+    {
+      "id": "film-tv_medium_002",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which film series features the One Ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "The Lord of the Rings"
+      ],
+      "correct": 3,
+      "explanation": "The One Ring is central to The Lord of the Rings."
+    },
+    {
+      "id": "film-tv_medium_003",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the name of the school in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Hogwarts",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "Harry attends Hogwarts."
+    },
+    {
+      "id": "film-tv_medium_004",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which classic movie features Dorothy and Toto?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Wizard of Oz",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "Dorothy and Toto are from The Wizard of Oz."
+    },
+    {
+      "id": "film-tv_medium_005",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which TV show follows a paper company in Scranton?",
+      "answers": [
+        "Frozen",
+        "The Office",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The Office is set around Dunder Mifflin in Scranton."
+    },
+    {
+      "id": "film-tv_medium_006",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which series features a blue police box time machine?",
+      "answers": [
+        "Frozen",
+        "Doctor Who",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "Doctor Who uses the TARDIS."
+    },
+    {
+      "id": "film-tv_medium_007",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which movie has a DeLorean time machine?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Back to the Future",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "Back to the Future uses a DeLorean."
+    },
+    {
+      "id": "film-tv_medium_008",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which family movie features a house lifted by balloons?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Up"
+      ],
+      "correct": 3,
+      "explanation": "Up begins with a balloon-lifted house."
+    },
+    {
+      "id": "film-tv_medium_009",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_medium_010",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_medium_011",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as wizard school headmaster early in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_medium_012",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as fish searched for in Pixar film?",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_medium_013",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as robot who compacts trash?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_medium_014",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as classic movie with George Bailey?",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_medium_015",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as archaeologist hero with a fedora?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_medium_016",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as family from Bedrock?",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_medium_017",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as TV show with a Mandalorian bounty hunter?",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_medium_018",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as movie about toys coming alive?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_medium_019",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_medium_020",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_medium_021",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as wizard school headmaster early in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_medium_022",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as fish searched for in Pixar film?",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_medium_023",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as robot who compacts trash?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_medium_024",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as classic movie with George Bailey?",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_medium_025",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as archaeologist hero with a fedora?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_medium_026",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as family from Bedrock?",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_medium_027",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as TV show with a Mandalorian bounty hunter?",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_medium_028",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as movie about toys coming alive?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_medium_029",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_medium_030",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_medium_031",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as wizard school headmaster early in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_medium_032",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as fish searched for in Pixar film?",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_medium_033",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as robot who compacts trash?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_medium_034",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as classic movie with George Bailey?",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_medium_035",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as archaeologist hero with a fedora?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_medium_036",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as family from Bedrock?",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_medium_037",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as TV show with a Mandalorian bounty hunter?",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_medium_038",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as movie about toys coming alive?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_medium_039",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_medium_040",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_medium_041",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as wizard school headmaster early in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_medium_042",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as fish searched for in Pixar film?",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_medium_043",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as robot who compacts trash?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_medium_044",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as classic movie with George Bailey?",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_medium_045",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as archaeologist hero with a fedora?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_medium_046",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as family from Bedrock?",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_medium_047",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as TV show with a Mandalorian bounty hunter?",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_medium_048",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as movie about toys coming alive?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_medium_049",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_medium_050",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_medium_051",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as wizard school headmaster early in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_medium_052",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as fish searched for in Pixar film?",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_medium_053",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as robot who compacts trash?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_medium_054",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as classic movie with George Bailey?",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_medium_055",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as archaeologist hero with a fedora?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_medium_056",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as family from Bedrock?",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_medium_057",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as TV show with a Mandalorian bounty hunter?",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_medium_058",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as movie about toys coming alive?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_medium_059",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_medium_060",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_medium_061",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as wizard school headmaster early in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_medium_062",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as fish searched for in Pixar film?",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_medium_063",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as robot who compacts trash?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_medium_064",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as classic movie with George Bailey?",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_medium_065",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as archaeologist hero with a fedora?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_medium_066",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as family from Bedrock?",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_medium_067",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as TV show with a Mandalorian bounty hunter?",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_medium_068",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as movie about toys coming alive?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_medium_069",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_medium_070",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_medium_071",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as wizard school headmaster early in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_medium_072",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as fish searched for in Pixar film?",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_medium_073",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as robot who compacts trash?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_medium_074",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as classic movie with George Bailey?",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_medium_075",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as archaeologist hero with a fedora?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_medium_076",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as family from Bedrock?",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_medium_077",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as TV show with a Mandalorian bounty hunter?",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_medium_078",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as movie about toys coming alive?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_medium_079",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_medium_080",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_medium_081",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as wizard school headmaster early in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_medium_082",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as fish searched for in Pixar film?",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_medium_083",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as robot who compacts trash?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_medium_084",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as classic movie with George Bailey?",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_medium_085",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as archaeologist hero with a fedora?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_medium_086",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as family from Bedrock?",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_medium_087",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as TV show with a Mandalorian bounty hunter?",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_medium_088",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as movie about toys coming alive?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_medium_089",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_medium_090",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_medium_091",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as wizard school headmaster early in Harry Potter?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_medium_092",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as fish searched for in Pixar film?",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_medium_093",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as robot who compacts trash?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_medium_094",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as classic movie with George Bailey?",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_medium_095",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as archaeologist hero with a fedora?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_medium_096",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as family from Bedrock?",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_medium_097",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as TV show with a Mandalorian bounty hunter?",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_medium_098",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as movie about toys coming alive?",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_medium_099",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as space ranger in Toy Story?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_medium_100",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Film & TV, which option is best described as hobbit who carries the ring?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_medium_101",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the first toy to be advertised on television?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Mr. Potato Head",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "Mr. Potato Head is the correct screen trivia answer."
+    },
+    {
+      "id": "film-tv_medium_102",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "When was the television invented?",
+      "answers": [
+        "1926",
+        "1927",
+        "1928",
+        "1922"
+      ],
+      "correct": 1,
+      "explanation": "1927 is the correct screen trivia answer."
+    },
+    {
+      "id": "film-tv_medium_103",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "How old was Philo Farnsworth when he invented the television?",
+      "answers": [
+        "19",
+        "20",
+        "22",
+        "21"
+      ],
+      "correct": 3,
+      "explanation": "21 is the correct screen trivia answer."
+    },
+    {
+      "id": "film-tv_medium_104",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the full title of the first Harry Potter movie released on November 16th, 2001?",
+      "answers": [
+        "Sorcerer's Stone",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "Sorcerer's Stone is the correct screen trivia answer."
+    },
+    {
+      "id": "film-tv_medium_105",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Where was the first Disney park built?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Anaheim, California"
+      ],
+      "correct": 3,
+      "explanation": "Anaheim, California is the correct screen trivia answer."
+    },
+    {
+      "id": "film-tv_medium_106",
+      "category": "Film & TV",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first U.S. President to appear on television?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Franklin Roosevelt",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "Franklin Roosevelt is the correct screen trivia answer."
+    },
+    {
+      "id": "film-tv_hard_001",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which film won Best Picture for 1942 and features Rick’s Cafe?",
+      "answers": [
+        "Frozen",
+        "Casablanca",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "Casablanca centers on Rick’s Cafe Americain."
+    },
+    {
+      "id": "film-tv_hard_002",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who composed many Star Wars film scores?",
+      "answers": [
+        "Frozen",
+        "John Williams",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "John Williams composed the iconic Star Wars music."
+    },
+    {
+      "id": "film-tv_hard_003",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which movie introduced the line “There’s no place like home”?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Wizard of Oz",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "That line is famously from The Wizard of Oz."
+    },
+    {
+      "id": "film-tv_hard_004",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which franchise features the Prime Directive?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Star Trek",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The Prime Directive is a Star Trek principle."
+    },
+    {
+      "id": "film-tv_hard_005",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Pixar film centers on emotions named Joy and Sadness?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Inside Out",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "Inside Out personifies emotions."
+    },
+    {
+      "id": "film-tv_hard_006",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which actor played Atticus Finch in the 1962 film?",
+      "answers": [
+        "Gregory Peck",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "Gregory Peck played Atticus Finch."
+    },
+    {
+      "id": "film-tv_hard_007",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which movie features the character Inigo Montoya?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Princess Bride",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "Inigo Montoya is from The Princess Bride."
+    },
+    {
+      "id": "film-tv_hard_008",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which classic TV show opened with a family on a three-hour tour?",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Gilligan’s Island",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "Gilligan’s Island begins with a three-hour tour setup."
+    },
+    {
+      "id": "film-tv_hard_009",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: space ranger in Toy Story.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_hard_010",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: hobbit who carries the ring.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_hard_011",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: wizard school headmaster early in Harry Potter.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_hard_012",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: fish searched for in Pixar film.",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_hard_013",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: robot who compacts trash.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_hard_014",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: classic movie with George Bailey.",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_hard_015",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: archaeologist hero with a fedora.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_hard_016",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: family from Bedrock.",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_hard_017",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: TV show with a Mandalorian bounty hunter.",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_hard_018",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: movie about toys coming alive.",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_hard_019",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: space ranger in Toy Story.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_hard_020",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: hobbit who carries the ring.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_hard_021",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: wizard school headmaster early in Harry Potter.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_hard_022",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: fish searched for in Pixar film.",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_hard_023",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: robot who compacts trash.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_hard_024",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: classic movie with George Bailey.",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_hard_025",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: archaeologist hero with a fedora.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_hard_026",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: family from Bedrock.",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_hard_027",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: TV show with a Mandalorian bounty hunter.",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_hard_028",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: movie about toys coming alive.",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_hard_029",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: space ranger in Toy Story.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_hard_030",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: hobbit who carries the ring.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_hard_031",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: wizard school headmaster early in Harry Potter.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_hard_032",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: fish searched for in Pixar film.",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_hard_033",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: robot who compacts trash.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_hard_034",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: classic movie with George Bailey.",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_hard_035",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: archaeologist hero with a fedora.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_hard_036",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: family from Bedrock.",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_hard_037",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: TV show with a Mandalorian bounty hunter.",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_hard_038",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: movie about toys coming alive.",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_hard_039",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: space ranger in Toy Story.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_hard_040",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: hobbit who carries the ring.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_hard_041",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: wizard school headmaster early in Harry Potter.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_hard_042",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: fish searched for in Pixar film.",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_hard_043",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: robot who compacts trash.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_hard_044",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: classic movie with George Bailey.",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_hard_045",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: archaeologist hero with a fedora.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_hard_046",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: family from Bedrock.",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_hard_047",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: TV show with a Mandalorian bounty hunter.",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_hard_048",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: movie about toys coming alive.",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_hard_049",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: space ranger in Toy Story.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_hard_050",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: hobbit who carries the ring.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_hard_051",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: wizard school headmaster early in Harry Potter.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_hard_052",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: fish searched for in Pixar film.",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_hard_053",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: robot who compacts trash.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_hard_054",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: classic movie with George Bailey.",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_hard_055",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: archaeologist hero with a fedora.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_hard_056",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: family from Bedrock.",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_hard_057",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: TV show with a Mandalorian bounty hunter.",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_hard_058",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: movie about toys coming alive.",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_hard_059",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: space ranger in Toy Story.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_hard_060",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: hobbit who carries the ring.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_hard_061",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: wizard school headmaster early in Harry Potter.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_hard_062",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: fish searched for in Pixar film.",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_hard_063",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: robot who compacts trash.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_hard_064",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: classic movie with George Bailey.",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_hard_065",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: archaeologist hero with a fedora.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_hard_066",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: family from Bedrock.",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_hard_067",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: TV show with a Mandalorian bounty hunter.",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_hard_068",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: movie about toys coming alive.",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_hard_069",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: space ranger in Toy Story.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_hard_070",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: hobbit who carries the ring.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_hard_071",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: wizard school headmaster early in Harry Potter.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_hard_072",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: fish searched for in Pixar film.",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_hard_073",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: robot who compacts trash.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_hard_074",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: classic movie with George Bailey.",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_hard_075",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: archaeologist hero with a fedora.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_hard_076",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: family from Bedrock.",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_hard_077",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: TV show with a Mandalorian bounty hunter.",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_hard_078",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: movie about toys coming alive.",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_hard_079",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: space ranger in Toy Story.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_hard_080",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: hobbit who carries the ring.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_hard_081",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: wizard school headmaster early in Harry Potter.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_hard_082",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: fish searched for in Pixar film.",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_hard_083",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: robot who compacts trash.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_hard_084",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: classic movie with George Bailey.",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_hard_085",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: archaeologist hero with a fedora.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_hard_086",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: family from Bedrock.",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_hard_087",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: TV show with a Mandalorian bounty hunter.",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_hard_088",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: movie about toys coming alive.",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_hard_089",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: space ranger in Toy Story.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_hard_090",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: hobbit who carries the ring.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    },
+    {
+      "id": "film-tv_hard_091",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: wizard school headmaster early in Harry Potter.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Dumbledore"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Dumbledore."
+    },
+    {
+      "id": "film-tv_hard_092",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: fish searched for in Pixar film.",
+      "answers": [
+        "Frozen",
+        "Nemo",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Nemo."
+    },
+    {
+      "id": "film-tv_hard_093",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: robot who compacts trash.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "WALL-E",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is WALL-E."
+    },
+    {
+      "id": "film-tv_hard_094",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: classic movie with George Bailey.",
+      "answers": [
+        "It’s a Wonderful Life",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is It’s a Wonderful Life."
+    },
+    {
+      "id": "film-tv_hard_095",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: archaeologist hero with a fedora.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "The Lion King",
+        "Indiana Jones"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Indiana Jones."
+    },
+    {
+      "id": "film-tv_hard_096",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: family from Bedrock.",
+      "answers": [
+        "The Flintstones",
+        "Frozen",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is The Flintstones."
+    },
+    {
+      "id": "film-tv_hard_097",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: TV show with a Mandalorian bounty hunter.",
+      "answers": [
+        "Frozen",
+        "The Mandalorian",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is The Mandalorian."
+    },
+    {
+      "id": "film-tv_hard_098",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: movie about toys coming alive.",
+      "answers": [
+        "Frozen",
+        "Toy Story",
+        "Yoda",
+        "The Lion King"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Toy Story."
+    },
+    {
+      "id": "film-tv_hard_099",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: space ranger in Toy Story.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Buzz Lightyear",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Buzz Lightyear."
+    },
+    {
+      "id": "film-tv_hard_100",
+      "category": "Film & TV",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Film & TV clue, identify: hobbit who carries the ring.",
+      "answers": [
+        "Frozen",
+        "Yoda",
+        "Frodo",
+        "The Lion King"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Frodo."
+    }
+  ]
+}

@@ -1,9 +1,9 @@
 {
-  "name": "IIAB Overland",
-  "short_name": "Overland",
+  "name": "Overland In A Box",
+  "short_name": "OIAB",
   "description": "Offline-first overland launcher for maps, media, learning, and family games.",
-  "start_url": "/mobile/",
-  "scope": "/",
+  "start_url": "https://mobile.daemonadventures.net/mobile/",
+  "scope": "https://mobile.daemonadventures.net/",
   "display": "fullscreen",
   "orientation": "any",
   "background_color": "#07160f",

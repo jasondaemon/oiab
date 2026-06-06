@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Starts With Ends With">
+  <defs>
+    <linearGradient id="bg" x1="36" y1="28" x2="220" y2="226" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#163624"/>
+      <stop offset="1" stop-color="#07130d"/>
+    </linearGradient>
+    <linearGradient id="card" x1="48" y1="56" x2="208" y2="204" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f7fff1"/>
+      <stop offset="1" stop-color="#baf7bd"/>
+    </linearGradient>
+  </defs>
+  <rect x="18" y="18" width="220" height="220" rx="46" fill="url(#bg)"/>
+  <rect x="18" y="18" width="220" height="220" rx="46" fill="none" stroke="#80f08a" stroke-width="8"/>
+  <rect x="45" y="58" width="70" height="100" rx="18" fill="url(#card)" stroke="#07130d" stroke-width="7"/>
+  <rect x="141" y="98" width="70" height="100" rx="18" fill="#ffd34e" stroke="#07130d" stroke-width="7"/>
+  <path d="M112 120h34" fill="none" stroke="#f7fff1" stroke-width="12" stroke-linecap="round"/>
+  <path d="m137 100 28 20-28 20z" fill="#f7fff1"/>
+  <text x="80" y="127" text-anchor="middle" font-family="Avenir Next, Arial, sans-serif" font-size="58" font-weight="900" fill="#07130d">A</text>
+  <text x="176" y="168" text-anchor="middle" font-family="Avenir Next, Arial, sans-serif" font-size="58" font-weight="900" fill="#07130d">Z</text>
+  <path d="M66 188c25 18 84 23 124-4" fill="none" stroke="#80f08a" stroke-width="10" stroke-linecap="round"/>
+</svg>

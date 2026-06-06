@@ -1,0 +1,1507 @@
+{
+  "category": "Olympics",
+  "slug": "olympics",
+  "version": 1,
+  "questions": [
+    {
+      "id": "olympics_easy_001",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which country is the birthplace of the ancient Olympic Games?",
+      "answers": [
+        "Every four years",
+        "Greece",
+        "Blue, yellow, black, green, red",
+        "United States"
+      ],
+      "correct": 1,
+      "explanation": "The ancient Olympic Games began in Greece."
+    },
+    {
+      "id": "olympics_easy_002",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How often were the ancient Olympic Games held?",
+      "answers": [
+        "Greece",
+        "Blue, yellow, black, green, red",
+        "United States",
+        "Every four years"
+      ],
+      "correct": 3,
+      "explanation": "The ancient Games followed a four-year cycle."
+    },
+    {
+      "id": "olympics_easy_003",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What five colors appear on the Olympic rings?",
+      "answers": [
+        "Greece",
+        "Blue, yellow, black, green, red",
+        "Every four years",
+        "United States"
+      ],
+      "correct": 1,
+      "explanation": "The Olympic rings use blue, yellow, black, green, and red."
+    },
+    {
+      "id": "olympics_easy_004",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which country has hosted the Olympic Games the most times?",
+      "answers": [
+        "Greece",
+        "United States",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 1,
+      "explanation": "The United States has hosted more Olympic Games than any other country."
+    },
+    {
+      "id": "olympics_easy_005",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What city hosted the first modern Olympic Games?",
+      "answers": [
+        "Greece",
+        "Athens",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 1,
+      "explanation": "The first modern Olympics were held in Athens, Greece."
+    },
+    {
+      "id": "olympics_easy_006",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What year were the first modern Olympic Games held?",
+      "answers": [
+        "1896",
+        "1895",
+        "1897",
+        "1891"
+      ],
+      "correct": 0,
+      "explanation": "The modern Olympics began in 1896."
+    },
+    {
+      "id": "olympics_easy_007",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which organization governs the Olympic Games?",
+      "answers": [
+        "International Olympic Committee",
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 0,
+      "explanation": "The International Olympic Committee oversees the Games."
+    },
+    {
+      "id": "olympics_easy_008",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What does an Olympic gold medal mostly contain?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Silver"
+      ],
+      "correct": 3,
+      "explanation": "Modern Olympic gold medals are mostly silver with gold plating."
+    },
+    {
+      "id": "olympics_easy_009",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which country boycotted the 1980 Moscow Summer Olympics?",
+      "answers": [
+        "Greece",
+        "United States",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 1,
+      "explanation": "The United States led a boycott of the 1980 Moscow Games."
+    },
+    {
+      "id": "olympics_easy_010",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was the first Winter Olympics host city?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Chamonix"
+      ],
+      "correct": 3,
+      "explanation": "Chamonix, France hosted the first Winter Olympics in 1924."
+    },
+    {
+      "id": "olympics_easy_011",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What year were the first Winter Olympics held?",
+      "answers": [
+        "1923",
+        "1925",
+        "1924",
+        "1919"
+      ],
+      "correct": 2,
+      "explanation": "The first Winter Olympics took place in 1924."
+    },
+    {
+      "id": "olympics_easy_012",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What city hosted the 2012 Summer Olympics?",
+      "answers": [
+        "London",
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 0,
+      "explanation": "London hosted the 2012 Summer Olympics."
+    },
+    {
+      "id": "olympics_easy_013",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which city hosted the 2008 Summer Olympics?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Beijing",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "Beijing hosted the 2008 Summer Olympics."
+    },
+    {
+      "id": "olympics_easy_014",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is famous for Olympic sprint golds in 100 and 200 meters?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Usain Bolt"
+      ],
+      "correct": 3,
+      "explanation": "Usain Bolt became famous for sprint victories in both the 100 and 200 meters."
+    },
+    {
+      "id": "olympics_easy_015",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which swimmer won eight gold medals at the 2008 Olympics?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Michael Phelps"
+      ],
+      "correct": 3,
+      "explanation": "Michael Phelps won eight gold medals in Beijing in 2008."
+    },
+    {
+      "id": "olympics_easy_016",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What city hosted the 1996 Summer Olympics?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Atlanta"
+      ],
+      "correct": 3,
+      "explanation": "Atlanta hosted the 1996 Summer Olympics."
+    },
+    {
+      "id": "olympics_easy_017",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What sport uses a balance beam in Olympic competition?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Gymnastics",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "The balance beam is an artistic gymnastics apparatus."
+    },
+    {
+      "id": "olympics_easy_018",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What sport has sabre, foil, and epee events?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Fencing",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "Olympic fencing includes foil, epee, and sabre."
+    },
+    {
+      "id": "olympics_easy_019",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What sport includes butterfly, backstroke, breaststroke, and freestyle?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Swimming"
+      ],
+      "correct": 3,
+      "explanation": "Those are swimming strokes used in Olympic events."
+    },
+    {
+      "id": "olympics_easy_020",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Olympic symbol is lit at the end of the torch relay?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Cauldron",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "The torch relay ends by lighting the Olympic cauldron."
+    },
+    {
+      "id": "olympics_easy_021",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Where is the Olympic flame traditionally lit?",
+      "answers": [
+        "Olympia, Greece",
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 0,
+      "explanation": "The Olympic flame is lit in Olympia, Greece."
+    },
+    {
+      "id": "olympics_easy_022",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Olympic medal usually goes to third place?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Bronze",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "Bronze is awarded for third place."
+    },
+    {
+      "id": "olympics_easy_023",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which medal is awarded to second place?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Silver"
+      ],
+      "correct": 3,
+      "explanation": "Silver is awarded for second place."
+    },
+    {
+      "id": "olympics_easy_024",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What Olympic sport includes the pommel horse?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Gymnastics",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "The pommel horse is a men’s gymnastics apparatus."
+    },
+    {
+      "id": "olympics_easy_025",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which event finishes a modern triathlon?",
+      "answers": [
+        "Greece",
+        "Running",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 1,
+      "explanation": "A triathlon goes swim, bike, then run."
+    },
+    {
+      "id": "olympics_easy_026",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What city hosted the 2020 Summer Olympics, held in 2021?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Tokyo",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "Tokyo hosted the delayed 2020 Summer Olympics."
+    },
+    {
+      "id": "olympics_easy_027",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which continent is represented by one of the Olympic rings?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Africa",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "The rings represent the inhabited continents, including Africa."
+    },
+    {
+      "id": "olympics_easy_028",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What event combines swimming, cycling, and running?",
+      "answers": [
+        "Greece",
+        "Triathlon",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 1,
+      "explanation": "Triathlon combines swimming, cycling, and running."
+    },
+    {
+      "id": "olympics_easy_029",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which sport uses a puck at the Winter Olympics?",
+      "answers": [
+        "Ice hockey",
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 0,
+      "explanation": "Ice hockey is played with a puck."
+    },
+    {
+      "id": "olympics_easy_030",
+      "category": "Olympics",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Olympic winter sport sends stones across ice?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Curling",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "Curling uses stones slid across ice."
+    },
+    {
+      "id": "olympics_medium_001",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which city hosted the 1976 Winter Olympics after Denver withdrew?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Innsbruck"
+      ],
+      "correct": 3,
+      "explanation": "Innsbruck hosted the 1976 Winter Games after Denver withdrew."
+    },
+    {
+      "id": "olympics_medium_002",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the Olympic motto in Latin?",
+      "answers": [
+        "Greece",
+        "Citius, Altius, Fortius",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 1,
+      "explanation": "The traditional Latin motto means faster, higher, stronger."
+    },
+    {
+      "id": "olympics_medium_003",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which city has hosted the Summer Olympics three times?",
+      "answers": [
+        "London",
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 0,
+      "explanation": "London has hosted the Summer Olympics three times."
+    },
+    {
+      "id": "olympics_medium_004",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What year was tennis restored as an Olympic medal sport?",
+      "answers": [
+        "1988",
+        "1987",
+        "1989",
+        "1983"
+      ],
+      "correct": 0,
+      "explanation": "Tennis returned as a full Olympic medal sport in 1988."
+    },
+    {
+      "id": "olympics_medium_005",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first Black athlete to win Winter Olympic gold?",
+      "answers": [
+        "Greece",
+        "Vonetta Flowers",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 1,
+      "explanation": "Vonetta Flowers won Winter Olympic gold in bobsled in 2002."
+    },
+    {
+      "id": "olympics_medium_006",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which city hosted the first boycott-free Summer Olympics since 1972?",
+      "answers": [
+        "Greece",
+        "Barcelona",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 1,
+      "explanation": "Barcelona 1992 was the first Summer Games since 1972 without a major boycott."
+    },
+    {
+      "id": "olympics_medium_007",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What year did the NBA Dream Team play in the Olympics?",
+      "answers": [
+        "1991",
+        "1992",
+        "1993",
+        "1987"
+      ],
+      "correct": 1,
+      "explanation": "The original U.S. Dream Team played in Barcelona in 1992."
+    },
+    {
+      "id": "olympics_medium_008",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which American city hosted the 1984 Summer Olympics?",
+      "answers": [
+        "Greece",
+        "Los Angeles",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 1,
+      "explanation": "Los Angeles hosted the 1984 Summer Olympics."
+    },
+    {
+      "id": "olympics_medium_009",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The Soviet Union boycotted which U.S. Olympic host city?",
+      "answers": [
+        "Greece",
+        "Los Angeles",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 1,
+      "explanation": "The Soviet Union boycotted the 1984 Los Angeles Games."
+    },
+    {
+      "id": "olympics_medium_010",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which sport returned to the Olympics in 2016 after a long absence?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Rugby"
+      ],
+      "correct": 3,
+      "explanation": "Rugby sevens joined the Olympic program in 2016."
+    },
+    {
+      "id": "olympics_medium_011",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which two sports began as Summer Olympic events before becoming Winter sports?",
+      "answers": [
+        "Ice hockey and figure skating",
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 0,
+      "explanation": "Ice hockey and figure skating appeared before the first Winter Olympics."
+    },
+    {
+      "id": "olympics_medium_012",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What year did snowboarding make its Olympic debut?",
+      "answers": [
+        "1997",
+        "1999",
+        "1993",
+        "1998"
+      ],
+      "correct": 3,
+      "explanation": "Snowboarding debuted at the 1998 Nagano Winter Olympics."
+    },
+    {
+      "id": "olympics_medium_013",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which city hosted the 1968 Summer Olympics?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Mexico City",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "Mexico City hosted the 1968 Summer Olympics."
+    },
+    {
+      "id": "olympics_medium_014",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first female Olympic champion?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Helene de Pourtales"
+      ],
+      "correct": 3,
+      "explanation": "Helene de Pourtales won sailing gold in 1900."
+    },
+    {
+      "id": "olympics_medium_015",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What year were women first allowed to compete in the modern Olympics?",
+      "answers": [
+        "1900",
+        "1899",
+        "1901",
+        "1895"
+      ],
+      "correct": 0,
+      "explanation": "Women first competed in the Olympics in 1900."
+    },
+    {
+      "id": "olympics_medium_016",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which city hosted the first Winter Olympics broadcast in color?",
+      "answers": [
+        "Grenoble",
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 0,
+      "explanation": "Grenoble 1968 was the first Winter Olympics broadcast in color."
+    },
+    {
+      "id": "olympics_medium_017",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Olympic host city used artificial snow first?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Lake Placid",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "Lake Placid was the first Winter Olympic host to use artificial snow."
+    },
+    {
+      "id": "olympics_medium_018",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What year did the Olympics first award gold, silver, and bronze medals?",
+      "answers": [
+        "1904",
+        "1903",
+        "1905",
+        "1899"
+      ],
+      "correct": 0,
+      "explanation": "The familiar three-medal system began in 1904."
+    },
+    {
+      "id": "olympics_medium_019",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which city first flew the Olympic flag?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Antwerp"
+      ],
+      "correct": 3,
+      "explanation": "The Olympic flag first flew at Antwerp in 1920."
+    },
+    {
+      "id": "olympics_medium_020",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What year did the Olympic flag debut?",
+      "answers": [
+        "1919",
+        "1921",
+        "1920",
+        "1915"
+      ],
+      "correct": 2,
+      "explanation": "The Olympic flag debuted at the 1920 Antwerp Games."
+    },
+    {
+      "id": "olympics_medium_021",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Olympic Games were suspended after an attack in the Olympic Village?",
+      "answers": [
+        "Munich",
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 0,
+      "explanation": "The 1972 Munich Games were paused after the Olympic Village attack."
+    },
+    {
+      "id": "olympics_medium_022",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which swimmer held the single-Games gold record before Michael Phelps?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Mark Spitz"
+      ],
+      "correct": 3,
+      "explanation": "Mark Spitz won seven gold medals in 1972."
+    },
+    {
+      "id": "olympics_medium_023",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who won four gold medals in one day at the 1992 Olympics?",
+      "answers": [
+        "Greece",
+        "Vitaly Scherbo",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 1,
+      "explanation": "Vitaly Scherbo won four gymnastics gold medals in a single day."
+    },
+    {
+      "id": "olympics_medium_024",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which gymnast was the youngest Winter Olympic champion in figure skating?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Tara Lipinski"
+      ],
+      "correct": 3,
+      "explanation": "Tara Lipinski won Olympic figure skating gold at age 15."
+    },
+    {
+      "id": "olympics_medium_025",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who won five speed-skating gold medals at the 1980 Winter Olympics?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Eric Heiden",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "Eric Heiden won five speed-skating golds in 1980."
+    },
+    {
+      "id": "olympics_medium_026",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which country returned to the Olympics in 1992 after being absent since 1960?",
+      "answers": [
+        "Greece",
+        "South Africa",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 1,
+      "explanation": "South Africa returned to the Olympics in 1992."
+    },
+    {
+      "id": "olympics_medium_027",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which nation won its first Olympic gold at Sapporo in 1972?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Japan",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "Japan won its first Olympic gold at the 1972 Sapporo Winter Games."
+    },
+    {
+      "id": "olympics_medium_028",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which country won the 2004 men’s soccer tournament without conceding a goal?",
+      "answers": [
+        "Greece",
+        "Argentina",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 1,
+      "explanation": "Argentina won men’s soccer gold in 2004 without allowing a goal."
+    },
+    {
+      "id": "olympics_medium_029",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which event was held in 1896 to honor Pheidippides?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Marathon",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "The marathon was inspired by the Pheidippides legend."
+    },
+    {
+      "id": "olympics_medium_030",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "From where to Athens did Pheidippides famously run?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Marathon",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "The marathon legend traces a run from Marathon to Athens."
+    },
+    {
+      "id": "olympics_medium_031",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who won the first modern Olympic marathon?",
+      "answers": [
+        "Spyridon Louis",
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 0,
+      "explanation": "Spyridon Louis won the first modern Olympic marathon."
+    },
+    {
+      "id": "olympics_medium_032",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the modern marathon distance?",
+      "answers": [
+        "24",
+        "25",
+        "27",
+        "26 miles 385 yards"
+      ],
+      "correct": 3,
+      "explanation": "The standard marathon is 26 miles and 385 yards, or 42.195 km."
+    },
+    {
+      "id": "olympics_medium_033",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What sport did BMX join at the 2008 Beijing Olympics?",
+      "answers": [
+        "Greece",
+        "Cycling",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 1,
+      "explanation": "BMX is part of Olympic cycling."
+    },
+    {
+      "id": "olympics_medium_034",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which two sports were added in 2000: triathlon and what?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Taekwondo",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "Triathlon and taekwondo became Olympic sports in 2000."
+    },
+    {
+      "id": "olympics_medium_035",
+      "category": "Olympics",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which sport made its Olympic debut in 1988 along with tennis returning?",
+      "answers": [
+        "Greece",
+        "Table tennis",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 1,
+      "explanation": "Table tennis became an Olympic sport in 1988."
+    },
+    {
+      "id": "olympics_hard_001",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "When were the first recorded ancient Olympic Games held?",
+      "answers": [
+        "775",
+        "777",
+        "771",
+        "776 B.C"
+      ],
+      "correct": 3,
+      "explanation": "The first recorded ancient Olympics are traditionally dated to 776 B.C."
+    },
+    {
+      "id": "olympics_hard_002",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many events were in the first modern Olympics?",
+      "answers": [
+        "41",
+        "42",
+        "44",
+        "43"
+      ],
+      "correct": 3,
+      "explanation": "The 1896 Athens Games included 43 events."
+    },
+    {
+      "id": "olympics_hard_003",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many nations joined the first modern Olympic Games?",
+      "answers": [
+        "11",
+        "12",
+        "13",
+        "14"
+      ],
+      "correct": 2,
+      "explanation": "Thirteen nations participated in the 1896 Olympics."
+    },
+    {
+      "id": "olympics_hard_004",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "About how many athletes competed in the first modern Olympics?",
+      "answers": [
+        "278",
+        "279",
+        "280",
+        "281"
+      ],
+      "correct": 2,
+      "explanation": "About 280 athletes competed in Athens in 1896."
+    },
+    {
+      "id": "olympics_hard_005",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "When was the last solid-gold Olympic medal awarded?",
+      "answers": [
+        "1911",
+        "1912",
+        "1913",
+        "1907"
+      ],
+      "correct": 1,
+      "explanation": "The last solid-gold Olympic medals were awarded in 1912."
+    },
+    {
+      "id": "olympics_hard_006",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who is credited with reviving the modern Olympic Games?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Pierre de Coubertin"
+      ],
+      "correct": 3,
+      "explanation": "Pierre de Coubertin is credited with founding the modern Olympic movement."
+    },
+    {
+      "id": "olympics_hard_007",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who was the first athlete to take the Olympic oath?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Victor Boin"
+      ],
+      "correct": 3,
+      "explanation": "Victor Boin took the first Olympic oath in 1920."
+    },
+    {
+      "id": "olympics_hard_008",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who was the first American woman to win an Olympic event?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Margaret Abbott"
+      ],
+      "correct": 3,
+      "explanation": "Margaret Abbott won golf at the 1900 Olympics."
+    },
+    {
+      "id": "olympics_hard_009",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which rower won gold at five consecutive Olympic Games?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Steve Redgrave"
+      ],
+      "correct": 3,
+      "explanation": "Steve Redgrave won rowing gold at five straight Olympics."
+    },
+    {
+      "id": "olympics_hard_010",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which woman won Olympic gold medals 20 years apart?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Birgit Fischer"
+      ],
+      "correct": 3,
+      "explanation": "Birgit Fischer won Olympic canoeing gold 20 years apart."
+    },
+    {
+      "id": "olympics_hard_011",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who was the first woman to light the Olympic cauldron?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Enriqueta Basilio"
+      ],
+      "correct": 3,
+      "explanation": "Enriqueta Basilio lit the cauldron at Mexico City in 1968."
+    },
+    {
+      "id": "olympics_hard_012",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which British royal won an Olympic medal?",
+      "answers": [
+        "Zara Tindall",
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 0,
+      "explanation": "Zara Tindall won an equestrian silver medal in 2012."
+    },
+    {
+      "id": "olympics_hard_013",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which American gymnast with a wooden leg won medals in 1904?",
+      "answers": [
+        "Greece",
+        "George Eyser",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 1,
+      "explanation": "George Eyser won six gymnastics medals in 1904."
+    },
+    {
+      "id": "olympics_hard_014",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which sprinter was nicknamed the Milwaukee Meteor?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Archie Hahn"
+      ],
+      "correct": 3,
+      "explanation": "Archie Hahn was known as the Milwaukee Meteor."
+    },
+    {
+      "id": "olympics_hard_015",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who was disqualified in 1904 after riding in a car during a race?",
+      "answers": [
+        "Fred Lorz",
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 0,
+      "explanation": "Fred Lorz rode part of the 1904 Olympic marathon in a car."
+    },
+    {
+      "id": "olympics_hard_016",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which Roman emperor claimed victory in an Olympic chariot race after falling out?",
+      "answers": [
+        "Nero",
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 0,
+      "explanation": "Nero entered and claimed an ancient Olympic chariot victory."
+    },
+    {
+      "id": "olympics_hard_017",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which emperor banned the ancient Olympics in A.D. 393?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Theodosius I",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "Theodosius I ended the ancient Olympic Games in A.D. 393."
+    },
+    {
+      "id": "olympics_hard_018",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which ancient athlete won 12 titles across four Olympics?",
+      "answers": [
+        "Greece",
+        "Leonidas of Rhodes",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 1,
+      "explanation": "Leonidas of Rhodes was a legendary ancient Olympic champion."
+    },
+    {
+      "id": "olympics_hard_019",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Who won the first recorded ancient Olympic footrace?",
+      "answers": [
+        "Coroebus",
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 0,
+      "explanation": "Coroebus is traditionally named as the first recorded Olympic winner."
+    },
+    {
+      "id": "olympics_hard_020",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which festival celebrated female athletes in ancient Greece?",
+      "answers": [
+        "Greece",
+        "Heraean Games",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 1,
+      "explanation": "The Heraean Games were a separate ancient festival for female athletes."
+    },
+    {
+      "id": "olympics_hard_021",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "The priestess of which goddess could watch the ancient Olympics?",
+      "answers": [
+        "Demeter",
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 0,
+      "explanation": "The priestess of Demeter was allowed to watch the ancient Olympics."
+    },
+    {
+      "id": "olympics_hard_022",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which goddess was honored by the ancient Olympic flame tradition?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Hestia",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "The flame connects to Hestia, goddess of the hearth."
+    },
+    {
+      "id": "olympics_hard_023",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What was the only event at the first recorded ancient Olympics?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "A footrace",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "The earliest recorded Olympics had a single footrace."
+    },
+    {
+      "id": "olympics_hard_024",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "About how long was the first ancient Olympic footrace?",
+      "answers": [
+        "192 meters",
+        "190",
+        "191",
+        "193"
+      ],
+      "correct": 0,
+      "explanation": "The stadion race was roughly 192 meters."
+    },
+    {
+      "id": "olympics_hard_025",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What was awarded to winners in the ancient Olympics?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Olive crown",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 2,
+      "explanation": "Ancient Olympic winners received an olive wreath or crown."
+    },
+    {
+      "id": "olympics_hard_026",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What events made up the ancient pentathlon?",
+      "answers": [
+        "Discus, javelin, jump, run, wrestling",
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 0,
+      "explanation": "The ancient pentathlon combined discus, javelin, long jump, running, and wrestling."
+    },
+    {
+      "id": "olympics_hard_027",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What error affected the 1932 men’s steeplechase?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Extra lap"
+      ],
+      "correct": 3,
+      "explanation": "The 1932 steeplechase was accidentally run with an extra lap."
+    },
+    {
+      "id": "olympics_hard_028",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How long did the longest Olympic wrestling match last?",
+      "answers": [
+        "11 hours 40 minutes",
+        "9",
+        "10",
+        "12"
+      ],
+      "correct": 0,
+      "explanation": "The longest Olympic wrestling match lasted 11 hours and 40 minutes."
+    },
+    {
+      "id": "olympics_hard_029",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which athlete was also a World War II prisoner of war?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Louis Zamperini"
+      ],
+      "correct": 3,
+      "explanation": "Louis Zamperini was an Olympian and later a prisoner of war."
+    },
+    {
+      "id": "olympics_hard_030",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which athlete won medals at Winter and Summer Olympics in the same year?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Christa Luding-Rothenburger"
+      ],
+      "correct": 3,
+      "explanation": "Christa Luding-Rothenburger medaled in both Games in 1988."
+    },
+    {
+      "id": "olympics_hard_031",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which figure-skating pair earned perfect scores for Bolero?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "Torvill and Dean"
+      ],
+      "correct": 3,
+      "explanation": "Jayne Torvill and Christopher Dean earned perfect scores for Bolero."
+    },
+    {
+      "id": "olympics_hard_032",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which city hosted the longest Olympic Games, lasting 188 days?",
+      "answers": [
+        "London",
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 0,
+      "explanation": "The 1908 London Olympics lasted 188 days."
+    },
+    {
+      "id": "olympics_hard_033",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which city’s 1904 Olympics coincided with a World’s Fair?",
+      "answers": [
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red",
+        "St. Louis"
+      ],
+      "correct": 3,
+      "explanation": "The 1904 St. Louis Olympics were held alongside the World’s Fair."
+    },
+    {
+      "id": "olympics_hard_034",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What year did electronic timing become official at the Olympics?",
+      "answers": [
+        "1967",
+        "1969",
+        "1968",
+        "1963"
+      ],
+      "correct": 2,
+      "explanation": "Electronic timing became official at the Olympics in 1968."
+    },
+    {
+      "id": "olympics_hard_035",
+      "category": "Olympics",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many gold medals did Dana Torres win in Beijing?",
+      "answers": [
+        "Zero",
+        "Greece",
+        "Every four years",
+        "Blue, yellow, black, green, red"
+      ],
+      "correct": 0,
+      "explanation": "Dana Torres won three silver medals in Beijing, not gold."
+    }
+  ]
+}

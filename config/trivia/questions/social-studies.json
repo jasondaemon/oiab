@@ -1,0 +1,5137 @@
+{
+  "category": "Social Studies",
+  "slug": "social-studies",
+  "version": 1,
+  "questions": [
+    {
+      "id": "social-studies_easy_001",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which branch of U.S. government makes federal laws?",
+      "answers": [
+        "A basic set of government rules",
+        "Legislative branch",
+        "A legal member of a country",
+        "Choosing leaders or deciding issues"
+      ],
+      "correct": 1,
+      "explanation": "Congress is the federal legislative branch."
+    },
+    {
+      "id": "social-studies_easy_002",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a constitution?",
+      "answers": [
+        "Legislative branch",
+        "A legal member of a country",
+        "A basic set of government rules",
+        "Choosing leaders or deciding issues"
+      ],
+      "correct": 2,
+      "explanation": "A constitution sets basic rules for government."
+    },
+    {
+      "id": "social-studies_easy_003",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a citizen?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Choosing leaders or deciding issues"
+      ],
+      "correct": 2,
+      "explanation": "A citizen is legally recognized as part of a country."
+    },
+    {
+      "id": "social-studies_easy_004",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is voting used for?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Choosing leaders or deciding issues",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "Voting lets people choose leaders or decide public questions."
+    },
+    {
+      "id": "social-studies_easy_005",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a map legend?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A key explaining map symbols",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "A legend explains symbols used on a map."
+    },
+    {
+      "id": "social-studies_easy_006",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which term means money a government collects to pay for services?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Tax"
+      ],
+      "correct": 3,
+      "explanation": "Taxes fund public services."
+    },
+    {
+      "id": "social-studies_easy_007",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a border?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "A line separating places"
+      ],
+      "correct": 3,
+      "explanation": "Borders separate areas or countries."
+    },
+    {
+      "id": "social-studies_easy_008",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a mayor usually responsible for?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "City leadership",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "Mayors lead local governments."
+    },
+    {
+      "id": "social-studies_easy_009",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_easy_010",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_easy_011",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: U.S. state with capital Austin?",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_easy_012",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: ocean east of the United States?",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_easy_013",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: document that starts “We the People”?",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_easy_014",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: right protected by the First Amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_easy_015",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: economic term for limited resources?",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_easy_016",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: government by elected representatives?",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_easy_017",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: group that decides guilt in many trials?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_easy_018",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: official count of population?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_easy_019",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_easy_020",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_easy_021",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: U.S. state with capital Austin?",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_easy_022",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: ocean east of the United States?",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_easy_023",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: document that starts “We the People”?",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_easy_024",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: right protected by the First Amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_easy_025",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: economic term for limited resources?",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_easy_026",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: government by elected representatives?",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_easy_027",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: group that decides guilt in many trials?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_easy_028",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: official count of population?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_easy_029",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_easy_030",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_easy_031",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: U.S. state with capital Austin?",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_easy_032",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: ocean east of the United States?",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_easy_033",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: document that starts “We the People”?",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_easy_034",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: right protected by the First Amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_easy_035",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: economic term for limited resources?",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_easy_036",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: government by elected representatives?",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_easy_037",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: group that decides guilt in many trials?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_easy_038",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: official count of population?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_easy_039",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_easy_040",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_easy_041",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: U.S. state with capital Austin?",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_easy_042",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: ocean east of the United States?",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_easy_043",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: document that starts “We the People”?",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_easy_044",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: right protected by the First Amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_easy_045",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: economic term for limited resources?",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_easy_046",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: government by elected representatives?",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_easy_047",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: group that decides guilt in many trials?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_easy_048",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: official count of population?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_easy_049",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_easy_050",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_easy_051",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: U.S. state with capital Austin?",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_easy_052",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: ocean east of the United States?",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_easy_053",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: document that starts “We the People”?",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_easy_054",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: right protected by the First Amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_easy_055",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: economic term for limited resources?",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_easy_056",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: government by elected representatives?",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_easy_057",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: group that decides guilt in many trials?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_easy_058",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: official count of population?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_easy_059",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_easy_060",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_easy_061",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: U.S. state with capital Austin?",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_easy_062",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: ocean east of the United States?",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_easy_063",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: document that starts “We the People”?",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_easy_064",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: right protected by the First Amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_easy_065",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: economic term for limited resources?",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_easy_066",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: government by elected representatives?",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_easy_067",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: group that decides guilt in many trials?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_easy_068",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: official count of population?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_easy_069",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_easy_070",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_easy_071",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: U.S. state with capital Austin?",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_easy_072",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: ocean east of the United States?",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_easy_073",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: document that starts “We the People”?",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_easy_074",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: right protected by the First Amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_easy_075",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: economic term for limited resources?",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_easy_076",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: government by elected representatives?",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_easy_077",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: group that decides guilt in many trials?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_easy_078",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: official count of population?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_easy_079",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_easy_080",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_easy_081",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: U.S. state with capital Austin?",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_easy_082",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: ocean east of the United States?",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_easy_083",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: document that starts “We the People”?",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_easy_084",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: right protected by the First Amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_easy_085",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: economic term for limited resources?",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_easy_086",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: government by elected representatives?",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_easy_087",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: group that decides guilt in many trials?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_easy_088",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: official count of population?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_easy_089",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_easy_090",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_easy_091",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: U.S. state with capital Austin?",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_easy_092",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: ocean east of the United States?",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_easy_093",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: document that starts “We the People”?",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_easy_094",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: right protected by the First Amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_easy_095",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: economic term for limited resources?",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_easy_096",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: government by elected representatives?",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_easy_097",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: group that decides guilt in many trials?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_easy_098",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: official count of population?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_easy_099",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_easy_100",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_easy_101",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The United States bought Alaska from which country?",
+      "answers": [
+        "Legislative branch",
+        "Russia",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The United States bought Alaska from Russia in 1867."
+    },
+    {
+      "id": "social-studies_easy_102",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The 19th Amendment guaranteed voting rights to whom?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Women",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The 19th Amendment protected women’s right to vote in the United States."
+    },
+    {
+      "id": "social-studies_easy_103",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What do the stripes on the American flag represent?",
+      "answers": [
+        "11",
+        "13 original colonies",
+        "12",
+        "14"
+      ],
+      "correct": 1,
+      "explanation": "The 13 stripes represent the original colonies."
+    },
+    {
+      "id": "social-studies_easy_104",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the longest wall in the world?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Great Wall of China"
+      ],
+      "correct": 3,
+      "explanation": "The Great Wall of China is commonly described as the world’s longest wall."
+    },
+    {
+      "id": "social-studies_easy_105",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who won the 2008 U.S. presidential election?",
+      "answers": [
+        "Barack Obama",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "Barack Obama won the 2008 U.S. presidential election."
+    },
+    {
+      "id": "social-studies_easy_106",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Brexit refers to which country leaving the EU?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "United Kingdom",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "Brexit refers to the United Kingdom leaving the European Union."
+    },
+    {
+      "id": "social-studies_easy_107",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the first woman elected U.S. vice president?",
+      "answers": [
+        "Kamala Harris",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "Kamala Harris was elected vice president in 2020."
+    },
+    {
+      "id": "social-studies_easy_108",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which U.S. president had a home called The Hermitage?",
+      "answers": [
+        "Andrew Jackson",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "Andrew Jackson is the correct answer."
+    },
+    {
+      "id": "social-studies_easy_109",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was shot outside the Hilton Hotel in Washington on March 30th, 1981?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "President Ronald Reagan",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "President Ronald Reagan is the correct answer."
+    },
+    {
+      "id": "social-studies_easy_110",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What scandal forced U.S. President Richard Nixon to resign in 1974?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Watergate",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "Watergate is the correct answer."
+    },
+    {
+      "id": "social-studies_easy_111",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which union has 28 member countries, many of which use the euro as their currency?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "European Union",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "European Union is the correct answer."
+    },
+    {
+      "id": "social-studies_easy_112",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the President of the United States during the Iran Hostage Crisis?",
+      "answers": [
+        "Legislative branch",
+        "Jimmy Carter",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "Jimmy Carter is the correct answer."
+    },
+    {
+      "id": "social-studies_easy_113",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which organization has 193 member countries?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "United Nations"
+      ],
+      "correct": 3,
+      "explanation": "United Nations is the correct answer."
+    },
+    {
+      "id": "social-studies_easy_114",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who was the second President of the United States?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "John Adams"
+      ],
+      "correct": 3,
+      "explanation": "John Adams is the correct answer."
+    },
+    {
+      "id": "social-studies_easy_115",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which U.S. President created the interstate highway system?",
+      "answers": [
+        "Dwight D. Eisenhower",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "Dwight D. Eisenhower is the correct answer."
+    },
+    {
+      "id": "social-studies_easy_116",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Ulysses S. Grant appears on the front on which denomination of U.S. currency?",
+      "answers": [
+        "48",
+        "The $50 bill",
+        "49",
+        "51"
+      ],
+      "correct": 1,
+      "explanation": "The $50 bill is the correct answer."
+    },
+    {
+      "id": "social-studies_easy_117",
+      "category": "Social Studies",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Central American country has a famous canal?",
+      "answers": [
+        "Panama",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "Panama is the correct answer."
+    },
+    {
+      "id": "social-studies_medium_001",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does federalism divide?",
+      "answers": [
+        "Legislative branch",
+        "Power between national and state governments",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "Federalism divides authority between levels of government."
+    },
+    {
+      "id": "social-studies_medium_002",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is due process?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Fair legal procedures"
+      ],
+      "correct": 3,
+      "explanation": "Due process means government must follow fair legal steps."
+    },
+    {
+      "id": "social-studies_medium_003",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is supply and demand about?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Price and availability"
+      ],
+      "correct": 3,
+      "explanation": "Supply and demand helps explain prices."
+    },
+    {
+      "id": "social-studies_medium_004",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is a civic duty?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A responsibility of citizenship",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "Civic duties include responsibilities like obeying laws."
+    },
+    {
+      "id": "social-studies_medium_005",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is an amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "A formal change to a document"
+      ],
+      "correct": 3,
+      "explanation": "An amendment is a formal change or addition."
+    },
+    {
+      "id": "social-studies_medium_006",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is a tariff?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "A tax on imports"
+      ],
+      "correct": 3,
+      "explanation": "Tariffs are taxes on imported goods."
+    },
+    {
+      "id": "social-studies_medium_007",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is a census?",
+      "answers": [
+        "Legislative branch",
+        "A population count",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "A census counts people."
+    },
+    {
+      "id": "social-studies_medium_008",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does diplomacy involve?",
+      "answers": [
+        "Legislative branch",
+        "Relations between governments",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "Diplomacy manages relations between governments."
+    },
+    {
+      "id": "social-studies_medium_009",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_medium_010",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_medium_011",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as U.S. state with capital Austin?",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_medium_012",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as ocean east of the United States?",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_medium_013",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as document that starts “We the People”?",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_medium_014",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as right protected by the First Amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_medium_015",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as economic term for limited resources?",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_medium_016",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as government by elected representatives?",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_medium_017",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as group that decides guilt in many trials?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_medium_018",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as official count of population?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_medium_019",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_medium_020",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_medium_021",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as U.S. state with capital Austin?",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_medium_022",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as ocean east of the United States?",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_medium_023",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as document that starts “We the People”?",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_medium_024",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as right protected by the First Amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_medium_025",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as economic term for limited resources?",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_medium_026",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as government by elected representatives?",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_medium_027",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as group that decides guilt in many trials?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_medium_028",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as official count of population?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_medium_029",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_medium_030",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_medium_031",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as U.S. state with capital Austin?",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_medium_032",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as ocean east of the United States?",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_medium_033",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as document that starts “We the People”?",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_medium_034",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as right protected by the First Amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_medium_035",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as economic term for limited resources?",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_medium_036",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as government by elected representatives?",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_medium_037",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as group that decides guilt in many trials?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_medium_038",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as official count of population?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_medium_039",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_medium_040",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_medium_041",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as U.S. state with capital Austin?",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_medium_042",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as ocean east of the United States?",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_medium_043",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as document that starts “We the People”?",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_medium_044",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as right protected by the First Amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_medium_045",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as economic term for limited resources?",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_medium_046",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as government by elected representatives?",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_medium_047",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as group that decides guilt in many trials?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_medium_048",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as official count of population?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_medium_049",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_medium_050",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_medium_051",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as U.S. state with capital Austin?",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_medium_052",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as ocean east of the United States?",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_medium_053",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as document that starts “We the People”?",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_medium_054",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as right protected by the First Amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_medium_055",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as economic term for limited resources?",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_medium_056",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as government by elected representatives?",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_medium_057",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as group that decides guilt in many trials?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_medium_058",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as official count of population?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_medium_059",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_medium_060",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_medium_061",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as U.S. state with capital Austin?",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_medium_062",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as ocean east of the United States?",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_medium_063",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as document that starts “We the People”?",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_medium_064",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as right protected by the First Amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_medium_065",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as economic term for limited resources?",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_medium_066",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as government by elected representatives?",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_medium_067",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as group that decides guilt in many trials?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_medium_068",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as official count of population?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_medium_069",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_medium_070",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_medium_071",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as U.S. state with capital Austin?",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_medium_072",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as ocean east of the United States?",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_medium_073",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as document that starts “We the People”?",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_medium_074",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as right protected by the First Amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_medium_075",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as economic term for limited resources?",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_medium_076",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as government by elected representatives?",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_medium_077",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as group that decides guilt in many trials?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_medium_078",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as official count of population?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_medium_079",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_medium_080",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_medium_081",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as U.S. state with capital Austin?",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_medium_082",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as ocean east of the United States?",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_medium_083",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as document that starts “We the People”?",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_medium_084",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as right protected by the First Amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_medium_085",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as economic term for limited resources?",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_medium_086",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as government by elected representatives?",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_medium_087",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as group that decides guilt in many trials?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_medium_088",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as official count of population?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_medium_089",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_medium_090",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_medium_091",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as U.S. state with capital Austin?",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_medium_092",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as ocean east of the United States?",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_medium_093",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as document that starts “We the People”?",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_medium_094",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as right protected by the First Amendment?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_medium_095",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as economic term for limited resources?",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_medium_096",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as government by elected representatives?",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_medium_097",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as group that decides guilt in many trials?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_medium_098",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as official count of population?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_medium_099",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of France?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_medium_100",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Social Studies, which option is best described as capital of Japan?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_medium_101",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the fourth president of the United States?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "James Madison"
+      ],
+      "correct": 3,
+      "explanation": "James Madison served as the fourth U.S. president."
+    },
+    {
+      "id": "social-studies_medium_102",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which presidents are carved on Mount Rushmore?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Washington, Jefferson, Lincoln, TR"
+      ],
+      "correct": 3,
+      "explanation": "Mount Rushmore shows George Washington, Thomas Jefferson, Abraham Lincoln, and Theodore Roosevelt."
+    },
+    {
+      "id": "social-studies_medium_103",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Supreme Court case struck down school segregation?",
+      "answers": [
+        "Legislative branch",
+        "Brown v. Board of Education",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "Brown v. Board of Education ruled segregated public schools unconstitutional."
+    },
+    {
+      "id": "social-studies_medium_104",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first Black U.S. Supreme Court justice?",
+      "answers": [
+        "Thurgood Marshall",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "Thurgood Marshall joined the Supreme Court in 1967."
+    },
+    {
+      "id": "social-studies_medium_105",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does the Greek word demokratia mean?",
+      "answers": [
+        "Legislative branch",
+        "Rule by the people",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "Demokratia is the root of the word democracy and means rule by the people."
+    },
+    {
+      "id": "social-studies_medium_106",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who won the Nobel Peace Prize at age 17 in 2014?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Malala Yousafzai"
+      ],
+      "correct": 3,
+      "explanation": "Malala Yousafzai became the youngest Nobel Peace Prize laureate."
+    },
+    {
+      "id": "social-studies_medium_107",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the 2007-2009 downturn called?",
+      "answers": [
+        "Great Recession",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The Great Recession lasted from 2007 to 2009."
+    },
+    {
+      "id": "social-studies_medium_108",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which U.S. department was created after 9/11?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Department of Homeland Security"
+      ],
+      "correct": 3,
+      "explanation": "The Department of Homeland Security was created after the Sept. 11 attacks."
+    },
+    {
+      "id": "social-studies_medium_109",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who became President of the United States after John F. Kennedy was assassinated?",
+      "answers": [
+        "Legislative branch",
+        "Lyndon B. Johnson",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "Lyndon B. Johnson is the correct answer."
+    },
+    {
+      "id": "social-studies_medium_110",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The Peloponnesian War was fought between Athens and which other ancient Greek state?",
+      "answers": [
+        "Legislative branch",
+        "Sparta",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "Sparta is the correct answer."
+    },
+    {
+      "id": "social-studies_medium_111",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first female to be elected into the U.S. Congress?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Janet Rankin"
+      ],
+      "correct": 3,
+      "explanation": "Janet Rankin is the correct answer."
+    },
+    {
+      "id": "social-studies_medium_112",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What First Lady became the first wife of a sitting president to appear under subpoena before a grand jury?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Hillary Rodham Clinton"
+      ],
+      "correct": 3,
+      "explanation": "Hillary Rodham Clinton is the correct answer."
+    },
+    {
+      "id": "social-studies_medium_113",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In which city and state was John F. Kennedy assassinated?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Dallas, Texas",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "Dallas, Texas is the correct answer."
+    },
+    {
+      "id": "social-studies_medium_114",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What are the Bill of Rights?",
+      "answers": [
+        "Legislative branch",
+        "First ten amendments",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "First ten amendments is the correct answer."
+    },
+    {
+      "id": "social-studies_medium_115",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first African American Supreme Court Justice?",
+      "answers": [
+        "Thurgood Marshall",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "Thurgood Marshall is the correct answer."
+    },
+    {
+      "id": "social-studies_medium_116",
+      "category": "Social Studies",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first democratically elected president of Russia?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Boris Yeltsin"
+      ],
+      "correct": 3,
+      "explanation": "Boris Yeltsin is the correct answer."
+    },
+    {
+      "id": "social-studies_hard_001",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is judicial review?",
+      "answers": [
+        "Courts deciding if laws fit the Constitution",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "Judicial review lets courts assess constitutionality."
+    },
+    {
+      "id": "social-studies_hard_002",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is gerrymandering?",
+      "answers": [
+        "Drawing districts for political advantage",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "Gerrymandering manipulates district boundaries."
+    },
+    {
+      "id": "social-studies_hard_003",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is comparative advantage?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Doing what has lower opportunity cost",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "Comparative advantage is about lower opportunity cost."
+    },
+    {
+      "id": "social-studies_hard_004",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is bicameralism?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "A two-house legislature"
+      ],
+      "correct": 3,
+      "explanation": "Bicameral legislatures have two chambers."
+    },
+    {
+      "id": "social-studies_hard_005",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is civil society?",
+      "answers": [
+        "Voluntary groups outside government",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "Civil society includes churches, charities, clubs, and associations."
+    },
+    {
+      "id": "social-studies_hard_006",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is sovereignty?",
+      "answers": [
+        "Independent governing authority",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "Sovereignty is governing authority."
+    },
+    {
+      "id": "social-studies_hard_007",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is proportional representation?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Seats matching vote share",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "It allocates seats by vote share."
+    },
+    {
+      "id": "social-studies_hard_008",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is subsidiarity?",
+      "answers": [
+        "Handling issues at the lowest practical level",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "Subsidiarity favors local handling when practical."
+    },
+    {
+      "id": "social-studies_hard_009",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of France.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_hard_010",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of Japan.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_hard_011",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: U.S. state with capital Austin.",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_hard_012",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: ocean east of the United States.",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_hard_013",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: document that starts “We the People”.",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_hard_014",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: right protected by the First Amendment.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_hard_015",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: economic term for limited resources.",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_hard_016",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: government by elected representatives.",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_hard_017",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: group that decides guilt in many trials.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_hard_018",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: official count of population.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_hard_019",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of France.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_hard_020",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of Japan.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_hard_021",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: U.S. state with capital Austin.",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_hard_022",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: ocean east of the United States.",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_hard_023",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: document that starts “We the People”.",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_hard_024",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: right protected by the First Amendment.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_hard_025",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: economic term for limited resources.",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_hard_026",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: government by elected representatives.",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_hard_027",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: group that decides guilt in many trials.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_hard_028",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: official count of population.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_hard_029",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of France.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_hard_030",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of Japan.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_hard_031",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: U.S. state with capital Austin.",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_hard_032",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: ocean east of the United States.",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_hard_033",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: document that starts “We the People”.",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_hard_034",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: right protected by the First Amendment.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_hard_035",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: economic term for limited resources.",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_hard_036",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: government by elected representatives.",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_hard_037",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: group that decides guilt in many trials.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_hard_038",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: official count of population.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_hard_039",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of France.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_hard_040",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of Japan.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_hard_041",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: U.S. state with capital Austin.",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_hard_042",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: ocean east of the United States.",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_hard_043",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: document that starts “We the People”.",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_hard_044",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: right protected by the First Amendment.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_hard_045",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: economic term for limited resources.",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_hard_046",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: government by elected representatives.",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_hard_047",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: group that decides guilt in many trials.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_hard_048",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: official count of population.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_hard_049",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of France.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_hard_050",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of Japan.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_hard_051",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: U.S. state with capital Austin.",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_hard_052",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: ocean east of the United States.",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_hard_053",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: document that starts “We the People”.",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_hard_054",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: right protected by the First Amendment.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_hard_055",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: economic term for limited resources.",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_hard_056",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: government by elected representatives.",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_hard_057",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: group that decides guilt in many trials.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_hard_058",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: official count of population.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_hard_059",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of France.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_hard_060",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of Japan.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_hard_061",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: U.S. state with capital Austin.",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_hard_062",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: ocean east of the United States.",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_hard_063",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: document that starts “We the People”.",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_hard_064",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: right protected by the First Amendment.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_hard_065",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: economic term for limited resources.",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_hard_066",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: government by elected representatives.",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_hard_067",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: group that decides guilt in many trials.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_hard_068",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: official count of population.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_hard_069",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of France.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_hard_070",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of Japan.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_hard_071",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: U.S. state with capital Austin.",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_hard_072",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: ocean east of the United States.",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_hard_073",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: document that starts “We the People”.",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_hard_074",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: right protected by the First Amendment.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_hard_075",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: economic term for limited resources.",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_hard_076",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: government by elected representatives.",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_hard_077",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: group that decides guilt in many trials.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_hard_078",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: official count of population.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_hard_079",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of France.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_hard_080",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of Japan.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_hard_081",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: U.S. state with capital Austin.",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_hard_082",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: ocean east of the United States.",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_hard_083",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: document that starts “We the People”.",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_hard_084",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: right protected by the First Amendment.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_hard_085",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: economic term for limited resources.",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_hard_086",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: government by elected representatives.",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_hard_087",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: group that decides guilt in many trials.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_hard_088",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: official count of population.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_hard_089",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of France.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_hard_090",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of Japan.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_hard_091",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: U.S. state with capital Austin.",
+      "answers": [
+        "Legislative branch",
+        "Texas",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is Texas."
+    },
+    {
+      "id": "social-studies_hard_092",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: ocean east of the United States.",
+      "answers": [
+        "Atlantic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is Atlantic."
+    },
+    {
+      "id": "social-studies_hard_093",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: document that starts “We the People”.",
+      "answers": [
+        "Legislative branch",
+        "U.S. Constitution",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is U.S. Constitution."
+    },
+    {
+      "id": "social-studies_hard_094",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: right protected by the First Amendment.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "free speech",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is free speech."
+    },
+    {
+      "id": "social-studies_hard_095",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: economic term for limited resources.",
+      "answers": [
+        "scarcity",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is scarcity."
+    },
+    {
+      "id": "social-studies_hard_096",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: government by elected representatives.",
+      "answers": [
+        "republic",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is republic."
+    },
+    {
+      "id": "social-studies_hard_097",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: group that decides guilt in many trials.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "jury",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is jury."
+    },
+    {
+      "id": "social-studies_hard_098",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: official count of population.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "census"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is census."
+    },
+    {
+      "id": "social-studies_hard_099",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of France.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country",
+        "Paris"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is Paris."
+    },
+    {
+      "id": "social-studies_hard_100",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Social Studies clue, identify: capital of Japan.",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Tokyo",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is Tokyo."
+    },
+    {
+      "id": "social-studies_hard_101",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which state first legalized same-sex marriage?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Massachusetts",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "Massachusetts became the first U.S. state to legalize same-sex marriage."
+    },
+    {
+      "id": "social-studies_hard_102",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "Which year brought major U.S. federal child labor rules?",
+      "answers": [
+        "1937",
+        "1938",
+        "1939",
+        "1933"
+      ],
+      "correct": 1,
+      "explanation": "The Fair Labor Standards Act of 1938 set major federal child labor rules."
+    },
+    {
+      "id": "social-studies_hard_103",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What year did NAFTA go into effect?",
+      "answers": [
+        "1993",
+        "1995",
+        "1989",
+        "1994"
+      ],
+      "correct": 3,
+      "explanation": "The North American Free Trade Agreement went into effect in 1994."
+    },
+    {
+      "id": "social-studies_hard_104",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many Celtic languages are still spoken today?",
+      "answers": [
+        "Legislative branch",
+        "A basic set of government rules",
+        "Six",
+        "A legal member of a country"
+      ],
+      "correct": 2,
+      "explanation": "Six Celtic languages are still spoken: Irish, Scottish Gaelic, Manx, Welsh, Cornish, and Breton."
+    },
+    {
+      "id": "social-studies_hard_105",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What agreement helped bring peace in Northern Ireland?",
+      "answers": [
+        "Good Friday Agreement",
+        "Legislative branch",
+        "A basic set of government rules",
+        "A legal member of a country"
+      ],
+      "correct": 0,
+      "explanation": "The Good Friday Agreement was signed in 1998."
+    },
+    {
+      "id": "social-studies_hard_106",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What year was the Paris Agreement signed?",
+      "answers": [
+        "2014",
+        "2016",
+        "2015",
+        "2010"
+      ],
+      "correct": 2,
+      "explanation": "The Paris Agreement on climate was signed in 2015."
+    },
+    {
+      "id": "social-studies_hard_107",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many days was William Harrison President of the United States?",
+      "answers": [
+        "30",
+        "31",
+        "33",
+        "32"
+      ],
+      "correct": 3,
+      "explanation": "32 is the correct answer."
+    },
+    {
+      "id": "social-studies_hard_108",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What year was the United Nations established?",
+      "answers": [
+        "1944",
+        "1945",
+        "1946",
+        "1940"
+      ],
+      "correct": 1,
+      "explanation": "1945 is the correct answer."
+    },
+    {
+      "id": "social-studies_hard_109",
+      "category": "Social Studies",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many heads of executive departments make up the U.S. President's cabinet?",
+      "answers": [
+        "15",
+        "13",
+        "14",
+        "16"
+      ],
+      "correct": 0,
+      "explanation": "15 is the correct answer."
+    }
+  ]
+}

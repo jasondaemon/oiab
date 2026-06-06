@@ -31,8 +31,11 @@ from urllib.request import Request, urlopen
 from math import atan, pi, sinh, tan, log, asinh
 
 from .app_db import AppDB
+from .battery import read_x1206_battery
+from .burst import BURST_MAX_PLAYERS, burst_apply_move, burst_new_payload, burst_player_mark, burst_public_payload, burst_start_game
 from .config import REPO_ROOT, SETTINGS, Settings, ensure_data_layout
 from .games_db import GamesDB
+from .geopdf import delete_geopdf, import_geopdf_bytes, list_geopdfs, load_metadata as load_geopdf_metadata, process_geopdf, tile_path as geopdf_tile_path, update_geopdf, write_metadata as write_geopdf_metadata
 from .gps.gpsd import read_gpsd
 from .services import docker_container_action, docker_containers, docker_socket_request, list_services, service_action
 from .storage import folders_from_places, read_json, read_places, save_waypoint
@@ -90,6 +93,27 @@ ROM_EXTENSIONS = {
 
 DOCKER_SOCKET_PATH = Path(os.environ.get("OIAB_DOCKER_SOCKET", "/var/run/docker.sock"))
 HOST_POWER_HELPER_IMAGE = os.environ.get("OIAB_HOST_POWER_HELPER_IMAGE", "oiab-core:latest")
+TRIVIA_SEED_DIR = REPO_ROOT / "config" / "trivia" / "questions"
+
+
+def ensure_default_trivia_questions(settings: Settings) -> dict[str, object]:
+    """Seed bundled trivia packs into durable storage without overwriting user files."""
+    target = settings.data_dir / "trivia" / "questions"
+    target.mkdir(parents=True, exist_ok=True)
+    if not TRIVIA_SEED_DIR.exists():
+        return {"status": "seed_missing", "path": str(target), "copied": 0}
+    copied = 0
+    skipped = 0
+    for source in sorted(TRIVIA_SEED_DIR.glob("*.json")):
+        if source.name.startswith("."):
+            continue
+        destination = target / source.name
+        if destination.exists():
+            skipped += 1
+            continue
+        shutil.copy2(source, destination)
+        copied += 1
+    return {"status": "seeded" if copied else "exists", "path": str(target), "copied": copied, "skipped": skipped}
 
 
 def docker_unix_json_request(method: str, path: str, payload: object | None = None, *, timeout: float = 20.0) -> tuple[int, object]:
@@ -278,7 +302,11 @@ MOBILE_GAME_TITLES = {
     "minesweeper": "Minesweeper",
     "blockfall": "Blockfall Battle",
     "claimline": "Territory Trace",
+    "sinkhole-city": "Sinkhole City",
+    "canyon-crawler": "Canyon Crawler",
+    "orbit-run": "Orbit Run",
     "blank-slate": "Blank Slate",
+    "starts-ends": "Starts With / Ends With",
     "word-tile-arena": "Word Tile Arena",
     "dots-and-boxes": "Dots and Boxes",
     "connect-four": "Connect Four",
@@ -286,6 +314,7 @@ MOBILE_GAME_TITLES = {
     "hangman": "Hangman",
     "word-grid": "Word Grid",
     "pattern-match": "Pattern Match",
+    "burst": "Burst",
 }
 MOBILE_GAME_PREFIXES = {
     "tic-tac-toe": "ttt",
@@ -294,7 +323,11 @@ MOBILE_GAME_PREFIXES = {
     "minesweeper": "mine",
     "blockfall": "block",
     "claimline": "trace",
+    "sinkhole-city": "sink",
+    "canyon-crawler": "crawl",
+    "orbit-run": "orbit",
     "blank-slate": "blank",
+    "starts-ends": "starts",
     "word-tile-arena": "tiles",
     "dots-and-boxes": "dots",
     "connect-four": "c4",
@@ -302,6 +335,7 @@ MOBILE_GAME_PREFIXES = {
     "hangman": "hang",
     "word-grid": "word",
     "pattern-match": "pat",
+    "burst": "burst",
 }
 MOBILE_GAME_MARKS = {
     "tic-tac-toe": ("X", "O"),
@@ -310,7 +344,11 @@ MOBILE_GAME_MARKS = {
     "minesweeper": ("A", "B"),
     "blockfall": ("P1", "P2"),
     "claimline": ("P1", "P2"),
+    "sinkhole-city": ("A", "B", "C", "D"),
+    "canyon-crawler": ("A", "B"),
+    "orbit-run": ("A", "B"),
     "blank-slate": ("P1", "P2"),
+    "starts-ends": ("P1", "P2", "P3", "P4"),
     "word-tile-arena": ("P1", "P2", "P3", "P4"),
     "dots-and-boxes": ("A", "B"),
     "connect-four": ("R", "Y"),
@@ -318,6 +356,7 @@ MOBILE_GAME_MARKS = {
     "hangman": ("A", "B"),
     "word-grid": ("A", "B"),
     "pattern-match": ("A", "B"),
+    "burst": ("A", "B", "C", "D", "E", "F"),
 }
 
 CLAIMLINE_COLS = 64
@@ -395,6 +434,15 @@ def form_value(form: dict, key: str, default: str = "") -> str:
     if value is None:
         return default
     return str(value)
+
+
+def parse_json_value(value: object, fallback: object) -> object:
+    if isinstance(value, (dict, list)):
+        return value
+    try:
+        return json.loads(str(value or ""))
+    except (TypeError, json.JSONDecodeError):
+        return fallback
 
 
 def clean_player_id(value: object) -> str:
@@ -502,6 +550,206 @@ def overland_word_trie() -> dict:
 
 def is_valid_game_word(value: object) -> bool:
     return clean_game_word(value) in overland_word_set()
+
+
+STARTS_ENDS_TOTAL_ROUNDS = 10
+STARTS_ENDS_SPIN_SECONDS = 2.1
+STARTS_ENDS_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+
+def starts_ends_min_word_length(difficulty: str) -> int:
+    value = str(difficulty or "medium").lower()
+    return {"easy": 4, "normal": 5, "medium": 5, "hard": 7, "expert": 8}.get(value, 5)
+
+
+def starts_ends_words_for_pair(start_letter: str, end_letter: str, min_len: int, *, limit: int = 0, exclude: set[str] | None = None) -> list[str]:
+    start = clean_game_word(start_letter)[:1]
+    end = clean_game_word(end_letter)[:1]
+    if not start or not end:
+        return []
+    excluded = exclude or set()
+    words = [
+        word
+        for word in overland_word_set()
+        if len(word) >= min_len and word not in excluded and word.startswith(start) and word.endswith(end)
+    ]
+    words.sort(key=lambda item: (len(item), item))
+    return words[:limit] if limit else words
+
+
+def starts_ends_choose_pair(min_len: int, exclude: set[str] | None = None) -> tuple[str, str, list[str]]:
+    letters = list(STARTS_ENDS_LETTERS)
+    excluded = exclude or set()
+    for _ in range(140):
+        start = secrets.choice(letters)
+        end = secrets.choice(letters)
+        matches = starts_ends_words_for_pair(start, end, min_len, limit=8, exclude=excluded)
+        if matches:
+            return start, end, matches
+    for start in letters:
+        for end in letters:
+            matches = starts_ends_words_for_pair(start, end, min_len, limit=8, exclude=excluded)
+            if matches:
+                return start, end, matches
+    return "S", "T", starts_ends_words_for_pair("S", "T", min_len, limit=8, exclude=excluded)
+
+
+def starts_ends_new_payload(total_rounds: int = STARTS_ENDS_TOTAL_ROUNDS, min_word_length: int = 5) -> dict:
+    try:
+        rounds = max(1, min(30, int(total_rounds or STARTS_ENDS_TOTAL_ROUNDS)))
+    except (TypeError, ValueError):
+        rounds = STARTS_ENDS_TOTAL_ROUNDS
+    try:
+        min_len = max(1, min(16, int(min_word_length or 5)))
+    except (TypeError, ValueError):
+        min_len = 5
+    return {
+        "phase": "lobby",
+        "roundNumber": 0,
+        "totalRounds": rounds,
+        "minWordLength": min_len,
+        "startLetter": "",
+        "endLetter": "",
+        "roundStartedAt": 0,
+        "acceptAt": 0,
+        "roundWinnerMark": "",
+        "winningWord": "",
+        "scores": {},
+        "guesses": [],
+        "examples": [],
+        "usedWinningWords": [],
+        "lastMove": None,
+    }
+
+
+def starts_ends_refresh_phase(game: dict) -> bool:
+    payload = game.setdefault("payload", starts_ends_new_payload())
+    if payload.get("phase") == "spinning" and float(payload.get("acceptAt") or 0) <= time.time():
+        payload["phase"] = "accepting"
+        return True
+    return False
+
+
+def starts_ends_start_round(game: dict) -> None:
+    payload = game.setdefault("payload", starts_ends_new_payload())
+    if int(payload.get("roundNumber") or 0) >= int(payload.get("totalRounds") or STARTS_ENDS_TOTAL_ROUNDS):
+        starts_ends_finish_game(game)
+        return
+    used = {clean_game_word(word) for word in payload.get("usedWinningWords", []) if clean_game_word(word)}
+    start, end, examples = starts_ends_choose_pair(int(payload.get("minWordLength") or 5), exclude=used)
+    now = time.time()
+    payload.update(
+        {
+            "phase": "spinning",
+            "roundNumber": int(payload.get("roundNumber") or 0) + 1,
+            "startLetter": start,
+            "endLetter": end,
+            "roundStartedAt": now,
+            "acceptAt": now + STARTS_ENDS_SPIN_SECONDS,
+            "roundWinnerMark": "",
+            "winningWord": "",
+            "guesses": [],
+            "examples": examples[:5],
+            "lastMove": None,
+        }
+    )
+    game["status"] = "active"
+    game["turn"] = "all"
+
+
+def starts_ends_finish_game(game: dict) -> None:
+    payload = game.setdefault("payload", starts_ends_new_payload())
+    scores = {str(mark): int(score or 0) for mark, score in (payload.get("scores") or {}).items()}
+    players = [player for player in game.get("players", []) if isinstance(player, dict)]
+    for player in players:
+        scores.setdefault(str(player.get("mark") or ""), 0)
+    if not scores:
+        winner = ""
+    else:
+        top_score = max(scores.values())
+        leaders = [mark for mark, score in scores.items() if score == top_score]
+        winner = "draw" if len(leaders) > 1 else leaders[0]
+    payload["scores"] = scores
+    payload["phase"] = "game_complete"
+    game["winner"] = winner
+    game["status"] = "complete"
+    record_mobile_game_result(game)
+
+
+def public_starts_ends_payload(game: dict) -> dict:
+    payload = game.get("payload") if isinstance(game.get("payload"), dict) else {}
+    phase = str(payload.get("phase") or "lobby")
+    if phase == "spinning" and float(payload.get("acceptAt") or 0) <= time.time():
+        phase = "accepting"
+    return {
+        "phase": phase,
+        "roundNumber": int(payload.get("roundNumber") or 0),
+        "totalRounds": int(payload.get("totalRounds") or STARTS_ENDS_TOTAL_ROUNDS),
+        "minWordLength": int(payload.get("minWordLength") or starts_ends_min_word_length(game.get("difficulty"))),
+        "startLetter": str(payload.get("startLetter") or ""),
+        "endLetter": str(payload.get("endLetter") or ""),
+        "roundStartedAt": float(payload.get("roundStartedAt") or 0),
+        "acceptAt": float(payload.get("acceptAt") or 0),
+        "now": time.time(),
+        "roundWinnerMark": str(payload.get("roundWinnerMark") or ""),
+        "winningWord": str(payload.get("winningWord") or ""),
+        "scores": dict(payload.get("scores") or {}),
+        "guesses": list(payload.get("guesses") or [])[-12:],
+        "examples": list(payload.get("examples") or [])[:5] if phase in {"round_complete", "game_complete"} else [],
+        "lastMove": payload.get("lastMove"),
+    }
+
+
+def starts_ends_apply_guess(game: dict, player: dict, word: object) -> None:
+    starts_ends_refresh_phase(game)
+    payload = game.setdefault("payload", starts_ends_new_payload())
+    mark = str(player.get("mark") or "")
+    candidate = clean_game_word(word)
+    min_len = int(payload.get("minWordLength") or 5)
+    start = str(payload.get("startLetter") or "")
+    end = str(payload.get("endLetter") or "")
+    reason = ""
+    valid = False
+    if payload.get("phase") != "accepting":
+        reason = "Wait for the letters to settle."
+    elif not candidate:
+        reason = "Enter a word."
+    elif len(candidate) < min_len:
+        reason = f"Words must be at least {min_len} letters."
+    elif not candidate.startswith(start):
+        reason = f"Word must start with {start}."
+    elif not candidate.endswith(end):
+        reason = f"Word must end with {end}."
+    elif not is_valid_game_word(candidate):
+        reason = "Word is not in the OIAB dictionary."
+    elif candidate in {clean_game_word(item) for item in payload.get("usedWinningWords", [])}:
+        reason = "That winning word was already used."
+    elif payload.get("roundWinnerMark"):
+        reason = "This round already has a winner."
+    else:
+        valid = True
+        reason = "Accepted."
+    guess = {
+        "mark": mark,
+        "name": clean_player_name(player.get("name") or mark),
+        "word": candidate,
+        "valid": valid,
+        "reason": reason,
+        "timestamp": timestamp(),
+    }
+    payload.setdefault("guesses", []).append(guess)
+    payload["guesses"] = payload["guesses"][-12:]
+    payload["lastMove"] = guess
+    if not valid:
+        raise ValueError(reason)
+    scores = payload.setdefault("scores", {})
+    scores[mark] = int(scores.get(mark) or 0) + 1
+    payload["roundWinnerMark"] = mark
+    payload["winningWord"] = candidate
+    payload.setdefault("usedWinningWords", []).append(candidate)
+    payload["phase"] = "round_complete"
+    if int(payload.get("roundNumber") or 0) >= int(payload.get("totalRounds") or STARTS_ENDS_TOTAL_ROUNDS):
+        starts_ends_finish_game(game)
 
 
 WORD_TILE_SIZE = 15
@@ -2108,10 +2356,16 @@ def public_mobile_game(game: dict, player_id: str = "") -> dict:
         payload["payload"] = public_hangman_payload(game)
     elif game_type == "word-grid":
         payload["payload"] = public_word_grid_payload(game, player_id)
+    elif game_type == "starts-ends":
+        payload["payload"] = public_starts_ends_payload(game)
     elif game_type == "pattern-match":
         payload["payload"] = public_pattern_payload(game)
     elif game_type == "word-tile-arena":
         payload["payload"] = word_tile_public_payload(game, player_id)
+    elif game_type == "burst":
+        payload["payload"] = burst_public_payload(game, player_id)
+    elif game_type == "sinkhole-city":
+        payload["payload"] = game.get("payload") or {}
     elif game_type in {"blank-slate", "blockfall"}:
         payload["payload"] = game.get("payload") or {}
     else:
@@ -2362,6 +2616,100 @@ def start_mvum_install(settings: Settings, kind: str) -> dict[str, object]:
     return job
 
 
+def start_geopdf_processing(settings: Settings, source_path: str, map_id: str, display_name: str | None = None, *, rebuild: bool = False) -> dict[str, object]:
+    map_id = str(map_id or "").strip()
+    if not map_id:
+        raise ValueError("GeoPDF map id is required.")
+    job_id = f"{map_id}_{'rebuild' if rebuild else 'import'}"
+    current = overlay_job_snapshot(job_id)
+    if current.get("status") in {"pending", "running"}:
+        return current
+    job = update_overlay_job(
+        job_id,
+        overlay_id=map_id,
+        type="geopdf_rebuild" if rebuild else "geopdf_import",
+        status="pending",
+        step="queued",
+        progress=0,
+        error_message="",
+        started_at=timestamp(),
+        output_path="",
+        size_bytes=0,
+    )
+
+    def worker() -> None:
+        update_overlay_job(job_id, status="running", step="processing GeoPDF", progress=5)
+        try:
+            metadata = process_geopdf(settings, Path(source_path), map_id=map_id, display_name=display_name)
+            update_overlay_job(
+                job_id,
+                status="succeeded",
+                step="GeoPDF tiles ready",
+                progress=100,
+                error_message="",
+                output_path=str(metadata.get("tile_path") or ""),
+                size_bytes=int(metadata.get("size_bytes") or 0),
+                feature_count=int(metadata.get("tile_count") or 0),
+                result=metadata,
+            )
+        except Exception as exc:  # noqa: BLE001 - background job boundary
+            error = str(exc)
+            update_overlay_job(job_id, status="failed", step="GeoPDF processing failed", progress=100, error_message=error)
+            try:
+                db = AppDB(settings)
+                meta_path = settings.data_dir / "geopdf" / "processed" / map_id / "metadata.json"
+                existing_metadata: dict[str, object] = {}
+                if meta_path.exists():
+                    try:
+                        existing_metadata = load_geopdf_metadata(settings, map_id)
+                    except Exception:
+                        existing_metadata = {}
+                failed_metadata = {
+                    "id": map_id,
+                    "original_filename": existing_metadata.get("original_filename") or Path(source_path).name,
+                    "display_name": existing_metadata.get("display_name") or display_name or Path(source_path).stem,
+                    "source_path": str(source_path),
+                    "tile_path": existing_metadata.get("tile_path") or str(settings.data_dir / "geopdf" / "processed" / map_id / "tiles"),
+                    "tile_template": existing_metadata.get("tile_template") or "",
+                    "minZoom": existing_metadata.get("minZoom") or int(settings.geopdf_min_zoom),
+                    "maxZoom": existing_metadata.get("maxZoom") or int(settings.geopdf_max_zoom),
+                    "bounds": existing_metadata.get("bounds") or [],
+                    "original_crs": existing_metadata.get("original_crs") or "",
+                    "commands": existing_metadata.get("commands") or [],
+                    "processing_status": "failed",
+                    "created_at": existing_metadata.get("created_at") or timestamp(),
+                    "updated_at": timestamp(),
+                    "error_message": error,
+                }
+                write_geopdf_metadata(settings, failed_metadata)
+                db.upsert_map_overlay(
+                    {
+                        "id": map_id,
+                        "name": display_name or Path(source_path).stem,
+                        "type": "raster",
+                        "source_type": "geopdf_tiles",
+                        "category": "geopdf",
+                        "path": str(meta_path),
+                        "tiles": [],
+                        "offline_available": False,
+                        "online_available": False,
+                        "cache_mode": "offline_pack",
+                        "cache_status": "failed",
+                        "install_status": "failed",
+                        "error_message": error,
+                        "source_path": str(source_path),
+                        "original_filename": Path(source_path).name,
+                        "sort_order": 88,
+                    },
+                    preserve_existing=True,
+                )
+            except Exception:
+                pass
+
+    threading.Thread(target=worker, name=f"oiab-{job_id}", daemon=True).start()
+    return job
+
+
 def ensure_default_world_map(settings: Settings) -> dict[str, object]:
     db = AppDB(settings)
     registry = db.map_pack_registry()
@@ -2508,6 +2856,10 @@ class OIABHandler(BaseHTTPRequestHandler):
             return self.send_json(self.app_db().map_overlay_catalog())
         if path in {"/api/maps/overlays", "/api/maps/overlays/installed", "/api/maps/overlays/status", "/maps-overlays"}:
             return self.send_json(self.map_overlays())
+        if path == "/api/geopdf":
+            return self.send_json({"ok": True, "maps": list_geopdfs(self.settings), **self.map_overlays()})
+        if path.startswith("/api/geopdf/"):
+            return self.handle_geopdf_get(path)
         if path == "/api/maps/overlays/regions":
             return self.send_json({"ok": True, "regions": self.app_db().offline_overlay_regions(), "offline_regions_only": bool(self.app_db().app_setting("maps.offline_regions_only", False))})
         if path == "/api/maps/overlays/jobs":
@@ -2526,6 +2878,8 @@ class OIABHandler(BaseHTTPRequestHandler):
             query = parse_qs(parsed.query)
             offline_only = str(query.get("offline_only", [""])[-1]).lower() in {"1", "true", "yes", "on"}
             return self.serve_overlay_cached_tile(overlay_id, z, x, y, offline_only=offline_only)
+        if path.startswith("/tiles/geopdf/"):
+            return self.serve_geopdf_tile(path)
         if path.startswith("/api/maps/overlays/jobs/"):
             job_id = path.rstrip("/").rsplit("/", 1)[-1]
             job = overlay_job_snapshot(job_id)
@@ -2605,11 +2959,31 @@ class OIABHandler(BaseHTTPRequestHandler):
         if path == "/app-layout":
             return self.send_json({"ok": True, "layout": self.app_layout()})
         if path in {"/books-admin", "/books-admin/"}:
-            self.send_response(HTTPStatus.FOUND)
+            self.send_response(HTTPStatus.OK)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
             self.send_header("Set-Cookie", "komga_admin=1; Path=/books; SameSite=Lax")
-            self.send_header("Location", "/books/")
+            self.send_header("Set-Cookie", "KOMGA-SESSION=; Max-Age=0; Path=/books; HttpOnly; SameSite=Lax")
+            self.send_header("Set-Cookie", "KOMGA-SESSION=; Max-Age=0; Path=/books/; HttpOnly; SameSite=Lax")
+            self.send_header("Set-Cookie", "XSRF-TOKEN=; Max-Age=0; Path=/books; SameSite=Lax")
+            self.send_header("Set-Cookie", "XSRF-TOKEN=; Max-Age=0; Path=/books/; SameSite=Lax")
             self.send_header("Cache-Control", "no-cache")
             self.end_headers()
+            self.wfile.write(
+                b"""<!doctype html><html><head><meta charset=\"utf-8\"><meta name=\"robots\" content=\"noindex\"><title>Opening Komga Admin</title></head><body><script>
+try {
+  for (const store of [window.localStorage, window.sessionStorage]) {
+    for (const key of Object.keys(store)) {
+      if (/komga|book/i.test(key)) store.removeItem(key);
+    }
+  }
+  for (const name of ["KOMGA-SESSION", "XSRF-TOKEN"]) {
+    document.cookie = `${name}=; Max-Age=0; Path=/books; SameSite=Lax`;
+    document.cookie = `${name}=; Max-Age=0; Path=/books/; SameSite=Lax`;
+  }
+} catch (error) {}
+window.location.replace("/books/");
+</script><p>Opening Komga admin...</p></body></html>"""
+            )
             return
         if path in {"/books-reader", "/books-reader/"}:
             self.send_response(HTTPStatus.FOUND)
@@ -2628,25 +3002,37 @@ class OIABHandler(BaseHTTPRequestHandler):
             return self.send_json(self.filebrowser_session_payload())
         if path.startswith("/books/"):
             return self.proxy_komga()
+        if path.startswith("/wiki/"):
+            return self.proxy_kiwix()
         if path.startswith("/apps/filebrowser"):
             return self.redirect_to_service(self.settings.filebrowser_url, self.filebrowser_port())
+        if path == "/apps/minecraft-map":
+            return self.redirect_to_url("/apps/minecraft-map/")
         if path.startswith("/apps/minecraft-map"):
-            return self.redirect_to_service(self.settings.minecraft_map_url, str(self.settings.minecraft_map_port))
+            return self.proxy_minecraft_map()
         if path.startswith("/apps/minecraft-admin"):
-            return self.redirect_to_service(self.settings.minecraft_admin_url, str(self.settings.minecraft_admin_port))
+            return self.redirect_to_minecraft_admin()
         if path.startswith("/apps/jellyfin"):
             return self.redirect_to_service(self.settings.jellyfin_url, os.environ.get("JELLYFIN_PORT", "8096"))
         if path.startswith("/apps/komga"):
-            return self.redirect_to_url("/books/")
+            return self.redirect_to_url("/books-reader")
         if path.startswith("/apps/wiki"):
-            return self.redirect_to_service(self.settings.kiwix_url, os.environ.get("KIWIX_PORT", "8081"))
+            return self.redirect_to_kiwix()
         if path.startswith("/apps/minecraft-wiki") or path.startswith("/apps/pokemon-wiki"):
             static = self.resolve_static(path)
             if static:
                 return self.serve_file(static)
-            return self.redirect_to_service(self.settings.kiwix_url, os.environ.get("KIWIX_PORT", "8081"))
+            return self.redirect_to_kiwix()
         if path.startswith("/apps/minecraft"):
-            return self.redirect_to_service(self.settings.minecraft_admin_url, str(self.settings.minecraft_admin_port))
+            return self.redirect_to_minecraft_admin()
+
+        if path == "/":
+            query = parse_qs(parsed.query)
+            if str(query.get("headunit", [""])[-1]).lower() in {"1", "true", "yes", "on"}:
+                return self.serve_file(REPO_ROOT / "frontend" / "shell" / "index.html")
+            if str(query.get("mobile", [""])[-1]).lower() in {"1", "true", "yes", "on"} or self.should_serve_mobile_landing():
+                return self.serve_file(REPO_ROOT / "frontend" / "mobile" / "index.html")
+            return self.serve_file(REPO_ROOT / "frontend" / "shell" / "index.html")
 
         static = self.resolve_static(path)
         if static:
@@ -2656,6 +3042,10 @@ class OIABHandler(BaseHTTPRequestHandler):
     def do_HEAD(self) -> None:
         parsed = urlparse(self.path)
         path = unquote(parsed.path)
+        if path == "/apps/minecraft-map":
+            return self.redirect_to_url("/apps/minecraft-map/")
+        if path.startswith("/apps/minecraft-map"):
+            return self.proxy_minecraft_map()
         static = self.resolve_static(path)
         if static and static.exists() and static.is_file():
             file_size = static.stat().st_size
@@ -2738,11 +3128,90 @@ class OIABHandler(BaseHTTPRequestHandler):
             return self.redirect_to_url(target)
         return self.redirect_to_port(fallback_port)
 
+    def redirect_to_minecraft_admin(self) -> None:
+        if self.settings.minecraft_admin_url:
+            return self.redirect_to_service(self.settings.minecraft_admin_url, str(self.settings.minecraft_admin_port))
+        host = self.headers.get("Host", self.settings.hostname).split(":", 1)[0].strip().lower()
+        if host in {"overland.daemonadventures.net", "mobile.daemonadventures.net"} or host.endswith(".overland.daemonadventures.net"):
+            return self.redirect_to_url("https://minecraft-admin.overland.daemonadventures.net/")
+        return self.redirect_to_url(f"https://{host}:{self.settings.minecraft_admin_port}/")
+
+    def redirect_to_minecraft_map(self) -> None:
+        if self.settings.minecraft_map_url:
+            return self.redirect_to_service(self.settings.minecraft_map_url, str(self.settings.minecraft_map_port))
+        host = self.headers.get("Host", self.settings.hostname).split(":", 1)[0].strip().lower()
+        if host in {"overland.daemonadventures.net", "mobile.daemonadventures.net"} or host.endswith(".overland.daemonadventures.net"):
+            return self.redirect_to_url("https://minecraft-map.overland.daemonadventures.net/")
+        return self.redirect_to_url(f"http://{host}:{self.settings.minecraft_map_port}/")
+
+    def proxy_minecraft_map(self) -> None:
+        target_base = f"http://host.docker.internal:{self.settings.minecraft_map_port}"
+        parsed = urlparse(self.path)
+        rel_path = parsed.path.removeprefix("/apps/minecraft-map")
+        if not rel_path:
+            rel_path = "/"
+        target = f"{target_base}{rel_path}"
+        if parsed.query:
+            target = f"{target}?{parsed.query}"
+        headers = {}
+        skip = {"host", "connection", "content-length", "accept-encoding"}
+        for key, value in self.headers.items():
+            if key.lower() not in skip:
+                headers[key] = value
+        headers["Host"] = urlparse(target_base).netloc
+        headers["X-Forwarded-Host"] = self.headers.get("Host", self.settings.hostname)
+        headers["X-Forwarded-Proto"] = self.headers.get("X-Forwarded-Proto", "http")
+        try:
+            request = Request(target, headers=headers, method=self.command)
+            with urlopen(request, timeout=30) as response:
+                payload = b"" if self.command == "HEAD" else response.read()
+                self.send_response(response.status)
+                for key, value in response.headers.items():
+                    lowered = key.lower()
+                    if lowered in {"connection", "transfer-encoding", "content-length", "content-encoding"}:
+                        continue
+                    if lowered == "location":
+                        value = value.replace(target_base, "/apps/minecraft-map")
+                    self.send_header(key, value)
+                self.send_header("Content-Length", str(len(payload)))
+                self.end_headers()
+                if payload:
+                    self.wfile.write(payload)
+        except HTTPError as exc:
+            payload = b"" if self.command == "HEAD" else exc.read()
+            self.send_response(exc.code)
+            for key, value in exc.headers.items():
+                lowered = key.lower()
+                if lowered in {"connection", "transfer-encoding", "content-length", "content-encoding"}:
+                    continue
+                if lowered == "location":
+                    value = value.replace(target_base, "/apps/minecraft-map")
+                self.send_header(key, value)
+            self.send_header("Content-Length", str(len(payload)))
+            self.end_headers()
+            if payload:
+                self.wfile.write(payload)
+        except Exception as exc:  # noqa: BLE001 - proxy boundary
+            return self.send_json({"ok": False, "error": f"Minecraft map proxy failed: {exc}"}, status=502)
+
+    def redirect_to_kiwix(self) -> None:
+        if self.settings.kiwix_url:
+            return self.redirect_to_service(self.settings.kiwix_url, os.environ.get("KIWIX_PORT", "8092"))
+        return self.redirect_to_url("/wiki/")
+
     def redirect_to_url(self, target: str) -> None:
         self.send_response(HTTPStatus.FOUND)
         self.send_header("Location", target)
         self.send_header("Cache-Control", "no-cache")
         self.end_headers()
+
+    def should_serve_mobile_landing(self) -> bool:
+        host = (self.headers.get("Host") or "").split(":", 1)[0].strip().lower()
+        if host.startswith("mobile."):
+            return True
+        agent = (self.headers.get("User-Agent") or "").lower()
+        mobile_markers = ("iphone", "ipod", "android", "mobile", "windows phone", "blackberry")
+        return any(marker in agent for marker in mobile_markers)
 
     def serve_filebrowser_launcher(self) -> None:
         html = """<!doctype html>
@@ -3296,21 +3765,13 @@ PY
             return self.send_json({"ok": False, "error": f"{action} failed: {exc}"}, status=500)
         return self.send_json({"ok": True, "action": action})
 
-    def komga_reader_auth_header(self) -> str:
-        configured = (self.settings.komga_reader_auth_header or "").strip()
-        if configured:
-            return configured.removeprefix("Authorization:").strip()
-        paths = [
-            self.settings.komga_reader_auth_file,
-            self.settings.data_dir / "services" / "komga" / "config" / "reader-auth.env",
-            self.settings.data_dir / "services" / "komga" / "config" / "komga.env",
-            Path("/srv/trailer/komga/config/reader-auth.env"),
-            Path("/srv/trailer/komga/config/komga.env"),
-        ]
+    def komga_auth_header_from_paths(self, paths: list[Path], header_keys: tuple[str, ...], username_keys: tuple[str, ...], password_keys: tuple[str, ...]) -> str:
         for path in paths:
             try:
                 if not path.exists() or not path.is_file():
                     continue
+                values: dict[str, str] = {}
+                fallback_header = ""
                 for raw_line in path.read_text(encoding="utf-8", errors="replace").splitlines():
                     line = raw_line.strip()
                     if not line or line.startswith("#"):
@@ -3319,28 +3780,63 @@ PY
                         key, value = line.split("=", 1)
                         key = key.strip().upper()
                         value = value.strip().strip('"').strip("'")
-                        if "AUTH" in key or "HEADER" in key or key == "AUTHORIZATION":
-                            return value.removeprefix("Authorization:").strip()
-                        if key in {"KOMGA_READER_USERNAME", "KOMGA_VIEWER_USERNAME", "KOMGA_USERNAME"}:
-                            username = value
-                            password = ""
-                            for candidate in path.read_text(encoding="utf-8", errors="replace").splitlines():
-                                c_line = candidate.strip()
-                                if not c_line or c_line.startswith("#") or "=" not in c_line:
-                                    continue
-                                c_key, c_value = c_line.split("=", 1)
-                                c_key = c_key.strip().upper()
-                                c_value = c_value.strip().strip('"').strip("'")
-                                if c_key in {"KOMGA_READER_PASSWORD", "KOMGA_VIEWER_PASSWORD", "KOMGA_PASSWORD"}:
-                                    password = c_value
-                                    break
-                            if username and password:
-                                token = f"{username}:{password}".encode("utf-8")
-                                return f"Basic {base64.b64encode(token).decode('ascii')}"
-                    return line.removeprefix("Authorization:").strip()
+                        values[key] = value
+                        continue
+                    if not fallback_header:
+                        fallback_header = line.removeprefix("Authorization:").strip()
+                for key in header_keys:
+                    if values.get(key):
+                        return values[key].removeprefix("Authorization:").strip()
+                username = next((values.get(key) for key in username_keys if values.get(key)), "")
+                password = next((values.get(key) for key in password_keys if values.get(key)), "")
+                if username and password:
+                    token = f"{username}:{password}".encode("utf-8")
+                    return f"Basic {base64.b64encode(token).decode('ascii')}"
+                if fallback_header:
+                    return fallback_header
             except OSError:
                 continue
         return ""
+
+    def komga_reader_auth_header(self) -> str:
+        configured = (self.settings.komga_reader_auth_header or "").strip()
+        if configured:
+            return configured.removeprefix("Authorization:").strip()
+        return self.komga_auth_header_from_paths(
+            [
+                self.settings.komga_reader_auth_file,
+                Path("/run/oiab/komga-config/reader-auth.env"),
+                Path("/run/oiab/komga-config/komga.env"),
+                self.settings.data_dir / "services" / "komga" / "config" / "reader-auth.env",
+                self.settings.data_dir / "services" / "komga" / "config" / "komga.env",
+                Path("/srv/trailer/komga/config/reader-auth.env"),
+                Path("/srv/trailer/komga/config/komga.env"),
+            ],
+            ("KOMGA_READER_AUTH_HEADER", "KOMGA_VIEWER_AUTH_HEADER", "KOMGA_AUTH_HEADER", "AUTHORIZATION"),
+            ("KOMGA_READER_USERNAME", "KOMGA_READER_EMAIL", "KOMGA_VIEWER_USERNAME", "KOMGA_VIEWER_EMAIL", "KOMGA_USERNAME", "KOMGA_EMAIL"),
+            ("KOMGA_READER_PASSWORD", "KOMGA_VIEWER_PASSWORD", "KOMGA_PASSWORD"),
+        )
+
+    def komga_admin_auth_header(self) -> str:
+        configured = os.environ.get("KOMGA_ADMIN_AUTH_HEADER", "").strip()
+        if configured:
+            return configured.removeprefix("Authorization:").strip()
+        return self.komga_auth_header_from_paths(
+            [
+                Path("/run/oiab/komga-config/admin-auth.env"),
+                Path("/run/oiab/komga-config/admin-reset.env"),
+                Path("/run/oiab/komga-config/komga.env"),
+                self.settings.data_dir / "services" / "komga" / "config" / "admin-auth.env",
+                self.settings.data_dir / "services" / "komga" / "config" / "admin-reset.env",
+                self.settings.data_dir / "services" / "komga" / "config" / "komga.env",
+                Path("/srv/trailer/komga/config/admin-auth.env"),
+                Path("/srv/trailer/komga/config/admin-reset.env"),
+                Path("/srv/trailer/komga/config/komga.env"),
+            ],
+            ("KOMGA_ADMIN_AUTH_HEADER", "KOMGA_AUTH_HEADER", "AUTHORIZATION"),
+            ("KOMGA_ADMIN_USERNAME", "KOMGA_ADMIN_EMAIL", "KOMGA_USERNAME", "KOMGA_EMAIL"),
+            ("KOMGA_ADMIN_PASSWORD", "KOMGA_PASSWORD"),
+        )
 
     def komga_admin_cookie_enabled(self) -> bool:
         cookie = self.headers.get("Cookie", "")
@@ -3365,7 +3861,11 @@ PY
         host = self.headers.get("Host", self.settings.hostname)
         headers["X-Forwarded-Host"] = host
         headers["X-Forwarded-Proto"] = self.headers.get("X-Forwarded-Proto", "http")
-        if not self.komga_admin_cookie_enabled():
+        if self.komga_admin_cookie_enabled():
+            auth_header = self.komga_admin_auth_header()
+            if auth_header:
+                headers["Authorization"] = auth_header
+        else:
             auth_header = self.komga_reader_auth_header()
             if auth_header:
                 headers["Authorization"] = auth_header
@@ -3407,11 +3907,67 @@ PY
         except Exception as exc:  # noqa: BLE001 - proxy boundary
             return self.send_json({"ok": False, "error": f"Komga proxy failed: {exc}"}, status=502)
 
+    def proxy_kiwix(self) -> None:
+        target_base = f"http://host.docker.internal:{os.environ.get('KIWIX_PORT', '8092')}"
+        parsed = urlparse(self.path)
+        target = f"{target_base}{parsed.path}"
+        if parsed.query:
+            target = f"{target}?{parsed.query}"
+        body = b""
+        if self.command in {"POST", "PUT", "PATCH"}:
+            length = int(self.headers.get("Content-Length", "0") or "0")
+            body = self.rfile.read(length) if length else b""
+        headers = {}
+        skip = {"host", "connection", "content-length", "accept-encoding"}
+        for key, value in self.headers.items():
+            if key.lower() not in skip:
+                headers[key] = value
+        headers["Host"] = urlparse(target_base).netloc
+        try:
+            request = Request(
+                target,
+                data=body if body or self.command in {"POST", "PUT", "PATCH"} else None,
+                headers=headers,
+                method=self.command,
+            )
+            with urlopen(request, timeout=30) as response:
+                payload = b"" if self.command == "HEAD" else response.read()
+                self.send_response(response.status)
+                for key, value in response.headers.items():
+                    lowered = key.lower()
+                    if lowered in {"connection", "transfer-encoding", "content-length", "content-encoding"}:
+                        continue
+                    if lowered == "location":
+                        value = value.replace(target_base, "")
+                    self.send_header(key, value)
+                self.send_header("Content-Length", str(len(payload)))
+                self.end_headers()
+                if payload:
+                    self.wfile.write(payload)
+        except HTTPError as exc:
+            payload = b"" if self.command == "HEAD" else exc.read()
+            self.send_response(exc.code)
+            for key, value in exc.headers.items():
+                lowered = key.lower()
+                if lowered in {"connection", "transfer-encoding", "content-length", "content-encoding"}:
+                    continue
+                if lowered == "location":
+                    value = value.replace(target_base, "")
+                self.send_header(key, value)
+            self.send_header("Content-Length", str(len(payload)))
+            self.end_headers()
+            if payload:
+                self.wfile.write(payload)
+        except Exception as exc:  # noqa: BLE001 - proxy boundary
+            return self.send_json({"ok": False, "error": f"Kiwix proxy failed: {exc}"}, status=502)
+
     def do_POST(self) -> None:
         parsed = urlparse(self.path)
         path = unquote(parsed.path)
         if path.startswith("/books/"):
             return self.proxy_komga()
+        if path.startswith("/wiki/"):
+            return self.proxy_kiwix()
         if path in {"/api/quick-save", "/maps-quick-save", "/api/waypoints"}:
             try:
                 payload = self.read_multipart() if "multipart/form-data" in self.headers.get("Content-Type", "") else self.read_body()
@@ -3468,6 +4024,10 @@ PY
         if path in {"/api/uploads/file", "/api/uploads/upload"}:
             target = parse_qs(parsed.query).get("target", ["uploads"])[-1]
             return self.handle_file_upload(target)
+        if path == "/api/geopdf/import":
+            return self.handle_geopdf_import()
+        if path.startswith("/api/geopdf/"):
+            return self.handle_geopdf_post(path)
         if path in {"/api/maps-v2/map-packs", "/maps-v2-map-packs"}:
             return self.handle_map_packs()
         if path in {"/api/maps/overlays", "/maps-overlays"}:
@@ -3511,9 +4071,35 @@ PY
     def do_OPTIONS(self) -> None:
         self.send_response(204)
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.end_headers()
+
+    def do_PATCH(self) -> None:
+        parsed = urlparse(self.path)
+        path = unquote(parsed.path)
+        if path.startswith("/api/geopdf/"):
+            try:
+                parts = [part for part in path.split("/") if part]
+                map_id = parts[2] if len(parts) > 2 else ""
+                metadata = update_geopdf(self.settings, map_id, self.read_body())
+                return self.send_json({"ok": True, "map": metadata, **self.map_overlays()})
+            except Exception as exc:  # noqa: BLE001 - HTTP boundary
+                return self.send_json({"ok": False, "error": str(exc)}, status=400)
+        self.send_error(HTTPStatus.NOT_FOUND, "Not found")
+
+    def do_DELETE(self) -> None:
+        parsed = urlparse(self.path)
+        path = unquote(parsed.path)
+        if path.startswith("/api/geopdf/"):
+            try:
+                parts = [part for part in path.split("/") if part]
+                map_id = parts[2] if len(parts) > 2 else ""
+                result = delete_geopdf(self.settings, map_id)
+                return self.send_json({**result, **self.map_overlays()})
+            except Exception as exc:  # noqa: BLE001 - HTTP boundary
+                return self.send_json({"ok": False, "error": str(exc)}, status=400)
+        self.send_error(HTTPStatus.NOT_FOUND, "Not found")
 
     def read_body(self) -> dict:
         length = int(self.headers.get("Content-Length", "0"))
@@ -3646,6 +4232,71 @@ PY
         except Exception as exc:  # noqa: BLE001 - management boundary
             return self.send_json({"ok": False, "error": str(exc)}, status=400)
 
+    def handle_geopdf_get(self, path: str) -> None:
+        try:
+            parts = [part for part in path.split("/") if part]
+            if len(parts) < 3:
+                return self.send_json({"ok": True, "maps": list_geopdfs(self.settings), **self.map_overlays()})
+            map_id = parts[2]
+            metadata = load_geopdf_metadata(self.settings, map_id)
+            return self.send_json({"ok": True, "map": metadata})
+        except Exception as exc:  # noqa: BLE001 - HTTP boundary
+            return self.send_json({"ok": False, "error": str(exc)}, status=404)
+
+    def handle_geopdf_import(self) -> None:
+        try:
+            form = self.read_multipart() if "multipart/form-data" in self.headers.get("Content-Type", "") else self.read_body()
+            upload = form.get("file") or form.get("pdf")
+            if not isinstance(upload, dict) or not upload.get("content"):
+                return self.send_json({"ok": False, "error": "Choose a georeferenced PDF file to import."}, status=400)
+            filename = self.safe_upload_name(Path(str(upload.get("filename") or "map.pdf")).name)
+            content = upload.get("content") if isinstance(upload.get("content"), bytes) else bytes(upload.get("content") or b"")
+            imported = import_geopdf_bytes(self.settings, filename, content)
+            job = start_geopdf_processing(self.settings, str(imported["source_path"]), str(imported["map_id"]), Path(filename).stem)
+            return self.send_json({"ok": True, "map_id": imported["map_id"], "source_path": imported["source_path"], "job": job, **self.map_overlays()})
+        except Exception as exc:  # noqa: BLE001 - upload boundary
+            return self.send_json({"ok": False, "error": str(exc)}, status=400)
+
+    def handle_geopdf_post(self, path: str) -> None:
+        try:
+            parts = [part for part in path.split("/") if part]
+            if len(parts) < 3:
+                return self.send_json({"ok": False, "error": "GeoPDF id is required."}, status=400)
+            map_id = parts[2]
+            action = parts[3] if len(parts) > 3 else str(self.read_body().get("action") or "")
+            if action == "rebuild":
+                metadata = load_geopdf_metadata(self.settings, map_id)
+                job = start_geopdf_processing(self.settings, str(metadata["source_path"]), map_id, str(metadata.get("display_name") or ""), rebuild=True)
+                return self.send_json({"ok": True, "job": job, **self.map_overlays()})
+            if action in {"rename", "update"}:
+                metadata = update_geopdf(self.settings, map_id, self.read_body())
+                return self.send_json({"ok": True, "map": metadata, **self.map_overlays()})
+            if action == "delete":
+                result = delete_geopdf(self.settings, map_id)
+                return self.send_json({**result, **self.map_overlays()})
+            return self.send_json({"ok": False, "error": f"Unknown GeoPDF action: {action}"}, status=400)
+        except Exception as exc:  # noqa: BLE001 - HTTP boundary
+            return self.send_json({"ok": False, "error": str(exc)}, status=400)
+
+    def serve_geopdf_tile(self, path: str) -> None:
+        try:
+            parts = [part for part in path.split("/") if part]
+            if len(parts) != 6 or parts[0] != "tiles" or parts[1] != "geopdf":
+                return self.send_error(HTTPStatus.NOT_FOUND, "Not found")
+            map_id = parts[2]
+            z = int(parts[3])
+            x = int(parts[4])
+            tile_name = Path(parts[5])
+            y = int(tile_name.stem)
+            tile = geopdf_tile_path(self.settings, map_id, z, x, y, tile_name.suffix.lstrip(".") or "png")
+            if not tile.exists() or not tile.is_file():
+                return self.send_blank_overlay_tile()
+            return self.serve_file(tile)
+        except Exception as exc:  # noqa: BLE001 - tile request boundary
+            if self.settings.dev_mode:
+                print(f"GeoPDF tile failed for {path}: {exc}")
+            return self.send_blank_overlay_tile()
+
     def serve_file(self, path: Path) -> None:
         if not path.exists() or not path.is_file():
             self.send_error(HTTPStatus.NOT_FOUND, "Not found")
@@ -3677,12 +4328,15 @@ PY
         with path.open("rb") as fh:
             fh.seek(start)
             remaining = length
-            while remaining > 0:
-                chunk = fh.read(min(1024 * 1024, remaining))
-                if not chunk:
-                    break
-                self.wfile.write(chunk)
-                remaining -= len(chunk)
+            try:
+                while remaining > 0:
+                    chunk = fh.read(min(1024 * 1024, remaining))
+                    if not chunk:
+                        break
+                    self.wfile.write(chunk)
+                    remaining -= len(chunk)
+            except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
+                return
 
     def send_static_headers(self, path: Path, content_type: str, content_length: int) -> None:
         stat = path.stat()
@@ -3705,7 +4359,7 @@ PY
             self.send_header("Cache-Control", "public, max-age=3600")
 
     def resolve_static(self, path: str) -> Path | None:
-        if path in {"/", "/overland/", "/overland/index.html"}:
+        if path in {"/overland/", "/overland/index.html"}:
             return REPO_ROOT / "frontend" / "shell" / "index.html"
         if path.startswith("/config/"):
             return self.safe_join(REPO_ROOT / "config", path.removeprefix("/config/"))
@@ -3797,7 +4451,11 @@ PY
                 return index if index and index.exists() else None
             return target if target and target.exists() else None
         if path.startswith("/media/music-art/"):
-            return self.safe_join(self.settings.data_dir / "media" / "music-art", path.removeprefix("/media/music-art/"))
+            target = self.safe_join(self.settings.data_dir / "media" / "music-art", path.removeprefix("/media/music-art/"))
+            if target and target.exists() and target.is_file():
+                return target
+            fallback = REPO_ROOT / "frontend" / "shared" / "overland" / "tunes.png"
+            return fallback if fallback.exists() else None
         if path.startswith("/media/visualizers/"):
             return self.safe_join(self.settings.data_dir / "media" / "visualizers", path.removeprefix("/media/visualizers/"))
         if path.startswith("/media/music/"):
@@ -4438,7 +5096,8 @@ PY
         return root
 
     def cacheable_overlay(self, overlay_id: str) -> dict[str, object]:
-        overlays = self.app_db().map_overlay_registry().get("overlays", [])
+        # Tile requests are high-volume; never rescan/write the overlay registry here.
+        overlays = self.app_db().map_overlay_registry(rescan=False).get("overlays", [])
         overlay = next((item for item in overlays if str(item.get("id")) == str(overlay_id)), None)
         if not overlay:
             raise ValueError(f"Overlay not found: {overlay_id}")
@@ -4508,35 +5167,43 @@ PY
         return data
 
     def serve_overlay_cached_tile(self, overlay_id: str, z: int, x: int, y: int, *, offline_only: bool = False) -> None:
-        overlay = self.cacheable_overlay(overlay_id)
-        offline_only = offline_only or bool(self.app_db().app_setting("maps.offline_regions_only", False))
-        matches = self.matching_offline_regions_for_tile(overlay_id, z, x, y)
-        mime = self.overlay_tile_mime(overlay)
-        for match in matches:
-            cache_path = self.tile_cache_path(str(match["region"]["id"]), overlay_id, z, x, y)
-            if cache_path.exists() and cache_path.is_file():
-                return self.send_tile_bytes(cache_path.read_bytes(), mime)
-        if offline_only:
-            return self.send_blank_overlay_tile()
         try:
-            data = self.fetch_remote_tile(overlay, z, x, y)
-        except Exception as exc:  # noqa: BLE001 - optional raster overlays should not break map rendering.
+            overlay = self.cacheable_overlay(overlay_id)
+            offline_only = offline_only or bool(self.app_db().app_setting("maps.offline_regions_only", False))
+            matches = self.matching_offline_regions_for_tile(overlay_id, z, x, y)
+            mime = self.overlay_tile_mime(overlay)
+            for match in matches:
+                cache_path = self.tile_cache_path(str(match["region"]["id"]), overlay_id, z, x, y)
+                if cache_path.exists() and cache_path.is_file():
+                    return self.send_tile_bytes(cache_path.read_bytes(), mime)
+            if offline_only:
+                return self.send_blank_overlay_tile()
+            try:
+                data = self.fetch_remote_tile(overlay, z, x, y)
+            except Exception as exc:  # noqa: BLE001 - optional raster overlays should not break map rendering.
+                if self.settings.dev_mode:
+                    print(f"Overlay tile fetch failed for {overlay_id} {z}/{x}/{y}: {exc}")
+                return self.send_blank_overlay_tile()
+            if matches:
+                cache_path = self.tile_cache_path(str(matches[0]["region"]["id"]), overlay_id, z, x, y)
+                cache_path.parent.mkdir(parents=True, exist_ok=True)
+                cache_path.write_bytes(data)
+            return self.send_tile_bytes(data, mime)
+        except Exception as exc:  # noqa: BLE001 - overlay diagnostics should never become a gateway failure.
             if self.settings.dev_mode:
-                print(f"Overlay tile fetch failed for {overlay_id} {z}/{x}/{y}: {exc}")
+                print(f"Overlay tile cache failed for {overlay_id} {z}/{x}/{y}: {exc}")
             return self.send_blank_overlay_tile()
-        if matches:
-            cache_path = self.tile_cache_path(str(matches[0]["region"]["id"]), overlay_id, z, x, y)
-            cache_path.parent.mkdir(parents=True, exist_ok=True)
-            cache_path.write_bytes(data)
-        return self.send_tile_bytes(data, mime)
 
     def send_tile_bytes(self, data: bytes, content_type: str) -> None:
-        self.send_response(HTTPStatus.OK)
-        self.send_header("Content-Type", content_type)
-        self.send_header("Content-Length", str(len(data)))
-        self.send_header("Cache-Control", "no-store")
-        self.end_headers()
-        self.wfile.write(data)
+        try:
+            self.send_response(HTTPStatus.OK)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Content-Length", str(len(data)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(data)
+        except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
+            return
 
     def start_offline_overlay_region_job(self, payload: dict[str, object]) -> dict[str, object]:
         name = str(payload.get("name") or "").strip() or "Offline Region"
@@ -6026,6 +6693,7 @@ PY
             "temperature_f": round((temp_c * 9 / 5) + 32, 1) if temp_c is not None else None,
             "uptime_seconds": uptime,
             "disks": disks,
+            "battery": read_x1206_battery(),
             "services": list_services(self.settings),
         }
 
@@ -6110,11 +6778,18 @@ PY
 
     def music_library(self, refresh: bool = False) -> dict:
         cache = self.settings.data_dir / "media" / "music-library.json"
+        root = self.settings.data_dir / "media" / "music"
         if cache.exists() and not refresh:
             cached = read_json(cache, {"ok": True, "tracks": []})
             if cached.get("schema") == MUSIC_SCHEMA_VERSION:
-                return cached
-        root = self.settings.data_dir / "media" / "music"
+                if int(cached.get("count") or len(cached.get("tracks") or [])) > 0:
+                    return cached
+                try:
+                    has_audio = root.exists() and any(path.is_file() and path.suffix.lower() in AUDIO_EXTENSIONS for path in root.rglob("*"))
+                except OSError:
+                    has_audio = False
+                if not has_audio:
+                    return cached
         tracks = []
         for path in sorted(root.rglob("*")):
             if not path.is_file() or path.suffix.lower() not in AUDIO_EXTENSIONS:
@@ -6268,6 +6943,11 @@ PY
             for mark in ("A", "B"):
                 opponent = "B" if mark == "A" else "A"
                 scores.setdefault(mark, len(set(shots.get(mark) or []) & set(ships.get(opponent) or [])))
+        elif game_type == "sinkhole-city":
+            states = payload.get("states") if isinstance(payload.get("states"), dict) else {}
+            for mark, snapshot in states.items():
+                if isinstance(snapshot, dict):
+                    scores.setdefault(str(mark), int(snapshot.get("score") or 0))
         elif game_type == "hangman":
             guesser = str(payload.get("guesserMark") or "A")
             scores.setdefault(guesser, max(0, len(str(payload.get("word") or "")) - int(payload.get("wrong") or 0)))
@@ -6332,7 +7012,9 @@ PY
             elif mode not in {"pvp", "cpu"}:
                 mode = "pvp"
             difficulty = form_value(payload, "difficulty", "medium").lower()
-            if difficulty not in {"easy", "medium", "hard"}:
+            if difficulty == "normal":
+                difficulty = "medium"
+            if difficulty not in {"easy", "medium", "hard", "expert"}:
                 difficulty = "medium"
             player_id = clean_player_id(form_value(payload, "playerId") or "player")
             player_name = clean_player_name(form_value(payload, "playerName") or "Player")
@@ -6396,8 +7078,40 @@ PY
             elif game_type == "word-grid":
                 start_at = time.time() if mode == "cpu" else 0
                 game.update({"payload": word_grid_new_payload(start_at, word_grid_min_word_length(difficulty)), "turn": "A"})
+            elif game_type == "starts-ends":
+                try:
+                    total_rounds = max(1, min(30, int(form_value(payload, "rounds", str(STARTS_ENDS_TOTAL_ROUNDS)) or STARTS_ENDS_TOTAL_ROUNDS)))
+                except (TypeError, ValueError):
+                    total_rounds = STARTS_ENDS_TOTAL_ROUNDS
+                game.update({"status": "waiting", "mode": "pvp", "turn": "all", "payload": starts_ends_new_payload(total_rounds, starts_ends_min_word_length(difficulty))})
             elif game_type == "word-tile-arena":
                 game.update({"status": "waiting", "mode": "pvp", "turn": "P1", "payload": word_tile_new_payload()})
+            elif game_type == "burst":
+                game.update({"status": "waiting", "mode": "pvp", "turn": "A", "payload": burst_new_payload()})
+            elif game_type == "sinkhole-city":
+                variant = form_value(payload, "variant", "objects").lower()
+                if variant not in {"objects", "swallow"}:
+                    variant = "objects"
+                try:
+                    duration = max(45, min(300, int(form_value(payload, "duration", "120") or 120)))
+                except (TypeError, ValueError):
+                    duration = 120
+                game.update(
+                    {
+                        "status": "waiting",
+                        "mode": "pvp",
+                        "turn": "all",
+                        "payload": {
+                            "seed": secrets.randbits(28),
+                            "variant": variant,
+                            "duration": duration,
+                            "startedAt": 0,
+                            "states": {},
+                            "eaten": {},
+                            "events": [],
+                        },
+                    }
+                )
             elif game_type == "pattern-match":
                 game.update({"status": "active", "mode": "cpu", "turn": "A", "payload": {"sequence": [secrets.randbelow(4)], "scores": {"A": 0}, "lastMove": None}})
             elif game_type == "tic-tac-toe":
@@ -6433,6 +7147,22 @@ PY
                                     return self.send_json({"ok": True, "game": public_mobile_game(game, player_id), "playerId": player_id, "mark": "", "observer": True, "games": [public_mobile_game(item, player_id) for item in games]})
                                 existing_marks = {item.get("mark") for item in game.get("players", []) if isinstance(item, dict)}
                                 mark = next((word_tile_player_mark(index) for index in range(WORD_TILE_MAX_PLAYERS) if word_tile_player_mark(index) not in existing_marks), word_tile_player_mark(len(existing_marks)))
+                            elif game.get("type") == "starts-ends":
+                                max_players = 4
+                                if len(game.get("players", [])) >= max_players:
+                                    return self.send_json({"ok": True, "game": public_mobile_game(game, player_id), "playerId": player_id, "mark": "", "observer": True, "games": [public_mobile_game(item, player_id) for item in games]})
+                                existing_marks = {item.get("mark") for item in game.get("players", []) if isinstance(item, dict)}
+                                mark = next((item for item in MOBILE_GAME_MARKS.get("starts-ends", ("P1", "P2", "P3", "P4")) if item not in existing_marks), f"P{len(existing_marks) + 1}")
+                            elif game.get("type") == "burst":
+                                if len(game.get("players", [])) >= BURST_MAX_PLAYERS:
+                                    return self.send_json({"ok": True, "game": public_mobile_game(game, player_id), "playerId": player_id, "mark": "", "observer": True, "games": [public_mobile_game(item, player_id) for item in games]})
+                                existing_marks = {item.get("mark") for item in game.get("players", []) if isinstance(item, dict)}
+                                mark = next((burst_player_mark(index) for index in range(BURST_MAX_PLAYERS) if burst_player_mark(index) not in existing_marks), burst_player_mark(len(existing_marks)))
+                            elif game.get("type") == "sinkhole-city":
+                                if len(game.get("players", [])) >= 4:
+                                    return self.send_json({"ok": True, "game": public_mobile_game(game, player_id), "playerId": player_id, "mark": "", "observer": True, "games": [public_mobile_game(item, player_id) for item in games]})
+                                existing_marks = {item.get("mark") for item in game.get("players", []) if isinstance(item, dict)}
+                                mark = next((item for item in ("A", "B", "C", "D") if item not in existing_marks), "D")
                             elif len(game.get("players", [])) >= 2:
                                 return self.send_json({"ok": True, "game": public_mobile_game(game, player_id), "playerId": player_id, "mark": "", "observer": True, "games": [public_mobile_game(item, player_id) for item in games]})
                             elif game.get("type") == "chess":
@@ -6455,7 +7185,7 @@ PY
                                 ships = payload_state.setdefault("ships", {})
                                 ships[mark] = flatten_battleship_ship_groups(ship_groups[mark])
                                 payload_state.setdefault("shots", {}).setdefault(mark, [])
-                        if len(game.get("players", [])) >= 2 and game.get("status") == "waiting" and game.get("type") != "word-tile-arena":
+                        if len(game.get("players", [])) >= 2 and game.get("status") == "waiting" and game.get("type") not in {"word-tile-arena", "starts-ends", "burst", "sinkhole-city"}:
                             game["status"] = "active"
                             if game.get("type") == "claimline":
                                 claimline_sync_status(game)
@@ -6471,6 +7201,9 @@ PY
             game_id = form_value(payload, "gameId")
             game = next((item for item in games if item.get("id") == game_id), None)
             if game and game.get("status") == "active":
+                if game.get("type") == "starts-ends" and starts_ends_refresh_phase(game):
+                    touch_mobile_game(game)
+                    db.save_game(game)
                 if game.get("type") == "claimline":
                     claimline_advance(game)
                     touch_mobile_game(game)
@@ -6555,9 +7288,34 @@ PY
                 start_at = time.time() if game.get("mode") == "cpu" else (time.time() + WORD_GRID_REVEAL_SECONDS if len(game.get("players", [])) >= 2 else 0)
                 game["payload"] = word_grid_new_payload(start_at, word_grid_min_word_length(game.get("difficulty")))
                 game["turn"] = "A"
+            elif game.get("type") == "starts-ends":
+                prior = game.get("payload") if isinstance(game.get("payload"), dict) else {}
+                game["payload"] = starts_ends_new_payload(int(prior.get("totalRounds") or STARTS_ENDS_TOTAL_ROUNDS), starts_ends_min_word_length(game.get("difficulty")))
+                game["turn"] = "all"
+                game["mode"] = "pvp"
+                game["status"] = "waiting"
             elif game.get("type") == "word-tile-arena":
                 game["payload"] = word_tile_new_payload()
                 game["turn"] = "P1"
+                game["mode"] = "pvp"
+                game["status"] = "waiting"
+            elif game.get("type") == "burst":
+                game["payload"] = burst_new_payload()
+                game["turn"] = "A"
+                game["mode"] = "pvp"
+                game["status"] = "waiting"
+            elif game.get("type") == "sinkhole-city":
+                prior = game.get("payload") if isinstance(game.get("payload"), dict) else {}
+                game["payload"] = {
+                    "seed": secrets.randbits(28),
+                    "variant": prior.get("variant") or "objects",
+                    "duration": int(prior.get("duration") or 120),
+                    "startedAt": 0,
+                    "states": {},
+                    "eaten": {},
+                    "events": [],
+                }
+                game["turn"] = "all"
                 game["mode"] = "pvp"
                 game["status"] = "waiting"
             elif game.get("type") == "pattern-match":
@@ -6571,7 +7329,7 @@ PY
             game["resultRecorded"] = False
             game.pop("resultPending", None)
             game["round"] = int(game.get("round") or 1) + 1
-            if game.get("type") != "word-tile-arena":
+            if game.get("type") not in {"word-tile-arena", "starts-ends", "burst", "sinkhole-city"}:
                 game["status"] = "active" if len(game.get("players", [])) >= 2 or game.get("mode") in {"cpu", "solo"} else "waiting"
             touch_mobile_game(game)
             db.save_game(game)
@@ -6585,7 +7343,10 @@ PY
                     if not player:
                         return self.send_json({"ok": False, "error": "Join the game before making a move."}, status=400)
                     word_tile_starting = game.get("type") == "word-tile-arena" and form_value(payload, "wordAction", "play").lower() == "start"
-                    if game.get("status") != "active" and not word_tile_starting:
+                    starts_ends_starting = game.get("type") == "starts-ends" and form_value(payload, "startsEndsAction", "guess").lower() == "start"
+                    burst_starting = game.get("type") == "burst" and form_value(payload, "burstAction", "play").lower() == "start"
+                    sinkhole_starting = game.get("type") == "sinkhole-city" and form_value(payload, "sinkholeAction", "snapshot").lower() == "start"
+                    if game.get("status") != "active" and not word_tile_starting and not starts_ends_starting and not burst_starting and not sinkhole_starting:
                         return self.send_json({"ok": False, "error": "Waiting for a second player."}, status=400)
                     if game.get("type") == "checkers":
                         if player.get("mark") != game.get("turn"):
@@ -6657,6 +7418,73 @@ PY
                                 word_tile_apply_play(game, player, form_value(payload, "placements", "[]"))
                         except ValueError as exc:
                             return self.send_json({"ok": False, "error": str(exc)}, status=400)
+                    elif game.get("type") == "starts-ends":
+                        try:
+                            starts_action = form_value(payload, "startsEndsAction", "guess").lower()
+                            if starts_action == "start":
+                                if str(player.get("mark") or "") != "P1":
+                                    raise ValueError("Only the host can start Starts With / Ends With.")
+                                starts_ends_start_round(game)
+                            elif starts_action == "next":
+                                if str(player.get("mark") or "") != "P1":
+                                    raise ValueError("Only the host can start the next round.")
+                                if (game.get("payload") or {}).get("phase") not in {"round_complete", "game_complete"}:
+                                    raise ValueError("Finish the current round first.")
+                                starts_ends_start_round(game)
+                            else:
+                                starts_ends_apply_guess(game, player, form_value(payload, "word"))
+                        except ValueError as exc:
+                            return self.send_json({"ok": False, "error": str(exc)}, status=400)
+                    elif game.get("type") == "burst":
+                        try:
+                            burst_action = form_value(payload, "burstAction", "play").lower()
+                            if burst_action == "start":
+                                if str(player.get("mark") or "") != "A":
+                                    raise ValueError("Only the host can start Burst.")
+                                burst_start_game(game)
+                            else:
+                                burst_apply_move(
+                                    game,
+                                    player,
+                                    burst_action,
+                                    form_value(payload, "cardId"),
+                                    wild_value=form_value(payload, "wildValue"),
+                                    target_mark=form_value(payload, "targetMark"),
+                                    remove_card_id=form_value(payload, "removeCardId"),
+                                )
+                        except ValueError as exc:
+                            return self.send_json({"ok": False, "error": str(exc)}, status=400)
+                    elif game.get("type") == "sinkhole-city":
+                        state_payload = game.setdefault("payload", {})
+                        sinkhole_action = form_value(payload, "sinkholeAction", "snapshot").lower()
+                        if sinkhole_action == "start":
+                            if str(player.get("mark") or "") != "A":
+                                return self.send_json({"ok": False, "error": "Only the host can start Sinkhole City."}, status=400)
+                            state_payload["startedAt"] = time.time() + 3.5
+                            state_payload["duration"] = max(45, min(300, int(state_payload.get("duration") or 120)))
+                            state_payload.setdefault("states", {})
+                            state_payload.setdefault("eaten", {})
+                            game["status"] = "active"
+                        elif sinkhole_action == "complete":
+                            state_payload.setdefault("states", {})[str(player.get("mark") or "")] = parse_json_value(form_value(payload, "stateJson"), {})
+                            game["status"] = "complete"
+                            scores = {
+                                mark: int((snapshot or {}).get("score") or 0)
+                                for mark, snapshot in (state_payload.get("states") or {}).items()
+                                if isinstance(snapshot, dict)
+                            }
+                            game["winner"] = max(scores, key=scores.get) if scores else ""
+                        else:
+                            mark = str(player.get("mark") or "")
+                            snapshot = parse_json_value(form_value(payload, "stateJson"), {})
+                            eaten_ids = parse_json_value(form_value(payload, "eatenJson"), [])
+                            if isinstance(snapshot, dict):
+                                snapshot["updatedAt"] = time.time()
+                                state_payload.setdefault("states", {})[mark] = snapshot
+                            if isinstance(eaten_ids, list):
+                                eaten = state_payload.setdefault("eaten", {})
+                                for item_id in eaten_ids[:80]:
+                                    eaten[str(item_id)] = mark
                     elif game.get("type") == "pattern-match":
                         try:
                             pattern_apply_move(game, form_value(payload, "pattern"), str(player.get("mark")))
@@ -6800,6 +7628,15 @@ PY
                 "extensions": [".pmtiles"],
             },
             {
+                "id": "geopdf",
+                "title": "GeoPDF Maps",
+                "description": "Georeferenced PDF maps rendered into local overlay tiles.",
+                "path": str(self.settings.data_dir / "geopdf" / "originals"),
+                "publicBase": "",
+                "accept": "application/pdf,.pdf",
+                "extensions": [".pdf"],
+            },
+            {
                 "id": "books",
                 "title": "Books",
                 "description": "Komga ebook/PDF library files.",
@@ -6879,7 +7716,7 @@ PY
                     "name": rel,
                     "size": path.stat().st_size,
                     "updated": datetime.fromtimestamp(path.stat().st_mtime).isoformat(),
-                    "url": f"{target['publicBase']}{rel}",
+                    "url": f"{target['publicBase']}{rel}" if target.get("publicBase") else "",
                 }
             )
         return {"ok": True, "target": target, "files": files}
@@ -6906,6 +7743,11 @@ PY
                     return self.send_json({"ok": False, "error": f"Invalid JSON: {exc}"}, status=400)
                 if filename != "manifest.json" and (not isinstance(data, dict) or not isinstance(data.get("questions"), list)):
                     return self.send_json({"ok": False, "error": "Question JSON must contain a questions array."}, status=400)
+            if target["id"] == "geopdf":
+                imported = import_geopdf_bytes(self.settings, filename, raw)
+                destination = Path(str(imported["source_path"]))
+                job = start_geopdf_processing(self.settings, str(destination), str(imported["map_id"]), Path(filename).stem)
+                return self.send_json({"ok": True, "target": target["id"], "file": destination.name, "job": job, "files": self.upload_files(target["id"]).get("files", []), **self.map_overlays()})
             root = Path(target["path"])
             root.mkdir(parents=True, exist_ok=True)
             destination = root / filename
@@ -6961,7 +7803,7 @@ PY
             "settingsPassword": settings_pin,
             "hiddenAppIds": ["legacy-home", "legacy-admin", "https-settings", "service-manager", "audio-test", "minecraft"],
             "folders": [
-                {"id": "games", "title": "Games", "icon": "/maps/overland/overland-folder-games.svg", "protected": False, "appIds": ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "blank-slate", "word-tile-arena", "connect-four", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "minecraft-map", "drums", "trivia", "tic-tac-toe", "license-plates"]},
+                {"id": "games", "title": "Games", "icon": "/maps/overland/overland-folder-games.svg", "protected": False, "appIds": ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "sinkhole-city", "canyon-crawler", "orbit-run", "blank-slate", "starts-ends", "dice-roller", "word-tile-arena", "connect-four", "burst", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "minecraft-map", "drums", "trivia", "tic-tac-toe", "license-plates"]},
             ],
         }
 
@@ -6972,6 +7814,7 @@ def run() -> None:
     parser.add_argument("--port", type=int, default=SETTINGS.http_port)
     args = parser.parse_args()
     ensure_data_layout(SETTINGS)
+    trivia_bootstrap = ensure_default_trivia_questions(SETTINGS)
     bootstrap = ensure_default_world_map(SETTINGS)
     start_track_recorder(SETTINGS)
     handler = OIABHandler
@@ -6979,6 +7822,7 @@ def run() -> None:
     httpd = ThreadingHTTPServer((args.host, args.port), handler)
     print(f"OIAB serving http://{args.host}:{args.port} with data at {SETTINGS.data_dir}")
     print(f"Map bootstrap: {bootstrap.get('status')}")
+    print(f"Trivia bootstrap: {trivia_bootstrap.get('status')} ({trivia_bootstrap.get('copied', 0)} copied)")
     httpd.serve_forever()
 
 

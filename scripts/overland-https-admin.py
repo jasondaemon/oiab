@@ -17,27 +17,39 @@ GEN_CERT = REPO_ROOT / "scripts" / "generate-cert.sh"
 HOST_RE = re.compile(r"^[a-zA-Z0-9_.-]+$")
 
 
+def sibling_host(hostname, prefix):
+    hostname = str(hostname or "overland.daemonadventures.net").strip().lower()
+    parts = hostname.split(".", 1)
+    base = parts[1] if len(parts) == 2 else hostname
+    return f"{prefix}.{base}"
+
+
+def default_cert_domains(hostname):
+    return f"{hostname},*.{hostname},{sibling_host(hostname, 'mobile')}"
+
+
 def respond(payload, code=0):
     sys.stdout.write(json.dumps(payload, indent=2) + "\n")
     raise SystemExit(code)
 
 
 def parse_env():
+    hostname = os.environ.get("OIAB_HOSTNAME", "overland.daemonadventures.net")
     values = {
-        "domain": os.environ.get("OIAB_HOSTNAME", "overland.daemonadventures.net"),
+        "domain": hostname,
         "piLanIp": os.environ.get("OIAB_PI_LAN_IP", "192.168.8.2"),
-        "certDomains": f"{os.environ.get('OIAB_HOSTNAME', 'overland.daemonadventures.net')},*.{os.environ.get('OIAB_HOSTNAME', 'overland.daemonadventures.net')}",
+        "certDomains": os.environ.get("OIAB_CERT_DOMAINS", default_cert_domains(hostname)),
         "email": os.environ.get("OIAB_ACME_EMAIL", ""),
-        "mapsHost": f"maps.{os.environ.get('OIAB_HOSTNAME', 'overland.daemonadventures.net')}",
-        "mobileHost": f"mobile.{os.environ.get('OIAB_HOSTNAME', 'overland.daemonadventures.net')}",
-        "musicHost": f"music.{os.environ.get('OIAB_HOSTNAME', 'overland.daemonadventures.net')}",
-        "filesHost": f"files.{os.environ.get('OIAB_HOSTNAME', 'overland.daemonadventures.net')}",
-        "jellyfinHost": f"jellyfin.{os.environ.get('OIAB_HOSTNAME', 'overland.daemonadventures.net')}",
-        "komgaHost": f"komga.{os.environ.get('OIAB_HOSTNAME', 'overland.daemonadventures.net')}",
-        "kiwixHost": f"wiki.{os.environ.get('OIAB_HOSTNAME', 'overland.daemonadventures.net')}",
-        "monitorHost": f"monitor.{os.environ.get('OIAB_HOSTNAME', 'overland.daemonadventures.net')}",
-        "minecraftMapHost": f"minecraft-map.{os.environ.get('OIAB_HOSTNAME', 'overland.daemonadventures.net')}",
-        "minecraftAdminHost": f"minecraft-admin.{os.environ.get('OIAB_HOSTNAME', 'overland.daemonadventures.net')}",
+        "mapsHost": f"maps.{hostname}",
+        "mobileHost": os.environ.get("OIAB_MOBILE_HOST", sibling_host(hostname, "mobile")),
+        "musicHost": f"music.{hostname}",
+        "filesHost": f"files.{hostname}",
+        "jellyfinHost": f"jellyfin.{hostname}",
+        "komgaHost": f"komga.{hostname}",
+        "kiwixHost": f"wiki.{hostname}",
+        "monitorHost": f"monitor.{hostname}",
+        "minecraftMapHost": f"minecraft-map.{hostname}",
+        "minecraftAdminHost": f"minecraft-admin.{hostname}",
     }
     if ENV_PATH.exists():
       for line in ENV_PATH.read_text(encoding="utf-8", errors="replace").splitlines():
@@ -100,6 +112,7 @@ def run_generate_cert():
     env["OIAB_DATA_DIR"] = str(DATA_DIR)
     values = parse_env()
     env["OIAB_HOSTNAME"] = values.get("domain") or env.get("OIAB_HOSTNAME", "overland.daemonadventures.net")
+    env["OIAB_CERT_DOMAINS"] = values.get("certDomains") or default_cert_domains(env["OIAB_HOSTNAME"])
     proc = subprocess.run([str(GEN_CERT)], capture_output=True, text=True, env=env, timeout=180, check=False)
     return {
         "ok": proc.returncode == 0,
@@ -138,7 +151,7 @@ def main():
             respond({"ok": result["ok"], "renew": result, **status_payload()}, 0 if result["ok"] else 1)
         if action == "dns":
             values = parse_env()
-            dns = f"Create DNS records for {values['domain']} and any desired subdomains, pointing to {values['piLanIp']} on the local network."
+            dns = f"Create DNS records for {values['domain']}, {values.get('mobileHost')}, and any desired subdomains, pointing to {values['piLanIp']} on the local network."
             respond({"ok": True, "dns": {"ok": True, "stdout": dns, "stderr": ""}, **status_payload()})
         if action == "pretrip":
             cert = cert_status()

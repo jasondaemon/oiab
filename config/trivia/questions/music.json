@@ -1,0 +1,4552 @@
+{
+  "category": "Music",
+  "slug": "music",
+  "version": 1,
+  "questions": [
+    {
+      "id": "music_easy_001",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "How many strings does a standard guitar usually have?",
+      "answers": [
+        "Piano",
+        "Elvis Presley",
+        "Six",
+        "Drums"
+      ],
+      "correct": 2,
+      "explanation": "Most standard guitars have six strings."
+    },
+    {
+      "id": "music_easy_002",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What instrument has black and white keys?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "Drums"
+      ],
+      "correct": 1,
+      "explanation": "A piano has black and white keys."
+    },
+    {
+      "id": "music_easy_003",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is known as the King of Rock and Roll?",
+      "answers": [
+        "Six",
+        "Elvis Presley",
+        "Piano",
+        "Drums"
+      ],
+      "correct": 1,
+      "explanation": "Elvis is commonly called the King of Rock and Roll."
+    },
+    {
+      "id": "music_easy_004",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What keeps the beat in a band?",
+      "answers": [
+        "Six",
+        "Drums",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "Drums often keep rhythm."
+    },
+    {
+      "id": "music_easy_005",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a duet?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "A performance by two people"
+      ],
+      "correct": 3,
+      "explanation": "A duet features two performers."
+    },
+    {
+      "id": "music_easy_006",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the person leading an orchestra called?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "Conductor"
+      ],
+      "correct": 3,
+      "explanation": "A conductor leads an orchestra."
+    },
+    {
+      "id": "music_easy_007",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is a chorus in a song?",
+      "answers": [
+        "Repeated main section",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "Choruses usually repeat and carry the hook."
+    },
+    {
+      "id": "music_easy_008",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What family is the trumpet in?",
+      "answers": [
+        "Six",
+        "Brass",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "Trumpet is a brass instrument."
+    },
+    {
+      "id": "music_easy_009",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_easy_010",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_easy_011",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: symbol that raises a note?",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_easy_012",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: symbol that lowers a note?",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_easy_013",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: five-line music staff marker?",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_easy_014",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: steady pulse in music?",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_easy_015",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: loudness in music?",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_easy_016",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: short repeated musical idea?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_easy_017",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: group of singers?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_easy_018",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: plucked string instrument often in bluegrass?",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_easy_019",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_easy_020",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_easy_021",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: symbol that raises a note?",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_easy_022",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: symbol that lowers a note?",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_easy_023",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: five-line music staff marker?",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_easy_024",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: steady pulse in music?",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_easy_025",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: loudness in music?",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_easy_026",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: short repeated musical idea?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_easy_027",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: group of singers?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_easy_028",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: plucked string instrument often in bluegrass?",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_easy_029",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_easy_030",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_easy_031",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: symbol that raises a note?",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_easy_032",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: symbol that lowers a note?",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_easy_033",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: five-line music staff marker?",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_easy_034",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: steady pulse in music?",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_easy_035",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: loudness in music?",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_easy_036",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: short repeated musical idea?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_easy_037",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: group of singers?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_easy_038",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: plucked string instrument often in bluegrass?",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_easy_039",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_easy_040",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_easy_041",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: symbol that raises a note?",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_easy_042",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: symbol that lowers a note?",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_easy_043",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: five-line music staff marker?",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_easy_044",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: steady pulse in music?",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_easy_045",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: loudness in music?",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_easy_046",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: short repeated musical idea?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_easy_047",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: group of singers?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_easy_048",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: plucked string instrument often in bluegrass?",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_easy_049",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_easy_050",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_easy_051",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: symbol that raises a note?",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_easy_052",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: symbol that lowers a note?",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_easy_053",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: five-line music staff marker?",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_easy_054",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: steady pulse in music?",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_easy_055",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: loudness in music?",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_easy_056",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: short repeated musical idea?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_easy_057",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: group of singers?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_easy_058",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: plucked string instrument often in bluegrass?",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_easy_059",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_easy_060",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_easy_061",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: symbol that raises a note?",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_easy_062",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: symbol that lowers a note?",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_easy_063",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: five-line music staff marker?",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_easy_064",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: steady pulse in music?",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_easy_065",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: loudness in music?",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_easy_066",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: short repeated musical idea?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_easy_067",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: group of singers?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_easy_068",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: plucked string instrument often in bluegrass?",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_easy_069",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_easy_070",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_easy_071",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: symbol that raises a note?",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_easy_072",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: symbol that lowers a note?",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_easy_073",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: five-line music staff marker?",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_easy_074",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: steady pulse in music?",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_easy_075",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: loudness in music?",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_easy_076",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: short repeated musical idea?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_easy_077",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: group of singers?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_easy_078",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: plucked string instrument often in bluegrass?",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_easy_079",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_easy_080",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_easy_081",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: symbol that raises a note?",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_easy_082",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: symbol that lowers a note?",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_easy_083",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: five-line music staff marker?",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_easy_084",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: steady pulse in music?",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_easy_085",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: loudness in music?",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_easy_086",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: short repeated musical idea?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_easy_087",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: group of singers?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_easy_088",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: plucked string instrument often in bluegrass?",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_easy_089",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_easy_090",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_easy_091",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: symbol that raises a note?",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_easy_092",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: symbol that lowers a note?",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_easy_093",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: five-line music staff marker?",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_easy_094",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: steady pulse in music?",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_easy_095",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: loudness in music?",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_easy_096",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: short repeated musical idea?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_easy_097",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: group of singers?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_easy_098",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: plucked string instrument often in bluegrass?",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_easy_099",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_easy_100",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which answer matches this clue: lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_easy_101",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of The Beatles' debut album?",
+      "answers": [
+        "Please Please Me",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "Please Please Me is the correct answer."
+    },
+    {
+      "id": "music_easy_102",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What famous music festival took place in 1969?",
+      "answers": [
+        "Six",
+        "Woodstock",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "Woodstock is the correct answer."
+    },
+    {
+      "id": "music_easy_103",
+      "category": "Music",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was the name of the movie that Elvis Presley made his film debut in?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Love Me Tender",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "Love Me Tender is the correct answer."
+    },
+    {
+      "id": "music_medium_001",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does tempo describe?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "Speed of music"
+      ],
+      "correct": 3,
+      "explanation": "Tempo is musical speed."
+    },
+    {
+      "id": "music_medium_002",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is harmony?",
+      "answers": [
+        "Notes sounding together",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "Harmony involves notes combined together."
+    },
+    {
+      "id": "music_medium_003",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which instrument is usually lowest in a string quartet?",
+      "answers": [
+        "Six",
+        "Cello",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "Cello is the lowest standard string quartet instrument."
+    },
+    {
+      "id": "music_medium_004",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is improvisation?",
+      "answers": [
+        "Creating music on the spot",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "Improvisation is spontaneous creation."
+    },
+    {
+      "id": "music_medium_005",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does “a cappella” mean?",
+      "answers": [
+        "Six",
+        "Singing without instruments",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "A cappella is vocal music without instruments."
+    },
+    {
+      "id": "music_medium_006",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is a chord?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "Three or more notes together"
+      ],
+      "correct": 3,
+      "explanation": "Chords combine notes."
+    },
+    {
+      "id": "music_medium_007",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What does key signature show?",
+      "answers": [
+        "Six",
+        "Sharps or flats for a key",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "Key signatures indicate the key’s sharps/flats."
+    },
+    {
+      "id": "music_medium_008",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is a bridge in a song?",
+      "answers": [
+        "Six",
+        "Contrasting section",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "A bridge provides contrast."
+    },
+    {
+      "id": "music_medium_009",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_medium_010",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_medium_011",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as symbol that raises a note?",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_medium_012",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as symbol that lowers a note?",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_medium_013",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as five-line music staff marker?",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_medium_014",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as steady pulse in music?",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_medium_015",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as loudness in music?",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_medium_016",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as short repeated musical idea?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_medium_017",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as group of singers?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_medium_018",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as plucked string instrument often in bluegrass?",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_medium_019",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_medium_020",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_medium_021",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as symbol that raises a note?",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_medium_022",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as symbol that lowers a note?",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_medium_023",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as five-line music staff marker?",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_medium_024",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as steady pulse in music?",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_medium_025",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as loudness in music?",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_medium_026",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as short repeated musical idea?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_medium_027",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as group of singers?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_medium_028",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as plucked string instrument often in bluegrass?",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_medium_029",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_medium_030",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_medium_031",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as symbol that raises a note?",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_medium_032",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as symbol that lowers a note?",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_medium_033",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as five-line music staff marker?",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_medium_034",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as steady pulse in music?",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_medium_035",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as loudness in music?",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_medium_036",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as short repeated musical idea?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_medium_037",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as group of singers?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_medium_038",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as plucked string instrument often in bluegrass?",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_medium_039",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_medium_040",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_medium_041",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as symbol that raises a note?",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_medium_042",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as symbol that lowers a note?",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_medium_043",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as five-line music staff marker?",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_medium_044",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as steady pulse in music?",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_medium_045",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as loudness in music?",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_medium_046",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as short repeated musical idea?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_medium_047",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as group of singers?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_medium_048",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as plucked string instrument often in bluegrass?",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_medium_049",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_medium_050",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_medium_051",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as symbol that raises a note?",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_medium_052",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as symbol that lowers a note?",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_medium_053",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as five-line music staff marker?",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_medium_054",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as steady pulse in music?",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_medium_055",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as loudness in music?",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_medium_056",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as short repeated musical idea?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_medium_057",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as group of singers?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_medium_058",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as plucked string instrument often in bluegrass?",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_medium_059",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_medium_060",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_medium_061",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as symbol that raises a note?",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_medium_062",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as symbol that lowers a note?",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_medium_063",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as five-line music staff marker?",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_medium_064",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as steady pulse in music?",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_medium_065",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as loudness in music?",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_medium_066",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as short repeated musical idea?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_medium_067",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as group of singers?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_medium_068",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as plucked string instrument often in bluegrass?",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_medium_069",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_medium_070",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_medium_071",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as symbol that raises a note?",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_medium_072",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as symbol that lowers a note?",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_medium_073",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as five-line music staff marker?",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_medium_074",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as steady pulse in music?",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_medium_075",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as loudness in music?",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_medium_076",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as short repeated musical idea?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_medium_077",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as group of singers?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_medium_078",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as plucked string instrument often in bluegrass?",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_medium_079",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_medium_080",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_medium_081",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as symbol that raises a note?",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_medium_082",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as symbol that lowers a note?",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_medium_083",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as five-line music staff marker?",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_medium_084",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as steady pulse in music?",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_medium_085",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as loudness in music?",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_medium_086",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as short repeated musical idea?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_medium_087",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as group of singers?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_medium_088",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as plucked string instrument often in bluegrass?",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_medium_089",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_medium_090",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_medium_091",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as symbol that raises a note?",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_medium_092",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as symbol that lowers a note?",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_medium_093",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as five-line music staff marker?",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_medium_094",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as steady pulse in music?",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_medium_095",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as loudness in music?",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_medium_096",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as short repeated musical idea?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_medium_097",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as group of singers?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_medium_098",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as plucked string instrument often in bluegrass?",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_medium_099",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as highest standard female voice type?",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_medium_100",
+      "category": "Music",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In Music, which option is best described as lowest standard male voice type?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_hard_001",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is syncopation?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "Emphasis on unexpected beats"
+      ],
+      "correct": 3,
+      "explanation": "Syncopation accents offbeats or unexpected beats."
+    },
+    {
+      "id": "music_hard_002",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What interval spans eight scale degrees?",
+      "answers": [
+        "Octave",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "An octave spans eight scale degrees."
+    },
+    {
+      "id": "music_hard_003",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is a leitmotif?",
+      "answers": [
+        "Six",
+        "A recurring musical theme",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "A leitmotif is a recurring theme tied to an idea or character."
+    },
+    {
+      "id": "music_hard_004",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does MIDI transmit?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Musical performance data",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "MIDI sends note and control data."
+    },
+    {
+      "id": "music_hard_005",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is counterpoint?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "Independent melodies sounding together"
+      ],
+      "correct": 3,
+      "explanation": "Counterpoint combines independent melodic lines."
+    },
+    {
+      "id": "music_hard_006",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is a diminished chord known for?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Tense, unstable sound",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "Diminished chords sound tense."
+    },
+    {
+      "id": "music_hard_007",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What does polyphony mean?",
+      "answers": [
+        "Six",
+        "Multiple independent voices",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "Polyphony has multiple independent lines."
+    },
+    {
+      "id": "music_hard_008",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "What is rubato?",
+      "answers": [
+        "Six",
+        "Piano",
+        "Flexible tempo expression",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "Rubato is expressive tempo flexibility."
+    },
+    {
+      "id": "music_hard_009",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: highest standard female voice type.",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_hard_010",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: lowest standard male voice type.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_hard_011",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: symbol that raises a note.",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_hard_012",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: symbol that lowers a note.",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_hard_013",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: five-line music staff marker.",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_hard_014",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: steady pulse in music.",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_hard_015",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: loudness in music.",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_hard_016",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: short repeated musical idea.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_hard_017",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: group of singers.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_hard_018",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: plucked string instrument often in bluegrass.",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_hard_019",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: highest standard female voice type.",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_hard_020",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: lowest standard male voice type.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_hard_021",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: symbol that raises a note.",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_hard_022",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: symbol that lowers a note.",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_hard_023",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: five-line music staff marker.",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_hard_024",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: steady pulse in music.",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_hard_025",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: loudness in music.",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_hard_026",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: short repeated musical idea.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_hard_027",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: group of singers.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_hard_028",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: plucked string instrument often in bluegrass.",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_hard_029",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: highest standard female voice type.",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_hard_030",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: lowest standard male voice type.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_hard_031",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: symbol that raises a note.",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_hard_032",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: symbol that lowers a note.",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_hard_033",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: five-line music staff marker.",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_hard_034",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: steady pulse in music.",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_hard_035",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: loudness in music.",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_hard_036",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: short repeated musical idea.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_hard_037",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: group of singers.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_hard_038",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: plucked string instrument often in bluegrass.",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_hard_039",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: highest standard female voice type.",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_hard_040",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: lowest standard male voice type.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_hard_041",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: symbol that raises a note.",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_hard_042",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: symbol that lowers a note.",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_hard_043",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: five-line music staff marker.",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_hard_044",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: steady pulse in music.",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_hard_045",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: loudness in music.",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_hard_046",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: short repeated musical idea.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_hard_047",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: group of singers.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_hard_048",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: plucked string instrument often in bluegrass.",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_hard_049",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: highest standard female voice type.",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_hard_050",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: lowest standard male voice type.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_hard_051",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: symbol that raises a note.",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_hard_052",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: symbol that lowers a note.",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_hard_053",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: five-line music staff marker.",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_hard_054",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: steady pulse in music.",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_hard_055",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: loudness in music.",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_hard_056",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: short repeated musical idea.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_hard_057",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: group of singers.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_hard_058",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: plucked string instrument often in bluegrass.",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_hard_059",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: highest standard female voice type.",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_hard_060",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: lowest standard male voice type.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_hard_061",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: symbol that raises a note.",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_hard_062",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: symbol that lowers a note.",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_hard_063",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: five-line music staff marker.",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_hard_064",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: steady pulse in music.",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_hard_065",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: loudness in music.",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_hard_066",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: short repeated musical idea.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_hard_067",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: group of singers.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_hard_068",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: plucked string instrument often in bluegrass.",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_hard_069",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: highest standard female voice type.",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_hard_070",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: lowest standard male voice type.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_hard_071",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: symbol that raises a note.",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_hard_072",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: symbol that lowers a note.",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_hard_073",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: five-line music staff marker.",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_hard_074",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: steady pulse in music.",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_hard_075",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: loudness in music.",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_hard_076",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: short repeated musical idea.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_hard_077",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: group of singers.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_hard_078",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: plucked string instrument often in bluegrass.",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_hard_079",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: highest standard female voice type.",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_hard_080",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: lowest standard male voice type.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_hard_081",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: symbol that raises a note.",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_hard_082",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: symbol that lowers a note.",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_hard_083",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: five-line music staff marker.",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_hard_084",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: steady pulse in music.",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_hard_085",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: loudness in music.",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_hard_086",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: short repeated musical idea.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_hard_087",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: group of singers.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_hard_088",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: plucked string instrument often in bluegrass.",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_hard_089",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: highest standard female voice type.",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_hard_090",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: lowest standard male voice type.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    },
+    {
+      "id": "music_hard_091",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: symbol that raises a note.",
+      "answers": [
+        "Six",
+        "Piano",
+        "sharp",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is sharp."
+    },
+    {
+      "id": "music_hard_092",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: symbol that lowers a note.",
+      "answers": [
+        "Six",
+        "flat",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 1,
+      "explanation": "The correct match is flat."
+    },
+    {
+      "id": "music_hard_093",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: five-line music staff marker.",
+      "answers": [
+        "Six",
+        "Piano",
+        "clef",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is clef."
+    },
+    {
+      "id": "music_hard_094",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: steady pulse in music.",
+      "answers": [
+        "Six",
+        "Piano",
+        "beat",
+        "Elvis Presley"
+      ],
+      "correct": 2,
+      "explanation": "The correct match is beat."
+    },
+    {
+      "id": "music_hard_095",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: loudness in music.",
+      "answers": [
+        "dynamics",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is dynamics."
+    },
+    {
+      "id": "music_hard_096",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: short repeated musical idea.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "riff"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is riff."
+    },
+    {
+      "id": "music_hard_097",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: group of singers.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "choir"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is choir."
+    },
+    {
+      "id": "music_hard_098",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: plucked string instrument often in bluegrass.",
+      "answers": [
+        "banjo",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is banjo."
+    },
+    {
+      "id": "music_hard_099",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: highest standard female voice type.",
+      "answers": [
+        "soprano",
+        "Six",
+        "Piano",
+        "Elvis Presley"
+      ],
+      "correct": 0,
+      "explanation": "The correct match is soprano."
+    },
+    {
+      "id": "music_hard_100",
+      "category": "Music",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "For a harder Music clue, identify: lowest standard male voice type.",
+      "answers": [
+        "Six",
+        "Piano",
+        "Elvis Presley",
+        "bass"
+      ],
+      "correct": 3,
+      "explanation": "The correct match is bass."
+    }
+  ]
+}

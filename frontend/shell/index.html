@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#123822">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="OIAB">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -11,6 +12,23 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/mobile/overland-touch-icon-180.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
   <link rel="manifest" href="/mobile/manifest.webmanifest">
+  <script>
+    (() => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("mobile") === "1" || window.location.hostname.toLowerCase().startsWith("mobile.")) {
+        window.location.replace("/mobile/");
+        return;
+      }
+      if (params.get("headunit") === "1") {
+        return;
+      }
+      const smallScreen = Math.min(window.innerWidth || 9999, window.screen?.width || 9999) <= 700;
+      const mobileUserAgent = /iphone|ipod|android|mobile|windows phone|blackberry/i.test(navigator.userAgent || "");
+      if ((smallScreen || mobileUserAgent) && window.location.pathname === "/") {
+        window.location.replace("/mobile/");
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="universal-shell.css?v=20260601d">
 </head>
 <body>
@@ -173,6 +191,7 @@
                 <section class="uo-settings-card">
                   <h2>Music</h2>
                   <p class="uo-card-note">Library rebuild and visualizer settings are shared with the music player.</p>
+                  <canvas id="musicVisualizerPreview" class="uo-visualizer-preview" aria-label="Visualizer preview"></canvas>
                   <label>Visualizer
                     <select id="musicVisualizerMode">
                       <option value="particles">Particles</option>
@@ -281,6 +300,12 @@
               <div class="uo-settings-grid uo-settings-grid--stacked">
                 <section class="uo-settings-card">
                   <h2>Map Runtime</h2>
+                  <label>Map Color Scheme
+                    <select id="mapColorScheme">
+                      <option value="light">Light / Day</option>
+                      <option value="dark">Dark / Night</option>
+                    </select>
+                  </label>
                   <label class="uo-switch-row">
                     <span>
                       <strong>3D Buildings</strong>
@@ -316,6 +341,16 @@
                   <p id="mapsOverlaysMessage" class="uo-status-note"></p>
                   <div id="mapsOverlaySummary" class="uo-settings-summary-card"></div>
                   <div id="mapsOverlaysList" class="uo-settings-stack"></div>
+                </section>
+                <section class="uo-settings-card">
+                  <h2>GeoPDF Maps</h2>
+                  <p class="uo-card-note">Import georeferenced PDF maps. OIAB detects GeoPDF metadata, renders local tiles, and adds each PDF as an overlay.</p>
+                  <form id="geopdfImportForm" class="uo-inline-upload-form">
+                    <input id="geopdfImportFile" type="file" accept="application/pdf,.pdf">
+                    <button id="geopdfImportButton" type="submit" class="is-primary">Import GeoPDF</button>
+                  </form>
+                  <p id="geopdfMessage" class="uo-status-note"></p>
+                  <div id="geopdfList" class="uo-settings-stack"></div>
                 </section>
                 <section class="uo-settings-card">
                   <h2>Offline Data Regions</h2>

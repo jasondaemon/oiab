@@ -1,0 +1,337 @@
+{
+  "category": "Ancient History",
+  "slug": "ancient-history",
+  "version": 1,
+  "questions": [
+    {
+      "id": "ancient-history_easy_001",
+      "category": "Ancient History",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which Roman leader crossed the Rubicon?",
+      "answers": [
+        "The scarab",
+        "Julius Caesar",
+        "Tutankhamun",
+        "Socrates"
+      ],
+      "correct": 1,
+      "explanation": "Julius Caesar is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_001",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What dung beetle was sacred in ancient Egypt?",
+      "answers": [
+        "Julius Caesar",
+        "Tutankhamun",
+        "Socrates",
+        "The scarab"
+      ],
+      "correct": 3,
+      "explanation": "The scarab is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_002",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Known as \"the boy king,\" what Egyptian king ascended to the throne when he was only 9 years old?",
+      "answers": [
+        "Julius Caesar",
+        "The scarab",
+        "Tutankhamun",
+        "Socrates"
+      ],
+      "correct": 2,
+      "explanation": "Tutankhamun is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_003",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What Greek philosopher is known as the \"Father of Western Philosophy?\"",
+      "answers": [
+        "Socrates",
+        "Julius Caesar",
+        "The scarab",
+        "Tutankhamun"
+      ],
+      "correct": 0,
+      "explanation": "Socrates is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_004",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What do B.C. and A.D. stand for in terms of dates?",
+      "answers": [
+        "Julius Caesar",
+        "The scarab",
+        "Tutankhamun",
+        "Before Christ and Anno Domini"
+      ],
+      "correct": 3,
+      "explanation": "Before Christ and Anno Domini is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_005",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What indigenous people of southern Mexico developed advanced calendars and the study of astronomy, among other feats?",
+      "answers": [
+        "The Mayans",
+        "Julius Caesar",
+        "The scarab",
+        "Tutankhamun"
+      ],
+      "correct": 0,
+      "explanation": "The Mayans is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_006",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Greek figure in mythology rules the underworld?",
+      "answers": [
+        "Julius Caesar",
+        "Hades",
+        "The scarab",
+        "Tutankhamun"
+      ],
+      "correct": 1,
+      "explanation": "Hades is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_007",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The Roman twins, Romulus and Remus, founded what city?",
+      "answers": [
+        "Julius Caesar",
+        "Rome",
+        "The scarab",
+        "Tutankhamun"
+      ],
+      "correct": 1,
+      "explanation": "Rome is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_008",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which empire is considered the \"Golden Age of India?\"",
+      "answers": [
+        "The Gupta Empire",
+        "Julius Caesar",
+        "The scarab",
+        "Tutankhamun"
+      ],
+      "correct": 0,
+      "explanation": "The Gupta Empire is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_009",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Middle Eastern river lies at the lowest elevation in the world?",
+      "answers": [
+        "Julius Caesar",
+        "The scarab",
+        "Tutankhamun",
+        "The Jordan River"
+      ],
+      "correct": 3,
+      "explanation": "The Jordan River is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_010",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who are the three kings of Israel?",
+      "answers": [
+        "Julius Caesar",
+        "Saul, David and Solomon",
+        "The scarab",
+        "Tutankhamun"
+      ],
+      "correct": 1,
+      "explanation": "Saul, David and Solomon is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_011",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The earliest known dinosaurs lived during which period?",
+      "answers": [
+        "Julius Caesar",
+        "The scarab",
+        "The Triassic Period",
+        "Tutankhamun"
+      ],
+      "correct": 2,
+      "explanation": "The Triassic Period is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_012",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The ancient Greeks notably founded what type of government?",
+      "answers": [
+        "Julius Caesar",
+        "The scarab",
+        "Tutankhamun",
+        "Democracy"
+      ],
+      "correct": 3,
+      "explanation": "Democracy is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_013",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The Sumerians invented what common farming tool?",
+      "answers": [
+        "The seed plow",
+        "Julius Caesar",
+        "The scarab",
+        "Tutankhamun"
+      ],
+      "correct": 0,
+      "explanation": "The seed plow is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_014",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The ancient Egyptians used what pictorial writing system to help communicate?",
+      "answers": [
+        "Julius Caesar",
+        "The scarab",
+        "Hieroglyphics",
+        "Tutankhamun"
+      ],
+      "correct": 2,
+      "explanation": "Hieroglyphics is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_015",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Name the runner who is said to have carried news of Greece's victory at the Battle of Marathon?",
+      "answers": [
+        "Julius Caesar",
+        "The scarab",
+        "Pheidippides",
+        "Tutankhamun"
+      ],
+      "correct": 2,
+      "explanation": "Pheidippides is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_016",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What horse-related sport was popular in ancient Rome, Greece and the Byzantine Empire?",
+      "answers": [
+        "Julius Caesar",
+        "The scarab",
+        "Chariot racing",
+        "Tutankhamun"
+      ],
+      "correct": 2,
+      "explanation": "Chariot racing is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_017",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Roman god could throw thunderbolts from the sky?",
+      "answers": [
+        "Julius Caesar",
+        "Jupiter",
+        "The scarab",
+        "Tutankhamun"
+      ],
+      "correct": 1,
+      "explanation": "Jupiter is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_018",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What ancient slab is considered a key discovery in understanding Egyptian hieroglyphics?",
+      "answers": [
+        "The Rosetta Stone",
+        "Julius Caesar",
+        "The scarab",
+        "Tutankhamun"
+      ],
+      "correct": 0,
+      "explanation": "The Rosetta Stone is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_019",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What ancient sculpture represents the Greek goddess Aphrodite?",
+      "answers": [
+        "The Venus de Milo",
+        "Julius Caesar",
+        "The scarab",
+        "Tutankhamun"
+      ],
+      "correct": 0,
+      "explanation": "The Venus de Milo is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_020",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What are the clay soldiers that guard the tomb of Qin Shi Huang in China called?",
+      "answers": [
+        "Julius Caesar",
+        "The Terracotta Army",
+        "The scarab",
+        "Tutankhamun"
+      ],
+      "correct": 1,
+      "explanation": "The Terracotta Army is the historical answer for this question."
+    },
+    {
+      "id": "ancient-history_medium_021",
+      "category": "Ancient History",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Greek philosopher is known as \"The Father of Logic?\"",
+      "answers": [
+        "Julius Caesar",
+        "The scarab",
+        "Tutankhamun",
+        "Aristotle"
+      ],
+      "correct": 3,
+      "explanation": "Aristotle is the historical answer for this question."
+    }
+  ]
+}

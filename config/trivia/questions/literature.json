@@ -1,0 +1,1882 @@
+{
+  "category": "Literature",
+  "slug": "literature",
+  "version": 1,
+  "questions": [
+    {
+      "id": "literature_easy_001",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which of her own characters did Agatha Christie call \"a detestable, bombastic, tiresome, egocentric little creep\"?",
+      "answers": [
+        "The Louvre",
+        "Chicago",
+        "Ode To A Nightingale",
+        "Hercule Poirot"
+      ],
+      "correct": 3,
+      "explanation": "Hercule Poirot is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_002",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The Da Vinci Code opens with a murder in which famous museum?",
+      "answers": [
+        "Hercule Poirot",
+        "Chicago",
+        "The Louvre",
+        "Ode To A Nightingale"
+      ],
+      "correct": 2,
+      "explanation": "The Louvre is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_003",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Veronica Roth's Divergent book series is set in a post-apocalyptic version of which U. S. city?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Ode To A Nightingale"
+      ],
+      "correct": 2,
+      "explanation": "Chicago is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_004",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of the poem John Keats wrote to a singing bird?",
+      "answers": [
+        "Ode To A Nightingale",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Ode To A Nightingale is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_005",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In what language was Don Quixote written?",
+      "answers": [
+        "Spanish",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Spanish is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_006",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What names did Charles Dickens consider for his character in A Christmas Carol before settling on \"Tiny Tim\"?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "\"Small Sam\" and \"Puny Pete\""
+      ],
+      "correct": 3,
+      "explanation": "\"Small Sam\" and \"Puny Pete\" is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_007",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What word did Robert A. Heinlein introduce into the English language in his book Stranger in a Strange Land?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Grok"
+      ],
+      "correct": 3,
+      "explanation": "Grok is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_008",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is probably the father of Caddy's child in The Sound and the Fury?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Dalton Ames",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Dalton Ames is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_009",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of Captain Ahab's ship?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Pequod",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Pequod is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_010",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What do the initials J. D. stand for in author J. D. Salinger's name?",
+      "answers": [
+        "Jerome David",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Jerome David is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_011",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The book Water for Elephants by Sara Gruen takes place in what era?",
+      "answers": [
+        "1929",
+        "1930's",
+        "1931",
+        "1925"
+      ],
+      "correct": 1,
+      "explanation": "1930's is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_012",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which actor played the role of Jay Gatsby in The Great Gatsby, adapted from the book written by F. Scott Fitzgerald?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Leonardo DiCaprio"
+      ],
+      "correct": 3,
+      "explanation": "Leonardo DiCaprio is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_013",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In which town is the book To Kill A Mockingbird by Harper Lee set?",
+      "answers": [
+        "Hercule Poirot",
+        "Maycomb, Alabama",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Maycomb, Alabama is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_014",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Emily Brontë's Wuthering Heights recounts the tragic romance between which two lovers?",
+      "answers": [
+        "Catherine and Heathcliff",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Catherine and Heathcliff is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_015",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who wrote Rip Van Winkle?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Washington Irving"
+      ],
+      "correct": 3,
+      "explanation": "Washington Irving is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_016",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The book The Martian Chronicles was written by whom?",
+      "answers": [
+        "Hercule Poirot",
+        "Ray Bradbury",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Ray Bradbury is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_017",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "During which century was Paradise Lost published?",
+      "answers": [
+        "15",
+        "16",
+        "17th century",
+        "18"
+      ],
+      "correct": 2,
+      "explanation": "17th century is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_018",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is the author of the book A Brave New World?",
+      "answers": [
+        "Hercule Poirot",
+        "Aldous Huxley",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Aldous Huxley is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_019",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is Leopold Bloom's wife in Ulysses?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Molly"
+      ],
+      "correct": 3,
+      "explanation": "Molly is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_020",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The hero Beowulf faces a monster known by what name?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Grendel"
+      ],
+      "correct": 3,
+      "explanation": "Grendel is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_021",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In Do Androids Dream of Electric Sheep, many humans leave Earth for which planet?",
+      "answers": [
+        "Hercule Poirot",
+        "Mars",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Mars is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_022",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of John's true love in Nicholas Sparks' Dear John?",
+      "answers": [
+        "Savannah",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Savannah is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_023",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who did C.S. Lewis base the protagonist of his Space Trilogy on?",
+      "answers": [
+        "J.R.R. Tolkien",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "J.R.R. Tolkien is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_024",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "A Dance with Dragons, the fifth book of A Song of Ice and Fire series, was authored by whom?",
+      "answers": [
+        "George R. R. Martin",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "George R. R. Martin is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_025",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What Spanish author wrote more than 5,000 novels?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Corín Tellado",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Corín Tellado is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_026",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which story authored by Washington Irving has the character Ichabod Crane?",
+      "answers": [
+        "The Legend of Sleepy Hollow",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "The Legend of Sleepy Hollow is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_027",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What was the original title of Ray Bradbury's Fahrenheit 451?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "The Fireman"
+      ],
+      "correct": 3,
+      "explanation": "The Fireman is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_028",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the title of the third book in the series Hitch Hikers Guide to the Galaxy?",
+      "answers": [
+        "Life, The Universe, and Everything",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Life, The Universe, and Everything is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_029",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the name of the author who wrote The Book Thief?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Markus Zusak"
+      ],
+      "correct": 3,
+      "explanation": "Markus Zusak is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_030",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "In which state do Mark Twain's characters Tom Sawyer and Huckleberry Finn live?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Missouri"
+      ],
+      "correct": 3,
+      "explanation": "Missouri is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_031",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the smallest book in the Welsh National Library?",
+      "answers": [
+        "Hercule Poirot",
+        "Old King Cole",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Old King Cole is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_032",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What Russian dramatist wrote The Inspector General?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Nikolai Gogol"
+      ],
+      "correct": 3,
+      "explanation": "Nikolai Gogol is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_033",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What happened to the original manuscript of John Steinbeck's Of Mice and Men?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "His dog ate a draft",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "His dog ate a draft is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_034",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What poet wrote the following lines: \"Two roads diverged in a wood, and I… I took the one less traveled by\"?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Robert Frost",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Robert Frost is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_035",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What famous author was a descendant of one of the Salem witches?",
+      "answers": [
+        "Hercule Poirot",
+        "Ray Bradbury",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Ray Bradbury is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_036",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "The U2 song Shadows and Tall Trees is taken from a chapter title in what famous book?",
+      "answers": [
+        "Lord of the Flies",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Lord of the Flies is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_037",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is the only author to publish books in 9 of the 10 Dewey Decimal categories?",
+      "answers": [
+        "Isaac Asimov",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Isaac Asimov is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_038",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What famous literary character offers this sage advice: \"Neither a borrower nor a lender be\"?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Polonius"
+      ],
+      "correct": 3,
+      "explanation": "Polonius is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_039",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What writer coined the phrase \"ships that pass in the night\"?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Henry Wadsworth Longfellow",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Henry Wadsworth Longfellow is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_040",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What is the subtitle of Mary Shelley's Frankenstein?",
+      "answers": [
+        "The Modern Prometheus",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "The Modern Prometheus is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_041",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which of Shakespeare's plays features a sorcerer named Prospero?",
+      "answers": [
+        "Hercule Poirot",
+        "The Tempest",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "The Tempest is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_042",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Who is the protagonist of The Hunger Games?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Katniss Everdeen"
+      ],
+      "correct": 3,
+      "explanation": "Katniss Everdeen is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_043",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What famous novelist once dated the daughter of playwright Eugene O'Neill?",
+      "answers": [
+        "Hercule Poirot",
+        "J.D. Salinger",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "J.D. Salinger is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_044",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "Which character is pregnant at the beginning of The Grapes of Wrath?",
+      "answers": [
+        "Hercule Poirot",
+        "Rose of Sharon",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Rose of Sharon is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_045",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "What writer had more than 70 different pen names?",
+      "answers": [
+        "Lauran Bosworth Paine",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Lauran Bosworth Paine is the literary answer for this question."
+    },
+    {
+      "id": "literature_easy_046",
+      "category": "Literature",
+      "difficulty": "easy",
+      "points": 100,
+      "question": "At the beginning of Lord of the Flies, what is their only means of making fire?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Piggy's glasses",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Piggy's glasses is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_001",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who was the first Chinese writer to win the Nobel Prize for Literature?",
+      "answers": [
+        "Hercule Poirot",
+        "Gao Xingjian",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Gao Xingjian is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_002",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What novel is set on a desert planet inhabited by giant sandworms?",
+      "answers": [
+        "Dune",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Dune is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_003",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the working title of Margaret Mitchell's 1936 novel Gone With the Wind?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Ba! Ba! Black Sheep",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Ba! Ba! Black Sheep is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_004",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What dystopian novel by George Orwell told of life in a future totalitarian state dominated by \"Big Brother\"?",
+      "answers": [
+        "Hercule Poirot",
+        "Nineteen Eighty-Four",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Nineteen Eighty-Four is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_005",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which Stephen King novel takes place mostly in the fictional Overlook Hotel?",
+      "answers": [
+        "Hercule Poirot",
+        "The Shining",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "The Shining is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_006",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What author wrote his last novel in crayon?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "James Joyce",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "James Joyce is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_007",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the name of Jane Austen's last unfinished novel?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Sanditon",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Sanditon is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_008",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The phrase \"dark horse\" comes from what 1831 novel?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "The Young Duke",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "The Young Duke is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_009",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In what Philip K. Dick novel does bounty hunter Rick Deckard track down a group of androids?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Do Androids Dream of Electric Sheep?",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Do Androids Dream of Electric Sheep? is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_010",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the first book sold on Amazon.com?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Fluid Concepts and Creative Analogies",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Fluid Concepts and Creative Analogies is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_011",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the first novel ever written?",
+      "answers": [
+        "Hercule Poirot",
+        "The Tale of Genji",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "The Tale of Genji is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_012",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What novel features a character named D-503?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "We",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "We is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_013",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What novel features characters named Ayla, Broud, Creb, and Iza?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "The Clan of the Cave Bear",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "The Clan of the Cave Bear is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_014",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What novel begins with: \"Call me Ishmael\"?",
+      "answers": [
+        "Moby Dick",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Moby Dick is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_015",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What did Aldous Huxley and C. S. Lewis have in common?",
+      "answers": [
+        "21",
+        "23",
+        "17",
+        "They both died on November 22, 1963"
+      ],
+      "correct": 3,
+      "explanation": "They both died on November 22, 1963 is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_016",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the name of the series that used second-person perspective and turned the reader into the one deciding the outcome of the books?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Choose Your Own Adventure",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Choose Your Own Adventure is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_017",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which science fiction author wrote Starship Troopers?",
+      "answers": [
+        "Hercule Poirot",
+        "Robert A. Heinlein",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Robert A. Heinlein is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_018",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Sir Walter Scott is known for his historical novels about which country?",
+      "answers": [
+        "Scotland",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Scotland is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_019",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The story of the Dashwood sisters is stated in which classic novel by Jane Austen?",
+      "answers": [
+        "Sense And Sensibility",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Sense And Sensibility is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_020",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What published book centers around marriage during the Victorian era, describing the fascination that a group of sisters have over one man?",
+      "answers": [
+        "Pride and Prejudice",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Pride and Prejudice is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_021",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What children's novel features the characters Tweedledee and Tweedledum?",
+      "answers": [
+        "Hercule Poirot",
+        "Alice Through the Looking Glass",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Alice Through the Looking Glass is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_022",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What classic book written by Oscar Wilde has to do with immortality?",
+      "answers": [
+        "The Picture of Dorian Gray",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "The Picture of Dorian Gray is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_023",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the name of one of the most adapted characters from the famous novels written by Sir Arthur Conan Doyle?",
+      "answers": [
+        "Hercule Poirot",
+        "Sherlock Holmes",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Sherlock Holmes is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_024",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What color was Anna Karenina's bag in the Tolstoy novel of the same name?",
+      "answers": [
+        "Hercule Poirot",
+        "Red",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Red is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_025",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "First published in 1842, The Masque of the Red Death is a short story by which American writer?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Edgar Allan Poe"
+      ],
+      "correct": 3,
+      "explanation": "Edgar Allan Poe is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_026",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "George Eliot is the pen name of which author?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Mary Ann Evans"
+      ],
+      "correct": 3,
+      "explanation": "Mary Ann Evans is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_027",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What play by Tennessee Williams contains characters named \"Big Daddy\" and \"Big Mama\"?",
+      "answers": [
+        "Cat on a Hot Tin Roof",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Cat on a Hot Tin Roof is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_028",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the name of the protagonist in Nathaniel Hawthorne's The Scarlet Letter?",
+      "answers": [
+        "Hercule Poirot",
+        "Hester Prynne",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Hester Prynne is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_029",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the first published Harry Potter book?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Philosopher's Stone",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Philosopher's Stone is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_030",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who wrote the children's book Where the Wild Things Are?",
+      "answers": [
+        "Maurice Sendak",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Maurice Sendak is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_031",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "According to legend, who was King Arthur's wife?",
+      "answers": [
+        "Guinevere",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Guinevere is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_032",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In the book, The Once And Future King, what is the name of Merlin's owl?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Archimedes"
+      ],
+      "correct": 3,
+      "explanation": "Archimedes is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_033",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the first fiction novel to be published in English?",
+      "answers": [
+        "Hercule Poirot",
+        "Robinson Crusoe",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Robinson Crusoe is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_034",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who introduced the phrase, 'wear your heart on your sleeve'?",
+      "answers": [
+        "Hercule Poirot",
+        "William Shakespeare",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "William Shakespeare is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_035",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "How old was Mary Shelley when she started writing Frankenstein?",
+      "answers": [
+        "18 years old",
+        "16",
+        "17",
+        "19"
+      ],
+      "correct": 0,
+      "explanation": "18 years old is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_036",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The Lion King is a movie loosely inspired by which of Shakespeare's dramas?",
+      "answers": [
+        "Hercule Poirot",
+        "Hamlet",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Hamlet is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_037",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What type of animal is Bagheera in Rudyard Kipling's The Jungle Book?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "A panther"
+      ],
+      "correct": 3,
+      "explanation": "A panther is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_038",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who is the director of the 2019 movie Little Women adapted from Louisa May Alcott's book?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Greta Gerwig",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Greta Gerwig is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_039",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Thirteen Reasons Why is a series based on which author's book?",
+      "answers": [
+        "Hercule Poirot",
+        "Jay Asher",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Jay Asher is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_040",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who played the role of Edward Cullen in The Twilight Saga?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Robert Pattinson",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Robert Pattinson is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_041",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who played the role of Elizabeth Bennet in the movie based on Jane Austen's Pride And Prejudice?",
+      "answers": [
+        "Hercule Poirot",
+        "Keira Knightley",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Keira Knightley is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_042",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who wrote The Da Vinci Code?",
+      "answers": [
+        "Hercule Poirot",
+        "Dan Brown",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Dan Brown is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_043",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who is the author of The Power Of Your Subconscious Mind?",
+      "answers": [
+        "Dr. Joseph Murphy",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Dr. Joseph Murphy is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_044",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "To The Lighthouse is a book written by which classic period author?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Virginia Woolf",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Virginia Woolf is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_045",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the name of the protagonist in John Green's Looking For Alaska?",
+      "answers": [
+        "Miles Halter",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Miles Halter is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_046",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the name of the memoir written by Michelle Obama in 2018?",
+      "answers": [
+        "Becoming",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Becoming is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_047",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Mariam and Laila are the protagonists of which book written by Khaled Hosseini?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "A Thousand Splendid Suns"
+      ],
+      "correct": 3,
+      "explanation": "A Thousand Splendid Suns is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_048",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In the book Curious George, who is the monkey's companion?",
+      "answers": [
+        "Hercule Poirot",
+        "Man in the Yellow Hat",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Man in the Yellow Hat is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_049",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Santiago, a Shepherd boy, is the protagonist of which book written by Paulo Coelho?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "The Alchemist"
+      ],
+      "correct": 3,
+      "explanation": "The Alchemist is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_050",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which detective series focuses on two brothers, Frank and Joe, solving mysteries?",
+      "answers": [
+        "The Hardy Boys",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "The Hardy Boys is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_051",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the name of Tom Sawyer's best friend in The Adventures of Tom Sawyer?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Huckleberry Finn"
+      ],
+      "correct": 3,
+      "explanation": "Huckleberry Finn is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_052",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who wrote Charlotte's Web, The Trumpet of the Swan, and Stuart Little?",
+      "answers": [
+        "E. B. White",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "E. B. White is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_053",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "The Kite Runner is the first published book of which author?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Khaled Hosseini"
+      ],
+      "correct": 3,
+      "explanation": "Khaled Hosseini is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_054",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What are the names of the three musketeers in the book written by Alexandre Dumas?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Athos, Porthos, and Aramis",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Athos, Porthos, and Aramis is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_055",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which classic book by J. M. Barrie opens with the line, \"All children, except one, grew up\"?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Peter Pan"
+      ],
+      "correct": 3,
+      "explanation": "Peter Pan is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_056",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who wrote the political satire also loved as a children's book titled Alice's Adventures in Wonderland?",
+      "answers": [
+        "Hercule Poirot",
+        "Lewis Carroll",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Lewis Carroll is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_057",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Who wrote the book, Lord Of The Flies?",
+      "answers": [
+        "Hercule Poirot",
+        "William Golding",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "William Golding is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_058",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What Belgian book series became a long-running cartoon series about blue people who were only three apples tall?",
+      "answers": [
+        "Hercule Poirot",
+        "The Smurfs",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "The Smurfs is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_059",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is the name of Stephen King's first published novel?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Carrie",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Carrie is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_060",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What kind of hat does the cat wear in the Dr. Seuss book The Cat in the Hat?",
+      "answers": [
+        "Hercule Poirot",
+        "A red and white striped top hat",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "A red and white striped top hat is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_061",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What was the name of Sherlock Holmes' arch enemy?",
+      "answers": [
+        "Professor Moriarty",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Professor Moriarty is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_062",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which author wrote about a boy named Charlie visiting a chocolate factory after winning a golden ticket?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Roald Dahl"
+      ],
+      "correct": 3,
+      "explanation": "Roald Dahl is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_063",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What color is Pippi's hair in Pippi Longstocking?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Orange",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Orange is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_064",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In the book Freaky Friday, Annabel changes bodies with whom?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Her mother",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Her mother is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_065",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What popular Disney movie, with Julie Andrews as the \"practically perfect\" nanny, was originally a novel written by P. L. Travers?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Mary Poppins",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Mary Poppins is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_066",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "Which first book in the series by Hugh Lofting is named after the main character, who has the ability to talk to animals?",
+      "answers": [
+        "Hercule Poirot",
+        "Story of Dr. Dolittle",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Story of Dr. Dolittle is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_067",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "In George Orwell's Animal Farm, what type of animal is Boxer?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "A horse",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "A horse is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_068",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "What is used as the portal to Narnia in C. S. Lewis' children's fantasy series?",
+      "answers": [
+        "Hercule Poirot",
+        "A wardrobe",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "A wardrobe is the literary answer for this question."
+    },
+    {
+      "id": "literature_medium_069",
+      "category": "Literature",
+      "difficulty": "medium",
+      "points": 300,
+      "question": "2001: A Space Odyssey features which artificially intelligent computer?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "HAL"
+      ],
+      "correct": 3,
+      "explanation": "HAL is the literary answer for this question."
+    },
+    {
+      "id": "literature_hard_001",
+      "category": "Literature",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many of Ernest Hemingway's ten novels were published posthumously?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Three",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Three is the literary answer for this question."
+    },
+    {
+      "id": "literature_hard_002",
+      "category": "Literature",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many volumes are in Marcel Proust's novel à La Recherche du Temps Perdu (In Search of Lost Time)?",
+      "answers": [
+        "Hercule Poirot",
+        "Seven",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Seven is the literary answer for this question."
+    },
+    {
+      "id": "literature_hard_003",
+      "category": "Literature",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many rejections did Louis L'Amour receive before being published?",
+      "answers": [
+        "200 rejections",
+        "198",
+        "199",
+        "201"
+      ],
+      "correct": 0,
+      "explanation": "200 rejections is the literary answer for this question."
+    },
+    {
+      "id": "literature_hard_004",
+      "category": "Literature",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "In what year was Of Mice and Men published?",
+      "answers": [
+        "1937",
+        "1936",
+        "1938",
+        "1932"
+      ],
+      "correct": 0,
+      "explanation": "1937 is the literary answer for this question."
+    },
+    {
+      "id": "literature_hard_005",
+      "category": "Literature",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many ghosts visited Scrooge?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Four",
+        "Chicago"
+      ],
+      "correct": 2,
+      "explanation": "Four is the literary answer for this question."
+    },
+    {
+      "id": "literature_hard_006",
+      "category": "Literature",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "In which year did Charles Dickens die?",
+      "answers": [
+        "1870",
+        "1869",
+        "1871",
+        "1865"
+      ],
+      "correct": 0,
+      "explanation": "1870 is the literary answer for this question."
+    },
+    {
+      "id": "literature_hard_007",
+      "category": "Literature",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "In which year did the movie based on Nicholas Sparks' The Notebook get released?",
+      "answers": [
+        "2003",
+        "2005",
+        "2004",
+        "1999"
+      ],
+      "correct": 2,
+      "explanation": "2004 is the literary answer for this question."
+    },
+    {
+      "id": "literature_hard_008",
+      "category": "Literature",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many books are in The Girl With The Dragon Tattoo series written by Stieg Larsson?",
+      "answers": [
+        "Three books",
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 0,
+      "explanation": "Three books is the literary answer for this question."
+    },
+    {
+      "id": "literature_hard_009",
+      "category": "Literature",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many siblings did Jane Austen have?",
+      "answers": [
+        "Hercule Poirot",
+        "Seven",
+        "The Louvre",
+        "Chicago"
+      ],
+      "correct": 1,
+      "explanation": "Seven is the literary answer for this question."
+    },
+    {
+      "id": "literature_hard_010",
+      "category": "Literature",
+      "difficulty": "hard",
+      "points": 500,
+      "question": "How many seasons does the book-adapted TV series The Vampire Diaries have?",
+      "answers": [
+        "Hercule Poirot",
+        "The Louvre",
+        "Chicago",
+        "Eight"
+      ],
+      "correct": 3,
+      "explanation": "Eight is the literary answer for this question."
+    }
+  ]
+}

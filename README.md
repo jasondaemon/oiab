@@ -108,6 +108,8 @@ Trail Trivia reads category packs from:
 /data/oiab/trivia/questions
 ```
 
+OIAB includes bundled default trivia packs under `config/trivia/questions`. On startup, missing bundled packs are copied into the durable trivia directory without overwriting user-uploaded packs.
+
 The File Uploads app can upload and list local content without rebuilding the frontend. Current upload targets are:
 
 - Music: `/data/oiab/media/music`

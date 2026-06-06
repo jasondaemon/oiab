@@ -110,6 +110,7 @@ address=/oiab.local/$OIAB_AP_IP
 address=/maps.local/$OIAB_AP_IP
 address=/daemon.local/$OIAB_AP_IP
 address=/daemon-adventures.local/$OIAB_AP_IP
+address=/overland.daemonadventures.net/$OIAB_AP_IP
 address=/mobile.daemonadventures.net/$OIAB_AP_IP
 address=/captive.apple.com/$OIAB_AP_IP
 address=/www.apple.com/$OIAB_AP_IP

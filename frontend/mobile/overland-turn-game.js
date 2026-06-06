@@ -195,6 +195,15 @@
         const p = game.payload || {};
         headline = state.patternPlaying ? "Watch the pattern." : `Repeat round ${p.round || (p.sequence || []).length || 1}.`;
         label = `score ${p.score || 0}`;
+    } else if (gameKind === "burst") {
+        const p = game.payload || {};
+        if (p.roundOver && game.status !== "complete") {
+          headline = "Round over. Host starts the next round.";
+          label = `round ${p.roundNumber || 1}`;
+        } else {
+          headline = observing ? `Watching ${turnName}'s turn.` : game.turn === state.mark ? "Your turn: play one card or draw." : `${turnName}'s turn.`;
+          label = `total ${p.centerTotal ?? p.total ?? 0}/${p.threshold || p.target || 21}`;
+        }
       } else {
         headline = observing ? `Watching ${turnName}'s turn.` : game.turn === state.mark ? "Your turn." : `${turnName}'s turn.`;
         label = observing ? "observer" : game.mode === "cpu" ? `${game.difficulty || "medium"} CPU` : `You are ${state.mark}`;
@@ -225,6 +234,7 @@
       hangman: renderHangman,
       "word-grid": renderWordGrid,
       "pattern-match": renderPatternMatch,
+      burst: renderBurst,
     };
     renderers[gameKind]?.();
   }
@@ -518,6 +528,231 @@
       state.patternInput = [];
       window.setTimeout(() => flashPattern(sequence, p.speedMs), 260);
     }
+  }
+
+  function burstCardSvg(card, label = "") {
+    const value = Number(card?.selectedValue ?? card?.value ?? 0);
+    const effect = String(card?.effect || "");
+    const color = {
+      green: "#72f083",
+      gold: "#ffd34e",
+      blue: "#5fb0ff",
+      red: "#ff756f",
+      reset: "#baf6ff",
+      wild: "#f6e27a",
+      remove: "#ffab6b",
+      reverse: "#cf9cff",
+      skip: "#ff756f",
+      draw_target: "#72f083",
+      swap_hands: "#5fb0ff",
+      double_total: "#ffcf5b",
+    }[card?.color || effect] || "#f5fbef";
+    const title = label || card?.label || card?.name || String(value);
+    const corner = value > 0 ? `+${value}` : String(value);
+    return `<svg class="burst-card-svg" viewBox="0 0 96 132" role="img" aria-label="Burst card ${escapeHtml(title)}">
+      <rect x="4" y="4" width="88" height="124" rx="13" fill="#f5fbef"/>
+      <rect x="9" y="9" width="78" height="114" rx="10" fill="${color}" opacity="0.82"/>
+      <path d="M18 29c13-17 39-17 52 0 13 18 2 47-22 73C24 76 6 47 18 29Z" fill="#102018" opacity="0.16"/>
+      <text x="48" y="52" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="900" fill="#102018">${escapeHtml(corner)}</text>
+      <text x="48" y="78" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="900" fill="#102018">${escapeHtml(String(title).slice(0, 13))}</text>
+      <text x="48" y="104" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="800" letter-spacing="3" fill="#102018" opacity="0.62">BURST</text>
+    </svg>`;
+  }
+
+  function burstOtherPlayers() {
+    return (state.game?.players || []).filter((player) => player.mark && player.mark !== state.mark);
+  }
+
+  function burstPlayablePreviousCards() {
+    return ((state.game?.payload?.centerCards || state.game?.payload?.pile || [])).filter((card) => card && !card.removed);
+  }
+
+  function burstSelect(label, options, valueKey = "value", textKey = "label") {
+    const row = document.createElement("label");
+    row.className = "burst-choice-row";
+    row.textContent = label;
+    const select = document.createElement("select");
+    options.forEach((option) => {
+      const opt = document.createElement("option");
+      opt.value = String(option[valueKey]);
+      opt.textContent = String(option[textKey] ?? option[valueKey]);
+      select.append(opt);
+    });
+    row.append(select);
+    return { row, select };
+  }
+
+  function chooseBurstOptions(card) {
+    const effect = card?.effect;
+    if (!["wild", "remove", "draw_target", "swap_hands"].includes(effect)) {
+      return Promise.resolve({});
+    }
+    return new Promise((resolve) => {
+      const overlay = document.createElement("div");
+      overlay.className = "burst-choice-overlay";
+      const panel = document.createElement("form");
+      panel.className = "burst-choice-panel";
+      panel.innerHTML = `<h2>${escapeHtml(card.label || card.name || "Choose")}</h2><p>Resolve this card effect before playing.</p>`;
+      let wildSelect;
+      let removeSelect;
+      let targetSelect;
+      if (effect === "wild") {
+        const values = Array.from({ length: 19 }, (_, i) => ({ value: i - 3, label: String(i - 3) }));
+        const built = burstSelect("Wild value", values);
+        wildSelect = built.select;
+        panel.append(built.row);
+      }
+      if (effect === "remove") {
+        const cards = burstPlayablePreviousCards().map((item) => ({ value: item.id, label: `${item.label || item.name || item.value} (${item.value})` }));
+        if (cards.length) {
+          const built = burstSelect("Remove previous card", cards);
+          removeSelect = built.select;
+          panel.append(built.row);
+        } else {
+          panel.insertAdjacentHTML("beforeend", "<p>No previous center cards to remove; effect fizzles.</p>");
+        }
+      }
+      if (effect === "draw_target" || effect === "swap_hands") {
+        const players = burstOtherPlayers().map((player) => ({ value: player.mark, label: `${player.name || player.mark} (${player.mark})` }));
+        if (players.length) {
+          const built = burstSelect(effect === "draw_target" ? "Target draws one" : "Swap with", players);
+          targetSelect = built.select;
+          panel.append(built.row);
+        } else {
+          panel.insertAdjacentHTML("beforeend", "<p>No valid target players.</p>");
+        }
+      }
+      const actions = document.createElement("div");
+      actions.className = "actions burst-actions";
+      actions.innerHTML = '<button class="primary" type="submit">Play Card</button><button type="button" data-cancel="1">Cancel</button>';
+      panel.append(actions);
+      overlay.append(panel);
+      document.body.append(overlay);
+      panel.addEventListener("submit", (event) => {
+        event.preventDefault();
+        overlay.remove();
+        resolve({
+          wildValue: wildSelect?.value || "",
+          removeCardId: removeSelect?.value || "",
+          targetMark: targetSelect?.value || "",
+        });
+      });
+      panel.querySelector("[data-cancel]")?.addEventListener("click", () => {
+        overlay.remove();
+        resolve(null);
+      });
+    });
+  }
+
+  function showBurstRules() {
+    const overlay = document.createElement("div");
+    overlay.className = "burst-choice-overlay";
+    overlay.innerHTML = `<section class="burst-choice-panel burst-rules">
+      <h2>Burst Rules</h2>
+      <p>Play one card into the shared total without pushing it above 21.</p>
+      <p>On your turn, play exactly one card if you have one, or draw one card if your hand has fewer than three cards.</p>
+      <p>If your resolved card effect makes the center total exceed 21, you burst and score 0 for that round. Every other player scores the numeric value left in hand. Negative cards count negative; unplayed Wild is 0.</p>
+      <p>First to the target score wins. Default target is 100 points.</p>
+      <button class="primary" type="button">Close</button>
+    </section>`;
+    overlay.querySelector("button")?.addEventListener("click", () => overlay.remove());
+    overlay.addEventListener("click", (event) => {
+      if (event.target === overlay) overlay.remove();
+    });
+    document.body.append(overlay);
+  }
+
+  function renderBurst() {
+    const p = state.game.payload || {};
+    const wrap = document.createElement("div");
+    wrap.className = "burst-wrap";
+    const total = Number(p.centerTotal ?? p.total ?? 0);
+    const target = Number(p.threshold || p.target || 21);
+    const pct = Math.max(0, Math.min(100, (total / target) * 100));
+    const last = p.lastMove || {};
+    const readout = document.createElement("section");
+    readout.className = "burst-readout";
+    readout.style.setProperty("--burst-pct", `${pct}%`);
+    readout.innerHTML = `
+      <div><span>Total</span><strong>${total}</strong><small>Burst over ${target}</small></div>
+      <div class="burst-pressure" aria-hidden="true"><i></i></div>
+      <p>${escapeHtml(last.action ? `${last.mark || "Player"} ${last.action}${last.card ? ` ${last.card.label || last.card.value}` : ""}${last.effectNote ? ` · ${last.effectNote}` : ""}${last.total !== undefined ? ` · total ${last.total}` : ""}` : "Keep the shared pile at 21 or lower.")}</p>
+    `;
+    const pile = document.createElement("section");
+    pile.className = "burst-pile";
+    const centerCards = p.centerCards || p.pile || [];
+    const visiblePile = centerCards.slice(-8);
+    pile.innerHTML = `<h3>Center · ${centerCards.length || 0} cards</h3><div class="burst-pile-cards">${visiblePile.map((card) => `<span class="${card.removed ? "removed" : ""}">${burstCardSvg(card)}</span>`).join("") || "<em>No cards played.</em>"}</div>`;
+    const hand = document.createElement("section");
+    hand.className = "burst-hand";
+    const handCards = Array.isArray(p.hand) ? p.hand : [];
+    hand.innerHTML = `<h3>Your Hand · ${handCards.length}/${p.handLimit || 3}</h3>`;
+    const handGrid = document.createElement("div");
+    handGrid.className = "burst-hand-cards";
+    handCards.forEach((card) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "burst-card";
+      button.innerHTML = burstCardSvg(card);
+      button.disabled = !canMove();
+      button.addEventListener("click", async () => {
+        const options = await chooseBurstOptions(card);
+        if (options === null) return;
+        makeMove({ burstAction: "play", cardId: card.id, ...options });
+      });
+      handGrid.append(button);
+    });
+    if (!handCards.length) {
+      const empty = document.createElement("p");
+      empty.className = "burst-empty";
+      empty.textContent = state.mark ? "No cards in hand." : "Join to see your hand.";
+      handGrid.append(empty);
+    }
+    hand.append(handGrid);
+    const controls = document.createElement("div");
+    controls.className = "actions burst-actions";
+    if (state.game.status === "waiting") {
+      const start = document.createElement("button");
+      start.type = "button";
+      start.className = "primary";
+      start.textContent = "Start Burst";
+      start.disabled = state.mark !== "A" || (state.game.players || []).length < 2;
+      start.addEventListener("click", () => makeMove({ burstAction: "start" }));
+      controls.append(start);
+    } else if (p.roundOver && state.game.status !== "complete") {
+      const next = document.createElement("button");
+      next.type = "button";
+      next.className = "primary";
+      next.textContent = "Start Next Round";
+      next.disabled = state.mark !== "A";
+      next.addEventListener("click", () => makeMove({ burstAction: "next-round" }));
+      controls.append(next);
+    } else {
+      const draw = document.createElement("button");
+      draw.type = "button";
+      draw.className = "primary";
+      const drawCount = Number(p.drawPileCount ?? p.deckCount ?? 0);
+      draw.textContent = `Draw (${drawCount})`;
+      draw.disabled = !canMove() || handCards.length >= Number(p.handLimit || 3) || drawCount <= 0;
+      draw.addEventListener("click", () => makeMove({ burstAction: "draw" }));
+      controls.append(draw);
+    }
+    const rules = document.createElement("button");
+    rules.type = "button";
+    rules.textContent = "Rules";
+    rules.addEventListener("click", showBurstRules);
+    controls.append(rules);
+    const scoreGrid = document.createElement("section");
+    scoreGrid.className = "burst-scores";
+    const scores = p.scores || {};
+    const counts = p.handCounts || {};
+    scoreGrid.innerHTML = (state.game.players || []).map((player) => {
+      const mark = player.mark || "";
+      return `<div class="${mark === state.game.turn ? "current" : ""}"><strong>${escapeHtml(player.name || mark)}</strong><span>${escapeHtml(mark)} · ${Number(scores[mark] || 0)} pts · ${Number(counts[mark] || 0)} cards</span></div>`;
+    }).join("");
+    wrap.append(readout, pile, hand, controls, scoreGrid);
+    $("board").className = "board-area";
+    $("board").replaceChildren(wrap);
   }
 
   function handlePatternTap(pad, sequence) {

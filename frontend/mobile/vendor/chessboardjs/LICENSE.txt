@@ -1,0 +1,2 @@
+chessboard.js 1.0.0 - MIT License - https://chessboardjs.com/
+Wikipedia chess pieces from chessboardjs.com distribution.
