@@ -557,13 +557,13 @@ input {
 .omv2-overlay-drag {
   display: inline-grid;
   place-items: center;
-  width: 20px;
-  height: 20px;
-  min-width: 20px;
-  min-height: 20px;
-  padding: 0;
+  width: 18px !important;
+  height: 10px !important;
+  min-width: 18px !important;
+  min-height: 10px !important;
+  padding: 0 !important;
   border: 0;
-  border-radius: 7px;
+  border-radius: 4px;
   background: transparent;
   color: var(--om-muted);
   cursor: grab;

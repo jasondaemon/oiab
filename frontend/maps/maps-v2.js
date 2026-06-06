@@ -270,6 +270,7 @@
     overlayRegistry: null,
     mapDetailLayersByOverlay: {},
     overlayDrag: null,
+    mapErrorsDismissed: false,
     tileErrors: [],
     inspectTile: false,
     offlineRegionDraw: false,
@@ -1621,6 +1622,7 @@
     state.tileErrors.unshift(entry);
     state.tileErrors = state.tileErrors.slice(0, 20);
     localStorage.setItem("omv2.tileErrors", JSON.stringify(state.tileErrors));
+    state.mapErrorsDismissed = false;
     console.groupCollapsed("[OIAB Maps v2 tile error]", entry.tile || entry.sourceId || entry.message);
     console.warn(entry);
     console.warn(event);
@@ -1736,6 +1738,7 @@
     state.tileErrors.unshift(entry);
     state.tileErrors = state.tileErrors.slice(0, 20);
     localStorage.setItem("omv2.tileErrors", JSON.stringify(state.tileErrors));
+    state.mapErrorsDismissed = false;
     renderMapErrors();
     toast(`${entry.tile}: ${entry.status}`);
     console.groupCollapsed("[OIAB Maps v2 manual tile check]", entry.tile);
@@ -1747,7 +1750,7 @@
     const node = $("mapErrorPanel");
     const list = $("mapErrorList");
     if (!node || !list) return;
-    node.hidden = state.tileErrors.length === 0;
+    node.hidden = state.mapErrorsDismissed || state.tileErrors.length === 0;
     list.innerHTML = state.tileErrors.slice(0, 8).map((entry) => `
       <div class="omv2-error-row">
         <strong>${escapeHtml(entry.sourceId || "map")}</strong>
@@ -3922,6 +3925,10 @@
       $("inspectTile").classList.toggle("is-pending", state.inspectTile);
       $("addMapWaypoint").classList.remove("is-pending");
       toast(state.inspectTile ? "Tile inspect mode on. Tap the gray block." : "Tile inspect mode off.");
+    });
+    $("closeMapErrors")?.addEventListener("click", () => {
+      state.mapErrorsDismissed = true;
+      $("mapErrorPanel").hidden = true;
     });
     $("retryMapPack").addEventListener("click", boot);
     $("rescanMapPacks").addEventListener("click", async () => {
