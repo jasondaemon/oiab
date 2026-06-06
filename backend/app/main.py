@@ -2813,8 +2813,16 @@ BLANK_PNG_TILE = base64.b64decode(
 NDFD_TEMPERATURE_PRODUCTS = {
     "temp": {
         "label": "Current / near-term temp",
-        "layer": 1,
-        "time_enabled": True,
+        "layers_by_period": {
+            "now": 9,
+            "plus6": 13,
+            "plus12": 21,
+            "tomorrow": 37,
+            "day3": 37,
+            "day5": 37,
+            "day7": 37,
+        },
+        "fallback_layer": 9,
         "unit": "°F",
     },
     "max": {
@@ -2831,8 +2839,16 @@ NDFD_TEMPERATURE_PRODUCTS = {
     },
     "apparent": {
         "label": "Apparent / feels-like temp",
-        "layer": 42,
-        "time_enabled": True,
+        "layers_by_period": {
+            "now": 50,
+            "plus6": 54,
+            "plus12": 62,
+            "tomorrow": 78,
+            "day3": 78,
+            "day5": 78,
+            "day7": 78,
+        },
+        "fallback_layer": 50,
         "unit": "°F",
     },
 }
