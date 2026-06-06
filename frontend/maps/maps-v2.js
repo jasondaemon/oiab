@@ -2897,6 +2897,7 @@
       state.inspectTile = false;
       $("addMapWaypoint").classList.remove("is-pending");
       $("inspectTile").classList.remove("is-pending");
+      $("overlaysPanel").hidden = true;
       toast("Tap the map for an NWS temperature forecast.");
     });
     row.appendChild(controls);

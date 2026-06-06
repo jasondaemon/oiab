@@ -2180,7 +2180,8 @@ class AppDB:
                     is_mvum_source = rel_key.startswith("mvum/source/")
                     is_public_land_source = rel_key.startswith("public-lands/source/")
                     is_contour_region = rel_key.startswith("contours/regions/")
-                    if outside_public_root or is_mvum_source or is_public_land_source or is_contour_region or candidate.resolve() in catalog_paths or rel_key in catalog_rel_paths:
+                    is_weather_forecast_cache = rel_key.startswith("weather/forecast-cache/")
+                    if outside_public_root or is_mvum_source or is_public_land_source or is_contour_region or is_weather_forecast_cache or candidate.resolve() in catalog_paths or rel_key in catalog_rel_paths:
                         conn.execute("DELETE FROM map_overlays WHERE id = ?", (row["id"],))
         scanned = 0
         local_files = [
@@ -2197,6 +2198,8 @@ class AppDB:
             if rel_key.startswith("public-lands/source/"):
                 continue
             if rel_key.startswith("contours/regions/"):
+                continue
+            if rel_key.startswith("weather/forecast-cache/"):
                 continue
             if path.resolve() in catalog_paths or rel_key in catalog_rel_paths:
                 continue
