@@ -63,6 +63,16 @@ TEXT_FRAMES = {"TIT2": "title", "TPE1": "artist", "TALB": "album", "TRCK": "trac
 COVER_FALLBACK_MAX_BYTES = 1024 * 1024
 COVER_MAX_PIXELS = 512
 COVER_JPEG_QUALITY = 82
+
+
+def first_present(record: dict[str, object], keys: list[str]) -> object | None:
+    for key in keys:
+        value = record.get(key)
+        if value not in (None, ""):
+            return value
+    return None
+
+
 ROM_SYSTEMS = {
     "arcade": ("Arcade", "mame2003"),
     "atari2600": ("Atari 2600", "stella2014"),
@@ -2616,6 +2626,78 @@ def start_mvum_install(settings: Settings, kind: str) -> dict[str, object]:
     return job
 
 
+def start_overlay_script_job(
+    settings: Settings,
+    overlay_id: str,
+    script_name: str,
+    output_path: str | None = None,
+    extra_env: dict[str, str] | None = None,
+) -> dict[str, object]:
+    overlay_id = str(overlay_id or "").strip()
+    script_name = str(script_name or "").strip()
+    if not overlay_id or not script_name:
+        raise ValueError("Overlay id and script name are required.")
+    job_id = f"{overlay_id}_refresh"
+    current = overlay_job_snapshot(job_id)
+    if current.get("status") in {"pending", "running"}:
+        return current
+    script = REPO_ROOT / "scripts" / "overlays" / script_name
+    if not script.exists():
+        raise ValueError(f"Overlay script is missing: {script}")
+    job = update_overlay_job(
+        job_id,
+        overlay_id=overlay_id,
+        type="refresh",
+        status="pending",
+        step="queued",
+        progress=0,
+        error_message="",
+        started_at=timestamp(),
+        output_path=output_path or "",
+        size_bytes=0,
+    )
+
+    def worker() -> None:
+        update_overlay_job(job_id, status="running", step=f"running {script_name}", progress=5)
+        try:
+            env = os.environ.copy()
+            env.setdefault("OIAB_DATA_DIR", str(settings.data_dir))
+            if extra_env:
+                env.update({str(key): str(value) for key, value in extra_env.items() if value is not None})
+            timeout_seconds = int(env.get("OIAB_OVERLAY_SCRIPT_TIMEOUT_SECONDS", "21600"))
+            result = subprocess.run([str(script)], cwd=REPO_ROOT, env=env, text=True, capture_output=True, timeout=timeout_seconds, check=False)
+            if result.returncode != 0:
+                raise ValueError((result.stderr or result.stdout or f"{script_name} failed with exit {result.returncode}")[-3000:])
+            handler = object.__new__(OIABHandler)
+            handler.settings = settings
+            registry = handler.app_db().rescan_map_overlays()
+            overlay = next((item for item in registry.get("overlays", []) if item.get("id") == overlay_id), {})
+            resolved_output = str(overlay.get("path") or overlay.get("local_path") or output_path or "")
+            size_bytes = int(overlay.get("size_bytes") or (Path(resolved_output).stat().st_size if resolved_output and Path(resolved_output).exists() else 0))
+            update_overlay_job(
+                job_id,
+                status="succeeded",
+                step=f"{script_name} complete",
+                progress=100,
+                error_message="",
+                output_path=resolved_output,
+                size_bytes=size_bytes,
+                result={"stdout": result.stdout[-3000:]},
+            )
+            handler.app_db().update_map_overlay_metadata(overlay_id, {"install_status": "installed", "cache_status": "cached", "error_message": ""})
+        except Exception as exc:  # noqa: BLE001 - background job boundary
+            update_overlay_job(job_id, status="failed", step=f"{script_name} failed", progress=100, error_message=str(exc), output_path=output_path or "")
+            handler = object.__new__(OIABHandler)
+            handler.settings = settings
+            try:
+                handler.app_db().update_map_overlay_metadata(overlay_id, {"install_status": "failed", "cache_status": "failed", "error_message": str(exc)})
+            except Exception:
+                pass
+
+    threading.Thread(target=worker, name=f"oiab-{job_id}", daemon=True).start()
+    return job
+
+
 def start_geopdf_processing(settings: Settings, source_path: str, map_id: str, display_name: str | None = None, *, rebuild: bool = False) -> dict[str, object]:
     map_id = str(map_id or "").strip()
     if not map_id:
@@ -3403,7 +3485,7 @@ window.location.replace("/books/");
             "OIAB_MUSIC_DIR": os.environ.get("OIAB_MUSIC_DIR", "/srv/trailer/media/music"),
             "OIAB_BOOKS_DIR": os.environ.get("OIAB_BOOKS_DIR", "/srv/trailer/media/books/Ebooks"),
             "OIAB_COMICS_DIR": os.environ.get("OIAB_COMICS_DIR", "/srv/trailer/media/books/Comics"),
-            "OIAB_ZIM_DIR": os.environ.get("OIAB_ZIM_DIR", "/srv/trailer/iiab/zims"),
+            "OIAB_ZIM_DIR": os.environ.get("OIAB_ZIM_DIR", "/srv/trailer/wikis/zims"),
             "OIAB_WIKIS_DIR": os.environ.get("OIAB_WIKIS_DIR", "/srv/trailer/wikis"),
             "OIAB_ROMS_DIR": os.environ.get("OIAB_ROMS_DIR", "/srv/trailer/roms"),
             "OIAB_FILEBROWSER_ROOT": os.environ.get("OIAB_FILEBROWSER_ROOT", "/srv/trailer"),
@@ -4113,6 +4195,8 @@ PY
             return self.handle_map_packs()
         if path in {"/api/maps/overlays", "/maps-overlays"}:
             return self.handle_map_overlays()
+        if path == "/api/maps/overlays/settings":
+            return self.handle_map_overlays(action_override="settings")
         if path == "/api/maps/overlays/contours/status":
             return self.send_json(self.contours_status())
         if path == "/api/maps/overlays/wildfire/refresh":
@@ -4139,6 +4223,10 @@ PY
         if path == "/api/maps/overlays/mvum/trails/install":
             job = start_mvum_install(self.settings, "trails")
             return self.send_json({"ok": True, "job": job, **self.map_overlays()})
+        if path.startswith("/api/maps/overlays/") and path.rstrip("/").endswith("/refresh"):
+            parts = [part for part in path.split("/") if part]
+            overlay_id = parts[3] if len(parts) >= 5 else ""
+            return self.send_json(self.refresh_named_overlay(overlay_id, self.read_body()))
         if path in {"/api/maps/packs/validate", "/api/maps/pmtiles/validate"}:
             return self.send_json(self.pmtiles_validate(self.read_body()))
         if path.startswith("/api/maps/overlays/"):
@@ -4951,6 +5039,12 @@ PY
                 return self.send_json(db.clear_map_overlay_cache(str(payload.get("id") or "")))
             if action in {"firms-key", "set-firms-key"}:
                 return self.send_json(db.set_firms_map_key(str(payload.get("map_key") or payload.get("key") or "")))
+            if action in {"settings", "set-settings", "provider-settings"}:
+                overlay_id = str(payload.get("id") or payload.get("overlay_id") or "").strip()
+                values = payload.get("settings") if isinstance(payload.get("settings"), dict) else payload.get("values")
+                if not isinstance(values, dict):
+                    values = {key: value for key, value in payload.items() if key not in {"id", "overlay_id", "action"}}
+                return self.send_json(db.set_map_overlay_provider_settings(overlay_id, values))
             if action in {"refresh-wildfire", "wildfire-refresh"}:
                 return self.send_json(self.refresh_wildfire_overlay())
             if action in {"refresh-weather", "refresh-alerts", "weather-alerts-refresh"}:
@@ -4961,6 +5055,22 @@ PY
                 return self.send_json(self.refresh_blm_wilderness_overlay(payload))
             if action in {"refresh-contours", "contours-refresh"}:
                 return self.send_json(self.refresh_contours_overlay(payload))
+            if action in {"ridb-refresh", "refresh-ridb"}:
+                return self.send_json(self.refresh_named_overlay("ridb_recreation_sites", payload))
+            if action in {"stream-gauges-refresh", "refresh-stream-gauges"}:
+                return self.send_json(self.refresh_named_overlay("stream_gauges_usgs", payload))
+            if action in {"drought-refresh", "refresh-drought"}:
+                return self.send_json(self.refresh_named_overlay("drought_monitor", payload))
+            if action in {"lightning-refresh", "refresh-lightning"}:
+                return self.send_json(self.refresh_named_overlay("lightning_recent", payload))
+            if action in {"padus-refresh", "refresh-padus"}:
+                return self.send_json(self.refresh_named_overlay("padus_protected_lands", payload))
+            if action in {"nhd-refresh", "refresh-nhd"}:
+                return self.send_json(self.refresh_named_overlay("nhd_water_features", payload))
+            if action in {"darksky-build", "build-darksky"}:
+                return self.send_json(self.refresh_named_overlay("dark_sky_overlay", payload))
+            if action in {"refresh-overlay", "overlay-refresh", "refresh"}:
+                return self.send_json(self.refresh_named_overlay(str(payload.get("id") or payload.get("overlay_id") or ""), payload))
             if action in {"install-mvum-roads", "mvum-roads-install"}:
                 job = start_mvum_install(self.settings, "roads")
                 return self.send_json({"ok": True, "job": job, **self.map_overlays()})
@@ -6381,6 +6491,382 @@ PY
             registry = self.app_db().mark_overlay_refresh("nws_active_alerts", output_path=output if output.exists() else None, ok=False, error=str(exc))
             update_overlay_job(job_id, status="failed", step="NWS refresh failed", progress=100, error_message=str(exc), output_path=str(output) if output.exists() else "")
             return {**registry, "ok": False, "error": str(exc)}
+
+    def overlay_catalog_item(self, overlay_id: str) -> dict[str, object]:
+        for overlay in self.app_db().map_overlay_registry(rescan=True).get("overlays", []):
+            if str(overlay.get("id") or "") == overlay_id:
+                return overlay
+        raise ValueError(f"Overlay not found: {overlay_id}")
+
+    def write_cached_geojson_overlay(
+        self,
+        overlay_id: str,
+        output: Path,
+        payload: dict[str, object],
+        *,
+        source: str,
+        job_id: str,
+    ) -> dict[str, object]:
+        if not isinstance(payload, dict) or payload.get("type") != "FeatureCollection":
+            raise ValueError(f"{source} did not return a GeoJSON FeatureCollection.")
+        payload.setdefault("properties", {})
+        if isinstance(payload["properties"], dict):
+            payload["properties"].update({"source": source, "fetched_at": timestamp()})
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(json.dumps(payload, separators=(",", ":")), encoding="utf-8")
+        feature_count = len(payload.get("features", [])) if isinstance(payload.get("features"), list) else 0
+        registry = self.app_db().mark_overlay_refresh(overlay_id, output_path=output, ok=True, extra={"feature_count": feature_count})
+        update_overlay_job(
+            job_id,
+            status="succeeded",
+            step=f"cached {source} snapshot",
+            progress=100,
+            error_message="",
+            output_path=str(output),
+            feature_count=feature_count,
+            size_bytes=output.stat().st_size,
+        )
+        return {"ok": True, "feature_count": feature_count, "path": str(output), **registry}
+
+    def fetch_geojson_overlay_url(self, overlay_id: str, source_url: str, output: Path, *, source: str, headers: dict[str, str] | None = None) -> dict[str, object]:
+        job_id = f"{overlay_id}_refresh"
+        update_overlay_job(job_id, overlay_id=overlay_id, type="refresh", status="running", step=f"fetching {source}", progress=15, error_message="", started_at=timestamp())
+        try:
+            request_headers = {
+                "User-Agent": f"OIAB overlay fetcher ({self.settings.hostname})",
+                "Accept": "application/geo+json, application/json",
+            }
+            if headers:
+                request_headers.update(headers)
+            request = Request(source_url, headers=request_headers)
+            with urlopen(request, timeout=60) as response:  # noqa: S310 - configured public data endpoint
+                payload = json.loads(response.read().decode("utf-8", errors="replace"))
+            return self.write_cached_geojson_overlay(overlay_id, output, payload, source=source, job_id=job_id)
+        except Exception as exc:  # noqa: BLE001 - remote data boundary
+            registry = self.app_db().mark_overlay_refresh(overlay_id, output_path=output if output.exists() else None, ok=False, error=str(exc))
+            update_overlay_job(job_id, status="failed", step=f"{source} refresh failed", progress=100, error_message=str(exc), output_path=str(output) if output.exists() else "")
+            return {**registry, "ok": False, "error": str(exc)}
+
+    def refresh_ridb_zip_overlay(self, source_url: str, output: Path, bbox: tuple[float, float, float, float] | None = None) -> dict[str, object]:
+        overlay_id = "ridb_recreation_sites"
+        job_id = f"{overlay_id}_refresh"
+        source_dir = self.settings.data_dir / "maps" / "overlays" / "ridb" / "source"
+        source_dir.mkdir(parents=True, exist_ok=True)
+        archive = source_dir / "RIDBFullExport_V1_JSON.zip"
+        try:
+            update_overlay_job(job_id, overlay_id=overlay_id, type="refresh", status="running", step="downloading RIDB full export", progress=8, error_message="", started_at=timestamp())
+            request = Request(source_url, headers={"User-Agent": f"OIAB RIDB overlay ({self.settings.hostname})", "Accept": "application/zip,*/*"})
+            with urlopen(request, timeout=90) as response, archive.open("wb") as handle:  # noqa: S310 - configured public data endpoint
+                expected = int(response.headers.get("content-length") or 0)
+                total = 0
+                while True:
+                    chunk = response.read(1024 * 1024)
+                    if not chunk:
+                        break
+                    handle.write(chunk)
+                    total += len(chunk)
+                    if expected:
+                        update_overlay_job(job_id, step="downloading RIDB full export", progress=min(40, 8 + int((total / expected) * 32)))
+            update_overlay_job(job_id, step="extracting RIDB JSON", progress=45, size_bytes=archive.stat().st_size)
+            features = self.ridb_features_from_zip(archive, bbox=bbox)
+            payload_geojson = {
+                "type": "FeatureCollection",
+                "features": features,
+                "properties": {
+                    "source": "RIDB full JSON export",
+                    "source_url": source_url,
+                    "bbox": list(bbox) if bbox else None,
+                    "fetched_at": timestamp(),
+                },
+            }
+            return self.write_cached_geojson_overlay(overlay_id, output, payload_geojson, source="RIDB recreation sites", job_id=job_id)
+        except Exception as exc:  # noqa: BLE001 - remote/archive boundary
+            registry = self.app_db().mark_overlay_refresh(overlay_id, output_path=output if output.exists() else None, ok=False, error=str(exc))
+            update_overlay_job(job_id, status="failed", step="RIDB full export refresh failed", progress=100, error_message=str(exc), output_path=str(output) if output.exists() else "")
+            return {**registry, "ok": False, "error": str(exc)}
+
+    def ridb_features_from_zip(self, archive: Path, bbox: tuple[float, float, float, float] | None = None) -> list[dict[str, object]]:
+        features: list[dict[str, object]] = []
+        with zipfile.ZipFile(archive) as zipped:
+            names = [
+                name for name in zipped.namelist()
+                if name.lower().endswith(".json") and any(token in name.lower() for token in ("facilit", "recarea", "recreation"))
+            ]
+            if not names:
+                names = [name for name in zipped.namelist() if name.lower().endswith(".json")]
+            for index, name in enumerate(names):
+                update_overlay_job("ridb_recreation_sites_refresh", step=f"normalizing {Path(name).name}", progress=min(85, 48 + index))
+                with zipped.open(name) as handle:
+                    payload = json.loads(handle.read().decode("utf-8", errors="replace"))
+                records = self.ridb_records_from_payload(payload)
+                source_kind = "recarea" if "recarea" in name.lower() or "recreation" in name.lower() else "facility"
+                for record in records:
+                    feature = self.ridb_record_to_feature(record, source_kind=source_kind, bbox=bbox)
+                    if feature:
+                        features.append(feature)
+        return features
+
+    def ridb_records_from_payload(self, payload: object) -> list[dict[str, object]]:
+        if isinstance(payload, list):
+            return [record for record in payload if isinstance(record, dict)]
+        if not isinstance(payload, dict):
+            return []
+        for key in ("RECDATA", "recdata", "data", "records", "features"):
+            value = payload.get(key)
+            if isinstance(value, list):
+                if key == "features":
+                    records = []
+                    for feature in value:
+                        if not isinstance(feature, dict):
+                            continue
+                        props = feature.get("properties") if isinstance(feature.get("properties"), dict) else {}
+                        geom = feature.get("geometry") if isinstance(feature.get("geometry"), dict) else {}
+                        merged = dict(props)
+                        if geom.get("type") == "Point" and isinstance(geom.get("coordinates"), list) and len(geom["coordinates"]) >= 2:
+                            merged.setdefault("longitude", geom["coordinates"][0])
+                            merged.setdefault("latitude", geom["coordinates"][1])
+                        records.append(merged)
+                    return records
+                return [record for record in value if isinstance(record, dict)]
+        return []
+
+    def ridb_record_to_feature(self, record: dict[str, object], *, source_kind: str, bbox: tuple[float, float, float, float] | None = None) -> dict[str, object] | None:
+        lat = first_present(record, ["FacilityLatitude", "RecAreaLatitude", "latitude", "Latitude", "lat"])
+        lon = first_present(record, ["FacilityLongitude", "RecAreaLongitude", "longitude", "Longitude", "lon", "lng"])
+        try:
+            lat_f = float(lat)
+            lon_f = float(lon)
+        except (TypeError, ValueError):
+            return None
+        if not (-90 <= lat_f <= 90 and -180 <= lon_f <= 180):
+            return None
+        if bbox:
+            min_lon, min_lat, max_lon, max_lat = bbox
+            if not (min_lat <= lat_f <= max_lat and min_lon <= lon_f <= max_lon):
+                return None
+        name = first_present(record, ["FacilityName", "RecAreaName", "name", "Name"]) or "RIDB site"
+        feature_id = first_present(record, ["FacilityID", "RecAreaID", "id", "ID"])
+        description = first_present(record, ["FacilityDescription", "RecAreaDescription", "description", "Description"])
+        url = first_present(record, ["FacilityReservationURL", "FacilityMapURL", "RecAreaReservationURL", "RecAreaMapURL", "url", "URL"])
+        site_type = first_present(record, ["FacilityTypeDescription", "RecAreaType", "type"]) or source_kind
+        site_type_text = str(site_type or "").lower()
+        if "camp" in site_type_text or "camp" in str(name).lower():
+            recreation_category = "camping"
+        elif any(token in site_type_text for token in ("visitor", "museum", "library", "archives")):
+            recreation_category = "visitor_info"
+        elif any(token in site_type_text for token in ("pass", "permit", "ticket", "timed entry")):
+            recreation_category = "pass_permit"
+        else:
+            recreation_category = "recreation"
+        return {
+            "type": "Feature",
+            "geometry": {"type": "Point", "coordinates": [lon_f, lat_f]},
+            "properties": {
+                "name": name,
+                "facility_id": feature_id if source_kind == "facility" else None,
+                "recarea_id": feature_id if source_kind != "facility" else None,
+                "description": description,
+                "type": site_type,
+                "recreation_category": recreation_category,
+                "phone": first_present(record, ["FacilityPhone", "RecAreaPhone"]),
+                "email": first_present(record, ["FacilityEmail", "RecAreaEmail"]),
+                "url": url,
+                "source": "RIDB",
+                "source_kind": source_kind,
+                "raw_properties": record,
+            },
+        }
+
+    def refresh_stream_gauges_overlay(self, payload: dict | None = None) -> dict[str, object]:
+        overlay_id = "stream_gauges_usgs"
+        job_id = f"{overlay_id}_refresh"
+        payload = payload or {}
+        output = self.settings.data_dir / "maps" / "overlays" / "water" / "usgs-stream-gauges-latest.geojson"
+        try:
+            bbox = self.parse_optional_bbox(payload.get("bbox") or os.environ.get("OIAB_STREAM_GAUGES_BBOX", ""))
+            if not bbox:
+                raise ValueError("USGS stream gauges refresh requires bbox: minLon,minLat,maxLon,maxLat.")
+            min_lon, min_lat, max_lon, max_lat = bbox
+            params = {
+                "format": "geojson",
+                "parameterCd": "00060",
+                "siteStatus": "active",
+                "bBox": f"{min_lon},{min_lat},{max_lon},{max_lat}",
+            }
+            url = f"https://waterservices.usgs.gov/nwis/iv/?{urlencode(params)}"
+            result = self.fetch_geojson_overlay_url(overlay_id, url, output, source="USGS NWIS stream gauges")
+            if result.get("ok"):
+                self.app_db().update_map_overlay_metadata(overlay_id, {"bbox": list(bbox)})
+            return result
+        except Exception as exc:  # noqa: BLE001 - input/remote boundary
+            registry = self.app_db().mark_overlay_refresh(overlay_id, output_path=output if output.exists() else None, ok=False, error=str(exc))
+            update_overlay_job(job_id, overlay_id=overlay_id, type="refresh", status="failed", step="stream gauge refresh failed", progress=100, error_message=str(exc), output_path=str(output) if output.exists() else "")
+            return {**registry, "ok": False, "error": str(exc)}
+
+    def refresh_ridb_overlay(self, payload: dict | None = None) -> dict[str, object]:
+        overlay_id = "ridb_recreation_sites"
+        job_id = f"{overlay_id}_refresh"
+        payload = payload or {}
+        output = self.settings.data_dir / "maps" / "overlays" / "ridb" / "ridb-recreation-sites-latest.geojson"
+        source_url = str(
+            self.app_db().map_overlay_provider_value(overlay_id, "source_url", "")
+            or os.environ.get("OIAB_RIDB_SOURCE_URL", "")
+            or ""
+        ).strip()
+        ridb_key = str(
+            self.app_db().map_overlay_provider_value(overlay_id, "api_key", "")
+            or os.environ.get("OIAB_RIDB_API_KEY", "")
+            or ""
+        ).strip()
+        if source_url:
+            bbox = self.parse_optional_bbox(payload.get("bbox") or os.environ.get("OIAB_RIDB_BBOX", ""))
+            parsed_source = urlparse(source_url)
+            source_path = parsed_source.path.lower()
+            if source_path.endswith(".zip") or "application/zip" in source_url.lower():
+                return self.refresh_ridb_zip_overlay(source_url, output, bbox=bbox)
+            return self.fetch_geojson_overlay_url(overlay_id, source_url, output, source="RIDB recreation sites")
+        if not ridb_key:
+            error = "OIAB_RIDB_API_KEY is required for live RIDB refresh, or set OIAB_RIDB_SOURCE_URL to a GeoJSON snapshot."
+            registry = self.app_db().mark_overlay_refresh(overlay_id, output_path=output if output.exists() else None, ok=False, error=error)
+            update_overlay_job(job_id, overlay_id=overlay_id, type="refresh", status="failed", step="missing RIDB API key", progress=100, error_message=error, output_path=str(output) if output.exists() else "")
+            return {**registry, "ok": False, "error": error}
+        try:
+            bbox = self.parse_optional_bbox(payload.get("bbox") or os.environ.get("OIAB_RIDB_BBOX", ""))
+            if not bbox:
+                raise ValueError("RIDB refresh requires bbox: minLon,minLat,maxLon,maxLat.")
+            min_lon, min_lat, max_lon, max_lat = bbox
+            center_lat = (min_lat + max_lat) / 2
+            center_lon = (min_lon + max_lon) / 2
+            radius_miles = min(200, max(1, int(float(payload.get("radius_miles") or os.environ.get("OIAB_RIDB_RADIUS_MILES", "75")))))
+            limit = min(50, max(1, int(os.environ.get("OIAB_RIDB_PAGE_SIZE", "50"))))
+            offset = 0
+            features: list[dict[str, object]] = []
+            update_overlay_job(job_id, overlay_id=overlay_id, type="refresh", status="running", step="fetching RIDB facilities", progress=10, error_message="", started_at=timestamp())
+            while offset < int(os.environ.get("OIAB_RIDB_MAX_FEATURES", "500")):
+                params = {
+                    "latitude": f"{center_lat:.6f}",
+                    "longitude": f"{center_lon:.6f}",
+                    "radius": str(radius_miles),
+                    "limit": str(limit),
+                    "offset": str(offset),
+                    "apikey": ridb_key,
+                }
+                request = Request(
+                    f"https://ridb.recreation.gov/api/v1/facilities?{urlencode(params)}",
+                    headers={"User-Agent": f"OIAB RIDB overlay ({self.settings.hostname})", "Accept": "application/json"},
+                )
+                with urlopen(request, timeout=60) as response:  # noqa: S310 - public API endpoint
+                    page = json.loads(response.read().decode("utf-8", errors="replace"))
+                records = page.get("RECDATA") or page.get("data") or []
+                if not isinstance(records, list) or not records:
+                    break
+                for record in records:
+                    if not isinstance(record, dict):
+                        continue
+                    lat = record.get("FacilityLatitude") or record.get("latitude")
+                    lon = record.get("FacilityLongitude") or record.get("longitude")
+                    try:
+                        lat_f = float(lat)
+                        lon_f = float(lon)
+                    except (TypeError, ValueError):
+                        continue
+                    if not (min_lat <= lat_f <= max_lat and min_lon <= lon_f <= max_lon):
+                        continue
+                    features.append(
+                        {
+                            "type": "Feature",
+                            "geometry": {"type": "Point", "coordinates": [lon_f, lat_f]},
+                            "properties": {
+                                "name": record.get("FacilityName") or record.get("name") or "RIDB site",
+                                "facility_id": record.get("FacilityID"),
+                                "description": record.get("FacilityDescription"),
+                                "type": record.get("FacilityTypeDescription"),
+                                "phone": record.get("FacilityPhone"),
+                                "email": record.get("FacilityEmail"),
+                                "url": record.get("FacilityReservationURL") or record.get("FacilityMapURL"),
+                                "source": "RIDB",
+                                "raw_properties": record,
+                            },
+                        }
+                    )
+                if len(records) < limit:
+                    break
+                offset += limit
+                update_overlay_job(job_id, step=f"fetching RIDB page {offset // limit + 1}", progress=min(80, 10 + offset // max(1, limit)))
+            payload_geojson = {"type": "FeatureCollection", "features": features, "properties": {"source": "RIDB", "bbox": list(bbox), "fetched_at": timestamp()}}
+            return self.write_cached_geojson_overlay(overlay_id, output, payload_geojson, source="RIDB recreation sites", job_id=job_id)
+        except Exception as exc:  # noqa: BLE001 - remote data boundary
+            registry = self.app_db().mark_overlay_refresh(overlay_id, output_path=output if output.exists() else None, ok=False, error=str(exc))
+            update_overlay_job(job_id, status="failed", step="RIDB refresh failed", progress=100, error_message=str(exc), output_path=str(output) if output.exists() else "")
+            return {**registry, "ok": False, "error": str(exc)}
+
+    def refresh_named_overlay(self, overlay_id: str, payload: dict | None = None) -> dict[str, object]:
+        payload = payload or {}
+        if not overlay_id:
+            return {"ok": False, "error": "Overlay id is required."}
+        if overlay_id == "firms_active_hotspots":
+            return self.refresh_wildfire_overlay()
+        if overlay_id == "nws_active_alerts":
+            return self.refresh_weather_alerts_overlay()
+        if overlay_id == "blm_sma_cached":
+            return self.refresh_blm_overlay(payload)
+        if overlay_id == "blm_wilderness_wsa_cached":
+            return self.refresh_blm_wilderness_overlay(payload)
+        if overlay_id == "usgs_topographic_contours":
+            return self.refresh_contours_overlay(payload)
+        if overlay_id == "stream_gauges_usgs":
+            return self.refresh_stream_gauges_overlay(payload)
+        if overlay_id == "ridb_recreation_sites":
+            return self.refresh_ridb_overlay(payload)
+        overlay = self.overlay_catalog_item(overlay_id)
+        output_value = str(overlay.get("local_path") or overlay.get("path") or "")
+        output = Path(output_value) if output_value else self.settings.data_dir / "maps" / "overlays" / f"{overlay_id}.geojson"
+        if overlay_id in {"drought_monitor", "lightning_recent"}:
+            env_name = str(overlay.get("metadata", {}).get("source_url_env") or overlay.get("source_url_env") or "").strip()
+            source_url = str(
+                self.app_db().map_overlay_provider_value(overlay_id, "source_url", "")
+                or (os.environ.get(env_name, "") if env_name else "")
+                or overlay.get("metadata", {}).get("default_source_url")
+                or overlay.get("default_source_url")
+                or ""
+            ).strip()
+            if not source_url:
+                error = f"{overlay.get('name') or overlay_id} refresh requires {env_name or 'a configured source URL'}."
+                registry = self.app_db().mark_overlay_refresh(overlay_id, output_path=output if output.exists() else None, ok=False, error=error)
+                return {**registry, "ok": False, "error": error}
+            return self.fetch_geojson_overlay_url(overlay_id, source_url, output, source=str(overlay.get("name") or overlay_id))
+        script_jobs = {
+            "padus_protected_lands": "download-padus",
+            "nhd_water_features": "download-nhd",
+            "dark_sky_overlay": "build-darksky",
+        }
+        if overlay_id in script_jobs:
+            extra_env: dict[str, str] = {}
+            env_name = str(overlay.get("metadata", {}).get("source_url_env") or overlay.get("source_url_env") or "").strip()
+            source_url = str(
+                self.app_db().map_overlay_provider_value(overlay_id, "source_url", "")
+                or (os.environ.get(env_name, "") if env_name else "")
+                or overlay.get("metadata", {}).get("default_source_url")
+                or overlay.get("default_source_url")
+                or ""
+            ).strip()
+            if env_name and source_url:
+                extra_env[env_name] = source_url
+            job = start_overlay_script_job(self.settings, overlay_id, script_jobs[overlay_id], str(output), extra_env=extra_env)
+            return {"ok": True, "job": job, **self.map_overlays()}
+        script_hint = {
+            "padus_protected_lands": "scripts/overlays/download-padus",
+            "nhd_water_features": "scripts/overlays/download-nhd",
+            "dark_sky_overlay": "scripts/overlays/build-darksky",
+            "fcc_connectivity": "scripts/overlays/build-pmtiles",
+            "parcel_import_hook": "scripts/overlays/build-pmtiles",
+            "wind_forecast": "set OIAB_WIND_FORECAST_TILE_URL",
+            "smoke_forecast": "set OIAB_SMOKE_FORECAST_TILE_URL",
+            "nasa_gibs_corrected_reflectance": "set OIAB_GIBS_TILE_URL",
+        }.get(overlay_id, "provide a source URL or local overlay file")
+        error = f"{overlay.get('name') or overlay_id} is not directly refreshable yet; use {script_hint} and rescan overlays."
+        registry = self.app_db().mark_overlay_refresh(overlay_id, output_path=output if output.exists() else None, ok=False, error=error)
+        return {**registry, "ok": False, "error": error}
 
     def refresh_blm_overlay(self, payload: dict | None = None) -> dict[str, object]:
         overlay_id = "blm_sma_cached"

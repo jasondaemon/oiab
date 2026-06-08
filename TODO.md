@@ -19,9 +19,10 @@
 - Add state/forest-scoped MVUM install options so users can avoid fetching national roads/trails when only one region is needed.
 - Add state/forest-level MVUM catalogs after the national roads/trails workflow is proven.
 - Expand offline topo support beyond contours with hillshade and selective region caching, while continuing to avoid full-CONUS raster mirroring.
-- Implement NOAA radar as an online raster overlay after the weather alert cache workflow is stable.
 - Add stale-overlay warnings directly in the map HUD for cached wildfire/weather overlays.
 - Add route-corridor satellite/imagery caching under `/data/oiab/maps/overlays/imagery/routes`.
+- Implement provider-specific online/cached overlays for wind forecast, smoke forecast, NASA GIBS satellite, recent lightning, FCC connectivity, and parcel imports.
+- Add provider-specific adapters for PAD-US/NHD package discovery, wind/smoke forecast time selectors, NASA GIBS product/date selectors, lightning providers, FCC connectivity packages, and dark-sky raster sources.
 - Deepen Kiwix/Wikipedia integration.
 - Add production HTTPS reverse proxy/unit integration.
 - Add sync/backup strategy for family game data and waypoints.

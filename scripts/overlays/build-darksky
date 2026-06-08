@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="${OIAB_DATA_DIR:-/data/oiab}/maps/overlays/darksky"
+SOURCE_URL="${OIAB_DARKSKY_SOURCE_URL:-}"
+BBOX="${OIAB_DARKSKY_BBOX:-}"
+MINZOOM="${OIAB_DARKSKY_MINZOOM:-3}"
+MAXZOOM="${OIAB_DARKSKY_MAXZOOM:-12}"
+
+if [[ -z "$SOURCE_URL" ]]; then
+  cat >&2 <<'EOF'
+OIAB_DARKSKY_SOURCE_URL is required.
+Set it to a GeoTIFF/raster source for light-pollution or dark-sky data.
+EOF
+  exit 2
+fi
+command -v gdalwarp >/dev/null || { echo "gdalwarp is required." >&2; exit 127; }
+command -v gdal2tiles.py >/dev/null || { echo "gdal2tiles.py is required." >&2; exit 127; }
+
+mkdir -p "$ROOT/source" "$ROOT/tiles"
+source_file="$ROOT/source/darksky-source"
+warped="$ROOT/source/darksky-webmercator.tif"
+
+if [[ "$SOURCE_URL" =~ ^https?:// ]]; then
+  curl -fL --retry 3 --retry-delay 2 -o "$source_file" "$SOURCE_URL"
+else
+  cp "$SOURCE_URL" "$source_file"
+fi
+
+warp_cmd=(gdalwarp -t_srs EPSG:3857 -r bilinear -dstalpha "$source_file" "$warped")
+if [[ -n "$BBOX" ]]; then
+  IFS=',' read -r min_lon min_lat max_lon max_lat <<<"$BBOX"
+  warp_cmd=(gdalwarp -t_srs EPSG:3857 -te_srs EPSG:4326 -te "$min_lon" "$min_lat" "$max_lon" "$max_lat" -r bilinear -dstalpha "$source_file" "$warped")
+fi
+"${warp_cmd[@]}"
+
+rm -rf "$ROOT/tiles"
+mkdir -p "$ROOT/tiles"
+gdal2tiles.py --xyz -z "${MINZOOM}-${MAXZOOM}" "$warped" "$ROOT/tiles"
+echo "$ROOT/tiles"

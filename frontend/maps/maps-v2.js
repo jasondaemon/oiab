@@ -612,6 +612,10 @@
     return expression;
   }
 
+  function overlayIconImageId(key) {
+    return `oiab-overlay-icon-${String(key || "marker").replace(/[^a-z0-9_-]+/gi, "-")}`;
+  }
+
   async function loadSvgMapImage(id, url, size = 96) {
     if (!state.map || state.map.hasImage(id)) return;
     const response = await fetch(url, { cache: "force-cache" });
@@ -648,6 +652,14 @@
       }),
     ]);
     await Promise.all(tasks);
+  }
+
+  async function loadOverlayImages() {
+    await Promise.all([
+      loadSvgMapImage(overlayIconImageId("wildfire-flame"), "/maps-v2/icons/overlay-flame.svg", 112).catch((error) => {
+        console.warn("[OIAB Maps v2] overlay icon failed", "wildfire-flame", error);
+      }),
+    ]);
   }
 
   function addMilitaryHatchPattern() {
@@ -1248,6 +1260,33 @@
     ];
   }
 
+  function pointIconOverlayLayer(overlay, sourceId, options = {}, sourceLayer = null, variant = "") {
+    const opacity = overlayOpacity(overlay);
+    const minzoom = Number(overlay.minzoom ?? overlay.metadata?.minzoom ?? 0);
+    const maxzoom = Number(overlay.maxzoom ?? overlay.metadata?.maxzoom ?? 22);
+    const layer = {
+      id: overlayLayerId(overlay, options.suffix || "point-icon", variant),
+      type: "symbol",
+      source: sourceId,
+      minzoom,
+      maxzoom,
+      filter: ["==", ["geometry-type"], "Point"],
+      layout: {
+        "icon-image": options.iconImage,
+        "icon-size": options.iconSize || ["interpolate", ["linear"], ["zoom"], 3, 0.12, 8, 0.2, 13, 0.34, 17, 0.46],
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+        "icon-optional": false,
+        "icon-padding": 2,
+      },
+      paint: {
+        "icon-opacity": opacity,
+      },
+    };
+    if (sourceLayer) layer["source-layer"] = sourceLayer;
+    return layer;
+  }
+
   function defaultOverlayLayers(overlay, sourceId, sourceLayer = null, variant = "") {
     const opacity = overlayOpacity(overlay);
     const style = overlay.style || overlay.category || "";
@@ -1303,17 +1342,94 @@
         ];
       }
       if (style === "wildfire_hotspots") {
+        return [pointIconOverlayLayer(overlay, sourceId, {
+          suffix: "hotspots",
+          iconImage: overlayIconImageId("wildfire-flame"),
+          iconSize: ["interpolate", ["linear"], ["zoom"], 3, 0.12, 8, 0.2, 13, 0.32, 17, 0.44],
+        }, null, variant)];
+      }
+      if (style === "ridb_recreation") {
         return [{
-          id: overlayLayerId(overlay, "hotspots", variant),
+          id: overlayLayerId(overlay, "ridb-point", variant),
           type: "circle",
           source: sourceId,
           minzoom,
           maxzoom,
           filter: ["==", ["geometry-type"], "Point"],
           paint: {
-            "circle-radius": ["interpolate", ["linear"], ["zoom"], 3, 2.5, 8, 4.5, 13, 7],
-            "circle-color": ["case", ["==", ["get", "confidence"], "h"], "#ff2d1f", ["==", ["get", "confidence"], "n"], "#ff8c1a", "#ffd34f"],
-            "circle-stroke-color": "#4a0906",
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, 3.5, 12, 6.5, 17, 9],
+            "circle-color": [
+              "case",
+              ["==", ["get", "recreation_category"], "camping"], "#f59e0b",
+              ["==", ["get", "type"], "Campground"], "#f59e0b",
+              ["==", ["get", "recreation_category"], "pass_permit"], "#7c3aed",
+              ["==", ["get", "recreation_category"], "visitor_info"], "#2563eb",
+              "#2f855a",
+            ],
+            "circle-stroke-color": "#f7f4df",
+            "circle-stroke-width": 1.8,
+            "circle-opacity": opacity,
+          },
+        }];
+      }
+      if (style === "stream_gauges") {
+        return [{
+          id: overlayLayerId(overlay, "stream-gauge", variant),
+          type: "circle",
+          source: sourceId,
+          minzoom,
+          maxzoom,
+          filter: ["==", ["geometry-type"], "Point"],
+          paint: {
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, 3, 12, 5.5, 17, 8],
+            "circle-color": "#0ea5e9",
+            "circle-stroke-color": "#083344",
+            "circle-stroke-width": 1.5,
+            "circle-opacity": opacity,
+          },
+        }];
+      }
+      if (style === "drought_monitor") {
+        return [
+          {
+            id: overlayLayerId(overlay, "drought-fill", variant),
+            type: "fill",
+            source: sourceId,
+            minzoom,
+            maxzoom,
+            filter: ["==", ["geometry-type"], "Polygon"],
+            paint: {
+              "fill-color": ["match", ["to-string", ["coalesce", ["get", "dm"], ["get", "DM"], ["get", "drought_class"], ["get", "class"]]], "D0", "#fff3b0", "D1", "#facc15", "D2", "#f97316", "D3", "#dc2626", "D4", "#7f1d1d", "#facc15"],
+              "fill-opacity": opacity * 0.42,
+            },
+          },
+          {
+            id: overlayLayerId(overlay, "drought-line", variant),
+            type: "line",
+            source: sourceId,
+            minzoom,
+            maxzoom,
+            filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
+            paint: {
+              "line-color": "#7c2d12",
+              "line-width": ["interpolate", ["linear"], ["zoom"], 4, 0.8, 10, 1.4, 15, 2],
+              "line-opacity": opacity,
+            },
+          },
+        ];
+      }
+      if (style === "lightning_recent") {
+        return [{
+          id: overlayLayerId(overlay, "lightning", variant),
+          type: "circle",
+          source: sourceId,
+          minzoom,
+          maxzoom,
+          filter: ["==", ["geometry-type"], "Point"],
+          paint: {
+            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 2.5, 10, 5, 16, 8],
+            "circle-color": "#fde047",
+            "circle-stroke-color": "#713f12",
             "circle-stroke-width": 1.5,
             "circle-opacity": opacity,
           },
@@ -1374,8 +1490,95 @@
       if (style === "public_lands_blm_wilderness") {
         return blmWildernessOverlayLayers(overlay, sourceId, pmtilesSourceLayer);
       }
+      if (style === "padus_public_lands") {
+        return [
+          {
+            id: overlayLayerId(overlay, "padus-fill", variant),
+            type: "fill",
+            source: sourceId,
+            "source-layer": pmtilesSourceLayer,
+            minzoom,
+            maxzoom,
+            filter: ["==", ["geometry-type"], "Polygon"],
+            paint: {
+              "fill-color": ["match", ["to-string", ["coalesce", ["get", "manager_type"], ["get", "agency"], ["get", "owner_type"]]], "Federal", "#7fbf7b", "State", "#b7d99a", "Local", "#c7e9b4", "Private", "#d8c9ef", "#9fcb8d"],
+              "fill-opacity": ["interpolate", ["linear"], ["zoom"], 4, opacity * 0.16, 8, opacity * 0.28, 12, opacity * 0.42],
+            },
+          },
+          {
+            id: overlayLayerId(overlay, "padus-line", variant),
+            type: "line",
+            source: sourceId,
+            "source-layer": pmtilesSourceLayer,
+            minzoom: Math.max(7, minzoom),
+            maxzoom,
+            filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
+            paint: {
+              "line-color": "#39613b",
+              "line-width": ["interpolate", ["linear"], ["zoom"], 7, 0.7, 12, 1.4, 16, 2.2],
+              "line-opacity": opacity,
+            },
+          },
+        ];
+      }
       if (style === "public_lands_blm" || overlay.category === "public_lands") {
         return blmOverlayLayers(overlay, sourceId, pmtilesSourceLayer);
+      }
+      if (style === "nhd_water") {
+        return [
+          {
+            id: overlayLayerId(overlay, "nhd-water-fill", variant),
+            type: "fill",
+            source: sourceId,
+            "source-layer": pmtilesSourceLayer,
+            minzoom,
+            maxzoom,
+            filter: ["==", ["geometry-type"], "Polygon"],
+            paint: {
+              "fill-color": "#79d4e5",
+              "fill-opacity": opacity * 0.36,
+            },
+          },
+          {
+            id: overlayLayerId(overlay, "nhd-water-line", variant),
+            type: "line",
+            source: sourceId,
+            "source-layer": pmtilesSourceLayer,
+            minzoom,
+            maxzoom,
+            filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
+            paint: {
+              "line-color": ["case", ["==", ["to-string", ["coalesce", ["get", "flow_type"], ["get", "fcode"]]], "intermittent"], "#55c7df", "#159ec6"],
+              "line-width": ["interpolate", ["linear"], ["zoom"], 5, 0.5, 10, 1.1, 15, 2.2],
+              "line-opacity": opacity,
+            },
+          },
+        ];
+      }
+      if (style === "connectivity_coverage" || style === "parcel_boundaries") {
+        const color = style === "parcel_boundaries" ? "#fbbf24" : "#38bdf8";
+        return [
+          {
+            id: overlayLayerId(overlay, "provider-line", variant),
+            type: "line",
+            source: sourceId,
+            "source-layer": pmtilesSourceLayer,
+            minzoom,
+            maxzoom,
+            filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
+            paint: { "line-color": color, "line-width": ["interpolate", ["linear"], ["zoom"], 5, 0.8, 14, 2.2], "line-opacity": opacity },
+          },
+          {
+            id: overlayLayerId(overlay, "provider-fill", variant),
+            type: "fill",
+            source: sourceId,
+            "source-layer": pmtilesSourceLayer,
+            minzoom,
+            maxzoom,
+            filter: ["==", ["geometry-type"], "Polygon"],
+            paint: { "fill-color": color, "fill-opacity": opacity * 0.14 },
+          },
+        ];
       }
       if (style === "mvum_roads" || style === "mvum_trails" || overlay.category === "mvum") {
         return [{
@@ -1917,6 +2120,7 @@
       applyMapTheme();
       applyBuildingDisplayMode();
       await loadPoiImages();
+      await loadOverlayImages();
       addMilitaryHatchLayer();
       addBasePoiIconLayer();
       bindOverlayFeaturePopups();
@@ -1942,21 +2146,15 @@
         openTemperatureForecast(event.lngLat);
         return;
       }
-      if (!state.addFromMap) return;
-      state.modalPoint = { lat: event.lngLat.lat, lon: event.lngLat.lng, source: "map_click" };
-      state.addFromMap = false;
-      $("addMapWaypoint").classList.remove("is-pending");
-      openWaypointModal("Save map point");
+      if (state.addFromMap) {
+        state.modalPoint = { lat: event.lngLat.lat, lon: event.lngLat.lng, source: "map_click" };
+        state.addFromMap = false;
+        $("addMapWaypoint").classList.remove("is-pending");
+        openWaypointModal("Save map point");
+        return;
+      }
+      handleMapFeatureTap(event);
     });
-    state.map.on("click", "overland-waypoint-circles", showSavedPointPopup);
-    state.map.on("click", "overland-waypoint-icons", showSavedPointPopup);
-    state.map.on("click", "overland-track-lines", showSavedTrackPopup);
-    const openOfflineRegionFromFeature = (event) => {
-      const regionId = event.features?.[0]?.properties?.id;
-      if (regionId && regionId !== "__draft__") openOfflineRegionById(regionId);
-    };
-    state.map.on("click", "offline-region-icon-halo", openOfflineRegionFromFeature);
-    state.map.on("click", "offline-region-icons", openOfflineRegionFromFeature);
     for (const layerId of ["offline-region-icon-halo", "offline-region-icons"]) {
       state.map.on("mouseenter", layerId, () => {
         state.map.getCanvas().style.cursor = "pointer";
@@ -1965,10 +2163,6 @@
         state.map.getCanvas().style.cursor = "";
       });
     }
-    state.map.on("click", "search-result-halo", (event) => openSearchResult(event.features?.[0]?.properties?.index));
-    state.map.on("click", "search-result-dot", (event) => openSearchResult(event.features?.[0]?.properties?.index));
-    state.map.on("click", "oiab-poi-icons", showBasePoiPopup);
-    state.map.on("click", "pois", showBasePoiPopup);
     state.map.on("mousedown", (event) => {
       if (!state.offlineRegionDraw) return;
       startOfflineRegionDraw(event.lngLat);
@@ -1987,7 +2181,6 @@
       .flatMap(overlayLayerIds)
       .filter((id) => state.map.getLayer(id));
     for (const layerId of layerIds) {
-      state.map.on("click", layerId, showOverlayPopup);
       state.map.on("mouseenter", layerId, () => {
         state.map.getCanvas().style.cursor = "pointer";
       });
@@ -1995,6 +2188,88 @@
         state.map.getCanvas().style.cursor = "";
       });
     }
+  }
+
+  function isTouchLikeMapEvent(event) {
+    const original = event?.originalEvent;
+    return original?.pointerType === "touch"
+      || original?.type?.startsWith?.("touch")
+      || window.matchMedia?.("(pointer: coarse)")?.matches;
+  }
+
+  function interactiveTapLayerIds() {
+    if (!state.map) return [];
+    const overlayLayers = (state.packSelection?.overlays || []).flatMap(overlayLayerIds);
+    return [
+      "search-result-halo",
+      "search-result-dot",
+      "offline-region-icon-halo",
+      "offline-region-icons",
+      "overland-waypoint-icons",
+      "overland-waypoint-circles",
+      "overland-track-lines",
+      "oiab-poi-icons",
+      "pois",
+      ...overlayLayers,
+    ].filter((layerId, index, all) => all.indexOf(layerId) === index && state.map.getLayer(layerId));
+  }
+
+  function tapFeaturePriority(feature) {
+    const layerId = feature?.layer?.id || "";
+    if (layerId.startsWith("search-result")) return 110;
+    if (layerId.startsWith("offline-region-icon")) return 105;
+    if (layerId === "overland-waypoint-icons" || layerId === "overland-waypoint-circles") return 100;
+    if (layerId === "oiab-poi-icons" || layerId === "pois") return 95;
+    if (feature?.geometry?.type === "Point") return 86;
+    if (layerId === "overland-track-lines") return 82;
+    if (feature?.geometry?.type === "LineString" || feature?.geometry?.type === "MultiLineString") return 72;
+    return 45;
+  }
+
+  function handleMapFeatureTap(event) {
+    if (!state.map || !event?.point) return false;
+    const layers = interactiveTapLayerIds();
+    if (!layers.length) return false;
+    const radius = isTouchLikeMapEvent(event) ? 28 : 8;
+    const bbox = [
+      [event.point.x - radius, event.point.y - radius],
+      [event.point.x + radius, event.point.y + radius],
+    ];
+    const features = state.map.queryRenderedFeatures(bbox, { layers })
+      .filter((feature) => feature?.layer?.id);
+    if (!features.length) return false;
+    features.sort((a, b) => tapFeaturePriority(b) - tapFeaturePriority(a));
+    return openTappedFeature(features[0], event);
+  }
+
+  function openTappedFeature(feature, event) {
+    const layerId = feature?.layer?.id || "";
+    const tappedEvent = { ...event, features: [feature] };
+    if (layerId.startsWith("search-result")) {
+      openSearchResult(feature.properties?.index);
+      return true;
+    }
+    if (layerId.startsWith("offline-region-icon")) {
+      const regionId = feature.properties?.id;
+      if (regionId && regionId !== "__draft__") {
+        openOfflineRegionById(regionId);
+        return true;
+      }
+    }
+    if (layerId === "overland-waypoint-icons" || layerId === "overland-waypoint-circles") {
+      showSavedPointPopup(tappedEvent);
+      return true;
+    }
+    if (layerId === "overland-track-lines") {
+      showSavedTrackPopup(tappedEvent);
+      return true;
+    }
+    if (layerId === "oiab-poi-icons" || layerId === "pois") {
+      showBasePoiPopup(tappedEvent);
+      return true;
+    }
+    showOverlayPopup(tappedEvent);
+    return true;
   }
 
   function showSavedPointPopup(event) {
@@ -2163,10 +2438,15 @@
       || props.title
       || props.headline
       || props.event
+      || props.facility_id
+      || props.site_no
+      || props.station_nm
       || props.route_id
       || props.id
       || (overlay.category === "wildfire" ? "Wildfire hotspot" : "")
       || (overlay.category === "weather" ? "Weather alert" : "")
+      || (overlay.category === "water" ? "Water feature" : "")
+      || (overlay.category === "camping_recreation" ? "Recreation site" : "")
       || (overlay.category === "mvum" ? "MVUM route" : "")
       || (overlay.category === "public_lands" ? "BLM public land" : "")
       || (overlay.style === "usgs_contours" ? "Contour line" : "")
@@ -2302,6 +2582,44 @@
         ["Instruction", firstPresent(props, ["instruction"])],
       ]);
     }
+    if (overlay.style === "drought_monitor") {
+      return compactDetails([
+        ["Class", firstPresent(props, ["dm", "DM", "drought_class", "class"])],
+        ["Intensity", firstPresent(props, ["intensity", "label", "name"])],
+        ["Valid", firstPresent(props, ["valid_date", "date", "release_date"])],
+        ["Source", "U.S. Drought Monitor"],
+      ]);
+    }
+    if (overlay.style === "ridb_recreation" || category === "camping_recreation") {
+      return compactDetails([
+        ["Name", firstPresent(props, ["name", "FacilityName"])],
+        ["Category", firstPresent(props, ["recreation_category"])],
+        ["Type", firstPresent(props, ["type", "FacilityTypeDescription"])],
+        ["Facility ID", firstPresent(props, ["facility_id", "FacilityID"])],
+        ["Phone", firstPresent(props, ["phone", "FacilityPhone"])],
+        ["Email", firstPresent(props, ["email", "FacilityEmail"])],
+        ["URL", firstPresent(props, ["url", "FacilityReservationURL", "FacilityMapURL"])],
+        ["Source", firstPresent(props, ["source"]) || "RIDB"],
+      ]);
+    }
+    if (overlay.style === "stream_gauges" || category === "water") {
+      return compactDetails([
+        ["Name", firstPresent(props, ["name", "station_nm", "siteName"])],
+        ["Site", firstPresent(props, ["site_no", "siteCode", "monitoringLocationIdentifier"])],
+        ["Flow", firstPresent(props, ["flow_cfs", "00060", "value"])],
+        ["Status", firstPresent(props, ["status", "siteStatus"])],
+        ["Waterbody", firstPresent(props, ["gnis_name", "waterbody", "feature_name"])],
+        ["Source", firstPresent(props, ["source"]) || "USGS"],
+      ]);
+    }
+    if (overlay.style === "lightning_recent") {
+      return compactDetails([
+        ["Time", firstPresent(props, ["time", "timestamp", "date"])],
+        ["Type", firstPresent(props, ["type", "event_type"])],
+        ["Amplitude", firstPresent(props, ["amplitude", "peak_current"])],
+        ["Source", firstPresent(props, ["source"])],
+      ]);
+    }
     if (overlay.style === "public_lands_blm_wilderness") {
       return compactDetails([
         ["Class", firstPresent(props, ["class_label"])],
@@ -2319,6 +2637,8 @@
       return compactDetails([
         ["Agency", firstPresent(props, ["ADMIN_AGENCY_CODE", "agency", "ADMIN_DEPT_CODE"])],
         ["Unit", firstPresent(props, ["ADMIN_UNIT_NAME"])],
+        ["Name", firstPresent(props, ["unit_name", "name", "NAME", "unit"])],
+        ["Manager", firstPresent(props, ["manager_type", "manager", "owner_type"])],
         ["Unit type", firstPresent(props, ["ADMIN_UNIT_TYPE"])],
         ["State", firstPresent(props, ["ADMIN_ST"])],
         ["Surface Mgmt ID", firstPresent(props, ["SMA_ID"])],

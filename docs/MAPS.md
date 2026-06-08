@@ -155,6 +155,7 @@ POST /api/maps/overlays/rescan
 POST /api/maps/overlays/set-enabled
 POST /api/maps/overlays/set-opacity
 POST /api/maps/overlays/set-order
+POST /api/maps/overlays/<overlay_id>/refresh
 POST /api/maps/overlays/wildfire/refresh
 POST /api/maps/overlays/weather/alerts/refresh
 POST /api/maps/overlays/mvum/roads/install
@@ -175,6 +176,8 @@ Supported overlay source types:
 - `pmtiles_vector` / `generated_pmtiles`: independent vector PMTiles overlay. PMTiles overlays need a known `source_layer`.
 
 Settings → Map Packs includes an **Overlay Sources** section for layer toggles, opacity, ordering, rescan, availability, cache mode, and attribution. Enabled overlays are persisted in SQLite and loaded by Maps v2 on startup. Overlay layers are inserted below symbol/label layers by default so labels remain readable.
+
+Overlay categories cover Land & Boundaries, Water, Weather & Forecasts, Fire & Smoke, Sky & Satellite, Camping & Recreation, Connectivity, and User/Imported data. Heavy offline vector overlays such as PAD-US and NHD are generated into managed PMTiles under `/data/oiab/maps/overlays`; lightweight live datasets such as RIDB, drought, lightning, and stream gauges use refreshable cached GeoJSON. Drought Monitor has a built-in official current GeoJSON source. FIRMS and RIDB require user API keys, entered from Settings → Maps → Overlays → Details & Source. See `docs/OVERLAYS.md` for provider variables, cache paths, and `scripts/overlays/*` helper commands.
 
 Current overlay direction:
 

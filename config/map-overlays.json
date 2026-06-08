@@ -210,6 +210,194 @@
       "warning": "BLM Wilderness / WSA uses the official national generalized NLCS service; it is suitable for trip planning and orientation, not parcel-precision boundary interpretation."
     },
     {
+      "id": "padus_protected_lands",
+      "name": "PAD-US Protected Lands",
+      "displayName": "PAD-US Protected Lands",
+      "description": "Offline vector protected/public land overlay generated from the USGS PAD-US dataset. Supports national, state, or bbox-limited packs.",
+      "category": "public_lands",
+      "group": "Land & Boundaries",
+      "data_mode": "offline_vector",
+      "type": "pmtiles",
+      "source_type": "generated_pmtiles",
+      "source_url": "/maps/overlays/padus/pmtiles/padus-protected-lands.pmtiles",
+      "local_path": "/data/oiab/maps/overlays/padus/pmtiles/padus-protected-lands.pmtiles",
+      "path": "/data/oiab/maps/overlays/padus/pmtiles/padus-protected-lands.pmtiles",
+      "source_layer": "padus_public_lands",
+      "source_url_env": "OIAB_PADUS_SOURCE_URL",
+      "default_source_url": "https://www.sciencebase.gov/catalog/item/6759b69fd34edfeb8710a3ea",
+      "source_instructions": "OIAB defaults to the USGS PAD-US 4.1 Vector Analysis PADUS-only package from ScienceBase, which is a better map overlay than the full inventory because overlaps are resolved for display. Paste a different national/state/bbox package URL only if you want to override the default. OIAB will convert it with GDAL/tippecanoe.",
+      "source_links": [
+        {"label": "USGS PAD-US downloads", "url": "https://www.usgs.gov/programs/gap-analysis-project/science/pad-us-data-download"},
+        {"label": "PAD-US 4.1 Vector Analysis package", "url": "https://www.sciencebase.gov/catalog/item/6759b69fd34edfeb8710a3ea"}
+      ],
+      "provider_fields": [
+        {
+          "key": "source_url",
+          "label": "PAD-US source URL",
+          "type": "url",
+          "env": "OIAB_PADUS_SOURCE_URL",
+          "placeholder": "Optional custom PAD-US package URL",
+          "help": "Optional. Leave blank to use the built-in USGS PAD-US 4.1 Vector Analysis PADUS-only ScienceBase package. Custom URLs may be GeoPackage, FileGDB zip, shapefile zip, or GeoJSON.",
+          "source_label": "Find PAD-US packages",
+          "source_url": "https://www.usgs.gov/programs/gap-analysis-project/science/pad-us-data-download"
+        }
+      ],
+      "tool_requirements": [
+        "ogr2ogr",
+        "tippecanoe",
+        "pmtiles"
+      ],
+      "minzoom": 4,
+      "maxzoom": 16,
+      "attribution": "USGS PAD-US",
+      "online_required": false,
+      "online_available": false,
+      "offline_available": false,
+      "cache_mode": "offline_pack",
+      "cache_policy": "offline_pack",
+      "cache_status": "not_cached",
+      "install_status": "ready",
+      "refresh_action": "padus-refresh",
+      "enabled": false,
+      "opacity": 0.45,
+      "layer_order": 57,
+      "sort_order": 57,
+      "style": "padus_public_lands",
+      "legend": [
+        {"label": "Federal protected/public land", "color": "#7fbf7b"},
+        {"label": "State/local protected land", "color": "#b7d99a"},
+        {"label": "Private conservation", "color": "#d8c9ef"}
+      ],
+      "tap_behavior": "feature_popup",
+      "warning": "PAD-US is a protected-area inventory. It is not a parcel ownership or legal access boundary layer."
+    },
+    {
+      "id": "nhd_water_features",
+      "name": "NHD Water Features",
+      "displayName": "USGS NHD Water Features",
+      "description": "Offline vector water overlay generated from USGS National Hydrography Dataset flowlines and waterbodies for the selected travel region.",
+      "category": "water",
+      "group": "Water",
+      "data_mode": "offline_vector",
+      "type": "pmtiles",
+      "source_type": "generated_pmtiles",
+      "source_url": "/maps/overlays/water/pmtiles/nhd-water-features.pmtiles",
+      "local_path": "/data/oiab/maps/overlays/water/pmtiles/nhd-water-features.pmtiles",
+      "path": "/data/oiab/maps/overlays/water/pmtiles/nhd-water-features.pmtiles",
+      "source_layer": "nhd_water",
+      "source_url_env": "OIAB_NHD_SOURCE_URL",
+      "source_instructions": "NHD is distributed by USGS as regional products such as GeoPackage, FileGDB, and shapefile packages. Choose the region you want from The National Map/NHD download tools, paste the direct package URL, and OIAB will convert it into PMTiles.",
+      "source_links": [
+        {"label": "USGS National Hydrography Dataset", "url": "https://www.usgs.gov/national-hydrography/national-hydrography-dataset"},
+        {"label": "The National Map downloader", "url": "https://apps.nationalmap.gov/downloader/"}
+      ],
+      "provider_fields": [
+        {
+          "key": "source_url",
+          "label": "NHD source URL",
+          "type": "url",
+          "env": "OIAB_NHD_SOURCE_URL",
+          "placeholder": "Direct NHD GeoPackage/zip URL",
+          "help": "Paste a direct USGS NHD GeoPackage/FileGDB/shapefile zip URL for the travel region. If the package has several layers, set OIAB_NHD_LAYER in the environment for now.",
+          "source_label": "Find NHD data",
+          "source_url": "https://apps.nationalmap.gov/downloader/"
+        }
+      ],
+      "tool_requirements": [
+        "ogr2ogr",
+        "tippecanoe",
+        "pmtiles"
+      ],
+      "minzoom": 5,
+      "maxzoom": 16,
+      "attribution": "USGS National Hydrography Dataset",
+      "online_required": false,
+      "online_available": false,
+      "offline_available": false,
+      "cache_mode": "offline_pack",
+      "cache_policy": "offline_pack",
+      "cache_status": "not_cached",
+      "install_status": "source_url_not_configured",
+      "refresh_action": "nhd-refresh",
+      "enabled": false,
+      "opacity": 0.9,
+      "layer_order": 58,
+      "sort_order": 58,
+      "style": "nhd_water",
+      "legend": [
+        {"label": "Perennial water", "color": "#159ec6"},
+        {"label": "Intermittent/ephemeral water", "color": "#55c7df"},
+        {"label": "Waterbody", "color": "#79d4e5"}
+      ],
+      "tap_behavior": "feature_popup"
+    },
+    {
+      "id": "ridb_recreation_sites",
+      "name": "RIDB Recreation Sites",
+      "displayName": "Recreation.gov / RIDB Sites",
+      "description": "Cached Recreation Information Database facilities and recreation sites. Refresh by bbox before a trip; cached points remain available offline.",
+      "category": "camping_recreation",
+      "group": "Camping & Recreation",
+      "data_mode": "online_cached_geojson",
+      "type": "geojson",
+      "source_type": "cached_geojson",
+      "source_url": "/maps/overlays/ridb/ridb-recreation-sites-latest.geojson",
+      "local_path": "/data/oiab/maps/overlays/ridb/ridb-recreation-sites-latest.geojson",
+      "path": "/data/oiab/maps/overlays/ridb/ridb-recreation-sites-latest.geojson",
+      "api_key_env": "OIAB_RIDB_API_KEY",
+      "source_url_env": "OIAB_RIDB_SOURCE_URL",
+      "source_instructions": "Create a free RIDB API key from Recreation.gov for bbox refreshes, or paste the official RIDB full JSON ZIP export URL for an offline national cache. OIAB converts the ZIP into a local GeoJSON point overlay.",
+      "source_links": [
+        {"label": "RIDB API docs and key", "url": "https://ridb.recreation.gov/docs"}
+      ],
+      "provider_fields": [
+        {
+          "key": "api_key",
+          "label": "RIDB API key",
+          "type": "password",
+          "secret": true,
+          "env": "OIAB_RIDB_API_KEY",
+          "help": "Required for live Recreation.gov/RIDB refreshes.",
+          "source_label": "Get RIDB API key",
+          "source_url": "https://ridb.recreation.gov/docs"
+        },
+        {
+          "key": "source_url",
+          "label": "RIDB source URL",
+          "type": "url",
+          "env": "OIAB_RIDB_SOURCE_URL",
+          "placeholder": "https://ridb.recreation.gov/downloads/RIDBFullExport_V1_JSON.zip",
+          "help": "Optional. Supports the official RIDB full JSON ZIP export or a direct GeoJSON snapshot URL.",
+          "source_label": "RIDB downloads",
+          "source_url": "https://ridb.recreation.gov/downloads/"
+        }
+      ],
+      "minzoom": 5,
+      "maxzoom": 18,
+      "attribution": "Recreation.gov RIDB",
+      "online_required": true,
+      "online_available": true,
+      "offline_available": false,
+      "cache_mode": "latest_snapshot",
+      "cache_policy": "latest_snapshot",
+      "cache_status": "not_cached",
+      "refresh_interval_minutes": 10080,
+      "install_status": "refresh_required",
+      "refresh_action": "ridb-refresh",
+      "enabled": false,
+      "opacity": 0.9,
+      "layer_order": 68,
+      "sort_order": 68,
+      "style": "ridb_recreation",
+      "legend": [
+        {"label": "Campground / camping", "color": "#f59e0b"},
+        {"label": "Visitor info / center", "color": "#2563eb"},
+        {"label": "Pass / permit / ticket", "color": "#7c3aed"},
+        {"label": "Other recreation site", "color": "#2f855a"}
+      ],
+      "tap_behavior": "feature_popup"
+    },
+    {
       "id": "firms_active_hotspots",
       "name": "Wildfire Hotspots",
       "description": "NASA FIRMS active fire hotspot snapshot. Refresh before a trip; cached data remains visible offline with age/stale status.",
@@ -219,6 +407,23 @@
       "source_url": "/maps/overlays/wildfire/firms-latest.geojson",
       "local_path": "/data/oiab/maps/overlays/wildfire/firms-latest.geojson",
       "path": "/data/oiab/maps/overlays/wildfire/firms-latest.geojson",
+      "api_key_env": "OIAB_FIRMS_MAP_KEY",
+      "source_instructions": "Create a free NASA FIRMS MAP_KEY and paste it here. OIAB uses the key to refresh active fire hotspots, then keeps the latest successful GeoJSON snapshot for offline display.",
+      "source_links": [
+        {"label": "Get NASA FIRMS MAP_KEY", "url": "https://firms.modaps.eosdis.nasa.gov/api/map_key/"}
+      ],
+      "provider_fields": [
+        {
+          "key": "api_key",
+          "label": "NASA FIRMS MAP_KEY",
+          "type": "password",
+          "secret": true,
+          "env": "OIAB_FIRMS_MAP_KEY",
+          "help": "Required for live NASA FIRMS active fire refreshes. Cached GeoJSON still renders offline.",
+          "source_label": "Get free FIRMS MAP_KEY",
+          "source_url": "https://firms.modaps.eosdis.nasa.gov/api/map_key/"
+        }
+      ],
       "attribution": "NASA FIRMS",
       "online_required": true,
       "online_available": true,
@@ -257,6 +462,221 @@
       "layer_order": 80,
       "sort_order": 80,
       "style": "weather_alerts"
+    },
+    {
+      "id": "snow_depth_nohrsc",
+      "name": "Snow Depth",
+      "displayName": "NOHRSC Snow Depth",
+      "description": "Online NOAA NOHRSC snow analysis raster overlay. Designed for winter trip planning; offline regional caching can be added through the bbox cache workflow later.",
+      "category": "weather",
+      "group": "Weather & Forecasts",
+      "data_mode": "online_raster",
+      "type": "raster",
+      "source_type": "arcgis_raster",
+      "url_template": "https://mapservices.weather.noaa.gov/raster/rest/services/snow/NOHRSC_Snow_Analysis/MapServer/tile/{z}/{y}/{x}",
+      "tiles": [
+        "https://mapservices.weather.noaa.gov/raster/rest/services/snow/NOHRSC_Snow_Analysis/MapServer/tile/{z}/{y}/{x}"
+      ],
+      "minzoom": 0,
+      "maxzoom": 12,
+      "tile_size": 256,
+      "attribution": "NOAA NOHRSC",
+      "online_required": true,
+      "online_available": true,
+      "offline_available": false,
+      "cache_mode": "none",
+      "cache_policy": "none",
+      "cache_status": "not_cached",
+      "install_status": "online_only",
+      "enabled": false,
+      "opacity": 0.65,
+      "layer_order": 83,
+      "sort_order": 83,
+      "legend": [
+        {"label": "Low snow depth", "color": "#dbeafe"},
+        {"label": "Moderate snow depth", "color": "#60a5fa"},
+        {"label": "High snow depth", "color": "#1d4ed8"}
+      ],
+      "tap_behavior": "none"
+    },
+    {
+      "id": "drought_monitor",
+      "name": "Drought Monitor",
+      "displayName": "U.S. Drought Monitor",
+      "description": "Cached U.S. Drought Monitor polygons. Refresh from a configured GeoJSON source or place generated GeoJSON under the drought overlay directory.",
+      "category": "weather",
+      "group": "Weather & Forecasts",
+      "data_mode": "online_cached_geojson",
+      "type": "geojson",
+      "source_type": "cached_geojson",
+      "source_url": "/maps/overlays/drought/usdm-latest.geojson",
+      "local_path": "/data/oiab/maps/overlays/drought/usdm-latest.geojson",
+      "path": "/data/oiab/maps/overlays/drought/usdm-latest.geojson",
+      "source_url_env": "OIAB_DROUGHT_GEOJSON_URL",
+      "default_source_url": "https://droughtmonitor.unl.edu/data/json/usdm_current.json",
+      "source_instructions": "OIAB defaults to the official current U.S. Drought Monitor GeoJSON feed. Leave this blank to use the built-in feed, or paste a different USDM GeoJSON snapshot if needed.",
+      "source_links": [
+        {"label": "U.S. Drought Monitor GIS data", "url": "https://droughtmonitor.unl.edu/DmData/GISData.aspx"}
+      ],
+      "provider_fields": [
+        {
+          "key": "source_url",
+          "label": "Drought GeoJSON URL",
+          "type": "url",
+          "env": "OIAB_DROUGHT_GEOJSON_URL",
+          "placeholder": "Direct U.S. Drought Monitor GeoJSON URL",
+          "default": "https://droughtmonitor.unl.edu/data/json/usdm_current.json",
+          "help": "Optional. Leave blank to use the official current USDM GeoJSON. OIAB caches the latest successful copy for offline use.",
+          "source_label": "USDM GIS data",
+          "source_url": "https://droughtmonitor.unl.edu/DmData/GISData.aspx"
+        }
+      ],
+      "minzoom": 3,
+      "maxzoom": 16,
+      "attribution": "U.S. Drought Monitor",
+      "online_required": true,
+      "online_available": true,
+      "offline_available": false,
+      "cache_mode": "latest_snapshot",
+      "cache_policy": "latest_snapshot",
+      "cache_status": "not_cached",
+      "refresh_interval_minutes": 10080,
+      "install_status": "source_url_not_configured",
+      "refresh_action": "drought-refresh",
+      "enabled": false,
+      "opacity": 0.5,
+      "layer_order": 84,
+      "sort_order": 84,
+      "style": "drought_monitor",
+      "legend": [
+        {"label": "D0 Abnormally dry", "color": "#fff3b0"},
+        {"label": "D1 Moderate", "color": "#facc15"},
+        {"label": "D2 Severe", "color": "#f97316"},
+        {"label": "D3 Extreme", "color": "#dc2626"},
+        {"label": "D4 Exceptional", "color": "#7f1d1d"}
+      ],
+      "tap_behavior": "feature_popup"
+    },
+    {
+      "id": "stream_gauges_usgs",
+      "name": "USGS Stream Gauges",
+      "displayName": "USGS Stream Gauges",
+      "description": "Cached USGS NWIS stream gauge points for a selected bbox. Refresh before a trip to inspect flow and station metadata offline.",
+      "category": "water",
+      "group": "Water",
+      "data_mode": "online_cached_geojson",
+      "type": "geojson",
+      "source_type": "cached_geojson",
+      "source_url": "/maps/overlays/water/usgs-stream-gauges-latest.geojson",
+      "local_path": "/data/oiab/maps/overlays/water/usgs-stream-gauges-latest.geojson",
+      "path": "/data/oiab/maps/overlays/water/usgs-stream-gauges-latest.geojson",
+      "minzoom": 5,
+      "maxzoom": 18,
+      "attribution": "USGS NWIS",
+      "online_required": true,
+      "online_available": true,
+      "offline_available": false,
+      "cache_mode": "latest_snapshot",
+      "cache_policy": "latest_snapshot",
+      "cache_status": "not_cached",
+      "refresh_interval_minutes": 360,
+      "install_status": "refresh_required",
+      "refresh_action": "stream-gauges-refresh",
+      "enabled": false,
+      "opacity": 0.9,
+      "layer_order": 85,
+      "sort_order": 85,
+      "style": "stream_gauges",
+      "legend": [
+        {"label": "USGS stream gauge", "color": "#0ea5e9"}
+      ],
+      "tap_behavior": "feature_popup"
+    },
+    {
+      "id": "wind_forecast",
+      "name": "Wind Forecast",
+      "displayName": "Wind Forecast",
+      "description": "Placeholder for NOAA/NWS wind forecast raster/vector visualization. Requires a configured service before it can be enabled.",
+      "category": "weather",
+      "group": "Weather & Forecasts",
+      "data_mode": "online_raster",
+      "type": "raster",
+      "source_type": "raster_wms",
+      "source_url_env": "OIAB_WIND_FORECAST_TILE_URL",
+      "source_instructions": "NOAA/NWS forecast data is time-enabled. This overlay accepts a compatible WMS/XYZ tile template, but the preferred production path is an OIAB adapter like Temperature Forecast so time/product selection is handled safely.",
+      "source_links": [
+        {"label": "NWS digital forecast map services", "url": "https://digital.weather.gov/staticpages/mapservices.php"}
+      ],
+      "provider_fields": [
+        {
+          "key": "source_url",
+          "label": "Wind tile URL",
+          "type": "url",
+          "env": "OIAB_WIND_FORECAST_TILE_URL",
+          "placeholder": "WMS/XYZ tile template",
+          "help": "Advanced. Set a compatible WMS/XYZ tile template before enabling this forecast overlay.",
+          "source_label": "NWS map services",
+          "source_url": "https://digital.weather.gov/staticpages/mapservices.php"
+        }
+      ],
+      "online_required": true,
+      "online_available": false,
+      "offline_available": false,
+      "cache_mode": "none",
+      "cache_policy": "none",
+      "cache_status": "not_cached",
+      "install_status": "source_url_not_configured",
+      "enabled": false,
+      "opacity": 0.65,
+      "layer_order": 86,
+      "sort_order": 86,
+      "legend": [
+        {"label": "Wind forecast", "color": "#38bdf8"}
+      ],
+      "tap_behavior": "none"
+    },
+    {
+      "id": "smoke_forecast",
+      "name": "Smoke Forecast",
+      "displayName": "Smoke Forecast",
+      "description": "Placeholder for NOAA HRRR/RAP smoke forecast visualization. Requires a configured raster/vector source before it can be enabled.",
+      "category": "wildfire",
+      "group": "Fire & Smoke",
+      "data_mode": "online_raster",
+      "type": "raster",
+      "source_type": "raster_wms",
+      "source_url_env": "OIAB_SMOKE_FORECAST_TILE_URL",
+      "source_instructions": "NOAA smoke products are service/layer/time dependent. This field is for an advanced compatible raster tile template. OIAB should eventually provide a dedicated smoke adapter rather than relying on manual templates.",
+      "source_links": [
+        {"label": "NOAA map services", "url": "https://mapservices.weather.noaa.gov/"}
+      ],
+      "provider_fields": [
+        {
+          "key": "source_url",
+          "label": "Smoke tile URL",
+          "type": "url",
+          "env": "OIAB_SMOKE_FORECAST_TILE_URL",
+          "placeholder": "WMS/XYZ tile template",
+          "help": "Advanced. Set a compatible NOAA/HRRR/RAP smoke raster source before enabling.",
+          "source_label": "NOAA map services",
+          "source_url": "https://mapservices.weather.noaa.gov/"
+        }
+      ],
+      "online_required": true,
+      "online_available": false,
+      "offline_available": false,
+      "cache_mode": "none",
+      "cache_policy": "none",
+      "cache_status": "not_cached",
+      "install_status": "source_url_not_configured",
+      "enabled": false,
+      "opacity": 0.55,
+      "layer_order": 87,
+      "sort_order": 87,
+      "legend": [
+        {"label": "Smoke concentration", "color": "#a16207"}
+      ],
+      "tap_behavior": "none"
     },
     {
       "id": "noaa_radar_online",
@@ -317,6 +737,224 @@
       "weather_product": "temp",
       "weather_period": "now",
       "warning": "Temperature Forecast requires internet for live map tiles. Point forecast lookups are cached for limited offline review."
+    },
+    {
+      "id": "dark_sky_overlay",
+      "name": "Dark Sky",
+      "displayName": "Dark Sky / Light Pollution",
+      "description": "Offline raster or vector dark-sky overlay generated from a configured light-pollution raster source. Build once for trip planning, then use offline.",
+      "category": "sky_satellite",
+      "group": "Sky & Satellite",
+      "data_mode": "offline_tiles",
+      "type": "raster",
+      "source_type": "raster_xyz",
+      "source_url": "/maps/overlays/darksky/tiles/{z}/{x}/{y}.png",
+      "url_template": "/maps/overlays/darksky/tiles/{z}/{x}/{y}.png",
+      "tiles": [
+        "/maps/overlays/darksky/tiles/{z}/{x}/{y}.png"
+      ],
+      "source_url_env": "OIAB_DARKSKY_SOURCE_URL",
+      "source_instructions": "Dark-sky/light-pollution datasets have licensing and provider differences. Paste a GDAL-readable raster source you are allowed to use; OIAB will generate local offline tiles.",
+      "provider_fields": [
+        {
+          "key": "source_url",
+          "label": "Dark-sky source URL",
+          "type": "url",
+          "env": "OIAB_DARKSKY_SOURCE_URL",
+          "placeholder": "Raster source URL or local file URL",
+          "help": "Use a light-pollution raster source that GDAL can read. OIAB builds local tiles from it."
+        }
+      ],
+      "tool_requirements": [
+        "gdalwarp",
+        "gdal2tiles.py"
+      ],
+      "minzoom": 3,
+      "maxzoom": 12,
+      "attribution": "Configured dark-sky/light-pollution source",
+      "online_required": false,
+      "online_available": false,
+      "offline_available": false,
+      "cache_mode": "offline_pack",
+      "cache_policy": "offline_pack",
+      "cache_status": "not_cached",
+      "install_status": "source_url_not_configured",
+      "refresh_action": "darksky-build",
+      "enabled": false,
+      "opacity": 0.55,
+      "layer_order": 88,
+      "sort_order": 88,
+      "legend": [
+        {"label": "Darker sky", "color": "#111827"},
+        {"label": "Light pollution", "color": "#f59e0b"}
+      ],
+      "tap_behavior": "none"
+    },
+    {
+      "id": "nasa_gibs_corrected_reflectance",
+      "name": "NASA GIBS Satellite",
+      "displayName": "NASA GIBS Satellite",
+      "description": "Online NASA GIBS daily satellite imagery placeholder. A configured WMTS tile template is required before enabling.",
+      "category": "sky_satellite",
+      "group": "Sky & Satellite",
+      "data_mode": "online_raster",
+      "type": "raster",
+      "source_type": "raster_xyz",
+      "source_url_env": "OIAB_GIBS_TILE_URL",
+      "source_instructions": "NASA GIBS uses WMTS templates with product, date, projection, and tile matrix set. This manual field is for an advanced fixed product/date template; a future adapter should expose product/date selectors.",
+      "source_links": [
+        {"label": "NASA GIBS API docs", "url": "https://nasa-gibs.github.io/gibs-api-docs/"}
+      ],
+      "provider_fields": [
+        {
+          "key": "source_url",
+          "label": "NASA GIBS tile URL",
+          "type": "url",
+          "env": "OIAB_GIBS_TILE_URL",
+          "placeholder": "WMTS/XYZ tile template",
+          "help": "Advanced. Set a NASA GIBS-compatible tile template for the desired product/date/projection.",
+          "source_label": "NASA GIBS docs",
+          "source_url": "https://nasa-gibs.github.io/gibs-api-docs/"
+        }
+      ],
+      "online_required": true,
+      "online_available": false,
+      "offline_available": false,
+      "cache_mode": "none",
+      "cache_policy": "none",
+      "cache_status": "not_cached",
+      "install_status": "source_url_not_configured",
+      "enabled": false,
+      "opacity": 0.7,
+      "layer_order": 89,
+      "sort_order": 89,
+      "legend": [
+        {"label": "NASA satellite imagery", "color": "#64748b"}
+      ],
+      "tap_behavior": "none"
+    },
+    {
+      "id": "lightning_recent",
+      "name": "Recent Lightning",
+      "displayName": "Recent Lightning",
+      "description": "Cached recent lightning strike overlay. Requires a configured provider URL; no default public source is bundled.",
+      "category": "weather",
+      "group": "Weather & Forecasts",
+      "data_mode": "online_cached_geojson",
+      "type": "geojson",
+      "source_type": "cached_geojson",
+      "source_url": "/maps/overlays/weather/lightning-latest.geojson",
+      "local_path": "/data/oiab/maps/overlays/weather/lightning-latest.geojson",
+      "path": "/data/oiab/maps/overlays/weather/lightning-latest.geojson",
+      "source_url_env": "OIAB_LIGHTNING_GEOJSON_URL",
+      "source_instructions": "There is no bundled free national lightning-strike feed. If you subscribe to or maintain a provider GeoJSON endpoint, paste it here and OIAB will cache the latest successful snapshot.",
+      "provider_fields": [
+        {
+          "key": "source_url",
+          "label": "Lightning GeoJSON URL",
+          "type": "url",
+          "env": "OIAB_LIGHTNING_GEOJSON_URL",
+          "placeholder": "Direct recent lightning GeoJSON URL",
+          "help": "Set a provider URL for recent lightning points. OIAB caches the latest successful snapshot."
+        }
+      ],
+      "online_required": true,
+      "online_available": true,
+      "offline_available": false,
+      "cache_mode": "latest_snapshot",
+      "cache_policy": "latest_snapshot",
+      "cache_status": "not_cached",
+      "install_status": "source_url_not_configured",
+      "refresh_action": "lightning-refresh",
+      "enabled": false,
+      "opacity": 0.9,
+      "layer_order": 90,
+      "sort_order": 90,
+      "style": "lightning_recent",
+      "legend": [
+        {"label": "Recent strike", "color": "#fde047"}
+      ],
+      "tap_behavior": "feature_popup"
+    },
+    {
+      "id": "fcc_connectivity",
+      "name": "FCC Connectivity",
+      "displayName": "FCC Connectivity",
+      "description": "Future connectivity/coverage overlay. Provider datasets vary and are intentionally not enabled until a source is configured.",
+      "category": "connectivity",
+      "group": "Connectivity",
+      "data_mode": "offline_vector",
+      "type": "pmtiles",
+      "source_type": "generated_pmtiles",
+      "source_url": "/maps/overlays/connectivity/fcc-connectivity.pmtiles",
+      "local_path": "/data/oiab/maps/overlays/connectivity/fcc-connectivity.pmtiles",
+      "path": "/data/oiab/maps/overlays/connectivity/fcc-connectivity.pmtiles",
+      "source_layer": "fcc_connectivity",
+      "source_url_env": "OIAB_FCC_CONNECTIVITY_SOURCE_URL",
+      "source_instructions": "FCC connectivity datasets are download/package oriented. Paste a direct vector package URL only if you have selected a specific FCC or provider export; OIAB will convert it to PMTiles.",
+      "source_links": [
+        {"label": "FCC Broadband Data Collection downloads", "url": "https://broadbandmap.fcc.gov/data-download"}
+      ],
+      "provider_fields": [
+        {
+          "key": "source_url",
+          "label": "Connectivity source URL",
+          "type": "url",
+          "env": "OIAB_FCC_CONNECTIVITY_SOURCE_URL",
+          "placeholder": "Direct vector package URL",
+          "help": "Paste a direct vector package URL before generating the connectivity PMTiles overlay.",
+          "source_label": "FCC data downloads",
+          "source_url": "https://broadbandmap.fcc.gov/data-download"
+        }
+      ],
+      "online_required": false,
+      "online_available": false,
+      "offline_available": false,
+      "cache_mode": "offline_pack",
+      "cache_policy": "offline_pack",
+      "cache_status": "not_cached",
+      "install_status": "source_url_not_configured",
+      "enabled": false,
+      "opacity": 0.45,
+      "layer_order": 91,
+      "sort_order": 91,
+      "style": "connectivity_coverage",
+      "legend": [
+        {"label": "Reported coverage", "color": "#38bdf8"}
+      ],
+      "tap_behavior": "feature_popup"
+    },
+    {
+      "id": "parcel_import_hook",
+      "name": "Parcel Import",
+      "displayName": "Parcel Import Hook",
+      "description": "Provider hook for future county/state parcel imports. OIAB does not ship parcel data; users can import provider-specific PMTiles later.",
+      "category": "user",
+      "group": "User / Imported",
+      "data_mode": "provider_import",
+      "type": "pmtiles",
+      "source_type": "pmtiles_vector",
+      "source_url": "/maps/overlays/parcels/parcels.pmtiles",
+      "local_path": "/data/oiab/maps/overlays/parcels/parcels.pmtiles",
+      "path": "/data/oiab/maps/overlays/parcels/parcels.pmtiles",
+      "source_layer": "parcels",
+      "online_required": false,
+      "online_available": false,
+      "offline_available": false,
+      "cache_mode": "manual_download",
+      "cache_policy": "manual_download",
+      "cache_status": "not_cached",
+      "install_status": "manual_download",
+      "enabled": false,
+      "opacity": 0.5,
+      "layer_order": 92,
+      "sort_order": 92,
+      "style": "parcel_boundaries",
+      "legend": [
+        {"label": "Parcel boundary", "color": "#fbbf24"}
+      ],
+      "tap_behavior": "feature_popup",
+      "warning": "Parcel datasets are provider-specific and may have legal/license restrictions."
     },
     {
       "id": "local_geojson",

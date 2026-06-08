@@ -997,16 +997,97 @@
       }
       return badge("Offline ready", "is-good");
     };
+    const providerFields = (overlay) => {
+      const fields = Array.isArray(overlay.provider_fields) ? [...overlay.provider_fields] : [];
+      if (overlay.source_url_env && !fields.some((field) => field?.key === "source_url")) {
+        fields.push({
+          key: "source_url",
+          label: "Source URL",
+          type: "url",
+          env: overlay.source_url_env,
+          value: overlay.configured_source_url || "",
+          configured: Boolean(overlay.source_url_configured),
+          help: "Use a direct GeoJSON, PMTiles, raster tile, or source package URL supported by this overlay."
+        });
+      }
+      if (overlay.api_key_env && !fields.some((field) => field?.key === "api_key")) {
+        fields.push({
+          key: "api_key",
+          label: "API Key",
+          type: "password",
+          env: overlay.api_key_env,
+          secret: true,
+          configured: Boolean(overlay.key_configured),
+          help: "Stored locally in OIAB settings. Leave blank to keep the current saved/environment value."
+        });
+      }
+      if (!fields.length) return "";
+      return `
+        <form class="uo-overlay-provider-form" data-overlay-settings-form data-overlay-id="${escapeHtml(overlay.id || "")}">
+          <div class="uo-overlay-provider-grid">
+            ${fields.map((field) => {
+              const key = String(field.key || "");
+              const label = String(field.label || key || "Setting");
+              const type = field.secret ? "password" : String(field.type || "text");
+              const placeholder = field.secret && field.configured
+                ? "Configured; enter a new value to replace"
+                : String(field.placeholder || field.env || "");
+              return `
+                <label class="uo-overlay-provider-field">
+                  <span>
+                    <strong>${escapeHtml(label)}</strong>
+                    ${field.env ? `<small>${escapeHtml(field.env)}</small>` : ""}
+                  </span>
+                  <input
+                    name="${escapeHtml(key)}"
+                    type="${escapeHtml(type)}"
+                    value="${escapeHtml(field.value || "")}"
+                    placeholder="${escapeHtml(placeholder)}"
+                    data-secret="${field.secret ? "true" : "false"}"
+                    autocomplete="off"
+                  >
+                </label>
+                ${field.help ? `<p class="uo-settings-item-subtitle">${escapeHtml(field.help)}</p>` : ""}
+                ${field.source_url ? `<p class="uo-settings-item-subtitle"><a href="${escapeHtml(field.source_url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(field.source_label || "Open provider instructions")}</a></p>` : ""}
+              `;
+            }).join("")}
+          </div>
+          <div class="uo-settings-item-actions">
+            <button type="submit" class="is-primary">Save Source Settings</button>
+          </div>
+        </form>
+      `;
+    };
     const overlayControls = (overlay) => {
       const overlayId = String(overlay.id || "");
-      const canRefresh = ["firms_active_hotspots", "nws_active_alerts", "mvum_roads_us", "mvum_trails_us", "blm_sma_cached", "blm_wilderness_wsa_cached"].includes(overlayId);
-      const isInstall = ["mvum_roads_us", "mvum_trails_us", "blm_sma_cached", "blm_wilderness_wsa_cached"].includes(overlayId);
-      const actionLabel = isInstall ? (overlay.exists || overlay.cache_status === "cached" ? "Update" : "Download") : "Refresh";
+      const actionAvailable = Boolean(
+        overlay.refresh_available ||
+        overlay.refresh_action ||
+        ["firms_active_hotspots", "nws_active_alerts", "mvum_roads_us", "mvum_trails_us", "blm_sma_cached", "blm_wilderness_wsa_cached"].includes(overlayId)
+      );
+      const missingSource = overlay.source_url_env && !overlay.source_url_configured && !(overlay.exists || overlay.cache_status === "cached");
+      const missingKey = overlay.api_key_env && !overlay.key_configured && !(overlay.exists || overlay.cache_status === "cached");
+      const missingTools = (overlay.missing_required_tools || overlay.missing_tools || []).length > 0 && !(overlay.exists || overlay.cache_status === "cached");
+      const blocked = missingSource || missingKey || missingTools || overlay.install_status === "not_implemented";
+      const actionLabel = overlay.exists || overlay.cache_status === "cached" ? "Update" : "Download";
       return `
-        ${canRefresh ? `<button type="button" data-overlay-action="${isInstall ? "install" : "refresh"}" data-overlay-id="${escapeHtml(overlay.id || "")}" class="is-primary">${actionLabel}</button>` : ""}
+        ${actionAvailable ? `<button type="button" data-overlay-action="refresh" data-overlay-id="${escapeHtml(overlay.id || "")}" class="is-primary" ${blocked ? "disabled" : ""}>${actionLabel}</button>` : ""}
         ${(overlay.exists || overlay.cache_status === "cached" || overlay.size_bytes) ? `<button type="button" data-overlay-action="clear-cache" data-overlay-id="${escapeHtml(overlay.id || "")}">Clear Cache</button>` : ""}
       `;
     };
+    const categoryLabel = (category) => ({
+      public_lands: "Land & Boundaries",
+      water: "Water",
+      topo: "Topo",
+      weather: "Weather & Forecasts",
+      wildfire: "Fire & Smoke",
+      sky_satellite: "Sky & Satellite",
+      imagery: "Sky & Satellite",
+      camping_recreation: "Camping & Recreation",
+      connectivity: "Connectivity",
+      geopdf: "GeoPDF Maps",
+      user: "User / Imported"
+    })[category || "user"] || String(category || "User / Imported").replace(/_/g, " ");
     const overlayMeta = (overlay) => `
       ${badge(overlay.category || "overlay")}
       ${badge(overlay.cache_status || "unknown", overlay.cache_status === "cached" ? "is-good" : overlay.cache_status === "failed" ? "is-bad" : overlay.cache_status === "stale" ? "is-warn" : "")}
@@ -1022,56 +1103,119 @@
         ${overlayId === "usgs_topographic_contours" ? `
           <p class="uo-settings-item-subtitle">Generated by Offline Data Regions.</p>
         ` : ""}
+        ${(overlay.source_url_env && !overlay.source_url_configured && !(overlay.exists || overlay.cache_status === "cached")) ? `
+          <p class="uo-settings-item-subtitle is-warn">${escapeHtml(overlay.source_url_env)} is not configured.</p>
+        ` : ""}
+        ${(overlay.api_key_env && !overlay.key_configured && !(overlay.exists || overlay.cache_status === "cached")) ? `
+          <p class="uo-settings-item-subtitle is-warn">${escapeHtml(overlay.api_key_env)} is required for live refresh.</p>
+        ` : ""}
+        ${((overlay.missing_required_tools || overlay.missing_tools || []).length && !(overlay.exists || overlay.cache_status === "cached")) ? `
+          <p class="uo-settings-item-subtitle is-warn">Missing tools: ${escapeHtml((overlay.missing_required_tools || overlay.missing_tools || []).join(", "))}.</p>
+        ` : ""}
         ${(overlay.last_fetch_at || overlay.error_message) ? `
           <p class="uo-settings-item-subtitle">
             ${overlay.last_fetch_at ? `Updated ${escapeHtml(formatTimestamp(overlay.last_fetch_at))}. ` : ""}
             ${overlay.error_message ? `Error: ${escapeHtml(overlay.error_message)}` : ""}
           </p>` : ""}
+        ${providerFields(overlay)}
+      `;
+    };
+    const enabledCell = (overlay) => badge(overlay.enabled ? "Enabled" : "Disabled", overlay.enabled ? "is-good" : "");
+    const statusCell = (overlay) => {
+      const status = overlay.cache_status || overlay.install_status || "unknown";
+      const tone = status === "cached" || status === "ready" || status === "installed"
+        ? "is-good"
+        : status === "failed"
+          ? "is-bad"
+          : status === "stale" || String(status).includes("needed") || String(status).includes("missing") || String(status).includes("not_configured")
+            ? "is-warn"
+            : "";
+      return badge(status, tone);
+    };
+    const availabilityCell = (overlay) => availabilityBadge(overlay);
+    const sizeCell = (overlay) => overlay.size_bytes ? escapeHtml(formatBytes(overlay.size_bytes)) : "—";
+    const sourceInfo = (overlay) => {
+      const links = Array.isArray(overlay.source_links) ? overlay.source_links : [];
+      const instructions = overlay.source_instructions || overlay.metadata?.source_instructions || "";
+      if (!instructions && !links.length) return "";
+      return `
+        <div class="uo-overlay-source-help">
+          ${instructions ? `<p>${escapeHtml(instructions)}</p>` : ""}
+          ${links.length ? `
+            <div class="uo-overlay-source-links">
+              ${links.map((link) => {
+                const href = String(link?.url || "").trim();
+                if (!href) return "";
+                return `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label || href)}</a>`;
+              }).join("")}
+            </div>
+          ` : ""}
+        </div>
       `;
     };
     const overlayItem = (overlay) => `
-      <article class="uo-settings-item">
-        <div class="uo-settings-item-main">
-          <div class="uo-settings-item-head">
-            <h3 class="uo-settings-item-title">${escapeHtml(overlay.name || overlay.id)}</h3>
-            <div class="uo-settings-item-meta">${overlayMeta(overlay)}</div>
-          </div>
-          ${overlayDetail(overlay)}
+      <article class="uo-overlay-row">
+        <div class="uo-overlay-cell uo-overlay-name">
+          <strong>${escapeHtml(overlay.name || overlay.id)}</strong>
+          <small>${escapeHtml(overlay.id || "")}</small>
         </div>
-        <div class="uo-settings-item-actions">${overlayControls(overlay)}</div>
+        <div class="uo-overlay-cell">${enabledCell(overlay)}</div>
+        <div class="uo-overlay-cell">${statusCell(overlay)}</div>
+        <div class="uo-overlay-cell">${availabilityCell(overlay)}</div>
+        <div class="uo-overlay-cell uo-overlay-size">${sizeCell(overlay)}</div>
+        <div class="uo-overlay-cell uo-overlay-actions">${overlayControls(overlay)}</div>
+        <div class="uo-overlay-cell uo-overlay-detail-cell">
+          <details class="uo-overlay-details">
+            <summary>Details & Source</summary>
+            <div class="uo-overlay-details-body">${sourceInfo(overlay)}${overlayDetail(overlay)}</div>
+          </details>
+        </div>
       </article>
     `;
     const topoIds = new Set(["usgs_topo", "usgs_topographic_contours"]);
     const topoOverlays = overlays.filter((overlay) => topoIds.has(String(overlay.id || "")));
     const remainingOverlays = overlays.filter((overlay) => !topoIds.has(String(overlay.id || "")));
+    const categoryOrder = ["public_lands", "water", "weather", "wildfire", "sky_satellite", "imagery", "camping_recreation", "connectivity", "geopdf", "user"];
+    const categoryKeys = [
+      ...categoryOrder,
+      ...[...new Set(remainingOverlays.map((overlay) => overlay.category || "user"))].filter((category) => !categoryOrder.includes(category)).sort()
+    ];
+    const groupedOverlays = categoryKeys
+      .map((category) => [category, remainingOverlays.filter((overlay) => (overlay.category || "user") === category)])
+      .filter(([, items]) => items.length);
     const topoGroup = topoOverlays.length ? `
-      <article class="uo-settings-item uo-topo-settings-group">
-        <div class="uo-settings-item-main">
-          <div class="uo-settings-item-head">
-            <h3 class="uo-settings-item-title">Topographic Layers</h3>
-            <div class="uo-settings-item-meta">
-              ${badge("topo")}
-              ${badge(`${topoOverlays.length} layer${topoOverlays.length === 1 ? "" : "s"}`)}
-            </div>
-          </div>
-          <div class="uo-settings-subitems">
-            ${topoOverlays.map((overlay) => `
-              <div class="uo-settings-subitem">
-                <div class="uo-settings-subitem-main">
-                  <div class="uo-settings-item-head">
-                    <h4 class="uo-settings-item-title">${escapeHtml(overlay.name || overlay.id)}</h4>
-                    <div class="uo-settings-item-meta">${overlayMeta(overlay)}</div>
-                  </div>
-                  ${overlayDetail(overlay)}
-                </div>
-                <div class="uo-settings-item-actions">${overlayControls(overlay)}</div>
-              </div>
-            `).join("")}
-          </div>
+      <section class="uo-overlay-table-section">
+        <div class="uo-settings-card-head">
+          <div><span class="uo-kicker">Topographic Layers</span></div>
+          <div class="uo-settings-item-meta">${badge("topo")}${badge(`${topoOverlays.length} layer${topoOverlays.length === 1 ? "" : "s"}`)}</div>
         </div>
-      </article>
+        <div class="uo-overlay-table">
+          <div class="uo-overlay-table-head">
+            <span>Overlay</span><span>Enabled</span><span>Status</span><span>Availability</span><span>Size</span><span>Actions</span><span>Settings</span>
+          </div>
+          ${topoOverlays.map(overlayItem).join("")}
+        </div>
+      </section>
     ` : "";
-    holder.innerHTML = [topoGroup, ...remainingOverlays.map(overlayItem)].join("");
+    holder.innerHTML = [
+      topoGroup,
+      ...groupedOverlays.map(([category, items]) => `
+        <section class="uo-overlay-table-section">
+          <div class="uo-settings-card-head">
+            <div>
+              <span class="uo-kicker">${escapeHtml(categoryLabel(category))}</span>
+            </div>
+            <div class="uo-settings-item-meta">${badge(`${items.length} overlay${items.length === 1 ? "" : "s"}`)}</div>
+          </div>
+          <div class="uo-overlay-table">
+            <div class="uo-overlay-table-head">
+              <span>Overlay</span><span>Enabled</span><span>Status</span><span>Availability</span><span>Size</span><span>Actions</span><span>Settings</span>
+            </div>
+            ${items.map(overlayItem).join("")}
+          </div>
+        </section>
+      `)
+    ].join("");
     holder.querySelectorAll("[data-overlay-action]").forEach((button) => {
       button.addEventListener("click", async () => {
         const overlayId = button.dataset.overlayId || "";
@@ -1086,22 +1230,6 @@
             });
             const data = await response.json().catch(() => ({}));
             if (!response.ok || data.ok === false) throw new Error(data.error || `${action} failed`);
-          } else if (action === "install") {
-            const path = overlayId === "mvum_roads_us"
-              ? "/api/maps/overlays/mvum/roads/install"
-              : overlayId === "mvum_trails_us"
-                ? "/api/maps/overlays/mvum/trails/install"
-                : overlayId === "blm_wilderness_wsa_cached"
-                  ? "/api/maps/overlays/blm-wilderness/refresh"
-                  : "/api/maps/overlays/blm/refresh";
-            const payload = null;
-            const response = await fetch(path, payload ? {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(payload),
-            } : { method: "POST" });
-            const data = await response.json().catch(() => ({}));
-            if (!response.ok || data.ok === false) throw new Error(data.error || `${action} failed`);
           } else if (action === "refresh") {
             const path = overlayId === "firms_active_hotspots"
               ? "/api/maps/overlays/wildfire/refresh"
@@ -1109,13 +1237,48 @@
                 ? "/api/maps/overlays/weather/alerts/refresh"
                 : overlayId === "blm_wilderness_wsa_cached"
                   ? "/api/maps/overlays/blm-wilderness/refresh"
-                : "/api/maps/overlays/blm/refresh";
+                  : overlayId === "blm_sma_cached"
+                    ? "/api/maps/overlays/blm/refresh"
+                    : overlayId === "mvum_roads_us"
+                      ? "/api/maps/overlays/mvum/roads/install"
+                      : overlayId === "mvum_trails_us"
+                        ? "/api/maps/overlays/mvum/trails/install"
+                        : `/api/maps/overlays/${encodeURIComponent(overlayId)}/refresh`;
             const response = await fetch(path, { method: "POST" });
             const data = await response.json().catch(() => ({}));
             if (!response.ok || data.ok === false) throw new Error(data.error || `${action} failed`);
           }
           await loadMapsSettings();
           setSettingsMessage("mapsOverlaysMessage", `${overlayId} ${action} complete.`);
+        } catch (error) {
+          setSettingsMessage("mapsOverlaysMessage", error.message, true);
+        }
+      });
+    });
+    holder.querySelectorAll("[data-overlay-settings-form]").forEach((form) => {
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const overlayId = form.dataset.overlayId || "";
+        const settings = {};
+        form.querySelectorAll("input[name]").forEach((input) => {
+          const key = input.name;
+          const value = String(input.value || "").trim();
+          if (input.dataset.secret === "true" && !value) return;
+          settings[key] = value;
+        });
+        setSettingsMessage("mapsOverlaysMessage", `Saving ${overlayId} source settings...`);
+        try {
+          const response = await fetch("/api/maps/overlays/settings", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: overlayId, settings }),
+          });
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok || data.ok === false) throw new Error(data.error || "Could not save overlay source settings");
+          state.maps.overlays = data;
+          renderOverlaySummary();
+          renderMapOverlays();
+          setSettingsMessage("mapsOverlaysMessage", `${overlayId} source settings saved.`);
         } catch (error) {
           setSettingsMessage("mapsOverlaysMessage", error.message, true);
         }

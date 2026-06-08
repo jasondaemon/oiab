@@ -1185,6 +1185,229 @@ button {
   border-color: transparent;
 }
 
+.uo-overlay-settings-item {
+  align-items: center;
+}
+
+.uo-overlay-table-section {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--uo-line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .035);
+}
+
+.uo-overlay-table {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 16px;
+}
+
+.uo-overlay-table-head,
+.uo-overlay-row {
+  display: grid;
+  grid-template-columns:
+    minmax(220px, 1.7fr)
+    minmax(92px, .62fr)
+    minmax(118px, .72fr)
+    minmax(138px, .82fr)
+    minmax(82px, .5fr)
+    minmax(210px, 1.1fr)
+    minmax(150px, .82fr);
+  gap: 10px;
+  align-items: center;
+}
+
+.uo-overlay-table-head {
+  min-height: 38px;
+  padding: 0 14px;
+  color: var(--uo-muted);
+  background: rgba(255, 255, 255, .06);
+  font-size: .75rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.uo-overlay-row {
+  min-height: 56px;
+  padding: 8px 14px;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+  background: rgba(0, 0, 0, .09);
+}
+
+.uo-overlay-row:nth-child(odd) {
+  background: rgba(255, 255, 255, .026);
+}
+
+.uo-overlay-cell {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.uo-overlay-name {
+  display: grid;
+  gap: 2px;
+}
+
+.uo-overlay-name strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.uo-overlay-name small {
+  color: var(--uo-muted);
+  font-size: .78rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.uo-overlay-size {
+  color: var(--uo-muted);
+  font-weight: 900;
+}
+
+.uo-overlay-actions {
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.uo-overlay-actions button {
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid var(--uo-line);
+  background: rgba(255, 255, 255, .07);
+  color: var(--uo-ink);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.uo-overlay-actions button:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
+.uo-overlay-actions .is-primary {
+  color: #06130d;
+  background: var(--uo-accent);
+  border-color: transparent;
+}
+
+.uo-overlay-detail-cell {
+  justify-content: flex-end;
+}
+
+.uo-overlay-details {
+  margin-top: 2px;
+}
+
+.uo-overlay-details > summary {
+  width: fit-content;
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--uo-line);
+  background: rgba(255, 255, 255, .055);
+  color: var(--uo-accent);
+  font-weight: 900;
+  cursor: pointer;
+  list-style-position: inside;
+}
+
+.uo-overlay-details[open] > summary {
+  margin-bottom: 10px;
+}
+
+.uo-overlay-details-body {
+  display: grid;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+  width: min(780px, calc(100vw - 160px));
+  margin-top: 10px;
+  padding: 12px;
+  border: 1px solid var(--uo-line);
+  border-radius: 16px;
+  background: rgba(4, 22, 13, .96);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .28);
+}
+
+.uo-overlay-provider-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 6px;
+  padding: 12px;
+  border: 1px solid var(--uo-line);
+  border-radius: 16px;
+  background: rgba(0, 0, 0, .22);
+}
+
+.uo-overlay-provider-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.uo-overlay-provider-field {
+  display: grid;
+  grid-template-columns: minmax(140px, 220px) minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+}
+
+.uo-overlay-provider-field span {
+  display: grid;
+  gap: 2px;
+}
+
+.uo-overlay-provider-field small {
+  color: var(--uo-muted);
+  font-size: .78rem;
+}
+
+.uo-overlay-provider-field input {
+  width: 100%;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--uo-line);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, .2);
+  color: var(--uo-ink);
+  font: inherit;
+}
+
+.uo-overlay-source-help {
+  display: grid;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid rgba(126, 232, 143, .22);
+  border-radius: 14px;
+  background: rgba(126, 232, 143, .08);
+  color: var(--uo-muted);
+}
+
+.uo-overlay-source-help p {
+  margin: 0;
+}
+
+.uo-overlay-source-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.uo-overlay-source-links a,
+.uo-overlay-provider-grid a {
+  color: var(--uo-accent);
+  font-weight: 900;
+}
+
 .uo-inline-form-grid {
   display: grid;
   grid-template-columns: minmax(260px, 1.8fr) repeat(2, minmax(120px, .7fr));
@@ -1519,6 +1742,10 @@ button {
 
   .uo-settings-item-actions {
     justify-content: flex-start;
+  }
+
+  .uo-overlay-provider-field {
+    grid-template-columns: 1fr;
   }
 
   .uo-inline-form-grid {

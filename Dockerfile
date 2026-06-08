@@ -18,7 +18,9 @@ WORKDIR /opt/oiab
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
       ca-certificates \
+      curl \
       gdal-bin \
+      unzip \
       wamerican \
     && (apt-get install -y --no-install-recommends tippecanoe || true) \
     && rm -rf /var/lib/apt/lists/*

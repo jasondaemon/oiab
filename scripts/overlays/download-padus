@@ -1,0 +1,285 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="${OIAB_DATA_DIR:-/data/oiab}/maps/overlays/padus"
+DEFAULT_SOURCE_URL="https://www.sciencebase.gov/catalog/item/6759b69fd34edfeb8710a3ea"
+DEFAULT_FILE_NAME="PADUS4_1VectorAnalysis_PADUS_Only.zip"
+SOURCE_URL="${OIAB_PADUS_SOURCE_URL:-$DEFAULT_SOURCE_URL}"
+SOURCE_FILE_NAME="${OIAB_PADUS_FILE_NAME:-$DEFAULT_FILE_NAME}"
+LAYER="${OIAB_PADUS_LAYER:-}"
+BBOX="${OIAB_PADUS_BBOX:-}"
+MINZOOM="${OIAB_PADUS_MINZOOM:-4}"
+MAXZOOM="${OIAB_PADUS_MAXZOOM:-16}"
+USER_AGENT="${OIAB_HTTP_USER_AGENT:-OIAB PAD-US downloader}"
+FORCE_DOWNLOAD="${OIAB_PADUS_FORCE_DOWNLOAD:-false}"
+
+usage() {
+  cat <<'EOF'
+Usage:
+  [OIAB_PADUS_SOURCE_URL=<file-or-url>] [OIAB_PADUS_LAYER=<layer>] [OIAB_PADUS_BBOX=minLon,minLat,maxLon,maxLat] scripts/overlays/download-padus
+
+Downloads/copies a PAD-US source, converts it to normalized GeoJSON, and builds:
+  /data/oiab/maps/overlays/padus/pmtiles/padus-protected-lands.pmtiles
+
+Default source:
+  USGS PAD-US 4.1 Vector Analysis PADUS-only ScienceBase package.
+
+Supported source forms:
+  - ScienceBase catalog item URL
+  - Direct ZIP/FileGDB/GPKG/GeoJSON/shapefile package URL
+  - Local ZIP/FileGDB/GPKG/GeoJSON path
+EOF
+}
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then usage; exit 0; fi
+command -v ogr2ogr >/dev/null || { echo "ogr2ogr/GDAL is required." >&2; exit 127; }
+command -v ogrinfo >/dev/null || { echo "ogrinfo/GDAL is required." >&2; exit 127; }
+command -v python3 >/dev/null || { echo "python3 is required." >&2; exit 127; }
+
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+mkdir -p "$ROOT/source" "$ROOT/geojson" "$ROOT/pmtiles"
+
+source_file="$ROOT/source/padus-source"
+raw_geojson="$ROOT/geojson/padus-protected-lands.raw.geojsonseq"
+geojson="$ROOT/geojson/padus-protected-lands.geojsonseq"
+pmtiles="$ROOT/pmtiles/padus-protected-lands.pmtiles"
+metadata="$ROOT/padus-protected-lands.metadata.json"
+
+resolve_sciencebase_file_url() {
+  python3 - "$SOURCE_URL" "$SOURCE_FILE_NAME" <<'PY'
+import json
+import ssl
+import sys
+import time
+import urllib.parse
+import urllib.request
+
+item_url, preferred_name = sys.argv[1:3]
+default_item_id = "6759b69fd34edfeb8710a3ea"
+
+def fetch_item(item_id):
+    api_url = f"https://www.sciencebase.gov/catalog/item/{item_id}?format=json"
+    req = urllib.request.Request(api_url, headers={"User-Agent": "OIAB PAD-US resolver"})
+    last_error = None
+    contexts = [ssl.create_default_context(), ssl._create_unverified_context()]
+    for attempt in range(1, 5):
+        for ctx in contexts:
+            try:
+                with urllib.request.urlopen(req, context=ctx, timeout=45) as fh:
+                    return json.load(fh)
+            except Exception as exc:
+                last_error = exc
+        time.sleep(attempt * 2)
+    raise SystemExit(f"Could not read ScienceBase item {item_id}: {last_error}")
+
+def choose_file(item):
+    files = item.get("files") or []
+    for entry in files:
+        name = str(entry.get("name") or "")
+        if name == preferred_name:
+            return entry
+    for entry in files:
+        name = str(entry.get("name") or "")
+        if "VectorAnalysis_PADUS_Only" in name and name.lower().endswith(".zip"):
+            return entry
+    return None
+
+item_url = item_url.split("?", 1)[0].rstrip("/")
+item_id = item_url.rsplit("/", 1)[-1]
+item = fetch_item(item_id)
+preferred = choose_file(item)
+if preferred is None and item_id != default_item_id:
+    # Existing installs may have saved the full inventory item before OIAB had a
+    # built-in source. Prefer the PADUS-only vector-analysis package for maps.
+    item_id = default_item_id
+    item = fetch_item(item_id)
+    preferred = choose_file(item)
+if preferred is None:
+    raise SystemExit(f"Could not find PAD-US vector-analysis ZIP in ScienceBase item {item_id}.")
+
+name = str(preferred.get("name") or preferred_name)
+print(f"https://www.sciencebase.gov/catalog/file/get/{item_id}?name={urllib.parse.quote(name)}")
+PY
+}
+
+download_url="$SOURCE_URL"
+if [[ "$SOURCE_URL" =~ sciencebase\.gov/catalog/item/ ]]; then
+  if [[ -s "$ROOT/source/padus-source.zip" && "$FORCE_DOWNLOAD" != "true" ]]; then
+    # ScienceBase occasionally drops API connections; do not block conversion
+    # when the requested source archive is already cached locally.
+    download_url="$ROOT/source/padus-source.zip"
+  else
+    download_url="$(resolve_sciencebase_file_url)"
+  fi
+fi
+
+if [[ "$download_url" =~ ^https?:// ]]; then
+  if [[ "$download_url" =~ \.geojson($|\?) ]]; then
+    source_file="$ROOT/source/padus-source.geojson"
+  elif [[ "$download_url" =~ \.gpkg($|\?) ]]; then
+    source_file="$ROOT/source/padus-source.gpkg"
+  elif [[ "$download_url" =~ \.gdb($|\?) ]]; then
+    source_file="$ROOT/source/padus-source.gdb"
+  else
+    source_file="$ROOT/source/padus-source.zip"
+  fi
+  if [[ -s "$source_file" && "$FORCE_DOWNLOAD" != "true" ]]; then
+    echo "Reusing existing PAD-US source: $source_file" >&2
+  else
+    curl -fL --retry 4 --retry-delay 3 --connect-timeout 30 -A "$USER_AGENT" -o "$source_file" "$download_url"
+  fi
+else
+  [[ -e "$download_url" ]] || { echo "PAD-US source does not exist: $download_url" >&2; exit 2; }
+  case "$download_url" in
+    *.zip) source_file="$ROOT/source/padus-source.zip" ;;
+    *.geojson|*.json) source_file="$ROOT/source/padus-source.geojson" ;;
+    *.gpkg) source_file="$ROOT/source/padus-source.gpkg" ;;
+    *.gdb) source_file="$ROOT/source/padus-source.gdb" ;;
+    *) source_file="$ROOT/source/padus-source" ;;
+  esac
+  if [[ "$(realpath "$download_url" 2>/dev/null || printf '%s' "$download_url")" == "$(realpath "$source_file" 2>/dev/null || printf '%s' "$source_file")" ]]; then
+    echo "Reusing existing PAD-US source: $source_file" >&2
+  elif [[ -d "$download_url" ]]; then
+    rm -rf "$source_file"
+    cp -R "$download_url" "$source_file"
+  else
+    cp "$download_url" "$source_file"
+  fi
+fi
+
+datasource="$source_file"
+if [[ "$source_file" == *.zip ]]; then
+  gdb_dir="$(python3 - "$source_file" <<'PY'
+import sys, zipfile
+zip_path = sys.argv[1]
+with zipfile.ZipFile(zip_path) as zf:
+    gdbs = sorted({name.split(".gdb/", 1)[0] + ".gdb" for name in zf.namelist() if ".gdb/" in name})
+print(gdbs[0] if gdbs else "")
+PY
+)"
+  if [[ -n "$gdb_dir" ]]; then
+    datasource="/vsizip/${source_file}/${gdb_dir}"
+  else
+    datasource="/vsizip/${source_file}"
+  fi
+fi
+
+if [[ -z "$LAYER" ]]; then
+  LAYER="$(python3 - "$datasource" <<'PY'
+import re
+import subprocess
+import sys
+
+datasource = sys.argv[1]
+proc = subprocess.run(["ogrinfo", "-ro", "-so", datasource], text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+if proc.returncode != 0:
+    print(proc.stdout, file=sys.stderr)
+    raise SystemExit(proc.returncode)
+layers = []
+for line in proc.stdout.splitlines():
+    match = re.match(r"\s*\d+:\s+(.+?)(?:\s+\(|$)", line)
+    if match:
+        layers.append(match.group(1).strip())
+        continue
+    match = re.match(r"\s*Layer:\s+(.+?)(?:\s+\(|$)", line)
+    if match:
+        layers.append(match.group(1).strip())
+if not layers:
+    raise SystemExit("No vector layers found in PAD-US source.")
+preferred_patterns = [
+    r"vector.*padus.*only",
+    r"padus.*only",
+    r"padus.*analysis",
+    r"padus.*protected",
+    r"padus",
+]
+for pattern in preferred_patterns:
+    for layer in layers:
+        if re.search(pattern, layer, re.I):
+            print(layer)
+            raise SystemExit(0)
+print(layers[0])
+PY
+)"
+fi
+
+rm -f "$raw_geojson" "$geojson" \
+  "$ROOT/geojson/padus-protected-lands.raw.geojson" \
+  "$ROOT/geojson/padus-protected-lands.geojson"
+ogr_cmd=(ogr2ogr -f GeoJSONSeq "$raw_geojson" "$datasource" "$LAYER" -t_srs EPSG:4326)
+if [[ -n "$BBOX" ]]; then
+  IFS=',' read -r min_lon min_lat max_lon max_lat <<<"$BBOX"
+  ogr_cmd+=(-clipsrc "$min_lon" "$min_lat" "$max_lon" "$max_lat")
+fi
+"${ogr_cmd[@]}"
+
+python3 - "$raw_geojson" "$geojson" "$metadata" "$download_url" "$LAYER" "$MINZOOM" "$MAXZOOM" <<'PY'
+import json
+import sys
+from datetime import datetime, timezone
+
+src, dst, metadata_path, source_url, layer, minzoom, maxzoom = sys.argv[1:8]
+
+def first(props, *names):
+    lower = {str(k).lower(): v for k, v in props.items()}
+    for name in names:
+        if name in props and props[name] not in ("", None):
+            return props[name]
+        value = lower.get(name.lower())
+        if value not in ("", None):
+            return value
+    return None
+
+count = 0
+with open(src, encoding="utf-8") as infile, open(dst, "w", encoding="utf-8") as outfile:
+    for line in infile:
+        line = line.strip()
+        if not line:
+            continue
+        feature = json.loads(line)
+        geom = feature.get("geometry")
+        if not geom:
+            continue
+        props = feature.get("properties") or {}
+        agency = first(props, "Manager_Name", "Mang_Name", "Manager", "Agency", "Own_Name", "Owner_Name", "Pub_Access", "Des_Tp", "agency")
+        unit = first(props, "Unit_Nm", "Loc_Nm", "Name", "UnitName", "FeatName", "Site_Name", "unit_name")
+        state = first(props, "State_Nm", "State", "STATE", "state")
+        manager_type = first(props, "Mang_Type", "Manager_Type", "Own_Type", "Owner_Type", "manager_type")
+        source_id = first(props, "OBJECTID", "objectid", "FID", "fid", "SourceID", "source_object_id")
+        gap_status = first(props, "GAP_Sts", "Gap_Status", "gap_status")
+        iucn_category = first(props, "IUCN_Cat", "IUCN_Category", "iucn_category")
+        access = first(props, "Access", "Pub_Access", "public_access")
+        feature["properties"] = {
+            "agency": agency,
+            "unit_name": unit,
+            "state": state,
+            "manager_type": manager_type,
+            "gap_status": gap_status,
+            "iucn_category": iucn_category,
+            "access": access,
+            "source_object_id": source_id,
+            "source": "USGS PAD-US",
+        }
+        outfile.write(json.dumps(feature, separators=(",", ":")))
+        outfile.write("\n")
+        count += 1
+
+json.dump(
+    {
+        "source": "USGS PAD-US",
+        "source_url": source_url,
+        "source_layer": layer,
+        "feature_count": count,
+        "minzoom": int(minzoom),
+        "maxzoom": int(maxzoom),
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    },
+    open(metadata_path, "w", encoding="utf-8"),
+    indent=2,
+)
+print(count)
+PY
+
+"$script_dir/build-pmtiles" "$geojson" "$pmtiles" padus_public_lands "$MINZOOM" "$MAXZOOM"
+echo "Built $pmtiles"
+echo "Run Overlay rescan in OIAB settings after this completes."

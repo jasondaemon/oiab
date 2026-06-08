@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="${OIAB_DATA_DIR:-/data/oiab}/maps/overlays/water"
+SOURCE_URL="${OIAB_NHD_SOURCE_URL:-}"
+LAYER="${OIAB_NHD_LAYER:-}"
+BBOX="${OIAB_NHD_BBOX:-}"
+MINZOOM="${OIAB_NHD_MINZOOM:-5}"
+MAXZOOM="${OIAB_NHD_MAXZOOM:-16}"
+
+usage() {
+  cat <<'EOF'
+Usage:
+  OIAB_NHD_SOURCE_URL=<file-or-url> [OIAB_NHD_LAYER=<layer>] [OIAB_NHD_BBOX=minLon,minLat,maxLon,maxLat] scripts/overlays/download-nhd
+
+Builds /data/oiab/maps/overlays/water/pmtiles/nhd-water-features.pmtiles from USGS NHD data.
+EOF
+}
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then usage; exit 0; fi
+[[ -n "$SOURCE_URL" ]] || { echo "OIAB_NHD_SOURCE_URL is required." >&2; usage >&2; exit 2; }
+command -v ogr2ogr >/dev/null || { echo "ogr2ogr/GDAL is required." >&2; exit 127; }
+
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+mkdir -p "$ROOT/source" "$ROOT/geojson" "$ROOT/pmtiles"
+source_file="$ROOT/source/nhd-source"
+raw_geojson="$ROOT/geojson/nhd-water-features.raw.geojson"
+geojson="$ROOT/geojson/nhd-water-features.geojson"
+pmtiles="$ROOT/pmtiles/nhd-water-features.pmtiles"
+
+if [[ "$SOURCE_URL" =~ ^https?:// ]]; then
+  curl -fL --retry 3 --retry-delay 2 -o "$source_file" "$SOURCE_URL"
+else
+  cp "$SOURCE_URL" "$source_file"
+fi
+
+ogr_cmd=(ogr2ogr -f GeoJSON "$raw_geojson" "$source_file" -t_srs EPSG:4326)
+[[ -n "$LAYER" ]] && ogr_cmd+=("$LAYER")
+if [[ -n "$BBOX" ]]; then
+  IFS=',' read -r min_lon min_lat max_lon max_lat <<<"$BBOX"
+  ogr_cmd+=(-clipsrc "$min_lon" "$min_lat" "$max_lon" "$max_lat")
+fi
+"${ogr_cmd[@]}"
+
+python3 - "$raw_geojson" "$geojson" <<'PY'
+import json, sys
+src, dst = sys.argv[1:3]
+data = json.load(open(src, encoding="utf-8"))
+features = []
+for feature in data.get("features", []):
+    props = feature.get("properties") or {}
+    fcode = props.get("FCode") or props.get("fcode")
+    ftype = props.get("FType") or props.get("ftype")
+    name = props.get("GNIS_Name") or props.get("gnis_name") or props.get("Name") or props.get("name")
+    flow_type = "intermittent" if str(fcode or "").startswith(("46", "33")) else "perennial"
+    feature["properties"] = {
+        "name": name,
+        "fcode": fcode,
+        "ftype": ftype,
+        "flow_type": flow_type,
+        "source": "USGS NHD",
+    }
+    features.append(feature)
+json.dump({"type": "FeatureCollection", "features": features}, open(dst, "w", encoding="utf-8"), separators=(",", ":"))
+print(len(features))
+PY
+
+"$script_dir/build-pmtiles" "$geojson" "$pmtiles" nhd_water "$MINZOOM" "$MAXZOOM"
+echo "Run Overlay rescan in OIAB settings after this completes."

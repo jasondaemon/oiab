@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="${OIAB_DATA_DIR:-/data/oiab}/maps/overlays/drought"
+SOURCE_URL="${OIAB_DROUGHT_GEOJSON_URL:-https://droughtmonitor.unl.edu/data/json/usdm_current.json}"
+
+if [[ -z "$SOURCE_URL" ]]; then
+  cat >&2 <<'EOF'
+OIAB_DROUGHT_GEOJSON_URL is optional.
+By default this script uses the official current U.S. Drought Monitor GeoJSON:
+  https://droughtmonitor.unl.edu/data/json/usdm_current.json
+
+To override it, set OIAB_DROUGHT_GEOJSON_URL to a GeoJSON snapshot/export, then run:
+  scripts/overlays/download-drought
+EOF
+  exit 2
+fi
+
+mkdir -p "$ROOT"
+curl -fL --retry 3 --retry-delay 2 -o "$ROOT/usdm-latest.geojson" "$SOURCE_URL"
+echo "$ROOT/usdm-latest.geojson"
+echo "Run Overlay rescan in OIAB settings after this completes."

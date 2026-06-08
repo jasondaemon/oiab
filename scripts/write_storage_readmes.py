@@ -106,18 +106,6 @@ Typical contents:
 Notes:
 - Administrative/security data. Keep this durable across rebuilds.
 """,
-    "iiab": """# IIAB Residual Content
-
-Purpose:
-- Legacy-named storage retained only because OIAB still uses the ZIM library path here.
-
-Typical contents:
-- zims
-
-Notes:
-- This is not an active IIAB runtime tree anymore.
-- OIAB still mounts /srv/trailer/iiab/zims for Kiwix/ZIM content.
-""",
     "jellyfin": """# Jellyfin
 
 Purpose:
@@ -160,13 +148,13 @@ Notes:
     "migration_data": """# Migration Data
 
 Purpose:
-- Consolidated legacy IIAB-era files and application trees kept for reference or recovery.
+- Consolidated pre-OIAB or migration-era files and application trees kept for reference or recovery.
 
 Typical contents:
 - Old maps-admin tree
 - Old music-player tree
 - Old system-monitor tree
-- Previous IIAB snapshots
+- Previous appliance snapshots
 
 Notes:
 - Not part of the active OIAB runtime.
@@ -262,7 +250,7 @@ Typical contents:
 - Other local web-readable knowledge bases
 
 Notes:
-- Distinct from ZIM libraries under /srv/trailer/iiab/zims.
+- Static wiki exports are distinct from ZIM libraries under /srv/trailer/wikis/zims.
 """,
 }
 
@@ -308,10 +296,10 @@ Typical contents:
 Notes:
 - OIAB scans this library for local music playback and artwork extraction.
 """,
-    "iiab/zims": """# ZIM Library
+    "wikis/zims": """# ZIM Library
 
 Purpose:
-- Offline ZIM archives still used by OIAB through Kiwix.
+- Offline ZIM archives served by OIAB through Kiwix.
 
 Typical contents:
 - Wikipedia ZIMs
@@ -319,7 +307,7 @@ Typical contents:
 - Other packaged offline knowledge archives
 
 Notes:
-- The directory name is legacy, but the content is still active in OIAB.
+- This is active OIAB user content and should live on durable storage.
 """,
 }
 

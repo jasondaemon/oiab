@@ -54,7 +54,7 @@ OIAB_MEDIA_DIR=/srv/trailer/media
 OIAB_MUSIC_DIR=/srv/trailer/media/music
 OIAB_BOOKS_DIR=/srv/trailer/media/books/Ebooks
 OIAB_COMICS_DIR=/srv/trailer/media/books/Comics
-OIAB_ZIM_DIR=/srv/trailer/iiab/zims
+OIAB_ZIM_DIR=/srv/trailer/wikis/zims
 OIAB_ROMS_DIR=/srv/trailer/roms
 OIAB_MINECRAFT_DIR=/srv/trailer/minecraft
 ```

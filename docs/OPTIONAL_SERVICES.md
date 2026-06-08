@@ -73,7 +73,7 @@ Current implementation runs `docker compose` from the OIAB repo directory when D
 ## Content Paths
 
 ```text
-/srv/trailer/iiab/zims -> /data/oiab/content/zim
+/srv/trailer/wikis/zims -> /data/oiab/content/zim
 /srv/trailer/media -> /data/oiab/media
 /srv/trailer/media/books/Ebooks -> /data/oiab/media/books
 /srv/trailer/media/books/Comics -> /data/oiab/media/comics
@@ -90,7 +90,7 @@ Kiwix expects ZIM content under `/data/oiab/content/zim`. The first compose prof
 
 File Browser is the drag-and-drop file manager used for bulk LAN uploads. It is intentionally separate from the lightweight built-in upload page. Configure credentials and any File Browser auth policy outside git under `/data/oiab/services/filebrowser/config`.
 
-Legacy libraries and static wikis can be linked or copied into the OIAB data layout with:
+Existing libraries and static wikis can be linked or copied into the OIAB data layout with:
 
 ```bash
 OIAB_DATA_DIR=/data/oiab scripts/migrate-legacy-content.sh

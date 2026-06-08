@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage:
+  build-pmtiles INPUT.geojson OUTPUT.pmtiles LAYER_NAME [MINZOOM] [MAXZOOM]
+
+Builds a PMTiles vector overlay from GeoJSON using tippecanoe + pmtiles.
+
+Environment:
+  OIAB_TIPPECANOE_EXTRA_ARGS   extra tippecanoe flags
+
+Example:
+  scripts/overlays/build-pmtiles /data/oiab/maps/overlays/padus/geojson/padus-protected-lands.geojson \
+    /data/oiab/maps/overlays/padus/pmtiles/padus-protected-lands.pmtiles padus_public_lands 4 16
+EOF
+}
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" || $# -lt 3 ]]; then
+  usage
+  exit $([[ $# -lt 3 ]] && echo 2 || echo 0)
+fi
+
+input="$1"
+output="$2"
+layer="$3"
+minzoom="${4:-4}"
+maxzoom="${5:-16}"
+
+command -v tippecanoe >/dev/null || { echo "tippecanoe is required." >&2; exit 127; }
+command -v pmtiles >/dev/null || { echo "pmtiles CLI is required." >&2; exit 127; }
+[[ -f "$input" ]] || { echo "Input does not exist: $input" >&2; exit 2; }
+
+mkdir -p "$(dirname "$output")"
+tmp_mbtiles="${output%.pmtiles}.mbtiles"
+rm -f "$tmp_mbtiles" "$output"
+
+# shellcheck disable=SC2206
+extra_args=(${OIAB_TIPPECANOE_EXTRA_ARGS:-})
+tippecanoe \
+  -o "$tmp_mbtiles" \
+  -l "$layer" \
+  "-Z${minzoom}" \
+  "-z${maxzoom}" \
+  --force \
+  -P \
+  -pf \
+  -pk \
+  "${extra_args[@]}" \
+  "$input"
+
+pmtiles convert "$tmp_mbtiles" "$output"
+echo "$output"

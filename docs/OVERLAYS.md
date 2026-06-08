@@ -29,6 +29,104 @@ Overlay types are intentionally separate:
 - Install/generated overlays: MVUM source data converted into normalized GeoJSON and PMTiles, plus offline USGS contour generation.
 - Imported map overlays: georeferenced PDFs rendered into local raster tiles.
 
+## Overlay Expansion Pack
+
+The overlay registry now supports broader categories for trip-planning data:
+
+```text
+Land & Boundaries
+Water
+Weather & Forecasts
+Fire & Smoke
+Sky & Satellite
+Camping & Recreation
+Connectivity
+User / Imported
+```
+
+Every catalog overlay carries metadata for display name, category, data mode, source type, cache policy, min/max zoom, opacity, legend, attribution, refresh/install status, and tap behavior. Heavy datasets remain disabled/unavailable until a source file is generated or a provider URL/key is configured.
+
+New catalog overlays:
+
+| Overlay | Data mode | Status |
+| --- | --- | --- |
+| PAD-US Protected Lands | offline PMTiles | defaults to the USGS PAD-US 4.1 Vector Analysis PADUS-only ScienceBase package; optionally override with `OIAB_PADUS_SOURCE_URL` |
+| NHD Water Features | offline PMTiles | build from `OIAB_NHD_SOURCE_URL` using `scripts/overlays/download-nhd` |
+| RIDB Recreation Sites | cached GeoJSON | refresh with `OIAB_RIDB_API_KEY` plus bbox, or convert the official `RIDBFullExport_V1_JSON.zip` from `OIAB_RIDB_SOURCE_URL` |
+| Snow Depth | online NOAA raster | online-only |
+| Drought Monitor | cached GeoJSON | defaults to official current USDM GeoJSON; optional `OIAB_DROUGHT_GEOJSON_URL` override |
+| USGS Stream Gauges | cached GeoJSON | refresh with bbox from USGS NWIS |
+| Wind Forecast | placeholder | set `OIAB_WIND_FORECAST_TILE_URL` before enabling |
+| Smoke Forecast | placeholder | set `OIAB_SMOKE_FORECAST_TILE_URL` before enabling |
+| Dark Sky | offline raster tiles | build from `OIAB_DARKSKY_SOURCE_URL` using `scripts/overlays/build-darksky` |
+| NASA GIBS Satellite | placeholder | set `OIAB_GIBS_TILE_URL` before enabling |
+| Recent Lightning | cached GeoJSON | set `OIAB_LIGHTNING_GEOJSON_URL` |
+| FCC Connectivity | provider PMTiles hook | import/build provider data manually |
+| Parcel Import | provider PMTiles hook | import provider-specific PMTiles manually |
+
+Refresh endpoints:
+
+```text
+POST /api/maps/overlays/<overlay_id>/refresh
+POST /api/maps/overlays
+  {"action":"refresh-overlay","id":"<overlay_id>"}
+```
+
+Supported lightweight refreshes today:
+
+```text
+ridb_recreation_sites
+drought_monitor
+stream_gauges_usgs
+lightning_recent
+firms_active_hotspots
+nws_active_alerts
+blm_sma_cached
+blm_wilderness_wsa_cached
+usgs_topographic_contours
+```
+
+Heavy vector/raster build scripts:
+
+```text
+scripts/overlays/download-padus
+scripts/overlays/download-nhd
+scripts/overlays/download-drought
+scripts/overlays/download-ridb
+scripts/overlays/build-darksky
+scripts/overlays/build-pmtiles
+```
+
+Managed output paths:
+
+```text
+/data/oiab/maps/overlays/padus/pmtiles/padus-protected-lands.pmtiles
+/data/oiab/maps/overlays/water/pmtiles/nhd-water-features.pmtiles
+/data/oiab/maps/overlays/water/usgs-stream-gauges-latest.geojson
+/data/oiab/maps/overlays/ridb/ridb-recreation-sites-latest.geojson
+/data/oiab/maps/overlays/drought/usdm-latest.geojson
+/data/oiab/maps/overlays/darksky/tiles/{z}/{x}/{y}.png
+```
+
+Source/cache directories under `padus/source`, `water/source`, `public-lands/source`, `darksky/source`, `contours/regions`, and `weather/forecast-cache` are excluded from local overlay auto-registration so generated working files do not show up as duplicate user overlays.
+
+## Provider setup guidance
+
+Settings → Maps → Overlays shows a collapsed **Details & Source** section for every provider-backed overlay. That section explains where to get the required key/package and what to paste into OIAB.
+
+Recommended configuration by source:
+
+| Overlay | User input | Source |
+| --- | --- | --- |
+| Wildfire Hotspots | Paste a free NASA FIRMS `MAP_KEY` | <https://firms.modaps.eosdis.nasa.gov/api/map_key/> |
+| RIDB Recreation Sites | Paste a RIDB API key for bbox refreshes, or paste `https://ridb.recreation.gov/downloads/RIDBFullExport_V1_JSON.zip` as the source URL for a national offline cache | <https://ridb.recreation.gov/docs> |
+| Drought Monitor | No input required; built-in current GeoJSON is used | <https://droughtmonitor.unl.edu/DmData/GISData.aspx> |
+| PAD-US Protected Lands | Optional direct USGS PAD-US package URL. Leave blank to use the built-in PAD-US 4.1 Vector Analysis PADUS-only package. | <https://www.usgs.gov/programs/gap-analysis-project/science/pad-us-data-download> |
+| NHD Water Features | Optional direct USGS NHD package URL | <https://apps.nationalmap.gov/downloader/> |
+| Wind / Smoke / GIBS / Lightning / FCC / Dark Sky | Advanced provider URL only | See each overlay's Details & Source section |
+
+Do not paste web landing pages into source URL fields. Use direct downloadable data packages, direct GeoJSON snapshots, or tile templates as described by each overlay. Key-based overlays should use the API key field, not a source URL.
+
 ## USGS Topo
 
 USGS Topo is currently an online raster overlay using The National Map `USGSTopo` ArcGIS tile endpoint:

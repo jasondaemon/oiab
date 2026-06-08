@@ -13,7 +13,7 @@
       "id": "background",
       "type": "background",
       "paint": {
-        "background-color": "#e2dfda"
+        "background-color": "#e7e3d8"
       }
     },
     {
@@ -37,7 +37,7 @@
         false
       ],
       "paint": {
-        "fill-color": "#e2dfda"
+        "fill-color": "#e7e3d8"
       }
     },
     {
@@ -53,18 +53,18 @@
             "kind"
           ],
           "grassland",
-          "#d7edc9",
+          "#cfe7bd",
           "barren",
-          "#fff3d7",
+          "#eadfbd",
           "urban_area",
-          "#e7e3dc",
+          "#ded9cf",
           "farmland",
-          "#daeccb",
+          "#d9e7c4",
           "glacier",
           "#e8fbfa",
           "scrub",
-          "#dbeac4",
-          "#cfeac7"
+          "#c9dfb1",
+          "#bfd8ad"
         ],
         "fill-opacity": [
           "interpolate",
@@ -74,10 +74,14 @@
           [
             "zoom"
           ],
-          5,
-          1,
+          4,
+          0.95,
           7,
-          0
+          0.58,
+          10,
+          0.36,
+          13,
+          0.22
         ]
       }
     },
@@ -120,10 +124,14 @@
           [
             "zoom"
           ],
-          6,
-          0,
+          5,
+          0.42,
+          8,
+          0.64,
           11,
-          1
+          0.82,
+          14,
+          0.72
         ],
         "fill-color": [
           "case",
@@ -137,12 +145,11 @@
               "literal",
               [
                 "national_park",
-                "park",
                 "protected_area"
               ]
             ]
           ],
-          "#e9dccb",
+          "#b7d7a6",
           [
             "in",
             [
@@ -152,13 +159,27 @@
             [
               "literal",
               [
-                "nature_reserve",
+                "park",
+                "nature_reserve"
+              ]
+            ]
+          ],
+          "#acd49d",
+          [
+            "in",
+            [
+              "get",
+              "kind"
+            ],
+            [
+              "literal",
+              [
                 "forest",
                 "wood"
               ]
             ]
           ],
-          "#cfe8cf",
+          "#9fc792",
           [
             "in",
             [
@@ -175,7 +196,7 @@
               ]
             ]
           ],
-          "#c5e6bb",
+          "#bee4aa",
           [
             "in",
             [
@@ -190,8 +211,8 @@
               ]
             ]
           ],
-          "#f3d7d7",
-          "#d7ead4"
+          "#efc8cf",
+          "#bfd8ad"
         ]
       }
     },
@@ -215,8 +236,8 @@
         false
       ],
       "paint": {
-        "fill-color": "#9cd3b4",
-        "fill-opacity": 0.7
+        "fill-color": "#a8d79c",
+        "fill-opacity": 0.82
       }
     },
     {
@@ -233,7 +254,7 @@
         "hospital"
       ],
       "paint": {
-        "fill-color": "#f1dddd"
+        "fill-color": "#ead2d4"
       }
     },
     {
@@ -250,7 +271,7 @@
         "industrial"
       ],
       "paint": {
-        "fill-color": "#ddd8cf"
+        "fill-color": "#d8d2c7"
       }
     },
     {
@@ -273,7 +294,7 @@
         false
       ],
       "paint": {
-        "fill-color": "#efe5d5"
+        "fill-color": "#eadfc9"
       }
     },
     {
@@ -294,7 +315,7 @@
         false
       ],
       "paint": {
-        "fill-color": "#f4e9c9"
+        "fill-color": "#f1dfaa"
       }
     },
     {
@@ -315,7 +336,7 @@
         false
       ],
       "paint": {
-        "fill-color": "#d8eddb"
+        "fill-color": "#a9d8a3"
       }
     },
     {
@@ -336,7 +357,7 @@
         false
       ],
       "paint": {
-        "fill-color": "#dceff3"
+        "fill-color": "#d6e4e2"
       }
     },
     {
@@ -449,7 +470,7 @@
         false
       ],
       "paint": {
-        "fill-color": "#80deea"
+        "fill-color": "#63c7d9"
       }
     },
     {
@@ -471,8 +492,24 @@
         false
       ],
       "paint": {
-        "line-color": "#80deea",
-        "line-width": 0.5
+        "line-color": "#32b8d0",
+        "line-width": [
+          "interpolate",
+          [
+            "linear"
+          ],
+          [
+            "zoom"
+          ],
+          6,
+          0.45,
+          10,
+          0.75,
+          14,
+          1.25,
+          18,
+          2.2
+        ]
       }
     },
     {
@@ -494,7 +531,7 @@
         false
       ],
       "paint": {
-        "line-color": "#80deea",
+        "line-color": "#32b8d0",
         "line-width": [
           "interpolate",
           [
@@ -504,12 +541,16 @@
           [
             "zoom"
           ],
+          7,
+          0.4,
           9,
-          0,
-          9.5,
-          1,
+          1.1,
+          12,
+          2.4,
+          16,
+          8,
           18,
-          12
+          13
         ]
       }
     },
@@ -2668,9 +2709,9 @@
         "text-letter-spacing": 0.2
       },
       "paint": {
-        "text-color": "#728dd4",
-        "text-halo-color": "#80deea",
-        "text-halo-width": 1
+        "text-color": "#247b9a",
+        "text-halo-color": "#d8f1f3",
+        "text-halo-width": 1.2
       }
     },
     {
@@ -2865,9 +2906,9 @@
         "text-transform": "uppercase"
       },
       "paint": {
-        "text-color": "#728dd4",
-        "text-halo-width": 1,
-        "text-halo-color": "#80deea"
+        "text-color": "#247b9a",
+        "text-halo-width": 1.2,
+        "text-halo-color": "#d8f1f3"
       }
     },
     {
@@ -2967,9 +3008,9 @@
         "text-max-width": 9
       },
       "paint": {
-        "text-color": "#728dd4",
-        "text-halo-color": "#80deea",
-        "text-halo-width": 1
+        "text-color": "#247b9a",
+        "text-halo-color": "#d8f1f3",
+        "text-halo-width": 1.2
       }
     },
     {

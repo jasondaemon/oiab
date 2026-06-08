@@ -65,7 +65,7 @@ services:
       - "${OIAB_MUSIC_DIR:-/srv/trailer/media/music}:/data/oiab/media/music"
       - "${OIAB_BOOKS_DIR:-/srv/trailer/media/books/Ebooks}:/data/oiab/media/books"
       - "${OIAB_COMICS_DIR:-/srv/trailer/media/books/Comics}:/data/oiab/media/comics"
-      - "${OIAB_ZIM_DIR:-/srv/trailer/iiab/zims}:/data/oiab/content/zim"
+      - "${OIAB_ZIM_DIR:-/srv/trailer/wikis/zims}:/data/oiab/content/zim"
       - "${OIAB_WIKIS_DIR:-/srv/trailer/wikis}:/data/oiab/content/wikis"
       - "${OIAB_ROMS_DIR:-/srv/trailer/roms}:/data/oiab/games/roms"
       - "${JELLYFIN_CONFIG_DIR:-/srv/trailer/jellyfin/config}:/data/oiab/services/jellyfin/config"

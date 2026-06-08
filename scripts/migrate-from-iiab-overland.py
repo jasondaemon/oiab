@@ -16,7 +16,7 @@ def copy_if_exists(src: Path, dst: Path) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Scaffold migration from an existing iiab-overland install into OIAB data paths.")
+    parser = argparse.ArgumentParser(description="Scaffold migration from an existing pre-OIAB Overland install into OIAB data paths.")
     parser.add_argument("--source-data", default="/srv/trailer/maps-admin/data", help="legacy maps-admin data directory")
     parser.add_argument("--target-data", default="/data/oiab", help="OIAB_DATA_DIR")
     args = parser.parse_args()
@@ -33,4 +33,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

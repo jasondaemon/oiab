@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import hashlib
+import os
 import re
 import shutil
 import sqlite3
@@ -2125,6 +2126,25 @@ class AppDB:
         overlays_dir = self.settings.data_dir / "maps" / "overlays"
         overlays_dir.mkdir(parents=True, exist_ok=True)
         imported = 0
+
+        def is_non_renderable_overlay_artifact(path: Path, rel_key: str) -> bool:
+            name = path.name.lower()
+            if name == "metadata.json" or name.endswith(".metadata.json"):
+                return True
+            if name.endswith((".mbtiles", ".mbtiles-journal", ".geojsonseq", ".part")):
+                return True
+            if ".raw." in name:
+                return True
+            return (
+                rel_key.startswith("mvum/source/")
+                or rel_key.startswith("padus/source/")
+                or rel_key.startswith("water/source/")
+                or rel_key.startswith("public-lands/source/")
+                or rel_key.startswith("darksky/source/")
+                or rel_key.startswith("contours/regions/")
+                or rel_key.startswith("weather/forecast-cache/")
+            )
+
         catalog_overlays = self.map_overlay_catalog().get("overlays", [])
         catalog_paths: set[Path] = set()
         catalog_rel_paths: set[str] = set()
@@ -2133,6 +2153,14 @@ class AppDB:
             "mvum/pmtiles/mvum-roads-us.pmtiles",
             "mvum/geojson/mvum-trails-us.geojson",
             "mvum/pmtiles/mvum-trails-us.pmtiles",
+            "padus/geojson/padus-protected-lands.geojson",
+            "padus/pmtiles/padus-protected-lands.pmtiles",
+            "water/geojson/nhd-water-features.geojson",
+            "water/pmtiles/nhd-water-features.pmtiles",
+            "water/usgs-stream-gauges-latest.geojson",
+            "ridb/ridb-recreation-sites-latest.geojson",
+            "drought/usdm-latest.geojson",
+            "weather/lightning-latest.geojson",
             "public-lands/blm-sma-latest.geojson",
             "public-lands/blm-sma-latest.pmtiles",
             "public-lands/blm-wilderness-latest.geojson",
@@ -2177,11 +2205,7 @@ class AppDB:
                     except ValueError:
                         rel_key = candidate.name
                     outside_public_root = not self.overlay_path_is_public(candidate)
-                    is_mvum_source = rel_key.startswith("mvum/source/")
-                    is_public_land_source = rel_key.startswith("public-lands/source/")
-                    is_contour_region = rel_key.startswith("contours/regions/")
-                    is_weather_forecast_cache = rel_key.startswith("weather/forecast-cache/")
-                    if outside_public_root or is_mvum_source or is_public_land_source or is_contour_region or is_weather_forecast_cache or candidate.resolve() in catalog_paths or rel_key in catalog_rel_paths:
+                    if outside_public_root or is_non_renderable_overlay_artifact(candidate, rel_key) or candidate.resolve() in catalog_paths or rel_key in catalog_rel_paths:
                         conn.execute("DELETE FROM map_overlays WHERE id = ?", (row["id"],))
         scanned = 0
         local_files = [
@@ -2193,13 +2217,7 @@ class AppDB:
                 rel_key = "/".join(path.relative_to(overlays_dir).parts)
             except ValueError:
                 rel_key = path.name
-            if rel_key.startswith("mvum/source/"):
-                continue
-            if rel_key.startswith("public-lands/source/"):
-                continue
-            if rel_key.startswith("contours/regions/"):
-                continue
-            if rel_key.startswith("weather/forecast-cache/"):
+            if is_non_renderable_overlay_artifact(path, rel_key):
                 continue
             if path.resolve() in catalog_paths or rel_key in catalog_rel_paths:
                 continue
@@ -2308,6 +2326,8 @@ class AppDB:
             "install_status": metadata.get("install_status") or "",
             "error_message": metadata.get("error_message") or "",
             "warning": metadata.get("warning") or "",
+            "source_instructions": metadata.get("source_instructions") or "",
+            "source_links": metadata.get("source_links") if isinstance(metadata.get("source_links"), list) else [],
             "feature_count": metadata.get("feature_count"),
             "source_size_bytes": metadata.get("source_size_bytes"),
             "layer_order": metadata.get("layer_order", row["sort_order"]),
@@ -2318,6 +2338,89 @@ class AppDB:
             "created": row["created_at"],
             "updated": row["updated_at"],
         }
+        provider_fields = metadata.get("provider_fields") if isinstance(metadata.get("provider_fields"), list) else []
+        item_provider_fields = []
+        for field in provider_fields:
+            if not isinstance(field, dict):
+                continue
+            field_key = str(field.get("key") or "").strip()
+            if not field_key:
+                continue
+            saved_value = self.map_overlay_provider_value(row["id"], field_key, "")
+            if row["id"] == "firms_active_hotspots" and field_key == "api_key" and not saved_value:
+                saved_value = str(self.app_setting("firms_map_key", "") or "").strip()
+            env_name = str(field.get("env") or "").strip()
+            env_value = str(os.environ.get(env_name, "") or "").strip() if env_name else ""
+            default_value = str(field.get("default") or "").strip()
+            effective_value = saved_value or env_value or default_value
+            secret = bool(field.get("secret"))
+            item_provider_fields.append(
+                {
+                    **field,
+                    "configured": bool(effective_value),
+                    "value": "" if secret else effective_value,
+                    "saved": bool(saved_value),
+                    "source": "saved" if saved_value else "env" if env_value else "default" if default_value else "",
+                }
+            )
+        if item_provider_fields:
+            item["provider_fields"] = item_provider_fields
+        source_url_env = str(metadata.get("source_url_env") or "").strip()
+        api_key_env = str(metadata.get("api_key_env") or "").strip()
+        if source_url_env:
+            configured_source_url = (
+                self.map_overlay_provider_value(row["id"], "source_url", "")
+                or str(os.environ.get(source_url_env, "") or "").strip()
+                or str(metadata.get("default_source_url") or "").strip()
+            )
+            item["source_url_env"] = source_url_env
+            item["source_url_configured"] = bool(configured_source_url)
+            if configured_source_url:
+                item["configured_source_url"] = configured_source_url
+                if item["type"] == "raster" and item["source_type"] in {"raster_xyz", "raster_wms", "arcgis_raster"}:
+                    item["url_template"] = configured_source_url
+                    item["tiles"] = [configured_source_url]
+                    item["online_available"] = True
+                    item["available"] = True
+                    item["online_only"] = item["cache_mode"] == "none"
+                    if item["cache_mode"] == "none":
+                        item["install_status"] = "online_only"
+                elif item["install_status"] in {"source_url_not_configured", "not_configured", ""}:
+                    item["install_status"] = "ready"
+            elif item["install_status"] in {"", "available", "ready"} and not item["exists"]:
+                item["install_status"] = "source_url_not_configured"
+        if api_key_env:
+            key_configured = bool(
+                self.map_overlay_provider_value(row["id"], "api_key", "")
+                or str(os.environ.get(api_key_env, "") or "").strip()
+            )
+            item["api_key_env"] = api_key_env
+            item["key_configured"] = key_configured
+            if not key_configured and not item["exists"]:
+                item["install_status"] = "api_key_missing"
+                item["error_message"] = item["error_message"] or f"{api_key_env} is required for live refresh."
+        required_tools = metadata.get("tool_requirements") if isinstance(metadata.get("tool_requirements"), list) else []
+        if required_tools:
+            tools = {str(tool): bool(shutil.which(str(tool))) for tool in required_tools}
+            missing_tools = [tool for tool, present in tools.items() if not present]
+            item["tools"] = {**(item.get("tools") if isinstance(item.get("tools"), dict) else {}), **tools}
+            item["required_tools"] = required_tools
+            item["missing_tools"] = missing_tools
+            item["missing_required_tools"] = missing_tools
+            if missing_tools and not item["exists"]:
+                item["install_status"] = "missing_tools"
+                item["error_message"] = item["error_message"] or "Missing required overlay tools: " + ", ".join(missing_tools)
+        refresh_action = str(metadata.get("refresh_action") or "").strip()
+        if refresh_action:
+            item["refresh_action"] = refresh_action
+            item["refresh_available"] = bool(
+                item["exists"]
+                or item.get("source_url_configured")
+                or item.get("key_configured")
+                or item["id"] in {"nws_active_alerts", "firms_active_hotspots", "stream_gauges_usgs"}
+            )
+            if item.get("api_key_env") and not item.get("key_configured"):
+                item["refresh_available"] = False
         if is_geopdf:
             item["local_path"] = row["path"]
             item["offline_available"] = bool(row["offline_available"] and exists)
@@ -2376,7 +2479,7 @@ class AppDB:
                         item["error_message"] = ""
                 item["cache_status"] = "not_cached"
         if item["id"] == "firms_active_hotspots":
-            stored_key = str(self.app_setting("firms_map_key", "") or "").strip()
+            stored_key = str(self.map_overlay_provider_value("firms_active_hotspots", "api_key", "") or self.app_setting("firms_map_key", "") or "").strip()
             env_key = str(self.settings.firms_map_key or "").strip()
             key_configured = bool(stored_key or env_key)
             item["key_configured"] = key_configured
@@ -2688,13 +2791,50 @@ class AppDB:
                 (key, json_dumps(value), now_iso()),
             )
 
+    def map_overlay_setting_key(self, overlay_id: str, field: str) -> str:
+        safe_overlay = re.sub(r"[^a-zA-Z0-9_.:-]+", "_", str(overlay_id or "").strip())
+        safe_field = re.sub(r"[^a-zA-Z0-9_.:-]+", "_", str(field or "").strip())
+        return f"map_overlay.{safe_overlay}.{safe_field}"
+
+    def map_overlay_provider_value(self, overlay_id: str, field: str, default: str = "") -> str:
+        return str(self.app_setting(self.map_overlay_setting_key(overlay_id, field), default) or "").strip()
+
+    def set_map_overlay_provider_settings(self, overlay_id: str, values: dict[str, Any]) -> dict[str, Any]:
+        overlay_id = str(overlay_id or "").strip()
+        if not overlay_id:
+            raise ValueError("Overlay id is required.")
+        catalog = {str(item.get("id")): item for item in self.map_overlay_catalog().get("overlays", [])}
+        metadata = catalog.get(overlay_id)
+        if not metadata:
+            raise ValueError("Map overlay not found.")
+        allowed = {str(field.get("key")) for field in metadata.get("provider_fields", []) if isinstance(field, dict) and field.get("key")}
+        if metadata.get("source_url_env"):
+            allowed.add("source_url")
+        if metadata.get("api_key_env"):
+            allowed.add("api_key")
+        if not allowed:
+            raise ValueError("This overlay has no editable provider settings.")
+        for key, raw_value in values.items():
+            key = str(key or "").strip()
+            if key not in allowed:
+                continue
+            value = str(raw_value or "").strip()
+            if len(value) > 4000:
+                raise ValueError(f"{key} is too long.")
+            self.set_app_setting(self.map_overlay_setting_key(overlay_id, key), value)
+            if overlay_id == "firms_active_hotspots" and key == "api_key":
+                self.set_app_setting("firms_map_key", value)
+        self.rescan_map_overlays()
+        return self.map_overlay_registry()
+
     def firms_map_key(self) -> str:
-        stored = str(self.app_setting("firms_map_key", "") or "").strip()
+        stored = str(self.map_overlay_provider_value("firms_active_hotspots", "api_key", "") or self.app_setting("firms_map_key", "") or "").strip()
         return stored or str(self.settings.firms_map_key or "").strip()
 
     def set_firms_map_key(self, value: str) -> dict[str, Any]:
         key = str(value or "").strip()
         self.set_app_setting("firms_map_key", key)
+        self.set_app_setting(self.map_overlay_setting_key("firms_active_hotspots", "api_key"), key)
         registry = self.map_overlay_registry()
         registry["firms_key_configured"] = bool(key)
         return registry

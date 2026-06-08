@@ -49,10 +49,6 @@
     .subdetails-body { padding:0 14px 14px; }
     .overlay-group { margin-top:16px; }
     .overlay-status { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
-    .readiness-grid { display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); margin:14px 0 4px; }
-    .readiness-card { border:1px solid var(--line); border-radius:18px; padding:14px; background:rgba(0,0,0,.14); }
-    .readiness-card strong { display:block; margin:6px 0; font-size:1.05rem; }
-    .readiness-card ul { margin:8px 0 0; padding-left:18px; color:var(--muted); }
     .modal-backdrop { position:fixed; inset:0; z-index:20; display:grid; place-items:center; padding:18px; background:rgba(0,0,0,.62); }
     .modal-backdrop[hidden] { display:none; }
     .modal-card { width:min(720px,100%); max-height:min(760px,88vh); overflow:auto; padding:22px; border:1px solid var(--line); border-radius:28px; background:linear-gradient(145deg,rgba(39,82,50,.98),rgba(8,29,18,.98)); box-shadow:0 24px 90px rgba(0,0,0,.48); }
@@ -135,7 +131,6 @@
     const packsNode = document.getElementById("packs");
     const catalogNode = document.getElementById("catalog");
     const overlaysNode = document.getElementById("overlays");
-    const overlayReadinessNode = document.getElementById("overlayReadiness");
     const message = document.getElementById("message");
     const fmt = new Intl.NumberFormat();
     let installedPacks = [];
@@ -216,13 +211,13 @@
     async function overlayRefresh(id) {
       if (id === "firms_active_hotspots") return fetchJson("/api/maps/overlays/wildfire/refresh", {method: "POST"});
       if (id === "nws_active_alerts") return fetchJson("/api/maps/overlays/weather/alerts/refresh", {method: "POST"});
-      throw new Error("This overlay does not have a refresh action yet.");
+      return fetchJson(`/api/maps/overlays/${encodeURIComponent(id)}/refresh`, {method: "POST"});
     }
 
     async function overlayInstall(overlay) {
       if (overlay.id === "mvum_roads_us") return fetchJson("/api/maps/overlays/mvum/roads/install", {method: "POST"});
       if (overlay.id === "mvum_trails_us") return fetchJson("/api/maps/overlays/mvum/trails/install", {method: "POST"});
-      throw new Error("This overlay does not have an install workflow yet.");
+      return overlayRefresh(overlay.id);
     }
 
     async function saveFirmsKey(mapKey) {
@@ -419,10 +414,15 @@
     function overlayCategoryLabel(category) {
       return ({
         topo: "Topo",
+        imagery: "Sky & Satellite",
         mvum: "MVUM",
         wildfire: "Wildfire",
         weather: "Weather",
+        water: "Water",
         public_lands: "Public Lands",
+        sky_satellite: "Sky & Satellite",
+        camping_recreation: "Camping & Recreation",
+        connectivity: "Connectivity",
         geopdf: "GeoPDF Maps",
         user: "User Overlays"
       })[category || "user"] || String(category || "User Overlays").replace(/_/g, " ");
@@ -441,81 +441,25 @@
       return available ? "" : "missing";
     }
 
-    function byOverlayId(id) {
-      return overlaySources.find((overlay) => overlay.id === id) || {};
-    }
-
-    function yesNo(value) {
-      return value ? "yes" : "no";
-    }
-
-    function readinessBadge(ok, text) {
-      return `<span class="badge ${ok ? "" : "missing"}">${text}</span>`;
-    }
-
-    function renderOverlayReadiness() {
-      const usgs = byOverlayId("usgs_topo");
-      const roads = byOverlayId("mvum_roads_us");
-      const trails = byOverlayId("mvum_trails_us");
-      const firms = byOverlayId("firms_active_hotspots");
-      const nws = byOverlayId("nws_active_alerts");
-      const mvumLines = (overlay) => {
-        const missingRequired = overlay.missing_required_tools || overlay.missing_tools || [];
-        const missingOptional = overlay.missing_optional_tools || [];
-        return `
-          <li>Source: ${overlay.source_url_configured ? `${overlay.mvum_source_mode || "configured"} configured` : "missing"}</li>
-          <li>Required tools: ${missingRequired.length ? `missing ${missingRequired.join(", ")}` : "ready"}</li>
-          <li>Optional PMTiles tools: ${missingOptional.length ? `missing ${missingOptional.join(", ")}; GeoJSON fallback still works` : "ready"}</li>
-          <li>Installed/cache: ${overlay.cache_status || "not_cached"}${overlay.last_fetch_at ? ` · ${overlay.last_fetch_at}` : ""}</li>
-        `;
-      };
-      overlayReadinessNode.innerHTML = `
-        <div class="readiness-grid">
-          <article class="readiness-card">
-            ${readinessBadge(Boolean(usgs.configured_url || usgs.tiles?.length), "Online")}
-            <strong>USGS Topo</strong>
-            <ul>
-              <li>Online-only raster overlay.</li>
-              <li>URL configured: ${yesNo(usgs.configured_url || usgs.tiles?.length)}</li>
-              <li>Enabled: ${yesNo(usgs.enabled)}</li>
-            </ul>
-          </article>
-          <article class="readiness-card">
-            ${readinessBadge(Boolean(roads.install_available || roads.exists), roads.exists ? "Installed" : roads.install_available ? "Ready" : "Blocked")}
-            <strong>MVUM Roads</strong>
-            <ul>${mvumLines(roads)}</ul>
-          </article>
-          <article class="readiness-card">
-            ${readinessBadge(Boolean(trails.install_available || trails.exists), trails.exists ? "Installed" : trails.install_available ? "Ready" : "Blocked")}
-            <strong>MVUM Trails</strong>
-            <ul>${mvumLines(trails)}</ul>
-          </article>
-          <article class="readiness-card">
-            ${readinessBadge(Boolean(firms.key_configured), firms.key_configured ? "Key configured" : "Needs key")}
-            <strong>Wildfire / NASA FIRMS</strong>
-            <ul>
-              <li>MAP_KEY configured: ${yesNo(firms.key_configured)}</li>
-              <li>Cached snapshot: ${yesNo(firms.exists)}</li>
-              <li>Last refresh: ${firms.last_fetch_at || "never"}</li>
-              <li>Status: ${firms.cache_status || "not_cached"}</li>
-            </ul>
-          </article>
-          <article class="readiness-card">
-            ${readinessBadge(true, "No key")}
-            <strong>NWS Weather Alerts</strong>
-            <ul>
-              <li>NWS API is available without a key.</li>
-              <li>Cached snapshot: ${yesNo(nws.exists)}</li>
-              <li>Last refresh: ${nws.last_fetch_at || "never"}</li>
-              <li>Status: ${nws.cache_status || "not_cached"}</li>
-            </ul>
-          </article>
-        </div>
-      `;
-    }
-
     function renderOverlays() {
-      const groups = ["topo", "mvum", "wildfire", "weather", "public_lands", "geopdf", "user"]
+      const orderedCategories = [
+        "public_lands",
+        "water",
+        "topo",
+        "weather",
+        "wildfire",
+        "sky_satellite",
+        "imagery",
+        "camping_recreation",
+        "connectivity",
+        "geopdf",
+        "user"
+      ];
+      const seen = new Set(orderedCategories);
+      const extraCategories = [...new Set(overlaySources.map((overlay) => overlay.category || "user"))]
+        .filter((category) => !seen.has(category))
+        .sort();
+      const groups = [...orderedCategories, ...extraCategories]
         .map(category => [category, overlaySources.filter(overlay => (overlay.category || "user") === category)])
         .filter(([, items]) => items.length);
       overlaysNode.innerHTML = groups.length ? groups.map(([category, overlays]) => `
@@ -526,14 +470,25 @@
             const downloaded = Boolean(overlay.exists || overlay.offline_available);
             const onlineOnly = Boolean(overlay.online_required && !downloaded && overlay.online_available);
             const status = downloaded ? "Downloaded" : onlineOnly ? "Online" : overlay.install_status === "not_implemented" ? "Unavailable" : "Not downloaded";
-            const canRefresh = overlay.id === "firms_active_hotspots" || overlay.id === "nws_active_alerts";
+            const actionAvailable = Boolean(
+              overlay.refresh_available ||
+              overlay.refresh_action ||
+              ["firms_active_hotspots", "nws_active_alerts", "mvum_roads_us", "mvum_trails_us", "blm_sma_cached", "blm_wilderness_wsa_cached"].includes(overlay.id)
+            );
             const job = overlayJob(overlay);
             const installing = overlayInstalling(overlay);
-            const isMvum = overlay.category === "mvum";
-            const hasDownloadAction = isMvum;
-            const canInstall = isMvum && overlay.install_available && !installing;
-            const canRunRefresh = overlay.id === "nws_active_alerts" || (overlay.id === "firms_active_hotspots" && overlay.key_configured);
+            const hasDownloadAction = actionAvailable;
+            const needsKey = overlay.api_key_env && !overlay.key_configured && !downloaded;
+            const missingSource = overlay.source_url_env && !overlay.source_url_configured && !downloaded;
+            const missingTools = (overlay.missing_required_tools || overlay.missing_tools || []).length > 0 && !downloaded;
+            const canInstall = actionAvailable && !installing && !needsKey && !missingSource && !missingTools && overlay.install_status !== "not_implemented";
             const firmsHint = overlay.id === "firms_active_hotspots" && !overlay.key_configured ? "Paste a free NASA FIRMS MAP_KEY below to enable live wildfire refresh. Cached GeoJSON will still render if present." : "";
+            const blockedHint = [
+              needsKey ? `${overlay.api_key_env} is required for live refresh.` : "",
+              missingSource ? `${overlay.source_url_env} is not configured.` : "",
+              missingTools ? `Missing tools: ${(overlay.missing_required_tools || overlay.missing_tools || []).join(", ")}.` : "",
+              overlay.install_status === "not_implemented" ? "This overlay is a future provider hook." : ""
+            ].filter(Boolean).join(" ");
             const firmsKeyForm = overlay.id === "firms_active_hotspots" ? `
               <form class="key-form" data-firms-key-form>
                 <input type="password" name="map_key" placeholder="${overlay.key_configured ? "Replace saved FIRMS MAP_KEY" : "Paste NASA FIRMS MAP_KEY"}" autocomplete="off">
@@ -558,11 +513,11 @@
                   ${overlay.error_message ? `<span style="color:var(--bad)">Error: ${overlay.error_message}</span>` : ""}
                   ${job?.error_message ? `<span style="color:var(--bad)">Job error: ${job.error_message}</span>` : ""}
                   ${firmsHint ? `<span style="color:var(--warn)">${firmsHint}</span>` : ""}
+                  ${blockedHint ? `<span style="color:var(--warn)">${blockedHint}</span>` : ""}
                   ${firmsKeyForm}
                 </div>
                 <div class="actions">
                   ${hasDownloadAction ? `<button type="button" data-overlay-install="${overlay.id}" ${canInstall ? "" : "disabled"}>${installing ? "Working..." : downloaded ? "Update" : "Download"}</button>` : ""}
-                  ${canRefresh ? `<button type="button" data-overlay-refresh="${overlay.id}" ${canRunRefresh ? "" : "disabled"}>${downloaded ? "Update" : "Download"}</button>` : ""}
                   <button class="secondary" type="button" data-overlay-clear="${overlay.id}" ${downloaded ? "" : "disabled"}>Clear cache</button>
                   <button class="icon-button" type="button" data-overlay-info="${overlay.id}" aria-label="Overlay details">i</button>
                 </div>

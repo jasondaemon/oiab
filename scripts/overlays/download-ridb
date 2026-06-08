@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+HOST="${OIAB_HOST:-http://127.0.0.1:18120}"
+BBOX="${OIAB_RIDB_BBOX:-${1:-}}"
+
+if [[ -z "$BBOX" ]]; then
+  echo "Usage for bbox API refresh: OIAB_RIDB_API_KEY=... scripts/overlays/download-ridb minLon,minLat,maxLon,maxLat" >&2
+  echo "Usage for national ZIP cache: set OIAB_RIDB_SOURCE_URL=https://ridb.recreation.gov/downloads/RIDBFullExport_V1_JSON.zip and POST refresh from Settings." >&2
+  exit 2
+fi
+
+curl -fsS -X POST "$HOST/api/maps/overlays/ridb_recreation_sites/refresh" \
+  -H 'Content-Type: application/json' \
+  --data "{\"bbox\":\"$BBOX\"}"
