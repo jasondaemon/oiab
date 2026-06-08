@@ -616,30 +616,45 @@
     return `oiab-overlay-icon-${String(key || "marker").replace(/[^a-z0-9_-]+/gi, "-")}`;
   }
 
-  async function loadSvgMapImage(id, url, size = 96) {
+  const pendingMapImageLoads = new Map();
+
+  function mapImageOptions(id, options = {}) {
+    const shouldUseSdf = options.sdf || id === overlayIconImageId("wildfire-flame");
+    return shouldUseSdf ? { pixelRatio: 2, sdf: true } : { pixelRatio: 2 };
+  }
+
+  async function loadSvgMapImage(id, url, size = 96, options = {}) {
     if (!state.map || state.map.hasImage(id)) return;
-    const response = await fetch(url, { cache: "force-cache" });
-    if (!response.ok) throw new Error(`${url} returned ${response.status}`);
-    const svg = await response.text();
-    const objectUrl = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
-    try {
-      const image = new Image();
-      image.decoding = "async";
-      await new Promise((resolve, reject) => {
-        image.onload = resolve;
-        image.onerror = reject;
-        image.src = objectUrl;
-      });
-      const canvas = document.createElement("canvas");
-      canvas.width = size;
-      canvas.height = size;
-      const context = canvas.getContext("2d");
-      context.clearRect(0, 0, size, size);
-      context.drawImage(image, 0, 0, size, size);
-      state.map.addImage(id, context.getImageData(0, 0, size, size), { pixelRatio: 2 });
-    } finally {
-      URL.revokeObjectURL(objectUrl);
-    }
+    if (pendingMapImageLoads.has(id)) return pendingMapImageLoads.get(id);
+    const task = (async () => {
+      const response = await fetch(url, { cache: "force-cache" });
+      if (!response.ok) throw new Error(`${url} returned ${response.status}`);
+      const svg = await response.text();
+      const objectUrl = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
+      try {
+        const image = new Image();
+        image.decoding = "async";
+        await new Promise((resolve, reject) => {
+          image.onload = resolve;
+          image.onerror = reject;
+          image.src = objectUrl;
+        });
+        const canvas = document.createElement("canvas");
+        canvas.width = size;
+        canvas.height = size;
+        const context = canvas.getContext("2d");
+        context.clearRect(0, 0, size, size);
+        context.drawImage(image, 0, 0, size, size);
+        if (state.map && !state.map.hasImage(id)) {
+          state.map.addImage(id, context.getImageData(0, 0, size, size), mapImageOptions(id, options));
+        }
+      } finally {
+        URL.revokeObjectURL(objectUrl);
+        pendingMapImageLoads.delete(id);
+      }
+    })();
+    pendingMapImageLoads.set(id, task);
+    return task;
   }
 
   async function loadPoiImages() {
@@ -656,10 +671,17 @@
 
   async function loadOverlayImages() {
     await Promise.all([
-      loadSvgMapImage(overlayIconImageId("wildfire-flame"), "/maps-v2/icons/overlay-flame.svg", 112).catch((error) => {
+      loadSvgMapImage(overlayIconImageId("wildfire-flame"), "/maps-v2/icons/overlay-flame.svg", 112, { sdf: true }).catch((error) => {
         console.warn("[OIAB Maps v2] overlay icon failed", "wildfire-flame", error);
       }),
     ]);
+  }
+
+  function handleStyleImageMissing(event) {
+    if (event.id !== overlayIconImageId("wildfire-flame")) return;
+    loadSvgMapImage(event.id, "/maps-v2/icons/overlay-flame.svg", 112, { sdf: true }).catch((error) => {
+      console.warn("[OIAB Maps v2] missing overlay icon failed", event.id, error);
+    });
   }
 
   function addMilitaryHatchPattern() {
@@ -2114,6 +2136,7 @@
     state.map.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-right");
     collapseAttribution();
     state.map.on("error", logMapError);
+    state.map.on("styleimagemissing", handleStyleImageMissing);
     state.map.on("moveend", saveMapView);
     state.map.on("load", async () => {
       collapseAttribution();
