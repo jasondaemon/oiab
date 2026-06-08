@@ -69,6 +69,8 @@ An nginx equivalent lives at:
 deploy/nginx/oiab.conf
 ```
 
+The nginx example also serves `/media/music-art/` directly from `/data/oiab/media/music-art`. These files are generated thumbnail cache entries, not source music files; serving them statically prevents album-art request bursts from causing upstream proxy errors while map or overlay jobs are active.
+
 ## Diagnostics
 
 Open:

@@ -73,7 +73,7 @@ Installed pack URLs returned by the registry are versioned from file metadata:
 
 If you manually replace a `.pmtiles` file, click **Rescan** in Map Packs so the stored file size/mtime and public URL version update. This prevents clients from reusing stale cached byte ranges from the old file.
 
-For production and large packs, put Caddy or nginx in front of `oiab-core` and serve `/maps/packs/` directly from `/data/oiab/maps/packs`. OIAB includes example configs:
+For production and large packs, put Caddy or nginx in front of `oiab-core` and serve `/maps/packs/` directly from `/data/oiab/maps/packs`. The same static server should serve generated album thumbnails from `/media/music-art/` directly from `/data/oiab/media/music-art` so large artwork bursts do not compete with backend API/database work. OIAB includes example configs:
 
 ```text
 deploy/caddy/Caddyfile
