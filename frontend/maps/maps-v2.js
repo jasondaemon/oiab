@@ -623,6 +623,23 @@
     return shouldUseSdf ? { pixelRatio: 2, sdf: true } : { pixelRatio: 2 };
   }
 
+  function addGeneratedWildfireFlameIcon(id = overlayIconImageId("wildfire-flame"), size = 112) {
+    if (!state.map || state.map.hasImage(id)) return true;
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
+    const context = canvas.getContext("2d");
+    if (!context || typeof Path2D === "undefined") return false;
+    context.clearRect(0, 0, size, size);
+    context.save();
+    context.scale(size / 24, size / 24);
+    context.fillStyle = "#000";
+    context.fill(new Path2D("M11.1758045,11.5299649 C11.7222481,10.7630248 11.6612694,9.95529555 11.2823626,8.50234466 C10.5329929,5.62882187 10.8313891,4.05382867 13.4147321,2.18916004 L14.6756139,1.27904986 L14.9805807,2.80388386 C15.3046861,4.42441075 15.8369398,5.42670671 17.2035766,7.35464078 C17.2578735,7.43122022 17.2578735,7.43122022 17.3124108,7.50814226 C19.2809754,10.2854144 20,11.9596204 20,15 C20,18.6883517 16.2713564,22 12,22 C7.72840879,22 4,18.6888043 4,15 C4,14.9310531 4.00007066,14.9331427 3.98838852,14.6284506 C3.89803284,12.2718054 4.33380946,10.4273676 6.09706666,8.43586022 C6.46961415,8.0150872 6.8930834,7.61067534 7.36962714,7.22370749 L8.42161802,6.36945926 L8.9276612,7.62657706 C9.30157948,8.55546878 9.73969716,9.28566491 10.2346078,9.82150804 C10.6537848,10.2753538 10.9647401,10.8460665 11.1758045,11.5299649 Z M7.59448531,9.76165711 C6.23711779,11.2947332 5.91440928,12.6606068 5.98692012,14.5518252 C6.00041903,14.9039019 6,14.8915108 6,15 C6,17.5278878 8.78360021,20 12,20 C15.2161368,20 18,17.527472 18,15 C18,12.4582072 17.4317321,11.1350292 15.6807305,8.66469725 C15.6264803,8.58818014 15.6264803,8.58818014 15.5719336,8.51124844 C14.5085442,7.0111098 13.8746802,5.96758691 13.4553336,4.8005211 C12.7704786,5.62117775 12.8107447,6.43738988 13.2176374,7.99765534 C13.9670071,10.8711781 13.6686109,12.4461713 11.0852679,14.31084 L9.61227259,15.3740546 L9.50184911,13.5607848 C9.43129723,12.4022487 9.16906461,11.6155508 8.76539217,11.178492 C8.36656566,10.7466798 8.00646835,10.2411426 7.68355027,9.66278925 C7.65342985,9.69565638 7.62374254,9.72861259 7.59448531,9.76165711 Z"));
+    context.restore();
+    state.map.addImage(id, context.getImageData(0, 0, size, size), { pixelRatio: 2, sdf: true });
+    return true;
+  }
+
   async function loadSvgMapImage(id, url, size = 96, options = {}) {
     if (!state.map || state.map.hasImage(id)) return;
     if (pendingMapImageLoads.has(id)) return pendingMapImageLoads.get(id);
@@ -670,6 +687,7 @@
   }
 
   async function loadOverlayImages() {
+    if (addGeneratedWildfireFlameIcon()) return;
     await Promise.all([
       loadSvgMapImage(overlayIconImageId("wildfire-flame"), "/maps-v2/icons/overlay-flame.svg", 112, { sdf: true }).catch((error) => {
         console.warn("[OIAB Maps v2] overlay icon failed", "wildfire-flame", error);
@@ -679,6 +697,7 @@
 
   function handleStyleImageMissing(event) {
     if (event.id !== overlayIconImageId("wildfire-flame")) return;
+    if (addGeneratedWildfireFlameIcon(event.id)) return;
     loadSvgMapImage(event.id, "/maps-v2/icons/overlay-flame.svg", 112, { sdf: true }).catch((error) => {
       console.warn("[OIAB Maps v2] missing overlay icon failed", event.id, error);
     });
@@ -1305,6 +1324,10 @@
         "icon-opacity": opacity,
       },
     };
+    if (options.iconColor) layer.paint["icon-color"] = options.iconColor;
+    if (options.iconHaloColor) layer.paint["icon-halo-color"] = options.iconHaloColor;
+    if (options.iconHaloWidth !== undefined) layer.paint["icon-halo-width"] = options.iconHaloWidth;
+    if (options.iconHaloBlur !== undefined) layer.paint["icon-halo-blur"] = options.iconHaloBlur;
     if (sourceLayer) layer["source-layer"] = sourceLayer;
     return layer;
   }
@@ -1368,6 +1391,10 @@
           suffix: "hotspots",
           iconImage: overlayIconImageId("wildfire-flame"),
           iconSize: ["interpolate", ["linear"], ["zoom"], 3, 0.12, 8, 0.2, 13, 0.32, 17, 0.44],
+          iconColor: "#e11d1d",
+          iconHaloColor: "rgba(255, 244, 214, 0.94)",
+          iconHaloWidth: ["interpolate", ["linear"], ["zoom"], 3, 0.35, 10, 0.65, 16, 1.0],
+          iconHaloBlur: 0.25,
         }, null, variant)];
       }
       if (style === "ridb_recreation") {
