@@ -19,7 +19,10 @@ DEFAULT_SERVER_PLAYERS = [
     {"id": "player-navigator", "name": "Navigator", "icon": "map", "sortOrder": 20},
     {"id": "player-scout", "name": "Scout", "icon": "mountain", "sortOrder": 30},
     {"id": "player-ranger", "name": "Ranger", "icon": "tent", "sortOrder": 40},
+    {"id": "player-cpu", "name": "Computer", "icon": "star", "sortOrder": 900},
 ]
+
+CPU_PLAYER_ID = "player-cpu"
 
 
 def now_iso() -> str:
@@ -152,15 +155,13 @@ class GamesDB:
 
     def seed_default_players(self) -> None:
         with self.connect() as conn:
-            row = conn.execute("SELECT COUNT(*) AS count FROM server_players").fetchone()
-            if row and int(row["count"] or 0) > 0:
-                return
             created = now_iso()
             for player in DEFAULT_SERVER_PLAYERS:
                 conn.execute(
                     """
                     INSERT INTO server_players(id, name, icon, active, sort_order, created_at, updated_at)
                     VALUES (?, ?, ?, 1, ?, ?, ?)
+                    ON CONFLICT(id) DO NOTHING
                     """,
                     (
                         player["id"],
@@ -229,6 +230,8 @@ class GamesDB:
 
     def delete_server_player(self, player_id: str | None) -> list[dict]:
         pid = str(player_id or "").strip()
+        if pid == CPU_PLAYER_ID:
+            return self.list_server_players(include_inactive=True)
         if pid:
             with self.connect() as conn:
                 conn.execute("UPDATE server_players SET active = 0, updated_at = ? WHERE id = ?", (now_iso(), pid))
@@ -284,6 +287,7 @@ class GamesDB:
         pid = str(player_id or name or "player").strip()
         pname = str(name or pid).strip() or pid
         is_cpu = 1 if is_cpu_identity(pid, pname) else 0
+        canonical = CPU_PLAYER_ID if is_cpu else pid
         created = now_iso()
         with self.connect() as conn:
             row = conn.execute("SELECT aliases_json, name FROM player_identities WHERE id = ?", (pid,)).fetchone()
@@ -295,18 +299,21 @@ class GamesDB:
                 INSERT INTO player_identities(id, canonical_id, name, aliases_json, is_cpu, created_at, updated_at)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(id) DO UPDATE SET
+                  canonical_id = excluded.canonical_id,
                   name = excluded.name,
                   aliases_json = excluded.aliases_json,
                   is_cpu = excluded.is_cpu,
                   updated_at = excluded.updated_at
                 """,
-                (pid, pid, pname, json_dumps(aliases), is_cpu, created, created),
+                (pid, canonical, pname, json_dumps(aliases), is_cpu, created, created),
             )
 
     def canonical_id(self, player_id: str | None) -> str:
         pid = str(player_id or "").strip()
         if not pid:
             return ""
+        if is_cpu_identity(pid, pid):
+            return CPU_PLAYER_ID
         with self.connect() as conn:
             row = conn.execute("SELECT canonical_id FROM player_identities WHERE id = ?", (pid,)).fetchone()
             return str(row["canonical_id"]) if row else pid
@@ -317,6 +324,9 @@ class GamesDB:
             return str(fallback or "Player")
         canonical = self.canonical_id(pid)
         with self.connect() as conn:
+            row = conn.execute("SELECT name FROM server_players WHERE id = ? AND active = 1", (canonical,)).fetchone()
+            if row:
+                return str(row["name"])
             row = conn.execute("SELECT name FROM player_identities WHERE id = ?", (canonical,)).fetchone()
             return str(row["name"]) if row else str(fallback or pid)
 
@@ -493,6 +503,34 @@ class GamesDB:
                 conn.execute("DELETE FROM score_events WHERE game_type = ?", (normalize_game_type(game),))
         return self.scoreboard()
 
+    def wipe_player_scores(self, player_id: str | None) -> dict:
+        target = self.canonical_id(player_id)
+        if not target:
+            raise ValueError("Player id is required.")
+        rows = self.score_rows()
+        delete_ids: list[int] = []
+        for row in rows:
+            payload = json_loads(row["payload_json"], {})
+            players = self.event_players(payload)
+            winner = self.event_winner(payload, players)
+            row_ids = {
+                self.canonical_id(row["player_id"]),
+                self.canonical_id(row["winner_id"]),
+            }
+            for player in players:
+                row_ids.add(self.canonical_id(player.get("id")))
+                row_ids.add(self.canonical_id(player.get("name")))
+            if winner:
+                row_ids.add(self.canonical_id(winner.get("id")))
+                row_ids.add(self.canonical_id(winner.get("name")))
+            if target in row_ids:
+                delete_ids.append(int(row["id"]))
+        if delete_ids:
+            placeholders = ",".join("?" for _ in delete_ids)
+            with self.connect() as conn:
+                conn.execute(f"DELETE FROM score_events WHERE id IN ({placeholders})", delete_ids)
+        return self.scoreboard()
+
     def scoreboard(self) -> dict:
         rows = self.score_rows()
         stats: dict[str, dict] = {}
@@ -515,8 +553,6 @@ class GamesDB:
             for player in players:
                 pid = str(player.get("id") or player.get("name") or "player")
                 name = str(player.get("name") or pid)
-                if is_cpu_identity(pid, name):
-                    continue
                 canonical = self.canonical_id(pid)
                 display = self.player_name(canonical, name)
                 item = stats.setdefault(canonical, self.empty_rank(canonical, display))
@@ -528,7 +564,7 @@ class GamesDB:
         games = {game: self.rank_list(items.values()) for game, items in game_stats.items()}
         players = self.identity_list()
         return {
-            "totals": {"matches": len(rows), "players": len(players)},
+            "totals": {"matches": len(rows), "players": len(overall)},
             "overall": overall,
             "games": games,
             "recent": recent[:50],

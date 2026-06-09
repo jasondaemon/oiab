@@ -425,7 +425,7 @@
               <div class="uo-settings-grid uo-settings-grid--stacked">
                 <section class="uo-settings-card uo-settings-wide-card">
                   <h2>Game Data</h2>
-                  <p class="uo-card-note">Manage server players, stuck active games, score resets, and tracked identities.</p>
+                  <p class="uo-card-note">Manage server players, stuck active games, and score resets.</p>
                   <div class="uo-settings-summary-card">
                     <strong id="gameDataSummary">Loading game data...</strong>
                     <div class="uo-settings-item-meta">
@@ -445,9 +445,11 @@
                   <p class="uo-card-note">These are the player profiles shown when someone opens games from the mobile launcher.</p>
                   <div id="gameDataServerPlayers" class="uo-settings-stack"></div>
                   <div class="uo-game-player-form">
+                    <input id="gameDataPlayerId" type="hidden" value="">
                     <label>Name <input id="gameDataPlayerName" type="text" maxlength="24" autocomplete="off" placeholder="Player name"></label>
                     <label>Icon <select id="gameDataPlayerIcon"></select></label>
                     <button id="gameDataSavePlayer" type="button" class="is-primary">Save Player</button>
+                    <button id="gameDataCancelPlayerEdit" type="button" hidden>Cancel Edit</button>
                   </div>
                 </section>
                 <section class="uo-settings-card uo-settings-wide-card">
@@ -487,11 +489,6 @@
                     </label>
                     <button id="gameDataWipeScores" type="button" class="is-danger">Wipe Selected Scores</button>
                   </div>
-                </section>
-                <section class="uo-settings-card uo-settings-wide-card">
-                  <h2>Known Identities</h2>
-                  <p class="uo-card-note">Tracked scoreboard identities. CPU identities are hidden here.</p>
-                  <div id="gameDataIdentities" class="uo-settings-stack"></div>
                 </section>
               </div>
             </section>

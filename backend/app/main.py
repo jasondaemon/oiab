@@ -8427,6 +8427,19 @@ PY
         if action == "wipe":
             scoreboard = self.games_db().wipe_scores(str(payload.get("game") or "all"))
             return self.send_json({"ok": True, "scoreboard": scoreboard})
+        if action == "wipe-player-scores":
+            try:
+                scoreboard = self.games_db().wipe_player_scores(payload.get("playerId"))
+                return self.send_json(
+                    {
+                        "ok": True,
+                        "scoreboard": scoreboard,
+                        "players": self.games_db().list_server_players(include_inactive=True),
+                        "icons": GAME_PLAYER_ICONS,
+                    }
+                )
+            except ValueError as exc:
+                return self.send_json({"ok": False, "error": str(exc)}, status=400)
         if str(action).startswith("record-"):
             scoreboard = self.games_db().record_score(payload)
             return self.send_json({"ok": True, "scoreboard": scoreboard})

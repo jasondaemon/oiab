@@ -1611,7 +1611,7 @@ button {
 .uo-game-player-form,
 .uo-game-wipe-form {
   display: grid;
-  grid-template-columns: minmax(180px, 1fr) minmax(140px, .65fr) auto;
+  grid-template-columns: minmax(180px, 1fr) minmax(140px, .65fr) auto auto;
   gap: 10px;
   align-items: end;
 }

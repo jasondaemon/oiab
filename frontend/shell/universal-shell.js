@@ -598,24 +598,6 @@
     return `/mobile/player-icons/${encodeURIComponent(icon || "compass")}.svg`;
   }
 
-  function gameDataIsCpuIdentity(player = {}) {
-    const id = String(player.id || "").toLowerCase();
-    const raw = `${player.id || ""} ${player.name || ""}`.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
-    const name = String(player.name || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
-    return (
-      id.startsWith("cpu-") ||
-      id.startsWith("computereasy") ||
-      id.startsWith("computermedium") ||
-      id.startsWith("computerhard") ||
-      raw === "cpu" ||
-      raw.startsWith("cpu ") ||
-      raw === "computer" ||
-      raw.startsWith("computer ") ||
-      name === "computer" ||
-      name.startsWith("computer ")
-    );
-  }
-
   function renderGameDataSummary() {
     const board = state.gameData.scoreboard || {};
     const matches = Number(board.totals?.matches || 0);
@@ -629,6 +611,10 @@
     if ($("gameDataActiveBadge")) $("gameDataActiveBadge").textContent = `${activeGames.length} active`;
   }
 
+  function gameDataPlayerStats(playerId) {
+    return (state.gameData.scoreboard?.overall || []).find((row) => row.id === playerId) || null;
+  }
+
   function renderGameDataServerPlayers() {
     const holder = $("gameDataServerPlayers");
     if (!holder) return;
@@ -636,24 +622,38 @@
     if (!players.length) {
       holder.innerHTML = `<article class="uo-settings-item"><div class="uo-settings-item-main"><p class="uo-settings-item-subtitle">No server players configured yet.</p></div></article>`;
     } else {
-      holder.innerHTML = players.map((player) => `
-        <article class="uo-settings-item uo-game-data-row">
+      holder.innerHTML = players.map((player) => {
+        const stats = gameDataPlayerStats(player.id);
+        const isCpu = player.id === "player-cpu";
+        return `
+        <article class="uo-settings-item uo-game-data-row${isCpu ? " is-system-player" : ""}">
           <div class="uo-settings-item-main">
             <div class="uo-settings-item-head">
               <img class="uo-game-player-icon" src="${escapeHtml(gameDataIconPath(player.icon))}" alt="">
               <h3 class="uo-settings-item-title">${escapeHtml(player.name || "Player")}</h3>
               <div class="uo-settings-item-meta">
                 ${badge(player.icon || "compass")}
-                ${player.aliases?.length ? badge(`${player.aliases.length} aliases`) : ""}
+                ${isCpu ? badge("CPU") : ""}
+                ${stats ? badge(`${stats.played || 0} played`) : badge("no scores")}
+                ${stats ? badge(`${stats.points || 0} pts`) : ""}
               </div>
             </div>
             <p class="uo-settings-item-path">${escapeHtml(player.id || "")}</p>
           </div>
           <div class="uo-settings-item-actions">
-            <button type="button" class="is-danger" data-game-player-delete="${escapeHtml(player.id || "")}" data-game-player-name="${escapeHtml(player.name || "this player")}">Disable</button>
+            <button type="button" data-game-player-edit="${escapeHtml(player.id || "")}">Edit</button>
+            <button type="button" class="is-danger" data-game-player-wipe="${escapeHtml(player.id || "")}" data-game-player-name="${escapeHtml(player.name || "this player")}">Wipe Scores</button>
+            ${isCpu ? "" : `<button type="button" class="is-danger" data-game-player-delete="${escapeHtml(player.id || "")}" data-game-player-name="${escapeHtml(player.name || "this player")}">Disable</button>`}
           </div>
         </article>
-      `).join("");
+      `;
+      }).join("");
+      holder.querySelectorAll("[data-game-player-edit]").forEach((button) => {
+        button.addEventListener("click", () => editGameDataServerPlayer(button.dataset.gamePlayerEdit || ""));
+      });
+      holder.querySelectorAll("[data-game-player-wipe]").forEach((button) => {
+        button.addEventListener("click", () => wipeGameDataPlayerScores(button.dataset.gamePlayerWipe || "", button.dataset.gamePlayerName || "this player"));
+      });
       holder.querySelectorAll("[data-game-player-delete]").forEach((button) => {
         button.addEventListener("click", () => deleteGameDataServerPlayer(button.dataset.gamePlayerDelete || "", button.dataset.gamePlayerName || "this player"));
       });
@@ -704,35 +704,10 @@
     renderGameDataSummary();
   }
 
-  function renderGameDataIdentities() {
-    const holder = $("gameDataIdentities");
-    if (!holder) return;
-    const players = (state.gameData.scoreboard?.players || []).filter((player) => !gameDataIsCpuIdentity(player));
-    if (!players.length) {
-      holder.innerHTML = `<article class="uo-settings-item"><div class="uo-settings-item-main"><p class="uo-settings-item-subtitle">No tracked score identities yet.</p></div></article>`;
-      return;
-    }
-    holder.innerHTML = players.map((player) => `
-      <article class="uo-settings-item uo-game-data-row">
-        <div class="uo-settings-item-main">
-          <div class="uo-settings-item-head">
-            <h3 class="uo-settings-item-title">${escapeHtml(player.name || "Player")}</h3>
-            <div class="uo-settings-item-meta">
-              ${badge(`${player.played || 0} played`)}
-              ${badge(`${player.points || 0} pts`)}
-            </div>
-          </div>
-          <p class="uo-settings-item-path">${escapeHtml(player.id || "")}${player.aliases?.length ? ` · aliases: ${escapeHtml(player.aliases.join(", "))}` : ""}</p>
-        </div>
-      </article>
-    `).join("");
-  }
-
   function renderGameDataSettings() {
     renderGameDataSummary();
     renderGameDataServerPlayers();
     renderGameDataActiveGames();
-    renderGameDataIdentities();
   }
 
   async function loadGameDataSettings() {
@@ -755,19 +730,40 @@
   }
 
   async function saveGameDataServerPlayer() {
+    const id = $("gameDataPlayerId")?.value || "";
     const name = $("gameDataPlayerName")?.value || "";
     const icon = $("gameDataPlayerIcon")?.value || "compass";
     setSettingsMessage("gameDataMessage", "Saving player...");
     try {
-      const data = await gameDataApiRaw({ action: "save-player", player: { name, icon } });
+      const data = await gameDataApiRaw({ action: "save-player", player: { id, name, icon } });
       state.gameData.players = data.players || [];
       state.gameData.icons = data.icons || state.gameData.icons;
-      if ($("gameDataPlayerName")) $("gameDataPlayerName").value = "";
+      cancelGameDataPlayerEdit(false);
       renderGameDataServerPlayers();
       setSettingsMessage("gameDataMessage", "Player saved.");
     } catch (error) {
       setSettingsMessage("gameDataMessage", error.message, true);
     }
+  }
+
+  function editGameDataServerPlayer(playerId) {
+    const player = (state.gameData.players || []).find((item) => item.id === playerId);
+    if (!player) return;
+    if ($("gameDataPlayerId")) $("gameDataPlayerId").value = player.id || "";
+    if ($("gameDataPlayerName")) $("gameDataPlayerName").value = player.name || "";
+    if ($("gameDataPlayerIcon")) $("gameDataPlayerIcon").value = player.icon || "compass";
+    if ($("gameDataSavePlayer")) $("gameDataSavePlayer").textContent = "Update Player";
+    if ($("gameDataCancelPlayerEdit")) $("gameDataCancelPlayerEdit").hidden = false;
+    $("gameDataPlayerName")?.focus();
+  }
+
+  function cancelGameDataPlayerEdit(clearMessage = true) {
+    if ($("gameDataPlayerId")) $("gameDataPlayerId").value = "";
+    if ($("gameDataPlayerName")) $("gameDataPlayerName").value = "";
+    if ($("gameDataPlayerIcon")) $("gameDataPlayerIcon").value = state.gameData.icons?.[0] || "compass";
+    if ($("gameDataSavePlayer")) $("gameDataSavePlayer").textContent = "Save Player";
+    if ($("gameDataCancelPlayerEdit")) $("gameDataCancelPlayerEdit").hidden = true;
+    if (clearMessage) setSettingsMessage("gameDataMessage", "");
   }
 
   async function deleteGameDataServerPlayer(playerId, name) {
@@ -779,6 +775,21 @@
       state.gameData.icons = data.icons || state.gameData.icons;
       renderGameDataServerPlayers();
       setSettingsMessage("gameDataMessage", "Player disabled.");
+    } catch (error) {
+      setSettingsMessage("gameDataMessage", error.message, true);
+    }
+  }
+
+  async function wipeGameDataPlayerScores(playerId, name) {
+    if (!playerId || !window.confirm(`Wipe all score history for ${name || "this player"}? Active games and player profile settings will remain.`)) return;
+    setSettingsMessage("gameDataMessage", "Wiping player scores...");
+    try {
+      const data = await gameDataApiRaw({ action: "wipe-player-scores", playerId, settingsPassword: "" });
+      state.gameData.scoreboard = data.scoreboard || state.gameData.scoreboard;
+      state.gameData.players = data.players || state.gameData.players;
+      state.gameData.icons = data.icons || state.gameData.icons;
+      renderGameDataSettings();
+      setSettingsMessage("gameDataMessage", "Player scores wiped.");
     } catch (error) {
       setSettingsMessage("gameDataMessage", error.message, true);
     }
@@ -2918,6 +2929,7 @@
     });
     $("gameDataRefresh")?.addEventListener("click", () => loadGameDataSettings().catch((error) => setSettingsMessage("gameDataMessage", error.message, true)));
     $("gameDataSavePlayer")?.addEventListener("click", saveGameDataServerPlayer);
+    $("gameDataCancelPlayerEdit")?.addEventListener("click", () => cancelGameDataPlayerEdit());
     $("gameDataClearAllActive")?.addEventListener("click", clearAllGameDataActiveGames);
     $("gameDataWipeScores")?.addEventListener("click", wipeGameDataScores);
     document.querySelectorAll("[data-system-action]").forEach((link) => {
