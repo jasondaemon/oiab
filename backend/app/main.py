@@ -270,16 +270,23 @@ def parse_df_usage(stdout: str) -> list[dict[str, object]]:
         parts = raw_line.split()
         if len(parts) < 4:
             continue
+        source = ""
+        if len(parts) >= 5:
+            source = parts[0]
+            values = parts[1:]
+        else:
+            values = parts
         try:
-            total = int(parts[0])
-            used = int(parts[1])
-            free = int(parts[2])
+            total = int(values[0])
+            used = int(values[1])
+            free = int(values[2])
         except ValueError:
             continue
-        path = parts[3]
+        path = values[3]
         percent = round((used / total) * 100, 1) if total else 0.0
         disks.append(
             {
+                "source": source,
                 "path": path,
                 "total": total,
                 "used": used,
@@ -295,11 +302,11 @@ def host_disk_usage() -> list[dict[str, object]]:
         [
             "/bin/df",
             "-B1",
-            "--output=size,used,avail,target",
+            "--output=source,size,used,avail,target",
             "/",
             "/srv/trailer-data",
         ],
-        timeout=10.0,
+        timeout=2.0,
     )
     if not result.get("ok"):
         return []
@@ -7413,9 +7420,22 @@ PY
         disks = []
         host_disks = host_disk_usage() if self.settings.allow_docker_control else []
         if host_disks:
+            seen_disks: set[tuple[str, str]] = set()
             for item in host_disks:
                 path = str(item.get("path") or "")
-                label = "System SD" if path == "/" else "SSD Data" if path == "/srv/trailer-data" else path
+                source = str(item.get("source") or "")
+                disk_key = (source, path)
+                if disk_key in seen_disks:
+                    continue
+                seen_disks.add(disk_key)
+                if path == "/" and "nvme" in source:
+                    label = "NVMe System/Data"
+                elif path == "/":
+                    label = "System SD"
+                elif path == "/srv/trailer-data":
+                    label = "SSD Data"
+                else:
+                    label = path
                 disks.append({**item, "label": label})
         else:
             fallback_paths = [
@@ -7461,7 +7481,8 @@ PY
             "uptime_seconds": uptime,
             "disks": disks,
             "battery": read_x1206_battery(),
-            "services": list_services(self.settings),
+            "services": list_service_visibility(self.settings),
+            "services_live": False,
         }
 
     @staticmethod
