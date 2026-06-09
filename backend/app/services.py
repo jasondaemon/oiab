@@ -441,3 +441,42 @@ def list_services(settings: Settings | None = None) -> list[dict[str, Any]]:
             }
         )
     return services
+
+
+def list_service_visibility(settings: Settings | None = None) -> list[dict[str, Any]]:
+    """Return plugin visibility without probing Docker or systemd.
+
+    This is used by the app launcher during shell boot. The full plugin
+    settings page can afford live container checks, but the launcher must not
+    block on Docker/socket timeouts after storage or network changes.
+    """
+    services = []
+    plugin_state = read_plugin_state(settings) if settings else {}
+    for path in sorted(MANIFEST_DIR.glob("*.yml")):
+        item = parse_simple_yaml(path)
+        service_id = str(item.get("id") or "")
+        saved = plugin_state.get(service_id, {}) if isinstance(plugin_state.get(service_id), dict) else {}
+        marker = resolve_marker(settings, str(item.get("installed_marker") or ""))
+        installed = marker_has_content(marker) if item.get("installed_marker") else bool(item.get("core"))
+        if item.get("runtime") in {"asset", "manual"}:
+            installed = bool(saved.get("installed")) or installed
+        if saved.get("installed") is True:
+            installed = True
+        if saved.get("installed") is False:
+            installed = False
+        enabled = bool(saved.get("enabled", installed)) and installed
+        services.append(
+            {
+                **item,
+                "label": item.get("name") or item.get("id"),
+                "manifest": path.name,
+                "installed": installed,
+                "enabled": enabled,
+                "active": enabled,
+                "running": False,
+                "optional": not bool(item.get("core")),
+                "data_path": str(marker) if item.get("installed_marker") else "",
+                "allow_docker_control": bool(settings.allow_docker_control) if settings else False,
+            }
+        )
+    return services

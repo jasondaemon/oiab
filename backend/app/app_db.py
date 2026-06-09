@@ -2070,6 +2070,12 @@ class AppDB:
                     offline_available = True
                     overlay_type = str(existing["type"] or overlay_type)
                     overlay["source_layer"] = existing["source_layer"]
+                if path and path.exists() and str(overlay.get("cache_mode") or metadata.get("cache_mode") or "") == "offline_pack":
+                    metadata["cache_status"] = "cached"
+                    if str(metadata.get("install_status") or "") in {"", "available", "ready", "failed", "refresh_failed", "not_cached"}:
+                        metadata["install_status"] = "installed"
+                    if str(metadata.get("error_message") or ""):
+                        metadata["error_message"] = ""
             else:
                 enabled = bool(overlay.get("enabled", overlay.get("enabled_default", False)))
                 opacity = float(overlay.get("opacity", 1.0))
@@ -2278,6 +2284,13 @@ class AppDB:
         cache_status = str(metadata.get("cache_status") or ("cached" if exists else "not_cached"))
         if exists and cache_status == "not_cached":
             cache_status = "cached"
+        if exists and row["cache_mode"] == "offline_pack" and cache_status == "failed":
+            cache_status = "cached"
+            metadata["cache_status"] = "cached"
+            if str(metadata.get("install_status") or "") in {"", "available", "ready", "failed", "refresh_failed", "not_cached"}:
+                metadata["install_status"] = "installed"
+            if str(metadata.get("error_message") or ""):
+                metadata["error_message"] = ""
         if not exists and row["cache_mode"] == "offline_pack" and cache_status == "cached":
             cache_status = "not_cached"
         if cache_status == "cached" and iso_is_stale(metadata.get("expires_at")):

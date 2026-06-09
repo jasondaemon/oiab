@@ -37,7 +37,7 @@ from .config import REPO_ROOT, SETTINGS, Settings, ensure_data_layout
 from .games_db import GamesDB
 from .geopdf import delete_geopdf, import_geopdf_bytes, list_geopdfs, load_metadata as load_geopdf_metadata, process_geopdf, tile_path as geopdf_tile_path, update_geopdf, write_metadata as write_geopdf_metadata
 from .gps.gpsd import read_gpsd
-from .services import docker_container_action, docker_containers, docker_socket_request, list_services, service_action
+from .services import docker_container_action, docker_containers, docker_socket_request, list_service_visibility, list_services, service_action
 from .storage import folders_from_places, read_json, read_places, save_waypoint
 
 try:
@@ -3470,11 +3470,17 @@ window.location.replace("/books/");
 
     def app_settings_payload(self) -> dict[str, object]:
         db = self.app_db()
+        try:
+            pin_timeout = int(db.app_setting("settings_pin_timeout_minutes", 5))
+        except (TypeError, ValueError):
+            pin_timeout = 5
+        pin_timeout = max(0, min(120, pin_timeout))
         return {
             "ok": True,
             "settings": {
                 "map_auto_recording": bool(db.app_setting("map_auto_recording", True)),
                 "settings_pin": str(db.app_setting("settings_pin", self.settings.settings_pin) or self.settings.settings_pin),
+                "settings_pin_timeout_minutes": pin_timeout,
             },
         }
 
@@ -3645,6 +3651,14 @@ window.location.replace("/books/");
             if not re.fullmatch(r"\d{6}", pin):
                 return self.send_json({"ok": False, "error": "Settings PIN must be exactly 6 digits."}, status=400)
             db.set_app_setting("settings_pin", pin)
+        if "settings_pin_timeout_minutes" in settings_payload:
+            try:
+                pin_timeout = int(settings_payload.get("settings_pin_timeout_minutes"))
+            except (TypeError, ValueError):
+                return self.send_json({"ok": False, "error": "Settings PIN timeout must be a number of minutes."}, status=400)
+            if pin_timeout < 0 or pin_timeout > 120:
+                return self.send_json({"ok": False, "error": "Settings PIN timeout must be between 0 and 120 minutes."}, status=400)
+            db.set_app_setting("settings_pin_timeout_minutes", pin_timeout)
         return self.send_json(self.app_settings_payload())
 
     def network_settings_defaults(self) -> dict[str, str]:
@@ -4669,7 +4683,7 @@ PY
 
     def apps_payload(self) -> dict:
         payload = read_json(REPO_ROOT / "config" / "apps.json", {"schema": 1, "apps": []})
-        services = {str(item.get("id")): item for item in list_services(self.settings)}
+        services = {str(item.get("id")): item for item in list_service_visibility(self.settings)}
         filtered = []
         for app in payload.get("apps", []) or []:
             service_id = app.get("optionalService")
@@ -8551,9 +8565,14 @@ PY
 
     def app_layout(self) -> dict:
         settings_pin = str(self.app_db().app_setting("settings_pin", self.settings.settings_pin) or self.settings.settings_pin)
+        try:
+            settings_pin_timeout = int(self.app_db().app_setting("settings_pin_timeout_minutes", 5))
+        except (TypeError, ValueError):
+            settings_pin_timeout = 5
         return {
             "schema": 1,
             "settingsPassword": settings_pin,
+            "settingsPinTimeoutMinutes": max(0, min(120, settings_pin_timeout)),
             "hiddenAppIds": ["legacy-home", "legacy-admin", "https-settings", "service-manager", "audio-test", "minecraft"],
             "folders": [
                 {"id": "games", "title": "Games", "icon": "/maps/overland/overland-folder-games.svg", "protected": False, "appIds": ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "sinkhole-city", "canyon-crawler", "orbit-run", "blank-slate", "starts-ends", "dice-roller", "word-tile-arena", "connect-four", "burst", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "minecraft-map", "drums", "trivia", "tic-tac-toe", "license-plates"]},
