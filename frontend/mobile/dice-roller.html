@@ -14,7 +14,7 @@
   <link rel="manifest" href="/mobile/manifest.webmanifest">
   <link rel="stylesheet" href="dice-roller.css?v=dice-mixed-20260605">
 </head>
-<body>
+<body data-require-server-player="true">
   <main class="dr-shell" data-theme="classic">
     <header class="dr-header">
       <a class="icon-button" href="/mobile/" aria-label="Back to mobile launcher">
@@ -117,6 +117,7 @@
 
     <p id="message" class="message" role="status"></p>
   </main>
+  <script src="/mobile/server-player.js?v=20260609"></script>
   <script src="dice-roller.js?v=dice-mixed-20260605"></script>
 </body>
 </html>

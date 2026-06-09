@@ -14,7 +14,7 @@
   <link rel="manifest" href="/mobile/manifest.webmanifest">
   <link rel="stylesheet" href="/mobile/sinkhole-city.css">
 </head>
-<body>
+<body data-require-server-player="true">
   <main class="sh-shell">
     <canvas id="gameCanvas" aria-label="Sinkhole City game canvas"></canvas>
 
@@ -118,6 +118,7 @@
       </div>
     </section>
   </main>
+  <script src="/mobile/server-player.js?v=20260609"></script>
   <script src="/mobile/sinkhole-city.js"></script>
 </body>
 </html>

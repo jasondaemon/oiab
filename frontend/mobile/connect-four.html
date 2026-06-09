@@ -13,7 +13,7 @@
   <link rel="manifest" href="/mobile/manifest.webmanifest">
   <link rel="stylesheet" href="overland-turn-game.css">
 </head>
-<body data-game="connect-four" data-title="Connect Four">
+<body data-game="connect-four" data-title="Connect Four" data-require-server-player="true">
   <main class="game-shell">
     <header class="game-header">
       <a class="icon-button" href="/mobile/" aria-label="Back to mobile launcher"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 5.2 8 12l6.8 6.8-1.8 1.8L5.4 13a1.4 1.4 0 0 1 0-2L13 3.4l1.8 1.8z"></path></svg></a>
@@ -24,6 +24,7 @@
     <section id="gamePanel" class="panel game-panel" hidden><div class="status-row"><div><span id="gameState">Waiting</span><strong id="gameStatus">Create or join a game.</strong></div><button id="leaveGame" class="small-pill" type="button">Leave</button></div><div id="players" class="players"></div><div id="board" class="board-area"></div><div class="actions"><button id="resetGame" type="button">Reset</button><button id="closeGame" type="button" class="danger">Close</button></div></section>
     <p id="message" class="message" role="status"></p>
   </main>
-  <script src="overland-turn-game.js"></script>
+    <script src="/mobile/server-player.js?v=20260609"></script>
+    <script src="overland-turn-game.js"></script>
 </body>
 </html>

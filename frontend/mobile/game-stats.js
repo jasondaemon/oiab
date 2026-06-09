@@ -140,13 +140,6 @@
     }));
   }
 
-  function playerOptions(players, selected = "") {
-    return (players || []).map((player) => {
-      const label = player.aliases?.length ? `${player.name} (${player.aliases.slice(0, 2).join(", ")})` : player.name;
-      return `<option value="${escapeHtml(player.id)}" ${player.id === selected ? "selected" : ""}>${escapeHtml(label)}</option>`;
-    }).join("");
-  }
-
   function iconPath(icon) {
     return `/mobile/player-icons/${encodeURIComponent(icon || "compass")}.svg`;
   }
@@ -175,41 +168,8 @@
     }
   }
 
-  function isCpuIdentity(player = {}) {
-    const id = String(player.id || "").toLowerCase();
-    const raw = `${player.id || ""} ${player.name || ""}`.toLowerCase();
-    const normalized = raw.replace(/[^a-z0-9]+/g, " ").trim();
-    const normalizedName = String(player.name || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
-    return (
-      id.startsWith("cpu-") ||
-      id.startsWith("computermedium") ||
-      id.startsWith("computereasy") ||
-      id.startsWith("computerhard") ||
-      normalized === "cpu" ||
-      normalized.startsWith("cpu ") ||
-      normalized === "computer" ||
-      normalized.startsWith("computer ") ||
-      normalizedName === "computer" ||
-      normalizedName.startsWith("computer ")
-    );
-  }
-
   function renderAdmin() {
     if (!isAdmin || !state.scoreboard) return;
-    const players = (state.scoreboard.players || []).filter((player) => !isCpuIdentity(player));
-    if ($("sourcePlayer")) $("sourcePlayer").innerHTML = playerOptions(players);
-    if ($("targetPlayer")) $("targetPlayer").innerHTML = playerOptions(players, players[1]?.id || players[0]?.id || "");
-    if ($("identityList")) {
-      $("identityList").innerHTML = players.length ? players.map((player) => `
-        <article class="gs-identity-row">
-          <div class="rank">ID</div>
-          <div>
-            <strong>${escapeHtml(player.name)}</strong>
-            <span>${escapeHtml(player.id)}${player.aliases?.length ? ` · aliases: ${escapeHtml(player.aliases.join(", "))}` : ""}</span>
-          </div>
-        </article>
-      `).join("") : '<div class="gs-recent-row"><div></div><div><strong>No identities yet.</strong><span>Play a tracked game first.</span></div></div>';
-    }
     renderActiveGames();
     renderServerPlayers();
   }
@@ -263,27 +223,6 @@
       state.icons = data.icons || state.icons;
       renderServerPlayers();
       message("Player disabled.");
-    } catch (error) {
-      message(error.message, true);
-    }
-  }
-
-  async function mergePlayers() {
-    const sourceId = $("sourcePlayer")?.value || "";
-    const targetId = $("targetPlayer")?.value || "";
-    if (!sourceId || !targetId || sourceId === targetId) {
-      message("Choose two different identities.", true);
-      return;
-    }
-    try {
-      state.scoreboard = await api({
-        action: "merge",
-        sourceId,
-        targetId,
-        settingsPassword: $("settingsPassword")?.value || "",
-      });
-      renderScoreboard();
-      message("Identities merged.");
     } catch (error) {
       message(error.message, true);
     }
@@ -345,7 +284,6 @@
     });
   });
   if ($("refreshScores")) $("refreshScores").addEventListener("click", load);
-  if ($("mergePlayers")) $("mergePlayers").addEventListener("click", mergePlayers);
   if ($("saveServerPlayer")) $("saveServerPlayer").addEventListener("click", saveServerPlayer);
   if ($("wipeScores")) $("wipeScores").addEventListener("click", wipeScores);
   if ($("clearAllActiveGames")) $("clearAllActiveGames").addEventListener("click", clearAllActiveGames);

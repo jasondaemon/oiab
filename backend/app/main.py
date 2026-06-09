@@ -8419,11 +8419,7 @@ PY
             players = self.games_db().delete_server_player(payload.get("playerId"))
             return self.send_json({"ok": True, "players": players, "icons": GAME_PLAYER_ICONS})
         if action == "merge":
-            try:
-                scoreboard = self.games_db().merge_identities(payload.get("sourceId", ""), payload.get("targetId", ""))
-                return self.send_json({"ok": True, "scoreboard": scoreboard})
-            except ValueError as exc:
-                return self.send_json({"ok": False, "error": str(exc)}, status=400)
+            return self.send_json({"ok": False, "error": "Identity merge has been retired. Use Server Players."}, status=410)
         if action == "wipe":
             scoreboard = self.games_db().wipe_scores(str(payload.get("game") or "all"))
             return self.send_json({"ok": True, "scoreboard": scoreboard})

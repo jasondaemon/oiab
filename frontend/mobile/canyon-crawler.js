@@ -1,5 +1,4 @@
 (() => {
-  const profileKey = "iiab-overland-player-profile";
   const bestKey = "oiab-canyon-crawler-best";
   const $ = (id) => document.getElementById(id);
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -30,12 +29,8 @@
   };
 
   function profile() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(profileKey) || "{}");
-      return { id: saved.id || `player-${Date.now()}`, name: saved.name || "Player" };
-    } catch {
-      return { id: `player-${Date.now()}`, name: "Player" };
-    }
+    const saved = window.OIABPlayers?.get?.() || {};
+    return { id: saved.id || "", name: saved.name || "Player" };
   }
 
   function show(el, visible) {

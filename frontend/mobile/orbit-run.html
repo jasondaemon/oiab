@@ -14,7 +14,7 @@
   <link rel="manifest" href="/mobile/manifest.webmanifest">
   <link rel="stylesheet" href="/mobile/oiab-arcade.css?v=20260605">
 </head>
-<body>
+<body data-require-server-player="true">
   <main class="arcade-shell">
     <div id="stage" class="arcade-stage"></div>
     <section class="arcade-hud" aria-live="polite">
@@ -62,6 +62,7 @@
     </section>
   </main>
   <script src="/mobile/vendor/pixi/pixi.min.js"></script>
+  <script src="/mobile/server-player.js?v=20260609"></script>
   <script src="/mobile/orbit-run.js?v=20260606-sfx"></script>
 </body>
 </html>

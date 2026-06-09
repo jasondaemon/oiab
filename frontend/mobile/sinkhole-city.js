@@ -1,5 +1,4 @@
 (() => {
-  const profileStorageKey = "iiab-overland-player-profile";
   const storageKey = "oiab-sinkhole-city-best";
   const durationMs = 120000;
   const world = { width: 2600, height: 1800 };
@@ -236,11 +235,6 @@
     }
   }
 
-  function randomId() {
-    if (window.crypto?.randomUUID) return window.crypto.randomUUID();
-    return `player-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-  }
-
   function cleanName(value) {
     return String(value || "").replace(/[\x00-\x1f]+/g, "").trim().slice(0, 24);
   }
@@ -275,12 +269,8 @@
   }
 
   function loadProfile() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(profileStorageKey) || "{}");
-      return { id: saved.id || randomId(), name: cleanName(saved.name) || "Player" };
-    } catch {
-      return { id: randomId(), name: "Player" };
-    }
+    const saved = window.OIABPlayers?.get?.() || {};
+    return { id: saved.id || "", name: cleanName(saved.name) || "Player" };
   }
 
   function rng(seed) {

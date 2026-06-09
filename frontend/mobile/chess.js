@@ -2,7 +2,6 @@ import { Chess } from "./vendor/chess.js";
 
 (() => {
   const storageKey = "iiab-overland-chess";
-  const profileStorageKey = "iiab-overland-player-profile";
   const pieceGlyphs = {
     wp: "♙", wn: "♘", wb: "♗", wr: "♖", wq: "♕", wk: "♔",
     bp: "♟", bn: "♞", bb: "♝", br: "♜", bq: "♛", bk: "♚",
@@ -34,11 +33,6 @@ import { Chess } from "./vendor/chess.js";
     theme: "classic",
   };
 
-  function randomId() {
-    if (window.crypto?.randomUUID) return window.crypto.randomUUID();
-    return `player-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-  }
-
   function cleanName(value) {
     return String(value || "").replace(/[\x00-\x1f]+/g, "").trim().slice(0, 24);
   }
@@ -48,15 +42,12 @@ import { Chess } from "./vendor/chess.js";
   }
 
   function loadProfileFromStorage() {
-    try {
-      return JSON.parse(localStorage.getItem(profileStorageKey) || "{}");
-    } catch {
-      return {};
-    }
+    const player = window.OIABPlayers?.get?.() || {};
+    return { id: player.id || "", name: player.name || "" };
   }
 
   function saveProfile(id, name) {
-    localStorage.setItem(profileStorageKey, JSON.stringify({ id, name }));
+    if (id && name && window.OIABPlayers?.set) window.OIABPlayers.set({ id, name });
   }
 
   function profileName() {
@@ -68,13 +59,13 @@ import { Chess } from "./vendor/chess.js";
   function profileId() {
     const fromQuery = queryValue("playerId");
     const saved = loadProfileFromStorage();
-    return fromQuery || saved.id || randomId();
+    return fromQuery || saved.id || "";
   }
 
   function loadLocal() {
     try {
       const saved = JSON.parse(localStorage.getItem(storageKey) || "{}");
-      state.playerId = profileId() || saved.playerId || randomId();
+      state.playerId = profileId() || saved.playerId || "";
       state.playerName = profileName();
       state.gameId = saved.gameId || "";
       state.mark = saved.mark || "";

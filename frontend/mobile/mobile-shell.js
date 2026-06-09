@@ -9,8 +9,6 @@
   let currentConfig = null;
   let currentLayout = defaultAppLayout;
   let serverPlayers = [];
-  const profileStorageKey = "oiab-player-profile";
-  const legacyProfileStorageKey = "iiab-overland-player-profile";
   const nativeIds = new Set(["music", "web-emulator", "drums", "license-plates", "trivia"]);
   const standaloneUrls = {
     music: "/mobile/music.html",
@@ -51,34 +49,21 @@
 
   const $ = (id) => document.getElementById(id);
 
-  function randomId() {
-    if (window.crypto?.randomUUID) return window.crypto.randomUUID();
-    return `player-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-  }
-
   function cleanName(value) {
     return String(value || "").replace(/[\x00-\x1f]+/g, "").trim().slice(0, 24);
   }
 
   function playerProfile() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(profileStorageKey) || localStorage.getItem(legacyProfileStorageKey) || "{}");
-      return {
-        id: saved.id || randomId(),
-        name: cleanName(saved.name),
-        icon: saved.icon || "compass",
-      };
-    } catch {
-      return { id: randomId(), name: "", icon: "compass" };
-    }
+    const selected = window.OIABPlayers?.get?.();
+    return {
+      id: selected?.id || "",
+      name: cleanName(selected?.name),
+      icon: selected?.icon || "compass",
+    };
   }
 
   function savePlayerProfile(profile) {
-    localStorage.setItem(profileStorageKey, JSON.stringify({
-      id: profile.id || randomId(),
-      name: cleanName(profile.name),
-      icon: profile.icon || "compass",
-    }));
+    if (window.OIABPlayers?.set) window.OIABPlayers.set(profile);
     renderPlayerProfile();
   }
 
@@ -115,9 +100,8 @@
     const input = $("playerNameInput");
     const error = $("playerNameError");
     const choices = $("playerChoices");
-    const profile = playerProfile();
     if (!serverPlayers.length) await loadServerPlayers();
-    input.value = profile.name || "";
+    input.value = "";
     error.textContent = "";
     choices.replaceChildren();
     serverPlayers.forEach((player) => {
@@ -136,21 +120,12 @@
       });
       choices.append(button);
     });
-    $("savePlayerName").onclick = () => {
-      const name = cleanName(input.value);
-      if (!name) {
-        error.textContent = serverPlayers.length ? "Choose a player." : "Enter a name.";
-        return;
-      }
-      savePlayerProfile({ id: profile.id, name, icon: profile.icon || "compass" });
-      dialog.close();
-    };
+    $("savePlayerName").hidden = true;
     input.onkeydown = (event) => {
       if (event.key === "Enter") $("savePlayerName").click();
     };
     dialog.showModal();
-    if (!serverPlayers.length) input.hidden = false;
-    input.focus();
+    input.hidden = true;
     if (force) dialog.addEventListener("cancel", (event) => event.preventDefault(), { once: true });
   }
 
@@ -469,7 +444,13 @@
     try {
       renderPlayerProfile();
       await loadServerPlayers();
-      if (!playerProfile().name) window.setTimeout(() => openPlayerNameDialog(true), 100);
+      if (!playerProfile().name) window.setTimeout(() => {
+        if (window.OIABPlayers?.require) {
+          window.OIABPlayers.require({ force: true }).then(renderPlayerProfile).catch((error) => console.warn(error));
+        } else {
+          openPlayerNameDialog(true);
+        }
+      }, 100);
       const [config, layout] = await Promise.all([loadConfig(), loadLayout()]);
       currentLayout = layout;
       render(config);
@@ -482,7 +463,11 @@
 
   $("refreshApps").addEventListener("click", main);
   $("refreshGames").addEventListener("click", loadOpenGames);
-  $("editPlayerName").addEventListener("click", () => openPlayerNameDialog(false));
+  $("editPlayerName").addEventListener("click", () => {
+    if (window.OIABPlayers?.change) window.OIABPlayers.change().then(renderPlayerProfile).catch((error) => console.warn(error));
+    else openPlayerNameDialog(false);
+  });
+  window.addEventListener("oiab:server-player-selected", renderPlayerProfile);
   setInterval(loadOpenGames, 5000);
   main();
 })();

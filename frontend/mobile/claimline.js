@@ -1,5 +1,4 @@
 (() => {
-  const profileStorageKey = "iiab-overland-player-profile";
   const colors = {
     P1: "#80f08a",
     P2: "#ffd34e",
@@ -32,23 +31,13 @@
   const canvas = $("traceCanvas");
   const ctx = canvas.getContext("2d");
 
-  function randomId() {
-    if (window.crypto?.randomUUID) return window.crypto.randomUUID();
-    return `player-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-  }
-
   function cleanName(value) {
     return String(value || "").replace(/[\x00-\x1f]+/g, "").trim().slice(0, 24);
   }
 
   function loadProfile() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(profileStorageKey) || "{}");
-      state.profile = { id: saved.id || randomId(), name: cleanName(saved.name) || "Player" };
-    } catch {
-      state.profile = { id: randomId(), name: "Player" };
-    }
-    localStorage.setItem(profileStorageKey, JSON.stringify(state.profile));
+    const saved = window.OIABPlayers?.get?.() || {};
+    state.profile = { id: saved.id || "", name: cleanName(saved.name) || "Player" };
     $("playerNameLabel").textContent = state.profile.name;
   }
 

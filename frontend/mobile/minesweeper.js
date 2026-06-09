@@ -1,5 +1,4 @@
 (() => {
-  const profileStorageKey = "iiab-overland-player-profile";
   const storageKey = "iiab-overland-minesweeper";
   const difficulties = {
     easy: { rows: 9, cols: 9, mines: 10, base: 1200 },
@@ -26,26 +25,21 @@
   };
   const $ = (id) => document.getElementById(id);
 
-  function randomId() {
-    if (window.crypto?.randomUUID) return window.crypto.randomUUID();
-    return `player-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-  }
-
   function cleanName(value) {
     return String(value || "").replace(/[\x00-\x1f]+/g, "").trim().slice(0, 24);
   }
 
   function loadProfile() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(profileStorageKey) || "{}");
-      return { id: saved.id || randomId(), name: cleanName(saved.name) || "Player" };
-    } catch {
-      return { id: randomId(), name: "Player" };
-    }
+    const saved = window.OIABPlayers?.get?.();
+    return {
+      id: saved?.id || "",
+      name: cleanName(saved?.name) || "Player",
+    };
   }
 
-  function saveProfile() {
-    localStorage.setItem(profileStorageKey, JSON.stringify({ id: state.playerId, name: state.playerName }));
+  function applyProfile(profile = loadProfile()) {
+    state.playerId = profile.id || "";
+    state.playerName = cleanName(profile.name) || "Player";
     $("playerName").textContent = state.playerName;
   }
 
@@ -68,9 +62,7 @@
 
   function loadLocal() {
     const profile = loadProfile();
-    state.playerId = profile.id;
-    state.playerName = profile.name;
-    saveProfile();
+    applyProfile(profile);
     try {
       const saved = JSON.parse(localStorage.getItem(storageKey) || "{}");
       if (saved && Array.isArray(saved.cells) && saved.cells.length && difficulties[saved.difficulty]) {
@@ -369,17 +361,10 @@
     }));
   }
 
-  function openNameDialog() {
-    const dialog = $("nameDialog");
-    $("nameInput").value = state.playerName;
-    dialog.showModal();
-    $("nameInput").focus();
-  }
-
-  function saveName() {
-    state.playerName = cleanName($("nameInput").value) || "Player";
-    saveProfile();
-    $("nameDialog").close();
+  function changePlayer() {
+    if (window.OIABPlayers?.change) {
+      window.OIABPlayers.change();
+    }
   }
 
   document.querySelectorAll("[data-difficulty]").forEach((button) => {
@@ -392,10 +377,11 @@
   });
   $("newGame").addEventListener("click", () => newGame());
   $("newGameTop").addEventListener("click", () => newGame());
-  $("playerName").addEventListener("click", openNameDialog);
-  $("saveName").addEventListener("click", saveName);
-  $("nameInput").addEventListener("keydown", (event) => {
-    if (event.key === "Enter") saveName();
+  $("playerName").addEventListener("click", changePlayer);
+  window.addEventListener("oiab:server-player-selected", (event) => {
+    applyProfile(event.detail?.player);
+    saveLocal();
+    render();
   });
   window.addEventListener("resize", render);
   window.addEventListener("beforeunload", () => {

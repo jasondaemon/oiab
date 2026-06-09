@@ -14,7 +14,7 @@
   <link rel="manifest" href="/mobile/manifest.webmanifest">
   <link rel="stylesheet" href="starts-ends.css">
 </head>
-<body>
+<body data-require-server-player="true">
   <main class="se-shell">
     <header class="se-header">
       <a class="icon-button" href="/mobile/" aria-label="Back to mobile launcher">
@@ -132,6 +132,7 @@
 
     <p id="message" class="message" role="status"></p>
   </main>
+  <script src="/mobile/server-player.js?v=20260609"></script>
   <script src="starts-ends.js"></script>
 </body>
 </html>

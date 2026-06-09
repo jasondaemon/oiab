@@ -121,16 +121,6 @@ class GamesDB:
                 CREATE INDEX IF NOT EXISTS idx_score_events_game_type
                   ON score_events(game_type, created_at);
 
-                CREATE TABLE IF NOT EXISTS player_identities (
-                  id TEXT PRIMARY KEY,
-                  canonical_id TEXT NOT NULL,
-                  name TEXT NOT NULL,
-                  aliases_json TEXT NOT NULL DEFAULT '[]',
-                  is_cpu INTEGER NOT NULL DEFAULT 0,
-                  created_at TEXT NOT NULL,
-                  updated_at TEXT NOT NULL
-                );
-
                 CREATE TABLE IF NOT EXISTS server_players (
                   id TEXT PRIMARY KEY,
                   name TEXT NOT NULL,
@@ -282,31 +272,10 @@ class GamesDB:
             )
 
     def register_player(self, player_id: str | None, name: str | None) -> None:
-        if not player_id and not name:
-            return
-        pid = str(player_id or name or "player").strip()
-        pname = str(name or pid).strip() or pid
-        is_cpu = 1 if is_cpu_identity(pid, pname) else 0
-        canonical = CPU_PLAYER_ID if is_cpu else pid
-        created = now_iso()
-        with self.connect() as conn:
-            row = conn.execute("SELECT aliases_json, name FROM player_identities WHERE id = ?", (pid,)).fetchone()
-            aliases = json_loads(row["aliases_json"], []) if row else []
-            if row and row["name"] != pname and pname not in aliases:
-                aliases.append(pname)
-            conn.execute(
-                """
-                INSERT INTO player_identities(id, canonical_id, name, aliases_json, is_cpu, created_at, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-                ON CONFLICT(id) DO UPDATE SET
-                  canonical_id = excluded.canonical_id,
-                  name = excluded.name,
-                  aliases_json = excluded.aliases_json,
-                  is_cpu = excluded.is_cpu,
-                  updated_at = excluded.updated_at
-                """,
-                (pid, canonical, pname, json_dumps(aliases), is_cpu, created, created),
-            )
+        # Server Players are the identity source of truth. This method remains
+        # as a compatibility hook for older game payloads, but it no longer
+        # creates free-form identities.
+        return
 
     def canonical_id(self, player_id: str | None) -> str:
         pid = str(player_id or "").strip()
@@ -314,9 +283,7 @@ class GamesDB:
             return ""
         if is_cpu_identity(pid, pid):
             return CPU_PLAYER_ID
-        with self.connect() as conn:
-            row = conn.execute("SELECT canonical_id FROM player_identities WHERE id = ?", (pid,)).fetchone()
-            return str(row["canonical_id"]) if row else pid
+        return pid
 
     def player_name(self, player_id: str | None, fallback: str | None = None) -> str:
         pid = str(player_id or "").strip()
@@ -324,38 +291,10 @@ class GamesDB:
             return str(fallback or "Player")
         canonical = self.canonical_id(pid)
         with self.connect() as conn:
-            row = conn.execute("SELECT name FROM server_players WHERE id = ? AND active = 1", (canonical,)).fetchone()
+            row = conn.execute("SELECT name FROM server_players WHERE id = ?", (canonical,)).fetchone()
             if row:
                 return str(row["name"])
-            row = conn.execute("SELECT name FROM player_identities WHERE id = ?", (canonical,)).fetchone()
-            return str(row["name"]) if row else str(fallback or pid)
-
-    def merge_identities(self, source_id: str, target_id: str) -> dict:
-        source_id = str(source_id or "").strip()
-        target_id = str(target_id or "").strip()
-        if not source_id or not target_id or source_id == target_id:
-            raise ValueError("Choose two different identities.")
-
-        with self.connect() as conn:
-            source = conn.execute("SELECT * FROM player_identities WHERE id = ?", (source_id,)).fetchone()
-            target = conn.execute("SELECT * FROM player_identities WHERE id = ?", (target_id,)).fetchone()
-            if not source or not target:
-                raise ValueError("Both identities must exist before merging.")
-            if source["is_cpu"] or target["is_cpu"]:
-                raise ValueError("Computer identities cannot be merged.")
-            aliases = set(json_loads(target["aliases_json"], []))
-            aliases.add(source["name"])
-            aliases.add(source_id)
-            aliases.update(json_loads(source["aliases_json"], []))
-            conn.execute(
-                "UPDATE player_identities SET canonical_id = ?, updated_at = ? WHERE id = ?",
-                (target_id, now_iso(), source_id),
-            )
-            conn.execute(
-                "UPDATE player_identities SET aliases_json = ?, updated_at = ? WHERE id = ?",
-                (json_dumps(sorted(alias for alias in aliases if alias and alias != target["name"])), now_iso(), target_id),
-            )
-        return self.scoreboard()
+            return str(fallback or pid)
 
     def list_open_games(self) -> list[dict]:
         with self.connect() as conn:
@@ -533,6 +472,8 @@ class GamesDB:
 
     def scoreboard(self) -> dict:
         rows = self.score_rows()
+        server_players = self.list_server_players(include_inactive=True)
+        server_player_ids = {str(player["id"]) for player in server_players}
         stats: dict[str, dict] = {}
         game_stats: dict[str, dict[str, dict]] = defaultdict(dict)
         recent = []
@@ -546,11 +487,20 @@ class GamesDB:
                 payload["winner"] = row["winner_name"]
             if row["score"] and not payload.get("score"):
                 payload["score"] = row["score"]
-            recent.append(payload)
             players = self.event_players(payload)
+            server_event_players = []
+            for player in players:
+                canonical = self.canonical_id(player.get("id") or player.get("name"))
+                if canonical not in server_player_ids:
+                    continue
+                server_event_players.append({**player, "id": canonical, "name": self.player_name(canonical, player.get("name"))})
+            if not server_event_players:
+                continue
+            payload["players"] = server_event_players
             winner = self.event_winner(payload, players)
             draw = bool(payload.get("draw") or row["draw"])
-            for player in players:
+            recent.append(payload)
+            for player in server_event_players:
                 pid = str(player.get("id") or player.get("name") or "player")
                 name = str(player.get("name") or pid)
                 canonical = self.canonical_id(pid)
@@ -562,7 +512,7 @@ class GamesDB:
 
         overall = self.rank_list(stats.values())
         games = {game: self.rank_list(items.values()) for game, items in game_stats.items()}
-        players = self.identity_list()
+        players = self.scoreboard_players(server_players, overall)
         return {
             "totals": {"matches": len(rows), "players": len(overall)},
             "overall": overall,
@@ -570,6 +520,26 @@ class GamesDB:
             "recent": recent[:50],
             "players": players,
         }
+
+    def scoreboard_players(self, server_players: list[dict], ranked: list[dict]) -> list[dict]:
+        by_id = {str(row["id"]): dict(row) for row in ranked}
+        rows: list[dict] = []
+        for player in server_players:
+            pid = str(player["id"])
+            row = self.empty_rank(pid, str(player["name"]))
+            row.update(by_id.get(pid, {}))
+            row.update(
+                {
+                    "id": pid,
+                    "name": str(player["name"]),
+                    "icon": str(player.get("icon") or "compass"),
+                    "active": bool(player.get("active", True)),
+                    "sortOrder": int(player.get("sortOrder") or 0),
+                    "serverPlayer": True,
+                }
+            )
+            rows.append(row)
+        return sorted(rows, key=lambda row: (not row.get("active", True), row["sortOrder"], row["name"].lower()))
 
     def score_rows(self) -> list[sqlite3.Row]:
         with self.connect() as conn:
@@ -579,7 +549,7 @@ class GamesDB:
         return {
             "id": player_id,
             "name": name,
-            "aliases": self.identity_aliases(player_id),
+            "aliases": [],
             "played": 0,
             "wins": 0,
             "losses": 0,
@@ -606,38 +576,6 @@ class GamesDB:
 
     def rank_list(self, rows: Any) -> list[dict]:
         return sorted((dict(row) for row in rows), key=lambda row: (row["points"], row["wins"], row["highScore"]), reverse=True)
-
-    def identity_aliases(self, player_id: str) -> list[str]:
-        with self.connect() as conn:
-            rows = conn.execute(
-                "SELECT id, name, aliases_json FROM player_identities WHERE canonical_id = ? OR id = ?",
-                (player_id, player_id),
-            ).fetchall()
-            aliases: set[str] = set()
-            for row in rows:
-                aliases.add(row["id"])
-                aliases.update(json_loads(row["aliases_json"], []))
-            aliases.discard(player_id)
-            return sorted(alias for alias in aliases if alias)
-
-    def identity_list(self) -> list[dict]:
-        with self.connect() as conn:
-            rows = conn.execute(
-                """
-                SELECT id, canonical_id, name, aliases_json
-                FROM player_identities
-                WHERE is_cpu = 0 AND id = canonical_id
-                ORDER BY name COLLATE NOCASE
-                """
-            ).fetchall()
-            return [
-                {
-                    "id": row["id"],
-                    "name": row["name"],
-                    "aliases": sorted(set(json_loads(row["aliases_json"], []) + self.identity_aliases(row["id"]))),
-                }
-                for row in rows
-            ]
 
     def license_plates(self) -> dict:
         return self.kv_get("license-plates", "state", {"ok": True, "plates": {}})

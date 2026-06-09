@@ -1,5 +1,4 @@
 (() => {
-  const profileStorageKey = "iiab-overland-player-profile";
   const state = {
     profile: { id: "", name: "Player" },
     game: null,
@@ -15,23 +14,13 @@
   const tileValues = { A: 1, B: 3, C: 3, D: 2, E: 1, F: 4, G: 2, H: 4, I: 1, J: 8, K: 5, L: 1, M: 3, N: 1, O: 1, P: 3, Q: 10, R: 1, S: 1, T: 1, U: 1, V: 4, W: 4, X: 8, Y: 4, Z: 10, _: 0 };
   const $ = (id) => document.getElementById(id);
 
-  function randomId() {
-    if (window.crypto?.randomUUID) return window.crypto.randomUUID();
-    return `player-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-  }
-
   function cleanName(value) {
     return String(value || "").replace(/[\x00-\x1f]+/g, "").trim().slice(0, 24);
   }
 
   function loadProfile() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(profileStorageKey) || "{}");
-      state.profile = { id: saved.id || randomId(), name: cleanName(saved.name) || "Player" };
-    } catch {
-      state.profile = { id: randomId(), name: "Player" };
-    }
-    localStorage.setItem(profileStorageKey, JSON.stringify(state.profile));
+    const saved = window.OIABPlayers?.get?.() || {};
+    state.profile = { id: saved.id || "", name: cleanName(saved.name) || "Player" };
     $("playerNameLabel").textContent = state.profile.name;
   }
 

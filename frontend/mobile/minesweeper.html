@@ -13,7 +13,7 @@
   <link rel="manifest" href="/mobile/manifest.webmanifest">
   <link rel="stylesheet" href="minesweeper.css">
 </head>
-<body>
+<body data-require-server-player="true">
   <main class="ms-shell">
     <header class="ms-header">
       <a class="ms-icon-button" href="/mobile/" aria-label="Back to mobile launcher">
@@ -50,16 +50,8 @@
         <a href="/mobile/scoreboard.html" class="ms-score-link">Scoreboard</a>
       </div>
     </section>
-
-    <dialog id="nameDialog" class="ms-dialog">
-      <form method="dialog">
-        <button class="ms-dialog-close" value="cancel" aria-label="Close">x</button>
-      </form>
-      <h2>Player Name</h2>
-      <input id="nameInput" type="text" maxlength="24" autocomplete="name">
-      <button id="saveName" type="button">Save Name</button>
-    </dialog>
   </main>
+  <script src="/mobile/server-player.js?v=20260609"></script>
   <script src="minesweeper.js"></script>
 </body>
 </html>
