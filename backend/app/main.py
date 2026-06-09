@@ -572,6 +572,18 @@ def is_valid_game_word(value: object) -> bool:
 STARTS_ENDS_TOTAL_ROUNDS = 10
 STARTS_ENDS_SPIN_SECONDS = 2.1
 STARTS_ENDS_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+GAME_PLAYER_ICONS = [
+    "compass",
+    "map",
+    "mountain",
+    "tent",
+    "campfire",
+    "jeep",
+    "trail",
+    "star",
+    "paw",
+    "home",
+]
 
 
 def starts_ends_min_word_length(difficulty: str) -> int:
@@ -632,6 +644,9 @@ def starts_ends_new_payload(total_rounds: int = STARTS_ENDS_TOTAL_ROUNDS, min_wo
         "roundWinnerMark": "",
         "winningWord": "",
         "scores": {},
+        "skips": {},
+        "ready": {},
+        "roundOutcome": "",
         "guesses": [],
         "examples": [],
         "usedWinningWords": [],
@@ -665,6 +680,9 @@ def starts_ends_start_round(game: dict) -> None:
             "acceptAt": now + STARTS_ENDS_SPIN_SECONDS,
             "roundWinnerMark": "",
             "winningWord": "",
+            "roundOutcome": "",
+            "skips": {},
+            "ready": {},
             "guesses": [],
             "examples": examples[:5],
             "lastMove": None,
@@ -672,6 +690,15 @@ def starts_ends_start_round(game: dict) -> None:
     )
     game["status"] = "active"
     game["turn"] = "all"
+
+
+def starts_ends_active_marks(game: dict) -> list[str]:
+    marks = []
+    for player in game.get("players", []) if isinstance(game.get("players"), list) else []:
+        mark = str(player.get("mark") or "").strip()
+        if mark:
+            marks.append(mark)
+    return marks
 
 
 def starts_ends_finish_game(game: dict) -> None:
@@ -711,6 +738,9 @@ def public_starts_ends_payload(game: dict) -> dict:
         "roundWinnerMark": str(payload.get("roundWinnerMark") or ""),
         "winningWord": str(payload.get("winningWord") or ""),
         "scores": dict(payload.get("scores") or {}),
+        "skips": dict(payload.get("skips") or {}),
+        "ready": dict(payload.get("ready") or {}),
+        "roundOutcome": str(payload.get("roundOutcome") or ""),
         "guesses": list(payload.get("guesses") or [])[-12:],
         "examples": list(payload.get("examples") or [])[:5] if phase in {"round_complete", "game_complete"} else [],
         "lastMove": payload.get("lastMove"),
@@ -725,10 +755,13 @@ def starts_ends_apply_guess(game: dict, player: dict, word: object) -> None:
     min_len = int(payload.get("minWordLength") or 5)
     start = str(payload.get("startLetter") or "")
     end = str(payload.get("endLetter") or "")
+    skipped_marks = payload.setdefault("skips", {})
     reason = ""
     valid = False
     if payload.get("phase") != "accepting":
         reason = "Wait for the letters to settle."
+    elif skipped_marks.get(mark):
+        reason = "You already skipped this round."
     elif not candidate:
         reason = "Enter a word."
     elif len(candidate) < min_len:
@@ -761,12 +794,67 @@ def starts_ends_apply_guess(game: dict, player: dict, word: object) -> None:
         raise ValueError(reason)
     scores = payload.setdefault("scores", {})
     scores[mark] = int(scores.get(mark) or 0) + 1
+    for skipped_mark in list(skipped_marks.keys()):
+        if skipped_mark != mark:
+            scores[skipped_mark] = int(scores.get(skipped_mark) or 0) - 1
     payload["roundWinnerMark"] = mark
     payload["winningWord"] = candidate
+    payload["roundOutcome"] = "won"
     payload.setdefault("usedWinningWords", []).append(candidate)
     payload["phase"] = "round_complete"
     if int(payload.get("roundNumber") or 0) >= int(payload.get("totalRounds") or STARTS_ENDS_TOTAL_ROUNDS):
         starts_ends_finish_game(game)
+
+
+def starts_ends_apply_skip(game: dict, player: dict) -> None:
+    starts_ends_refresh_phase(game)
+    payload = game.setdefault("payload", starts_ends_new_payload())
+    mark = str(player.get("mark") or "")
+    if payload.get("phase") != "accepting":
+        raise ValueError("Wait for the letters to settle.")
+    if not mark:
+        raise ValueError("Player is not in this round.")
+    skips = payload.setdefault("skips", {})
+    if skips.get(mark):
+        raise ValueError("You already skipped this round.")
+    skip = {
+        "mark": mark,
+        "name": clean_player_name(player.get("name") or mark),
+        "word": "SKIP",
+        "skipped": True,
+        "valid": False,
+        "reason": "Skipped.",
+        "timestamp": timestamp(),
+    }
+    skips[mark] = skip
+    payload.setdefault("guesses", []).append(skip)
+    payload["guesses"] = payload["guesses"][-12:]
+    payload["lastMove"] = skip
+    active_marks = starts_ends_active_marks(game)
+    if active_marks and all(skips.get(active_mark) for active_mark in active_marks):
+        payload["roundWinnerMark"] = ""
+        payload["winningWord"] = ""
+        payload["roundOutcome"] = "skipped"
+        payload["phase"] = "round_complete"
+        if int(payload.get("roundNumber") or 0) >= int(payload.get("totalRounds") or STARTS_ENDS_TOTAL_ROUNDS):
+            starts_ends_finish_game(game)
+
+
+def starts_ends_ready_next(game: dict, player: dict) -> None:
+    starts_ends_refresh_phase(game)
+    payload = game.setdefault("payload", starts_ends_new_payload())
+    mark = str(player.get("mark") or "")
+    if payload.get("phase") == "game_complete":
+        return
+    if payload.get("phase") != "round_complete":
+        raise ValueError("The round is still active.")
+    if not mark:
+        raise ValueError("Player is not in this game.")
+    ready = payload.setdefault("ready", {})
+    ready[mark] = {"name": clean_player_name(player.get("name") or mark), "timestamp": timestamp()}
+    active_marks = starts_ends_active_marks(game)
+    if active_marks and all(ready.get(active_mark) for active_mark in active_marks):
+        starts_ends_start_round(game)
 
 
 WORD_TILE_SIZE = 15
@@ -8214,11 +8302,9 @@ PY
                                     raise ValueError("Only the host can start Starts With / Ends With.")
                                 starts_ends_start_round(game)
                             elif starts_action == "next":
-                                if str(player.get("mark") or "") != "P1":
-                                    raise ValueError("Only the host can start the next round.")
-                                if (game.get("payload") or {}).get("phase") not in {"round_complete", "game_complete"}:
-                                    raise ValueError("Finish the current round first.")
-                                starts_ends_start_round(game)
+                                starts_ends_ready_next(game, player)
+                            elif starts_action == "skip":
+                                starts_ends_apply_skip(game, player)
                             else:
                                 starts_ends_apply_guess(game, player, form_value(payload, "word"))
                         except ValueError as exc:
@@ -8308,6 +8394,30 @@ PY
             game_id = payload.get("gameId")
             games = self.games_db().delete_game(game_id)
             return self.send_json({"ok": True, "games": games, "activeGames": games})
+        if action == "players":
+            return self.send_json(
+                {
+                    "ok": True,
+                    "players": self.games_db().list_server_players(include_inactive=bool(payload.get("includeInactive"))),
+                    "icons": GAME_PLAYER_ICONS,
+                }
+            )
+        if action == "save-player":
+            try:
+                player = self.games_db().save_server_player(payload.get("player") if isinstance(payload.get("player"), dict) else payload)
+                return self.send_json(
+                    {
+                        "ok": True,
+                        "player": player,
+                        "players": self.games_db().list_server_players(include_inactive=True),
+                        "icons": GAME_PLAYER_ICONS,
+                    }
+                )
+            except ValueError as exc:
+                return self.send_json({"ok": False, "error": str(exc)}, status=400)
+        if action == "delete-player":
+            players = self.games_db().delete_server_player(payload.get("playerId"))
+            return self.send_json({"ok": True, "players": players, "icons": GAME_PLAYER_ICONS})
         if action == "merge":
             try:
                 scoreboard = self.games_db().merge_identities(payload.get("sourceId", ""), payload.get("targetId", ""))

@@ -8,7 +8,9 @@
   };
   let currentConfig = null;
   let currentLayout = defaultAppLayout;
-  const profileStorageKey = "iiab-overland-player-profile";
+  let serverPlayers = [];
+  const profileStorageKey = "oiab-player-profile";
+  const legacyProfileStorageKey = "iiab-overland-player-profile";
   const nativeIds = new Set(["music", "web-emulator", "drums", "license-plates", "trivia"]);
   const standaloneUrls = {
     music: "/mobile/music.html",
@@ -60,13 +62,14 @@
 
   function playerProfile() {
     try {
-      const saved = JSON.parse(localStorage.getItem(profileStorageKey) || "{}");
+      const saved = JSON.parse(localStorage.getItem(profileStorageKey) || localStorage.getItem(legacyProfileStorageKey) || "{}");
       return {
         id: saved.id || randomId(),
         name: cleanName(saved.name),
+        icon: saved.icon || "compass",
       };
     } catch {
-      return { id: randomId(), name: "" };
+      return { id: randomId(), name: "", icon: "compass" };
     }
   }
 
@@ -74,6 +77,7 @@
     localStorage.setItem(profileStorageKey, JSON.stringify({
       id: profile.id || randomId(),
       name: cleanName(profile.name),
+      icon: profile.icon || "compass",
     }));
     renderPlayerProfile();
   }
@@ -84,26 +88,68 @@
     if (button) button.textContent = profile.name ? profile.name : "Set Name";
   }
 
-  function openPlayerNameDialog(force = false) {
+  async function loadServerPlayers() {
+    try {
+      const response = await fetch("/game-stats", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "players" }),
+        cache: "no-cache",
+      });
+      if (!response.ok) throw new Error(`players: ${response.status}`);
+      const data = await response.json();
+      serverPlayers = Array.isArray(data.players) ? data.players.filter((player) => player.active !== false) : [];
+    } catch (error) {
+      console.warn(error);
+      serverPlayers = [];
+    }
+    return serverPlayers;
+  }
+
+  function iconPath(icon) {
+    return `/mobile/player-icons/${encodeURIComponent(icon || "compass")}.svg`;
+  }
+
+  async function openPlayerNameDialog(force = false) {
     const dialog = $("playerNameDialog");
     const input = $("playerNameInput");
     const error = $("playerNameError");
+    const choices = $("playerChoices");
     const profile = playerProfile();
+    if (!serverPlayers.length) await loadServerPlayers();
     input.value = profile.name || "";
     error.textContent = "";
+    choices.replaceChildren();
+    serverPlayers.forEach((player) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "player-choice";
+      const img = document.createElement("img");
+      img.src = iconPath(player.icon);
+      img.alt = "";
+      const label = document.createElement("span");
+      label.textContent = player.name;
+      button.append(img, label);
+      button.addEventListener("click", () => {
+        savePlayerProfile(player);
+        dialog.close();
+      });
+      choices.append(button);
+    });
     $("savePlayerName").onclick = () => {
       const name = cleanName(input.value);
       if (!name) {
-        error.textContent = "Enter a name.";
+        error.textContent = serverPlayers.length ? "Choose a player." : "Enter a name.";
         return;
       }
-      savePlayerProfile({ id: profile.id, name });
+      savePlayerProfile({ id: profile.id, name, icon: profile.icon || "compass" });
       dialog.close();
     };
     input.onkeydown = (event) => {
       if (event.key === "Enter") $("savePlayerName").click();
     };
     dialog.showModal();
+    if (!serverPlayers.length) input.hidden = false;
     input.focus();
     if (force) dialog.addEventListener("cancel", (event) => event.preventDefault(), { once: true });
   }
@@ -337,6 +383,7 @@
       "dots-and-boxes": "/mobile/dots-and-boxes.html",
       "connect-four": "/mobile/connect-four.html",
       burst: "/mobile/burst.html",
+      "sinkhole-city": "/mobile/sinkhole-city.html",
       battleship: "/mobile/battleship.html",
       hangman: "/mobile/hangman.html",
       "word-grid": "/mobile/word-grid.html",
@@ -364,6 +411,7 @@
       "pattern-match": "/maps/overland/overland-pattern-match.svg",
       "canyon-crawler": "/maps/overland/overland-canyon-crawler.svg",
       "orbit-run": "/maps/overland/overland-orbit-run.svg",
+      "sinkhole-city": "/maps/overland/overland-sinkhole-city.svg",
       blockfall: "/maps/overland/overland-blockfall.svg",
     }[game.type] || "/mobile/tic-tac-toe.svg";
     img.alt = "";
@@ -420,6 +468,7 @@
   async function main() {
     try {
       renderPlayerProfile();
+      await loadServerPlayers();
       if (!playerProfile().name) window.setTimeout(() => openPlayerNameDialog(true), 100);
       const [config, layout] = await Promise.all([loadConfig(), loadLayout()]);
       currentLayout = layout;

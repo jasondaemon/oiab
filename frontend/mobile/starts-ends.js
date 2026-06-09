@@ -302,10 +302,13 @@
 
   function renderGuessPanel(payload, me) {
     const canGuess = state.game?.status === "active" && payload.phase === "accepting" && me;
+    const skipped = !!payload.skips?.[me?.mark || state.mark || ""];
     $("guessPanel").hidden = !me || ["lobby", "round_complete", "game_complete"].includes(payload.phase || "lobby");
-    $("wordInput").disabled = !canGuess;
-    $("submitWord").disabled = !canGuess;
+    $("wordInput").disabled = !canGuess || skipped;
+    $("submitWord").disabled = !canGuess || skipped;
+    $("skipRound").disabled = !canGuess || skipped;
     $("submitWord").textContent = payload.phase === "spinning" ? "Wait" : "Submit";
+    $("skipRound").textContent = skipped ? "Skipped" : "Skip";
   }
 
   function renderRoundPanel(payload, isHost, game) {
@@ -314,8 +317,16 @@
     if (!complete) return;
     const winner = playerByMark(payload.roundWinnerMark);
     const examples = (payload.examples || []).slice(0, 5).join(", ");
-    $("roundResult").innerHTML = `<strong>${escapeHtml(payload.winningWord || "Round complete")}</strong><span>${escapeHtml(winner?.name || payload.roundWinnerMark || "")}${examples ? ` · examples: ${escapeHtml(examples)}` : ""}</span>`;
-    $("nextRound").hidden = !isHost || payload.phase === "game_complete" || game.status === "complete";
+    const ready = payload.ready || {};
+    const readyCount = Object.keys(ready).length;
+    const playerCount = Array.isArray(game.players) ? game.players.length : 0;
+    const title = payload.roundOutcome === "skipped" ? "Everyone skipped." : (payload.winningWord || "Round complete");
+    const detail = payload.roundOutcome === "skipped" ? "No points awarded." : escapeHtml(winner?.name || payload.roundWinnerMark || "");
+    $("roundResult").innerHTML = `<strong>${escapeHtml(title)}</strong><span>${detail}${examples ? ` · examples: ${escapeHtml(examples)}` : ""}${playerCount ? ` · ready ${readyCount}/${playerCount}` : ""}</span>`;
+    const gameComplete = payload.phase === "game_complete" || game.status === "complete";
+    $("nextRound").hidden = gameComplete;
+    $("nextRound").disabled = !!ready[state.mark];
+    $("nextRound").textContent = ready[state.mark] ? "Ready" : "Next Round";
   }
 
   function renderGuesses(payload) {
@@ -328,7 +339,7 @@
     target.replaceChildren(...guesses.map((guess) => {
       const row = document.createElement("div");
       row.className = `guess-row ${guess.valid ? "valid" : "invalid"}`;
-      row.innerHTML = `<div><strong>${escapeHtml(guess.name || guess.mark || "Player")} · ${escapeHtml(guess.word || "")}</strong><span>${escapeHtml(guess.reason || "")}</span></div><div class="guess-badge">${guess.valid ? "Win" : "No"}</div>`;
+      row.innerHTML = `<div><strong>${escapeHtml(guess.name || guess.mark || "Player")} · ${escapeHtml(guess.skipped ? "Skip" : guess.word || "")}</strong><span>${escapeHtml(guess.reason || "")}</span></div><div class="guess-badge">${guess.valid ? "Win" : (guess.skipped ? "Skip" : "No")}</div>`;
       return row;
     }));
   }
@@ -434,7 +445,17 @@
     try {
       await gameMove({ startsEndsAction: "next" });
       $("wordInput").value = "";
-      message("Next round started.");
+      message("Ready for the next round.");
+    } catch (error) {
+      message(error.message, true);
+    }
+  }
+
+  async function skipRound() {
+    try {
+      await gameMove({ startsEndsAction: "skip" });
+      $("wordInput").value = "";
+      message("Skipped this round.");
     } catch (error) {
       message(error.message, true);
     }
@@ -519,6 +540,7 @@
     $("refreshGame").addEventListener("click", refreshGame);
     $("startGame").addEventListener("click", startGame);
     $("submitWord").addEventListener("click", submitWord);
+    $("skipRound").addEventListener("click", skipRound);
     $("wordInput").addEventListener("keydown", (event) => {
       if (event.key === "Enter") submitWord();
     });

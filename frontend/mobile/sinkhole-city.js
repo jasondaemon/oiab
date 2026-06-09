@@ -773,8 +773,8 @@
     const speed = Math.max(actor.isCpu ? 145 : 170, 300 - actor.radius * 1.25) * (profile?.speedScale || 1);
     actor.vx += (input.x * speed - actor.vx) * Math.min(1, dt * 8);
     actor.vy += (input.y * speed - actor.vy) * Math.min(1, dt * 8);
-    actor.x = Math.max(actor.radius, Math.min(world.width - actor.radius, actor.x + actor.vx * dt));
-    actor.y = Math.max(actor.radius, Math.min(world.height - actor.radius, actor.y + actor.vy * dt));
+    actor.x = Math.max(0, Math.min(world.width, actor.x + actor.vx * dt));
+    actor.y = Math.max(0, Math.min(world.height, actor.y + actor.vy * dt));
     actor.radius += (actor.targetRadius - actor.radius) * Math.min(1, dt * 5);
     const currentRank = rankFor(actor.radius).label;
     if (currentRank !== actor.lastRank) {
@@ -852,7 +852,7 @@
         const b = list[j];
         if (now < (a.respawnUntil || 0) || now < (b.respawnUntil || 0)) continue;
         const radiusDelta = a.radius - b.radius;
-        if (Math.abs(radiusDelta) <= 0.5) continue;
+      if (Math.abs(radiusDelta) <= 0.01) continue;
         const winner = radiusDelta > 0 ? a : b;
         const loser = radiusDelta > 0 ? b : a;
         const dist = Math.hypot(loser.x - winner.x, loser.y - winner.y);

@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#123822">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="IIAB Overland">
+  <meta name="apple-mobile-web-app-title" content="OIAB">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Game Data | IIAB Overland</title>
+  <title>Game Data | OIAB</title>
   <link rel="apple-touch-icon" sizes="180x180" href="/mobile/overland-touch-icon-180.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
   <link rel="manifest" href="/mobile/manifest.webmanifest">
@@ -26,17 +26,14 @@
     </header>
 
     <section class="gs-panel gs-admin-panel">
-      <h2>Admin Password</h2>
-      <p>Used for merge and wipe actions. This is the same launcher settings password.</p>
-      <input id="settingsPassword" type="password" autocomplete="current-password" placeholder="Settings password">
-    </section>
-
-    <section class="gs-panel gs-admin-panel">
-      <h2>Merge Identities</h2>
-      <p>Use this when the same person has played from multiple devices. Stats from the source identity roll into the target identity.</p>
-      <label>Source identity <select id="sourcePlayer"></select></label>
-      <label>Target identity <select id="targetPlayer"></select></label>
-      <button id="mergePlayers" class="gs-action" type="button">Merge Source Into Target</button>
+      <h2>Server Players</h2>
+      <p>These are the player profiles shown when someone opens games from the mobile launcher.</p>
+      <div id="serverPlayersList" class="gs-identities"></div>
+      <div class="gs-section-line">
+        <label>Name <input id="serverPlayerName" maxlength="24" placeholder="Player name"></label>
+        <label>Icon <select id="serverPlayerIcon"></select></label>
+        <button id="saveServerPlayer" class="gs-action compact" type="button">Save Player</button>
+      </div>
     </section>
 
     <section class="gs-panel gs-admin-panel">
@@ -53,6 +50,7 @@
     <section class="gs-panel gs-admin-panel">
       <h2>Wipe High Scores</h2>
       <p>This clears recorded match results only. It does not delete active games or player names.</p>
+      <input id="settingsPassword" type="password" autocomplete="current-password" placeholder="Settings password" hidden>
       <label>Game <select id="wipeGame"><option value="tic-tac-toe">Tic-Tac-Toe</option><option value="chess">Chess</option><option value="checkers">Checkers</option><option value="minesweeper">Minesweeper</option><option value="blockfall">Blockfall Battle</option><option value="claimline">Territory Trace</option><option value="word-tile-arena">Word Tile Arena</option><option value="blank-slate">Blank Slate</option><option value="dots-and-boxes">Dots and Boxes</option><option value="connect-four">Connect Four</option><option value="burst">Burst</option><option value="battleship">Battleship</option><option value="hangman">Hangman</option><option value="word-grid">Word Grid</option><option value="pattern-match">Pattern Match</option><option value="trivia">Trail Trivia</option><option value="all">All Games</option></select></label>
       <button id="wipeScores" class="gs-action danger" type="button">Wipe Selected Scores</button>
     </section>

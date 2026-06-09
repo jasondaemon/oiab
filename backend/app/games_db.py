@@ -14,6 +14,13 @@ from .storage import read_json
 
 DEFAULT_SCOREBOARD = {"totals": {"matches": 0, "players": 0}, "overall": [], "games": {}, "recent": [], "players": []}
 
+DEFAULT_SERVER_PLAYERS = [
+    {"id": "player-driver", "name": "Driver", "icon": "compass", "sortOrder": 10},
+    {"id": "player-navigator", "name": "Navigator", "icon": "map", "sortOrder": 20},
+    {"id": "player-scout", "name": "Scout", "icon": "mountain", "sortOrder": 30},
+    {"id": "player-ranger", "name": "Ranger", "icon": "tent", "sortOrder": 40},
+]
+
 
 def now_iso() -> str:
     return datetime.now().isoformat()
@@ -121,6 +128,16 @@ class GamesDB:
                   updated_at TEXT NOT NULL
                 );
 
+                CREATE TABLE IF NOT EXISTS server_players (
+                  id TEXT PRIMARY KEY,
+                  name TEXT NOT NULL,
+                  icon TEXT NOT NULL DEFAULT 'compass',
+                  active INTEGER NOT NULL DEFAULT 1,
+                  sort_order INTEGER NOT NULL DEFAULT 0,
+                  created_at TEXT NOT NULL,
+                  updated_at TEXT NOT NULL
+                );
+
                 CREATE TABLE IF NOT EXISTS kv_store (
                   namespace TEXT NOT NULL,
                   key TEXT NOT NULL,
@@ -130,7 +147,92 @@ class GamesDB:
                 );
                 """
             )
+        self.seed_default_players()
         self.import_legacy_json_once()
+
+    def seed_default_players(self) -> None:
+        with self.connect() as conn:
+            row = conn.execute("SELECT COUNT(*) AS count FROM server_players").fetchone()
+            if row and int(row["count"] or 0) > 0:
+                return
+            created = now_iso()
+            for player in DEFAULT_SERVER_PLAYERS:
+                conn.execute(
+                    """
+                    INSERT INTO server_players(id, name, icon, active, sort_order, created_at, updated_at)
+                    VALUES (?, ?, ?, 1, ?, ?, ?)
+                    """,
+                    (
+                        player["id"],
+                        player["name"],
+                        player["icon"],
+                        int(player.get("sortOrder") or 0),
+                        created,
+                        created,
+                    ),
+                )
+
+    def list_server_players(self, include_inactive: bool = False) -> list[dict]:
+        where = "" if include_inactive else "WHERE active = 1"
+        with self.connect() as conn:
+            rows = conn.execute(
+                f"""
+                SELECT id, name, icon, active, sort_order, created_at, updated_at
+                FROM server_players
+                {where}
+                ORDER BY sort_order ASC, name COLLATE NOCASE ASC
+                """
+            ).fetchall()
+        return [
+            {
+                "id": str(row["id"]),
+                "name": str(row["name"]),
+                "icon": str(row["icon"] or "compass"),
+                "active": bool(row["active"]),
+                "sortOrder": int(row["sort_order"] or 0),
+                "createdAt": row["created_at"],
+                "updatedAt": row["updated_at"],
+            }
+            for row in rows
+        ]
+
+    def save_server_player(self, payload: dict) -> dict:
+        player_id = str(payload.get("id") or "").strip()
+        name = str(payload.get("name") or "").strip()[:24]
+        icon = str(payload.get("icon") or "compass").strip()[:64] or "compass"
+        if not name:
+            raise ValueError("Player name is required.")
+        if not player_id:
+            player_id = f"player-{''.join(ch.lower() if ch.isalnum() else '-' for ch in name).strip('-') or 'custom'}"
+        player_id = "".join(ch if ch.isalnum() or ch in "-_" else "-" for ch in player_id).strip("-_")[:64] or "player"
+        try:
+            sort_order = int(payload.get("sortOrder") or 0)
+        except (TypeError, ValueError):
+            sort_order = 0
+        active = 1 if payload.get("active", True) else 0
+        now = now_iso()
+        with self.connect() as conn:
+            conn.execute(
+                """
+                INSERT INTO server_players(id, name, icon, active, sort_order, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(id) DO UPDATE SET
+                  name = excluded.name,
+                  icon = excluded.icon,
+                  active = excluded.active,
+                  sort_order = excluded.sort_order,
+                  updated_at = excluded.updated_at
+                """,
+                (player_id, name, icon, active, sort_order, now, now),
+            )
+        return {"id": player_id, "name": name, "icon": icon, "active": bool(active), "sortOrder": sort_order}
+
+    def delete_server_player(self, player_id: str | None) -> list[dict]:
+        pid = str(player_id or "").strip()
+        if pid:
+            with self.connect() as conn:
+                conn.execute("UPDATE server_players SET active = 0, updated_at = ? WHERE id = ?", (now_iso(), pid))
+        return self.list_server_players(include_inactive=True)
 
     def import_legacy_json_once(self) -> None:
         if self.kv_get("migrations", "json_import_v1"):

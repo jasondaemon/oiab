@@ -54,11 +54,12 @@
     </section>
   </main>
   <dialog id="playerNameDialog" class="player-name-dialog">
-    <h2>Your Name</h2>
-    <p>This name is saved on this device and used for local family games.</p>
-    <input id="playerNameInput" maxlength="24" autocomplete="nickname" placeholder="Player name">
+    <h2>Choose Player</h2>
+    <p>Select the player profile for this device. Profiles are managed by the admin in Settings.</p>
+    <div id="playerChoices" class="player-choice-grid"></div>
+    <input id="playerNameInput" maxlength="24" autocomplete="nickname" placeholder="Fallback player name" hidden>
     <div id="playerNameError" class="password-error"></div>
-    <button id="savePlayerName" class="password-submit" type="button">Save Name</button>
+    <button id="savePlayerName" class="password-submit" type="button">Use Fallback Name</button>
   </dialog>
   <script src="/mobile/mobile-shell.js"></script>
 </body>

@@ -1,6 +1,6 @@
 (() => {
   const isAdmin = document.body && document.querySelector("#settingsPassword");
-  const state = { scoreboard: null, activeGames: [], view: "overall" };
+  const state = { scoreboard: null, activeGames: [], players: [], icons: [], view: "overall" };
   const $ = (id) => document.getElementById(id);
 
   function escapeHtml(value) {
@@ -147,6 +147,34 @@
     }).join("");
   }
 
+  function iconPath(icon) {
+    return `/mobile/player-icons/${encodeURIComponent(icon || "compass")}.svg`;
+  }
+
+  function renderServerPlayers() {
+    const list = $("serverPlayersList");
+    if (!list) return;
+    const activePlayers = (state.players || []).filter((player) => player.active !== false);
+    list.replaceChildren(...activePlayers.map((player) => {
+      const row = document.createElement("article");
+      row.className = "gs-identity-row";
+      row.innerHTML = `
+        <div class="rank"><img src="${iconPath(player.icon)}" alt="" style="width:32px;height:32px"></div>
+        <div>
+          <strong>${escapeHtml(player.name)}</strong>
+          <span>${escapeHtml(player.id)} · ${escapeHtml(player.icon || "compass")}</span>
+        </div>
+        <button class="gs-action danger compact" type="button">Disable</button>
+      `;
+      row.querySelector("button").addEventListener("click", () => deleteServerPlayer(player.id, player.name));
+      return row;
+    }));
+    const iconSelect = $("serverPlayerIcon");
+    if (iconSelect) {
+      iconSelect.innerHTML = (state.icons || []).map((icon) => `<option value="${escapeHtml(icon)}">${escapeHtml(icon)}</option>`).join("");
+    }
+  }
+
   function isCpuIdentity(player = {}) {
     const id = String(player.id || "").toLowerCase();
     const raw = `${player.id || ""} ${player.name || ""}`.toLowerCase();
@@ -183,6 +211,7 @@
       `).join("") : '<div class="gs-recent-row"><div></div><div><strong>No identities yet.</strong><span>Play a tracked game first.</span></div></div>';
     }
     renderActiveGames();
+    renderServerPlayers();
   }
 
   async function loadActiveGames() {
@@ -192,12 +221,48 @@
     renderActiveGames();
   }
 
+  async function loadServerPlayers() {
+    if (!isAdmin) return;
+    const data = await apiRaw({ action: "players", includeInactive: true });
+    state.players = data.players || [];
+    state.icons = data.icons || [];
+    renderServerPlayers();
+  }
+
   async function load() {
     try {
       state.scoreboard = await api({ action: "scoreboard" });
       renderScoreboard();
-      await loadActiveGames();
+      await Promise.all([loadActiveGames(), loadServerPlayers()]);
       message("");
+    } catch (error) {
+      message(error.message, true);
+    }
+  }
+
+  async function saveServerPlayer() {
+    const name = $("serverPlayerName")?.value || "";
+    const icon = $("serverPlayerIcon")?.value || "compass";
+    try {
+      const data = await apiRaw({ action: "save-player", player: { name, icon } });
+      state.players = data.players || [];
+      state.icons = data.icons || state.icons;
+      if ($("serverPlayerName")) $("serverPlayerName").value = "";
+      renderServerPlayers();
+      message("Player saved.");
+    } catch (error) {
+      message(error.message, true);
+    }
+  }
+
+  async function deleteServerPlayer(playerId, name) {
+    if (!window.confirm(`Disable ${name || "this player"}?`)) return;
+    try {
+      const data = await apiRaw({ action: "delete-player", playerId });
+      state.players = data.players || [];
+      state.icons = data.icons || state.icons;
+      renderServerPlayers();
+      message("Player disabled.");
     } catch (error) {
       message(error.message, true);
     }
@@ -242,10 +307,6 @@
   }
 
   async function clearActiveGame(gameId, label) {
-    if (!$("settingsPassword")?.value) {
-      message("Enter the settings password first.", true);
-      return;
-    }
     if (!window.confirm(`Clear saved ${label || "game"}?`)) return;
     try {
       const data = await apiRaw({
@@ -262,10 +323,6 @@
   }
 
   async function clearAllActiveGames() {
-    if (!$("settingsPassword")?.value) {
-      message("Enter the settings password first.", true);
-      return;
-    }
     if (!window.confirm("Clear all active saved games? Score history will remain.")) return;
     try {
       const data = await apiRaw({
@@ -289,6 +346,7 @@
   });
   if ($("refreshScores")) $("refreshScores").addEventListener("click", load);
   if ($("mergePlayers")) $("mergePlayers").addEventListener("click", mergePlayers);
+  if ($("saveServerPlayer")) $("saveServerPlayer").addEventListener("click", saveServerPlayer);
   if ($("wipeScores")) $("wipeScores").addEventListener("click", wipeScores);
   if ($("clearAllActiveGames")) $("clearAllActiveGames").addEventListener("click", clearAllActiveGames);
   load();
