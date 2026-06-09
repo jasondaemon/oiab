@@ -610,11 +610,13 @@
   async function loadServicesSettings() {
     setSettingsMessage("pluginsSettingsMessage", "Loading plugins...");
     try {
-      const response = await fetch("/api/services", { cache: "no-store" });
+      const [response, containersResponse] = await Promise.all([
+        fetch("/api/services", { cache: "no-store" }),
+        fetch("/api/containers", { cache: "no-store" }),
+      ]);
       if (!response.ok) throw new Error(`services ${response.status}`);
       const data = await response.json();
       state.services = Array.isArray(data?.services) ? data.services : [];
-      const containersResponse = await fetch("/api/containers", { cache: "no-store" });
       const containersData = await containersResponse.json().catch(() => ({}));
       state.containers = {
         available: Boolean(containersData?.available),

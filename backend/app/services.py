@@ -14,6 +14,8 @@ from .config import REPO_ROOT, Settings
 
 MANIFEST_DIR = REPO_ROOT / "services" / "manifests"
 DOCKER_SOCKET = Path(os.environ.get("OIAB_DOCKER_SOCKET", "/var/run/docker.sock"))
+DOCKER_CONTAINERS_CACHE: dict[str, Any] = {"expires_at": 0.0, "payload": None}
+DOCKER_CONTAINERS_CACHE_TTL = 3.0
 
 
 def plugin_state_file(settings: Settings) -> Path:
@@ -108,12 +110,12 @@ def docker_compose_exists(service_id: str) -> bool:
         return False
 
 
-def docker_socket_request(method: str, path: str) -> tuple[int, Any]:
+def docker_socket_request(method: str, path: str, *, timeout: float = 5.0) -> tuple[int, Any]:
     if not DOCKER_SOCKET.exists():
         return 503, {"ok": False, "error": f"Docker socket not mounted: {DOCKER_SOCKET}"}
     try:
         with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as sock:
-            sock.settimeout(60)
+            sock.settimeout(timeout)
             sock.connect(str(DOCKER_SOCKET))
             request = f"{method} {path} HTTP/1.1\r\nHost: docker\r\nContent-Length: 0\r\nConnection: close\r\n\r\n"
             sock.sendall(request.encode("utf-8"))
@@ -159,6 +161,10 @@ def docker_socket_request(method: str, path: str) -> tuple[int, Any]:
 def docker_containers(settings: Settings) -> dict[str, Any]:
     if not settings.allow_docker_control:
         return {"ok": True, "available": False, "error": "Docker control disabled.", "containers": []}
+    now = time.monotonic()
+    cached = DOCKER_CONTAINERS_CACHE.get("payload")
+    if cached is not None and now < float(DOCKER_CONTAINERS_CACHE.get("expires_at") or 0):
+        return cached
     status, payload = docker_socket_request("GET", "/v1.43/containers/json?all=1")
     if status >= 400:
         return {"ok": False, "available": False, "error": payload.get("error") if isinstance(payload, dict) else str(payload), "containers": []}
@@ -174,7 +180,10 @@ def docker_containers(settings: Settings) -> dict[str, Any]:
                 "ports": item.get("Ports") or [],
             }
         )
-    return {"ok": True, "available": True, "containers": sorted(containers, key=lambda item: item["name"])}
+    result = {"ok": True, "available": True, "containers": sorted(containers, key=lambda item: item["name"])}
+    DOCKER_CONTAINERS_CACHE["payload"] = result
+    DOCKER_CONTAINERS_CACHE["expires_at"] = now + DOCKER_CONTAINERS_CACHE_TTL
+    return result
 
 
 def docker_container_action(settings: Settings, container: str, action: str) -> dict[str, Any]:
@@ -182,6 +191,8 @@ def docker_container_action(settings: Settings, container: str, action: str) -> 
         return {"ok": False, "error": "Docker control disabled."}
     if action not in {"start", "stop", "restart"}:
         return {"ok": False, "error": f"Unsupported container action: {action}"}
+    DOCKER_CONTAINERS_CACHE["expires_at"] = 0.0
+    DOCKER_CONTAINERS_CACHE["payload"] = None
     suffix = "?t=1" if action == "restart" else ""
     status, payload = docker_socket_request("POST", f"/v1.43/containers/{container}/{action}{suffix}")
     if status in {204, 304} or (action == "start" and status == 304):
@@ -195,6 +206,15 @@ def docker_container_lookup(settings: Settings, container: str | None) -> dict[s
     if not container or not settings.allow_docker_control:
         return None
     snapshot = docker_containers(settings)
+    for item in snapshot.get("containers", []):
+        if item.get("name") == container or item.get("id") == container:
+            return item
+    return None
+
+
+def docker_container_lookup_from_snapshot(snapshot: dict[str, Any], container: str | None) -> dict[str, Any] | None:
+    if not container:
+        return None
     for item in snapshot.get("containers", []):
         if item.get("name") == container or item.get("id") == container:
             return item
@@ -388,6 +408,7 @@ def service_action(settings: Settings, service_id: str, action: str) -> dict[str
 def list_services(settings: Settings | None = None) -> list[dict[str, Any]]:
     services = []
     plugin_state = read_plugin_state(settings) if settings else {}
+    container_snapshot = docker_containers(settings) if settings and settings.allow_docker_control else {"containers": []}
     for path in sorted(MANIFEST_DIR.glob("*.yml")):
         item = parse_simple_yaml(path)
         service_id = str(item.get("id") or "")
@@ -395,7 +416,7 @@ def list_services(settings: Settings | None = None) -> list[dict[str, Any]]:
         unit = item.get("systemd_unit")
         external_container = str(item.get("external_container") or "")
         marker = resolve_marker(settings, str(item.get("installed_marker") or ""))
-        container = docker_container_lookup(settings, external_container) if settings and external_container else None
+        container = docker_container_lookup_from_snapshot(container_snapshot, external_container) if external_container else None
         if container:
             state = str(container.get("state") or "unknown")
             installed = True
