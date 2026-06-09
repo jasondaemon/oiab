@@ -119,6 +119,12 @@
       overlays: { overlays: [] },
       geopdfs: { maps: [] },
     },
+    gameData: {
+      scoreboard: null,
+      activeGames: [],
+      players: [],
+      icons: [],
+    },
   };
 
   function iconSvg(name) {
@@ -543,6 +549,279 @@
     if (!node) return;
     node.textContent = text || "";
     node.style.color = error ? "#ff8f87" : "";
+  }
+
+  async function gameDataApiRaw(payload = {}) {
+    const response = await fetch("/game-stats", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || data.ok === false) throw new Error(data.error || `Game data request failed: ${response.status}`);
+    return data;
+  }
+
+  async function gameDataApi(payload = { action: "scoreboard" }) {
+    const data = await gameDataApiRaw(payload);
+    return data.scoreboard || data;
+  }
+
+  function gameDataLabel(game = {}) {
+    const labels = {
+      "tic-tac-toe": "Tic-Tac-Toe",
+      chess: "Chess",
+      checkers: "Checkers",
+      minesweeper: "Minesweeper",
+      blockfall: "Blockfall Battle",
+      claimline: "Territory Trace",
+      "sinkhole-city": "Sinkhole City",
+      "canyon-crawler": "Canyon Crawler",
+      "orbit-run": "Orbit Run",
+      "word-tile-arena": "Word Tile Arena",
+      "blank-slate": "Blank Slate",
+      "starts-ends": "Starts / Ends",
+      "dice-roller": "Dice Roller",
+      "dots-and-boxes": "Dots and Boxes",
+      "connect-four": "Connect Four",
+      burst: "Burst",
+      battleship: "Battleship",
+      hangman: "Hangman",
+      "word-grid": "Word Grid",
+      "pattern-match": "Pattern Match",
+      trivia: "Trail Trivia",
+    };
+    return labels[game.type] || labels[game.game] || game.title || game.type || "Game";
+  }
+
+  function gameDataIconPath(icon) {
+    return `/mobile/player-icons/${encodeURIComponent(icon || "compass")}.svg`;
+  }
+
+  function gameDataIsCpuIdentity(player = {}) {
+    const id = String(player.id || "").toLowerCase();
+    const raw = `${player.id || ""} ${player.name || ""}`.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+    const name = String(player.name || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+    return (
+      id.startsWith("cpu-") ||
+      id.startsWith("computereasy") ||
+      id.startsWith("computermedium") ||
+      id.startsWith("computerhard") ||
+      raw === "cpu" ||
+      raw.startsWith("cpu ") ||
+      raw === "computer" ||
+      raw.startsWith("computer ") ||
+      name === "computer" ||
+      name.startsWith("computer ")
+    );
+  }
+
+  function renderGameDataSummary() {
+    const board = state.gameData.scoreboard || {};
+    const matches = Number(board.totals?.matches || 0);
+    const scoredPlayers = Number(board.totals?.players || 0);
+    const serverPlayers = (state.gameData.players || []).filter((player) => player.active !== false).length;
+    const activeGames = state.gameData.activeGames || [];
+    const leader = board.overall?.[0]?.name || "No leader yet";
+    if ($("gameDataSummary")) $("gameDataSummary").textContent = `${matches} completed matches · leader: ${leader}`;
+    if ($("gameDataMatchesBadge")) $("gameDataMatchesBadge").textContent = `${matches} match${matches === 1 ? "" : "es"}`;
+    if ($("gameDataPlayersBadge")) $("gameDataPlayersBadge").textContent = `${serverPlayers || scoredPlayers} player${(serverPlayers || scoredPlayers) === 1 ? "" : "s"}`;
+    if ($("gameDataActiveBadge")) $("gameDataActiveBadge").textContent = `${activeGames.length} active`;
+  }
+
+  function renderGameDataServerPlayers() {
+    const holder = $("gameDataServerPlayers");
+    if (!holder) return;
+    const players = (state.gameData.players || []).filter((player) => player.active !== false);
+    if (!players.length) {
+      holder.innerHTML = `<article class="uo-settings-item"><div class="uo-settings-item-main"><p class="uo-settings-item-subtitle">No server players configured yet.</p></div></article>`;
+    } else {
+      holder.innerHTML = players.map((player) => `
+        <article class="uo-settings-item uo-game-data-row">
+          <div class="uo-settings-item-main">
+            <div class="uo-settings-item-head">
+              <img class="uo-game-player-icon" src="${escapeHtml(gameDataIconPath(player.icon))}" alt="">
+              <h3 class="uo-settings-item-title">${escapeHtml(player.name || "Player")}</h3>
+              <div class="uo-settings-item-meta">
+                ${badge(player.icon || "compass")}
+                ${player.aliases?.length ? badge(`${player.aliases.length} aliases`) : ""}
+              </div>
+            </div>
+            <p class="uo-settings-item-path">${escapeHtml(player.id || "")}</p>
+          </div>
+          <div class="uo-settings-item-actions">
+            <button type="button" class="is-danger" data-game-player-delete="${escapeHtml(player.id || "")}" data-game-player-name="${escapeHtml(player.name || "this player")}">Disable</button>
+          </div>
+        </article>
+      `).join("");
+      holder.querySelectorAll("[data-game-player-delete]").forEach((button) => {
+        button.addEventListener("click", () => deleteGameDataServerPlayer(button.dataset.gamePlayerDelete || "", button.dataset.gamePlayerName || "this player"));
+      });
+    }
+    const iconSelect = $("gameDataPlayerIcon");
+    if (iconSelect) {
+      const icons = state.gameData.icons?.length ? state.gameData.icons : ["compass"];
+      iconSelect.innerHTML = icons.map((icon) => `<option value="${escapeHtml(icon)}">${escapeHtml(icon)}</option>`).join("");
+    }
+    renderGameDataSummary();
+  }
+
+  function renderGameDataActiveGames() {
+    const holder = $("gameDataActiveGames");
+    if (!holder) return;
+    const games = state.gameData.activeGames || [];
+    if (!games.length) {
+      holder.innerHTML = `<article class="uo-settings-item"><div class="uo-settings-item-main"><p class="uo-settings-item-subtitle">No active saved games.</p></div></article>`;
+      renderGameDataSummary();
+      return;
+    }
+    holder.innerHTML = games.map((game) => {
+      const players = (game.players || []).map((player) => `${player.name || "Player"} (${player.mark || "-"})`).join(" vs ") || "No players";
+      const meta = [game.status, game.mode, game.difficulty].filter(Boolean).join(" · ");
+      return `
+        <article class="uo-settings-item uo-game-data-row">
+          <div class="uo-settings-item-main">
+            <div class="uo-settings-item-head">
+              <h3 class="uo-settings-item-title">${escapeHtml(gameDataLabel(game))}</h3>
+              <div class="uo-settings-item-meta">
+                ${game.status ? badge(game.status) : ""}
+                ${game.mode ? badge(game.mode) : ""}
+                ${game.difficulty ? badge(game.difficulty) : ""}
+              </div>
+            </div>
+            <p class="uo-settings-item-subtitle">${escapeHtml(players)}</p>
+            <p class="uo-settings-item-path">${escapeHtml(meta)}${game.updated ? ` · ${escapeHtml(formatTimestamp(game.updated))}` : ""}</p>
+          </div>
+          <div class="uo-settings-item-actions">
+            <button type="button" class="is-danger" data-game-clear="${escapeHtml(game.id || "")}" data-game-label="${escapeHtml(gameDataLabel(game))}">Clear</button>
+          </div>
+        </article>
+      `;
+    }).join("");
+    holder.querySelectorAll("[data-game-clear]").forEach((button) => {
+      button.addEventListener("click", () => clearGameDataActiveGame(button.dataset.gameClear || "", button.dataset.gameLabel || "game"));
+    });
+    renderGameDataSummary();
+  }
+
+  function renderGameDataIdentities() {
+    const holder = $("gameDataIdentities");
+    if (!holder) return;
+    const players = (state.gameData.scoreboard?.players || []).filter((player) => !gameDataIsCpuIdentity(player));
+    if (!players.length) {
+      holder.innerHTML = `<article class="uo-settings-item"><div class="uo-settings-item-main"><p class="uo-settings-item-subtitle">No tracked score identities yet.</p></div></article>`;
+      return;
+    }
+    holder.innerHTML = players.map((player) => `
+      <article class="uo-settings-item uo-game-data-row">
+        <div class="uo-settings-item-main">
+          <div class="uo-settings-item-head">
+            <h3 class="uo-settings-item-title">${escapeHtml(player.name || "Player")}</h3>
+            <div class="uo-settings-item-meta">
+              ${badge(`${player.played || 0} played`)}
+              ${badge(`${player.points || 0} pts`)}
+            </div>
+          </div>
+          <p class="uo-settings-item-path">${escapeHtml(player.id || "")}${player.aliases?.length ? ` · aliases: ${escapeHtml(player.aliases.join(", "))}` : ""}</p>
+        </div>
+      </article>
+    `).join("");
+  }
+
+  function renderGameDataSettings() {
+    renderGameDataSummary();
+    renderGameDataServerPlayers();
+    renderGameDataActiveGames();
+    renderGameDataIdentities();
+  }
+
+  async function loadGameDataSettings() {
+    setSettingsMessage("gameDataMessage", "Loading game data...");
+    try {
+      const [scoreboard, activeData, playersData] = await Promise.all([
+        gameDataApi({ action: "scoreboard" }),
+        gameDataApiRaw({ action: "active-games" }),
+        gameDataApiRaw({ action: "players", includeInactive: true }),
+      ]);
+      state.gameData.scoreboard = scoreboard;
+      state.gameData.activeGames = activeData.activeGames || [];
+      state.gameData.players = playersData.players || [];
+      state.gameData.icons = playersData.icons || [];
+      renderGameDataSettings();
+      setSettingsMessage("gameDataMessage", "");
+    } catch (error) {
+      setSettingsMessage("gameDataMessage", error.message, true);
+    }
+  }
+
+  async function saveGameDataServerPlayer() {
+    const name = $("gameDataPlayerName")?.value || "";
+    const icon = $("gameDataPlayerIcon")?.value || "compass";
+    setSettingsMessage("gameDataMessage", "Saving player...");
+    try {
+      const data = await gameDataApiRaw({ action: "save-player", player: { name, icon } });
+      state.gameData.players = data.players || [];
+      state.gameData.icons = data.icons || state.gameData.icons;
+      if ($("gameDataPlayerName")) $("gameDataPlayerName").value = "";
+      renderGameDataServerPlayers();
+      setSettingsMessage("gameDataMessage", "Player saved.");
+    } catch (error) {
+      setSettingsMessage("gameDataMessage", error.message, true);
+    }
+  }
+
+  async function deleteGameDataServerPlayer(playerId, name) {
+    if (!playerId || !window.confirm(`Disable ${name || "this player"}?`)) return;
+    setSettingsMessage("gameDataMessage", "Disabling player...");
+    try {
+      const data = await gameDataApiRaw({ action: "delete-player", playerId });
+      state.gameData.players = data.players || [];
+      state.gameData.icons = data.icons || state.gameData.icons;
+      renderGameDataServerPlayers();
+      setSettingsMessage("gameDataMessage", "Player disabled.");
+    } catch (error) {
+      setSettingsMessage("gameDataMessage", error.message, true);
+    }
+  }
+
+  async function clearGameDataActiveGame(gameId, label) {
+    if (!gameId || !window.confirm(`Clear saved ${label || "game"}? Score history will remain.`)) return;
+    setSettingsMessage("gameDataMessage", "Clearing active game...");
+    try {
+      const data = await gameDataApiRaw({ action: "clear-active-game", gameId, settingsPassword: "" });
+      state.gameData.activeGames = data.activeGames || [];
+      renderGameDataActiveGames();
+      setSettingsMessage("gameDataMessage", "Active game cleared.");
+    } catch (error) {
+      setSettingsMessage("gameDataMessage", error.message, true);
+    }
+  }
+
+  async function clearAllGameDataActiveGames() {
+    if (!window.confirm("Clear all active saved games? Score history will remain.")) return;
+    setSettingsMessage("gameDataMessage", "Clearing active games...");
+    try {
+      const data = await gameDataApiRaw({ action: "clear-active-games", settingsPassword: "" });
+      state.gameData.activeGames = data.activeGames || [];
+      renderGameDataActiveGames();
+      setSettingsMessage("gameDataMessage", "All active games cleared.");
+    } catch (error) {
+      setSettingsMessage("gameDataMessage", error.message, true);
+    }
+  }
+
+  async function wipeGameDataScores() {
+    const game = $("gameDataWipeGame")?.value || "tic-tac-toe";
+    const label = game === "all" ? "all games" : gameDataLabel({ type: game });
+    if (!window.confirm(`Wipe ${label} score history? Active games and player profiles will remain.`)) return;
+    setSettingsMessage("gameDataMessage", "Wiping score history...");
+    try {
+      state.gameData.scoreboard = await gameDataApi({ action: "wipe", game, settingsPassword: "" });
+      renderGameDataSettings();
+      setSettingsMessage("gameDataMessage", "Score data wiped.");
+    } catch (error) {
+      setSettingsMessage("gameDataMessage", error.message, true);
+    }
   }
 
   function renderFolderCard(folder) {
@@ -2632,8 +2911,15 @@
       button.addEventListener("click", () => {
         state.settingsSection = button.dataset.settingsSection || "music";
         renderSettingsSections();
+        if (state.settingsSection === "game-data") {
+          loadGameDataSettings().catch((error) => setSettingsMessage("gameDataMessage", error.message, true));
+        }
       });
     });
+    $("gameDataRefresh")?.addEventListener("click", () => loadGameDataSettings().catch((error) => setSettingsMessage("gameDataMessage", error.message, true)));
+    $("gameDataSavePlayer")?.addEventListener("click", saveGameDataServerPlayer);
+    $("gameDataClearAllActive")?.addEventListener("click", clearAllGameDataActiveGames);
+    $("gameDataWipeScores")?.addEventListener("click", wipeGameDataScores);
     document.querySelectorAll("[data-system-action]").forEach((link) => {
       link.addEventListener("click", async (event) => {
         event.preventDefault();
@@ -2908,6 +3194,7 @@
     loadNetworkSettings().catch((error) => console.warn(error));
     loadServicesSettings().catch((error) => console.warn(error));
     loadMapsSettings().catch((error) => console.warn(error));
+    loadGameDataSettings().catch((error) => setSettingsMessage("gameDataMessage", error.message, true));
     loadStorageSettings().catch((error) => {
       const message = $("storageSettingsMessage");
       if (message) message.textContent = error.message;

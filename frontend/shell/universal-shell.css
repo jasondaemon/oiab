@@ -1054,6 +1054,18 @@ button {
   cursor: default;
 }
 
+.uo-settings-actions > .is-primary {
+  color: #06130d;
+  background: var(--uo-accent);
+  border-color: transparent;
+}
+
+.uo-settings-actions > .is-danger {
+  color: #fff;
+  background: #d7645d;
+  border-color: transparent;
+}
+
 .uo-settings-summary-card {
   display: grid;
   gap: 6px;
@@ -1584,7 +1596,8 @@ button {
 
 .uo-settings-fields input,
 .uo-settings-card input[type="text"],
-.uo-settings-card input[type="number"] {
+.uo-settings-card input[type="number"],
+.uo-settings-card select {
   min-width: 0;
   height: 42px;
   border-radius: 14px;
@@ -1593,6 +1606,56 @@ button {
   color: var(--uo-text);
   background: rgba(0, 0, 0, .18);
   font: inherit;
+}
+
+.uo-game-player-form,
+.uo-game-wipe-form {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(140px, .65fr) auto;
+  gap: 10px;
+  align-items: end;
+}
+
+.uo-game-wipe-form {
+  grid-template-columns: minmax(220px, 1fr) auto;
+}
+
+.uo-game-player-form > button,
+.uo-game-wipe-form > button {
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 14px;
+  border: 1px solid var(--uo-line);
+  background: rgba(255, 255, 255, .07);
+  color: var(--uo-ink);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.uo-game-player-form > .is-primary {
+  color: #06130d;
+  background: var(--uo-accent);
+  border-color: transparent;
+}
+
+.uo-game-wipe-form > .is-danger {
+  color: #fff;
+  background: #d7645d;
+  border-color: transparent;
+}
+
+.uo-game-data-row {
+  align-items: center;
+}
+
+.uo-game-player-icon {
+  width: 34px;
+  height: 34px;
+  padding: 4px;
+  border: 1px solid var(--uo-line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .08);
 }
 
 .uo-switch-row {
@@ -1792,6 +1855,11 @@ button {
   }
 
   .uo-inline-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .uo-game-player-form,
+  .uo-game-wipe-form {
     grid-template-columns: 1fr;
   }
 }

@@ -422,13 +422,76 @@
             </section>
 
             <section class="uo-settings-page" data-settings-page="game-data" hidden>
-              <div class="uo-settings-grid">
-                <section class="uo-settings-card">
+              <div class="uo-settings-grid uo-settings-grid--stacked">
+                <section class="uo-settings-card uo-settings-wide-card">
                   <h2>Game Data</h2>
-                  <p class="uo-card-note">Manage scores, resets, and saved local game state from one place.</p>
-                  <div class="uo-settings-actions">
-                    <a href="/mobile/game-data.html?shell=1">Open Game Data</a>
+                  <p class="uo-card-note">Manage server players, stuck active games, score resets, and tracked identities.</p>
+                  <div class="uo-settings-summary-card">
+                    <strong id="gameDataSummary">Loading game data...</strong>
+                    <div class="uo-settings-item-meta">
+                      <span id="gameDataMatchesBadge" class="uo-settings-badge">0 matches</span>
+                      <span id="gameDataPlayersBadge" class="uo-settings-badge">0 players</span>
+                      <span id="gameDataActiveBadge" class="uo-settings-badge">0 active</span>
+                    </div>
                   </div>
+                  <p id="gameDataMessage" class="uo-status-note"></p>
+                  <div class="uo-settings-actions">
+                    <button id="gameDataRefresh" type="button">Refresh Game Data</button>
+                    <button id="gameDataClearAllActive" class="is-danger" type="button">Clear Active Games</button>
+                  </div>
+                </section>
+                <section class="uo-settings-card uo-settings-wide-card">
+                  <h2>Server Players</h2>
+                  <p class="uo-card-note">These are the player profiles shown when someone opens games from the mobile launcher.</p>
+                  <div id="gameDataServerPlayers" class="uo-settings-stack"></div>
+                  <div class="uo-game-player-form">
+                    <label>Name <input id="gameDataPlayerName" type="text" maxlength="24" autocomplete="off" placeholder="Player name"></label>
+                    <label>Icon <select id="gameDataPlayerIcon"></select></label>
+                    <button id="gameDataSavePlayer" type="button" class="is-primary">Save Player</button>
+                  </div>
+                </section>
+                <section class="uo-settings-card uo-settings-wide-card">
+                  <h2>Active Games</h2>
+                  <p class="uo-card-note">Clear stuck or abandoned saved games. Score history is not affected.</p>
+                  <div id="gameDataActiveGames" class="uo-settings-stack"></div>
+                </section>
+                <section class="uo-settings-card uo-settings-wide-card">
+                  <h2>Wipe High Scores</h2>
+                  <p class="uo-card-note">Clear recorded match results by game. This does not delete active games or server player names.</p>
+                  <div class="uo-game-wipe-form">
+                    <label>Game
+                      <select id="gameDataWipeGame">
+                        <option value="tic-tac-toe">Tic-Tac-Toe</option>
+                        <option value="chess">Chess</option>
+                        <option value="checkers">Checkers</option>
+                        <option value="minesweeper">Minesweeper</option>
+                        <option value="blockfall">Blockfall Battle</option>
+                        <option value="claimline">Territory Trace</option>
+                        <option value="sinkhole-city">Sinkhole City</option>
+                        <option value="canyon-crawler">Canyon Crawler</option>
+                        <option value="orbit-run">Orbit Run</option>
+                        <option value="word-tile-arena">Word Tile Arena</option>
+                        <option value="blank-slate">Blank Slate</option>
+                        <option value="starts-ends">Starts / Ends</option>
+                        <option value="dice-roller">Dice Roller</option>
+                        <option value="dots-and-boxes">Dots and Boxes</option>
+                        <option value="connect-four">Connect Four</option>
+                        <option value="burst">Burst</option>
+                        <option value="battleship">Battleship</option>
+                        <option value="hangman">Hangman</option>
+                        <option value="word-grid">Word Grid</option>
+                        <option value="pattern-match">Pattern Match</option>
+                        <option value="trivia">Trail Trivia</option>
+                        <option value="all">All Games</option>
+                      </select>
+                    </label>
+                    <button id="gameDataWipeScores" type="button" class="is-danger">Wipe Selected Scores</button>
+                  </div>
+                </section>
+                <section class="uo-settings-card uo-settings-wide-card">
+                  <h2>Known Identities</h2>
+                  <p class="uo-card-note">Tracked scoreboard identities. CPU identities are hidden here.</p>
+                  <div id="gameDataIdentities" class="uo-settings-stack"></div>
                 </section>
               </div>
             </section>
