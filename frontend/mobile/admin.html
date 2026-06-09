@@ -13,8 +13,17 @@
   <link rel="manifest" href="/mobile/manifest.webmanifest">
   <link rel="stylesheet" href="/maps/overland/overland-dock.css">
   <link rel="stylesheet" href="/mobile/standalone-app.css">
+  <style>html.oiab-settings-locked body > :not(.oiab-pin-gate){visibility:hidden!important}</style>
+  <script>document.documentElement.classList.add("oiab-settings-locked")</script>
 </head>
 <body class="mobile-standalone od-admin-standalone" data-standalone-app="admin">
-  <script src="/maps/overland/overland-dock.js"></script>
+  <script src="/mobile/settings-pin-guard.js?v=20260608"></script>
+  <script>
+    window.OIABSettingsPinGuard.requireSettingsPin(() => {
+      const script = document.createElement("script");
+      script.src = "/maps/overland/overland-dock.js";
+      document.body.appendChild(script);
+    });
+  </script>
 </body>
 </html>

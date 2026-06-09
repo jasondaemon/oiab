@@ -347,6 +347,20 @@
         byId("omShuffle").addEventListener("click", toggleShuffle)
         byId("omLibraryButton").addEventListener("click", openLibrary)
         byId("omLibraryClose").addEventListener("click", closeLibrary)
+        byId("omCover")?.closest(".om-cover")?.addEventListener("click", event => {
+            const panel = byId("omPlayer")
+            if (!panel) return
+            event.stopPropagation()
+            if (panel.classList.contains("is-visualizer-only")) {
+                closeVisualizerOnly(event)
+                return
+            }
+            if (panel.classList.contains("is-full")) openVisualizerOnly()
+            else {
+                panel.classList.add("is-full")
+                setOpen(true)
+            }
+        })
         byId("omArtistFilter").addEventListener("change", event => setLibraryFilter("artist", event.target.value))
         byId("omAlbumFilter").addEventListener("change", event => setLibraryFilter("album", event.target.value))
         byId("omFolderFilter").addEventListener("change", event => setLibraryFilter("folder", event.target.value))
@@ -576,7 +590,6 @@
         setSettingsOpen(false)
         setOpen(true)
         startParticleVisualizer()
-        panel.addEventListener("click", closeVisualizerOnly, {once: true})
     }
 
     function closeVisualizerOnly(event) {

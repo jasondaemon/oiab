@@ -395,7 +395,22 @@
                     </span>
                     <input id="settingsPinInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off" placeholder="••••••">
                   </label>
-                  <button id="saveSettingsPin" type="button">Save PIN</button>
+                  <label class="uo-pin-row">
+                    <span>
+                      <strong>PIN Timeout</strong>
+                      <small>How long settings stay unlocked after a successful PIN.</small>
+                    </span>
+                    <select id="settingsPinTimeout">
+                      <option value="0">Always ask</option>
+                      <option value="1">1 minute</option>
+                      <option value="5">5 minutes</option>
+                      <option value="10">10 minutes</option>
+                      <option value="15">15 minutes</option>
+                      <option value="30">30 minutes</option>
+                      <option value="60">1 hour</option>
+                    </select>
+                  </label>
+                  <button id="saveSettingsPin" type="button">Save PIN Settings</button>
                   <small id="settingsPinMessage" class="uo-status-note"></small>
                   <div class="uo-settings-actions">
                     <a href="/https-settings/?shell=1">Certificates / HTTPS</a>

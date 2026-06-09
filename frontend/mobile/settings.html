@@ -13,6 +13,8 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/mobile/overland-icon-192.png">
   <link rel="manifest" href="/mobile/manifest.webmanifest">
   <link rel="stylesheet" href="/mobile/mobile-shell.css">
+  <style>html.oiab-settings-locked body > :not(.oiab-pin-gate){visibility:hidden!important}</style>
+  <script>document.documentElement.classList.add("oiab-settings-locked")</script>
 </head>
 <body>
   <main class="mobile-shell mobile-settings-hub" aria-label="OIAB mobile settings">
@@ -73,10 +75,13 @@
       </div>
     </section>
   </main>
+  <script src="/mobile/settings-pin-guard.js?v=20260608"></script>
   <script>
-    document.querySelectorAll("[data-module]").forEach((link) => {
-      link.addEventListener("click", () => {
-        sessionStorage.setItem("oiab:settings-section", link.dataset.module || "");
+    window.OIABSettingsPinGuard.requireSettingsPin(() => {
+      document.querySelectorAll("[data-module]").forEach((link) => {
+        link.addEventListener("click", () => {
+          sessionStorage.setItem("oiab:settings-section", link.dataset.module || "");
+        });
       });
     });
   </script>

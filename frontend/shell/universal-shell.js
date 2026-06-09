@@ -5,6 +5,7 @@
   const DOCK_KEY = "iiab-overland-universal-dock-v1";
   const MUSIC_KEY = "iiab-overland-universal-music-v1";
   const RECENT_KEY = "iiab-overland-universal-recents-v1";
+  const SETTINGS_UNLOCK_KEY = "oiab-settings-unlock-until-v1";
   const MAP_3D_BUILDINGS_KEY = "omv2.show3dBuildings";
   const MAP_AUTO_RECORDING_KEY = "omv2.autoTrackRecording";
   const MAP_THEME_KEY = "omv2.mapTheme";
@@ -13,6 +14,7 @@
   const DEFAULT_LAYOUT = {
     schema: 1,
     settingsPassword: "314159",
+    settingsPinTimeoutMinutes: 5,
     hiddenAppIds: ["legacy-home", "legacy-admin", "https-settings", "service-manager", "audio-test", "minecraft"],
     folders: [
       { id: "games", title: "Games", icon: "/maps/overland/overland-folder-games.svg", protected: false, appIds: ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "sinkhole-city", "blank-slate", "starts-ends", "dice-roller", "word-tile-arena", "connect-four", "burst", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "minecraft-map", "drums", "trivia", "tic-tac-toe", "license-plates"] },
@@ -89,6 +91,14 @@
         s: .18 + Math.random() * .52,
         p: Math.random() * Math.PI * 2,
       })),
+      audioContext: null,
+      audioSource: null,
+      analyser: null,
+      analyserUnavailable: false,
+      frequencyData: new Uint8Array(64),
+      waveformData: new Uint8Array(128),
+      particles: [],
+      particulaParticles: [],
     },
     storage: {
       settings: {},
@@ -436,31 +446,55 @@
     renderApps();
   }
 
-  function openSettingsProtected(section = "music") {
-    sessionStorage.removeItem("oiab:settings-section");
-    if (state.layout.settingsPassword) {
-      state.passwordFolder = null;
-      state.passwordAction = () => {
-        state.currentAppId = "overland-settings";
-        state.settingsSection = section;
-        saveRecent("overland-settings");
-        renderDock();
-        setView("settings");
-        renderSettingsSections();
-      };
-      $("passwordInput").value = "";
-      $("passwordError").textContent = "";
-      $("passwordTitle").textContent = "Settings";
-      $("passwordDialog").showModal();
-      $("passwordInput").focus();
+  function settingsPinTimeoutMinutes() {
+    const raw = Number(state.layout.settingsPinTimeoutMinutes ?? 5);
+    if (!Number.isFinite(raw)) return 5;
+    return Math.max(0, Math.min(120, raw));
+  }
+
+  function settingsPinUnlocked() {
+    const until = Number(sessionStorage.getItem(SETTINGS_UNLOCK_KEY) || "0");
+    return Number.isFinite(until) && until > Date.now();
+  }
+
+  function rememberSettingsUnlock() {
+    const minutes = settingsPinTimeoutMinutes();
+    if (minutes <= 0) {
+      sessionStorage.removeItem(SETTINGS_UNLOCK_KEY);
       return;
     }
+    sessionStorage.setItem(SETTINGS_UNLOCK_KEY, String(Date.now() + minutes * 60 * 1000));
+  }
+
+  function clearSettingsUnlock() {
+    sessionStorage.removeItem(SETTINGS_UNLOCK_KEY);
+  }
+
+  function openSettingsSection(section = "music") {
     state.currentAppId = "overland-settings";
     state.settingsSection = section;
     saveRecent("overland-settings");
     renderDock();
     setView("settings");
     renderSettingsSections();
+  }
+
+  function openSettingsProtected(section = "music") {
+    sessionStorage.removeItem("oiab:settings-section");
+    if (!state.layout.settingsPassword || settingsPinUnlocked()) {
+      openSettingsSection(section);
+      return;
+    }
+    state.passwordFolder = null;
+    state.passwordAction = () => {
+      rememberSettingsUnlock();
+      openSettingsSection(section);
+    };
+    $("passwordInput").value = "";
+    $("passwordError").textContent = "";
+    $("passwordTitle").textContent = "Settings";
+    $("passwordDialog").showModal();
+    $("passwordInput").focus();
   }
 
   function renderSettingsSections() {
@@ -1552,7 +1586,9 @@
     }
     updateMusicUi();
     persistMusicState();
-    if (autoplay) audio.play().catch((error) => console.warn(error));
+    if (autoplay) {
+      ensureMusicAnalyser().finally(() => audio.play().catch((error) => console.warn(error)));
+    }
   }
 
   function setMusicDetailMode(enabled) {
@@ -1576,7 +1612,10 @@
       return;
     }
     try {
-      if (audio.paused) await audio.play();
+      if (audio.paused) {
+        await ensureMusicAnalyser();
+        await audio.play();
+      }
       else audio.pause();
     } catch (error) {
       console.warn(error);
@@ -1744,145 +1783,689 @@
     return state.music.visualizerImages;
   }
 
+  async function ensureMusicAnalyser() {
+    const audio = $("globalAudio");
+    if (!audio || state.music.analyser || state.music.analyserUnavailable) return state.music.analyser;
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) {
+      state.music.analyserUnavailable = true;
+      return null;
+    }
+    try {
+      const context = state.music.audioContext || new AudioContextClass();
+      state.music.audioContext = context;
+      if (!state.music.audioSource) {
+        state.music.audioSource = context.createMediaElementSource(audio);
+        state.music.audioSource.connect(context.destination);
+      }
+      const analyser = context.createAnalyser();
+      analyser.fftSize = 256;
+      analyser.smoothingTimeConstant = 0.82;
+      state.music.audioSource.connect(analyser);
+      state.music.analyser = analyser;
+      if (context.state !== "running") await context.resume().catch(() => {});
+    } catch (error) {
+      console.warn("Music visualizer analyser unavailable", error);
+      state.music.analyserUnavailable = true;
+      state.music.analyser = null;
+    }
+    return state.music.analyser;
+  }
+
+  function activeMusicAnalyser() {
+    const analyser = state.music.analyser;
+    if (!analyser) return null;
+    if (state.music.audioContext?.state === "suspended") state.music.audioContext.resume().catch(() => {});
+    return analyser;
+  }
+
+  function ensureMusicParticles() {
+    const desired = state.music.visualizerStyle === "pulse" ? 18 : state.music.visualizerStyle === "nebula" ? 52 : 36;
+    if (state.music.particles.length === desired) return;
+    state.music.particles = Array.from({ length: desired }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      r: state.music.visualizerStyle === "pulse" ? 2 + Math.random() * 5 : .8 + Math.random() * 2.4,
+      vx: -.0008 + Math.random() * .0016,
+      vy: -.0008 + Math.random() * .0016,
+      hue: particleHue(),
+    }));
+  }
+
+  function musicVisualizerFrameData(audio) {
+    const frequencyData = state.music.frequencyData;
+    const waveformData = state.music.waveformData;
+    let energy = audio && !audio.paused ? .35 : .12;
+    const analyser = activeMusicAnalyser();
+    if (analyser) {
+      analyser.getByteFrequencyData(frequencyData);
+      analyser.getByteTimeDomainData(waveformData);
+      energy = frequencyData.reduce((sum, value) => sum + value, 0) / (frequencyData.length * 255);
+    } else if (audio && !audio.paused) {
+      const t = audio.currentTime || performance.now() / 1000;
+      energy = .28 + Math.sin(t * 2.7) * .08 + Math.sin(t * 7.9) * .04;
+      for (let i = 0; i < frequencyData.length; i += 1) {
+        frequencyData[i] = Math.max(0, Math.min(255, 72 + Math.sin(t * (1.2 + i * .035) + i * .7) * 44 + Math.sin(t * 4.1 + i * .19) * 24));
+      }
+      for (let i = 0; i < waveformData.length; i += 1) {
+        waveformData[i] = Math.max(0, Math.min(255, 128 + Math.sin(t * 5.2 + i * .14) * 42));
+      }
+    } else {
+      frequencyData.fill(0);
+      waveformData.fill(128);
+    }
+    return { frequencyData, waveformData, energy: Math.max(.02, Math.min(1, energy)) };
+  }
+
   function drawMusicCanvas(canvasId) {
     const canvas = $(canvasId);
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     const rect = canvas.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
-    const width = Math.max(1, Math.floor(rect.width * dpr));
-    const height = Math.max(1, Math.floor(rect.height * dpr));
+    const pixelRatio = window.devicePixelRatio || 1;
+    const width = Math.max(1, Math.floor(rect.width * pixelRatio));
+    const height = Math.max(1, Math.floor(rect.height * pixelRatio));
     if (canvas.width !== width || canvas.height !== height) {
       canvas.width = width;
       canvas.height = height;
     }
-    ctx.clearRect(0, 0, width, height);
+    if (state.music.visualizer === "off") {
+      ctx.clearRect(0, 0, width, height);
+      return;
+    }
+    ensureMusicParticles();
     const audio = $("globalAudio");
-    const pulse = audio.paused ? .26 : .56 + Math.sin(Date.now() / 180) * .18;
-    if (state.music.visualizer === "off") return;
-    if (state.music.visualizer.startsWith("image") && state.music.visualizerImage?.url) {
-      const image = state.music.visualizerImage._img;
-      if (image?.complete) {
-        ctx.globalAlpha = state.music.visualizerFocus === "dream" ? 0.3 : 0.22;
-        ctx.drawImage(image, 0, 0, width, height);
-        ctx.globalAlpha = 1;
-      }
-    }
-    if (state.music.visualizer === "bars") {
-      const bars = 28;
-      for (let i = 0; i < bars; i += 1) {
-        const sample = .2 + Math.abs(Math.sin(Date.now() / 260 + i * .45)) * pulse;
-        const barHeight = height * sample * (state.music.visualizerStyle === "pulse" ? .82 : .66);
-        const barWidth = width / bars;
-        ctx.fillStyle = `rgba(131,220,140,${0.2 + sample * 0.4})`;
-        ctx.fillRect(i * barWidth + barWidth * 0.18, height - barHeight, barWidth * 0.64, barHeight);
-      }
-      return;
-    }
-    if (state.music.visualizer === "waveform") {
-      ctx.strokeStyle = "rgba(131,220,140,0.8)";
-      ctx.lineWidth = 2 * dpr;
-      ctx.beginPath();
-      for (let i = 0; i <= 80; i += 1) {
-        const x = (i / 80) * width;
-        const y = height * 0.5 + Math.sin(Date.now() / 220 + i * .22) * height * 0.13 * (1 + pulse);
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.stroke();
-      return;
-    }
-    if (["aurora", "liquid"].includes(state.music.visualizer)) {
-      const t = Date.now() / 900;
-      for (let i = 0; i < 5; i += 1) {
-        const gradient = ctx.createLinearGradient(0, height * (i / 5), width, height * ((i + 1) / 5));
-        gradient.addColorStop(0, `rgba(98, 217, 232, ${0.08 + pulse * 0.08})`);
-        gradient.addColorStop(.5, `rgba(131, 220, 140, ${0.16 + pulse * 0.12})`);
-        gradient.addColorStop(1, `rgba(192, 132, 252, ${0.08 + pulse * 0.08})`);
-        ctx.strokeStyle = gradient;
-        ctx.lineWidth = (state.music.visualizer === "liquid" ? 12 : 7) * dpr;
-        ctx.beginPath();
-        for (let x = 0; x <= width; x += width / 36) {
-          const y = height * (0.18 + i * 0.16) + Math.sin(t + i * 1.7 + x / width * 5.5) * height * 0.08;
-          if (x === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-      }
-      return;
-    }
-    if (["rings", "tunnel"].includes(state.music.visualizer)) {
-      const cx = width / 2;
-      const cy = height / 2;
-      const max = Math.min(width, height) * .52;
-      for (let i = 0; i < 9; i += 1) {
-        const r = (((Date.now() / 44) + i * max / 8) % max) + max * .08;
-        ctx.strokeStyle = `rgba(131, 220, 140, ${0.12 + (1 - r / max) * .5})`;
-        ctx.lineWidth = (state.music.visualizer === "tunnel" ? 3.5 : 2) * dpr;
-        ctx.beginPath();
-        ctx.arc(cx, cy, r * (1 + pulse * .08), 0, Math.PI * 2);
-        ctx.stroke();
-      }
-      return;
-    }
-    if (["kaleidoscope", "imagekaleidoscope", "mirror"].includes(state.music.visualizer)) {
-      const t = Date.now() / 1000;
-      const cx = width / 2;
-      const cy = height / 2;
-      for (let i = 0; i < 12; i += 1) {
-        const angle = i * Math.PI / 6 + t * .3;
-        ctx.strokeStyle = `rgba(${i % 2 ? "98,217,232" : "131,220,140"}, ${0.22 + pulse * .28})`;
-        ctx.lineWidth = 2 * dpr;
-        ctx.beginPath();
-        ctx.moveTo(cx, cy);
-        ctx.lineTo(cx + Math.cos(angle) * width * .55, cy + Math.sin(angle) * height * .55);
-        ctx.stroke();
-      }
-      return;
-    }
-    if (["bokeh", "led", "motion", "particula"].includes(state.music.visualizer)) {
-      const size = state.music.visualizer === "led" ? 10 * dpr : 18 * dpr;
-      for (let y = 0; y < height; y += size * 1.45) {
-        for (let x = 0; x < width; x += size * 1.45) {
-          const sample = .2 + Math.abs(Math.sin(Date.now() / 360 + x * .01 + y * .013)) * pulse;
-          ctx.fillStyle = `rgba(131, 220, 140, ${0.05 + sample * .28})`;
-          ctx.beginPath();
-          ctx.arc(x, y, size * (state.music.visualizer === "led" ? .28 : .5), 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-      return;
-    }
-    if (state.music.visualizer === "radial") {
-      const cx = width / 2;
-      const cy = height / 2;
-      for (let i = 0; i < 48; i += 1) {
-        const angle = (Math.PI * 2 * i) / 48 + Date.now() / 2200;
-        const inner = Math.min(width, height) * 0.12;
-        const outer = inner + Math.abs(Math.sin(Date.now() / 240 + i * .33)) * Math.min(width, height) * 0.2 * (1 + pulse);
-        ctx.strokeStyle = `rgba(131,220,140,${0.18 + pulse * 0.55})`;
-        ctx.lineWidth = 2 * dpr;
-        ctx.beginPath();
-        ctx.moveTo(cx + Math.cos(angle) * inner, cy + Math.sin(angle) * inner);
-        ctx.lineTo(cx + Math.cos(angle) * outer, cy + Math.sin(angle) * outer);
-        ctx.stroke();
-      }
-      return;
-    }
-    for (const particle of state.music.visualSeed) {
-      particle.p += particle.s * (state.music.visualizerStyle === "nebula" ? .018 : .01);
-      const x = ((particle.x + Math.sin(particle.p) * .06 + 1) % 1) * width;
-      const y = ((particle.y + Math.cos(particle.p * .7) * .06 + 1) % 1) * height;
-      const radius = particle.r * dpr * (1 + pulse * (state.music.visualizerFocus === "sharp" ? 1.5 : 1));
-      const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
-      gradient.addColorStop(0, `rgba(131, 220, 140, ${.18 + .18 * pulse})`);
-      gradient.addColorStop(1, "rgba(131, 220, 140, 0)");
-      ctx.fillStyle = gradient;
-      ctx.beginPath();
-      ctx.arc(x, y, radius, 0, Math.PI * 2);
-      ctx.fill();
+    const { frequencyData, waveformData, energy } = musicVisualizerFrameData(audio);
+    const mode = state.music.visualizer;
+    if (mode === "motion") {
+      ctx.clearRect(0, 0, width, height);
+      drawMotionSpectrum(ctx, width, height, pixelRatio, frequencyData, energy);
+    } else if (mode === "aurora") {
+      drawAuroraWash(ctx, width, height, pixelRatio, frequencyData, energy);
+    } else if (mode === "bokeh") {
+      ctx.clearRect(0, 0, width, height);
+      drawBokehField(ctx, width, height, pixelRatio, frequencyData, energy);
+    } else if (mode === "liquid") {
+      drawLiquidColor(ctx, width, height, pixelRatio, frequencyData, energy);
+    } else if (mode === "imagekaleidoscope") {
+      ctx.clearRect(0, 0, width, height);
+      drawImageKaleidoscope(ctx, width, height, pixelRatio, frequencyData, energy);
+    } else if (mode === "imagefloat") {
+      drawImageFloat(ctx, width, height, pixelRatio, frequencyData, energy);
+    } else if (mode === "led") {
+      ctx.clearRect(0, 0, width, height);
+      drawLedBands(ctx, width, height, pixelRatio, frequencyData, energy);
+    } else if (mode === "mirror") {
+      ctx.clearRect(0, 0, width, height);
+      drawMirrorSpectrum(ctx, width, height, pixelRatio, frequencyData, energy);
+    } else if (mode === "bars") {
+      ctx.clearRect(0, 0, width, height);
+      drawBars(ctx, width, height, pixelRatio, frequencyData, energy);
+    } else if (mode === "particula") {
+      drawParticulaSphere(ctx, width, height, pixelRatio, frequencyData, energy);
+    } else if (mode === "waveform") {
+      ctx.clearRect(0, 0, width, height);
+      drawWaveform(ctx, width, height, pixelRatio, waveformData, energy);
+    } else if (mode === "radial") {
+      ctx.clearRect(0, 0, width, height);
+      drawRadial(ctx, width, height, pixelRatio, frequencyData, energy);
+    } else if (mode === "rings") {
+      ctx.clearRect(0, 0, width, height);
+      drawRings(ctx, width, height, pixelRatio, energy);
+    } else if (mode === "tunnel") {
+      ctx.clearRect(0, 0, width, height);
+      drawTunnel(ctx, width, height, pixelRatio, frequencyData, energy);
+    } else if (mode === "kaleidoscope") {
+      ctx.clearRect(0, 0, width, height);
+      drawKaleidoscope(ctx, width, height, pixelRatio, frequencyData, energy);
+    } else {
+      ctx.clearRect(0, 0, width, height);
+      drawParticles(ctx, width, height, pixelRatio, energy);
     }
   }
+
+  function drawParticles(ctx, width, height, pixelRatio, energy) {
+      state.music.particles.forEach(particle => {
+          const speed = state.music.visualizerStyle === "nebula" ? 1.8 : 1
+          particle.x = (particle.x + particle.vx * speed * (1 + energy * 3) + 1) % 1
+          particle.y = (particle.y + particle.vy * speed * (1 + energy * 3) + 1) % 1
+          const radius = (particle.r + energy * (state.music.visualizerStyle === "pulse" ? 16 : 7)) * pixelRatio
+          const x = particle.x * width
+          const y = particle.y * height
+          const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius * 8)
+          gradient.addColorStop(0, `hsla(${particle.hue}, 90%, 62%, ${.18 + energy * .2})`)
+          gradient.addColorStop(1, `hsla(${particle.hue}, 90%, 62%, 0)`)
+          ctx.fillStyle = gradient
+          ctx.beginPath()
+          ctx.arc(x, y, radius * 8, 0, Math.PI * 2)
+          ctx.fill()
+      })
+  }
+
+  function drawAuroraWash(ctx, width, height, pixelRatio, data, energy) {
+      ctx.globalCompositeOperation = "source-over"
+      ctx.fillStyle = `rgba(0, 0, 0, ${.045 + energy * .035})`
+      ctx.fillRect(0, 0, width, height)
+      ctx.globalCompositeOperation = "lighter"
+      const time = Date.now() / 1000
+      for (let band = 0; band < 9; band += 1) {
+          const sample = data[(band * 5) % data.length] / 255 || energy
+          const yBase = height * (.15 + band * .085)
+          const hue = particleHue((band / 9 + time * .025) % 1)
+          const alpha = .055 + sample * .16
+          const amplitude = height * (.08 + sample * .12)
+          ctx.beginPath()
+          for (let step = 0; step <= 42; step += 1) {
+              const x = (step / 42) * width
+              const y = yBase + Math.sin(step * .62 + time * (.7 + band * .06)) * amplitude + Math.cos(step * .23 + band) * amplitude * .45
+              if (step === 0) ctx.moveTo(x, y)
+              else ctx.lineTo(x, y)
+          }
+          ctx.lineWidth = (28 + sample * 64) * pixelRatio
+          ctx.strokeStyle = `hsla(${hue}, 94%, ${58 + sample * 18}%, ${alpha})`
+          ctx.stroke()
+      }
+      ctx.globalCompositeOperation = "source-over"
+  }
+
+  function drawBokehField(ctx, width, height, pixelRatio, data, energy) {
+      const time = Date.now() / 1000
+      const count = state.music.visualizerStyle === "nebula" ? 80 : 46
+      for (let index = 0; index < count; index += 1) {
+          const seed = Math.sin(index * 91.7) * 10000
+          const x = ((Math.sin(seed) * 43758.5453 + time * (.012 + index % 5 * .002)) % 1 + 1) % 1
+          const y = ((Math.cos(seed * 1.37) * 24634.6345 + time * (.008 + index % 7 * .0015)) % 1 + 1) % 1
+          const sample = data[index % data.length] / 255 || energy
+          const radius = (20 + (index % 9) * 9 + sample * 70) * pixelRatio
+          const hue = particleHue((index / count + sample * .12) % 1)
+          const gradient = ctx.createRadialGradient(x * width, y * height, 0, x * width, y * height, radius)
+          gradient.addColorStop(0, `hsla(${hue}, 92%, ${60 + sample * 18}%, ${.1 + sample * .18})`)
+          gradient.addColorStop(1, `hsla(${hue}, 92%, 54%, 0)`)
+          ctx.fillStyle = gradient
+          ctx.beginPath()
+          ctx.arc(x * width, y * height, radius, 0, Math.PI * 2)
+          ctx.fill()
+      }
+  }
+
+  function drawLiquidColor(ctx, width, height, pixelRatio, data, energy) {
+      ctx.globalCompositeOperation = "source-over"
+      ctx.fillStyle = `rgba(0, 0, 0, ${.055 + energy * .025})`
+      ctx.fillRect(0, 0, width, height)
+      ctx.globalCompositeOperation = "lighter"
+      const time = Date.now() / 1000
+      const blobs = state.music.visualizerStyle === "pulse" ? 7 : 11
+      for (let index = 0; index < blobs; index += 1) {
+          const sample = data[(index * 6) % data.length] / 255 || energy
+          const x = width * (.5 + Math.sin(time * (.13 + index * .017) + index * 1.8) * (.24 + sample * .08))
+          const y = height * (.5 + Math.cos(time * (.11 + index * .013) + index * 2.2) * (.26 + sample * .08))
+          const radius = (Math.min(width, height) * (.18 + sample * .22)) * pixelRatio
+          const hue = particleHue((index / blobs + time * .035) % 1)
+          const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius)
+          gradient.addColorStop(0, `hsla(${hue}, 90%, ${58 + sample * 20}%, ${.1 + sample * .18})`)
+          gradient.addColorStop(.42, `hsla(${hue + 18}, 90%, 54%, ${.05 + sample * .1})`)
+          gradient.addColorStop(1, `hsla(${hue}, 90%, 45%, 0)`)
+          ctx.fillStyle = gradient
+          ctx.beginPath()
+          ctx.arc(x, y, radius, 0, Math.PI * 2)
+          ctx.fill()
+      }
+      ctx.globalCompositeOperation = "source-over"
+  }
+
+  function drawImageKaleidoscope(ctx, width, height, pixelRatio, data, energy) {
+      const image = (state.music.visualizerImage?._img || state.music.visualizerImage)
+      if (!image?.complete || !image.naturalWidth) {
+          drawBokehField(ctx, width, height, pixelRatio, data, energy)
+          return
+      }
+      const time = Date.now() / 1000
+      const segments = state.music.visualizerStyle === "pulse" ? 8 : state.music.visualizerStyle === "nebula" ? 14 : 10
+      const radius = Math.hypot(width, height)
+      const sample = data[4] / 255 || energy
+      const zoom = 1.25 + sample * .45 + Math.sin(time * .23) * .08
+      const crop = Math.min(image.naturalWidth, image.naturalHeight) / zoom
+      const sx = (image.naturalWidth - crop) * (.5 + Math.sin(time * .07) * .16)
+      const sy = (image.naturalHeight - crop) * (.5 + Math.cos(time * .06) * .16)
+
+      ctx.save()
+      ctx.translate(width / 2, height / 2)
+      ctx.globalCompositeOperation = "source-over"
+      ctx.fillStyle = `rgba(0,0,0,${.05 + energy * .04})`
+      ctx.fillRect(-width / 2, -height / 2, width, height)
+      ctx.globalCompositeOperation = "lighter"
+      for (let index = 0; index < segments; index += 1) {
+          ctx.save()
+          ctx.rotate((Math.PI * 2 * index) / segments + time * (.025 + energy * .04))
+          if (index % 2) ctx.scale(1, -1)
+          ctx.beginPath()
+          ctx.moveTo(0, 0)
+          ctx.arc(0, 0, radius, -Math.PI / segments, Math.PI / segments)
+          ctx.closePath()
+          ctx.clip()
+          ctx.globalAlpha = .16 + sample * .12
+          ctx.drawImage(image, sx, sy, crop, crop, -radius * .08, -radius * .5, radius, radius)
+          ctx.restore()
+      }
+      ctx.globalCompositeOperation = "source-over"
+      const vignette = ctx.createRadialGradient(0, 0, 0, 0, 0, radius * .52)
+      vignette.addColorStop(0, `rgba(255,255,255,${.035 + sample * .035})`)
+      vignette.addColorStop(.6, "rgba(0,0,0,0)")
+      vignette.addColorStop(1, "rgba(0,0,0,.3)")
+      ctx.fillStyle = vignette
+      ctx.fillRect(-width / 2, -height / 2, width, height)
+      ctx.restore()
+  }
+
+  function drawImageFloat(ctx, width, height, pixelRatio, data, energy) {
+      const image = (state.music.visualizerImage?._img || state.music.visualizerImage)
+      if (!image?.complete || !image.naturalWidth) {
+          drawBokehField(ctx, width, height, pixelRatio, data, energy)
+          return
+      }
+      const time = Date.now() / 1000
+      const count = state.music.visualizerStyle === "nebula" ? 38 : state.music.visualizerStyle === "pulse" ? 18 : 26
+      ctx.globalCompositeOperation = "source-over"
+      ctx.fillStyle = `rgba(0,0,0,${.045 + energy * .03})`
+      ctx.fillRect(0, 0, width, height)
+      ctx.globalCompositeOperation = "lighter"
+      for (let index = 0; index < count; index += 1) {
+          const seed = Math.sin(index * 73.17) * 10000
+          const sample = data[(index * 3) % data.length] / 255 || energy
+          const drift = state.music.visualizerStyle === "pulse" ? .18 : state.music.visualizerStyle === "nebula" ? .34 : .24
+          const x = width * (((Math.sin(seed) * 43758.54) % 1 + 1) % 1)
+              + Math.sin(time * (.19 + index * .006) + seed) * width * drift
+          const y = height * (((Math.cos(seed * 1.31) * 24634.63) % 1 + 1) % 1)
+              + Math.cos(time * (.15 + index * .005) + seed) * height * drift
+          const size = Math.min(width, height) * (.055 + (index % 5) * .012 + sample * .075)
+          const rotation = time * (.05 + sample * .12) + index
+          ctx.save()
+          ctx.translate((x % width + width) % width, (y % height + height) % height)
+          ctx.rotate(rotation)
+          ctx.globalAlpha = .055 + sample * .18
+          const drawSize = size * (state.music.visualizerStyle === "pulse" ? 1 + energy * 1.1 : 1 + sample * .55)
+          ctx.drawImage(image, -drawSize / 2, -drawSize / 2, drawSize, drawSize)
+          ctx.restore()
+      }
+      ctx.globalCompositeOperation = "source-over"
+  }
+
+  // Inspired by Humprt/particula's MIT-licensed audio-reactive particle sphere,
+  // adapted here as a local 2D canvas renderer to avoid CDN/Three.js dependencies.
+  function drawParticulaSphere(ctx, width, height, pixelRatio, data, energy) {
+      if (!state.music.particulaParticles.length) {
+          state.music.particulaParticles = makeSphereParticles(2200)
+      }
+      const cx = width * .5
+      const cy = height * .5
+      const shortest = Math.min(width, height)
+      const baseRadius = shortest * .2
+      const haloRadius = shortest * .38
+      const time = Date.now() / 1000
+      const rotY = time * (.09 + energy * .2)
+      const rotX = Math.sin(time * .13) * .32
+      const cosY = Math.cos(rotY)
+      const sinY = Math.sin(rotY)
+      const cosX = Math.cos(rotX)
+      const sinX = Math.sin(rotX)
+
+      ctx.globalCompositeOperation = "source-over"
+      ctx.fillStyle = `rgba(0, 0, 0, ${state.music.visualizerStyle === "pulse" ? .18 : .1})`
+      ctx.fillRect(0, 0, width, height)
+      ctx.globalCompositeOperation = "lighter"
+
+      state.music.particulaParticles.forEach((particle, index) => {
+          const band = data[index % data.length] / 255 || energy * .35
+          const low = data[index % 9] / 255 || energy
+          const turbulence = Math.sin(time * (.55 + particle.seed) + particle.seed * 19 + band * 8)
+          const filament = Math.sin(time * .42 + particle.theta * 7 + particle.phi * 5)
+          const spiral = time * (.16 + energy * .42) + particle.seed * 6
+          const shellMix = particle.core ? baseRadius : haloRadius
+          const radius = shellMix * particle.shell + (band * shortest * .12) + turbulence * shortest * .02
+          const swirl = particle.core ? .18 + energy * .3 : .5 + low * .35
+          let x = particle.x * radius + Math.cos(particle.theta + spiral) * shortest * .04 * swirl * filament
+          let y = particle.y * radius + Math.sin(particle.phi * 3 + spiral) * shortest * .035 * swirl * turbulence
+          let z = particle.z * radius + Math.sin(particle.theta - spiral) * shortest * .04 * swirl
+
+          const xz = x * cosY - z * sinY
+          const zz = x * sinY + z * cosY
+          const yz = y * cosX - zz * sinX
+          const z2 = y * sinX + zz * cosX
+          const perspective = 1.25 / (1.25 + z2 / shortest)
+          const screenX = cx + xz * perspective
+          const screenY = cy + yz * perspective
+          const depth = Math.max(.03, Math.min(1, (z2 / shortest + .68)))
+          const size = Math.max(.36, (particle.size + band * 1.6 + low * 1.1) * pixelRatio * perspective)
+          const hue = particle.particulaHue + band * 18
+          const alpha = (particle.core ? .2 : .05) + depth * (particle.core ? .42 : .18) + band * .18
+          ctx.fillStyle = `hsla(${hue}, 96%, ${particle.core ? 62 + band * 20 : 42 + band * 22}%, ${Math.min(.78, alpha)})`
+          ctx.beginPath()
+          ctx.arc(screenX, screenY, size, 0, Math.PI * 2)
+          ctx.fill()
+
+          if (particle.core && band + energy > .45) {
+              const glow = size * (4 + band * 7)
+              const gradient = ctx.createRadialGradient(screenX, screenY, 0, screenX, screenY, glow)
+              gradient.addColorStop(0, `hsla(${hue}, 96%, 68%, ${.12 + band * .18})`)
+              gradient.addColorStop(1, `hsla(${hue}, 96%, 52%, 0)`)
+              ctx.fillStyle = gradient
+              ctx.beginPath()
+              ctx.arc(screenX, screenY, glow, 0, Math.PI * 2)
+              ctx.fill()
+          }
+      })
+      ctx.globalCompositeOperation = "source-over"
+  }
+
+  function makeSphereParticles(count) {
+      return Array.from({length: count}, (_, index) => {
+          const t = (index + .5) / count
+          const inclination = Math.acos(1 - 2 * t)
+          const azimuth = Math.PI * (1 + Math.sqrt(5)) * index
+          const core = Math.random() > .32
+          const shell = core ? .2 + Math.random() * .9 : .85 + Math.random() * .95
+          const palette = Math.random()
+          return {
+              x: Math.sin(inclination) * Math.cos(azimuth),
+              y: Math.sin(inclination) * Math.sin(azimuth),
+              z: Math.cos(inclination),
+              theta: azimuth,
+              phi: inclination,
+              shell,
+              core,
+              size: core ? .32 + Math.random() * 1.1 : .16 + Math.random() * .78,
+              particulaHue: palette < .58 ? 28 + Math.random() * 25 : palette < .82 ? 278 + Math.random() * 32 : 348 + Math.random() * 30,
+              seed: Math.random(),
+          }
+      })
+  }
+
+  function drawBars(ctx, width, height, pixelRatio, data, energy) {
+      const bars = Math.min(48, data.length)
+      const gap = 4 * pixelRatio
+      const barWidth = Math.max(8 * pixelRatio, (width - gap * (bars - 1)) / bars)
+      ctx.fillStyle = `rgba(0,0,0,${.05 + energy * .04})`
+      ctx.fillRect(0, 0, width, height)
+      ctx.globalCompositeOperation = "lighter"
+      for (let index = 0; index < bars; index += 1) {
+          const value = easedBand(data, index, bars)
+          const barHeight = height * (.22 + value * .88)
+          const x = index * (barWidth + gap)
+          const hue = particleHue(index / bars)
+          const gradient = ctx.createLinearGradient(0, height - barHeight, 0, height)
+          gradient.addColorStop(0, `hsla(${hue}, 94%, 66%, ${.04 + value * .16})`)
+          gradient.addColorStop(.5, `hsla(${hue}, 94%, 54%, ${.08 + value * .18})`)
+          gradient.addColorStop(1, `hsla(${hue}, 94%, 38%, 0)`)
+          ctx.fillStyle = gradient
+          roundRect(ctx, x, height - barHeight, barWidth, barHeight, 12 * pixelRatio)
+          ctx.fill()
+      }
+      ctx.globalCompositeOperation = "source-over"
+  }
+
+  function drawMotionSpectrum(ctx, width, height, pixelRatio, data, energy) {
+      const bands = 64
+      const pad = width * .035
+      const areaWidth = width - pad * 2
+      const gap = 3 * pixelRatio
+      const barWidth = Math.max(6 * pixelRatio, areaWidth / bands - gap)
+      drawAnalyzerBackdrop(ctx, width, height, energy)
+      ctx.globalCompositeOperation = "lighter"
+      for (let index = 0; index < bands; index += 1) {
+          const sample = easedBand(data, index, bands)
+          const x = pad + index * (barWidth + gap)
+          const h = Math.max(height * .18, Math.pow(sample, .68) * height * .9)
+          const hue = particleHue(index / bands)
+          const top = (height - h) * .5
+          const grad = ctx.createLinearGradient(0, top, 0, top + h)
+          grad.addColorStop(0, `hsla(${hue}, 98%, 68%, 0)`)
+          grad.addColorStop(.5, `hsla(${hue}, 92%, 58%, ${.06 + sample * .24})`)
+          grad.addColorStop(1, `hsla(${hue}, 92%, 38%, 0)`)
+          ctx.fillStyle = grad
+          roundRect(ctx, x, top, barWidth, h, 9 * pixelRatio)
+          ctx.fill()
+      }
+      ctx.globalCompositeOperation = "source-over"
+  }
+
+  function drawLedBands(ctx, width, height, pixelRatio, data, energy) {
+      const bands = 34
+      const ledRows = 22
+      const pad = width * .045
+      const areaWidth = width - pad * 2
+      const rowGap = 4 * pixelRatio
+      const colGap = 6 * pixelRatio
+      const cellWidth = Math.max(5 * pixelRatio, areaWidth / bands - colGap)
+      const cellHeight = Math.max(5 * pixelRatio, height * .9 / ledRows - rowGap)
+      const top = height * .05
+      drawAnalyzerBackdrop(ctx, width, height, energy)
+      ctx.globalCompositeOperation = "lighter"
+      for (let index = 0; index < bands; index += 1) {
+          const value = easedBand(data, index, bands)
+          const lit = Math.max(1, Math.round(value * ledRows))
+          const x = pad + index * (cellWidth + colGap)
+          for (let row = 0; row < ledRows; row += 1) {
+              const active = row < lit
+              const y = top + (ledRows - row - 1) * (cellHeight + rowGap)
+              const level = row / ledRows
+              const hue = level > .76 ? 12 : level > .58 ? 42 : particleHue(index / bands)
+              ctx.fillStyle = active
+                  ? `hsla(${hue}, 96%, ${54 + level * 18}%, ${.035 + value * .2})`
+                  : `rgba(255,255,255,${.012 + energy * .008})`
+              roundRect(ctx, x, y, cellWidth, cellHeight, 3 * pixelRatio)
+              ctx.fill()
+          }
+      }
+      ctx.globalCompositeOperation = "source-over"
+  }
+
+  function drawMirrorSpectrum(ctx, width, height, pixelRatio, data, energy) {
+      const bands = 70
+      const pad = width * .035
+      const areaWidth = width - pad * 2
+      const center = height * .5
+      const maxHeight = height * .56
+      const gap = 3 * pixelRatio
+      const barWidth = Math.max(5 * pixelRatio, areaWidth / bands - gap)
+      drawAnalyzerBackdrop(ctx, width, height, energy)
+      ctx.globalCompositeOperation = "lighter"
+      for (let index = 0; index < bands; index += 1) {
+          const value = easedBand(data, index, bands)
+          const h = Math.max(2 * pixelRatio, Math.pow(value, .72) * maxHeight)
+          const x = pad + index * (barWidth + gap)
+          const hue = particleHue(index / bands)
+          const gradTop = ctx.createLinearGradient(0, center - h, 0, center)
+          gradTop.addColorStop(0, `hsla(${hue}, 96%, 60%, 0)`)
+          gradTop.addColorStop(1, `hsla(${hue}, 96%, ${48 + value * 24}%, ${.06 + value * .24})`)
+          ctx.fillStyle = gradTop
+          roundRect(ctx, x, center - h, barWidth, h, 8 * pixelRatio)
+          ctx.fill()
+          const gradBottom = ctx.createLinearGradient(0, center, 0, center + h)
+          gradBottom.addColorStop(0, `hsla(${hue}, 96%, ${48 + value * 24}%, ${.06 + value * .22})`)
+          gradBottom.addColorStop(1, `hsla(${hue}, 96%, 60%, 0)`)
+          ctx.fillStyle = gradBottom
+          roundRect(ctx, x, center, barWidth, h, 8 * pixelRatio)
+          ctx.fill()
+      }
+      ctx.globalCompositeOperation = "source-over"
+      ctx.strokeStyle = `rgba(255,255,255,${.035 + energy * .08})`
+      ctx.lineWidth = pixelRatio
+      ctx.beginPath()
+      ctx.moveTo(pad, center)
+      ctx.lineTo(width - pad, center)
+      ctx.stroke()
+  }
+
+  function drawAnalyzerBackdrop(ctx, width, height, energy) {
+      const bg = ctx.createRadialGradient(width * .5, height * .52, 0, width * .5, height * .52, Math.max(width, height) * .65)
+      bg.addColorStop(0, `rgba(255,255,255,${.035 + energy * .035})`)
+      bg.addColorStop(.55, "rgba(255,255,255,.018)")
+      bg.addColorStop(1, "rgba(0,0,0,.18)")
+      ctx.fillStyle = bg
+      ctx.fillRect(0, 0, width, height)
+  }
+
+  function easedBand(data, index, total) {
+      const normalized = index / Math.max(1, total - 1)
+      const sourceIndex = Math.min(data.length - 1, Math.floor(Math.pow(normalized, 1.7) * (data.length - 1)))
+      const value = data[sourceIndex] / 255
+      return Math.max(.015, value)
+  }
+
+  function drawRings(ctx, width, height, pixelRatio, energy) {
+      const cx = width * .5
+      const cy = height * .52
+      const time = Date.now() / 1000
+      const maxRadius = Math.hypot(width, height) * .42
+      for (let index = 0; index < 7; index += 1) {
+          const phase = ((time * (.09 + energy * .24) + index / 7) % 1)
+          const radius = (phase * maxRadius) + 32 * pixelRatio
+          const alpha = Math.max(0, (1 - phase) * (.18 + energy * .36))
+          ctx.strokeStyle = `hsla(${particleHue(index / 7)}, 96%, 64%, ${alpha})`
+          ctx.lineWidth = (1.4 + energy * 5) * pixelRatio
+          ctx.beginPath()
+          ctx.arc(cx, cy, radius, 0, Math.PI * 2)
+          ctx.stroke()
+      }
+  }
+
+  function drawWaveform(ctx, width, height, pixelRatio, data, energy) {
+      const mid = height * .5
+      const amplitude = height * (.12 + energy * .25)
+      ctx.lineWidth = (2 + energy * 5) * pixelRatio
+      ctx.strokeStyle = `hsla(${particleHue(.7)}, 96%, 68%, .78)`
+      ctx.shadowColor = `hsla(${particleHue(.45)}, 96%, 58%, .52)`
+      ctx.shadowBlur = 18 * pixelRatio
+      ctx.beginPath()
+      data.forEach((value, index) => {
+          const x = (index / (data.length - 1)) * width
+          const y = mid + ((value - 128) / 128) * amplitude
+          if (index === 0) ctx.moveTo(x, y)
+          else ctx.lineTo(x, y)
+      })
+      ctx.stroke()
+      ctx.shadowBlur = 0
+  }
+
+  function drawRadial(ctx, width, height, pixelRatio, data, energy) {
+      const cx = width * .5
+      const cy = height * .5
+      const baseRadius = Math.min(width, height) * (.12 + energy * .08)
+      const bars = Math.min(96, data.length)
+      ctx.lineCap = "round"
+      for (let index = 0; index < bars; index += 1) {
+          const value = data[index % data.length] / 255
+          const angle = (index / bars) * Math.PI * 2 - Math.PI / 2
+          const inner = baseRadius + 12 * pixelRatio
+          const outer = inner + (height * .18 * Math.max(value, energy * .2))
+          const hue = particleHue(index / bars)
+          ctx.strokeStyle = `hsla(${hue}, 96%, 64%, ${.35 + value * .6})`
+          ctx.lineWidth = (2 + value * 5) * pixelRatio
+          ctx.beginPath()
+          ctx.moveTo(cx + Math.cos(angle) * inner, cy + Math.sin(angle) * inner)
+          ctx.lineTo(cx + Math.cos(angle) * outer, cy + Math.sin(angle) * outer)
+          ctx.stroke()
+      }
+  }
+
+  function drawTunnel(ctx, width, height, pixelRatio, data, energy) {
+      const cx = width * .5
+      const cy = height * .5
+      const time = Date.now() / 1000
+      const count = 90
+      for (let index = 0; index < count; index += 1) {
+          const value = data[index % data.length] / 255 || energy
+          const depth = ((index / count + time * (.04 + energy * .08)) % 1)
+          const angle = index * 2.399 + time * .35
+          const radius = depth * Math.min(width, height) * .72
+          const x = cx + Math.cos(angle) * radius
+          const y = cy + Math.sin(angle) * radius
+          const size = (1.5 + value * 5 + depth * 4) * pixelRatio
+          ctx.fillStyle = `hsla(${particleHue(depth)}, 96%, ${58 + value * 20}%, ${Math.max(.06, 1 - depth)})`
+          ctx.beginPath()
+          ctx.arc(x, y, size, 0, Math.PI * 2)
+          ctx.fill()
+      }
+  }
+
+  function drawKaleidoscope(ctx, width, height, pixelRatio, data, energy) {
+      const shortest = Math.min(width, height)
+      const cell = Math.max(8 * pixelRatio, shortest / 42)
+      const cols = Math.ceil(width / cell)
+      const rows = Math.ceil(height / cell)
+      const centerCol = cols / 2
+      const centerRow = rows / 2
+      const time = Date.now() / 620
+      ctx.save()
+      ctx.globalCompositeOperation = state.music.visualizerStyle === "nebula" ? "lighter" : "source-over"
+      for (let row = 0; row <= centerRow; row += 1) {
+          for (let col = 0; col <= centerCol; col += 1) {
+              const distance = Math.hypot(col - centerCol, row - centerRow)
+              const value = data[(Math.floor(distance * 2 + time) + row + col) % data.length] / 255 || energy
+              const pulse = Math.sin(time * .9 + distance * .38)
+              const alpha = Math.max(.05, Math.min(.68, value * .5 + energy * .34 + pulse * .08))
+              const hue = particleHue((distance % 24) / 24)
+              const size = cell * (.45 + value * .55)
+              const x = col * cell
+              const y = row * cell
+              ctx.fillStyle = `hsla(${hue}, 96%, ${48 + value * 26}%, ${alpha})`
+              drawMirroredPixel(ctx, x, y, width, height, size)
+          }
+      }
+      ctx.restore()
+  }
+
+  function drawMirroredPixel(ctx, x, y, width, height, size) {
+      const points = [
+          [x, y],
+          [width - x, y],
+          [x, height - y],
+          [width - x, height - y],
+          [y, x],
+          [width - y, x],
+          [y, height - x],
+          [width - y, height - x],
+      ]
+      points.forEach(([px, py]) => {
+          ctx.fillRect(px - size / 2, py - size / 2, size, size)
+      })
+  }
+
+  function roundRect(ctx, x, y, width, height, radius) {
+      ctx.beginPath()
+      ctx.moveTo(x + radius, y)
+      ctx.arcTo(x + width, y, x + width, y + height, radius)
+      ctx.arcTo(x + width, y + height, x, y + height, radius)
+      ctx.arcTo(x, y + height, x, y, radius)
+      ctx.arcTo(x, y, x + width, y, radius)
+      ctx.closePath()
+  }
+
+  function particleHue(offset=0) {
+      if (Number.isFinite(offset) && offset > 0) {
+          const bases = {
+              amber: [15, 38],
+              ocean: [190, 218],
+              night: [206, 268],
+              leather: [18, 30],
+              brightgreen: [92, 118],
+              caution: [20, 34],
+              crimson: [354, 12],
+              forest: [46, 134],
+          }
+          const pair = bases[(loadTheme().background || "forest")] || bases.forest
+          return pair[0] + (pair[1] - pair[0]) * offset
+      }
+      if ((loadTheme().background || "forest") === "amber") return Math.random() > .45 ? 38 : 15
+      if ((loadTheme().background || "forest") === "ocean") return Math.random() > .45 ? 190 : 218
+      if ((loadTheme().background || "forest") === "night") return Math.random() > .45 ? 268 : 206
+      if ((loadTheme().background || "forest") === "leather") return Math.random() > .45 ? 30 : 18
+      if ((loadTheme().background || "forest") === "brightgreen") return Math.random() > .45 ? 118 : 92
+      if ((loadTheme().background || "forest") === "caution") return Math.random() > .45 ? 34 : 20
+      if ((loadTheme().background || "forest") === "crimson") return Math.random() > .45 ? 354 : 12
+      return Math.random() > .55 ? 46 : 134
+  }
+
 
   function animationLoop() {
     drawMusicCanvas("dashMusicCanvas");
@@ -2223,21 +2806,30 @@
     if ($("saveSettingsPin")) {
       $("saveSettingsPin").addEventListener("click", async () => {
         const pin = String($("settingsPinInput")?.value || "").trim();
+        const timeout = Number($("settingsPinTimeout")?.value ?? 5);
         const message = $("settingsPinMessage");
-        if (!/^\d{6}$/.test(pin)) {
+        if (pin && !/^\d{6}$/.test(pin)) {
           if (message) message.textContent = "PIN must be exactly 6 digits.";
           return;
         }
+        if (!Number.isFinite(timeout) || timeout < 0 || timeout > 120) {
+          if (message) message.textContent = "PIN timeout must be between 0 and 120 minutes.";
+          return;
+        }
         try {
+          const body = { settings_pin_timeout_minutes: timeout };
+          if (pin) body.settings_pin = pin;
           const response = await fetch("/api/settings/app", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ settings_pin: pin }),
+            body: JSON.stringify(body),
           });
           const data = await response.json().catch(() => ({}));
           if (!response.ok || data.ok === false) throw new Error(data.error || `settings ${response.status}`);
-          state.layout.settingsPassword = pin;
-          if (message) message.textContent = "PIN saved.";
+          if (pin) state.layout.settingsPassword = pin;
+          state.layout.settingsPinTimeoutMinutes = timeout;
+          clearSettingsUnlock();
+          if (message) message.textContent = "PIN settings saved.";
           if ($("settingsPinInput")) $("settingsPinInput").value = "";
         } catch (error) {
           if (message) message.textContent = error.message;
@@ -2348,6 +2940,9 @@
     if ($("mapAutoRecording")) $("mapAutoRecording").checked = enabled;
     const pin = data?.settings?.settings_pin;
     if (pin) state.layout.settingsPassword = String(pin);
+    const timeout = Number(data?.settings?.settings_pin_timeout_minutes ?? 5);
+    if (Number.isFinite(timeout)) state.layout.settingsPinTimeoutMinutes = Math.max(0, Math.min(120, timeout));
+    if ($("settingsPinTimeout")) $("settingsPinTimeout").value = String(state.layout.settingsPinTimeoutMinutes);
   }
 
   const NETWORK_FIELD_MAP = {
