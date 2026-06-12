@@ -13,7 +13,7 @@
       "title": "Overland Maps",
       "description": "Native MapLibre and PMTiles Overland map runtime.",
       "url": "/maps-v2/",
-      "icon": "/maps-v2/icons/vehicle.svg",
+      "icon": "/mobile/player-icons/map.svg",
       "category": "Overland",
       "dock": true,
       "openMode": "overlay"

@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#102719">
   <title>Overland Maps v2</title>
   <link rel="stylesheet" href="./vendor/maplibre-gl.css?v=20260602a">
-  <link rel="stylesheet" href="./maps-v2.css?v=20260602a">
+  <link rel="stylesheet" href="./maps-v2.css?v=20260612d">
 </head>
 <body>
   <main id="mapRoot" class="omv2-shell">
@@ -55,8 +55,18 @@
           <label><input id="searchOverlays" type="checkbox" checked> Overlays</label>
           <label><input id="searchSaved" type="checkbox" checked> Saved</label>
         </div>
+        <button id="poiFilterToggle" type="button" class="omv2-filter-toggle" title="Filter visible POI kinds">Filter</button>
         <button id="searchSubmit" type="submit" title="Search">Go</button>
         <button id="searchClose" type="button" title="Clear search">×</button>
+        <div id="poiFilterPanel" class="omv2-poi-filter" hidden>
+          <div class="omv2-poi-filter-actions">
+            <strong>Show POI Kinds</strong>
+            <span id="poiFilterSummary"></span>
+            <button id="poiFilterAllOn" type="button">All On</button>
+            <button id="poiFilterAllOff" type="button">All Off</button>
+          </div>
+          <div id="poiFilterList" class="omv2-poi-filter-list"></div>
+        </div>
       </form>
       <div id="searchResults" class="omv2-search-results" hidden></div>
     </section>
@@ -305,6 +315,6 @@
 
   <script src="./vendor/maplibre-gl.js?v=20260602a"></script>
   <script src="./vendor/pmtiles.js?v=20260602a"></script>
-  <script src="./maps-v2.js?v=20260602a"></script>
+  <script src="./maps-v2.js?v=20260612i"></script>
 </body>
 </html>

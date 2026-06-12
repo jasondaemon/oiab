@@ -19,6 +19,8 @@ OIAB is its own platform. It does not require any external appliance framework, 
 - Raspberry Pi performance monitor, including CPU, memory, disks, temperature, network throughput, and optional Geekworm X1206 UPS telemetry.
 - Certificate, hostname, service, plugin, storage, network, map, music, and game management through Central Settings.
 
+Source credits, third-party data notices, and icon attributions are tracked in [`docs/ATTRIBUTIONS.md`](docs/ATTRIBUTIONS.md) and surfaced in Central Settings -> Data & Attributions.
+
 ## Repository Layout
 
 ```text

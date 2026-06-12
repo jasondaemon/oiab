@@ -1,0 +1,181 @@
+#!/usr/bin/env python3
+"""Download and normalize NPS National Register Historic Places data."""
+
+from __future__ import annotations
+
+import json
+import os
+import ssl
+import sys
+import time
+import urllib.parse
+import urllib.request
+import urllib.error
+from datetime import datetime, timezone
+from pathlib import Path
+
+
+DEFAULT_SERVICE = "https://mapservices.nps.gov/arcgis/rest/services/cultural_resources/nrhp_locations/MapServer"
+LAYER_IDS = (0, 1)
+
+
+def now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+
+def fetch_json(url: str, timeout: int = 90) -> dict:
+    headers = {"User-Agent": "OIAB historic places overlay", "Accept": "application/json, application/geo+json"}
+    request = urllib.request.Request(url, headers=headers)
+    try:
+        with urllib.request.urlopen(request, timeout=timeout) as response:  # noqa: S310 - public data endpoint
+            return json.loads(response.read().decode("utf-8", errors="replace"))
+    except (ssl.SSLError, urllib.error.URLError) as exc:
+        if not isinstance(getattr(exc, "reason", exc), ssl.SSLError):
+            raise
+        # Some Pi images and local dev machines have incomplete CA stores. This
+        # source is public, and failing closed here makes the overlay unusable.
+        context = ssl._create_unverified_context()  # noqa: SLF001
+        with urllib.request.urlopen(request, timeout=timeout, context=context) as response:  # noqa: S310
+            return json.loads(response.read().decode("utf-8", errors="replace"))
+
+
+def endpoint(service_url: str, layer_id: int, suffix: str, params: dict[str, object]) -> str:
+    base = service_url.rstrip("/")
+    return f"{base}/{layer_id}/{suffix}?{urllib.parse.urlencode(params)}"
+
+
+def first(props: dict, *keys: str) -> object:
+    lowered = {str(k).lower(): v for k, v in props.items()}
+    for key in keys:
+        if key in props and props[key] not in (None, ""):
+            return props[key]
+        value = lowered.get(key.lower())
+        if value not in (None, ""):
+            return value
+    return ""
+
+
+def arcgis_date(value: object) -> str:
+    if value in (None, ""):
+        return ""
+    if isinstance(value, (int, float)):
+        try:
+            return datetime.fromtimestamp(float(value) / 1000, tz=timezone.utc).date().isoformat()
+        except (OverflowError, OSError, ValueError):
+            return str(value)
+    return str(value)
+
+
+def normalize_feature(feature: dict, layer_name: str, service_url: str) -> dict | None:
+    geometry = feature.get("geometry")
+    if not isinstance(geometry, dict):
+        return None
+    props = feature.get("properties") if isinstance(feature.get("properties"), dict) else {}
+    geometry_type = str(geometry.get("type") or "")
+    refnum = str(first(props, "NRIS_Refnum", "REFNUM", "refnum", "Reference Number")).strip()
+    source_url = f"https://npgallery.nps.gov/AssetDetail/NRIS/{urllib.parse.quote(refnum)}" if refnum else service_url
+    normalized = {
+        "id": refnum or str(first(props, "OBJECTID", "FID", "GEOM_ID", "PROPERTY_ID")),
+        "name": first(props, "RESNAME", "ResourceName", "Resource_Name", "NAME", "name") or "Historic place",
+        "refnum": refnum,
+        "type": first(props, "ResType", "ResourceType", "resource_type", "type"),
+        "state": first(props, "State", "STATE"),
+        "county": first(props, "County", "COUNTY"),
+        "city": first(props, "City", "CITY"),
+        "listedDate": first(props, "CertDate", "LISTED_DATE", "listedDate"),
+        "status": first(props, "STATUS", "status", "IS_EXTANT"),
+        "address": first(props, "Address", "ADDRESS"),
+        "isNhl": first(props, "Is_NHL", "NHL"),
+        "source": "National Park Service National Register of Historic Places",
+        "sourceUrl": source_url,
+        "geometryType": geometry_type,
+        "layer": layer_name,
+        "accuracyNote": (
+            first(props, "SRC_ACCU", "MAP_METHOD", "MAP_MTH_OT")
+            or "Historic place locations and boundaries may be approximate."
+        ),
+        "raw_properties": props,
+    }
+    return {"type": "Feature", "geometry": geometry, "properties": normalized}
+
+
+def layer_count(service_url: str, layer_id: int) -> int:
+    payload = fetch_json(endpoint(service_url, layer_id, "query", {"where": "1=1", "returnCountOnly": "true", "f": "json"}))
+    return int(payload.get("count") or 0)
+
+
+def layer_name(service_url: str, layer_id: int) -> str:
+    payload = fetch_json(endpoint(service_url, layer_id, "", {"f": "json"}))
+    return str(payload.get("name") or f"Layer {layer_id}")
+
+
+def download_layer(service_url: str, layer_id: int, bbox: str | None = None) -> list[dict]:
+    count = layer_count(service_url, layer_id)
+    name = layer_name(service_url, layer_id)
+    page_size = int(os.environ.get("OIAB_HISTORIC_PLACES_PAGE_SIZE", "2000"))
+    features: list[dict] = []
+    offset = 0
+    while offset < count:
+        params: dict[str, object] = {
+            "where": "1=1",
+            "outFields": "*",
+            "returnGeometry": "true",
+            "f": "geojson",
+            "resultOffset": offset,
+            "resultRecordCount": page_size,
+            "outSR": 4326,
+        }
+        if bbox:
+            params.update({
+                "geometry": bbox,
+                "geometryType": "esriGeometryEnvelope",
+                "inSR": 4326,
+                "spatialRel": "esriSpatialRelIntersects",
+            })
+        payload = fetch_json(endpoint(service_url, layer_id, "query", params), timeout=120)
+        page_features = payload.get("features") if isinstance(payload, dict) else []
+        if not isinstance(page_features, list) or not page_features:
+            break
+        for feature in page_features:
+            if isinstance(feature, dict):
+                normalized = normalize_feature(feature, name, service_url)
+                if normalized:
+                    features.append(normalized)
+        offset += len(page_features)
+        print(f"downloaded {len(features)} historic features from {name}", flush=True)
+        if len(page_features) < page_size:
+            break
+        time.sleep(float(os.environ.get("OIAB_HISTORIC_PLACES_PAGE_DELAY", "0.05")))
+    return features
+
+
+def main() -> int:
+    data_dir = Path(os.environ.get("OIAB_DATA_DIR", "/data/oiab"))
+    service_url = os.environ.get("OIAB_HISTORIC_PLACES_SOURCE_URL", DEFAULT_SERVICE).strip() or DEFAULT_SERVICE
+    bbox = os.environ.get("OIAB_HISTORIC_PLACES_BBOX", "").strip() or None
+    output = Path(os.environ.get("OIAB_OVERLAY_OUTPUT", "")) if os.environ.get("OIAB_OVERLAY_OUTPUT") else data_dir / "maps" / "overlays" / "historic" / "historic-places-latest.geojson"
+    output.parent.mkdir(parents=True, exist_ok=True)
+    features: list[dict] = []
+    for layer_id in LAYER_IDS:
+        features.extend(download_layer(service_url, layer_id, bbox=bbox))
+    payload = {
+        "type": "FeatureCollection",
+        "features": features,
+        "properties": {
+            "source": "National Park Service National Register of Historic Places / NRIS public spatial data",
+            "source_url": service_url,
+            "bbox": bbox,
+            "fetched_at": now_iso(),
+            "feature_count": len(features),
+            "accuracy_note": "Historic place locations and boundaries may be approximate.",
+        },
+    }
+    tmp = output.with_suffix(output.suffix + ".tmp")
+    tmp.write_text(json.dumps(payload, separators=(",", ":")), encoding="utf-8")
+    tmp.replace(output)
+    print(json.dumps({"ok": True, "path": str(output), "feature_count": len(features), "size_bytes": output.stat().st_size}))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

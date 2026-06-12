@@ -6,6 +6,8 @@ OIAB Maps v2 is a standalone MapLibre/PMTiles map app located at:
 /maps-v2/
 ```
 
+Map source credits, overlay provider notices, and icon attributions are maintained in `docs/ATTRIBUTIONS.md` and Central Settings -> Data & Attributions.
+
 ## Map Packs
 
 PMTiles files live under:
@@ -177,7 +179,16 @@ Supported overlay source types:
 
 Settings → Map Packs includes an **Overlay Sources** section for layer toggles, opacity, ordering, rescan, availability, cache mode, and attribution. Enabled overlays are persisted in SQLite and loaded by Maps v2 on startup. Overlay layers are inserted below symbol/label layers by default so labels remain readable.
 
-Overlay categories cover Land & Boundaries, Water, Weather & Forecasts, Fire & Smoke, Sky & Satellite, Camping & Recreation, Connectivity, and User/Imported data. Heavy offline vector overlays such as PAD-US and NHD are generated into managed PMTiles under `/data/oiab/maps/overlays`; lightweight live datasets such as RIDB, drought, lightning, and stream gauges use refreshable cached GeoJSON. Drought Monitor has a built-in official current GeoJSON source. FIRMS and RIDB require user API keys, entered from Settings → Maps → Overlays → Details & Source. See `docs/OVERLAYS.md` for provider variables, cache paths, and `scripts/overlays/*` helper commands.
+Overlay categories cover Land & Boundaries, Water, Weather & Forecasts, Fire & Smoke, Sky & Satellite, Camping & Recreation, Connectivity, and User/Imported data. Heavy offline vector overlays such as PAD-US and NHD are generated into managed PMTiles under `/data/oiab/maps/overlays`; lightweight live datasets such as RIDB, Campflare, drought, lightning, and stream gauges use refreshable cached GeoJSON. Drought Monitor has a built-in official current GeoJSON source. FIRMS, RIDB, and Campflare require user API keys, entered from Settings → Maps → Overlays → Details & Source. See `docs/OVERLAYS.md` for provider variables, cache paths, and `scripts/overlays/*` helper commands.
+
+Campflare is available as a keyed camping/recreation provider. Enter a Campflare API key in Settings → Maps → Overlays → a Campflare overlay → Details & Source, then Download/Update to refresh all Campflare-generated local overlays:
+
+```text
+/data/oiab/maps/overlays/campflare/raw
+/data/oiab/maps/overlays/campflare/geojson
+```
+
+Campflare output overlays include campgrounds, campsites, land POIs, public land records, and notices. OIAB does not ship Campflare data; it only stores user-generated caches on durable storage.
 
 Current overlay direction:
 

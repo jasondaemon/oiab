@@ -217,7 +217,7 @@ input {
 
 .omv2-search-box {
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr auto auto auto;
   gap: 6px;
   border-radius: 18px;
   padding: 8px;
@@ -241,7 +241,8 @@ input {
 }
 
 .omv2-search-box[hidden],
-.omv2-search-results[hidden] {
+.omv2-search-results[hidden],
+.omv2-poi-filter[hidden] {
   display: none;
 }
 
@@ -263,6 +264,77 @@ input {
   background: rgba(255, 255, 255, 0.12);
   color: var(--om-text);
   font-weight: 900;
+}
+
+.omv2-filter-toggle {
+  padding-inline: 12px;
+}
+
+.omv2-poi-filter {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 8px;
+  max-height: min(44vh, 420px);
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 16px;
+  padding: 10px;
+  background: rgba(7, 28, 16, 0.88);
+}
+
+.omv2-poi-filter-actions {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  align-items: center;
+  gap: 7px;
+  color: var(--om-text);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.omv2-poi-filter-actions span {
+  color: var(--om-muted);
+  font-size: 0.74rem;
+  white-space: nowrap;
+}
+
+.omv2-poi-filter-actions button {
+  min-height: 32px;
+  min-width: 0;
+  padding: 0 9px;
+  border-radius: 10px;
+  font-size: 0.72rem;
+}
+
+.omv2-poi-filter-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 6px;
+}
+
+.omv2-poi-filter-item {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 6px 7px;
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--om-text);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.omv2-poi-filter-item .legend-poi {
+  width: 28px;
+  height: 28px;
+}
+
+.omv2-poi-filter-item .legend-poi img {
+  width: 22px;
+  height: 22px;
 }
 
 .omv2-search-results {
@@ -565,27 +637,37 @@ input {
   accent-color: var(--om-green);
 }
 
-.omv2-overlay-drag {
+.omv2-overlay-order {
+  display: inline-grid;
+  grid-template-columns: repeat(2, 14px);
+  align-items: center;
+  justify-content: end;
+  gap: 1px;
+  min-width: 30px;
+}
+
+.omv2-overlay-order button {
   display: inline-grid;
   place-items: center;
-  width: 18px !important;
-  height: 10px !important;
-  min-width: 18px !important;
-  min-height: 10px !important;
-  padding: 0 !important;
+  width: 14px;
+  height: 18px;
+  min-width: 14px;
+  min-height: 18px;
+  padding: 0;
   border: 0;
   border-radius: 4px;
   background: transparent;
   color: var(--om-muted);
-  cursor: grab;
-  font-size: 0.78rem;
-  font-weight: 900;
+  cursor: pointer;
+  font-size: 0.62rem;
+  font-weight: 950;
   line-height: 1;
-  touch-action: none;
+  touch-action: manipulation;
 }
 
-.omv2-overlay-drag:active {
-  cursor: grabbing;
+.omv2-overlay-order button:active {
+  color: var(--om-green);
+  background: rgba(125, 242, 140, 0.14);
 }
 
 .omv2-temperature-controls {
@@ -745,6 +827,16 @@ input {
   gap: 6px;
 }
 
+.omv2-manager-folder-group,
+.omv2-manager-folder-items {
+  display: grid;
+  gap: 4px;
+}
+
+.omv2-manager-folder-items[hidden] {
+  display: none;
+}
+
 .omv2-manager-folder,
 .omv2-manager-item {
   display: grid;
@@ -767,16 +859,27 @@ input {
   background: rgba(255, 255, 255, 0.12);
 }
 
-.omv2-manager-caret {
+.omv2-manager-expander {
   display: grid;
   place-items: center;
   width: 34px;
   height: 34px;
-  border: 0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 10px;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.08);
   color: var(--om-text);
-  font-size: 1.4rem;
+  font-size: 1.1rem;
+  font-weight: 1000;
+  line-height: 1;
+}
+
+.omv2-manager-expander::before {
+  content: "+";
+  transform: translateY(-1px);
+}
+
+.omv2-manager-expander[aria-expanded="true"]::before {
+  content: "\2212";
 }
 
 .omv2-manager-folder input,
@@ -976,11 +1079,23 @@ input {
   color: #1b1500;
 }
 
-.omv2-type-grid button img {
-  width: 34px;
-  height: 34px;
+.omv2-type-grid button .waypoint-type-badge {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  border: 1.5px solid #050706;
+  border-radius: 50%;
+  background: var(--poi-bg, #f7f4df);
+}
+
+.omv2-type-grid button .waypoint-type-badge img {
+  width: 29px;
+  height: 29px;
   flex: 0 0 auto;
   object-fit: contain;
+  filter: brightness(0) saturate(100%);
 }
 
 .omv2-type-grid button span {
@@ -1079,6 +1194,30 @@ input {
   cursor: pointer;
 }
 
+.omv2-poi-actions .omv2-map-link {
+  display: inline-grid;
+  place-items: center;
+  min-width: 34px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid rgba(5, 7, 6, 0.18);
+  color: #06130b;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.omv2-map-link--apple {
+  background: #f8fafc !important;
+}
+
+.omv2-map-link--google {
+  background: #4285f4 !important;
+  color: #fff !important;
+  font-family: Arial, sans-serif;
+  font-weight: 900;
+}
+
 .omv2-toast {
   position: absolute;
   z-index: 30;
@@ -1130,6 +1269,35 @@ input {
   margin: 0 34px 10px 0;
   font-size: 22px;
   line-height: 1.05;
+}
+
+.omv2-poi-card .omv2-poi-title {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.omv2-poi-title span {
+  min-width: 0;
+}
+
+.omv2-popup-icon-badge {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border: 2px solid #050706;
+  border-radius: 999px;
+  background: var(--poi-bg, #ffd34f);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+}
+
+.omv2-popup-icon-badge img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  filter: brightness(0);
 }
 
 .omv2-poi-kicker {
@@ -1335,6 +1503,23 @@ input {
     linear-gradient(var(--c), var(--c)) 0 5px / 100% 2px no-repeat;
 }
 
+.legend-line.mvum {
+  position: relative;
+  height: 16px;
+  background: transparent;
+}
+
+.legend-line-svg {
+  display: block;
+  width: 74px;
+  height: 16px;
+  overflow: visible;
+}
+
+.legend-line-svg--annotated {
+  height: 22px;
+}
+
 .legend-area {
   display: block;
   width: 66px;
@@ -1347,17 +1532,61 @@ input {
 .legend-poi {
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
-  border: 2px solid rgba(255,255,255,.85);
+  width: 36px;
+  height: 36px;
+  border: 0;
   border-radius: 50%;
-  background: rgba(10, 35, 21, .9);
+  background: transparent;
+  box-shadow: none;
 }
 
-.legend-poi img {
-  width: 22px;
-  height: 22px;
-  object-fit: contain;
+.legend-poi-glyph {
+  display: block;
+  width: 31px;
+  height: 31px;
+  background: var(--poi-bg, #f7f4df);
+  -webkit-mask: var(--poi-url) center / contain no-repeat;
+  mask: var(--poi-url) center / contain no-repeat;
+}
+
+.legend-poi--outlined-glyph .legend-poi-glyph {
+  width: 34px;
+  height: 34px;
+  filter:
+    drop-shadow(1px 0 0 #fff)
+    drop-shadow(-1px 0 0 #fff)
+    drop-shadow(0 1px 0 #fff)
+    drop-shadow(0 -1px 0 #fff)
+    drop-shadow(0 0 1px #fff);
+}
+
+.legend-poi--circle-marker,
+.legend-poi--google-circle {
+  border: 1.5px solid #0b0f0c;
+  background: var(--poi-bg, #f7f4df);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, .35),
+    0 0 0 1px rgba(255, 255, 255, .14);
+}
+
+.legend-poi--circle-marker .legend-poi-glyph {
+  width: 27px;
+  height: 27px;
+  background: #050706;
+}
+
+.legend-poi--google-circle {
+  border-color: #fff;
+}
+
+.legend-poi--google-circle .legend-poi-glyph {
+  width: 25px;
+  height: 25px;
+  background: #fff;
+}
+
+.legend-poi-flame .legend-poi-glyph {
+  background: var(--poi-bg, #ef4444);
 }
 
 @media (max-width: 720px) {

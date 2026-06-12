@@ -1,0 +1,77 @@
+All icons are from Noun Project (CC BY 3.0)
+
+
+| File | Used For |
+| --- | --- |
+| `airport.svg` | Airport / aerodrome | https://thenounproject.com/icon/airplane-8161404/, MHDK, noun-airplane-8161404.svg
+| `atm.svg` | ATM | https://thenounproject.com/icon/atm-8416598/, Dwi ridwanto,  noun-atm-8416598.svg
+| `bank.svg` | Bank | https://thenounproject.com/icon/bank-8344407/, Studio Danro, noun-bank-8344407.svg
+| `cafe.svg` | Cafe / coffee | https://thenounproject.com/icon/coffee-836672/, Gregor Cresnar, noun-coffee-836672.svg
+| `campground.svg` | Established campground | https://thenounproject.com/icon/camping-tents-840639/, Oksana Latysheva, noun-camping-tents-840639.svg 
+| `campsite.svg` | Campsite / dispersed camp | https://thenounproject.com/icon/camping-866965/, Dolly Holmes, noun-camping-866965.svg
+| `cave.svg` | Cave entrance | https://thenounproject.com/icon/cave-4513063/, Iconiqu, noun-camping-866965.svg
+| `church.svg` | Church / place of worship | https://thenounproject.com/icon/church-2051868/, TAQRIB ICON, noun-church-2051868.svg
+| `fast-food.svg` | Fast food | https://thenounproject.com/icon/fast-food-8248585/, Styfico, noun-fast-food-8248585.svg
+| `fuel.svg` | Fuel / gas / EV charging | https://thenounproject.com/icon/fuel-8261805/, SHAKA FAHMI, noun-fuel-8261805.svg
+| `garden.svg` | Garden | https://thenounproject.com/icon/flower-8157408/, Yaumil Fadhilah, noun-fuel-8261805.svg
+| `grocery.svg` | Grocery / supermarket / convenience | https://thenounproject.com/icon/grocery-8393598/, Iconic Creations, noun-grocery-8393598.svg
+| `hospital.svg` | Hospital / clinic / medical | https://thenounproject.com/icon/hospital-1658509/, Adrien Coquet, noun-hospital-1658509.svg
+| `hotel.svg` | Hotel / motel / lodging | https://thenounproject.com/icon/hotel-2992734/, Nubaia Karim Barsha, noun-hotel-2992734.svg
+| `house.svg` | Home / house waypoint | https://thenounproject.com/icon/house-8330382/, Dong Gyu Yang, noun-house-8330382.svg
+| `library.svg` | Library | https://thenounproject.com/icon/books-137857/, Jakub Čaja, noun-books-137857.svg
+| `mountain.svg` | Peak / summit | https://thenounproject.com/icon/mountain-8417985/, Studio Danro, noun-mountain-8417985.svg
+| `museum.svg` | Museum | https://thenounproject.com/icon/museum-8174840/, Side Project, noun-museum-8174840.svg
+| `pharmacy.svg` | Pharmacy | https://thenounproject.com/icon/pharmacy-1658511/, Adrien Coquet, noun-pharmacy-1658511.svg
+| `picnic-area.svg` | Picnic area | https://thenounproject.com/icon/picnic-table-7065786/, Corner Pixel, noun-picnic-table-7065786.svg
+| `post-office.svg` | Post office / mail | https://thenounproject.com/icon/mail-3424360/, Martins Ratkus, noun-mail-3424360.svg
+| `restaurant.svg` | Restaurant | https://thenounproject.com/icon/restaurant-8280443/, Muhammad Nur Auliady Pamungkas, noun-restaurant-8280443.svg
+| `school.svg` | School | https://thenounproject.com/icon/school-8303079/, Muhammad Naufal Subhiansyah, noun-school-8303079.svg
+| `shop.svg` | Shop / shopping | https://thenounproject.com/icon/shop-8280259/, White Snow, noun-shop-8280259.svg
+| `theatre.svg` | Theater / theatre | https://thenounproject.com/icon/theater-8246854/, SHAKA FAHMI, noun-theater-8246854.svg
+| `toilet.svg` | Restrooms / toilet | https://thenounproject.com/icon/restroom-3649061/, Uswa KDT, noun-restroom-3649061.svg
+| `trailhead.svg` | Trailhead | https://thenounproject.com/icon/sign-6691879/, RomanP, noun-sign-6691879.svg
+| `train.svg` | Train station | https://thenounproject.com/icon/train-8295315/, Studio Danro, noun-train-8295315.svg
+| `water.svg` | Drinking water / water pump | https://thenounproject.com/icon/water-pump-8409570/, Ricons, noun-water-pump-8409570.svg
+| `waterfall.svg` | Waterfall | https://thenounproject.com/icon/waterfall-7937149/, Alvida, noun-waterfall-7937149.svg
+
+## Additional Icons Still Needed For Full Legacy Coverage
+
+The base map and waypoint system can reference these categories. If no Noun-style icon exists, OIAB falls back to the older legacy SVG.
+
+| Suggested File | Used For |
+| --- | --- |
+| `alpine-hut.svg` | Alpine hut / cabin / chalet | https:, //thenounproject.com/icon/cabin-8194441/, Rikas Dzihab, noun-cabin-8194441.svg
+| `amphitheater.svg` | Amphitheater | https://thenounproject.com/icon/open-source-4735654/, Fusion Experience, noun-open-source-4735654.svg
+| `attraction.svg` | Attraction | https://thenounproject.com/icon/attractions-5560373/, Sari Braga, noun-attractions-5560373.svg
+| `bakery.svg` | Bakery | https://thenounproject.com/icon/bread-8193351/, Edi Rahmat Sutrisno, noun-bread-8193351.svg
+| `bar.svg` | Bar | https://thenounproject.com/icon/bar-8173766/, Artur Lopato, noun-bar-8173766.svg
+| `beach.svg` | Beach | https://thenounproject.com/icon/beach-8202179/, Fajriah Robiatul Adawiah, noun-beach-8202179.svg
+| `bicycle-parking.svg` | Bicycle parking |
+| `bike-shop.svg` | Bike shop |
+| `bus-station.svg` | Bus station / bus stop |
+| `cinema.svg` | Cinema |
+| `college-university.svg` | College / university |
+| `dog-park.svg` | Dog park |
+| `ferry-terminal.svg` | Ferry terminal |
+| `fire-station.svg` | Fire station |
+| `golf-course.svg` | Golf course |
+| `hotspring.svg` | Hot spring |
+| `lighthouse.svg` | Lighthouse |
+| `marina.svg` | Marina |
+| `mine-quarry.svg` | Mine / quarry |
+| `outdoor-store.svg` | Outdoor store |
+| `parking.svg` | Parking | https://thenounproject.com/icon/parking-8280446/, Muhammad Nur Auliady Pamungkas, noun-parking-8280446.svg
+| `playground.svg` | Playground | https://thenounproject.com/icon/playground-8127945/, Humam, noun-playground-8127945.svg
+| `police-station.svg` | Police station | https://thenounproject.com/icon/police-1584054/, Artdabana@Design, noun-police-1584054.svg
+| `pub-brewery.svg` | Pub / brewery |
+| `ranger-station.svg` | Ranger station | https://thenounproject.com/icon/ranger-232278/, Luis Prado, noun-ranger-232278.svg
+| `rv-camping.svg` | RV camping | https://thenounproject.com/icon/camping-rv-482273/, 16bit icons, noun-camping-rv-482273.svg
+| `shelter.svg` | Shelter |
+| `ski-area.svg` | Ski area |
+| `spring.svg` | Spring |
+| `swimming-area.svg` | Swimming area |
+| `theme-park.svg` | Theme park |
+| `viewpoint.svg` | Viewpoint / lookout | https://thenounproject.com/icon/camping-3341154/, sandiindra, noun-camping-3341154.svg
+| `visitor-center.svg` | Visitor center |
+| `volcano.svg` | Volcano |
+| `zoo.svg` | Zoo |

@@ -103,6 +103,7 @@ services:
       - "${OIAB_WEB_HTTP_PUBLISHED_PORT:-18080}:80"
     volumes:
       - "./deploy/caddy/Caddyfile:/etc/caddy/Caddyfile:ro"
+      - "./frontend/maps/icons:/opt/oiab/frontend/maps/icons:ro"
       - "${OIAB_MAP_PACKS_DIR:-/data/oiab/maps/packs}:/data/oiab/maps/packs:ro"
 
   jellyfin:

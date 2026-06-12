@@ -1061,7 +1061,7 @@ class AppDB:
                 "folder": self.folder_name(row["folder_id"]),
                 "status": row["status"],
                 "source": row["source"],
-                "color": row["color"] or "#ffd34f",
+                "color": row["color"] or "#a855f7",
                 "timestamp": row["created_at"],
             }
         )
@@ -2148,6 +2148,7 @@ class AppDB:
                 or rel_key.startswith("public-lands/source/")
                 or rel_key.startswith("darksky/source/")
                 or rel_key.startswith("contours/regions/")
+                or rel_key.startswith("campflare/raw/")
                 or rel_key.startswith("weather/forecast-cache/")
             )
 
@@ -2165,6 +2166,11 @@ class AppDB:
             "water/pmtiles/nhd-water-features.pmtiles",
             "water/usgs-stream-gauges-latest.geojson",
             "ridb/ridb-recreation-sites-latest.geojson",
+            "campflare/geojson/campgrounds.geojson",
+            "campflare/geojson/campsites.geojson",
+            "campflare/geojson/land-pois.geojson",
+            "campflare/geojson/public-lands.geojson",
+            "campflare/geojson/notices.geojson",
             "drought/usdm-latest.geojson",
             "weather/lightning-latest.geojson",
             "public-lands/blm-sma-latest.geojson",
@@ -2360,6 +2366,11 @@ class AppDB:
             if not field_key:
                 continue
             saved_value = self.map_overlay_provider_value(row["id"], field_key, "")
+            if row["id"].startswith("campflare_") and field_key == "api_key" and not saved_value:
+                for campflare_id in ("campflare_campgrounds", "campflare_campsites", "campflare_land_pois", "campflare_public_lands", "campflare_notices"):
+                    saved_value = self.map_overlay_provider_value(campflare_id, field_key, "")
+                    if saved_value:
+                        break
             if row["id"] == "firms_active_hotspots" and field_key == "api_key" and not saved_value:
                 saved_value = str(self.app_setting("firms_map_key", "") or "").strip()
             env_name = str(field.get("env") or "").strip()
@@ -2403,8 +2414,15 @@ class AppDB:
             elif item["install_status"] in {"", "available", "ready"} and not item["exists"]:
                 item["install_status"] = "source_url_not_configured"
         if api_key_env:
+            shared_key = ""
+            if str(row["id"]).startswith("campflare_") and api_key_env == "OIAB_CAMPFLARE_API_KEY":
+                for campflare_id in ("campflare_campgrounds", "campflare_campsites", "campflare_land_pois", "campflare_public_lands", "campflare_notices"):
+                    shared_key = str(self.map_overlay_provider_value(campflare_id, "api_key", "") or "").strip()
+                    if shared_key:
+                        break
             key_configured = bool(
                 self.map_overlay_provider_value(row["id"], "api_key", "")
+                or shared_key
                 or str(os.environ.get(api_key_env, "") or "").strip()
             )
             item["api_key_env"] = api_key_env

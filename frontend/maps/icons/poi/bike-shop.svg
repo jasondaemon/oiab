@@ -1,4 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Bike Shop">
-  <rect width="64" height="64" fill="none"/>
-  <g><circle cx="19" cy="42" r="9" fill="none" stroke="#d8752b" stroke-width="4"/><circle cx="47" cy="42" r="9" fill="none" stroke="#d8752b" stroke-width="4"/><path d="M19 42l10-18h10l8 18M29 24l-10 18M29 24l18 18M27 19h12" fill="none" stroke="#d8752b" stroke-width="3" stroke-linecap="round"/></g>
-</svg>

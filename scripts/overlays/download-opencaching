@@ -1,0 +1,403 @@
+#!/usr/bin/env python3
+"""Download OpenCaching OKAPI caches and import local GPX cache files."""
+
+from __future__ import annotations
+
+import html
+import json
+import os
+import re
+import ssl
+import sys
+import tarfile
+import time
+import urllib.parse
+import urllib.error
+import urllib.request
+import xml.etree.ElementTree as ET
+from datetime import datetime, timezone
+from pathlib import Path
+
+
+DEFAULT_BASE = "https://www.opencaching.us/okapi/"
+DEFAULT_BBOX = "-125,24,-66,50"
+GPX_NS = {"gpx": "http://www.topografix.com/GPX/1/1", "groundspeak": "http://www.groundspeak.com/cache/1/0/1"}
+
+
+def now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+
+def okapi_url(base: str, method: str, params: dict[str, object]) -> str:
+    return f"{base.rstrip('/')}/services/{method}?{urllib.parse.urlencode(params, doseq=True)}"
+
+
+def fetch_json(url: str, timeout: int = 60) -> object:
+    request = urllib.request.Request(url, headers={"User-Agent": "OIAB OpenCaching overlay", "Accept": "application/json"})
+    try:
+        with urllib.request.urlopen(request, timeout=timeout) as response:  # noqa: S310 - configured public data endpoint
+            return json.loads(response.read().decode("utf-8", errors="replace"))
+    except (ssl.SSLError, urllib.error.URLError) as exc:
+        if not isinstance(getattr(exc, "reason", exc), ssl.SSLError):
+            raise
+        context = ssl._create_unverified_context()  # noqa: SLF001
+        with urllib.request.urlopen(request, timeout=timeout, context=context) as response:  # noqa: S310
+            return json.loads(response.read().decode("utf-8", errors="replace"))
+
+
+def text(value: object) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, dict):
+        for key in ("text", "html", "value"):
+            if key in value:
+                return text(value[key])
+        return json.dumps(value, ensure_ascii=False)
+    if isinstance(value, list):
+        return ", ".join(text(item) for item in value if text(item))
+    return html.unescape(re.sub(r"<[^>]+>", " ", str(value))).strip()
+
+
+def localized(value: object, lang: str = "en") -> str:
+    if isinstance(value, dict):
+        return text(value.get(lang) or next((item for item in value.values() if item), ""))
+    return text(value)
+
+
+def cache_type_label(value: object) -> str:
+    raw = str(value or "").strip().lower().replace("_", " ")
+    labels = {
+        "traditional": "Traditional",
+        "multi": "Multi",
+        "virtual": "Virtual",
+        "webcam": "Webcam",
+        "event": "Event",
+        "mystery": "Mystery / puzzle",
+        "quiz": "Mystery / puzzle",
+        "moving": "Moving",
+        "benchmark": "Benchmark",
+        "other": "Other",
+    }
+    return labels.get(raw, raw.title() if raw else "OpenCaching cache")
+
+
+def normalize_okapi_cache(cache: dict) -> dict | None:
+    lat = cache.get("lat") or cache.get("latitude")
+    lon = cache.get("lon") or cache.get("longitude")
+    location = cache.get("location")
+    if (lat is None or lon is None) and isinstance(location, str) and "|" in location:
+        lat, lon = location.split("|", 1)
+    try:
+        lat_f = float(lat)
+        lon_f = float(lon)
+    except (TypeError, ValueError):
+        return None
+    if not (-90 <= lat_f <= 90 and -180 <= lon_f <= 180):
+        return None
+    code = str(cache.get("code") or cache.get("id") or "").strip()
+    cache_type = cache.get("type") or cache.get("type2")
+    status = cache.get("status") or cache.get("status2")
+    url = cache.get("url") or (f"https://www.opencaching.us/viewcache.php?cacheid={urllib.parse.quote(code)}" if code else "")
+    owner = cache.get("owner")
+    owner_name = text(owner.get("username")) if isinstance(owner, dict) else text(owner or cache.get("owner_username"))
+    owner_url = text(owner.get("profile_url")) if isinstance(owner, dict) else ""
+    props = {
+        "id": str(cache.get("uuid") or code),
+        "code": code,
+        "name": localized(cache.get("name") or cache.get("names")) or code or "OpenCaching cache",
+        "type": cache_type_label(cache_type),
+        "status": text(status),
+        "difficulty": cache.get("difficulty"),
+        "terrain": cache.get("terrain"),
+        "size": text(cache.get("size2") or cache.get("size")),
+        "owner": owner_name,
+        "ownerUrl": owner_url,
+        "hiddenDate": text(cache.get("date_hidden") or cache.get("hiddenDate")),
+        "lastFoundDate": text(cache.get("last_found") or cache.get("lastFoundDate")),
+        "shortDescription": localized(cache.get("short_description") or cache.get("short_descriptions") or cache.get("short_desc")),
+        "longDescription": localized(cache.get("description") or cache.get("descriptions") or cache.get("desc")),
+        "url": text(url),
+        "source": "OpenCaching.us OKAPI",
+        "sourceUrl": text(url),
+        "lat": lat_f,
+        "lon": lon_f,
+        "raw_properties": cache,
+    }
+    return {"type": "Feature", "geometry": {"type": "Point", "coordinates": [lon_f, lat_f]}, "properties": props}
+
+
+def normalize_gpx_wpt(wpt: ET.Element, source_path: Path) -> dict | None:
+    try:
+        lat_f = float(wpt.attrib.get("lat", ""))
+        lon_f = float(wpt.attrib.get("lon", ""))
+    except ValueError:
+        return None
+    name = (wpt.findtext("gpx:name", namespaces=GPX_NS) or wpt.findtext("name") or "OpenCaching cache").strip()
+    desc = (wpt.findtext("gpx:desc", namespaces=GPX_NS) or wpt.findtext("desc") or "").strip()
+    url = (wpt.findtext("gpx:url", namespaces=GPX_NS) or wpt.findtext("url") or "").strip()
+    groundspeak = wpt.find("groundspeak:cache", namespaces=GPX_NS)
+    cache_type = ""
+    status = ""
+    owner = ""
+    difficulty = ""
+    terrain = ""
+    long_desc = ""
+    if groundspeak is not None:
+        cache_type = groundspeak.findtext("groundspeak:type", namespaces=GPX_NS) or ""
+        owner = groundspeak.findtext("groundspeak:owner", namespaces=GPX_NS) or ""
+        difficulty = groundspeak.findtext("groundspeak:difficulty", namespaces=GPX_NS) or ""
+        terrain = groundspeak.findtext("groundspeak:terrain", namespaces=GPX_NS) or ""
+        long_desc = groundspeak.findtext("groundspeak:long_description", namespaces=GPX_NS) or ""
+        archived = groundspeak.attrib.get("archived")
+        available = groundspeak.attrib.get("available")
+        if archived == "True":
+            status = "Archived"
+        elif available == "False":
+            status = "Unavailable"
+        else:
+            status = "Available"
+    props = {
+        "id": name,
+        "code": name.split()[0] if name else "",
+        "name": name,
+        "type": cache_type_label(cache_type),
+        "status": status,
+        "difficulty": difficulty,
+        "terrain": terrain,
+        "size": "",
+        "owner": owner,
+        "hiddenDate": "",
+        "lastFoundDate": "",
+        "shortDescription": text(desc),
+        "longDescription": text(long_desc),
+        "url": url,
+        "source": f"OpenCaching GPX import: {source_path.name}",
+        "sourceUrl": url,
+        "lat": lat_f,
+        "lon": lon_f,
+    }
+    return {"type": "Feature", "geometry": {"type": "Point", "coordinates": [lon_f, lat_f]}, "properties": props}
+
+
+def import_gpx(import_dir: Path) -> list[dict]:
+    features: list[dict] = []
+    for path in sorted(import_dir.glob("*.gpx")):
+        try:
+            root = ET.parse(path).getroot()
+        except ET.ParseError as exc:
+            print(f"skipping invalid GPX {path}: {exc}", file=sys.stderr)
+            continue
+        for wpt in root.findall(".//gpx:wpt", namespaces=GPX_NS) or root.findall(".//wpt"):
+            feature = normalize_gpx_wpt(wpt, path)
+            if feature:
+                features.append(feature)
+    return features
+
+
+def okapi_bbox(bbox: str) -> str:
+    parts = [float(part.strip()) for part in str(bbox or "").split(",") if part.strip()]
+    if len(parts) != 4:
+        raise ValueError("OpenCaching bbox must be minLon,minLat,maxLon,maxLat.")
+    min_lon, min_lat, max_lon, max_lat = parts
+    if min_lon >= max_lon or min_lat >= max_lat:
+        raise ValueError("OpenCaching bbox values are invalid.")
+    return f"{min_lat}|{min_lon}|{max_lat}|{max_lon}"
+
+
+def parse_bbox(bbox: str) -> tuple[float, float, float, float] | None:
+    if not bbox:
+        return None
+    parts = [float(part.strip()) for part in str(bbox or "").split(",") if part.strip()]
+    if len(parts) != 4:
+        raise ValueError("OpenCaching bbox must be minLon,minLat,maxLon,maxLat.")
+    min_lon, min_lat, max_lon, max_lat = parts
+    if min_lon >= max_lon or min_lat >= max_lat:
+        raise ValueError("OpenCaching bbox values are invalid.")
+    return min_lon, min_lat, max_lon, max_lat
+
+
+def in_bbox(feature: dict, bbox: tuple[float, float, float, float] | None) -> bool:
+    if not bbox:
+        return True
+    geometry = feature.get("geometry") if isinstance(feature.get("geometry"), dict) else {}
+    coords = geometry.get("coordinates") if isinstance(geometry, dict) else None
+    if not isinstance(coords, list) or len(coords) < 2:
+        return False
+    lon, lat = float(coords[0]), float(coords[1])
+    min_lon, min_lat, max_lon, max_lat = bbox
+    return min_lon <= lon <= max_lon and min_lat <= lat <= max_lat
+
+
+def download_binary(url: str, output: Path, timeout: int = 180) -> None:
+    output.parent.mkdir(parents=True, exist_ok=True)
+    request = urllib.request.Request(url, headers={"User-Agent": "OIAB OpenCaching overlay"})
+    try:
+        with urllib.request.urlopen(request, timeout=timeout) as response, output.open("wb") as handle:  # noqa: S310
+            while True:
+                chunk = response.read(1024 * 1024)
+                if not chunk:
+                    break
+                handle.write(chunk)
+    except (ssl.SSLError, urllib.error.URLError) as exc:
+        if not isinstance(getattr(exc, "reason", exc), ssl.SSLError):
+            raise
+        context = ssl._create_unverified_context()  # noqa: SLF001
+        with urllib.request.urlopen(request, timeout=timeout, context=context) as response, output.open("wb") as handle:  # noqa: S310
+            while True:
+                chunk = response.read(1024 * 1024)
+                if not chunk:
+                    break
+                handle.write(chunk)
+
+
+def okapi_fulldump_features(base: str, key: str, bbox: str, include_unavailable: bool, output_dir: Path) -> tuple[list[dict], dict]:
+    info = fetch_json(okapi_url(base, "replicate/info", {"consumer_key": key, "format": "json"}), timeout=60)
+    revision = str(((info or {}).get("latest_fulldump") or {}).get("revision") or "latest") if isinstance(info, dict) else "latest"
+    archive = output_dir / "source" / f"opencaching-fulldump-{revision}.tbz2"
+    if not archive.exists() or archive.stat().st_size == 0:
+        print(f"downloading OpenCaching fulldump revision {revision}", flush=True)
+        download_binary(okapi_url(base, "replicate/fulldump", {"consumer_key": key}), archive)
+    bbox_tuple = parse_bbox(bbox) if bbox else None
+    features: list[dict] = []
+    with tarfile.open(archive, "r:*") as tar:
+        names = sorted(name for name in tar.getnames() if name.endswith(".json"))
+        for index, name in enumerate(names, start=1):
+            member = tar.extractfile(name)
+            if member is None:
+                continue
+            entries = json.load(member)
+            if not isinstance(entries, list):
+                continue
+            for entry in entries:
+                if not isinstance(entry, dict):
+                    continue
+                if entry.get("object_type") != "geocache" or entry.get("change_type") == "delete":
+                    continue
+                cache = entry.get("data")
+                if not isinstance(cache, dict):
+                    continue
+                if not include_unavailable and text(cache.get("status")) != "Available":
+                    continue
+                feature = normalize_okapi_cache(cache)
+                if feature and in_bbox(feature, bbox_tuple):
+                    features.append(feature)
+            if index % 15 == 0:
+                print(f"parsed {index}/{len(names)} OpenCaching fulldump parts; {len(features)} features", flush=True)
+    metadata = {
+        "replication_revision": revision,
+        "replication_generated_at": ((info or {}).get("latest_fulldump") or {}).get("generated_at") if isinstance(info, dict) else "",
+        "archive_path": str(archive),
+    }
+    return features, metadata
+
+
+def okapi_features(base: str, key: str, bbox: str, include_unavailable: bool) -> list[dict]:
+    search_method = os.environ.get("OIAB_OPENCACHING_SEARCH_METHOD", "").strip().lower()
+    max_results = max(1, min(int(os.environ.get("OIAB_OPENCACHING_MAX_RESULTS", "500")), 500))
+    search_params = {
+        "limit": str(max_results),
+    }
+    if not include_unavailable:
+        search_params["status"] = "Available"
+    if bbox and search_method != "all":
+        search_name = "services/caches/search/bbox"
+        search_params["bbox"] = okapi_bbox(bbox)
+    else:
+        search_name = "services/caches/search/all"
+    fields = "code|name|location|type|status|difficulty|terrain|size2|owner|date_hidden|last_found|short_description|description|url"
+    payload = fetch_json(okapi_url(base, "caches/shortcuts/search_and_retrieve", {
+        "consumer_key": key,
+        "search_method": search_name,
+        "search_params": json.dumps(search_params, separators=(",", ":")),
+        "retr_method": "services/caches/geocaches",
+        "retr_params": json.dumps({
+            "fields": fields,
+            "langpref": "en",
+            "attribution_append": "none",
+        }, separators=(",", ":")),
+        "wrap": "true",
+        "format": "json",
+    }), timeout=120)
+    if isinstance(payload, dict) and "results" in payload:
+        records = payload.get("results")
+    else:
+        records = payload
+    if isinstance(records, dict):
+        iterable = records.values()
+    elif isinstance(records, list):
+        iterable = records
+    else:
+        raise ValueError("OpenCaching OKAPI search did not return cache records.")
+    features: list[dict] = []
+    for record in iterable:
+        if isinstance(record, dict):
+            feature = normalize_okapi_cache(record)
+            if feature:
+                features.append(feature)
+    print(f"downloaded {len(features)} OpenCaching features using {search_name}", flush=True)
+    time.sleep(float(os.environ.get("OIAB_OPENCACHING_PAGE_DELAY", "0.15")))
+    return features
+
+
+def main() -> int:
+    data_dir = Path(os.environ.get("OIAB_DATA_DIR", "/data/oiab"))
+    output = Path(os.environ.get("OIAB_OVERLAY_OUTPUT", "")) if os.environ.get("OIAB_OVERLAY_OUTPUT") else data_dir / "maps" / "overlays" / "opencaching" / "opencaching-latest.geojson"
+    import_dir = data_dir / "maps" / "overlays" / "opencaching" / "import"
+    output.parent.mkdir(parents=True, exist_ok=True)
+    import_dir.mkdir(parents=True, exist_ok=True)
+    base = os.environ.get("OIAB_OPENCACHING_BASE_URL", DEFAULT_BASE).strip() or DEFAULT_BASE
+    key = os.environ.get("OIAB_OPENCACHING_CONSUMER_KEY", "").strip()
+    bbox = os.environ.get("OIAB_OPENCACHING_BBOX", DEFAULT_BBOX).strip() or DEFAULT_BBOX
+    include_unavailable = os.environ.get("OIAB_OPENCACHING_SHOW_UNAVAILABLE", "").lower() in {"1", "true", "yes", "on"}
+    use_fulldump = os.environ.get("OIAB_OPENCACHING_USE_FULLDUMP", "true").lower() not in {"0", "false", "no", "off"}
+    features = import_gpx(import_dir)
+    errors: list[str] = []
+    metadata: dict[str, object] = {}
+    if key:
+        try:
+            if use_fulldump:
+                live_features, metadata = okapi_fulldump_features(base, key, bbox, include_unavailable, output.parent)
+            else:
+                live_features = okapi_features(base, key, bbox, include_unavailable)
+            features.extend(live_features)
+        except Exception as exc:  # noqa: BLE001 - remote API boundary
+            if use_fulldump:
+                errors.append(f"OpenCaching fulldump failed: {exc}; falling back to capped search.")
+                try:
+                    features.extend(okapi_features(base, key, bbox, include_unavailable))
+                except Exception as search_exc:  # noqa: BLE001
+                    errors.append(str(search_exc))
+            else:
+                errors.append(str(exc))
+    else:
+        errors.append("OpenCaching OKAPI consumer key is not configured; only local GPX imports were cached.")
+    deduped: dict[str, dict] = {}
+    for feature in features:
+        props = feature.get("properties") if isinstance(feature.get("properties"), dict) else {}
+        key_id = str(props.get("code") or props.get("id") or feature.get("geometry"))
+        deduped[key_id] = feature
+    payload = {
+        "type": "FeatureCollection",
+        "features": list(deduped.values()),
+        "properties": {
+            "source": "OpenCaching.us OKAPI and local GPX imports",
+            "source_url": base,
+            "bbox": bbox,
+            "mode": "fulldump" if use_fulldump else "search",
+            "fetched_at": now_iso(),
+            "feature_count": len(deduped),
+            "errors": errors,
+            **metadata,
+        },
+    }
+    tmp = output.with_suffix(output.suffix + ".tmp")
+    tmp.write_text(json.dumps(payload, separators=(",", ":")), encoding="utf-8")
+    tmp.replace(output)
+    if errors and not deduped:
+        raise SystemExit("; ".join(errors))
+    print(json.dumps({"ok": True, "path": str(output), "feature_count": len(deduped), "errors": errors, "size_bytes": output.stat().st_size}))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

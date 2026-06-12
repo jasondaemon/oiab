@@ -20,10 +20,16 @@
   const MAP_RIGHT_CONTROLS_COLLAPSED_KEY = "omv2.rightControlsCollapsed";
   const MAP_DETAIL_OVERLAYS_KEY = "omv2.mapDetailOverlays";
   const TEMPERATURE_FORECAST_KEY = "omv2.temperatureForecast";
+  const POI_KIND_FILTER_KEY = "omv2.poiKindFilter";
+  const POI_ICON_STYLE_KEY = "omv2.poiIconStyle";
+  const SAVED_DATA_OVERLAYS_KEY = "omv2.savedDataOverlays";
+  const POI_ICON_STYLE_DEFAULT = "outlined-glyph";
+  const POI_ICON_STYLES = new Set(["outlined-glyph", "circle-marker", "google-circle"]);
   const FOLLOW_PITCH = 58;
   const FOLLOW_MIN_HEADING_SPEED_MPH = 1.2;
   const EMPTY = { type: "FeatureCollection", features: [] };
   const WAYPOINT_TYPES = [
+    ["waypoint", "Waypoint", "waypoint"],
     ["gas", "Gas", "gas-station-ev-station"],
     ["camp", "Camp", "campsite"],
     ["waterfall", "Waterfall", "waterfall"],
@@ -33,7 +39,7 @@
     ["restroom", "Restroom", "restrooms"],
     ["hazard", "Hazard", "hazard"],
     ["photo", "Photo", "photo"],
-    ["other", "Other", "information"],
+    ["other", "Other", "waypoint"],
   ];
   const CATEGORY_COLORS = {
     gas: "#f3c74d",
@@ -49,7 +55,7 @@
     restroom: "#b7a1ff",
     hazard: "#ff7068",
     photo: "#f0f7ff",
-    route: "#ffd34f",
+    route: "#a855f7",
     quick_save: "#ffd34f",
     "quick-save": "#ffd34f",
   };
@@ -77,18 +83,43 @@
     trail: ["trail", "trailhead", "path", "hiking"],
   };
   const MVUM_ROUTE_TYPE_LABELS = {
-    "1": "Road open to all vehicles",
-    "2": "Road open to highway-legal vehicles",
-    "3": "Road open to all vehicles",
-    "4": "Trail open to vehicles 50 inches or less",
-    "5": "Trail open to motorcycles",
-    "6": "Trail open to wheeled vehicles",
-    "7": "Special vehicle designation",
-    "8": "Seasonal route",
+    "1": "Road open to highway-legal vehicles",
+    "2": "Road open to all vehicles",
+    "3": "Seasonal road",
+    "4": "Road with seasonal designation",
+    "5": "High-clearance vehicle road",
+    "6": "Special vehicle designation",
+    "7": "Trail open to all vehicles",
+    "8": "Trail open to vehicles 50 inches or less",
+    "9": "Motorcycle trail",
+    "10": "Seasonal trail",
+    "11": "Seasonal motorized trail",
+    "12": "Administrative route",
+    "13": "Closed route",
+    "14": "Decommissioned route",
+    "15": "Non-motorized trail",
+    "16": "Motorized mixed-use route",
     "17": "ATV Only",
     "18": "Motorcycle Only",
-    "19": "OHV / Off-highway vehicle",
+    "19": "OHV / off-highway vehicle route",
   };
+  const MVUM_LINE_STYLES = {
+    open_motorized: { label: "MVUM Motor Road", color: "#585858", casing: "#bdbdbd", dash: [1.2, 1.2], pattern: "gravel" },
+    high_clearance: { label: "MVUM High-Clearance / Unmaintained", color: "#786b47", casing: "#d9c89b", dash: [2.4, 1.2, 0.7, 1.2], pattern: "high-clearance" },
+    seasonal: { label: "MVUM Seasonal Road / Trail Info", color: "#786b47", casing: "#c9c9c9", dash: [2.4, 1.2], annotation: "Open 6/15-9/30", pattern: "seasonal" },
+    trail: { label: "MVUM Motorized Trail", color: "#c084fc", dash: [1.1, 1.3] },
+    atv_only: { label: "MVUM ATV Only", color: "#22c55e", dash: [2.8, 1.1, 0.7, 1.1], symbol: "ATV" },
+    motorcycle_only: { label: "MVUM Motorcycle Only", color: "#60a5fa", dash: [0.8, 1.1, 2.4, 1.1] },
+    special: { label: "MVUM Special Designation", color: "#38bdf8", dash: [3, 1.2] },
+    restricted: { label: "MVUM Restricted / Closed", color: "#ff7068", dash: [0.9, 1.1] },
+    closed: { label: "MVUM Restricted / Closed", color: "#ff7068", dash: [0.9, 1.1] },
+    unknown: { label: "MVUM Unknown Route", color: "#a3a3a3", dash: [1, 1] },
+  };
+  function humanizeToken(value) {
+    return String(value || "")
+      .replace(/[_-]+/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+  }
   const MAP_KIND_TO_POI_ICON = {
     aerodrome: "airport",
     airport: "airport",
@@ -97,10 +128,15 @@
     attraction: "attraction",
     bakery: "bakery",
     bank: "bank",
+    bench: "bench",
     bar: "bar",
     beach: "beach",
+    bicycle: "bicycle-parking",
     bicycle_parking: "bicycle-parking",
+    bicycle_rental: "bicycle-parking",
+    bike_rental: "bicycle-parking",
     bicycle_shop: "bike-shop",
+    bike_shop: "bike-shop",
     bus_station: "bus-station",
     cafe: "cafe",
     camp_site: "campsite",
@@ -112,7 +148,19 @@
     university: "college-university",
     dog_park: "dog-park",
     drinking_water: "drinking-water",
+    water: "drinking-water",
+    water_point: "drinking-water",
+    water_fountain: "drinking-water",
+    drinking_fountain: "drinking-water",
+    fountain: "drinking-water",
+    tap: "drinking-water",
+    diner: "restaurant",
+    food: "restaurant",
+    coffee: "cafe",
+    coffee_shop: "cafe",
+    food_court: "fast-food",
     fast_food: "fast-food",
+    fast_food_restaurant: "fast-food",
     ferry_terminal: "ferry-terminal",
     fire_station: "fire-station",
     fuel: "gas-station-ev-station",
@@ -122,11 +170,14 @@
     golf_course: "golf-course",
     supermarket: "grocery-store",
     convenience: "grocery-store",
+    convenience_store: "grocery-store",
     grocery: "grocery-store",
+    grocery_store: "grocery-store",
+    greengrocer: "grocery-store",
     hotel: "lodging",
     motel: "lodging",
     hot_spring: "hotspring",
-    information: "information",
+    information: "waypoint",
     library: "library",
     lighthouse: "lighthouse",
     marina: "marina",
@@ -140,6 +191,7 @@
     outdoor: "outdoor-store",
     parking: "parking",
     parking_lot: "parking",
+    car_park: "parking",
     peak: "peak-summit",
     picnic_site: "picnic-area",
     playground: "playground",
@@ -158,6 +210,8 @@
     school: "school",
     shelter: "shelter",
     shop: "shopping",
+    store: "shopping",
+    marketplace: "shopping",
     ski: "ski-area",
     spring: "spring",
     swimming_pool: "swimming-area",
@@ -171,6 +225,169 @@
     volcano: "volcano",
     waterfall: "waterfall",
     zoo: "zoo",
+  };
+  const NOUN_POI_ICON_PATHS = {
+    airport: "airport",
+    "alpine-hut": "alpine-hut",
+    amphitheater: "amphitheater",
+    atm: "atm",
+    attraction: "attraction",
+    bakery: "bakery",
+    bar: "bar",
+    beach: "beach",
+    bench: "bench",
+    cafe: "cafe",
+    campground: "campground",
+    campsite: "campsite",
+    bank: "bank",
+    cave_entrance: "cave",
+    "cave-entrance": "cave",
+    church: "church",
+    fast_food: "fast-food",
+    "fast-food": "fast-food",
+    fuel: "fuel",
+    gas_station: "fuel",
+    charging_station: "fuel",
+    "gas-station-ev-station": "fuel",
+    garden: "garden",
+    grocery: "grocery",
+    "grocery-store": "grocery",
+    "bicycle-parking": "parking",
+    "bike-shop": "shop",
+    "bus-station": "train",
+    cinema: "theatre",
+    "college-university": "school",
+    "dog-park": "campsite",
+    "ferry-terminal": "train",
+    "fire-station": "hospital",
+    "golf-course": "trailhead",
+    hotspring: "water",
+    information: "waypoint",
+    lighthouse: "airport",
+    marina: "water",
+    "mine-quarry": "mountain",
+    "pub-brewery": "restaurant",
+    shelter: "house",
+    "ski-area": "mountain",
+    spring: "water",
+    "swimming-area": "water",
+    "water-point": "water",
+    "theme-park": "attraction",
+    "visitor-center": "waypoint",
+    volcano: "mountain",
+    zoo: "attraction",
+    hospital: "hospital",
+    "medical-clinic-hospital": "hospital",
+    hotel: "hotel",
+    lodging: "hotel",
+    library: "library",
+    museum: "museum",
+    mountain: "mountain",
+    "peak-summit": "mountain",
+    post_office: "post-office",
+    "post-office": "post-office",
+    parking: "parking",
+    pharmacy: "pharmacy",
+    picnic_area: "picnic-area",
+    "picnic-area": "picnic-area",
+    playground: "playground",
+    "police-station": "police-station",
+    "ranger-station": "ranger-station",
+    restaurant: "restaurant",
+    "rv-camping": "rv-camping",
+    school: "school",
+    shop: "shop",
+    shopping: "shop",
+    "drinking-water": "water",
+    "house-home": "house",
+    "outdoor-store": "shop",
+    theater: "theatre",
+    theatre: "theatre",
+    restrooms: "toilet",
+    toilet: "toilet",
+    toilets: "toilet",
+    trailhead: "trailhead",
+    train_station: "train",
+    "train-station": "train",
+    viewpoint: "viewpoint",
+    waterfall: "waterfall",
+    waypoint: "waypoint",
+    hazard: "waypoint",
+    photo: "viewpoint",
+    "house-home": "house",
+  };
+  const POI_ICON_COLORS = {
+    airport: "#60a5fa",
+    "alpine-hut": "#78716c",
+    amphitheater: "#78716c",
+    atm: "#a78bfa",
+    attraction: "#a78bfa",
+    bakery: "#fb923c",
+    bank: "#a78bfa",
+    bar: "#fb923c",
+    beach: "#67e8f9",
+    bench: "#f7f4df",
+    "bicycle-parking": "#60a5fa",
+    "bike-shop": "#60a5fa",
+    "bus-station": "#60a5fa",
+    cafe: "#fb923c",
+    campground: "#fb923c",
+    campsite: "#4ade80",
+    "cave-entrance": "#78716c",
+    cinema: "#a78bfa",
+    "college-university": "#a78bfa",
+    "dog-park": "#4ade80",
+    "drinking-water": "#67e8f9",
+    "water-point": "#67e8f9",
+    "fast-food": "#fb923c",
+    "ferry-terminal": "#60a5fa",
+    "fire-station": "#f87171",
+    "gas-station-ev-station": "#facc15",
+    garden: "#4ade80",
+    "golf-course": "#4ade80",
+    "grocery-store": "#facc15",
+    hazard: "#fb7185",
+    "house-home": "#4ade80",
+    hotspring: "#67e8f9",
+    information: "#ffd34f",
+    library: "#a78bfa",
+    lighthouse: "#60a5fa",
+    lodging: "#60a5fa",
+    "lookout-tower": "#67e8f9",
+    marina: "#67e8f9",
+    "medical-clinic-hospital": "#f87171",
+    "mine-quarry": "#78716c",
+    museum: "#a78bfa",
+    "outdoor-store": "#fb923c",
+    parking: "#60a5fa",
+    "peak-summit": "#78716c",
+    pharmacy: "#f87171",
+    photo: "#67e8f9",
+    "picnic-area": "#4ade80",
+    playground: "#4ade80",
+    "police-station": "#78716c",
+    "post-office": "#a78bfa",
+    "pub-brewery": "#fb923c",
+    "ranger-station": "#78716c",
+    restaurant: "#fb923c",
+    restrooms: "#c4b5fd",
+    "rv-camping": "#fb923c",
+    school: "#eadfbe",
+    shelter: "#78716c",
+    shopping: "#facc15",
+    "ski-area": "#78716c",
+    spring: "#67e8f9",
+    "swimming-area": "#67e8f9",
+    theater: "#a78bfa",
+    "theme-park": "#a78bfa",
+    trailhead: "#a3e635",
+    "train-station": "#60a5fa",
+    viewpoint: "#67e8f9",
+    "visitor-center": "#f7f4df",
+    volcano: "#78716c",
+    waterfall: "#67e8f9",
+    waypoint: "#ffd34f",
+    zoo: "#a78bfa",
   };
   const WAYPOINT_CATEGORY_TO_POI_ICON = {
     gas: "gas-station-ev-station",
@@ -194,16 +411,65 @@
     photo: "photo",
     parking: "parking",
     library: "library",
-    other: "information",
-    waypoint: "information",
-    quick_save: "information",
-    "quick-save": "information",
+    other: "waypoint",
+    waypoint: "waypoint",
+    quick_save: "waypoint",
+    "quick-save": "waypoint",
   };
   const POI_ICON_KEYS = Array.from(new Set([
     ...Object.values(MAP_KIND_TO_POI_ICON),
     ...Object.values(WAYPOINT_CATEGORY_TO_POI_ICON),
-    "information",
+    "bench",
+    "waypoint",
   ])).sort();
+  const POI_KIND_FILTER_LABELS = {
+    "gas-station-ev-station": "Fuel / EV",
+    "fast-food": "Fast Food",
+    "grocery-store": "Grocery",
+    "drinking-water": "Drinking Water",
+    "medical-clinic-hospital": "Medical",
+    "picnic-area": "Picnic",
+    "rv-camping": "RV Camping",
+    "train-station": "Train Station",
+    "bus-station": "Bus Station",
+    "cave-entrance": "Cave",
+    "college-university": "College",
+    "police-station": "Police",
+    "post-office": "Post Office",
+    "ranger-station": "Ranger Station",
+    "peak-summit": "Peak / Summit",
+    "pub-brewery": "Pub / Brewery",
+    "ski-area": "Ski Area",
+    "theme-park": "Theme Park",
+    "visitor-center": "Visitor Center",
+    "water-point": "Water Point",
+    "house-home": "Home",
+  };
+  const POI_KIND_FILTER_OPTIONS = POI_ICON_KEYS
+    .map((key) => [key, POI_KIND_FILTER_LABELS[key] || humanizeToken(key)])
+    .sort((a, b) => a[1].localeCompare(b[1]));
+
+  function loadPoiKindFilter() {
+    const raw = localStorage.getItem(POI_KIND_FILTER_KEY);
+    if (!raw) return new Set(POI_ICON_KEYS);
+    try {
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return new Set(POI_ICON_KEYS);
+      return new Set(parsed.filter((key) => POI_ICON_KEYS.includes(key)));
+    } catch {
+      return new Set(POI_ICON_KEYS);
+    }
+  }
+
+  function savePoiKindFilter() {
+    localStorage.setItem(POI_KIND_FILTER_KEY, JSON.stringify(Array.from(state.poiKindFilter)));
+  }
+
+  function readPoiIconStyle() {
+    const value = localStorage.getItem(POI_ICON_STYLE_KEY) || POI_ICON_STYLE_DEFAULT;
+    return POI_ICON_STYLES.has(value) ? value : POI_ICON_STYLE_DEFAULT;
+  }
+
   const MAP_DETAIL_OVERLAY_DEFS = [
     {
       id: "map_detail_roads",
@@ -243,6 +509,27 @@
     },
   ];
 
+  const SAVED_DATA_OVERLAY_DEFS = [
+    {
+      id: "saved_data_routes",
+      name: "Saved Routes",
+      category: "saved",
+      summary: "routes",
+      default_enabled: true,
+      default_opacity: 1,
+      default_sort_order: 86,
+    },
+    {
+      id: "saved_data_pois",
+      name: "Saved POIs",
+      category: "saved",
+      summary: "points",
+      default_enabled: true,
+      default_opacity: 1,
+      default_sort_order: 88,
+    },
+  ];
+
   const state = {
     map: null,
     packSelection: null,
@@ -270,7 +557,6 @@
     packSignature: "",
     overlayRegistry: null,
     mapDetailLayersByOverlay: {},
-    overlayDrag: null,
     mapErrorsDismissed: false,
     tileErrors: [],
     inspectTile: false,
@@ -283,6 +569,8 @@
     managerSelectedFolders: new Set(),
     managerOpenFolders: new Set(),
     searchResults: [],
+    poiKindFilter: loadPoiKindFilter(),
+    poiIconStyle: readPoiIconStyle(),
     manualRecording: false,
     temperatureForecast: JSON.parse(localStorage.getItem(TEMPERATURE_FORECAST_KEY) || '{"product":"temp","period":"now"}'),
     temperatureOptions: null,
@@ -404,7 +692,7 @@
       .toLowerCase()
       .replace(/[^a-z0-9_-]+/g, "-")
       .replace(/^-+|-+$/g, "");
-    return WAYPOINT_CATEGORY_TO_POI_ICON[raw] || (POI_ICON_KEYS.includes(raw) ? raw : "information");
+    return WAYPOINT_CATEGORY_TO_POI_ICON[raw] || (POI_ICON_KEYS.includes(raw) ? raw : "waypoint");
   }
 
   function featureName(feature) {
@@ -463,6 +751,9 @@
     if (isMapDetailOverlayId(id)) {
       return updateMapDetailOverlay(id, { enabled: Boolean(enabled) });
     }
+    if (isSavedDataOverlayId(id)) {
+      return updateSavedDataOverlay(id, { enabled: Boolean(enabled) });
+    }
     return postJson("/api/maps/overlays/set-enabled", { id, enabled });
   }
 
@@ -470,12 +761,18 @@
     if (isMapDetailOverlayId(id)) {
       return updateMapDetailOverlay(id, { opacity: Number(opacity) });
     }
+    if (isSavedDataOverlayId(id)) {
+      return updateSavedDataOverlay(id, { opacity: Number(opacity) });
+    }
     return postJson("/api/maps/overlays/set-opacity", { id, opacity });
   }
 
   async function setOverlayOrder(id, sortOrder) {
     if (isMapDetailOverlayId(id)) {
       return updateMapDetailOverlay(id, { sort_order: Number(sortOrder) });
+    }
+    if (isSavedDataOverlayId(id)) {
+      return updateSavedDataOverlay(id, { sort_order: Number(sortOrder) });
     }
     return postJson("/api/maps/overlays/set-order", { id, sort_order: sortOrder });
   }
@@ -518,11 +815,61 @@
     });
   }
 
+  function mapDetailOverlayState(id) {
+    return mapDetailOverlays().find((overlay) => overlay.id === id) || null;
+  }
+
   function updateMapDetailOverlay(id, patch) {
     const saved = readMapDetailOverlayState();
     const current = saved[id] || {};
     saved[id] = { ...current, ...patch };
     writeMapDetailOverlayState(saved);
+    return state.overlayRegistry || { overlays: [] };
+  }
+
+  function readSavedDataOverlayState() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(SAVED_DATA_OVERLAYS_KEY) || "{}");
+      return saved && typeof saved === "object" ? saved : {};
+    } catch {
+      return {};
+    }
+  }
+
+  function writeSavedDataOverlayState(next) {
+    localStorage.setItem(SAVED_DATA_OVERLAYS_KEY, JSON.stringify(next || {}));
+  }
+
+  function isSavedDataOverlayId(id) {
+    return SAVED_DATA_OVERLAY_DEFS.some((overlay) => overlay.id === id);
+  }
+
+  function savedDataOverlays() {
+    const saved = readSavedDataOverlayState();
+    return SAVED_DATA_OVERLAY_DEFS.map((def) => {
+      const item = saved[def.id] || {};
+      return {
+        ...def,
+        type: "saved_data",
+        source_type: "overland_saved_data",
+        available: true,
+        enabled: item.enabled === undefined ? def.default_enabled : Boolean(item.enabled),
+        opacity: Number.isFinite(Number(item.opacity)) ? Number(item.opacity) : def.default_opacity,
+        sort_order: Number.isFinite(Number(item.sort_order)) ? Number(item.sort_order) : def.default_sort_order,
+        cache_status: "local",
+      };
+    });
+  }
+
+  function savedDataOverlayState(id) {
+    return savedDataOverlays().find((overlay) => overlay.id === id) || null;
+  }
+
+  function updateSavedDataOverlay(id, patch) {
+    const saved = readSavedDataOverlayState();
+    const current = saved[id] || {};
+    saved[id] = { ...current, ...patch };
+    writeSavedDataOverlayState(saved);
     return state.overlayRegistry || { overlays: [] };
   }
 
@@ -595,21 +942,205 @@
     return `${overlaySourceId(overlay, variant)}-${suffix}`;
   }
 
+  const POI_ICON_ASSET_VERSION = "noun-20260611d";
+  const POI_IMAGE_PREFIX = `oiab-poi-${POI_ICON_ASSET_VERSION}-`;
+  const warnedPoiIconFallbacks = new Set();
+
   function poiImageId(key) {
-    return `oiab-poi-${String(key || "information").replace(/[^a-z0-9_-]+/gi, "-")}`;
+    return `${POI_IMAGE_PREFIX}${String(key || "waypoint").replace(/[^a-z0-9_-]+/gi, "-")}`;
   }
 
-  function poiMarkerImageId(key) {
-    return `oiab-poi-marker-${String(key || "information").replace(/[^a-z0-9_-]+/gi, "-")}`;
-  }
-
-  function mapPoiMatchExpression(property, mapping, fallback = "information", idFactory = poiImageId) {
-    const expression = ["match", ["get", property]];
+  function mapPoiMatchExpression(property, mapping, fallback = "waypoint", idFactory = poiImageId) {
+    const keyExpression = Array.isArray(property) ? property : ["get", property];
+    const expression = ["match", keyExpression];
     for (const [value, iconKey] of Object.entries(mapping)) {
       expression.push(value, idFactory(iconKey));
     }
     expression.push(idFactory(fallback));
     return expression;
+  }
+
+  function poiKindFilterActive() {
+    return state.poiKindFilter.size < POI_ICON_KEYS.length;
+  }
+
+  function poiKindFilterExpression(iconKeyExpression) {
+    if (!poiKindFilterActive()) return null;
+    return ["in", iconKeyExpression, ["literal", Array.from(state.poiKindFilter)]];
+  }
+
+  function combineMapFilters(...filters) {
+    const active = filters.filter(Boolean);
+    if (active.length === 0) return undefined;
+    if (active.length === 1) return active[0];
+    return ["all", ...active];
+  }
+
+  function pointGeometryFilter() {
+    return ["==", ["geometry-type"], "Point"];
+  }
+
+  function basePoiIconKeyExpression() {
+    return mapPoiMatchExpression(basePoiKindExpression(), MAP_KIND_TO_POI_ICON, "waypoint", (key) => key);
+  }
+
+  function basePoiKindExpression() {
+    return ["coalesce", ["get", "kind_detail"], ["get", "kind"]];
+  }
+
+  function mapPoiColorExpression() {
+    return [
+      "match",
+      basePoiKindExpression(),
+      "fuel", "#facc15",
+      "gas_station", "#facc15",
+      "charging_station", "#22d3ee",
+      "restaurant", "#fb923c",
+      "fast_food", "#fb923c",
+      "food_court", "#fb923c",
+      "diner", "#fb923c",
+      "cafe", "#fb923c",
+      "camp_site", "#4ade80",
+      "campsite", "#4ade80",
+      "campground", "#fb923c",
+      "trailhead", "#a3e635",
+      "parking", "#60a5fa",
+      "hospital", "#f87171",
+      "clinic", "#f87171",
+      "pharmacy", "#f87171",
+      "restroom", "#c4b5fd",
+      "restrooms", "#c4b5fd",
+      "toilet", "#c4b5fd",
+      "toilets", "#c4b5fd",
+      "drinking_water", "#67e8f9",
+      "water_point", "#67e8f9",
+      "viewpoint", "#67e8f9",
+      "waterfall", "#67e8f9",
+      "supermarket", "#facc15",
+      "convenience", "#facc15",
+      "grocery_store", "#facc15",
+      "#f7f4df",
+    ];
+  }
+
+  function campflarePointColorExpression(style) {
+    const fallback = style === "campflare_campsites"
+      ? "#38bdf8"
+      : style === "campflare_campgrounds"
+        ? "#fb923c"
+        : style === "campflare_land_pois"
+          ? "#a78bfa"
+          : "#94a3b8";
+    return [
+      "case",
+      ["==", ["get", "source_kind"], "campsite"], "#38bdf8",
+      ["==", ["get", "source_kind"], "poi"], "#a78bfa",
+      ["==", ["get", "kind"], "dispersed"], "#4ade80",
+      ["==", ["get", "kind"], "established"], "#fb923c",
+      ["==", ["get", "kind"], "campground"], "#fb923c",
+      fallback,
+    ];
+  }
+
+  function campflarePointIconExpression(style, idFactory = poiImageId) {
+    const campgroundIcon = [
+      "match",
+      ["get", "kind"],
+      "dispersed", idFactory("campsite"),
+      "established", idFactory("campground"),
+      "campground", idFactory("campground"),
+      idFactory("campground"),
+    ];
+    const poiIcon = [
+      "match",
+      ["get", "kind"],
+      "toilet", idFactory("restrooms"),
+      "toilets", idFactory("restrooms"),
+      "restroom", idFactory("restrooms"),
+      "restrooms", idFactory("restrooms"),
+      "water", idFactory("drinking-water"),
+      "drinking_water", idFactory("drinking-water"),
+      "trailhead", idFactory("trailhead"),
+      "viewpoint", idFactory("viewpoint"),
+      "picnic", idFactory("picnic-area"),
+      "picnic_area", idFactory("picnic-area"),
+      "cafe", idFactory("cafe"),
+      "restaurant", idFactory("restaurant"),
+      "fuel", idFactory("gas-station-ev-station"),
+      idFactory("waypoint"),
+    ];
+    const fallbackIcon = style === "campflare_campsites"
+      ? idFactory("campsite")
+      : style === "campflare_campgrounds"
+        ? campgroundIcon
+        : style === "campflare_land_pois"
+          ? poiIcon
+          : idFactory("waypoint");
+    return [
+      "case",
+      ["==", ["get", "source_kind"], "campsite"], idFactory("campsite"),
+      ["==", ["get", "source_kind"], "campground"], campgroundIcon,
+      ["==", ["get", "source_kind"], "poi"], poiIcon,
+      fallbackIcon,
+    ];
+  }
+
+  function ridbPointIconExpression(idFactory = poiImageId) {
+    return [
+      "case",
+      ["==", ["get", "recreation_category"], "camping"], idFactory("campground"),
+      ["==", ["get", "type"], "Campground"], idFactory("campground"),
+      ["==", ["get", "type"], "Camping"], idFactory("campsite"),
+      ["==", ["get", "recreation_category"], "pass_permit"], idFactory("waypoint"),
+      ["==", ["get", "recreation_category"], "visitor_info"], idFactory("waypoint"),
+      idFactory("waypoint"),
+    ];
+  }
+
+  function unifiedPoiBadgeIconSize() {
+    if (state.poiIconStyle === "outlined-glyph") {
+      return ["interpolate", ["linear"], ["zoom"], 5, 0.62, 12, 0.9, 17, 1.18];
+    }
+    return ["interpolate", ["linear"], ["zoom"], 5, 0.5, 12, 0.76, 17, 1.02];
+  }
+
+  function poiIconAnchor() {
+    return state.poiIconStyle === "outlined-glyph" ? "bottom" : "center";
+  }
+
+  function poiIconOffset() {
+    return state.poiIconStyle === "outlined-glyph" ? [0, -2] : [0, 0];
+  }
+
+  function applyPoiIconLayerLayout() {
+    if (!state.map?.getStyle) return;
+    const layers = state.map.getStyle()?.layers || [];
+    for (const layer of layers) {
+      const id = String(layer?.id || "");
+      if (
+        id === "oiab-poi-icons"
+        || id === "overland-waypoint-icons"
+        || id.includes("point-icon")
+      ) {
+        try {
+          if (!state.map.getLayer(id)) continue;
+          state.map.setLayoutProperty(id, "icon-anchor", poiIconAnchor());
+          state.map.setLayoutProperty(id, "icon-offset", poiIconOffset());
+          state.map.setLayoutProperty(id, "icon-size", unifiedPoiBadgeIconSize());
+        } catch (error) {
+          if (window.OIAB_DEBUG_MAPS) console.warn("[OIAB Maps v2] POI icon layout update failed", id, error);
+        }
+      }
+    }
+  }
+
+  function staticPoiBadgeLayer(overlay, sourceId, iconKey, options = {}, sourceLayer = null, variant = "") {
+    return pointIconOverlayLayer(overlay, sourceId, {
+      suffix: options.suffix || "point-icon",
+      iconImage: poiImageId(iconKey || "waypoint"),
+      iconKey: iconKey || "waypoint",
+      iconSize: options.iconSize,
+    }, sourceLayer, variant);
   }
 
   function overlayIconImageId(key) {
@@ -644,11 +1175,12 @@
     if (!state.map || state.map.hasImage(id)) return;
     if (pendingMapImageLoads.has(id)) return pendingMapImageLoads.get(id);
     const task = (async () => {
-      const response = await fetch(url, { cache: "force-cache" });
-      if (!response.ok) throw new Error(`${url} returned ${response.status}`);
-      const svg = await response.text();
-      const objectUrl = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
+      let objectUrl = null;
       try {
+        const response = await fetch(url, { cache: "no-cache" });
+        if (!response.ok) throw new Error(`${url} returned ${response.status}`);
+        const svg = await response.text();
+        objectUrl = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
         const image = new Image();
         image.decoding = "async";
         await new Promise((resolve, reject) => {
@@ -662,11 +1194,229 @@
         const context = canvas.getContext("2d");
         context.clearRect(0, 0, size, size);
         context.drawImage(image, 0, 0, size, size);
+        if (options.trim !== false) {
+          const imageData = context.getImageData(0, 0, size, size);
+          const data = imageData.data;
+          let minX = size;
+          let minY = size;
+          let maxX = -1;
+          let maxY = -1;
+          for (let y = 0; y < size; y += 1) {
+            for (let x = 0; x < size; x += 1) {
+              if (data[((y * size + x) * 4) + 3] < 8) continue;
+              minX = Math.min(minX, x);
+              minY = Math.min(minY, y);
+              maxX = Math.max(maxX, x);
+              maxY = Math.max(maxY, y);
+            }
+          }
+          if (maxX >= minX && maxY >= minY) {
+            const sourceWidth = maxX - minX + 1;
+            const sourceHeight = maxY - minY + 1;
+            const padding = Math.max(2, Math.round(size * 0.04));
+            const targetSize = size - (padding * 2);
+            const scale = Math.min(targetSize / sourceWidth, targetSize / sourceHeight);
+            const drawWidth = sourceWidth * scale;
+            const drawHeight = sourceHeight * scale;
+            const drawX = (size - drawWidth) / 2;
+            const drawY = (size - drawHeight) / 2;
+            const trimmed = document.createElement("canvas");
+            trimmed.width = sourceWidth;
+            trimmed.height = sourceHeight;
+            const trimmedContext = trimmed.getContext("2d");
+            trimmedContext.putImageData(context.getImageData(minX, minY, sourceWidth, sourceHeight), 0, 0);
+            context.clearRect(0, 0, size, size);
+            context.drawImage(trimmed, drawX, drawY, drawWidth, drawHeight);
+          }
+        }
         if (state.map && !state.map.hasImage(id)) {
           state.map.addImage(id, context.getImageData(0, 0, size, size), mapImageOptions(id, options));
         }
       } finally {
-        URL.revokeObjectURL(objectUrl);
+        if (objectUrl) URL.revokeObjectURL(objectUrl);
+        pendingMapImageLoads.delete(id);
+      }
+    })();
+    pendingMapImageLoads.set(id, task);
+    return task;
+  }
+
+  function poiIconColor(key) {
+    return POI_ICON_COLORS[String(key || "waypoint")] || POI_ICON_COLORS.waypoint || "#ffd34f";
+  }
+
+  function parseSvgViewBox(svg) {
+    const match = String(svg || "").match(/\bviewBox\s*=\s*["']([^"']+)["']/i);
+    if (!match) return [0, 0, 100, 100];
+    const values = match[1].trim().split(/[\s,]+/).map(Number);
+    return values.length === 4 && values.every(Number.isFinite) && values[2] > 0 && values[3] > 0
+      ? values
+      : [0, 0, 100, 100];
+  }
+
+  function svgInnerMarkup(svg) {
+    return String(svg || "")
+      .replace(/<\?xml[\s\S]*?\?>/gi, "")
+      .replace(/<!doctype[\s\S]*?>/gi, "")
+      .replace(/<!--[\s\S]*?-->/g, "")
+      .replace(/<script[\s\S]*?<\/script>/gi, "")
+      .replace(/<foreignObject[\s\S]*?<\/foreignObject>/gi, "")
+      .replace(/<foreignObject\b[^>]*\/>/gi, "")
+      .replace(/<image\b[\s\S]*?>/gi, "")
+      .replace(/<metadata[\s\S]*?<\/metadata>/gi, "")
+      .replace(/<title[\s\S]*?<\/title>/gi, "")
+      .replace(/<desc[\s\S]*?<\/desc>/gi, "")
+      .replace(/<text[\s\S]*?<\/text>/gi, "")
+      .replace(/^\s*<svg\b[^>]*>/i, "")
+      .replace(/<\/svg>\s*$/i, "")
+      .replace(/<\/?switch\b[^>]*>/gi, "")
+      .replace(/\s+[a-z][\w-]*:[\w-]+\s*=\s*"[^"]*"/gi, "")
+      .replace(/\s+[a-z][\w-]*:[\w-]+\s*=\s*'[^']*'/gi, "")
+      .replace(/<\/?[a-z][\w-]*:[\w-]+\b[^>]*>/gi, "")
+      .replace(/\s+style\s*=\s*"[^"]*"/gi, "")
+      .replace(/\s+style\s*=\s*'[^']*'/gi, "")
+      .replace(/\s+fill\s*=\s*"(?!none\b)[^"]*"/gi, "")
+      .replace(/\s+fill\s*=\s*'(?!none\b)[^']*'/gi, "")
+      .replace(/\s+stroke\s*=\s*"[^"]*"/gi, "")
+      .replace(/\s+stroke\s*=\s*'[^']*'/gi, "")
+      .trim();
+  }
+
+  function safeSvgColor(value, fallback = "#f7f4df") {
+    const text = String(value || "").trim();
+    return /^#[0-9a-f]{3,8}$/i.test(text) ? text : fallback;
+  }
+
+  function poiIconStyleConfig(style = state.poiIconStyle) {
+    if (style === "circle-marker") {
+      return {
+        style: "circle-marker",
+        foreground: "#050706",
+        circleStroke: "#050706",
+        circleStrokeWidth: 0.045,
+        circleRadius: 0.44,
+        glyphScale: 0.82,
+        outlineScale: 0,
+      };
+    }
+    if (style === "google-circle") {
+      return {
+        style: "google-circle",
+        foreground: "#ffffff",
+        circleStroke: "#ffffff",
+        circleStrokeWidth: 0.055,
+        circleRadius: 0.42,
+        glyphScale: 0.7,
+        outlineScale: 0,
+      };
+    }
+    return {
+      style: "outlined-glyph",
+      foreground: null,
+      outline: "#ffffff",
+      glyphScale: 0.72,
+      outlineScale: 1.16,
+    };
+  }
+
+  function composePoiBadgeSvg(key, rawSvg, size = 96, style = state.poiIconStyle) {
+    const [minX, minY, width, height] = parseSvgViewBox(rawSvg);
+    const config = poiIconStyleConfig(style);
+    const targetSize = size * config.glyphScale;
+    const scale = targetSize / Math.max(width, height);
+    const drawX = (size - (width * scale)) / 2;
+    const drawY = (size - (height * scale)) / 2;
+    const fill = safeSvgColor(poiIconColor(key));
+    const foreground = safeSvgColor(config.foreground || fill);
+    const inner = svgInnerMarkup(rawSvg);
+    const circle = config.circleRadius
+      ? `<circle cx="${size / 2}" cy="${size / 2}" r="${size * config.circleRadius}" fill="${fill}" stroke="${config.circleStroke}" stroke-width="${Math.max(2, Math.round(size * config.circleStrokeWidth))}"/>`
+      : "";
+    const outlineScale = config.outlineScale || 0;
+    const outlineDraw = outlineScale > 0
+      ? `<g class="oiab-poi-outline" transform="translate(${size / 2} ${size / 2}) scale(${outlineScale}) translate(${-size / 2} ${-size / 2}) translate(${drawX} ${drawY}) scale(${scale}) translate(${-minX} ${-minY})">
+        ${inner}
+      </g>`
+      : "";
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+      <style>
+        .oiab-poi-outline, .oiab-poi-outline * {
+          color: ${config.outline || "#ffffff"};
+          fill: ${config.outline || "#ffffff"};
+          stroke: ${config.outline || "#ffffff"};
+        }
+        .oiab-poi-glyph, .oiab-poi-glyph * {
+          color: ${foreground};
+          fill: ${foreground};
+          stroke: ${foreground};
+        }
+        .oiab-poi-outline [fill="none"], .oiab-poi-outline [fill="None"], .oiab-poi-outline [fill="NONE"],
+        .oiab-poi-glyph [fill="none"], .oiab-poi-glyph [fill="None"], .oiab-poi-glyph [fill="NONE"] {
+          fill: none;
+        }
+      </style>
+      ${circle}
+      ${outlineDraw}
+      <g class="oiab-poi-glyph" transform="translate(${drawX} ${drawY}) scale(${scale}) translate(${-minX} ${-minY})">
+        ${inner}
+      </g>
+    </svg>`;
+  }
+
+  function fallbackPoiGlyphSvg() {
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <path d="M50 8c-17.7 0-32 14.1-32 31.5 0 23.6 32 52.5 32 52.5s32-28.9 32-52.5C82 22.1 67.7 8 50 8Zm0 45.5c-8.1 0-14.7-6.4-14.7-14.3S41.9 24.9 50 24.9s14.7 6.4 14.7 14.3S58.1 53.5 50 53.5Z"/>
+    </svg>`;
+  }
+
+  async function setMapImage(id, image, options = { pixelRatio: 2 }) {
+    if (!state.map) return;
+    if (state.map.hasImage(id) && typeof state.map.updateImage === "function") {
+      state.map.updateImage(id, image);
+      return;
+    }
+    if (state.map.hasImage(id)) state.map.removeImage(id);
+    state.map.addImage(id, image, options);
+  }
+
+  async function addPoiBadgeImageFromSvg(id, key, rawSvg, size = 96) {
+    const svg = composePoiBadgeSvg(key, rawSvg || fallbackPoiGlyphSvg(), size);
+    const imageUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+    const image = new Image();
+    image.decoding = "async";
+    await new Promise((resolve, reject) => {
+      image.onload = resolve;
+      image.onerror = reject;
+      image.src = imageUrl;
+    });
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
+    const context = canvas.getContext("2d");
+    context.clearRect(0, 0, size, size);
+    context.drawImage(image, 0, 0, size, size);
+    await setMapImage(id, context.getImageData(0, 0, size, size), { pixelRatio: 2 });
+  }
+
+  async function loadPoiBadgeImage(id, key, size = 96, force = false) {
+    if (!state.map || (!force && state.map.hasImage(id))) return;
+    if (pendingMapImageLoads.has(id)) return pendingMapImageLoads.get(id);
+    const task = (async () => {
+      try {
+        let rawSvg = fallbackPoiGlyphSvg();
+        try {
+          const url = poiIconUrl(key);
+          const response = await fetch(url, { cache: "no-cache" });
+          if (!response.ok) throw new Error(`${url} returned ${response.status}`);
+          rawSvg = await response.text();
+        } catch (error) {
+          if (window.OIAB_DEBUG_MAPS && !warnedPoiIconFallbacks.has(key)) {
+            warnedPoiIconFallbacks.add(key);
+            console.warn("[OIAB Maps v2] POI icon using fallback", key, error);
+          }
+        }
+        await addPoiBadgeImageFromSvg(id, key, rawSvg, size);
+      } finally {
         pendingMapImageLoads.delete(id);
       }
     })();
@@ -675,15 +1425,25 @@
   }
 
   async function loadPoiImages() {
-    const tasks = POI_ICON_KEYS.flatMap((key) => [
-      loadSvgMapImage(poiImageId(key), `/maps-v2/icons/poi/${key}.svg`).catch((error) => {
+    const tasks = POI_ICON_KEYS.map((key) =>
+      loadPoiBadgeImage(poiImageId(key), key).catch((error) => {
         console.warn("[OIAB Maps v2] POI icon failed", key, error);
-      }),
-      loadSvgMapImage(poiMarkerImageId(key), `/maps-v2/icons/poi-marker/${key}.svg`, 120).catch((error) => {
-        console.warn("[OIAB Maps v2] POI marker failed", key, error);
-      }),
-    ]);
+      }));
     await Promise.all(tasks);
+  }
+
+  async function refreshPoiIconStyle() {
+    state.poiIconStyle = readPoiIconStyle();
+    const tasks = POI_ICON_KEYS.map((key) =>
+      loadPoiBadgeImage(poiImageId(key), key, 96, true).catch((error) => {
+        console.warn("[OIAB Maps v2] POI icon refresh failed", key, error);
+      }));
+    await Promise.all(tasks);
+    applyPoiIconLayerLayout();
+    renderPoiKindFilterPanel();
+    if ($("legendModal") && !$("legendModal").hidden && $("legendContent")) {
+      $("legendContent").innerHTML = legendMarkup();
+    }
   }
 
   async function loadOverlayImages() {
@@ -695,7 +1455,21 @@
     ]);
   }
 
+  function poiIconUrl(key) {
+    const iconKey = String(key || "waypoint").replace(/[^a-z0-9_-]+/gi, "-");
+    const asset = NOUN_POI_ICON_PATHS[iconKey] || NOUN_POI_ICON_PATHS.waypoint || "waypoint";
+    return `/maps-v2/icons/noun/${asset}.svg`;
+  }
+
   function handleStyleImageMissing(event) {
+    const imageId = String(event?.id || "");
+    if (imageId.startsWith(POI_IMAGE_PREFIX)) {
+      const key = imageId.slice(POI_IMAGE_PREFIX.length) || "waypoint";
+      loadPoiBadgeImage(imageId, key).catch((error) => {
+        console.warn("[OIAB Maps v2] missing POI icon fallback failed", imageId, error);
+      });
+      return;
+    }
     if (event.id !== overlayIconImageId("wildfire-flame")) return;
     if (addGeneratedWildfireFlameIcon(event.id)) return;
     loadSvgMapImage(event.id, "/maps-v2/icons/overlay-flame.svg", 112, { sdf: true }).catch((error) => {
@@ -741,23 +1515,169 @@
   function addBasePoiIconLayer() {
     const sourceId = sourceIdFor(state.packSelection?.base || {});
     if (!state.map || !state.map.getSource(sourceId) || state.map.getLayer("oiab-poi-icons")) return;
+    if (state.map.getLayer("oiab-poi-icon-bg")) state.map.removeLayer("oiab-poi-icon-bg");
     const beforeId = state.map.getLayer("oiab-travel-poi-labels") ? "oiab-travel-poi-labels" : undefined;
+    const poiOverlay = mapDetailOverlayState("map_detail_pois");
     state.map.addLayer({
       id: "oiab-poi-icons",
       type: "symbol",
       source: sourceId,
       "source-layer": "pois",
       minzoom: 13,
-      filter: ["in", ["get", "kind"], ["literal", Object.keys(MAP_KIND_TO_POI_ICON)]],
+      filter: combineMapFilters(
+        ["in", basePoiKindExpression(), ["literal", Object.keys(MAP_KIND_TO_POI_ICON)]],
+        poiKindFilterExpression(basePoiIconKeyExpression()),
+      ),
       layout: {
-        "icon-image": mapPoiMatchExpression("kind", MAP_KIND_TO_POI_ICON, "information", poiMarkerImageId),
-        "icon-size": ["interpolate", ["linear"], ["zoom"], 13, 0.22, 15, 0.3, 18, 0.42],
+        "icon-image": mapPoiMatchExpression(basePoiKindExpression(), MAP_KIND_TO_POI_ICON, "waypoint", poiImageId),
+        "icon-size": unifiedPoiBadgeIconSize(),
+        "icon-anchor": poiIconAnchor(),
+        "icon-offset": poiIconOffset(),
         "icon-allow-overlap": true,
         "icon-ignore-placement": true,
         "icon-optional": false,
         "icon-padding": 2,
+        "visibility": poiOverlay?.enabled === false ? "none" : "visible",
+      },
+      paint: {
+        "icon-opacity": overlayOpacity(poiOverlay || { opacity: 1 }),
       },
     }, beforeId);
+  }
+
+  function applyBasePoiOverlayState() {
+    if (!state.map?.getLayer("oiab-poi-icons")) return;
+    const poiOverlay = mapDetailOverlayState("map_detail_pois") || { enabled: true, opacity: 1 };
+    try {
+      state.map.setLayoutProperty("oiab-poi-icons", "visibility", poiOverlay.enabled === false ? "none" : "visible");
+      state.map.setPaintProperty("oiab-poi-icons", "icon-opacity", overlayOpacity(poiOverlay));
+    } catch (error) {
+      console.warn("[OIAB Maps v2] failed to apply base POI overlay state", error);
+    }
+  }
+
+  function applySavedDataOverlayState() {
+    if (!state.map) return;
+    const routeOverlay = savedDataOverlayState("saved_data_routes") || { enabled: true, opacity: 1 };
+    const poiOverlay = savedDataOverlayState("saved_data_pois") || { enabled: true, opacity: 1 };
+    const routeVisible = routeOverlay.enabled === false ? "none" : "visible";
+    const poiVisible = poiOverlay.enabled === false ? "none" : "visible";
+    try {
+      if (state.map.getLayer("overland-track-lines")) {
+        state.map.setLayoutProperty("overland-track-lines", "visibility", routeVisible);
+        state.map.setPaintProperty("overland-track-lines", "line-opacity", overlayOpacity(routeOverlay));
+      }
+      if (state.map.getLayer("overland-waypoint-icons")) {
+        state.map.setLayoutProperty("overland-waypoint-icons", "visibility", poiVisible);
+        state.map.setPaintProperty("overland-waypoint-icons", "icon-opacity", overlayOpacity(poiOverlay));
+      }
+      if (state.map.getLayer("overland-waypoint-labels")) {
+        state.map.setLayoutProperty("overland-waypoint-labels", "visibility", poiVisible);
+        state.map.setPaintProperty("overland-waypoint-labels", "text-opacity", overlayOpacity(poiOverlay));
+      }
+    } catch (error) {
+      console.warn("[OIAB Maps v2] failed to apply saved data overlay state", error);
+    }
+  }
+
+  function applyOverlayLayerOrdering() {
+    if (!state.map) return;
+    const overlays = normalizeOverlayRegistry(state.overlayRegistry).filter((overlay) => overlay.available && overlay.enabled);
+    const managedStack = [];
+    const seen = new Set();
+    // The overlay list is a visual stack: first row is topmost. MapLibre draws
+    // later layers above earlier layers, so rebuild the managed layer stack bottom-up.
+    for (const overlay of overlays.slice().reverse()) {
+      for (const layerId of overlayLayerIds(overlay)) {
+        if (seen.has(layerId) || !state.map.getLayer(layerId)) continue;
+        seen.add(layerId);
+        managedStack.push(layerId);
+      }
+    }
+    for (const layerId of managedStack) {
+      try {
+        state.map.moveLayer(layerId);
+      } catch (error) {
+        console.warn("[OIAB Maps v2] failed to order overlay layer", layerId, error);
+      }
+    }
+  }
+
+  function applyLayerFilter(layerId, filter) {
+    if (!state.map?.getLayer(layerId)) return;
+    try {
+      state.map.setFilter(layerId, filter);
+    } catch (error) {
+      console.warn("[OIAB Maps v2] failed to apply POI kind filter", layerId, error);
+    }
+  }
+
+  function applyPoiKindFilters() {
+    applyLayerFilter("oiab-poi-icons", combineMapFilters(
+      ["in", basePoiKindExpression(), ["literal", Object.keys(MAP_KIND_TO_POI_ICON)]],
+      poiKindFilterExpression(basePoiIconKeyExpression()),
+    ));
+    applyLayerFilter("overland-waypoint-icons", combineMapFilters(
+      pointGeometryFilter(),
+      poiKindFilterExpression(["coalesce", ["get", "marker_icon_key"], "waypoint"]),
+    ));
+
+    for (const overlay of normalizeOverlayRegistry(state.overlayRegistry)) {
+      const style = overlay.style || overlay.category || "";
+      const variants = [""].concat((overlay.region_sources || []).map((region) => region.region_id || region.region_name || "region"));
+      for (const variant of variants) {
+        if (style === "historic_places") {
+          applyLayerFilter(overlayLayerId(overlay, "historic-point-icon", variant), combineMapFilters(
+            pointGeometryFilter(),
+            poiKindFilterExpression(["literal", "museum"]),
+          ));
+        } else if (style === "opencaching") {
+          applyLayerFilter(overlayLayerId(overlay, "opencaching-point-icon", variant), combineMapFilters(
+            pointGeometryFilter(),
+            poiKindFilterExpression(["literal", "waypoint"]),
+          ));
+        } else if (style === "ridb_recreation") {
+          applyLayerFilter(overlayLayerId(overlay, "ridb-point-icon", variant), combineMapFilters(
+            pointGeometryFilter(),
+            poiKindFilterExpression(ridbPointIconExpression((key) => key)),
+          ));
+        } else if (style === "campflare_campgrounds" || style === "campflare_campsites" || style === "campflare_land_pois") {
+          applyLayerFilter(overlayLayerId(overlay, "campflare-marker-icon", variant), combineMapFilters(
+            pointGeometryFilter(),
+            poiKindFilterExpression(campflarePointIconExpression(style, (key) => key)),
+          ));
+        }
+      }
+    }
+    applyBasePoiOverlayState();
+  }
+
+  function setPoiKindFilter(keys) {
+    state.poiKindFilter = new Set(keys.filter((key) => POI_ICON_KEYS.includes(key)));
+    savePoiKindFilter();
+    renderPoiKindFilterPanel();
+    applyPoiKindFilters();
+    if ($("searchInput")?.value.trim()) runMapSearch($("searchInput").value);
+  }
+
+  function renderPoiKindFilterPanel() {
+    const list = $("poiFilterList");
+    if (!list) return;
+    const selectedCount = state.poiKindFilter.size;
+    list.innerHTML = POI_KIND_FILTER_OPTIONS.map(([key, label]) => `
+      <label class="omv2-poi-filter-item">
+        <input type="checkbox" value="${escapeHtml(key)}" ${state.poiKindFilter.has(key) ? "checked" : ""}>
+        <span
+          class="legend-poi legend-poi--${escapeHtml(state.poiIconStyle)}"
+          style="--poi-bg:${escapeHtml(poiIconColor(key))};--poi-url:url('${escapeHtml(poiIconUrl(key))}')"
+        >
+          <span class="legend-poi-glyph" aria-hidden="true"></span>
+        </span>
+        <span>${escapeHtml(label)}</span>
+      </label>
+    `).join("");
+    const heading = $("poiFilterSummary");
+    if (heading) heading.textContent = `${selectedCount}/${POI_ICON_KEYS.length} kinds`;
   }
 
   function numericPackZoom(pack, key, fallback) {
@@ -792,6 +1712,7 @@
   function normalizeOverlayRegistry(registry) {
     return [
       ...mapDetailOverlays(),
+      ...savedDataOverlays(),
       ...(Array.isArray(registry?.overlays) ? registry.overlays : []),
     ]
       .sort((a, b) => Number(a.sort_order ?? 100) - Number(b.sort_order ?? 100));
@@ -952,31 +1873,129 @@
     return copy;
   }
 
-  function mvumLinePaint(opacity) {
-    return {
-      "line-color": [
+  function mvumRouteClassExpression() {
+    const routeCode = ["to-string", ["coalesce", ["get", "route_type"], ["get", "route_type_label"], ["get", "type"], ""]];
+    const bucket = ["to-string", ["coalesce", ["get", "style_bucket"], ""]];
+    return [
+      "case",
+      ["in", bucket, ["literal", ["restricted", "closed"]]], "restricted",
+      ["in", routeCode, ["literal", ["13", "14"]]], "restricted",
+      ["in", bucket, ["literal", ["atv_only"]]], "atv_only",
+      ["in", routeCode, ["literal", ["8", "17"]]], "atv_only",
+      ["in", bucket, ["literal", ["motorcycle_only"]]], "motorcycle_only",
+      ["in", routeCode, ["literal", ["9", "18"]]], "motorcycle_only",
+      ["in", bucket, ["literal", ["high_clearance"]]], "high_clearance",
+      ["in", routeCode, ["literal", ["5", "19"]]], "high_clearance",
+      ["in", bucket, ["literal", ["seasonal"]]], "seasonal",
+      ["in", routeCode, ["literal", ["3", "4", "10", "11"]]], "seasonal",
+      ["in", bucket, ["literal", ["trail"]]], "trail",
+      ["in", routeCode, ["literal", ["7", "15"]]], "trail",
+      ["in", routeCode, ["literal", ["6", "12", "16"]]], "special",
+      "open_motorized",
+    ];
+  }
+
+  function mvumLinePaint(opacity, routeClass = "", part = "main") {
+    const colorFor = (key) => MVUM_LINE_STYLES[key]?.color || MVUM_LINE_STYLES.unknown.color;
+    const style = MVUM_LINE_STYLES[routeClass] || {};
+    const isCasing = part === "casing";
+    const paint = {
+      "line-color": isCasing ? (style.casing || colorFor(routeClass)) : routeClass ? colorFor(routeClass) : [
         "match",
-        ["coalesce", ["get", "style_bucket"], ["get", "route_type"], ["get", "route_type_label"], ""],
-        "restricted", "#ff7068",
-        "closed", "#ff7068",
-        "seasonal", "#ffd34f",
-        "high_clearance", "#f97316",
-        "atv_only", "#22c55e",
-        "motorcycle_only", "#60a5fa",
-        "trail", "#c084fc",
-        "open_motorized", "#ff8c2f",
-        "17", "#22c55e",
-        "18", "#60a5fa",
-        "#a3a3a3",
+        mvumRouteClassExpression(),
+        "restricted", colorFor("restricted"),
+        "closed", colorFor("closed"),
+        "seasonal", colorFor("seasonal"),
+        "high_clearance", colorFor("high_clearance"),
+        "atv_only", colorFor("atv_only"),
+        "motorcycle_only", colorFor("motorcycle_only"),
+        "trail", colorFor("trail"),
+        "special", colorFor("special"),
+        "open_motorized", colorFor("open_motorized"),
+        colorFor("unknown"),
       ],
-      "line-width": ["interpolate", ["linear"], ["zoom"], 8, 1.2, 12, 2.2, 16, 4],
+      "line-width": isCasing
+        ? ["interpolate", ["linear"], ["zoom"], 8, 2.2, 12, 3.6, 16, 6.2]
+        : ["interpolate", ["linear"], ["zoom"], 8, 1.1, 12, 1.8, 16, 3.1],
       "line-opacity": opacity,
     };
+    if (!isCasing && routeClass && MVUM_LINE_STYLES[routeClass]?.dash) paint["line-dasharray"] = MVUM_LINE_STYLES[routeClass].dash;
+    return paint;
+  }
+
+  function mvumRouteLineLayers(overlay, sourceId, sourceLayer = null, variant = "", opacity = 1) {
+    const minzoom = Number(overlay.minzoom ?? overlay.metadata?.minzoom ?? 0);
+    const maxzoom = Number(overlay.maxzoom ?? overlay.metadata?.maxzoom ?? 22);
+    const classes = ["open_motorized", "high_clearance", "seasonal", "trail", "atv_only", "motorcycle_only", "special", "restricted"];
+    const layers = [];
+    for (const routeClass of classes) {
+      const style = MVUM_LINE_STYLES[routeClass] || {};
+      const filter = ["all",
+        ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString"]]],
+        ["==", mvumRouteClassExpression(), routeClass],
+      ];
+      if (style.casing) {
+        const casingLayer = {
+          id: overlayLayerId(overlay, `mvum-line-${routeClass}-casing`, variant),
+          type: "line",
+          source: sourceId,
+          minzoom,
+          maxzoom,
+          filter,
+          paint: mvumLinePaint(opacity, routeClass, "casing"),
+        };
+        if (sourceLayer) casingLayer["source-layer"] = sourceLayer;
+        layers.push(casingLayer);
+      }
+      const mainLayer = {
+        id: overlayLayerId(overlay, `mvum-line-${routeClass}`, variant),
+        type: "line",
+        source: sourceId,
+        minzoom,
+        maxzoom,
+        filter,
+        paint: mvumLinePaint(opacity, routeClass),
+      };
+      if (sourceLayer) mainLayer["source-layer"] = sourceLayer;
+      layers.push(mainLayer);
+    }
+    return layers;
+  }
+
+  function mvumAtvSymbolLayer(overlay, sourceId, sourceLayer = null, variant = "", opacity = 1) {
+    const layer = {
+      id: overlayLayerId(overlay, "mvum-atv-label", variant),
+      type: "symbol",
+      source: sourceId,
+      minzoom: Math.max(Number(overlay.minzoom ?? overlay.metadata?.minzoom ?? 0), 11),
+      maxzoom: Number(overlay.maxzoom ?? overlay.metadata?.maxzoom ?? 22),
+      filter: ["all",
+        ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString"]]],
+        ["==", mvumRouteClassExpression(), "atv_only"],
+      ],
+      layout: {
+        "symbol-placement": "line",
+        "symbol-spacing": 340,
+        "text-field": "ATV",
+        "text-font": ["Noto Sans Regular"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 11, 9, 16, 12],
+        "text-allow-overlap": false,
+        "text-ignore-placement": false,
+      },
+      paint: {
+        "text-color": "#0b2816",
+        "text-halo-color": "#a7f3d0",
+        "text-halo-width": 1.4,
+        "text-opacity": opacity,
+      },
+    };
+    if (sourceLayer) layer["source-layer"] = sourceLayer;
+    return layer;
   }
 
   function routeLinePaint() {
     return {
-      "line-color": ["coalesce", ["get", "color"], ["match", ["get", "road_type"], "interstate", "#ff4f2e", "main_road", "#ff8a2a", "street", "#ffffff", "gravel", "#b08d57", "dirt", "#8a6a42", "high_clearance", "#f97316", "trail", "#555555", "#ffd34f"]],
+      "line-color": ["coalesce", ["get", "color"], ["match", ["get", "road_type"], "interstate", "#ff4f2e", "main_road", "#ff8a2a", "street", "#ffffff", "gravel", "#b08d57", "dirt", "#8a6a42", "high_clearance", "#f97316", "trail", "#555555", "#a855f7"]],
       "line-width": ["interpolate", ["linear"], ["zoom"], 5, 2, 12, 4, 16, 7],
       "line-opacity": 0.95,
     };
@@ -1305,16 +2324,19 @@
     const opacity = overlayOpacity(overlay);
     const minzoom = Number(overlay.minzoom ?? overlay.metadata?.minzoom ?? 0);
     const maxzoom = Number(overlay.maxzoom ?? overlay.metadata?.maxzoom ?? 22);
+    const iconKeyExpression = options.iconKeyExpression || (options.iconKey ? ["literal", options.iconKey] : null);
     const layer = {
       id: overlayLayerId(overlay, options.suffix || "point-icon", variant),
       type: "symbol",
       source: sourceId,
       minzoom,
       maxzoom,
-      filter: ["==", ["geometry-type"], "Point"],
+      filter: combineMapFilters(pointGeometryFilter(), iconKeyExpression ? poiKindFilterExpression(iconKeyExpression) : null),
       layout: {
         "icon-image": options.iconImage,
-        "icon-size": options.iconSize || ["interpolate", ["linear"], ["zoom"], 3, 0.12, 8, 0.2, 13, 0.34, 17, 0.46],
+        "icon-size": options.iconSize || unifiedPoiBadgeIconSize(),
+        "icon-anchor": poiIconAnchor(),
+        "icon-offset": poiIconOffset(),
         "icon-allow-overlap": true,
         "icon-ignore-placement": true,
         "icon-optional": false,
@@ -1398,45 +2420,117 @@
         }, null, variant)];
       }
       if (style === "ridb_recreation") {
-        return [{
-          id: overlayLayerId(overlay, "ridb-point", variant),
-          type: "circle",
-          source: sourceId,
-          minzoom,
-          maxzoom,
-          filter: ["==", ["geometry-type"], "Point"],
-          paint: {
-            "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, 3.5, 12, 6.5, 17, 9],
-            "circle-color": [
-              "case",
-              ["==", ["get", "recreation_category"], "camping"], "#f59e0b",
-              ["==", ["get", "type"], "Campground"], "#f59e0b",
-              ["==", ["get", "recreation_category"], "pass_permit"], "#7c3aed",
-              ["==", ["get", "recreation_category"], "visitor_info"], "#2563eb",
-              "#2f855a",
-            ],
-            "circle-stroke-color": "#f7f4df",
-            "circle-stroke-width": 1.8,
-            "circle-opacity": opacity,
+        return [pointIconOverlayLayer(overlay, sourceId, {
+          suffix: "ridb-point-icon",
+          iconImage: ridbPointIconExpression(),
+          iconKeyExpression: ridbPointIconExpression((key) => key),
+        }, null, variant)];
+      }
+      if (style === "historic_places") {
+        return [
+          {
+            id: overlayLayerId(overlay, "historic-fill", variant),
+            type: "fill",
+            source: sourceId,
+            minzoom,
+            maxzoom,
+            filter: ["==", ["geometry-type"], "Polygon"],
+            paint: {
+              "fill-color": "#9a6a3d",
+              "fill-opacity": opacity * 0.18,
+            },
           },
-        }];
+          {
+            id: overlayLayerId(overlay, "historic-line", variant),
+            type: "line",
+            source: sourceId,
+            minzoom,
+            maxzoom,
+            filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
+            paint: {
+              "line-color": "#68411f",
+              "line-width": ["interpolate", ["linear"], ["zoom"], 4, 0.7, 10, 1.2, 15, 2.2],
+              "line-opacity": opacity * 0.88,
+            },
+          },
+          staticPoiBadgeLayer(overlay, sourceId, "museum", { suffix: "historic-point-icon" }, null, variant),
+        ];
+      }
+      if (style === "opencaching") {
+        return [staticPoiBadgeLayer(overlay, sourceId, "waypoint", { suffix: "opencaching-point-icon" }, null, variant)];
+      }
+      if (style === "campflare_campgrounds" || style === "campflare_campsites" || style === "campflare_land_pois") {
+        return [
+          {
+            id: overlayLayerId(overlay, "campflare-marker-icon", variant),
+            type: "symbol",
+            source: sourceId,
+            minzoom,
+            maxzoom,
+            filter: combineMapFilters(pointGeometryFilter(), poiKindFilterExpression(campflarePointIconExpression(style, (key) => key))),
+            layout: {
+              "icon-image": campflarePointIconExpression(style),
+              "icon-size": unifiedPoiBadgeIconSize(),
+              "icon-allow-overlap": true,
+              "icon-ignore-placement": true,
+              "icon-optional": false,
+              "icon-padding": 2,
+            },
+            paint: {
+              "icon-opacity": opacity,
+            },
+          },
+        ];
+      }
+      if (style === "campflare_public_lands") {
+        return [
+          {
+            id: overlayLayerId(overlay, "campflare-land-fill", variant),
+            type: "fill",
+            source: sourceId,
+            minzoom,
+            maxzoom,
+            filter: ["==", ["geometry-type"], "Polygon"],
+            paint: {
+              "fill-color": "#9fce78",
+              "fill-opacity": opacity * 0.26,
+            },
+          },
+          {
+            id: overlayLayerId(overlay, "campflare-land-line", variant),
+            type: "line",
+            source: sourceId,
+            minzoom,
+            maxzoom,
+            filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
+            paint: {
+              "line-color": "#517c31",
+              "line-width": ["interpolate", ["linear"], ["zoom"], 5, 0.8, 12, 1.6, 16, 2.2],
+              "line-opacity": opacity,
+            },
+          },
+          staticPoiBadgeLayer(overlay, sourceId, "waypoint", { suffix: "campflare-land-point" }, null, variant),
+        ];
+      }
+      if (style === "campflare_notices") {
+        return [
+          {
+            id: overlayLayerId(overlay, "campflare-notice-fill", variant),
+            type: "fill",
+            source: sourceId,
+            minzoom,
+            maxzoom,
+            filter: ["==", ["geometry-type"], "Polygon"],
+            paint: {
+              "fill-color": ["match", ["get", "kind"], "fire", "#ef4444", "closure", "#f97316", "weather", "#38bdf8", "#facc15"],
+              "fill-opacity": opacity * 0.3,
+            },
+          },
+          staticPoiBadgeLayer(overlay, sourceId, "waypoint", { suffix: "campflare-notice-point" }, null, variant),
+        ];
       }
       if (style === "stream_gauges") {
-        return [{
-          id: overlayLayerId(overlay, "stream-gauge", variant),
-          type: "circle",
-          source: sourceId,
-          minzoom,
-          maxzoom,
-          filter: ["==", ["geometry-type"], "Point"],
-          paint: {
-            "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, 3, 12, 5.5, 17, 8],
-            "circle-color": "#0ea5e9",
-            "circle-stroke-color": "#083344",
-            "circle-stroke-width": 1.5,
-            "circle-opacity": opacity,
-          },
-        }];
+        return [staticPoiBadgeLayer(overlay, sourceId, "water", { suffix: "stream-gauge" }, null, variant)];
       }
       if (style === "drought_monitor") {
         return [
@@ -1468,32 +2562,13 @@
         ];
       }
       if (style === "lightning_recent") {
-        return [{
-          id: overlayLayerId(overlay, "lightning", variant),
-          type: "circle",
-          source: sourceId,
-          minzoom,
-          maxzoom,
-          filter: ["==", ["geometry-type"], "Point"],
-          paint: {
-            "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 2.5, 10, 5, 16, 8],
-            "circle-color": "#fde047",
-            "circle-stroke-color": "#713f12",
-            "circle-stroke-width": 1.5,
-            "circle-opacity": opacity,
-          },
-        }];
+        return [staticPoiBadgeLayer(overlay, sourceId, "waypoint", { suffix: "lightning" }, null, variant)];
       }
       if (style === "mvum_roads" || style === "mvum_trails" || overlay.category === "mvum") {
-        return [{
-          id: overlayLayerId(overlay, "mvum-line", variant),
-          type: "line",
-          source: sourceId,
-          minzoom,
-          maxzoom,
-          filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString"]]],
-          paint: mvumLinePaint(opacity),
-        }];
+        return [
+          ...mvumRouteLineLayers(overlay, sourceId, null, variant, opacity),
+          mvumAtvSymbolLayer(overlay, sourceId, null, variant, opacity),
+        ];
       }
       return [
         {
@@ -1514,21 +2589,7 @@
           filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
           paint: { "line-color": "#ffcf45", "line-width": 2, "line-opacity": opacity },
         },
-        {
-          id: overlayLayerId(overlay, "point", variant),
-          type: "circle",
-          source: sourceId,
-          minzoom,
-          maxzoom,
-          filter: ["==", ["geometry-type"], "Point"],
-          paint: {
-            "circle-radius": ["interpolate", ["linear"], ["zoom"], 7, 3, 14, 6],
-            "circle-color": "#ffcf45",
-            "circle-stroke-color": "#102719",
-            "circle-stroke-width": 1.5,
-            "circle-opacity": opacity,
-          },
-        },
+        staticPoiBadgeLayer(overlay, sourceId, "waypoint", { suffix: "point" }, null, variant),
       ];
     }
     const pmtilesSourceLayer = sourceLayer || overlay.source_layer;
@@ -1630,16 +2691,10 @@
         ];
       }
       if (style === "mvum_roads" || style === "mvum_trails" || overlay.category === "mvum") {
-        return [{
-          id: overlayLayerId(overlay, "mvum-line", variant),
-          type: "line",
-          source: sourceId,
-          "source-layer": pmtilesSourceLayer,
-          minzoom,
-          maxzoom,
-          filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString"]]],
-          paint: mvumLinePaint(opacity),
-        }];
+        return [
+          ...mvumRouteLineLayers(overlay, sourceId, pmtilesSourceLayer, variant, opacity),
+          mvumAtvSymbolLayer(overlay, sourceId, pmtilesSourceLayer, variant, opacity),
+        ];
       }
       return [
         {
@@ -1662,22 +2717,7 @@
           filter: ["in", ["geometry-type"], ["literal", ["LineString", "MultiLineString", "Polygon", "MultiPolygon"]]],
           paint: { "line-color": "#ffcf45", "line-width": 2, "line-opacity": opacity },
         },
-        {
-          id: overlayLayerId(overlay, "point", variant),
-          type: "circle",
-          source: sourceId,
-          "source-layer": pmtilesSourceLayer,
-          minzoom,
-          maxzoom,
-          filter: ["==", ["geometry-type"], "Point"],
-          paint: {
-            "circle-radius": ["interpolate", ["linear"], ["zoom"], 7, 3, 14, 6],
-            "circle-color": "#ffcf45",
-            "circle-stroke-color": "#102719",
-            "circle-stroke-width": 1.5,
-            "circle-opacity": opacity,
-          },
-        },
+        staticPoiBadgeLayer(overlay, sourceId, "waypoint", { suffix: "point" }, pmtilesSourceLayer, variant),
       ];
     }
     return [];
@@ -1685,7 +2725,17 @@
 
   function overlayLayerIds(overlay) {
     if (overlay.type === "map_detail") {
-      return (state.mapDetailLayersByOverlay?.[overlay.id] || []).map((layer) => layer.id);
+      const ids = (state.mapDetailLayersByOverlay?.[overlay.id] || []).map((layer) => layer.id);
+      // Base POIs are rendered by a runtime symbol layer after the PMTiles style loads
+      // so they can use OIAB's unified icon renderer. Keep that runtime layer attached
+      // to the Map POIs overlay; otherwise routes/roads can be reordered above it.
+      if (overlay.id === "map_detail_pois") ids.push("oiab-poi-icons");
+      return ids;
+    }
+    if (overlay.type === "saved_data") {
+      if (overlay.id === "saved_data_routes") return ["overland-track-lines"];
+      if (overlay.id === "saved_data_pois") return ["overland-waypoint-icons", "overland-waypoint-labels"];
+      return [];
     }
     const variants = Array.isArray(overlay.region_sources) && overlay.region_sources.length
       ? overlay.region_sources.map((item) => ({ sourceId: overlaySourceId(overlay, item.region_id || item.region_name || "region"), variant: item.region_id || item.region_name || "region" }))
@@ -1714,6 +2764,7 @@
         overlayLayers.push(...layers);
         continue;
       }
+      if (overlay.type === "saved_data") continue;
       const sourceId = overlaySourceId(overlay);
       const sourceUrl = overlay.url || overlay.source_url;
       if (overlay.type === "pmtiles" && Array.isArray(overlay.region_sources) && overlay.region_sources.length) {
@@ -2175,6 +3226,7 @@
       addBasePoiIconLayer();
       bindOverlayFeaturePopups();
       addOverlandSources();
+      applyPoiKindFilters();
       loadOverlandData();
       pollLocation();
       pollTrack();
@@ -2256,7 +3308,6 @@
       "offline-region-icon-halo",
       "offline-region-icons",
       "overland-waypoint-icons",
-      "overland-waypoint-circles",
       "overland-track-lines",
       "oiab-poi-icons",
       "pois",
@@ -2268,7 +3319,7 @@
     const layerId = feature?.layer?.id || "";
     if (layerId.startsWith("search-result")) return 110;
     if (layerId.startsWith("offline-region-icon")) return 105;
-    if (layerId === "overland-waypoint-icons" || layerId === "overland-waypoint-circles") return 100;
+    if (layerId === "overland-waypoint-icons") return 100;
     if (layerId === "oiab-poi-icons" || layerId === "pois") return 95;
     if (feature?.geometry?.type === "Point") return 86;
     if (layerId === "overland-track-lines") return 82;
@@ -2306,7 +3357,7 @@
         return true;
       }
     }
-    if (layerId === "overland-waypoint-icons" || layerId === "overland-waypoint-circles") {
+    if (layerId === "overland-waypoint-icons") {
       showSavedPointPopup(tappedEvent);
       return true;
     }
@@ -2389,6 +3440,101 @@
     return Number.isFinite(lat) && Number.isFinite(lon) ? `${lat.toFixed(6)}, ${lon.toFixed(6)}` : "";
   }
 
+  function normalizePoiIconLookupKey(value) {
+    return String(value || "")
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "_")
+      .replace(/^_+|_+$/g, "");
+  }
+
+  function resolvePoiIconKey(value, fallback = "waypoint") {
+    const normalized = normalizePoiIconLookupKey(value);
+    const dashed = normalized.replace(/_/g, "-");
+    return MAP_KIND_TO_POI_ICON[normalized]
+      || MAP_KIND_TO_POI_ICON[dashed]
+      || WAYPOINT_CATEGORY_TO_POI_ICON[normalized]
+      || WAYPOINT_CATEGORY_TO_POI_ICON[dashed]
+      || (POI_ICON_KEYS.includes(normalized) ? normalized : "")
+      || (POI_ICON_KEYS.includes(dashed) ? dashed : "")
+      || fallback;
+  }
+
+  function basePoiIconKey(props = {}) {
+    return resolvePoiIconKey(
+      props.kind_detail
+        || props.kind
+        || props.amenity
+        || props.shop
+        || props.tourism
+        || props.leisure
+        || props.highway
+        || props.name,
+      "waypoint",
+    );
+  }
+
+  function overlayPopupIconKey(props = {}, overlay = {}) {
+    const category = String(overlay.category || overlay.style || "").toLowerCase();
+    if (category.includes("wildfire")) return "hazard";
+    if (category.includes("weather")) return "waypoint";
+    if (category.includes("mvum")) return "trailhead";
+    if (category.includes("historic") || overlay.style === "historic_places") return "museum";
+    if (category.includes("geocaching") || overlay.style === "opencaching") return "waypoint";
+    if (category.includes("camping") || category.includes("recreation")) {
+      const kind = normalizePoiIconLookupKey(props.kind || props.site_type || props.facility_type || props.type);
+      if (kind.includes("campground") || kind.includes("established")) return "campground";
+      if (kind.includes("camp") || kind.includes("campsite")) return "campsite";
+      return resolvePoiIconKey(kind, "waypoint");
+    }
+    return resolvePoiIconKey(
+      props.kind
+        || props.kind_detail
+        || props.amenity
+        || props.type
+        || props.category
+        || props.source_kind
+        || props.class_label,
+      "waypoint",
+    );
+  }
+
+  function popupIconBadgeHtml(iconKey, colorKey = iconKey) {
+    const resolved = resolvePoiIconKey(iconKey, "waypoint");
+    const color = poiIconColor(colorKey || resolved);
+    return `<span class="omv2-popup-icon-badge" style="--poi-bg:${escapeHtml(color)}"><img src="${escapeHtml(poiIconUrl(resolved))}" alt="" loading="lazy"></span>`;
+  }
+
+  function popupTitleHtml(title, iconKey, colorKey = iconKey) {
+    return `<h3 class="omv2-poi-title">${popupIconBadgeHtml(iconKey, colorKey)}<span>${escapeHtml(title)}</span></h3>`;
+  }
+
+  function coordinateNavigationActionsHtml(coordText, title = "OIAB location") {
+    const match = String(coordText || "").match(/(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)/);
+    if (!match) return "";
+    const lat = Number(match[1]);
+    const lon = Number(match[2]);
+    if (!Number.isFinite(lat) || !Number.isFinite(lon)) return "";
+    const label = encodeURIComponent(title || "OIAB location");
+    const coord = `${lat.toFixed(6)},${lon.toFixed(6)}`;
+    const apple = `https://maps.apple.com/?daddr=${encodeURIComponent(coord)}&q=${label}`;
+    const google = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(coord)}`;
+    return `
+      <a class="omv2-map-link omv2-map-link--apple" href="${apple}" target="_blank" rel="noopener" title="Navigate with Apple Maps" aria-label="Navigate with Apple Maps"></a>
+      <a class="omv2-map-link omv2-map-link--google" href="${google}" target="_blank" rel="noopener" title="Navigate with Google Maps" aria-label="Navigate with Google Maps">G</a>
+    `;
+  }
+
+  function coordinateActionButtonsHtml(coordText, title = "OIAB location") {
+    if (!coordText) return "";
+    return `
+      <div class="omv2-poi-actions">
+        <button type="button" data-copy-coords="${escapeHtml(coordText)}">Copy coordinates</button>
+        ${coordinateNavigationActionsHtml(coordText, title)}
+      </div>
+    `;
+  }
+
   function basePoiPopupHtml(props = {}, coords = null) {
     const name = props.name || props["name:en"] || props.name_en || "Point of interest";
     const kind = humanizePoiValue(props.kind || props.kind_detail || props.amenity || props.shop || props.tourism || "poi");
@@ -2402,10 +3548,10 @@
     return `
       <article class="omv2-poi-card">
         <p class="omv2-poi-kicker">${escapeHtml(kind)}</p>
-        <h3>${escapeHtml(name)}</h3>
-        ${details.length ? `<dl class="omv2-poi-details">${details.map(([key, value]) => `<dt>${escapeHtml(key)}</dt><dd>${escapeHtml(value)}</dd>`).join("")}</dl>` : `<p class="omv2-poi-empty">No additional details in this map pack.</p>`}
+        ${popupTitleHtml(name, basePoiIconKey(props))}
+        ${details.length ? `<dl class="omv2-poi-details">${details.map(([key, value]) => `<dt>${escapeHtml(key)}</dt><dd>${linkifyDetail(key, value)}</dd>`).join("")}</dl>` : `<p class="omv2-poi-empty">No additional details in this map pack.</p>`}
         ${technical ? `<details class="omv2-poi-technical"><summary>Technical details</summary><dl>${technical}</dl></details>` : ""}
-        ${coordText ? `<div class="omv2-poi-actions"><button type="button" data-copy-coords="${escapeHtml(coordText)}">Copy coordinates</button></div>` : ""}
+        ${coordinateActionButtonsHtml(coordText, name)}
       </article>
     `;
   }
@@ -2425,10 +3571,10 @@
     return `
       <article class="omv2-poi-card">
         <p class="omv2-poi-kicker">${escapeHtml(kicker)}</p>
-        <h3>${escapeHtml(title)}</h3>
-        ${details.length ? `<dl class="omv2-poi-details">${details.map(([key, value]) => `<dt>${escapeHtml(key)}</dt><dd>${escapeHtml(value)}</dd>`).join("")}</dl>` : `<p class="omv2-poi-empty">No readable details in this overlay feature.</p>`}
+        ${popupTitleHtml(title, overlayPopupIconKey(props, overlay))}
+        ${details.length ? `<dl class="omv2-poi-details">${details.map(([key, value]) => `<dt>${escapeHtml(key)}</dt><dd>${linkifyDetail(key, value)}</dd>`).join("")}</dl>` : `<p class="omv2-poi-empty">No readable details in this overlay feature.</p>`}
         ${technical ? `<details class="omv2-poi-technical"><summary>All available fields</summary><dl>${technical}</dl></details>` : ""}
-        ${coordText ? `<div class="omv2-poi-actions"><button type="button" data-copy-coords="${escapeHtml(coordText)}">Copy coordinates</button></div>` : ""}
+        ${coordinateActionButtonsHtml(coordText, title)}
       </article>
     `;
   }
@@ -2451,10 +3597,11 @@
     return `
       <article class="omv2-poi-card">
         <p class="omv2-poi-kicker">Saved ${escapeHtml(kind)}</p>
-        <h3>${escapeHtml(title)}</h3>
+        ${popupTitleHtml(title, waypointIconKey(props))}
         ${details.length ? `<dl class="omv2-poi-details">${details.map(([key, value]) => `<dt>${escapeHtml(key)}</dt><dd>${linkifyDetail(key, value)}</dd>`).join("")}</dl>` : ""}
         <div class="omv2-poi-actions">
           ${coordText ? `<button type="button" data-copy-coords="${escapeHtml(coordText)}">Copy coordinates</button>` : ""}
+          ${coordinateNavigationActionsHtml(coordText, title)}
           <button type="button" data-edit-map-item="${escapeHtml(itemId)}">Edit</button>
           <button type="button" data-delete-map-item="${escapeHtml(itemId)}" data-delete-map-label="${escapeHtml(title)}">Delete</button>
           <button type="button" data-open-map-data-manager>Open manager</button>
@@ -2464,8 +3611,10 @@
   }
 
   function linkifyDetail(key, value) {
-    if (String(key).toLowerCase() === "url" && /^https?:\/\//i.test(String(value))) {
-      const safe = escapeHtml(value);
+    const label = String(key || "").toLowerCase();
+    const text = String(value || "").trim();
+    if ((label === "url" || label.includes("website") || label.includes("link")) && /^https?:\/\//i.test(text)) {
+      const safe = escapeHtml(text);
       return `<a href="${safe}" target="_blank" rel="noopener">${safe}</a>`;
     }
     return escapeHtml(value);
@@ -2497,6 +3646,8 @@
       || (overlay.category === "weather" ? "Weather alert" : "")
       || (overlay.category === "water" ? "Water feature" : "")
       || (overlay.category === "camping_recreation" ? "Recreation site" : "")
+      || (overlay.category === "historic" ? "Historic place" : "")
+      || (overlay.category === "geocaching" ? "OpenCaching cache" : "")
       || (overlay.category === "mvum" ? "MVUM route" : "")
       || (overlay.category === "public_lands" ? "BLM public land" : "")
       || (overlay.style === "usgs_contours" ? "Contour line" : "")
@@ -2640,6 +3791,22 @@
         ["Source", "U.S. Drought Monitor"],
       ]);
     }
+    if (String(overlay.style || "").startsWith("campflare_")) {
+      return compactDetails([
+        ["Name", firstPresent(props, ["name"])],
+        ["Kind", firstPresent(props, ["kind_label", "kind", "source_kind"])],
+        ["Status", firstPresent(props, ["status"])],
+        ["Campground", firstPresent(props, ["campground_name", "campground_id"])],
+        ["Loop", firstPresent(props, ["loop"])],
+        ["Equipment", firstPresent(props, ["equipment"])],
+        ["Amenities", firstPresent(props, ["amenities"])],
+        ["Manager", firstPresent(props, ["manager"])],
+        ["Address", firstPresent(props, ["address"])],
+        ["Directions", firstPresent(props, ["directions"])],
+        ["URL", firstPresent(props, ["url", "website", "reservation_url"])],
+        ["Source", "Campflare"],
+      ]);
+    }
     if (overlay.style === "ridb_recreation" || category === "camping_recreation") {
       return compactDetails([
         ["Name", firstPresent(props, ["name", "FacilityName"])],
@@ -2650,6 +3817,38 @@
         ["Email", firstPresent(props, ["email", "FacilityEmail"])],
         ["URL", firstPresent(props, ["url", "FacilityReservationURL", "FacilityMapURL"])],
         ["Source", firstPresent(props, ["source"]) || "RIDB"],
+      ]);
+    }
+    if (overlay.style === "historic_places" || category === "historic") {
+      return compactDetails([
+        ["Name", firstPresent(props, ["name"])],
+        ["Reference #", firstPresent(props, ["refnum"])],
+        ["Type", firstPresent(props, ["type"])],
+        ["Status", firstPresent(props, ["status"])],
+        ["Listed", firstPresent(props, ["listedDate"])],
+        ["City", firstPresent(props, ["city"])],
+        ["County", firstPresent(props, ["county"])],
+        ["State", firstPresent(props, ["state"])],
+        ["Accuracy", firstPresent(props, ["accuracyNote"])],
+        ["URL", firstPresent(props, ["sourceUrl"])],
+        ["Source", "National Park Service / NRHP"],
+      ]);
+    }
+    if (overlay.style === "opencaching" || category === "geocaching") {
+      return compactDetails([
+        ["Code", firstPresent(props, ["code", "id"])],
+        ["Name", firstPresent(props, ["name"])],
+        ["Type", firstPresent(props, ["type"])],
+        ["Status", firstPresent(props, ["status"])],
+        ["Difficulty", firstPresent(props, ["difficulty"])],
+        ["Terrain", firstPresent(props, ["terrain"])],
+        ["Size", firstPresent(props, ["size"])],
+        ["Owner", firstPresent(props, ["owner"])],
+        ["Hidden", firstPresent(props, ["hiddenDate"])],
+        ["Last found", firstPresent(props, ["lastFoundDate"])],
+        ["Description", firstPresent(props, ["shortDescription"])],
+        ["URL", firstPresent(props, ["url", "sourceUrl"])],
+        ["Source", firstPresent(props, ["source"]) || "OpenCaching"],
       ]);
     }
     if (overlay.style === "stream_gauges" || category === "water") {
@@ -2764,8 +3963,15 @@
   function formatPoiValue(value) {
     if (typeof value === "boolean") return value ? "Yes" : "No";
     if (Array.isArray(value)) return value.map(formatPoiValue).join(", ");
-    if (typeof value === "object") return JSON.stringify(value);
-    return humanizePoiValue(value);
+    if (typeof value === "object") {
+      return Object.entries(value || {})
+        .filter(([, item]) => item !== undefined && item !== null && String(item).trim() !== "")
+        .map(([key, item]) => `${humanizePoiKey(key)}: ${formatPoiValue(item)}`)
+        .join(", ");
+    }
+    const text = String(value || "").trim();
+    if (/^https?:\/\//i.test(text) || /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(text)) return text;
+    return humanizePoiValue(text);
   }
 
   function saveMapView() {
@@ -2789,26 +3995,17 @@
       paint: routeLinePaint(),
     });
     state.map.addLayer({
-      id: "overland-waypoint-circles",
-      type: "circle",
-      source: "overland-waypoints",
-      paint: {
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 11, 12, 17, 16, 24],
-        "circle-color": ["get", "color"],
-        "circle-opacity": 0.78,
-        "circle-stroke-color": "#0a170f",
-        "circle-stroke-width": 2,
-      },
-    });
-    state.map.addLayer({
       id: "overland-waypoint-icons",
       type: "symbol",
       source: "overland-waypoints",
+      filter: combineMapFilters(pointGeometryFilter(), poiKindFilterExpression(["coalesce", ["get", "marker_icon_key"], "waypoint"])),
       layout: {
         "icon-image": mapPoiMatchExpression("marker_icon_key", Object.fromEntries(
           POI_ICON_KEYS.map((key) => [key, key]),
-        ), "information", poiMarkerImageId),
-        "icon-size": ["interpolate", ["linear"], ["zoom"], 4, 0.36, 12, 0.52, 16, 0.68],
+        ), "waypoint", poiImageId),
+        "icon-size": unifiedPoiBadgeIconSize(),
+        "icon-anchor": poiIconAnchor(),
+        "icon-offset": poiIconOffset(),
         "icon-allow-overlap": true,
         "icon-ignore-placement": true,
       },
@@ -2908,6 +4105,8 @@
         "text-halo-width": 0,
       },
     });
+    applySavedDataOverlayState();
+    applyOverlayLayerOrdering();
     updateOfflineRegionSources();
   }
 
@@ -3189,7 +4388,6 @@
       heading.className = "omv2-overlay-section-title";
       heading.textContent = title;
       wrap.appendChild(heading);
-      bindOverlaySortGroup(wrap);
       for (const overlay of group) renderOverlayControlRow(wrap, overlay);
       node.appendChild(wrap);
     };
@@ -3293,7 +4491,10 @@
           <input type="range" min="0" max="1" step="0.05" value="${Number(overlay.opacity ?? 1)}">
         </label>
         ${overlay.category === "geopdf" ? `<button class="omv2-mini-button" type="button" data-zoom-overlay="${escapeHtml(overlay.id)}" title="Zoom to map">⌖</button>` : ""}
-        <button class="omv2-overlay-drag" type="button" draggable="true" title="Drag to reorder" aria-label="Drag ${escapeHtml(overlay.name || overlay.id)} to reorder">☰</button>
+        <span class="omv2-overlay-order" aria-label="Layer order">
+          <button type="button" data-overlay-move="up" title="Move up" aria-label="Move ${escapeHtml(overlay.name || overlay.id)} up">▲</button>
+          <button type="button" data-overlay-move="down" title="Move down" aria-label="Move ${escapeHtml(overlay.name || overlay.id)} down">▼</button>
+        </span>
       `;
       row.querySelector(".omv2-overlay-check input").addEventListener("change", async (event) => {
         try {
@@ -3319,95 +4520,34 @@
       if (isTemperatureOverlay(overlay)) {
         renderTemperatureControls(row, overlay);
       }
-      const dragHandle = row.querySelector(".omv2-overlay-drag");
-      dragHandle.addEventListener("dragstart", (event) => {
-        event.dataTransfer.effectAllowed = "move";
-        event.dataTransfer.setData("text/plain", overlay.id);
-        state.overlayDrag = { row, sourceGroup: row.closest(".omv2-overlay-sort-group") };
-        row.classList.add("is-dragging");
-        window.setTimeout(() => row.classList.add("is-dragging-active"), 0);
-      });
-      dragHandle.addEventListener("dragend", () => finishOverlayReorder(row));
-      dragHandle.addEventListener("pointerdown", (event) => {
-        if (event.pointerType === "mouse") return;
-        state.overlayDrag = { row, sourceGroup: row.closest(".omv2-overlay-sort-group"), pointerId: event.pointerId };
-        dragHandle.setPointerCapture?.(event.pointerId);
-        row.classList.add("is-dragging", "is-dragging-active");
-        event.preventDefault();
-      });
-      dragHandle.addEventListener("pointermove", (event) => {
-        if (!state.overlayDrag || state.overlayDrag.row !== row || state.overlayDrag.pointerId !== event.pointerId) return;
-        moveOverlayRowAtPoint(row, event.clientX, event.clientY);
-        event.preventDefault();
-      });
-      dragHandle.addEventListener("pointerup", (event) => {
-        if (!state.overlayDrag || state.overlayDrag.row !== row || state.overlayDrag.pointerId !== event.pointerId) return;
-        dragHandle.releasePointerCapture?.(event.pointerId);
-        finishOverlayReorder(row);
-        event.preventDefault();
-      });
-      dragHandle.addEventListener("pointercancel", (event) => {
-        if (!state.overlayDrag || state.overlayDrag.row !== row || state.overlayDrag.pointerId !== event.pointerId) return;
-        dragHandle.releasePointerCapture?.(event.pointerId);
-        finishOverlayReorder(row);
+      row.querySelectorAll("[data-overlay-move]").forEach((button) => {
+        button.addEventListener("click", () => moveOverlayRowByButton(row, button.dataset.overlayMove));
       });
       node.appendChild(row);
   }
 
-  function bindOverlaySortGroup(group) {
-    group.addEventListener("dragover", (event) => {
-      if (!state.overlayDrag?.row || state.overlayDrag.sourceGroup !== group) return;
-      event.preventDefault();
-      event.dataTransfer.dropEffect = "move";
-      moveOverlayRowInGroup(group, state.overlayDrag.row, event.clientY);
-    });
-    group.addEventListener("drop", (event) => {
-      if (!state.overlayDrag?.row || state.overlayDrag.sourceGroup !== group) return;
-      event.preventDefault();
-      finishOverlayReorder(state.overlayDrag.row);
-    });
-  }
-
-  function moveOverlayRowAtPoint(row, x, y) {
-    const element = document.elementFromPoint(x, y);
-    const group = element?.closest?.(".omv2-overlay-sort-group");
-    if (!group || group !== state.overlayDrag?.sourceGroup) return;
-    moveOverlayRowInGroup(group, row, y);
-  }
-
-  function moveOverlayRowInGroup(group, row, y) {
-    const rows = [...group.querySelectorAll(".omv2-overlay-row:not(.is-dragging-active)")];
-    const after = rows.reduce((closest, item) => {
-      const box = item.getBoundingClientRect();
-      const offset = y - box.top - box.height / 2;
-      return offset < 0 && offset > closest.offset ? { offset, item } : closest;
-    }, { offset: Number.NEGATIVE_INFINITY, item: null }).item;
-    if (after) group.insertBefore(row, after);
-    else group.appendChild(row);
+  async function moveOverlayRowByButton(row, direction) {
+    const group = row.closest(".omv2-overlay-sort-group");
+    if (!group) return;
+    const rows = [...group.querySelectorAll(".omv2-overlay-row")];
+    const index = rows.indexOf(row);
+    const targetIndex = direction === "up" ? index - 1 : index + 1;
+    if (index < 0 || targetIndex < 0 || targetIndex >= rows.length) return;
+    const target = rows[targetIndex];
+    if (direction === "up") group.insertBefore(row, target);
+    else group.insertBefore(target, row);
+    try {
+      await moveOverlaysToOrder(overlayOrderFromDom());
+    } catch (error) {
+      renderOverlayControls();
+      toast(error.message || "Overlay order update failed.", true);
+    }
   }
 
   function overlayOrderFromDom() {
     return [...document.querySelectorAll("#overlayList .omv2-overlay-row")]
       .map((row) => row.dataset.overlayId)
       .filter(Boolean);
-  }
-
-  async function finishOverlayReorder(row) {
-    const drag = state.overlayDrag;
-    if (!drag || drag.row !== row) return;
-    state.overlayDrag = null;
-    row.classList.remove("is-dragging", "is-dragging-active");
-    const orderedIds = overlayOrderFromDom();
-    const currentIds = normalizeOverlayRegistry(state.overlayRegistry)
-      .filter((overlay) => overlay.available)
-      .map((overlay) => overlay.id);
-    if (orderedIds.join("|") === currentIds.join("|")) return;
-    try {
-      await moveOverlaysToOrder(orderedIds);
-    } catch (error) {
-      renderOverlayControls();
-      toast(error.message || "Overlay order update failed.", true);
-    }
   }
 
   async function moveOverlaysToOrder(orderedIds) {
@@ -3499,10 +4639,13 @@
     root.innerHTML = groups.length ? "" : '<div class="omv2-overlay-note">No saved map data yet.</div>';
     for (const folder of groups) {
       const open = state.managerOpenFolders.has(folder.name);
+      const folderGroup = document.createElement("div");
+      folderGroup.className = "omv2-manager-folder-group";
+      folderGroup.dataset.folderName = folder.name;
       const folderRow = document.createElement("div");
       folderRow.className = "omv2-manager-folder";
       folderRow.innerHTML = `
-        <button class="omv2-manager-caret" type="button" title="Expand folder">${open ? "▾" : "▸"}</button>
+        <button class="omv2-manager-expander" type="button" title="${open ? "Collapse folder" : "Expand folder"}" aria-label="${open ? "Collapse" : "Expand"} ${escapeHtml(folder.name)}" aria-expanded="${open ? "true" : "false"}"></button>
         <input type="checkbox" ${state.managerSelectedFolders.has(folder.name) ? "checked" : ""} title="Select folder">
         <span class="omv2-manager-name">${escapeHtml(folder.name)}</span>
         <span class="omv2-manager-meta">${folder.items.length}</span>
@@ -3511,10 +4654,21 @@
           <button class="omv2-manager-icon-button" type="button" data-folder-delete="${escapeHtml(folder.name)}" title="Delete folder">🗑</button>
         </span>
       `;
-      folderRow.querySelector(".omv2-manager-caret").addEventListener("click", () => {
-        if (state.managerOpenFolders.has(folder.name)) state.managerOpenFolders.delete(folder.name);
-        else state.managerOpenFolders.add(folder.name);
-        renderDataManager();
+      const itemsNode = document.createElement("div");
+      itemsNode.className = "omv2-manager-folder-items";
+      itemsNode.hidden = !open;
+      folderRow.querySelector(".omv2-manager-expander").addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const nextOpen = !state.managerOpenFolders.has(folder.name);
+        if (nextOpen) state.managerOpenFolders.add(folder.name);
+        else state.managerOpenFolders.delete(folder.name);
+        folderGroup.classList.toggle("is-open", nextOpen);
+        itemsNode.hidden = !nextOpen;
+        const button = folderRow.querySelector(".omv2-manager-expander");
+        button.setAttribute("aria-expanded", nextOpen ? "true" : "false");
+        button.setAttribute("aria-label", `${nextOpen ? "Collapse" : "Expand"} ${folder.name}`);
+        button.title = nextOpen ? "Collapse folder" : "Expand folder";
       });
       folderRow.querySelector("input").addEventListener("change", (event) => {
         if (event.target.checked) state.managerSelectedFolders.add(folder.name);
@@ -3529,8 +4683,8 @@
         }
       });
       folderRow.querySelector("[data-folder-delete]").addEventListener("click", () => openDataDeleteModal("", folder.name, folder.name));
-      root.appendChild(folderRow);
-      if (!open) continue;
+      folderGroup.classList.toggle("is-open", open);
+      folderGroup.appendChild(folderRow);
       for (const item of folder.items) {
         const itemRow = document.createElement("div");
         itemRow.className = "omv2-manager-item";
@@ -3547,8 +4701,10 @@
           if (event.target.checked) state.managerSelectedItems.add(item.id);
           else state.managerSelectedItems.delete(item.id);
         });
-        root.appendChild(itemRow);
+        itemsNode.appendChild(itemRow);
       }
+      folderGroup.appendChild(itemsNode);
+      root.appendChild(folderGroup);
     }
     fillManagerFolderSelect($("managerImportFolder"));
     fillManagerFolderSelect($("managerCoordFolder"));
@@ -3574,6 +4730,7 @@
   function closeSearch() {
     $("searchForm").hidden = true;
     $("searchResults").hidden = true;
+    if ($("poiFilterPanel")) $("poiFilterPanel").hidden = true;
     $("searchInput").value = "";
     state.searchResults = [];
     if (state.map?.getSource("search-results")) state.map.getSource("search-results").setData(EMPTY);
@@ -3701,8 +4858,49 @@
     return `${feature.source || ""}:${feature.sourceLayer || feature.layer?.id || ""}:${title}:${point.map((value) => Number(value).toFixed(4)).join(",")}`;
   }
 
+  function campflareFeatureIconKey(props = {}, style = "") {
+    const sourceKind = normalizePoiIconLookupKey(props.source_kind);
+    const kind = normalizePoiIconLookupKey(props.kind);
+    if (sourceKind === "campsite") return "campsite";
+    if (sourceKind === "campground") {
+      if (kind === "dispersed") return "campsite";
+      return "campground";
+    }
+    if (sourceKind === "poi") {
+      return resolvePoiIconKey(kind || props.amenity || props.type, "waypoint");
+    }
+    if (style === "campflare_campsites") return "campsite";
+    if (style === "campflare_campgrounds") return kind === "dispersed" ? "campsite" : "campground";
+    if (style === "campflare_land_pois") return resolvePoiIconKey(kind || props.amenity || props.type, "waypoint");
+    return "waypoint";
+  }
+
+  function featurePoiKind(feature, overlay = null, sourceType = "") {
+    const props = feature?.properties || {};
+    const geometryType = feature?.geometry?.type || feature?.geometry?.type || "";
+    if (geometryType && geometryType !== "Point") return null;
+    if (sourceType === "saved") return waypointIconKey(props);
+    const style = overlay?.style || overlay?.category || "";
+    if (style === "historic_places") return "museum";
+    if (style === "opencaching") return "waypoint";
+    if (style === "campflare_campgrounds" || style === "campflare_campsites" || style === "campflare_land_pois") {
+      return campflareFeatureIconKey(props, style);
+    }
+    if (overlay) return overlayPopupIconKey(props, overlay);
+    return basePoiIconKey(props);
+  }
+
+  function passesPoiKindFilter(feature, overlay = null, sourceType = "") {
+    if (!poiKindFilterActive()) return true;
+    const point = pointForFeature(feature);
+    if (!point) return true;
+    const iconKey = featurePoiKind(feature, overlay, sourceType);
+    return !iconKey || state.poiKindFilter.has(iconKey);
+  }
+
   function addSearchFeature(results, seen, feature, sourceLabel, sourceType, overlay = null) {
     if (!matchesSearch(feature, state.searchNeedles || [])) return;
+    if (!passesPoiKindFilter(feature, overlay, sourceType)) return;
     const point = pointForFeature(feature);
     if (!point) return;
     if (state.searchBounds && !state.searchBounds.contains({ lng: Number(point[0]), lat: Number(point[1]) })) return;
@@ -3801,9 +4999,7 @@
           <article class="omv2-poi-card">
             <p class="omv2-poi-kicker">Coordinates</p>
             <h3>${escapeHtml(title)}</h3>
-            <div class="omv2-poi-actions">
-              <button type="button" data-copy-coords="${escapeHtml(title)}">Copy coordinates</button>
-            </div>
+            ${coordinateActionButtonsHtml(title, "Coordinates")}
           </article>
         `)
         .addTo(state.map);
@@ -3821,6 +5017,7 @@
     if (includeSaved) {
       for (const feature of state.places.features || []) {
         if (!featureWithinBounds(feature, bounds)) continue;
+        if (!passesPoiKindFilter(feature, null, "saved")) continue;
         if (!matchesSearch(feature, needles)) continue;
         const point = pointForFeature(feature);
         const title = searchResultTitle(feature, "Saved item");
@@ -3838,6 +5035,7 @@
       const overlay = featureOverlay(feature);
       if (overlay && !includeOverlays) continue;
       if (!overlay && !includeBase) continue;
+      if (!passesPoiKindFilter(feature, overlay, overlay ? "overlay" : "map")) continue;
       if (!matchesSearch(feature, needles)) continue;
       const point = pointForFeature(feature);
       if (!point) continue;
@@ -3893,6 +5091,8 @@
     }
     state.map.getSource("overland-waypoints").setData({ type: "FeatureCollection", features: waypointFeatures });
     state.map.getSource("overland-tracks").setData({ type: "FeatureCollection", features: trackFeatures });
+    applySavedDataOverlayState();
+    applyOverlayLayerOrdering();
     updateOfflineRegionSources();
   }
 
@@ -4078,9 +5278,8 @@
 
   function openLegendModal() {
     const content = $("legendContent");
-    if (content && !content.dataset.rendered) {
+    if (content) {
       content.innerHTML = legendMarkup();
-      content.dataset.rendered = "1";
     }
     $("legendModal").hidden = false;
   }
@@ -4090,6 +5289,10 @@
   }
 
   function legendMarkup() {
+    const activeStyles = new Set((state.packSelection?.overlays || []).map((overlay) => overlay.style || overlay.id || overlay.category).filter(Boolean));
+    const activeCategories = new Set((state.packSelection?.overlays || []).map((overlay) => overlay.category).filter(Boolean));
+    const hasStyle = (...styles) => styles.some((style) => activeStyles.has(style));
+    const hasCategory = (...categories) => categories.some((category) => activeCategories.has(category));
     const lines = [
       ["Interstate / Primary Road", "solid", "#ff7b24"],
       ["Main Road / Highway", "solid", "#ffd34f"],
@@ -4098,38 +5301,95 @@
       ["Track / Unmaintained Road", "dash", "#777"],
       ["Trail / Path", "dot", "#555"],
       ["Railroad", "rail", "#8d8377"],
-      ["MVUM Motor Road", "dash", "#ff8a2a"],
-      ["MVUM Trail", "dash", "#7c5cff"],
     ];
+    if (hasCategory("mvum") || hasStyle("mvum_roads", "mvum_trails")) {
+      for (const key of ["open_motorized", "high_clearance", "seasonal", "trail", "atv_only", "motorcycle_only", "special", "restricted"]) {
+        const style = MVUM_LINE_STYLES[key];
+        lines.push([style.label, "mvum", style.color, style.dash, style.symbol || "", style.casing || "", style.annotation || ""]);
+      }
+    }
+    if (hasStyle("usgs_contours")) {
+      lines.push(["Index Contour", "solid", "#4f4630"], ["Contour", "solid", "#7b7358"]);
+    }
     const areas = [
-      ["Park / Forest", "#9bd8ac"],
-      ["BLM-Administered Land", "#efc96e"],
-      ["BLM Wilderness Area", "#e7b45a"],
-      ["BLM Wilderness Study Area", "#8fb39a"],
-      ["Waterway / Waterbody", "#76d9e8"],
-      ["Building / Structure", "#d7d1c5"],
-      ["School / Campus", "#e9e2cb"],
-      ["Industrial / Commercial", "#e0d8d0"],
+      ["Forest / Woodland", "#b7d7ad"],
+      ["Park / Protected Green Space", "#a9d8a7"],
+      ["Waterway / Waterbody", "#5fd2df"],
+      ["Wetland", "#a8d8ce"],
+      ["Building / Structure", "#cec7b8"],
+      ["School / Campus", "#eadfbe"],
+      ["Industrial / Commercial", "#ddd1c7"],
       ["Restricted / Military", "#ffd4d4"],
-      ["Weather Alert", "rgba(255, 211, 79, .42)"],
-      ["Wildfire Hotspot", "#ff6b37"],
     ];
+    if (hasStyle("public_lands_blm")) areas.push(["BLM-Administered Land", "#d2bf75"]);
+    if (hasStyle("public_lands_blm_wilderness")) {
+      areas.push(["BLM Wilderness Area", "#e7b45a"], ["BLM Wilderness Study Area", "#8fb39a"]);
+    }
+    if (hasStyle("weather_alerts")) areas.push(["Weather Alert", "rgba(255, 211, 79, .42)"]);
     const pois = [
-      ["gas-station-ev-station", "Fuel / EV"],
-      ["parking", "Parking"],
-      ["restaurant", "Restaurant"],
-      ["campsite", "Campsite"],
-      ["trailhead", "Trailhead"],
-      ["viewpoint", "Viewpoint"],
-      ["restrooms", "Restrooms"],
-      ["medical-clinic-hospital", "Medical"],
-      ["airport", "Airport"],
-      ["waterfall", "Waterfall"],
+      ["gas-station-ev-station", "Fuel / EV", "#facc15"],
+      ["parking", "Parking", "#60a5fa"],
+      ["restaurant", "Restaurant", "#fb923c"],
+      ["campsite", "Campsite", "#4ade80"],
+      ["trailhead", "Trailhead", "#a3e635"],
+      ["viewpoint", "Viewpoint", "#67e8f9"],
+      ["restrooms", "Restrooms", "#c4b5fd"],
+      ["medical-clinic-hospital", "Medical", "#f87171"],
+      ["airport", "Airport", "#60a5fa"],
+      ["waterfall", "Waterfall", "#67e8f9"],
     ];
+    const overlayPois = [];
+    if (hasStyle("wildfire_hotspots")) overlayPois.push(["overlay-flame", "Wildfire Hotspot", "#ef4444", "/maps-v2/icons/overlay-flame.svg", "legend-poi-flame"]);
+    if (hasStyle("campflare_campgrounds", "campflare_campsites", "campflare_land_pois")) {
+      overlayPois.push(
+        ["campground", "Campflare Campground", "#fb923c"],
+        ["campsite", "Campflare Campsite", "#38bdf8"],
+        ["waypoint", "Campflare POI", "#a78bfa"],
+      );
+    }
+    const lineStyle = ([, , color]) => `--c:${escapeHtml(color)}`;
+    const mvumLegendSvg = (color, dash, symbol, casing, annotation) => {
+      const dashAttr = Array.isArray(dash) && dash.length ? ` stroke-dasharray="${dash.map((value) => Number(value || 0) * 6).join(" ")}"` : "";
+      const y = annotation ? 16 : 9;
+      const viewHeight = annotation ? 22 : 16;
+      const casingPath = casing
+        ? `<path d="M2 ${y}H66" fill="none" stroke="${escapeHtml(casing)}" stroke-width="7" stroke-linecap="butt"/>`
+        : "";
+      const annotationText = annotation
+        ? `<text x="2" y="8" fill="#f7f4df" font-size="8" font-style="italic" font-family="Trebuchet MS, sans-serif">${escapeHtml(annotation)}</text>`
+        : "";
+      const symbolText = symbol
+        ? `<text x="54" y="${y + 3.2}" fill="${escapeHtml(color)}" stroke="#f7f4df" stroke-width="2.8" paint-order="stroke" font-size="9" font-weight="900" font-family="Trebuchet MS, sans-serif">${escapeHtml(symbol)}</text>`
+        : "";
+      return `<svg class="legend-line-svg ${annotation ? "legend-line-svg--annotated" : ""}" viewBox="0 0 74 ${viewHeight}" aria-hidden="true">
+        ${annotationText}
+        ${casingPath}
+        <path d="M2 ${y}H66" fill="none" stroke="${escapeHtml(color)}" stroke-width="${casing ? 3.2 : 4}" stroke-linecap="${casing ? "butt" : "round"}"${dashAttr}/>
+        ${symbolText}
+      </svg>`;
+    };
+    const lineBadge = ([label, type, color, dash, symbol, casing, annotation]) => `
+      <div class="legend-row">
+        <span class="legend-line ${escapeHtml(type)}" style="${lineStyle([label, type, color, dash, symbol])}">
+          ${type === "mvum" ? mvumLegendSvg(color, dash, symbol, casing, annotation) : ""}
+        </span>
+        <span>${escapeHtml(label)}</span>
+      </div>`;
+    const poiBadge = ([icon, label, color, url, extraClass]) => `
+      <div class="legend-row">
+        <span
+          class="legend-poi legend-poi--${escapeHtml(state.poiIconStyle)} ${escapeHtml(extraClass || "")}"
+          style="--poi-bg:${escapeHtml(color || poiIconColor(icon))};--poi-url:url('${escapeHtml(url || poiIconUrl(icon))}')"
+        >
+          <span class="legend-poi-glyph" aria-hidden="true"></span>
+        </span>
+        <span>${escapeHtml(label)}</span>
+      </div>`;
     return `
-      <section><h3>Roads & Lines</h3>${lines.map(([label, type, color]) => `<div class="legend-row"><span class="legend-line ${type}" style="--c:${color}"></span><span>${escapeHtml(label)}</span></div>`).join("")}</section>
+      <section><h3>Roads & Lines</h3>${lines.map(lineBadge).join("")}</section>
       <section><h3>Areas & Overlays</h3>${areas.map(([label, color]) => `<div class="legend-row"><span class="legend-area" style="--c:${color}"></span><span>${escapeHtml(label)}</span></div>`).join("")}</section>
-      <section><h3>Points of Interest</h3>${pois.map(([icon, label]) => `<div class="legend-row"><span class="legend-poi"><img src="/maps-v2/icons/poi/${escapeHtml(icon)}.svg" alt=""></span><span>${escapeHtml(label)}</span></div>`).join("")}</section>
+      <section><h3>Points of Interest</h3>${pois.map(poiBadge).join("")}</section>
+      ${overlayPois.length ? `<section><h3>Active Overlay Symbols</h3>${overlayPois.map(poiBadge).join("")}</section>` : ""}
     `;
   }
 
@@ -4310,7 +5570,7 @@
     for (const [id, label, iconKey] of WAYPOINT_TYPES) {
       const button = document.createElement("button");
       button.type = "button";
-      button.innerHTML = `<img src="/maps-v2/icons/poi/${escapeHtml(iconKey)}.svg" alt="" loading="lazy"><span>${escapeHtml(label)}</span>`;
+      button.innerHTML = `<span class="waypoint-type-badge" style="--poi-bg:${escapeHtml(poiIconColor(iconKey))}"><img src="${escapeHtml(poiIconUrl(iconKey))}" alt="" loading="lazy"></span><span>${escapeHtml(label)}</span>`;
       button.addEventListener("click", () => saveWaypoint(id));
       node.appendChild(button);
     }
@@ -4441,9 +5701,24 @@
     });
     $("searchToggle").addEventListener("click", () => {
       $("searchForm").hidden = false;
+      renderPoiKindFilterPanel();
       $("searchInput").focus();
     });
     $("searchClose").addEventListener("click", closeSearch);
+    $("poiFilterToggle")?.addEventListener("click", () => {
+      renderPoiKindFilterPanel();
+      $("poiFilterPanel").hidden = !$("poiFilterPanel").hidden;
+    });
+    $("poiFilterAllOn")?.addEventListener("click", () => setPoiKindFilter(POI_ICON_KEYS));
+    $("poiFilterAllOff")?.addEventListener("click", () => setPoiKindFilter([]));
+    $("poiFilterList")?.addEventListener("change", (event) => {
+      const checkbox = event.target.closest('input[type="checkbox"][value]');
+      if (!checkbox) return;
+      const next = new Set(state.poiKindFilter);
+      if (checkbox.checked) next.add(checkbox.value);
+      else next.delete(checkbox.value);
+      setPoiKindFilter(Array.from(next));
+    });
     $("searchForm").addEventListener("submit", (event) => {
       event.preventDefault();
       runMapSearch($("searchInput").value);
@@ -4734,6 +6009,7 @@
 
   bindControls();
   renderWaypointTypes();
+  renderPoiKindFilterPanel();
   populateIconSelect();
   window.addEventListener("storage", (event) => {
     if (event.key === MAP_3D_BUILDINGS_KEY) {
@@ -4741,6 +6017,9 @@
       applyBuildingDisplayMode();
     }
     if (event.key === MAP_THEME_KEY) applyMapTheme();
+    if (event.key === POI_ICON_STYLE_KEY) {
+      refreshPoiIconStyle().catch((error) => console.warn("[OIAB Maps v2] POI icon style refresh failed", error));
+    }
   });
   applyMapTheme();
   boot();

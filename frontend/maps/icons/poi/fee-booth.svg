@@ -1,4 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Fee Booth">
-  <rect width="64" height="64" fill="none"/>
-  <g><path d="M15 50h34M20 50v-24h24v24M15 26L32 14l17 12" fill="none" stroke="#555" stroke-width="4" stroke-linejoin="round"/><text x="27" y="42" font-family="Aptos, Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#555" style="">$</text></g>
-</svg>

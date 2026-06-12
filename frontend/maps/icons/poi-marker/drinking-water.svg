@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="Drinking Water marker">
-  <defs>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0b170f" flood-opacity=".28"/>
-    </filter>
-  </defs>
-  <circle cx="40" cy="40" r="31" fill="#f8fbf6" stroke="#31a8b7" stroke-width="5" filter="url(#shadow)"/>
-  <g transform="translate(8 8)"><path d="M23 19h18l-3 31h-12z" fill="none" stroke="#173125" stroke-width="4" stroke-linejoin="round"/><path d="M18 12h28M32 12v7M27 28h10" stroke="#173125" stroke-width="4" stroke-linecap="round"/></g>
-</svg>

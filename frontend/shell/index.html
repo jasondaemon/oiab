@@ -180,6 +180,7 @@
               <button type="button" class="uo-settings-nav-button" data-settings-section="maps">Maps</button>
               <button type="button" class="uo-settings-nav-button" data-settings-section="storage">OIAB Storage</button>
               <button type="button" class="uo-settings-nav-button" data-settings-section="system">System</button>
+              <button type="button" class="uo-settings-nav-button" data-settings-section="attributions">Data & Attributions</button>
               <button type="button" class="uo-settings-nav-button" data-settings-section="game-data">Game Data</button>
               <button id="settingsNavMinecraft" type="button" class="uo-settings-nav-button" data-settings-section="minecraft-admin" hidden>Minecraft Admin</button>
               <button type="button" class="uo-settings-nav-button" data-settings-section="raspap">RaspAP</button>
@@ -306,6 +307,13 @@
                       <option value="dark">Dark / Night</option>
                     </select>
                   </label>
+                  <label>POI Icon Style
+                    <select id="mapPoiIconStyle">
+                      <option value="outlined-glyph">Colored icon with white outline</option>
+                      <option value="google-circle">White icon in colored circle</option>
+                      <option value="circle-marker">Colored circle marker</option>
+                    </select>
+                  </label>
                   <label class="uo-switch-row">
                     <span>
                       <strong>3D Buildings</strong>
@@ -416,6 +424,47 @@
                     <a href="/https-settings/?shell=1">Certificates / HTTPS</a>
                     <a href="/system/reboot" data-system-action="reboot">Reboot Pi</a>
                     <a href="/system/shutdown" data-system-action="shutdown">Shut Down Pi</a>
+                  </div>
+                </section>
+              </div>
+            </section>
+
+            <section class="uo-settings-page" data-settings-page="attributions" hidden>
+              <div class="uo-settings-grid uo-settings-grid--stacked">
+                <section class="uo-settings-card uo-settings-wide-card">
+                  <h2>Data & Attributions</h2>
+                  <p class="uo-card-note">OIAB combines offline user data, public map sources, and optional third-party overlay feeds. Keep these notices with redistributed builds and exported documentation.</p>
+                  <div class="uo-settings-stack">
+                    <article class="uo-settings-summary-card">
+                      <strong>Base Maps</strong>
+                      <p>OpenStreetMap contributors, Protomaps, MapLibre, and local PMTiles packs provide the base map data and renderer.</p>
+                      <div class="uo-settings-actions">
+                        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>
+                        <a href="https://protomaps.com/" target="_blank" rel="noopener">Protomaps</a>
+                        <a href="https://maplibre.org/" target="_blank" rel="noopener">MapLibre</a>
+                      </div>
+                    </article>
+                    <article class="uo-settings-summary-card">
+                      <strong>Public Land, Weather, and Fire Overlays</strong>
+                      <p>Overlay data may include BLM, PAD-US, USGS, NOAA/NWS, NASA FIRMS, Recreation.gov/RIDB, and Campflare sources when enabled or cached.</p>
+                      <div class="uo-settings-actions">
+                        <a href="https://www.blm.gov/" target="_blank" rel="noopener">BLM</a>
+                        <a href="https://www.usgs.gov/programs/gap-analysis-project/science/protected-areas" target="_blank" rel="noopener">PAD-US</a>
+                        <a href="https://www.usgs.gov/programs/national-geospatial-program/national-map" target="_blank" rel="noopener">USGS National Map</a>
+                        <a href="https://www.weather.gov/documentation/services-web-api" target="_blank" rel="noopener">NOAA/NWS</a>
+                        <a href="https://firms.modaps.eosdis.nasa.gov/" target="_blank" rel="noopener">NASA FIRMS</a>
+                        <a href="https://ridb.recreation.gov/" target="_blank" rel="noopener">RIDB</a>
+                        <a href="https://campflare.com/" target="_blank" rel="noopener">Campflare</a>
+                      </div>
+                    </article>
+                    <article class="uo-settings-summary-card">
+                      <strong>Map Icons</strong>
+                      <p>Selected POI and overlay symbols use Noun Project icons under Creative Commons BY 3.0. Full per-icon attribution is stored in the repository at <code>frontend/maps/icons/noun/attribution.txt</code>.</p>
+                      <div class="uo-settings-actions">
+                        <a href="/maps-v2/icons/noun/attribution.txt" target="_blank" rel="noopener">Noun Project Icon Attribution</a>
+                        <a href="https://thenounproject.com/" target="_blank" rel="noopener">The Noun Project</a>
+                      </div>
+                    </article>
                   </div>
                 </section>
               </div>
@@ -578,6 +627,6 @@
 
     <audio id="globalAudio" preload="metadata"></audio>
   </main>
-  <script src="universal-shell.js?v=20260601d"></script>
+  <script src="universal-shell.js?v=20260612a"></script>
 </body>
 </html>

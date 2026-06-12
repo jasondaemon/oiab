@@ -23,6 +23,12 @@ Application code and containers should be rebuildable. User data, map packs, gen
 /data/oiab/maps/overlays/water/pmtiles
 /data/oiab/maps/overlays/public-lands/source
 /data/oiab/maps/overlays/ridb
+/data/oiab/maps/overlays/historic
+/data/oiab/maps/overlays/opencaching
+/data/oiab/maps/overlays/opencaching/import
+/data/oiab/maps/overlays/campflare/raw
+/data/oiab/maps/overlays/campflare/geojson
+/data/oiab/maps/overlays/campflare/pmtiles
 /data/oiab/maps/overlays/drought
 /data/oiab/maps/overlays/darksky/source
 /data/oiab/maps/overlays/darksky/tiles

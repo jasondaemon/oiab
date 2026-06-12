@@ -9,6 +9,7 @@
   const MAP_3D_BUILDINGS_KEY = "omv2.show3dBuildings";
   const MAP_AUTO_RECORDING_KEY = "omv2.autoTrackRecording";
   const MAP_THEME_KEY = "omv2.mapTheme";
+  const POI_ICON_STYLE_KEY = "omv2.poiIconStyle";
   const FALLBACK_ART = "/maps/overland/tunes.png";
   const NUMBER_FMT = new Intl.NumberFormat();
   const DEFAULT_LAYOUT = {
@@ -3085,6 +3086,13 @@
       $("mapColorScheme").value = localStorage.getItem(MAP_THEME_KEY) === "dark" ? "dark" : "light";
       $("mapColorScheme").addEventListener("change", () => {
         localStorage.setItem(MAP_THEME_KEY, $("mapColorScheme").value === "dark" ? "dark" : "light");
+      });
+    }
+    if ($("mapPoiIconStyle")) {
+      const current = localStorage.getItem(POI_ICON_STYLE_KEY) || "outlined-glyph";
+      $("mapPoiIconStyle").value = ["outlined-glyph", "google-circle", "circle-marker"].includes(current) ? current : "outlined-glyph";
+      $("mapPoiIconStyle").addEventListener("change", () => {
+        localStorage.setItem(POI_ICON_STYLE_KEY, $("mapPoiIconStyle").value || "outlined-glyph");
       });
     }
     if ($("mapAutoRecording")) {

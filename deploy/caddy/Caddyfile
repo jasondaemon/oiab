@@ -25,5 +25,13 @@
     file_server
   }
 
+  handle_path /maps-v2/icons/* {
+    root * /opt/oiab/frontend/maps/icons
+    header {
+      Cache-Control "public, max-age=3600"
+    }
+    file_server
+  }
+
   reverse_proxy oiab-core:8080
 }

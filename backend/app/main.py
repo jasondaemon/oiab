@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import base64
 import csv
+import gzip
 import hashlib
 import io
 import ipaddress
@@ -6786,6 +6787,390 @@ PY
             },
         }
 
+    def campflare_overlay_ids(self) -> list[str]:
+        return [
+            "campflare_campgrounds",
+            "campflare_campsites",
+            "campflare_land_pois",
+            "campflare_public_lands",
+            "campflare_notices",
+        ]
+
+    def campflare_api_key(self) -> str:
+        env_key = str(os.environ.get("OIAB_CAMPFLARE_API_KEY", "") or "").strip()
+        if env_key:
+            return env_key
+        for overlay_id in self.campflare_overlay_ids():
+            value = str(self.app_db().map_overlay_provider_value(overlay_id, "api_key", "") or "").strip()
+            if value:
+                return value
+        return ""
+
+    def campflare_find_url(self, payload: object, token: str) -> str:
+        token_l = token.lower()
+        if isinstance(payload, str):
+            return payload if payload.startswith(("http://", "https://")) and token_l in payload.lower() else ""
+        if isinstance(payload, list):
+            for item in payload:
+                found = self.campflare_find_url(item, token)
+                if found:
+                    return found
+            return ""
+        if not isinstance(payload, dict):
+            return ""
+        for key, value in payload.items():
+            key_l = str(key).lower()
+            if token_l in key_l:
+                found = self.campflare_find_url(value, token)
+                if found:
+                    return found
+            if key_l in {"url", "download_url", "signed_url", "href"} and isinstance(value, str) and value.startswith(("http://", "https://")):
+                if token_l in value.lower():
+                    return value
+        for value in payload.values():
+            found = self.campflare_find_url(value, token)
+            if found:
+                return found
+        return ""
+
+    def campflare_records_from_gzip(self, path: Path) -> list[dict[str, object]]:
+        if not path.exists():
+            return []
+
+        def collect(payload: object) -> list[dict[str, object]]:
+            if isinstance(payload, list):
+                return [record for record in payload if isinstance(record, dict)]
+            if not isinstance(payload, dict):
+                return []
+            for key in ("data", "records", "items", "campgrounds", "campsites", "lands", "pois", "notices"):
+                value = payload.get(key)
+                if isinstance(value, list):
+                    return [record for record in value if isinstance(record, dict)]
+            return [payload]
+
+        try:
+            with gzip.open(path, "rt", encoding="utf-8", errors="replace") as handle:
+                return collect(json.load(handle))
+        except json.JSONDecodeError:
+            pass
+
+        # Campflare dumps may be newline-delimited JSON rather than one JSON document.
+        records: list[dict[str, object]] = []
+        try:
+            with gzip.open(path, "rt", encoding="utf-8", errors="replace") as handle:
+                for line in handle:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        records.extend(collect(json.loads(line)))
+                    except json.JSONDecodeError:
+                        records = []
+                        break
+            if records:
+                return records
+        except OSError:
+            return []
+
+        # Last-resort parser for concatenated JSON values without line guarantees.
+        try:
+            with gzip.open(path, "rt", encoding="utf-8", errors="replace") as handle:
+                text = handle.read()
+        except OSError:
+            return []
+        decoder = json.JSONDecoder()
+        index = 0
+        length = len(text)
+        while index < length:
+            while index < length and text[index].isspace():
+                index += 1
+            if index >= length:
+                break
+            try:
+                payload, index = decoder.raw_decode(text, index)
+            except json.JSONDecodeError:
+                break
+            records.extend(collect(payload))
+        return records
+
+    def campflare_download_dump(self, name: str, url: str, output: Path, *, job_id: str, base_progress: int) -> None:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        part = output.with_suffix(output.suffix + ".part")
+        request = Request(url, headers={"User-Agent": f"OIAB Campflare overlay ({self.settings.hostname})", "Accept": "application/gzip,*/*"})
+        with urlopen(request, timeout=120) as response, part.open("wb") as handle:  # noqa: S310 - Campflare signed dump URL
+            expected = int(response.headers.get("content-length") or 0)
+            total = 0
+            while True:
+                chunk = response.read(1024 * 1024)
+                if not chunk:
+                    break
+                handle.write(chunk)
+                total += len(chunk)
+                if expected:
+                    update_overlay_job(job_id, step=f"downloading Campflare {name}", progress=min(base_progress + 8, base_progress + int((total / expected) * 8)), size_bytes=total)
+        shutil.move(str(part), str(output))
+
+    def campflare_location(self, record: dict[str, object]) -> tuple[float, float] | None:
+        location = record.get("location") if isinstance(record.get("location"), dict) else {}
+        lat = first_present(location, ["latitude", "lat"]) if isinstance(location, dict) else None
+        lon = first_present(location, ["longitude", "lon", "lng"]) if isinstance(location, dict) else None
+        lat = lat if lat not in (None, "") else first_present(record, ["latitude", "lat"])
+        lon = lon if lon not in (None, "") else first_present(record, ["longitude", "lon", "lng"])
+        try:
+            lat_f = float(lat)
+            lon_f = float(lon)
+        except (TypeError, ValueError):
+            geometry = record.get("geometry")
+            if isinstance(geometry, dict) and geometry.get("type") == "Point":
+                coords = geometry.get("coordinates")
+                if isinstance(coords, list) and len(coords) >= 2:
+                    try:
+                        lon_f = float(coords[0])
+                        lat_f = float(coords[1])
+                    except (TypeError, ValueError):
+                        return None
+                else:
+                    return None
+            else:
+                return None
+        if not (-90 <= lat_f <= 90 and -180 <= lon_f <= 180):
+            return None
+        return lon_f, lat_f
+
+    def campflare_scalar(self, value: object) -> str:
+        if value in (None, ""):
+            return ""
+        if isinstance(value, (dict, list, tuple)):
+            return ""
+        return str(value).strip()
+
+    def campflare_kind(self, value: object, fallback: str) -> tuple[str, str]:
+        label = self.campflare_scalar(value) or fallback.replace("_", " ")
+        key = re.sub(r"[^a-z0-9]+", "_", label.strip().lower()).strip("_") or fallback
+        display = re.sub(r"\s+", " ", label.replace("_", " ")).strip()
+        return key, display[:1].upper() + display[1:] if display else key
+
+    def campflare_format_address(self, value: object) -> str:
+        if value in (None, ""):
+            return ""
+        if isinstance(value, str):
+            return value.strip()
+        if not isinstance(value, dict):
+            return self.campflare_scalar(value)
+        full = first_present(value, [
+            "Full",
+            "full",
+            "formatted_address",
+            "FormattedAddress",
+            "display",
+            "label",
+            "address",
+        ])
+        full_text = self.campflare_scalar(full)
+        if full_text:
+            return full_text
+        street_parts = [
+            self.campflare_scalar(first_present(value, ["Street1", "street1", "street", "address1"])),
+            self.campflare_scalar(first_present(value, ["Street2", "street2", "address2"])),
+        ]
+        city = self.campflare_scalar(first_present(value, ["City", "city"]))
+        state = self.campflare_scalar(first_present(value, ["State Code", "State", "state_code", "state"]))
+        zip_code = self.campflare_scalar(first_present(value, ["Zipcode", "PostalCode", "postal_code", "zip"]))
+        country = self.campflare_scalar(first_present(value, ["Country Code", "Country", "country_code", "country"]))
+        lines = [part for part in street_parts if part]
+        locality = ", ".join(part for part in [city, state] if part)
+        if zip_code:
+            locality = f"{locality} {zip_code}".strip()
+        if locality:
+            lines.append(locality)
+        if country and country.upper() not in {"US", "USA", "UNITED STATES"}:
+            lines.append(country)
+        return ", ".join(lines)
+
+    def campflare_format_list(self, value: object) -> str:
+        if isinstance(value, list):
+            return ", ".join(str(item).strip() for item in value[:16] if self.campflare_scalar(item))[:400]
+        if isinstance(value, dict):
+            names: list[str] = []
+            for key, item in value.items():
+                if item:
+                    names.append(str(key).replace("_", " ").strip())
+            return ", ".join(names[:16])[:400]
+        return self.campflare_scalar(value)
+
+    def campflare_point_feature(self, record: dict[str, object], *, source_kind: str, bbox: tuple[float, float, float, float] | None = None, extra: dict[str, object] | None = None) -> dict[str, object] | None:
+        location = self.campflare_location(record)
+        if not location:
+            return None
+        lon_f, lat_f = location
+        if bbox:
+            min_lon, min_lat, max_lon, max_lat = bbox
+            if not (min_lat <= lat_f <= max_lat and min_lon <= lon_f <= max_lon):
+                return None
+        kind_key, kind_label = self.campflare_kind(first_present(record, ["kind", "type", "category"]), source_kind)
+        props = {
+            "id": first_present(record, ["id", "uuid", "slug"]),
+            "name": first_present(record, ["name", "title"]) or f"Campflare {source_kind}",
+            "kind": kind_key,
+            "kind_label": kind_label,
+            "status": first_present(record, ["status"]),
+            "description": first_present(record, ["description", "short_description", "summary"]),
+            "url": first_present(record, ["reservation_url", "reservationUrl", "booking_url", "bookingUrl", "campground_url", "url", "website"]),
+            "source": "Campflare",
+            "source_kind": source_kind,
+        }
+        loc = record.get("location") if isinstance(record.get("location"), dict) else {}
+        if isinstance(loc, dict):
+            address = self.campflare_format_address(first_present(loc, ["address", "formatted_address"]) or record.get("address"))
+            props.update({
+                "address": address,
+                "directions": self.campflare_scalar(first_present(loc, ["directions"])),
+                "elevation": first_present(loc, ["elevation", "elevation_ft"]),
+            })
+        management = record.get("management") if isinstance(record.get("management"), dict) else {}
+        if isinstance(management, dict):
+            props["manager"] = first_present(management, ["name", "agency", "organization"])
+        amenities = record.get("amenities")
+        props["amenities"] = self.campflare_format_list(amenities)
+        if extra:
+            props.update(extra)
+        return {
+            "type": "Feature",
+            "geometry": {"type": "Point", "coordinates": [lon_f, lat_f]},
+            "properties": {key: value for key, value in props.items() if value not in (None, "")},
+        }
+
+    def campflare_geometry_feature(self, record: dict[str, object], *, source_kind: str, bbox: tuple[float, float, float, float] | None = None) -> dict[str, object] | None:
+        geometry = record.get("geometry")
+        if not isinstance(geometry, dict) or not geometry.get("type"):
+            return self.campflare_point_feature(record, source_kind=source_kind, bbox=bbox)
+        kind_key, kind_label = self.campflare_kind(first_present(record, ["kind", "type", "category"]), source_kind)
+        props = {
+            "id": first_present(record, ["id", "uuid", "slug"]),
+            "name": first_present(record, ["name", "title"]) or f"Campflare {source_kind}",
+            "kind": kind_key,
+            "kind_label": kind_label,
+            "manager": first_present(record, ["manager", "agency", "owner", "operator"]),
+            "source": "Campflare",
+            "source_kind": source_kind,
+        }
+        return {"type": "Feature", "geometry": geometry, "properties": {key: value for key, value in props.items() if value not in (None, "")}}
+
+    def campflare_notice_features(self, campgrounds: list[dict[str, object]], bbox: tuple[float, float, float, float] | None = None) -> list[dict[str, object]]:
+        features: list[dict[str, object]] = []
+        for campground in campgrounds:
+            notices = []
+            for key in ("alerts", "notices", "closures"):
+                value = campground.get(key)
+                if isinstance(value, list):
+                    notices.extend(item for item in value if isinstance(item, dict))
+            for notice in notices:
+                merged = dict(notice)
+                merged.setdefault("location", campground.get("location"))
+                feature = self.campflare_geometry_feature(merged, source_kind="notice", bbox=bbox)
+                if not feature:
+                    continue
+                props = feature.setdefault("properties", {})
+                if isinstance(props, dict):
+                    props["campground_id"] = first_present(campground, ["id", "uuid", "slug"])
+                    props["campground_name"] = first_present(campground, ["name", "title"])
+                    props["severity"] = first_present(notice, ["severity", "level"])
+                    props["kind"] = first_present(notice, ["kind", "type"]) or props.get("kind")
+                    props["name"] = first_present(notice, ["title", "headline", "name"]) or f"{props.get('campground_name', 'Campground')} notice"
+                features.append(feature)
+        return features
+
+    def write_campflare_overlay(self, overlay_id: str, features: list[dict[str, object]], output: Path, *, bbox: tuple[float, float, float, float] | None = None) -> dict[str, object]:
+        payload_geojson = {
+            "type": "FeatureCollection",
+            "features": features,
+            "properties": {
+                "source": "Campflare",
+                "bbox": list(bbox) if bbox else None,
+                "fetched_at": timestamp(),
+            },
+        }
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(json.dumps(payload_geojson, separators=(",", ":")), encoding="utf-8")
+        return self.app_db().mark_overlay_refresh(overlay_id, output_path=output, ok=True, extra={"feature_count": len(features)})
+
+    def refresh_campflare_overlays(self, payload: dict | None = None, *, requested_overlay_id: str = "campflare_campgrounds") -> dict[str, object]:
+        payload = payload or {}
+        job_id = "campflare_refresh"
+        raw_dir = self.settings.data_dir / "maps" / "overlays" / "campflare" / "raw"
+        geojson_dir = self.settings.data_dir / "maps" / "overlays" / "campflare" / "geojson"
+        raw_dir.mkdir(parents=True, exist_ok=True)
+        geojson_dir.mkdir(parents=True, exist_ok=True)
+        key = self.campflare_api_key()
+        if not key:
+            error = "OIAB_CAMPFLARE_API_KEY is required. Create a key at https://campflare.com/platform and paste it into the Campflare overlay settings."
+            registry = self.app_db().mark_overlay_refresh(requested_overlay_id, output_path=None, ok=False, error=error)
+            update_overlay_job(job_id, overlay_id=requested_overlay_id, type="refresh", status="failed", step="missing Campflare API key", progress=100, error_message=error)
+            return {**registry, "ok": False, "error": error}
+        bbox = self.parse_optional_bbox(payload.get("bbox") or os.environ.get("OIAB_CAMPFLARE_BBOX", ""))
+        try:
+            update_overlay_job(job_id, overlay_id=requested_overlay_id, type="refresh", status="running", step="fetching Campflare dump manifest", progress=5, error_message="", started_at=timestamp())
+            request = Request(
+                "https://api.campflare.com/v2/dumps/latest",
+                headers={"Authorization": key, "Accept": "application/json", "User-Agent": f"OIAB Campflare overlay ({self.settings.hostname})"},
+            )
+            with urlopen(request, timeout=45) as response:  # noqa: S310 - configured public provider API
+                manifest = json.loads(response.read().decode("utf-8", errors="replace"))
+            (raw_dir / "manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
+            dump_names = ["campgrounds", "campsites", "lands", "pois", "poi_land_relations"]
+            for index, name in enumerate(dump_names):
+                url = self.campflare_find_url(manifest, name)
+                if not url:
+                    continue
+                self.campflare_download_dump(name, url, raw_dir / f"{name}.json.gz", job_id=job_id, base_progress=10 + (index * 8))
+            update_overlay_job(job_id, step="normalizing Campflare campgrounds", progress=55)
+            campgrounds = self.campflare_records_from_gzip(raw_dir / "campgrounds.json.gz")
+            campsites = self.campflare_records_from_gzip(raw_dir / "campsites.json.gz")
+            lands = self.campflare_records_from_gzip(raw_dir / "lands.json.gz")
+            pois = self.campflare_records_from_gzip(raw_dir / "pois.json.gz")
+            campground_features = []
+            for record in campgrounds:
+                feature = self.campflare_point_feature(record, source_kind="campground", bbox=bbox)
+                if feature:
+                    campground_features.append(feature)
+            update_overlay_job(job_id, step="normalizing Campflare campsites", progress=65, feature_count=len(campground_features))
+            campsite_features = []
+            for record in campsites:
+                extra = {
+                    "campground_id": first_present(record, ["campground_id", "campgroundId"]),
+                    "loop": first_present(record, ["loop", "loop_name"]),
+                    "equipment": first_present(record, ["equipment", "equipment_type"]),
+                    "firepit": first_present(record, ["firepit", "fire_pit"]),
+                    "picnic_table": first_present(record, ["picnic_table"]),
+                    "ada": first_present(record, ["ada", "accessible"]),
+                    "max_people": first_present(record, ["max_people", "capacity"]),
+                    "max_rv_length": first_present(record, ["max_rv_length", "max_trailer_length", "driveway_length"]),
+                }
+                feature = self.campflare_point_feature(record, source_kind="campsite", bbox=bbox, extra=extra)
+                if feature:
+                    campsite_features.append(feature)
+            update_overlay_job(job_id, step="normalizing Campflare POIs and lands", progress=76, feature_count=len(campground_features) + len(campsite_features))
+            poi_features = [feature for record in pois if (feature := self.campflare_point_feature(record, source_kind="poi", bbox=bbox))]
+            land_features = [feature for record in lands if (feature := self.campflare_geometry_feature(record, source_kind="land", bbox=bbox))]
+            notice_features = self.campflare_notice_features(campgrounds, bbox=bbox)
+            outputs = {
+                "campflare_campgrounds": (campground_features, geojson_dir / "campgrounds.geojson"),
+                "campflare_campsites": (campsite_features, geojson_dir / "campsites.geojson"),
+                "campflare_land_pois": (poi_features, geojson_dir / "land-pois.geojson"),
+                "campflare_public_lands": (land_features, geojson_dir / "public-lands.geojson"),
+                "campflare_notices": (notice_features, geojson_dir / "notices.geojson"),
+            }
+            registry: dict[str, object] = {}
+            for overlay_id, (features, output) in outputs.items():
+                registry = self.write_campflare_overlay(overlay_id, features, output, bbox=bbox)
+            total_features = sum(len(features) for features, _ in outputs.values())
+            update_overlay_job(job_id, status="succeeded", step="cached Campflare overlays", progress=100, error_message="", output_path=str(geojson_dir), feature_count=total_features)
+            return {"ok": True, "updated_overlays": list(outputs), "feature_count": total_features, **registry}
+        except Exception as exc:  # noqa: BLE001 - provider boundary
+            registry = self.app_db().mark_overlay_refresh(requested_overlay_id, output_path=None, ok=False, error=str(exc))
+            update_overlay_job(job_id, status="failed", step="Campflare refresh failed", progress=100, error_message=str(exc))
+            return {**registry, "ok": False, "error": str(exc)}
+
     def refresh_stream_gauges_overlay(self, payload: dict | None = None) -> dict[str, object]:
         overlay_id = "stream_gauges_usgs"
         job_id = f"{overlay_id}_refresh"
@@ -6927,6 +7312,8 @@ PY
             return self.refresh_stream_gauges_overlay(payload)
         if overlay_id == "ridb_recreation_sites":
             return self.refresh_ridb_overlay(payload)
+        if overlay_id.startswith("campflare_"):
+            return self.refresh_campflare_overlays(payload, requested_overlay_id=overlay_id)
         overlay = self.overlay_catalog_item(overlay_id)
         output_value = str(overlay.get("local_path") or overlay.get("path") or "")
         output = Path(output_value) if output_value else self.settings.data_dir / "maps" / "overlays" / f"{overlay_id}.geojson"
@@ -6948,9 +7335,11 @@ PY
             "padus_protected_lands": "download-padus",
             "nhd_water_features": "download-nhd",
             "dark_sky_overlay": "build-darksky",
+            "historic_places_nps": "download-historic-places",
+            "opencaching_caches": "download-opencaching",
         }
         if overlay_id in script_jobs:
-            extra_env: dict[str, str] = {}
+            extra_env: dict[str, str] = {"OIAB_OVERLAY_OUTPUT": str(output)}
             env_name = str(overlay.get("metadata", {}).get("source_url_env") or overlay.get("source_url_env") or "").strip()
             source_url = str(
                 self.app_db().map_overlay_provider_value(overlay_id, "source_url", "")
@@ -6961,6 +7350,23 @@ PY
             ).strip()
             if env_name and source_url:
                 extra_env[env_name] = source_url
+            api_key_env = str(overlay.get("metadata", {}).get("api_key_env") or overlay.get("api_key_env") or "").strip()
+            api_key = str(
+                self.app_db().map_overlay_provider_value(overlay_id, "api_key", "")
+                or (os.environ.get(api_key_env, "") if api_key_env else "")
+                or ""
+            ).strip()
+            if api_key_env and api_key:
+                extra_env[api_key_env] = api_key
+            bbox_value = str(self.app_db().map_overlay_provider_value(overlay_id, "bbox", "") or "").strip()
+            if payload.get("bbox"):
+                parsed_bbox = self.parse_optional_bbox(payload.get("bbox"))
+                if parsed_bbox:
+                    bbox_value = ",".join(str(value) for value in parsed_bbox)
+            if overlay_id == "historic_places_nps" and bbox_value:
+                extra_env["OIAB_HISTORIC_PLACES_BBOX"] = bbox_value
+            if overlay_id == "opencaching_caches" and bbox_value:
+                extra_env["OIAB_OPENCACHING_BBOX"] = bbox_value
             job = start_overlay_script_job(self.settings, overlay_id, script_jobs[overlay_id], str(output), extra_env=extra_env)
             return {"ok": True, "job": job, **self.map_overlays()}
         script_hint = {

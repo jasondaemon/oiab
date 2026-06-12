@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="Climbing Area marker">
-  <defs>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0b170f" flood-opacity=".28"/>
-    </filter>
-  </defs>
-  <circle cx="40" cy="40" r="31" fill="#f8fbf6" stroke="#555" stroke-width="5" filter="url(#shadow)"/>
-  <g transform="translate(8 8)"><path d="M14 51l9-31 11 10 8-15 10 36z" fill="none" stroke="#173125" stroke-width="4" stroke-linejoin="round"/><circle cx="31" cy="17" r="3" fill="#173125"/><path d="M31 21l-9 12M31 21l11 9M22 33l-6 12M42 30l8 12" stroke="#173125" stroke-width="3" stroke-linecap="round"/></g>
-</svg>
