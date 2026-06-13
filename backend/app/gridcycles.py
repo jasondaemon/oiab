@@ -378,13 +378,14 @@ def gridcycles_advance(game: dict[str, Any]) -> bool:
     settings = payload.get("settings") if isinstance(payload.get("settings"), dict) else {}
     tick_ms = clamp_int(settings.get("tickMs"), 105, 55, 180)
     last_tick = int(payload.get("lastTick") or current)
-    steps = min(8, max(0, (current - last_tick) // tick_ms))
-    for _ in range(int(steps)):
-        if payload.get("phase") != "running":
-            break
-        advance_one_tick(game)
-        payload["lastTick"] = int(payload.get("lastTick") or last_tick) + tick_ms
-        changed = True
+    if current - last_tick < tick_ms:
+        return changed
+    # Do not catch up multiple grid moves after a slow browser frame or delayed
+    # poll. A catch-up burst makes the bike appear frozen client-side while the
+    # authoritative state keeps moving, which causes unfair invisible crashes.
+    advance_one_tick(game)
+    payload["lastTick"] = current
+    changed = True
     return changed
 
 
