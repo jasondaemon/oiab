@@ -6,12 +6,22 @@
     start: "/mobile/assets/gridcycles/start.mp3",
     roundOver: "/mobile/assets/gridcycles/round-over.mp3",
   };
+  const DIRS = {
+    up: [0, -1],
+    right: [1, 0],
+    down: [0, 1],
+    left: [-1, 0],
+  };
+  const OPPOSITE = { up: "down", down: "up", left: "right", right: "left" };
+  const MARKS = ["A", "B", "C", "D"];
+  const COLORS = { A: "#67e8f9", B: "#ffcf4d", C: "#ff6b7a", D: "#8bff8f" };
   const $ = (id) => document.getElementById(id);
   const canvas = $("gridCanvas");
   const ctx = canvas.getContext("2d", { alpha: false });
   const state = {
     player: null,
     game: null,
+    localGame: false,
     mark: "",
     observer: false,
     cell: 10,
@@ -32,6 +42,16 @@
     audioLoadPromise: null,
     audioUnlocked: false,
     bgAudio: null,
+    bgSource: null,
+    bgGain: null,
+    bgWanted: false,
+    backgroundCanvas: null,
+    backgroundCtx: null,
+    backgroundKey: "",
+    trailCanvas: null,
+    trailCtx: null,
+    trailKey: "",
+    lastFrameAt: 0,
   };
 
   const els = {
@@ -102,7 +122,7 @@
     state.game = game;
     state.mark = extra.mark || state.mark || (game?.players || []).find((player) => player.id === state.player?.id)?.mark || "";
     state.observer = !!extra.observer;
-    state.lastPlayers = { ...(game?.payload?.players || {}) };
+    state.lastPlayers = JSON.parse(JSON.stringify(game?.payload?.players || {}));
     updateUi();
     handleAudioTransition(previousPhase, phase());
   }
@@ -147,7 +167,6 @@
     if (Object.keys(state.audioBuffers).length) return state.audioBuffers;
     if (state.audioLoadPromise) return state.audioLoadPromise;
     state.audioLoadPromise = Promise.all(Object.entries(audioPaths)
-      .filter(([name]) => name !== "background")
       .map(async ([name, path]) => {
         const response = await fetch(path, { cache: "force-cache" });
         if (!response.ok) return null;
@@ -182,11 +201,43 @@
   }
 
   function startBackground() {
-    if (!state.audioUnlocked || !state.bgAudio) return;
-    state.bgAudio.play().catch(() => {});
+    state.bgWanted = true;
+    if (!state.audioUnlocked || state.bgSource) return;
+    const context = ensureAudioContext();
+    if (!context) return;
+    context.resume?.().catch(() => {});
+    loadAudioBuffers().then((buffers) => {
+      if (state.bgSource || !state.audioUnlocked || !state.bgWanted) return;
+      const buffer = buffers.background;
+      if (!buffer) {
+        if (state.bgAudio) state.bgAudio.play().catch(() => {});
+        return;
+      }
+      const source = context.createBufferSource();
+      const gain = context.createGain();
+      source.buffer = buffer;
+      source.loop = true;
+      gain.gain.value = .28;
+      source.connect(gain).connect(context.destination);
+      source.start();
+      state.bgSource = source;
+      state.bgGain = gain;
+      source.onended = () => {
+        if (state.bgSource === source) state.bgSource = null;
+      };
+    }).catch(() => {
+      if (state.bgAudio) state.bgAudio.play().catch(() => {});
+    });
   }
 
   function stopBackground() {
+    state.bgWanted = false;
+    if (state.bgSource) {
+      const source = state.bgSource;
+      state.bgSource = null;
+      source.onended = null;
+      try { source.stop(); } catch (_error) {}
+    }
     if (!state.bgAudio) return;
     state.bgAudio.pause();
   }
@@ -251,11 +302,396 @@
     };
   }
 
+  function tickMsForDifficulty(difficulty, kidMode = false) {
+    if (kidMode) return 150;
+    return { easy: 135, medium: 105, hard: 86, expert: 72 }[difficulty] || 105;
+  }
+
+  function localNow() {
+    return Date.now();
+  }
+
+  function validTurn(current, proposed) {
+    return proposed in DIRS && proposed !== OPPOSITE[current];
+  }
+
+  function directionToFurthestWall(x, y, gridW, gridH) {
+    const distances = {
+      left: x,
+      right: gridW - 1 - x,
+      up: y,
+      down: gridH - 1 - y,
+    };
+    return Object.entries(distances).sort((a, b) => b[1] - a[1])[0][0];
+  }
+
+  function startPositions(gridW, gridH, marks) {
+    const margin = 4;
+    const minGap = 10;
+    const maxX = Math.max(margin, gridW - margin - 1);
+    const maxY = Math.max(margin, gridH - margin - 1);
+    const placed = [];
+    const result = {};
+    const fallbacks = [[margin, margin], [maxX, maxY], [maxX, margin], [margin, maxY]];
+    for (const mark of marks) {
+      let chosen = null;
+      for (let attempt = 0; attempt < 600; attempt += 1) {
+        const x = margin + Math.floor(Math.random() * Math.max(1, maxX - margin + 1));
+        const y = margin + Math.floor(Math.random() * Math.max(1, maxY - margin + 1));
+        if (placed.every(([px, py]) => Math.abs(x - px) + Math.abs(y - py) >= minGap)) {
+          chosen = [x, y];
+          break;
+        }
+      }
+      if (!chosen) chosen = fallbacks[placed.length % fallbacks.length];
+      placed.push(chosen);
+      result[mark] = [chosen[0], chosen[1], directionToFurthestWall(chosen[0], chosen[1], gridW, gridH)];
+    }
+    return result;
+  }
+
+  function pruneFadingTrails(data, now = localNow()) {
+    data.fadingTrails = (data.fadingTrails || []).filter((trail) => now - Number(trail.startedAt || 0) < Number(trail.durationMs || 2000) + 120);
+  }
+
+  function releaseCrashedTrails(data, crashed, now = localNow()) {
+    if (!data || !crashed?.size) {
+      if (data) pruneFadingTrails(data, now);
+      return;
+    }
+    data.fadingTrails = data.fadingTrails || [];
+    data.occupied = data.occupied || {};
+    for (const mark of [...crashed].sort()) {
+      const cells = [];
+      for (const [key, owner] of Object.entries(data.occupied)) {
+        if (owner !== mark) continue;
+        const [x, y] = key.split(",").map(Number);
+        if (Number.isFinite(x) && Number.isFinite(y)) cells.push([x, y]);
+        delete data.occupied[key];
+      }
+      if (cells.length) {
+        data.fadingTrails.push({
+          mark,
+          color: data.players?.[mark]?.color || COLORS[mark] || "#ffffff",
+          startedAt: now,
+          durationMs: 2000,
+          cells,
+        });
+      }
+    }
+    pruneFadingTrails(data, now);
+    state.trailKey = "";
+  }
+
+  function createLocalGame() {
+    clearInterval(state.polling);
+    clearTimeout(state.pollTimer);
+    const difficulty = $("difficulty").value || "medium";
+    const mode = $("gameMode").value || "classic";
+    const kidMode = mode === "kid";
+    const settings = {
+      gridW: 80,
+      gridH: 45,
+      tickMs: tickMsForDifficulty(difficulty, kidMode),
+      roundsToWin: Math.max(1, Math.min(9, Number($("roundsToWin").value || 3))),
+      mode,
+      kidMode,
+      duration: Math.max(30, Math.min(300, Number($("duration").value || 90))),
+      lowPerf: false,
+    };
+    const playerName = state.player?.name || "Player";
+    const players = [
+      { id: state.player?.id || "local-player", name: playerName, mark: "A" },
+      { id: `cpu-gridcycles-b-${difficulty}`, name: "Computer B", mark: "B", isBot: true },
+      { id: `cpu-gridcycles-c-${difficulty}`, name: "Computer C", mark: "C", isBot: true },
+    ];
+    const game = {
+      id: `local-gridcycles-${Math.random().toString(16).slice(2, 8)}`,
+      type: "gridcycles",
+      title: "Local GridCycles",
+      status: "active",
+      mode: "cpu",
+      difficulty,
+      players,
+      payload: {
+        phase: "lobby",
+        settings,
+        players: {},
+        occupied: {},
+        fadingTrails: [],
+        round: 1,
+        winner: null,
+        scores: {},
+        roundWinners: [],
+        countdownUntil: 0,
+        startedAt: 0,
+        lastTick: 0,
+        tick: 0,
+        lagPauses: 0,
+        events: [],
+      },
+    };
+    syncLocalPlayers(game);
+    state.localGame = true;
+    setGame(game, { mark: "A", observer: false });
+    startLocalRound(2600);
+    showMessage("Local solo round started.");
+  }
+
+  function syncLocalPlayers(game) {
+    const data = game.payload || {};
+    const players = data.players || {};
+    const scores = data.scores || {};
+    for (const player of game.players || []) {
+      if (!player?.mark) continue;
+      players[player.mark] = {
+        ...(players[player.mark] || {}),
+        id: player.id || player.mark,
+        name: player.name || player.mark,
+        mark: player.mark,
+        color: players[player.mark]?.color || COLORS[player.mark] || "#fff",
+        isBot: !!player.isBot,
+      };
+      scores[player.mark] = Number(scores[player.mark] || 0);
+    }
+    data.players = players;
+    data.scores = scores;
+  }
+
+  function startLocalRound(countdownMs = 2600) {
+    const game = state.game;
+    if (!game) return;
+    const previousPhase = phase();
+    syncLocalPlayers(game);
+    const data = game.payload;
+    const settings = data.settings || {};
+    const gridW = Number(settings.gridW || 80);
+    const gridH = Number(settings.gridH || 45);
+    const marks = (game.players || []).map((player) => player.mark).filter(Boolean);
+    const positions = startPositions(gridW, gridH, marks);
+    data.occupied = {};
+    data.fadingTrails = [];
+    for (const mark of marks) {
+      const [x, y, dir] = positions[mark];
+      data.players[mark] = {
+        ...(data.players[mark] || {}),
+        x,
+        y,
+        dir,
+        nextDir: dir,
+        alive: true,
+        distance: 0,
+        survivalMs: 0,
+        crashedAt: 0,
+        shield: !!settings.kidMode,
+      };
+      data.occupied[`${x},${y}`] = mark;
+    }
+    data.phase = "countdown";
+    data.countdownUntil = localNow() + countdownMs;
+    data.countdownRemainingMs = countdownMs;
+    data.startedAt = 0;
+    data.lastTick = data.countdownUntil;
+    data.tick = 0;
+    data.winner = null;
+    data.events = [];
+    game.status = "active";
+    state.lastPlayers = {};
+    state.visualPlayers = {};
+    state.trailKey = "";
+    setGame(game);
+    handleAudioTransition(previousPhase, phase());
+  }
+
+  function localOpenCell(data, x, y) {
+    const settings = data.settings || {};
+    return x >= 0 && y >= 0 && x < Number(settings.gridW || 80) && y < Number(settings.gridH || 45) && !data.occupied?.[`${x},${y}`];
+  }
+
+  function localFloodScore(data, startX, startY, limit) {
+    if (!localOpenCell(data, startX, startY)) return -1;
+    const seen = new Set([`${startX},${startY}`]);
+    const queue = [[startX, startY]];
+    while (queue.length && seen.size < limit) {
+      const [x, y] = queue.shift();
+      for (const [dx, dy] of Object.values(DIRS)) {
+        const nx = x + dx;
+        const ny = y + dy;
+        const key = `${nx},${ny}`;
+        if (!seen.has(key) && localOpenCell(data, nx, ny)) {
+          seen.add(key);
+          queue.push([nx, ny]);
+        }
+      }
+    }
+    return seen.size;
+  }
+
+  function localBotDirection(data, mark, difficulty) {
+    const bot = data.players?.[mark] || {};
+    const human = data.players?.A || {};
+    const current = bot.dir || "right";
+    const x = Number(bot.x || 0);
+    const y = Number(bot.y || 0);
+    const humanDir = human.dir || "right";
+    const [hdx, hdy] = DIRS[humanDir] || [0, 0];
+    const projectedHuman = {
+      x: Number(human.x || 0) + hdx * ({ easy: 2, medium: 4, hard: 7, expert: 10 }[difficulty] || 4),
+      y: Number(human.y || 0) + hdy * ({ easy: 2, medium: 4, hard: 7, expert: 10 }[difficulty] || 4),
+    };
+    const lookahead = { easy: 16, medium: 48, hard: 100, expert: 160 }[difficulty] || 48;
+    const aggression = { easy: 0, medium: 10, hard: 28, expert: 48 }[difficulty] || 10;
+    const mistakeRate = { easy: .32, medium: .12, hard: .04, expert: .015 }[difficulty] ?? .12;
+    const choices = [];
+    for (const [dir, [dx, dy]] of Object.entries(DIRS)) {
+      if (dir === OPPOSITE[current]) continue;
+      const nx = x + dx;
+      const ny = y + dy;
+      const space = localFloodScore(data, nx, ny, lookahead);
+      if (space < 0) continue;
+      const distanceToHuman = Math.abs(nx - projectedHuman.x) + Math.abs(ny - projectedHuman.y);
+      const directPressure = Math.max(0, 24 - distanceToHuman) * aggression;
+      const laneCut = ((dx !== 0 && Math.abs(ny - projectedHuman.y) <= 2) || (dy !== 0 && Math.abs(nx - projectedHuman.x) <= 2)) ? aggression * 1.7 : 0;
+      const forwardBias = dir === current ? 4 : 0;
+      const turnBias = dir !== current && difficulty !== "easy" ? 3 : 0;
+      choices.push({ dir, score: space + directPressure + laneCut + forwardBias + turnBias });
+    }
+    if (!choices.length) return current;
+    choices.sort((a, b) => b.score - a.score);
+    if (Math.random() < mistakeRate && choices.length > 1) {
+      return choices[Math.min(choices.length - 1, Math.floor(Math.random() * 3))].dir;
+    }
+    return choices[0].dir;
+  }
+
+  function finishLocalRound(crashed) {
+    const game = state.game;
+    const data = payload();
+    const previousPhase = phase();
+    const living = Object.entries(data.players || {}).filter(([, player]) => player?.alive).map(([mark]) => mark);
+    let winner = living.length === 1 ? living[0] : null;
+    if (!living.length) {
+      const distances = Object.fromEntries(Object.entries(data.players || {}).map(([mark, player]) => [mark, Number(player?.distance || 0)]));
+      const top = Math.max(...Object.values(distances), 0);
+      const leaders = Object.entries(distances).filter(([, value]) => value === top).map(([mark]) => mark);
+      winner = leaders.length === 1 ? leaders[0] : "draw";
+    }
+    data.phase = "roundOver";
+    data.winner = winner || "draw";
+    data.roundWinners = [...(data.roundWinners || []), data.winner];
+    if (winner && winner !== "draw") data.scores[winner] = Number(data.scores[winner] || 0) + 1;
+    data.events = [{ type: "crash", marks: [...crashed].sort(), at: localNow() }];
+    const roundsToWin = Number(data.settings?.roundsToWin || 3);
+    if (winner && winner !== "draw" && Number(data.scores[winner] || 0) >= roundsToWin) {
+      data.phase = "gameOver";
+      game.status = "complete";
+      game.winner = winner;
+    }
+    setGame(game);
+    handleAudioTransition(previousPhase, phase());
+  }
+
+  function advanceLocalTick() {
+    const game = state.game;
+    const data = payload();
+    const difficulty = game?.difficulty || "medium";
+    for (const [mark, player] of Object.entries(data.players || {})) {
+      if (player?.alive && player.isBot) player.nextDir = localBotDirection(data, mark, difficulty);
+    }
+    const intents = {};
+    const targetCounts = {};
+    for (const [mark, player] of Object.entries(data.players || {})) {
+      if (!player?.alive) continue;
+      let dir = player.nextDir || player.dir || "right";
+      if (!validTurn(player.dir || dir, dir)) dir = player.dir || dir;
+      const [dx, dy] = DIRS[dir];
+      const nx = Number(player.x || 0) + dx;
+      const ny = Number(player.y || 0) + dy;
+      const key = `${nx},${ny}`;
+      intents[mark] = { x: nx, y: ny, dir, key };
+      targetCounts[key] = Number(targetCounts[key] || 0) + 1;
+    }
+    const gridW = Number(data.settings?.gridW || 80);
+    const gridH = Number(data.settings?.gridH || 45);
+    const crashed = new Set();
+    for (const [mark, move] of Object.entries(intents)) {
+      const player = data.players[mark];
+      if (move.x < 0 || move.y < 0 || move.x >= gridW || move.y >= gridH || data.occupied?.[move.key] || targetCounts[move.key] > 1) {
+        if (player.shield) {
+          player.shield = false;
+          player.nextDir = OPPOSITE[player.dir || "right"] || "left";
+        } else {
+          crashed.add(mark);
+        }
+      }
+    }
+    const now = localNow();
+    for (const mark of crashed) {
+      if (data.players[mark]) {
+        data.players[mark].alive = false;
+        data.players[mark].crashedAt = now;
+      }
+    }
+    releaseCrashedTrails(data, crashed, now);
+    for (const [mark, move] of Object.entries(intents)) {
+      const player = data.players[mark];
+      if (!player?.alive) continue;
+      player.x = move.x;
+      player.y = move.y;
+      player.dir = move.dir;
+      player.nextDir = move.dir;
+      player.distance = Number(player.distance || 0) + 1;
+      player.survivalMs = Math.max(0, now - Number(data.startedAt || now));
+      data.occupied[move.key] = mark;
+    }
+    data.tick = Number(data.tick || 0) + 1;
+    const mode = data.settings?.mode || "classic";
+    const timedOut = mode === "timed" && data.startedAt && now >= Number(data.startedAt) + Number(data.settings?.duration || 90) * 1000;
+    const alive = Object.values(data.players || {}).filter((player) => player?.alive);
+    if (alive.length <= 1 || timedOut) {
+      if (timedOut) {
+        for (const player of Object.values(data.players || {})) player.alive = false;
+        releaseCrashedTrails(data, new Set(Object.keys(data.players || {})), now);
+      }
+      finishLocalRound(crashed);
+    }
+  }
+
+  function advanceLocalGame() {
+    if (!state.localGame || !state.game) return;
+    const data = payload();
+    const now = localNow();
+    if (data.phase === "countdown") {
+      data.countdownRemainingMs = Math.max(0, Number(data.countdownUntil || 0) - now);
+      if (now >= Number(data.countdownUntil || 0)) {
+        const previousPhase = phase();
+        data.phase = "running";
+        data.startedAt = now;
+        data.lastTick = now;
+        setGame(state.game);
+        handleAudioTransition(previousPhase, phase());
+      }
+      return;
+    }
+    if (data.phase !== "running") return;
+    const tickMs = Math.max(55, Math.min(180, Number(data.settings?.tickMs || 105)));
+    const elapsed = now - Number(data.lastTick || now);
+    if (elapsed < tickMs) return;
+    if (elapsed > tickMs * 5) {
+      data.lastTick = now;
+      data.lagPauses = Number(data.lagPauses || 0) + 1;
+      return;
+    }
+    advanceLocalTick();
+    data.lastTick = now;
+    setGame(state.game);
+  }
+
   async function loadOpenGames() {
     const data = await post({ action: "status", ...playerPayload() });
     const games = (data.games || []).filter((game) => game.type === "gridcycles");
     renderOpenGames(games);
-    if (state.game) {
+    if (state.game && !state.localGame) {
       const latest = games.find((game) => game.id === state.game.id);
       if (latest) setGame(latest);
     }
@@ -281,6 +717,10 @@
   }
 
   async function createGame(mode) {
+    if (mode === "cpu") {
+      createLocalGame();
+      return;
+    }
     const data = await post({
       action: "create",
       game: "gridcycles",
@@ -292,20 +732,73 @@
       botCount: mode === "cpu" ? 2 : 0,
       ...playerPayload(),
     });
+    state.localGame = false;
     setGame(data.game, { mark: data.mark });
     startPolling();
   }
 
   async function joinGame(gameId) {
     const data = await post({ action: "join", gameId, ...playerPayload() });
+    state.localGame = false;
     setGame(data.game, { mark: data.mark, observer: data.observer });
     startPolling();
   }
 
   async function gameMove(extra) {
     if (!state.game) return;
+    if (state.localGame) {
+      const action = String(extra.gridcyclesAction || "input").toLowerCase();
+      if (action === "start" || action === "next") {
+        startLocalRound();
+        return;
+      }
+      if (action === "input") {
+        const player = currentPlayerState();
+        const dir = String(extra.dir || "").toLowerCase();
+        if (player && dir in DIRS && validTurn(player.dir || "right", dir) && validTurn(player.nextDir || player.dir || "right", dir)) {
+          player.nextDir = dir;
+          setGame(state.game);
+        }
+      }
+      return;
+    }
     const data = await post({ action: "move", gameId: state.game.id, ...playerPayload(), ...extra });
     setGame(data.game);
+  }
+
+  async function closeCurrentGame() {
+    if (!state.game) return;
+    if (state.localGame) {
+      clearInterval(state.polling);
+      clearTimeout(state.pollTimer);
+      state.game = null;
+      state.localGame = false;
+      state.mark = "";
+      state.observer = false;
+      state.lastPlayers = {};
+      state.visualPlayers = {};
+      state.particles = [];
+      stopBackground();
+      updateUi();
+      showMessage("Local game closed.");
+      return;
+    }
+    const gameId = state.game.id;
+    const action = state.mark === "A" ? "close" : "leave";
+    const data = await post({ action, gameId, ...playerPayload() });
+    clearInterval(state.polling);
+    clearTimeout(state.pollTimer);
+    state.game = null;
+    state.localGame = false;
+    state.mark = "";
+    state.observer = false;
+    state.lastPlayers = {};
+    state.visualPlayers = {};
+    state.particles = [];
+    stopBackground();
+    updateUi();
+    renderOpenGames((data.games || []).filter((game) => game.type === "gridcycles"));
+    showMessage(data.closed ? "Room closed." : "Left room.");
   }
 
   async function pollState() {
@@ -352,12 +845,13 @@
     els.round.textContent = String(data.round || game.round || 1);
     els.status.textContent = statusText(game, data);
     els.score.textContent = String(playerScores[state.mark] ?? myState?.distance ?? 0);
-    els.roomCode.textContent = String(game.id || "").split("-").slice(-2).join("-").toUpperCase();
+    els.roomCode.textContent = state.localGame ? "LOCAL" : String(game.id || "").split("-").slice(-2).join("-").toUpperCase();
     els.roomTitle.textContent = roomTitle(game, data);
     els.roomStatus.textContent = roomStatus(game, data);
     els.start.hidden = !(phase() === "lobby" && state.mark === "A");
-    els.addBot.hidden = !(phase() === "lobby" && state.mark === "A" && (game.players || []).length < 4);
+    els.addBot.hidden = state.localGame || !(phase() === "lobby" && state.mark === "A" && (game.players || []).length < 4);
     els.next.hidden = !(phase() === "roundOver" && state.mark === "A" && game.status !== "complete");
+    els.close.textContent = state.localGame ? "Close" : (state.mark === "A" ? "Close Room" : "Leave");
     renderPlayers(game, data);
     renderCountdown(data);
   }
@@ -420,18 +914,29 @@
 
   function resizeCanvas() {
     const rect = canvas.getBoundingClientRect();
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    const dpr = Math.min(1.5, window.devicePixelRatio || 1);
     const width = Math.max(320, Math.floor(rect.width * dpr));
     const height = Math.max(240, Math.floor(rect.height * dpr));
     if (canvas.width !== width || canvas.height !== height) {
       canvas.width = width;
       canvas.height = height;
+      state.backgroundKey = "";
+      state.trailKey = "";
     }
   }
 
   function render() {
+    const now = performance.now();
+    if (state.lastFrameAt && now - state.lastFrameAt > 260) {
+      // A long browser stall means interpolation targets are stale. Snap heads
+      // back to canonical state instead of visually easing across many cells.
+      state.visualPlayers = {};
+    }
+    state.lastFrameAt = now;
+    advanceLocalGame();
     resizeCanvas();
     const data = payload();
+    if (data.phase === "countdown") renderCountdown(data);
     const settings = data.settings || { gridW: 80, gridH: 45 };
     const gridW = settings.gridW || 80;
     const gridH = settings.gridH || 45;
@@ -442,7 +947,8 @@
     state.offsetX = Math.floor((w - cell * gridW) / 2);
     state.offsetY = Math.floor((h - cell * gridH) / 2);
     drawBackground(w, h, cell, gridW, gridH);
-    drawTrails(data, cell);
+    drawTrails(data, cell, gridW, gridH);
+    drawFadingTrails(data, cell);
     drawHeads(data, cell);
     drawParticles(cell);
     state.raf = requestAnimationFrame(render);
@@ -466,49 +972,115 @@
     }
   }
 
+  function ensureCacheCanvas(kind, w, h) {
+    const canvasKey = `${kind}Canvas`;
+    const ctxKey = `${kind}Ctx`;
+    if (!state[canvasKey]) {
+      state[canvasKey] = document.createElement("canvas");
+      state[ctxKey] = state[canvasKey].getContext("2d", { alpha: true });
+    }
+    if (state[canvasKey].width !== w || state[canvasKey].height !== h) {
+      state[canvasKey].width = w;
+      state[canvasKey].height = h;
+      state[`${kind}Key`] = "";
+    }
+    return { canvas: state[canvasKey], context: state[ctxKey] };
+  }
+
   function drawBackground(w, h, cell, gridW, gridH) {
-    ctx.fillStyle = "#040b07";
-    ctx.fillRect(0, 0, w, h);
     const ox = state.offsetX;
     const oy = state.offsetY;
     const arenaW = cell * gridW;
     const arenaH = cell * gridH;
-    const grd = ctx.createRadialGradient(w * .5, h * .45, 0, w * .5, h * .45, Math.max(w, h) * .7);
-    grd.addColorStop(0, "#123923");
-    grd.addColorStop(1, "#050f09");
-    ctx.fillStyle = grd;
-    ctx.fillRect(ox, oy, arenaW, arenaH);
-    ctx.strokeStyle = "rgba(126,229,139,.13)";
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    const step = cell * 4;
-    for (let x = ox; x <= ox + arenaW; x += step) {
-      ctx.moveTo(x, oy);
-      ctx.lineTo(x, oy + arenaH);
+    const key = `${w}:${h}:${cell}:${gridW}:${gridH}:${ox}:${oy}`;
+    const cache = ensureCacheCanvas("background", w, h);
+    const bctx = cache.context;
+    if (state.backgroundKey !== key) {
+      bctx.clearRect(0, 0, w, h);
+      bctx.fillStyle = "#040b07";
+      bctx.fillRect(0, 0, w, h);
+      const grd = bctx.createRadialGradient(w * .5, h * .45, 0, w * .5, h * .45, Math.max(w, h) * .7);
+      grd.addColorStop(0, "#123923");
+      grd.addColorStop(1, "#050f09");
+      bctx.fillStyle = grd;
+      bctx.fillRect(ox, oy, arenaW, arenaH);
+      bctx.strokeStyle = "rgba(126,229,139,.13)";
+      bctx.lineWidth = 1;
+      bctx.beginPath();
+      const step = cell * 4;
+      for (let x = ox; x <= ox + arenaW; x += step) {
+        bctx.moveTo(x, oy);
+        bctx.lineTo(x, oy + arenaH);
+      }
+      for (let y = oy; y <= oy + arenaH; y += step) {
+        bctx.moveTo(ox, y);
+        bctx.lineTo(ox + arenaW, y);
+      }
+      bctx.stroke();
+      bctx.strokeStyle = "rgba(255,255,255,.22)";
+      bctx.lineWidth = 2;
+      bctx.strokeRect(ox, oy, arenaW, arenaH);
+      state.backgroundKey = key;
     }
-    for (let y = oy; y <= oy + arenaH; y += step) {
-      ctx.moveTo(ox, y);
-      ctx.lineTo(ox + arenaW, y);
-    }
-    ctx.stroke();
-    ctx.strokeStyle = "rgba(255,255,255,.22)";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(ox, oy, arenaW, arenaH);
+    ctx.drawImage(cache.canvas, 0, 0);
   }
 
-  function drawTrails(data, cell) {
+  function drawTrails(data, cell, gridW, gridH) {
     const occupied = data.occupied || {};
     const players = data.players || {};
     const ox = state.offsetX;
     const oy = state.offsetY;
-    for (const [key, mark] of Object.entries(occupied)) {
-      const [x, y] = key.split(",").map(Number);
-      const color = players[mark]?.color || "#fff";
-      ctx.fillStyle = color;
-      ctx.globalAlpha = .78;
-      ctx.shadowColor = color;
-      ctx.shadowBlur = cell > 7 ? 8 : 0;
-      ctx.fillRect(ox + x * cell + 1, oy + y * cell + 1, Math.max(1, cell - 2), Math.max(1, cell - 2));
+    const entries = Object.entries(occupied);
+    const key = `${canvas.width}:${canvas.height}:${cell}:${gridW}:${gridH}:${ox}:${oy}:${data.round || 1}:${data.tick || entries.length}:${entries.length}`;
+    const cache = ensureCacheCanvas("trail", canvas.width, canvas.height);
+    const tctx = cache.context;
+    if (state.trailKey !== key) {
+      tctx.clearRect(0, 0, cache.canvas.width, cache.canvas.height);
+      for (const [pos, mark] of entries) {
+        const [x, y] = pos.split(",").map(Number);
+        const color = players[mark]?.color || "#fff";
+        const px = ox + x * cell;
+        const py = oy + y * cell;
+        // Cheap two-pass glow. Avoid per-cell shadowBlur; it becomes the main
+        // stutter source once a round has hundreds of occupied cells.
+        tctx.fillStyle = color;
+        tctx.globalAlpha = .22;
+        tctx.fillRect(px, py, cell, cell);
+        tctx.globalAlpha = .86;
+        tctx.fillRect(px + 1, py + 1, Math.max(1, cell - 2), Math.max(1, cell - 2));
+      }
+      tctx.globalAlpha = 1;
+      state.trailKey = key;
+    }
+    ctx.drawImage(cache.canvas, 0, 0);
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+  }
+
+  function drawFadingTrails(data, cell) {
+    const trails = data.fadingTrails || [];
+    if (!trails.length) return;
+    const now = localNow();
+    const ox = state.offsetX;
+    const oy = state.offsetY;
+    for (const trail of trails) {
+      const duration = Math.max(1, Number(trail.durationMs || 2000));
+      const age = now - Number(trail.startedAt || now);
+      const progress = Math.max(0, Math.min(1, age / duration));
+      const alpha = Math.pow(1 - progress, 1.35);
+      if (alpha <= 0) continue;
+      const scale = Math.max(.08, 1 - progress * .92);
+      const size = Math.max(1, cell * scale);
+      const inset = (cell - size) / 2;
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = trail.color || "#ffffff";
+      ctx.shadowColor = trail.color || "#ffffff";
+      ctx.shadowBlur = 10 * alpha;
+      for (const cellPos of trail.cells || []) {
+        const [x, y] = cellPos;
+        if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
+        ctx.fillRect(ox + x * cell + inset, oy + y * cell + inset, size, size);
+      }
     }
     ctx.globalAlpha = 1;
     ctx.shadowBlur = 0;
@@ -610,19 +1182,31 @@
   function bindEvents() {
     $("soloGame").addEventListener("click", () => createGame("cpu").catch((error) => showMessage(error.message)));
     $("createGame").addEventListener("click", () => createGame("pvp").catch((error) => showMessage(error.message)));
-    els.refresh.addEventListener("click", () => (state.game ? pollState() : loadOpenGames()).catch((error) => showMessage(error.message)));
+    els.refresh.addEventListener("click", () => {
+      if (state.localGame) {
+        showMessage("Local game is running in this browser.");
+        return;
+      }
+      (state.game ? pollState() : loadOpenGames()).catch((error) => showMessage(error.message));
+    });
     els.start.addEventListener("click", () => gameMove({ gridcyclesAction: "start" }).catch((error) => showMessage(error.message)));
     els.addBot.addEventListener("click", () => gameMove({ gridcyclesAction: "add-bot" }).catch((error) => showMessage(error.message)));
     els.next.addEventListener("click", () => gameMove({ gridcyclesAction: "next" }).catch((error) => showMessage(error.message)));
-    els.reset.addEventListener("click", () => post({ action: "reset", gameId: state.game?.id, ...playerPayload() }).then((data) => setGame(data.game)).catch((error) => showMessage(error.message)));
-    els.close.addEventListener("click", () => {
-      clearInterval(state.polling);
-      clearTimeout(state.pollTimer);
-      state.game = null;
-      stopBackground();
-      updateUi();
-      loadOpenGames().catch((error) => showMessage(error.message));
+    els.reset.addEventListener("click", () => {
+      if (state.localGame) {
+        if (state.game) {
+          state.game.payload.round = 1;
+          state.game.round = 1;
+          state.game.payload.scores = {};
+          state.game.payload.roundWinners = [];
+          state.game.status = "active";
+          startLocalRound();
+        }
+        return;
+      }
+      post({ action: "reset", gameId: state.game?.id, ...playerPayload() }).then((data) => setGame(data.game)).catch((error) => showMessage(error.message));
     });
+    els.close.addEventListener("click", () => closeCurrentGame().catch((error) => showMessage(error.message)));
     document.querySelectorAll("#dpad [data-dir]").forEach((button) => {
       button.addEventListener("pointerdown", (event) => {
         event.preventDefault();

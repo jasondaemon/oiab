@@ -46,14 +46,17 @@
     </section>
 
     <section id="mapSearch" class="omv2-search" aria-label="Map search">
-      <button id="searchToggle" type="button" title="Search visible map">⌕</button>
+      <button id="searchToggle" type="button" title="Search map">⌕</button>
       <a id="mobileMapHome" class="omv2-mobile-home" href="/mobile/" title="Back to OIAB home" aria-label="Back to OIAB home">⌂</a>
       <form id="searchForm" class="omv2-search-box" hidden>
-        <input id="searchInput" name="q" type="search" placeholder="Search visible map..." autocomplete="off">
+        <input id="searchInput" name="q" type="search" placeholder="Search map..." autocomplete="off">
         <div class="omv2-search-scope" aria-label="Search sources">
           <label><input id="searchBase" type="checkbox" checked> Map</label>
           <label><input id="searchOverlays" type="checkbox" checked> Overlays</label>
           <label><input id="searchSaved" type="checkbox" checked> Saved</label>
+          <label><input id="searchPois" type="checkbox" checked> POIs</label>
+          <label><input id="searchRoads" type="checkbox" checked> Roads</label>
+          <label><input id="searchTrails" type="checkbox" checked> Trails</label>
         </div>
         <button id="poiFilterToggle" type="button" class="omv2-filter-toggle" title="Filter visible POI kinds">Filter</button>
         <button id="searchSubmit" type="submit" title="Search">Go</button>

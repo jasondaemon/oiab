@@ -352,8 +352,46 @@ class AppDB:
                   value_json TEXT NOT NULL,
                   updated_at TEXT NOT NULL
                 );
+
+                CREATE TABLE IF NOT EXISTS map_search_index (
+                  id TEXT PRIMARY KEY,
+                  source TEXT NOT NULL,
+                  source_id TEXT NOT NULL DEFAULT '',
+                  source_label TEXT NOT NULL DEFAULT '',
+                  category TEXT NOT NULL DEFAULT 'poi',
+                  kind TEXT NOT NULL DEFAULT '',
+                  icon_key TEXT NOT NULL DEFAULT 'waypoint',
+                  title TEXT NOT NULL,
+                  subtitle TEXT NOT NULL DEFAULT '',
+                  lat REAL NOT NULL,
+                  lon REAL NOT NULL,
+                  zoom REAL NOT NULL DEFAULT 14,
+                  search_text TEXT NOT NULL DEFAULT '',
+                  properties_json TEXT NOT NULL DEFAULT '{}',
+                  geometry_json TEXT NOT NULL DEFAULT '{}',
+                  signature TEXT NOT NULL DEFAULT '',
+                  updated_at TEXT NOT NULL
+                );
+
+                CREATE INDEX IF NOT EXISTS idx_map_search_index_source
+                  ON map_search_index(source, source_id);
+                CREATE INDEX IF NOT EXISTS idx_map_search_index_category_kind
+                  ON map_search_index(category, kind, icon_key);
+                CREATE INDEX IF NOT EXISTS idx_map_search_index_location
+                  ON map_search_index(lat, lon);
                 """
             )
+            try:
+                conn.execute(
+                    """
+                    CREATE VIRTUAL TABLE IF NOT EXISTS map_search_index_fts
+                    USING fts5(id UNINDEXED, title, subtitle, search_text, tokenize='unicode61 remove_diacritics 2')
+                    """
+                )
+            except sqlite3.OperationalError:
+                # Some Python/SQLite builds omit FTS5. The normal table remains
+                # usable with LIKE fallback, just slower.
+                pass
         self.import_legacy_once()
 
     def migration_applied(self, migration_id: str) -> bool:
@@ -1050,6 +1088,263 @@ class AppDB:
             tracks = conn.execute("SELECT * FROM tracks ORDER BY updated_at DESC").fetchall()
             features.extend(self.row_to_track(row) for row in tracks)
         return {"type": "FeatureCollection", "features": features}
+
+    def search_index_has_fts(self, conn: sqlite3.Connection) -> bool:
+        row = conn.execute(
+            "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'map_search_index_fts'"
+        ).fetchone()
+        return bool(row)
+
+    def clear_search_index_source(self, source: str, source_id: str = "") -> None:
+        with self.connect() as conn:
+            ids = [
+                row["id"] for row in conn.execute(
+                    """
+                    SELECT id FROM map_search_index
+                    WHERE source = ? AND (? = '' OR source_id = ?)
+                    """,
+                    (source, source_id, source_id),
+                ).fetchall()
+            ]
+            conn.execute(
+                "DELETE FROM map_search_index WHERE source = ? AND (? = '' OR source_id = ?)",
+                (source, source_id, source_id),
+            )
+            if ids and self.search_index_has_fts(conn):
+                conn.executemany("DELETE FROM map_search_index_fts WHERE id = ?", [(item_id,) for item_id in ids])
+
+    def upsert_search_index(self, docs: list[dict[str, Any]]) -> int:
+        if not docs:
+            return 0
+        now = now_iso()
+        written = 0
+        conn = sqlite3.connect(self.db_path, timeout=10)
+        conn.row_factory = sqlite3.Row
+        conn.execute("PRAGMA busy_timeout=5000")
+        conn.execute("PRAGMA foreign_keys=ON")
+        conn.execute("PRAGMA journal_mode=WAL")
+        try:
+            has_fts = self.search_index_has_fts(conn)
+            for doc in docs:
+                try:
+                    item_id = str(doc.get("id") or "").strip()
+                    if not item_id:
+                        continue
+                    lat = float(doc.get("lat"))
+                    lon = float(doc.get("lon"))
+                except (TypeError, ValueError):
+                    continue
+                if not valid_lat_lon(lat, lon):
+                    continue
+                row = (
+                    item_id,
+                    str(doc.get("source") or ""),
+                    str(doc.get("source_id") or ""),
+                    str(doc.get("source_label") or ""),
+                    str(doc.get("category") or "poi"),
+                    str(doc.get("kind") or ""),
+                    str(doc.get("icon_key") or "waypoint"),
+                    str(doc.get("title") or ""),
+                    str(doc.get("subtitle") or ""),
+                    lat,
+                    lon,
+                    float(doc.get("zoom") or 14),
+                    str(doc.get("search_text") or ""),
+                    json_dumps(doc.get("properties") or {}),
+                    json_dumps(doc.get("geometry") or {}),
+                    str(doc.get("signature") or ""),
+                    now,
+                )
+                conn.execute(
+                    """
+                    INSERT INTO map_search_index(
+                      id, source, source_id, source_label, category, kind, icon_key, title, subtitle,
+                      lat, lon, zoom, search_text, properties_json, geometry_json, signature, updated_at
+                    )
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ON CONFLICT(id) DO UPDATE SET
+                      source = excluded.source,
+                      source_id = excluded.source_id,
+                      source_label = excluded.source_label,
+                      category = excluded.category,
+                      kind = excluded.kind,
+                      icon_key = excluded.icon_key,
+                      title = excluded.title,
+                      subtitle = excluded.subtitle,
+                      lat = excluded.lat,
+                      lon = excluded.lon,
+                      zoom = excluded.zoom,
+                      search_text = excluded.search_text,
+                      properties_json = excluded.properties_json,
+                      geometry_json = excluded.geometry_json,
+                      signature = excluded.signature,
+                      updated_at = excluded.updated_at
+                    """,
+                    row,
+                )
+                if has_fts:
+                    conn.execute("DELETE FROM map_search_index_fts WHERE id = ?", (item_id,))
+                    conn.execute(
+                        "INSERT INTO map_search_index_fts(id, title, subtitle, search_text) VALUES (?, ?, ?, ?)",
+                        (item_id, row[7], row[8], row[12]),
+                    )
+                written += 1
+                if written % 500 == 0:
+                    conn.commit()
+            conn.commit()
+        finally:
+            conn.close()
+        return written
+
+    def search_index_signature(self) -> str:
+        with self.connect() as conn:
+            row = conn.execute("SELECT value_json FROM app_settings WHERE key = 'map_search_index_signature'").fetchone()
+        return str(json_loads(row["value_json"], "") if row else "")
+
+    def set_search_index_signature(self, signature: str) -> None:
+        self.set_app_setting("map_search_index_signature", signature)
+
+    @staticmethod
+    def fts_query(value: str) -> str:
+        tokens = [token for token in re.findall(r"[A-Za-z0-9]+", value.lower()) if token]
+        if not tokens:
+            return ""
+        return " OR ".join(f'"{token}"*' if len(token) > 2 else f'"{token}"' for token in tokens)
+
+    def query_search_index(
+        self,
+        query: str,
+        *,
+        sources: set[str],
+        categories: set[str],
+        poi_kinds: set[str],
+        center_lat: float | None,
+        center_lon: float | None,
+        limit: int,
+        offset: int,
+        kind_hints: set[str] | None = None,
+    ) -> dict[str, Any]:
+        source_values = tuple(sorted(sources))
+        category_values = tuple(sorted(categories))
+        kind_values = tuple(sorted(kind_hints or set()))
+        poi_kind_values = tuple(sorted(poi_kinds))
+        with self.connect() as conn:
+            has_fts = self.search_index_has_fts(conn)
+            base_params: list[Any] = []
+            where = []
+            if source_values:
+                where.append(f"source IN ({','.join('?' for _ in source_values)})")
+                base_params.extend(source_values)
+            if category_values:
+                normalized_categories = []
+                if "pois" in category_values:
+                    normalized_categories.extend(["poi", "place"])
+                if "roads" in category_values:
+                    normalized_categories.append("road")
+                if "trails" in category_values:
+                    normalized_categories.extend(["trail", "route"])
+                normalized_categories = sorted(set(normalized_categories))
+                if normalized_categories:
+                    where.append(f"category IN ({','.join('?' for _ in normalized_categories)})")
+                    base_params.extend(normalized_categories)
+            if poi_kind_values:
+                where.append("(category NOT IN ('poi', 'place') OR icon_key IN (" + ",".join("?" for _ in poi_kind_values) + "))")
+                base_params.extend(poi_kind_values)
+
+            text_params = list(base_params)
+            match_query = self.fts_query(query)
+            rows: list[sqlite3.Row] = []
+            if has_fts and match_query:
+                fts_where = list(where)
+                fts_where.append("map_search_index_fts MATCH ?")
+                text_params.append(match_query)
+                rows = conn.execute(
+                    f"""
+                    SELECT i.*, bm25(map_search_index_fts) AS text_rank
+                    FROM map_search_index_fts
+                    JOIN map_search_index i ON i.id = map_search_index_fts.id
+                    WHERE {' AND '.join(fts_where) if fts_where else '1=1'}
+                    LIMIT 1000
+                    """,
+                        text_params,
+                ).fetchall()
+            if not rows:
+                like_terms = [f"%{token}%" for token in re.findall(r"[A-Za-z0-9]+", query.lower()) if token]
+                if like_terms:
+                    like_where = list(where)
+                    like_params = list(base_params)
+                    for _term in like_terms:
+                        like_where.append("(lower(title) LIKE ? OR lower(subtitle) LIKE ? OR lower(search_text) LIKE ?)")
+                        like_params.extend([_term, _term, _term])
+                    rows = conn.execute(
+                        f"""
+                        SELECT *, 0.0 AS text_rank
+                        FROM map_search_index
+                        WHERE {' AND '.join(like_where) if like_where else '1=1'}
+                        LIMIT 1000
+                        """,
+                        like_params,
+                    ).fetchall()
+            if kind_values:
+                kind_where = list(where)
+                kind_params = list(base_params)
+                kind_where.append("icon_key IN (" + ",".join("?" for _ in kind_values) + ")")
+                kind_params.extend(kind_values)
+                kind_rows = conn.execute(
+                    f"""
+                    SELECT *, -10.0 AS text_rank
+                    FROM map_search_index
+                    WHERE {' AND '.join(kind_where) if kind_where else '1=1'}
+                    LIMIT 1000
+                    """,
+                    kind_params,
+                ).fetchall()
+                seen_ids = {row["id"] for row in rows}
+                rows.extend(row for row in kind_rows if row["id"] not in seen_ids)
+
+        query_l = query.strip().lower()
+        results = []
+        for row in rows:
+            title = str(row["title"] or "")
+            subtitle = str(row["subtitle"] or "")
+            icon_key = str(row["icon_key"] or "")
+            kind_bonus = 0 if icon_key in (kind_hints or set()) else 1
+            title_l = title.lower()
+            if title_l == query_l:
+                text_bucket = 0
+            elif title_l.startswith(query_l):
+                text_bucket = 1
+            elif kind_bonus == 0:
+                text_bucket = 2
+            else:
+                text_bucket = 3
+            dist = None
+            if center_lat is not None and center_lon is not None and valid_lat_lon(center_lat, center_lon):
+                dist = distance_m(center_lat, center_lon, float(row["lat"]), float(row["lon"]))
+            result = {
+                "id": row["id"],
+                "source": row["source"],
+                "source_label": row["source_label"],
+                "kind": row["kind"],
+                "category": row["category"],
+                "title": title,
+                "subtitle": subtitle,
+                "lat": row["lat"],
+                "lon": row["lon"],
+                "zoom": row["zoom"],
+                "icon_key": icon_key,
+                "rank_bucket": text_bucket,
+                "properties": json_loads(row["properties_json"], {}),
+                "geometry": json_loads(row["geometry_json"], {}),
+                "_sort": (text_bucket, float("inf") if dist is None else dist, title_l),
+            }
+            if dist is not None:
+                result["distance_m"] = round(dist)
+            results.append(result)
+        results.sort(key=lambda item: item["_sort"])
+        for result in results:
+            result.pop("_sort", None)
+        return {"total": len(results), "results": results[offset:offset + limit]}
 
     def row_to_track(self, row: sqlite3.Row) -> dict[str, Any]:
         props = json_loads(row["properties_json"], {})
@@ -1846,8 +2141,9 @@ class AppDB:
         )
         return self.map_pack_registry()
 
-    def map_pack_registry(self) -> dict[str, Any]:
-        self.rescan_map_packs()
+    def map_pack_registry(self, *, rescan: bool = False) -> dict[str, Any]:
+        if rescan:
+            self.rescan_map_packs()
         with self.connect() as conn:
             rows = conn.execute("SELECT * FROM map_packs ORDER BY active DESC, name COLLATE NOCASE").fetchall()
         basemaps = []

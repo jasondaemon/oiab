@@ -3072,6 +3072,10 @@ TEMPERATURE_LEGEND = [
 class OIABHandler(BaseHTTPRequestHandler):
     server_version = "OIAB/0.1"
     settings: Settings = SETTINGS
+    _map_search_cache: dict[str, dict[str, object]] = {}
+    _map_search_cache_lock = threading.Lock()
+    _map_search_index_rebuild_lock = threading.Lock()
+    _map_search_index_rebuild_started_at = 0.0
 
     def log_message(self, fmt: str, *args: object) -> None:
         if self.settings.dev_mode:
@@ -3114,6 +3118,8 @@ class OIABHandler(BaseHTTPRequestHandler):
             return self.send_json(self.app_db().map_overlay_catalog())
         if path in {"/api/maps/overlays", "/api/maps/overlays/installed", "/api/maps/overlays/status", "/maps-overlays"}:
             return self.send_json(self.map_overlays())
+        if path in {"/api/maps/search", "/maps-search"}:
+            return self.send_json(self.map_search(parsed))
         if path == "/api/maps/overlays/temperature/options":
             return self.send_json(self.temperature_overlay_options())
         if path.startswith("/api/maps/overlays/temperature/tile/"):
@@ -4807,11 +4813,890 @@ PY
         return {**payload, "apps": filtered}
 
     def map_packs(self) -> dict:
-        registry = self.app_db().map_pack_registry()
+        registry = self.app_db().map_pack_registry(rescan=False)
         return {**registry, "jobs": map_pack_job_snapshot()}
 
     def map_overlays(self) -> dict:
-        return {**self.app_db().map_overlay_registry(), "jobs": overlay_job_snapshot()}
+        return {**self.app_db().map_overlay_registry(rescan=False), "jobs": overlay_job_snapshot()}
+
+    def map_search(self, parsed) -> dict:
+        query = parse_qs(parsed.query)
+        q = str(query.get("q", [""])[-1] or "").strip()
+        limit = max(1, min(50, self.safe_int(query.get("limit", ["20"])[-1], 20)))
+        offset = max(0, self.safe_int(query.get("offset", ["0"])[-1], 0))
+        center_lat = self.safe_float(query.get("lat", [""])[-1])
+        center_lon = self.safe_float(query.get("lon", [""])[-1])
+        sources = self.csv_set(query.get("sources", ["map,overlays,saved"])[-1], {"map", "overlays", "saved"})
+        categories = self.csv_set(query.get("categories", ["pois,roads,trails"])[-1], {"pois", "roads", "trails"})
+        poi_kinds = self.csv_set(query.get("poi_kinds", [""])[-1], set())
+        if not q:
+            return {"ok": True, "query": q, "limit": limit, "offset": offset, "total": 0, "results": []}
+        coordinate = self.coordinate_search_result(q)
+        if coordinate:
+            return {"ok": True, "query": q, "limit": limit, "offset": 0, "total": 1, "results": [coordinate]}
+
+        query_poi_kind = self.search_query_poi_kind(q)
+        if query_poi_kind and poi_kinds and query_poi_kind not in poi_kinds:
+            return {
+                "ok": True,
+                "query": q,
+                "limit": limit,
+                "offset": offset,
+                "total": 0,
+                "results": [],
+                "sources": sorted(sources),
+                "categories": sorted(categories),
+            }
+        self.ensure_map_search_index()
+        indexed = self.app_db().query_search_index(
+            q,
+            sources=sources,
+            categories=categories,
+            poi_kinds=poi_kinds,
+            center_lat=center_lat if self.valid_lat_lon(center_lat, center_lon) else None,
+            center_lon=center_lon if self.valid_lat_lon(center_lat, center_lon) else None,
+            limit=1000,
+            offset=0,
+            kind_hints={query_poi_kind} if query_poi_kind else set(),
+        )
+        results: list[dict[str, object]] = list(indexed.get("results", [])) if isinstance(indexed, dict) else []
+        if "map" in sources and "pois" in categories:
+            results.extend(self.search_online_places(q, center_lat, center_lon, poi_kinds, query_poi_kind=query_poi_kind))
+
+        seen: set[str] = set()
+        unique: list[dict[str, object]] = []
+        for result in results:
+            key = "|".join(
+                [
+                    str(result.get("source") or ""),
+                    str(result.get("id") or ""),
+                    str(result.get("title") or result.get("name") or ""),
+                    f"{self.safe_float(result.get('lat')):.5f},{self.safe_float(result.get('lon')):.5f}",
+                ]
+            )
+            if key in seen:
+                continue
+            seen.add(key)
+            lat = self.safe_float(result.get("lat"))
+            lon = self.safe_float(result.get("lon"))
+            if self.valid_lat_lon(lat, lon) and self.valid_lat_lon(center_lat, center_lon):
+                distance_m = self.haversine_m(center_lat, center_lon, lat, lon)
+                result["distance_m"] = round(distance_m)
+                result["distance_label"] = self.distance_label(distance_m)
+            else:
+                result["distance_m"] = None
+                result["distance_label"] = ""
+            unique.append(result)
+
+        unique.sort(key=lambda item: (
+            self.safe_int(item.get("rank_bucket"), 3),
+            float("inf") if item.get("distance_m") is None else float(item.get("distance_m") or 0),
+            str(item.get("title") or item.get("name") or "").lower(),
+        ))
+        page = unique[offset:offset + limit]
+        return {
+            "ok": True,
+            "query": q,
+            "limit": limit,
+            "offset": offset,
+            "total": len(unique),
+            "results": page,
+            "sources": sorted(sources),
+            "categories": sorted(categories),
+        }
+
+    def ensure_map_search_index(self) -> None:
+        try:
+            signature = self.map_search_index_signature()
+            current = self.app_db().search_index_signature()
+            index_count = self.map_search_index_count()
+            if index_count > 0:
+                if current != signature:
+                    print("[maps-search] index signature changed; keeping existing index until explicit rebuild")
+                return
+            self.schedule_map_search_index_rebuild(signature)
+        except Exception as exc:  # noqa: BLE001 - search must never break maps
+            print(f"[maps-search] index refresh skipped: {exc}")
+
+    def schedule_map_search_index_rebuild(self, signature: str) -> None:
+        now = time.time()
+        with self._map_search_index_rebuild_lock:
+            if self._map_search_index_rebuild_started_at and now - self._map_search_index_rebuild_started_at < 300:
+                return
+            self._map_search_index_rebuild_started_at = now
+
+        def worker() -> None:
+            try:
+                self.rebuild_map_search_index(signature)
+            except Exception as exc:  # noqa: BLE001 - background index must not break map APIs
+                print(f"[maps-search] background index rebuild failed: {exc}")
+            finally:
+                with self._map_search_index_rebuild_lock:
+                    self._map_search_index_rebuild_started_at = 0.0
+
+        threading.Thread(target=worker, daemon=True, name="map-search-index-rebuild").start()
+
+    def map_search_index_count(self) -> int:
+        with self.app_db().connect() as conn:
+            row = conn.execute("SELECT COUNT(*) AS count FROM map_search_index").fetchone()
+            return int(row["count"] if row else 0)
+
+    def map_search_index_signature(self) -> str:
+        parts: list[str] = []
+        with self.app_db().connect() as conn:
+            for table in ("waypoints", "tracks"):
+                row = conn.execute(f"SELECT COUNT(*) AS count, MAX(updated_at) AS updated FROM {table}").fetchone()
+                parts.append(f"{table}:{row['count'] if row else 0}:{row['updated'] if row else ''}")
+        registry = self.app_db().map_overlay_registry(rescan=False)
+        for overlay in registry.get("overlays", []) if isinstance(registry, dict) else []:
+            if not isinstance(overlay, dict):
+                continue
+            source_type = str(overlay.get("source_type") or overlay.get("type") or "")
+            raw_path = overlay.get("local_path") or overlay.get("path") or overlay.get("source_url")
+            if source_type not in {"geojson", "cached_geojson"} and not str(raw_path or "").lower().endswith((".geojson", ".json")):
+                continue
+            try:
+                path = self.app_db().resolve_overlay_path(str(raw_path or ""))
+                stat = path.stat() if path.exists() and path.is_file() else None
+                parts.append(f"overlay:{overlay.get('id')}:{path}:{stat.st_size if stat else 0}:{stat.st_mtime_ns if stat else 0}")
+            except OSError:
+                parts.append(f"overlay:{overlay.get('id')}:missing")
+        for path in self.local_gazetteer_paths():
+            try:
+                stat = path.stat() if path.exists() else None
+                parts.append(f"gazetteer:{path}:{stat.st_size if stat else 0}:{stat.st_mtime_ns if stat else 0}")
+            except OSError:
+                parts.append(f"gazetteer:{path}:missing")
+        return hashlib.sha1("\n".join(parts).encode("utf-8")).hexdigest()
+
+    def rebuild_map_search_index(self, signature: str) -> None:
+        docs: list[dict[str, object]] = []
+        saved_payload = self.app_db().places_geojson()
+        for feature in saved_payload.get("features", []) if isinstance(saved_payload, dict) else []:
+            if isinstance(feature, dict):
+                doc = self.search_doc_from_feature(feature, "saved", "saved", "Saved data")
+                if doc:
+                    docs.append(doc)
+
+        registry = self.app_db().map_overlay_registry(rescan=False)
+        for overlay in registry.get("overlays", []) if isinstance(registry, dict) else []:
+            if not isinstance(overlay, dict):
+                continue
+            source_type = str(overlay.get("source_type") or overlay.get("type") or "")
+            if source_type not in {"geojson", "cached_geojson"} and not str(overlay.get("path") or "").lower().endswith((".geojson", ".json")):
+                continue
+            label = str(overlay.get("name") or overlay.get("id") or "Overlay")
+            overlay_id = str(overlay.get("id") or label)
+            for doc in self.overlay_search_docs(overlay):
+                feature = doc.get("feature")
+                if isinstance(feature, dict):
+                    item = self.search_doc_from_feature(feature, "overlays", overlay_id, label, overlay)
+                    if item:
+                        docs.append(item)
+
+        for path in self.local_gazetteer_paths():
+            overlay = {"id": f"gazetteer_{path.stem}", "name": "Places", "category": "places", "style": "places", "path": str(path)}
+            for doc in self.overlay_search_docs(overlay):
+                feature = doc.get("feature")
+                if isinstance(feature, dict):
+                    item = self.search_doc_from_feature(feature, "map", f"gazetteer:{path.stem}", "Places", overlay)
+                    if item:
+                        item["category"] = "place"
+                        item["kind"] = "place"
+                        item["zoom"] = 11
+                        docs.append(item)
+
+        self.app_db().clear_search_index_source("saved")
+        self.app_db().clear_search_index_source("overlays")
+        self.app_db().clear_search_index_source("map")
+        self.app_db().upsert_search_index(docs)
+        self.app_db().set_search_index_signature(signature)
+
+    def local_gazetteer_paths(self) -> list[Path]:
+        root = self.settings.data_dir / "maps" / "search"
+        return [root / "places.geojson", root / "cities.geojson", root / "geonames.geojson"]
+
+    def search_doc_from_feature(
+        self,
+        feature: dict[str, object],
+        source: str,
+        source_id: str,
+        source_label: str,
+        overlay: dict[str, object] | None = None,
+    ) -> dict[str, object] | None:
+        props = feature.get("properties") if isinstance(feature.get("properties"), dict) else {}
+        geometry = feature.get("geometry") if isinstance(feature.get("geometry"), dict) else None
+        point = self.point_for_geometry(geometry)
+        if not point or not self.valid_lat_lon(point[0], point[1]):
+            return None
+        category = self.search_result_category(feature, props, overlay)
+        icon_key = self.normalize_search_icon_key(
+            props.get("marker_icon_key")
+            or props.get("kind_detail")
+            or props.get("kind")
+            or props.get("amenity")
+            or props.get("shop")
+            or props.get("tourism")
+            or props.get("category")
+            or props.get("type")
+        )
+        title = str(
+            props.get("name")
+            or props.get("title")
+            or props.get("route_name")
+            or props.get("headline")
+            or props.get("event")
+            or props.get("kind")
+            or props.get("category")
+            or source_label
+        )
+        subtitle = " · ".join(
+            part for part in [
+                source_label,
+                str(props.get("folder") or props.get("category") or props.get("kind") or props.get("amenity") or "").strip(),
+            ] if part
+        )
+        text = self.search_text(props)
+        stable = hashlib.sha1(
+            json.dumps({"source": source, "source_id": source_id, "title": title, "point": point, "props": props}, sort_keys=True, default=str).encode("utf-8")
+        ).hexdigest()[:16]
+        item_id = str(props.get("id") or props.get("uid") or props.get("objectid") or props.get("OBJECTID") or stable)
+        return {
+            "id": f"{source}:{source_id}:{item_id}",
+            "source": source,
+            "source_id": source_id,
+            "source_label": source_label,
+            "category": category,
+            "kind": category,
+            "icon_key": icon_key,
+            "title": title,
+            "subtitle": subtitle,
+            "lat": point[0],
+            "lon": point[1],
+            "zoom": 15 if category == "poi" else 13,
+            "search_text": f"{title} {subtitle} {text}",
+            "properties": props,
+            "geometry": geometry or {},
+        }
+
+    @staticmethod
+    def safe_int(value: object, default: int = 0) -> int:
+        try:
+            return int(value)
+        except (TypeError, ValueError):
+            return default
+
+    @staticmethod
+    def safe_float(value: object, default: float = float("nan")) -> float:
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return default
+
+    @staticmethod
+    def valid_lat_lon(lat: float, lon: float) -> bool:
+        return math.isfinite(lat) and math.isfinite(lon) and -90 <= lat <= 90 and -180 <= lon <= 180
+
+    @staticmethod
+    def csv_set(value: object, allowed: set[str]) -> set[str]:
+        parsed = {str(item).strip().lower() for item in str(value or "").split(",") if str(item).strip()}
+        return parsed & allowed if allowed else parsed
+
+    @staticmethod
+    def haversine_m(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+        radius_m = 6371000.0
+        phi1 = math.radians(lat1)
+        phi2 = math.radians(lat2)
+        dphi = math.radians(lat2 - lat1)
+        dlambda = math.radians(lon2 - lon1)
+        a = math.sin(dphi / 2) ** 2 + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda / 2) ** 2
+        return 2 * radius_m * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+    @staticmethod
+    def distance_label(distance_m: float) -> str:
+        miles = distance_m / 1609.344
+        if miles < 0.2:
+            return f"{round(distance_m)} m"
+        if miles < 10:
+            return f"{miles:.1f} mi"
+        return f"{round(miles)} mi"
+
+    @staticmethod
+    def search_needles(query: str) -> list[str]:
+        synonyms = {
+            "gas": ["gas", "fuel", "petrol", "charging", "ev", "service station"],
+            "fuel": ["fuel", "gas", "petrol", "charging", "ev"],
+            "grocery": ["grocery", "groceries", "supermarket", "market"],
+            "food": ["food", "restaurant", "fast food", "cafe", "diner"],
+            "restroom": ["restroom", "restrooms", "toilet", "toilets", "bathroom"],
+            "camp": ["camp", "campsite", "campground", "rv"],
+            "trail": ["trail", "trailhead", "path", "hiking"],
+        }
+        q = query.strip().lower()
+        values = {q}
+        for token in re.split(r"\s+", q):
+            if not token:
+                continue
+            values.add(token)
+            values.update(synonyms.get(token, []))
+        return [value for value in values if value]
+
+    def coordinate_search_result(self, query: str) -> dict[str, object] | None:
+        match = re.match(r"^\s*(-?\d+(?:\.\d+)?)\s*[, ]\s*(-?\d+(?:\.\d+)?)\s*$", query)
+        if not match:
+            return None
+        lat = self.safe_float(match.group(1))
+        lon = self.safe_float(match.group(2))
+        if not self.valid_lat_lon(lat, lon):
+            return None
+        title = f"{lat:.6f}, {lon:.6f}"
+        return {
+            "id": f"coords:{title}",
+            "source": "coordinates",
+            "source_label": "Coordinates",
+            "kind": "coordinates",
+            "category": "poi",
+            "title": title,
+            "subtitle": "Coordinates",
+            "lat": lat,
+            "lon": lon,
+            "zoom": 14,
+            "properties": {"name": title},
+        }
+
+    @staticmethod
+    def search_text(value: object) -> str:
+        if value is None:
+            return ""
+        if isinstance(value, dict):
+            return " ".join(f"{key} {OIABHandler.search_text(item)}" for key, item in value.items())
+        if isinstance(value, list):
+            return " ".join(OIABHandler.search_text(item) for item in value)
+        return str(value)
+
+    @staticmethod
+    def matches_needles(text: str, needles: list[str]) -> bool:
+        haystack = text.lower()
+        tokens = set(re.findall(r"[a-z0-9]+", haystack))
+        for needle in needles:
+            normalized = needle.lower().strip()
+            if not normalized:
+                continue
+            if len(normalized) <= 3:
+                if normalized in tokens:
+                    return True
+                continue
+            if normalized in haystack:
+                return True
+        return False
+
+    @staticmethod
+    def point_for_geometry(geometry: dict[str, object] | None) -> tuple[float, float] | None:
+        if not isinstance(geometry, dict):
+            return None
+        geometry_type = str(geometry.get("type") or "")
+        coords = geometry.get("coordinates")
+        try:
+            if geometry_type == "Point" and isinstance(coords, list) and len(coords) >= 2:
+                return float(coords[1]), float(coords[0])
+            if geometry_type == "LineString" and isinstance(coords, list) and coords:
+                point = coords[len(coords) // 2]
+                return float(point[1]), float(point[0])
+            if geometry_type == "MultiLineString" and isinstance(coords, list) and coords and coords[0]:
+                line = coords[0]
+                point = line[len(line) // 2]
+                return float(point[1]), float(point[0])
+            if geometry_type == "Polygon" and isinstance(coords, list) and coords and coords[0]:
+                ring = coords[0]
+                lon = sum(float(point[0]) for point in ring) / len(ring)
+                lat = sum(float(point[1]) for point in ring) / len(ring)
+                return lat, lon
+            if geometry_type == "MultiPolygon" and isinstance(coords, list) and coords and coords[0] and coords[0][0]:
+                ring = coords[0][0]
+                lon = sum(float(point[0]) for point in ring) / len(ring)
+                lat = sum(float(point[1]) for point in ring) / len(ring)
+                return lat, lon
+        except (TypeError, ValueError, IndexError, ZeroDivisionError):
+            return None
+        return None
+
+    def normalize_search_icon_key(self, value: object, fallback: str = "waypoint") -> str:
+        normalized = re.sub(r"[^a-z0-9]+", "_", str(value or "").lower()).strip("_")
+        dashed = normalized.replace("_", "-")
+        mapping = {
+            "fuel": "gas-station-ev-station",
+            "gas_station": "gas-station-ev-station",
+            "charging_station": "gas-station-ev-station",
+            "restaurant": "restaurant",
+            "fast_food": "fast-food",
+            "cafe": "cafe",
+            "coffee": "cafe",
+            "supermarket": "grocery-store",
+            "grocery": "grocery-store",
+            "grocery_store": "grocery-store",
+            "convenience": "grocery-store",
+            "campground": "campground",
+            "camp_site": "campsite",
+            "campsite": "campsite",
+            "trailhead": "trailhead",
+            "parking": "parking",
+            "restroom": "restrooms",
+            "restrooms": "restrooms",
+            "toilet": "restrooms",
+            "toilets": "restrooms",
+            "bench": "bench",
+            "atm": "atm",
+            "bank": "bank",
+            "airport": "airport",
+            "aerodrome": "airport",
+            "viewpoint": "viewpoint",
+            "waterfall": "waterfall",
+            "drinking_water": "drinking-water",
+            "water_point": "drinking-water",
+            "pharmacy": "pharmacy",
+            "hospital": "medical-clinic-hospital",
+            "clinic": "medical-clinic-hospital",
+            "library": "library",
+            "museum": "museum",
+            "post_office": "post-office",
+            "picnic_site": "picnic-area",
+            "school": "school",
+            "hotel": "lodging",
+            "lodging": "lodging",
+            "motel": "lodging",
+            "guest_house": "lodging",
+            "alpine_hut": "alpine-hut-cabin-chalet",
+            "chalet": "alpine-hut-cabin-chalet",
+            "bicycle_parking": "bicycle-parking",
+            "bicycle_rental": "bike-shop",
+            "bicycle": "bike-shop",
+            "bus_station": "bus-station",
+            "bus_stop": "bus-station",
+            "bar": "bar",
+            "pub": "pub-brewery",
+            "brewery": "pub-brewery",
+            "bakery": "bakery",
+            "beach": "beach",
+            "cinema": "cinema",
+            "dog_park": "dog-park",
+            "fire_station": "fire-station",
+            "garden": "garden",
+            "playground": "playground",
+            "marina": "marina",
+            "swimming_pool": "swimming-area",
+            "swimming_area": "swimming-area",
+            "theme_park": "theme-park",
+            "zoo": "zoo",
+        }
+        return mapping.get(normalized) or mapping.get(dashed) or dashed or fallback
+
+    def search_query_poi_kind(self, value: object) -> str:
+        normalized = re.sub(r"[^a-z0-9]+", "_", str(value or "").lower()).strip("_")
+        direct = {
+            "gas": "gas-station-ev-station",
+            "fuel": "gas-station-ev-station",
+            "ev": "gas-station-ev-station",
+            "atm": "atm",
+            "bank": "bank",
+            "bench": "bench",
+            "restaurant": "restaurant",
+            "restaurants": "restaurant",
+            "food": "restaurant",
+            "fast_food": "fast-food",
+            "cafe": "cafe",
+            "coffee": "cafe",
+            "grocery": "grocery-store",
+            "groceries": "grocery-store",
+            "supermarket": "grocery-store",
+            "camp": "campground",
+            "campground": "campground",
+            "campsite": "campsite",
+            "parking": "parking",
+            "restroom": "restrooms",
+            "restrooms": "restrooms",
+            "toilet": "restrooms",
+            "airport": "airport",
+            "waterfall": "waterfall",
+            "viewpoint": "viewpoint",
+            "trailhead": "trailhead",
+        }
+        return direct.get(normalized, "")
+
+    def search_result_category(self, feature: dict[str, object], props: dict[str, object], overlay: dict[str, object] | None = None) -> str:
+        geometry_type = str((feature.get("geometry") or {}).get("type") or "")
+        text = self.search_text(props).lower()
+        style = str((overlay or {}).get("style") or (overlay or {}).get("category") or "").lower()
+        if geometry_type == "Point":
+            return "poi"
+        if "mvum" in style or "trail" in text or "path" in text:
+            return "trail"
+        if any(token in text for token in ("road", "route", "highway", "street", "gravel", "dirt")):
+            return "road"
+        if geometry_type in {"LineString", "MultiLineString"}:
+            return "road"
+        return "poi"
+
+    @staticmethod
+    def category_allowed(category: str, categories: set[str]) -> bool:
+        if category == "poi":
+            return "pois" in categories
+        if category == "road":
+            return "roads" in categories
+        if category in {"trail", "route"}:
+            return "trails" in categories
+        if category == "place":
+            return "pois" in categories
+        return True
+
+    def result_from_feature(
+        self,
+        feature: dict[str, object],
+        props: dict[str, object],
+        source: str,
+        source_label: str,
+        needles: list[str],
+        categories: set[str],
+        poi_kinds: set[str],
+        overlay: dict[str, object] | None = None,
+        query_poi_kind: str = "",
+    ) -> dict[str, object] | None:
+        text = self.search_text(props)
+        point = self.point_for_geometry(feature.get("geometry") if isinstance(feature.get("geometry"), dict) else None)
+        if not point or not self.valid_lat_lon(point[0], point[1]):
+            return None
+        category = self.search_result_category(feature, props, overlay)
+        if not self.category_allowed(category, categories):
+            return None
+        icon_key = self.normalize_search_icon_key(
+            props.get("marker_icon_key")
+            or props.get("kind_detail")
+            or props.get("kind")
+            or props.get("amenity")
+            or props.get("shop")
+            or props.get("tourism")
+            or props.get("category")
+            or props.get("type")
+        )
+        if query_poi_kind:
+            if category != "poi" or icon_key != query_poi_kind:
+                return None
+        elif not self.matches_needles(text, needles):
+            return None
+        if category == "poi" and poi_kinds and icon_key not in poi_kinds:
+            return None
+        title = str(
+            props.get("name")
+            or props.get("title")
+            or props.get("route_name")
+            or props.get("headline")
+            or props.get("event")
+            or props.get("kind")
+            or props.get("category")
+            or source_label
+        )
+        subtitle_parts = [
+            source_label,
+            str(props.get("folder") or props.get("category") or props.get("kind") or props.get("amenity") or "").strip(),
+        ]
+        return {
+            "id": str(props.get("id") or props.get("uid") or props.get("objectid") or props.get("OBJECTID") or hashlib.sha1(text.encode("utf-8")).hexdigest()[:12]),
+            "source": source,
+            "source_label": source_label,
+            "kind": category,
+            "category": category,
+            "title": title,
+            "subtitle": " · ".join(part for part in subtitle_parts if part),
+            "lat": point[0],
+            "lon": point[1],
+            "zoom": 15 if category == "poi" else 13,
+            "icon_key": icon_key,
+            "properties": props,
+            "geometry": feature.get("geometry"),
+            "overlay": overlay,
+        }
+
+    def search_saved_map_data(self, needles: list[str], categories: set[str], poi_kinds: set[str], *, query_poi_kind: str = "") -> list[dict[str, object]]:
+        payload = self.app_db().places_geojson()
+        results = []
+        for feature in payload.get("features", []) if isinstance(payload, dict) else []:
+            if not isinstance(feature, dict):
+                continue
+            props = feature.get("properties") if isinstance(feature.get("properties"), dict) else {}
+            item = self.result_from_feature(feature, props, "saved", "Saved data", needles, categories, poi_kinds, query_poi_kind=query_poi_kind)
+            if item:
+                results.append(item)
+        return results
+
+    def overlay_search_docs(self, overlay: dict[str, object]) -> list[dict[str, object]]:
+        raw_path = overlay.get("local_path") or overlay.get("path") or overlay.get("source_url")
+        if not raw_path:
+            return []
+        path = self.app_db().resolve_overlay_path(str(raw_path))
+        if path.suffix.lower() not in {".geojson", ".json"} or not path.exists() or not path.is_file():
+            return []
+        try:
+            stat = path.stat()
+        except OSError:
+            return []
+        cache_key = str(path.resolve())
+        signature = f"{stat.st_size}:{stat.st_mtime_ns}"
+        with self._map_search_cache_lock:
+            cached = self._map_search_cache.get(cache_key)
+            if cached and cached.get("signature") == signature:
+                return cached.get("docs", []) if isinstance(cached.get("docs"), list) else []
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError, UnicodeDecodeError):
+            return []
+        features = data.get("features") if isinstance(data, dict) else None
+        if not isinstance(features, list):
+            return []
+        docs = []
+        for feature in features:
+            if not isinstance(feature, dict):
+                continue
+            props = feature.get("properties") if isinstance(feature.get("properties"), dict) else {}
+            docs.append({"feature": feature, "properties": props})
+        with self._map_search_cache_lock:
+            self._map_search_cache[cache_key] = {"signature": signature, "docs": docs}
+        return docs
+
+    def search_local_overlay_data(self, needles: list[str], categories: set[str], poi_kinds: set[str], *, query_poi_kind: str = "") -> list[dict[str, object]]:
+        registry = self.app_db().map_overlay_registry(rescan=False)
+        overlays = registry.get("overlays", []) if isinstance(registry, dict) else []
+        results = []
+        for overlay in overlays:
+            if not isinstance(overlay, dict):
+                continue
+            if query_poi_kind and not self.overlay_may_contain_poi_kind(overlay, query_poi_kind):
+                continue
+            source_type = str(overlay.get("source_type") or overlay.get("type") or "")
+            if source_type not in {"geojson", "cached_geojson"} and not str(overlay.get("path") or "").lower().endswith((".geojson", ".json")):
+                continue
+            label = str(overlay.get("name") or overlay.get("id") or "Overlay")
+            for doc in self.overlay_search_docs(overlay):
+                feature = doc.get("feature")
+                props = doc.get("properties")
+                if not isinstance(feature, dict) or not isinstance(props, dict):
+                    continue
+                item = self.result_from_feature(feature, props, "overlay", label, needles, categories, poi_kinds, overlay, query_poi_kind=query_poi_kind)
+                if item:
+                    results.append(item)
+        return results
+
+    @staticmethod
+    def overlay_may_contain_poi_kind(overlay: dict[str, object], poi_kind: str) -> bool:
+        overlay_text = " ".join(
+            str(overlay.get(key) or "").lower()
+            for key in ("id", "name", "description", "category", "style", "source_type", "local_path", "path")
+        )
+        relevant_tokens = {
+            "campground": ("camp", "ridb", "recreation", "campflare"),
+            "campsite": ("camp", "ridb", "recreation", "campflare"),
+            "trailhead": ("trail", "ridb", "recreation", "campflare", "opencaching"),
+            "parking": ("parking", "ridb", "recreation", "campflare"),
+            "viewpoint": ("view", "overlook", "ridb", "recreation", "opencaching"),
+            "restrooms": ("restroom", "toilet", "ridb", "recreation", "campflare"),
+        }
+        tokens = relevant_tokens.get(poi_kind)
+        if not tokens:
+            return False
+        return any(token in overlay_text for token in tokens)
+
+    def search_local_gazetteer(self, needles: list[str], categories: set[str], poi_kinds: set[str]) -> list[dict[str, object]]:
+        if "pois" not in categories:
+            return []
+        root = self.settings.data_dir / "maps" / "search"
+        results = []
+        for path in [root / "places.geojson", root / "cities.geojson", root / "geonames.geojson"]:
+            if not path.exists():
+                continue
+            overlay = {"id": f"gazetteer_{path.stem}", "name": "Places", "category": "places", "style": "places", "path": str(path)}
+            for doc in self.overlay_search_docs(overlay):
+                feature = doc.get("feature")
+                props = doc.get("properties")
+                if not isinstance(feature, dict) or not isinstance(props, dict):
+                    continue
+                item = self.result_from_feature(feature, props, "map", "Places", needles, categories, set(), overlay)
+                if item:
+                    item["kind"] = "place"
+                    item["category"] = "place"
+                    item["zoom"] = 11
+                    results.append(item)
+        return results
+
+    def search_online_places(self, query: str, center_lat: float, center_lon: float, poi_kinds: set[str] | None = None, *, query_poi_kind: str = "") -> list[dict[str, object]]:
+        if str(os.environ.get("OIAB_SEARCH_ONLINE_GEOCODER", "true")).lower() in {"0", "false", "no", "off"}:
+            return []
+        if query_poi_kind:
+            return self.search_overpass_pois(query_poi_kind, center_lat, center_lon)
+        params = {
+            "format": "jsonv2",
+            "limit": "10",
+            "q": query,
+        }
+        if self.valid_lat_lon(center_lat, center_lon):
+            params.update({"lat": f"{center_lat:.6f}", "lon": f"{center_lon:.6f}"})
+        url = f"https://nominatim.openstreetmap.org/search?{urlencode(params)}"
+        try:
+            request = Request(url, headers={"User-Agent": "OIAB Maps v2 search"})
+            with urlopen(request, timeout=4) as response:
+                payload = json.loads(response.read().decode("utf-8"))
+        except Exception:
+            return []
+        if not isinstance(payload, list):
+            return []
+        results = []
+        for index, item in enumerate(payload):
+            if not isinstance(item, dict):
+                continue
+            lat = self.safe_float(item.get("lat"))
+            lon = self.safe_float(item.get("lon"))
+            if not self.valid_lat_lon(lat, lon):
+                continue
+            osm_class = str(item.get("class") or "").lower()
+            osm_type = str(item.get("type") or "").lower()
+            is_place = osm_class in {"place", "boundary"} or osm_type in {"city", "town", "village", "hamlet", "suburb", "neighbourhood", "administrative"}
+            if query_poi_kind and is_place:
+                continue
+            icon_key = "waypoint" if is_place else self.normalize_search_icon_key(osm_type or osm_class)
+            if not is_place and poi_kinds and icon_key not in poi_kinds:
+                continue
+            title = str(item.get("name") or item.get("display_name") or query)
+            subtitle = str(item.get("display_name") or "Online place search")
+            results.append(
+                {
+                    "id": f"nominatim:{item.get('osm_type', '')}:{item.get('osm_id', index)}",
+                    "source": "map",
+                    "source_label": "Places",
+                    "kind": "place" if is_place else "poi",
+                    "category": "place" if is_place else "poi",
+                    "title": title,
+                    "subtitle": subtitle,
+                    "lat": lat,
+                    "lon": lon,
+                    "zoom": 11 if str(item.get("type") or "").lower() in {"city", "town", "village"} else 15,
+                    "icon_key": icon_key,
+                    "rank_bucket": 2 if is_place else 3,
+                    "properties": {"name": title, "display_name": subtitle, "source": "OpenStreetMap Nominatim"},
+                }
+            )
+        return results
+
+    def search_overpass_pois(self, poi_kind: str, center_lat: float, center_lon: float) -> list[dict[str, object]]:
+        if not self.valid_lat_lon(center_lat, center_lon):
+            return []
+        clauses = {
+            "gas-station-ev-station": [
+                'node(around:{radius},{lat},{lon})["amenity"="fuel"];',
+                'way(around:{radius},{lat},{lon})["amenity"="fuel"];',
+                'relation(around:{radius},{lat},{lon})["amenity"="fuel"];',
+                'node(around:{radius},{lat},{lon})["amenity"="charging_station"];',
+                'way(around:{radius},{lat},{lon})["amenity"="charging_station"];',
+                'relation(around:{radius},{lat},{lon})["amenity"="charging_station"];',
+            ],
+            "atm": [
+                'node(around:{radius},{lat},{lon})["amenity"="atm"];',
+                'way(around:{radius},{lat},{lon})["amenity"="atm"];',
+            ],
+            "bank": [
+                'node(around:{radius},{lat},{lon})["amenity"="bank"];',
+                'way(around:{radius},{lat},{lon})["amenity"="bank"];',
+            ],
+            "bench": [
+                'node(around:{radius},{lat},{lon})["amenity"="bench"];',
+            ],
+            "restaurant": [
+                'node(around:{radius},{lat},{lon})["amenity"="restaurant"];',
+                'way(around:{radius},{lat},{lon})["amenity"="restaurant"];',
+            ],
+            "fast-food": [
+                'node(around:{radius},{lat},{lon})["amenity"="fast_food"];',
+                'way(around:{radius},{lat},{lon})["amenity"="fast_food"];',
+            ],
+            "cafe": [
+                'node(around:{radius},{lat},{lon})["amenity"="cafe"];',
+                'way(around:{radius},{lat},{lon})["amenity"="cafe"];',
+            ],
+            "grocery-store": [
+                'node(around:{radius},{lat},{lon})["shop"~"^(supermarket|grocery|convenience)$"];',
+                'way(around:{radius},{lat},{lon})["shop"~"^(supermarket|grocery|convenience)$"];',
+            ],
+            "parking": [
+                'node(around:{radius},{lat},{lon})["amenity"="parking"];',
+                'way(around:{radius},{lat},{lon})["amenity"="parking"];',
+            ],
+            "restrooms": [
+                'node(around:{radius},{lat},{lon})["amenity"="toilets"];',
+                'way(around:{radius},{lat},{lon})["amenity"="toilets"];',
+            ],
+            "campground": [
+                'node(around:{radius},{lat},{lon})["tourism"="camp_site"];',
+                'way(around:{radius},{lat},{lon})["tourism"="camp_site"];',
+            ],
+            "campsite": [
+                'node(around:{radius},{lat},{lon})["tourism"="camp_site"];',
+                'way(around:{radius},{lat},{lon})["tourism"="camp_site"];',
+            ],
+            "trailhead": [
+                'node(around:{radius},{lat},{lon})["highway"="trailhead"];',
+            ],
+        }.get(poi_kind)
+        if not clauses:
+            return []
+        radius = max(1000, min(100000, int(os.environ.get("OIAB_SEARCH_OVERPASS_RADIUS_M", "75000") or "75000")))
+        rendered = "\n".join(
+            clause.format(radius=radius, lat=f"{center_lat:.6f}", lon=f"{center_lon:.6f}")
+            for clause in clauses
+        )
+        overpass_query = f"[out:json][timeout:6];({rendered});out center tags 80;"
+        try:
+            request = Request(
+                os.environ.get("OIAB_SEARCH_OVERPASS_URL", "https://overpass-api.de/api/interpreter"),
+                data=urlencode({"data": overpass_query}).encode("utf-8"),
+                headers={
+                    "User-Agent": "OIAB Maps v2 search",
+                    "Accept": "application/json",
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            )
+            with urlopen(request, timeout=8) as response:
+                payload = json.loads(response.read().decode("utf-8"))
+        except Exception:
+            return []
+        elements = payload.get("elements") if isinstance(payload, dict) else None
+        if not isinstance(elements, list):
+            return []
+        results = []
+        for item in elements:
+            if not isinstance(item, dict):
+                continue
+            tags = item.get("tags") if isinstance(item.get("tags"), dict) else {}
+            lat = self.safe_float(item.get("lat") or (item.get("center") or {}).get("lat"))
+            lon = self.safe_float(item.get("lon") or (item.get("center") or {}).get("lon"))
+            if not self.valid_lat_lon(lat, lon):
+                continue
+            name = str(tags.get("name") or tags.get("brand") or tags.get("operator") or "Fuel / EV" if poi_kind == "gas-station-ev-station" else tags.get("name") or tags.get("brand") or poi_kind.replace("-", " ").title())
+            osm_type = str(item.get("type") or "node")
+            osm_id = str(item.get("id") or hashlib.sha1(json.dumps(item, sort_keys=True).encode("utf-8")).hexdigest()[:12])
+            results.append(
+                {
+                    "id": f"overpass:{osm_type}:{osm_id}",
+                    "source": "map",
+                    "source_label": "OpenStreetMap POIs",
+                    "kind": "poi",
+                    "category": "poi",
+                    "title": name,
+                    "subtitle": "OpenStreetMap POI",
+                    "lat": lat,
+                    "lon": lon,
+                    "zoom": 16,
+                    "icon_key": poi_kind,
+                    "rank_bucket": 0,
+                    "properties": {**tags, "name": name, "source": "OpenStreetMap Overpass"},
+                }
+            )
+        return results
 
     def pmtiles_diagnostics(self) -> dict:
         try:
@@ -8588,6 +9473,56 @@ PY
                 self.persist_mobile_game_result(game)
                 db.save_game(game)
             return self.send_json({"ok": bool(game), "game": public_mobile_game(game, form_value(payload, "playerId")) if game else None, "error": None if game else "Game not found"})
+        if action in {"close", "leave"}:
+            game_id = form_value(payload, "gameId")
+            player_id = clean_player_id(form_value(payload, "playerId") or "")
+            game = next((item for item in games if item.get("id") == game_id), None)
+            if not game:
+                return self.send_json({"ok": True, "closed": True, "games": [public_mobile_game(item, player_id) for item in db.list_open_games()]})
+            player = find_mobile_player(game, player_id)
+            mark = str((player or {}).get("mark") or "")
+            host_mark = {
+                "gridcycles": "A",
+                "word-tile-arena": "P1",
+                "starts-ends": "P1",
+                "burst": "A",
+                "sinkhole-city": "A",
+                "chess": "white",
+                "checkers": "red",
+                "connect-four": "R",
+                "tic-tac-toe": "X",
+            }.get(str(game.get("type") or ""), "A")
+            is_host = bool(player) and mark == host_mark
+            if action == "close" and not is_host:
+                return self.send_json({"ok": False, "error": "Only the room host can close this game."}, status=403)
+            if action == "close":
+                games = db.delete_game(game_id)
+                return self.send_json({"ok": True, "closed": True, "games": [public_mobile_game(item, player_id) for item in games]})
+            if player:
+                game["players"] = [
+                    item for item in game.get("players", [])
+                    if not (isinstance(item, dict) and str(item.get("id") or "") == player_id)
+                ]
+                if game.get("type") == "gridcycles" and mark:
+                    state = game.setdefault("payload", {})
+                    players_state = state.setdefault("players", {})
+                    if isinstance(players_state, dict):
+                        if state.get("phase") == "lobby":
+                            players_state.pop(mark, None)
+                        elif isinstance(players_state.get(mark), dict):
+                            players_state[mark]["alive"] = False
+                            players_state[mark]["leftAt"] = time.time()
+                    state.setdefault("leftPlayers", {})[mark] = timestamp()
+            human_players = [
+                item for item in game.get("players", [])
+                if isinstance(item, dict) and not str(item.get("id") or "").startswith("cpu-")
+            ]
+            if not human_players:
+                games = db.delete_game(game_id)
+                return self.send_json({"ok": True, "closed": True, "games": [public_mobile_game(item, player_id) for item in games]})
+            touch_mobile_game(game)
+            db.save_game(game)
+            return self.send_json({"ok": True, "closed": False, "left": True, "game": public_mobile_game(game, player_id), "games": [public_mobile_game(item, player_id) for item in db.list_open_games()]})
         if action in {"delete", "reset"}:
             game_id = form_value(payload, "gameId")
             if action == "delete":

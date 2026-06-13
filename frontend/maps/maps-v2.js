@@ -13,6 +13,7 @@
     trackManualStop: "/api/tracks/manual/stop",
     save: "/maps-quick-save",
     manage: "/maps-data-manage",
+    search: "/api/maps/search",
   };
   const MAP_3D_BUILDINGS_KEY = "omv2.show3dBuildings";
   const MAP_AUTO_RECORDING_KEY = "omv2.autoTrackRecording";
@@ -570,6 +571,10 @@
     managerSelectedFolders: new Set(),
     managerOpenFolders: new Set(),
     searchResults: [],
+    searchQuery: "",
+    searchOffset: 0,
+    searchLimit: 20,
+    searchTotal: 0,
     poiKindFilter: loadPoiKindFilter(),
     poiIconStyle: readPoiIconStyle(),
     manualRecording: false,
@@ -4785,6 +4790,9 @@
     if ($("poiFilterPanel")) $("poiFilterPanel").hidden = true;
     $("searchInput").value = "";
     state.searchResults = [];
+    state.searchQuery = "";
+    state.searchOffset = 0;
+    state.searchTotal = 0;
     if (state.map?.getSource("search-results")) state.map.getSource("search-results").setData(EMPTY);
   }
 
@@ -4848,20 +4856,105 @@
     return [sourceLabel, props.category, props.kind, props.amenity, props.shop, props.folder].filter(Boolean).join(" · ");
   }
 
+  function searchDistanceM(point) {
+    if (!state.map || !point) return null;
+    const center = state.map.getCenter();
+    const lat1 = Number(center.lat);
+    const lon1 = Number(center.lng);
+    const lat2 = Number(point[1]);
+    const lon2 = Number(point[0]);
+    if (![lat1, lon1, lat2, lon2].every(Number.isFinite)) return null;
+    const toRad = (value) => value * Math.PI / 180;
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a = Math.sin(dLat / 2) ** 2
+      + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+    return 6371000 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
+  function searchDistanceLabel(distanceM) {
+    if (!Number.isFinite(distanceM)) return "";
+    const miles = distanceM / 1609.344;
+    if (miles < 0.1) return `${Math.round(distanceM * 3.28084)} ft`;
+    if (miles < 10) return `${miles.toFixed(1)} mi`;
+    return `${Math.round(miles)} mi`;
+  }
+
+  function decorateSearchResult(result) {
+    const distance = searchDistanceM(result.point);
+    result.distanceM = Number.isFinite(distance) ? distance : null;
+    if (Number.isFinite(distance) && !String(result.subtitle || "").match(/^\d+(\.\d+)?\s(mi|ft)\b/)) {
+      result.subtitle = [searchDistanceLabel(distance), result.subtitle].filter(Boolean).join(" · ");
+    }
+    return result;
+  }
+
+  function searchResultRank(result, query) {
+    const q = String(query || "").trim().toLowerCase();
+    const title = String(result.title || "").toLowerCase();
+    const props = result.feature?.properties || {};
+    const kindText = [
+      props.marker_icon_key,
+      props.kind_detail,
+      props.kind,
+      props.amenity,
+      props.shop,
+      props.tourism,
+      props.category,
+    ].filter(Boolean).join(" ").toLowerCase();
+    let bucket = 3;
+    if (title === q) bucket = 0;
+    else if (title.startsWith(q)) bucket = 1;
+    else if ((state.searchNeedles || []).some((needle) => kindText.includes(needle))) bucket = 2;
+    return [
+      bucket,
+      Number.isFinite(result.distanceM) ? result.distanceM : Number.POSITIVE_INFINITY,
+      title,
+    ];
+  }
+
+  function sortSearchResults(results, query) {
+    results.forEach(decorateSearchResult);
+    results.sort((a, b) => {
+      const ar = searchResultRank(a, query);
+      const br = searchResultRank(b, query);
+      for (let i = 0; i < ar.length; i += 1) {
+        if (ar[i] < br[i]) return -1;
+        if (ar[i] > br[i]) return 1;
+      }
+      return 0;
+    });
+    return results;
+  }
+
   function renderSearchResults(results) {
     const list = $("searchResults");
     if (!results.length) {
-      list.innerHTML = '<div class="omv2-overlay-note">No visible matches.</div>';
+      list.innerHTML = '<div class="omv2-overlay-note">No matches.</div>';
       list.hidden = false;
       if (state.map?.getSource("search-results")) state.map.getSource("search-results").setData(EMPTY);
       return;
     }
-    list.innerHTML = results.slice(0, 40).map((result, index) => `
+    const start = state.searchOffset + 1;
+    const end = state.searchOffset + results.length;
+    const total = state.searchTotal || results.length;
+    const pager = total > state.searchLimit
+      ? `<div class="omv2-search-pager">
+          <span>${start}-${end} of ${total}</span>
+          <button type="button" data-search-page="prev" ${state.searchOffset <= 0 ? "disabled" : ""}>Prev</button>
+          <button type="button" data-search-page="next" ${end >= total ? "disabled" : ""}>Next</button>
+        </div>`
+      : "";
+    list.innerHTML = `
+      ${pager}
+      ${results.map((result, index) => `
       <button class="omv2-search-result" type="button" data-search-index="${index}">
         <strong>${escapeHtml(result.title)}</strong>
         <small>${escapeHtml(result.subtitle)}</small>
       </button>
-    `).join("");
+      `).join("")}
+      ${pager}
+    `;
     list.hidden = false;
     const highlights = results
       .filter((result) => result.point)
@@ -4873,6 +4966,93 @@
     if (state.map?.getSource("search-results")) {
       state.map.getSource("search-results").setData({ type: "FeatureCollection", features: highlights });
     }
+  }
+
+  function searchSourcesParam() {
+    const sources = [];
+    if ($("searchBase")?.checked !== false) sources.push("map");
+    if ($("searchOverlays")?.checked !== false) sources.push("overlays");
+    if ($("searchSaved")?.checked !== false) sources.push("saved");
+    return sources.join(",");
+  }
+
+  function searchCategoriesParam() {
+    const categories = [];
+    if ($("searchPois")?.checked !== false) categories.push("pois");
+    if ($("searchRoads")?.checked !== false) categories.push("roads");
+    if ($("searchTrails")?.checked !== false) categories.push("trails");
+    return categories.join(",");
+  }
+
+  function searchPoiKindsParam() {
+    if (!poiKindFilterActive()) return "";
+    return Array.from(state.poiKindFilter).sort().join(",");
+  }
+
+  function serverResultToFeature(result) {
+    return {
+      type: "Feature",
+      geometry: result.geometry || { type: "Point", coordinates: [Number(result.lon), Number(result.lat)] },
+      properties: {
+        ...(result.properties || {}),
+        id: result.id,
+        name: result.title || result.name,
+        title: result.title || result.name,
+        category: result.category || result.kind || "",
+        kind: result.kind || "",
+        marker_icon_key: result.icon_key || result.poi_kind || "waypoint",
+        source: result.source || "",
+      },
+    };
+  }
+
+  function searchResultFromServer(result) {
+    const lon = Number(result.lon);
+    const lat = Number(result.lat);
+    const point = Number.isFinite(lon) && Number.isFinite(lat) ? [lon, lat] : pointForFeature(result.geometry ? { geometry: result.geometry } : {});
+    const feature = serverResultToFeature(result);
+    return {
+      feature,
+      point,
+      title: result.title || result.name || "Search result",
+      subtitle: [result.distance_label, result.subtitle || result.source_label || result.source, result.kind].filter(Boolean).join(" · "),
+      source: result.source || "map",
+      overlay: result.overlay || null,
+      zoom: result.zoom,
+    };
+  }
+
+  async function runServerMapSearch(query, offset = 0) {
+    if (!state.map) return;
+    const center = state.map.getCenter();
+    const params = new URLSearchParams({
+      q: String(query || "").trim(),
+      lat: String(center.lat),
+      lon: String(center.lng),
+      limit: String(state.searchLimit),
+      offset: String(Math.max(0, offset)),
+      sources: searchSourcesParam(),
+      categories: searchCategoriesParam(),
+    });
+    const poiKinds = searchPoiKindsParam();
+    if (poiKinds) params.set("poi_kinds", poiKinds);
+    const payload = await fetchJson(`${API.search}?${params.toString()}`);
+    const results = Array.isArray(payload.results) ? payload.results.map(searchResultFromServer) : [];
+    state.searchNeedles = searchNeedles(query);
+    if (Number(offset || 0) === 0) {
+      const includeBase = $("searchBase")?.checked !== false;
+      const includeOverlays = $("searchOverlays")?.checked !== false;
+      state.searchBounds = state.map.getBounds();
+      const seen = new Set(results.map((result) => featureKey(result.feature, result.title, result.point || [0, 0])));
+      searchLoadedSourceFeatures({ includeBase, includeOverlays, results, seen });
+    }
+    sortSearchResults(results, query);
+    state.searchQuery = query;
+    state.searchOffset = Number(payload.offset || 0);
+    state.searchLimit = Number(payload.limit || state.searchLimit);
+    state.searchTotal = Number(payload.total || results.length);
+    state.searchResults = results;
+    renderSearchResults(results);
   }
 
   function searchNeedles(query) {
@@ -4960,14 +5140,14 @@
     const key = featureKey(feature, title, point);
     if (seen.has(key)) return;
     seen.add(key);
-    results.push({
+    results.push(decorateSearchResult({
       feature,
       point,
       title,
       subtitle: searchResultSubtitle(feature, sourceLabel),
       source: sourceType,
       overlay,
-    });
+    }));
   }
 
   function querySourceFeatures(sourceId, sourceLayers = []) {
@@ -5026,7 +5206,7 @@
     }
   }
 
-  function runMapSearch(query) {
+  async function runMapSearch(query, offset = 0) {
     const q = String(query || "").trim().toLowerCase();
     if (!state.map || !q) {
       closeSearch();
@@ -5056,6 +5236,13 @@
         `)
         .addTo(state.map);
       return;
+    }
+    try {
+      await runServerMapSearch(query, offset);
+      return;
+    } catch (error) {
+      console.warn("[OIAB Maps v2] server map search failed, falling back to loaded map features", error);
+      toast("Global search failed; using loaded map data only.", true);
     }
     const needles = searchNeedles(q);
     state.searchNeedles = needles;
@@ -5105,6 +5292,9 @@
       });
     }
     searchLoadedSourceFeatures({ includeBase, includeOverlays, results, seen });
+    sortSearchResults(results, query);
+    state.searchOffset = 0;
+    state.searchTotal = results.length;
     state.searchResults = results;
     renderSearchResults(results);
   }
@@ -5112,7 +5302,7 @@
   function openSearchResult(index) {
     const result = state.searchResults[Number(index)];
     if (!result?.point || !state.map) return;
-    state.map.easeTo({ center: result.point, zoom: Math.max(state.map.getZoom(), 15), duration: 450 });
+    state.map.easeTo({ center: result.point, zoom: Math.max(state.map.getZoom(), Number(result.zoom || 15)), duration: 450 });
     const html = result.source === "saved"
       ? savedDataPopupHtml(result.feature.properties || {}, result.feature.geometry?.type === "Point" ? "waypoint" : "route", result.point)
       : result.source === "overlay"
@@ -5783,6 +5973,15 @@
       }
     });
     $("searchResults").addEventListener("click", (event) => {
+      const pageButton = event.target.closest("[data-search-page]");
+      if (pageButton) {
+        const direction = pageButton.dataset.searchPage;
+        const nextOffset = direction === "next"
+          ? state.searchOffset + state.searchLimit
+          : Math.max(0, state.searchOffset - state.searchLimit);
+        runMapSearch(state.searchQuery || $("searchInput").value, nextOffset);
+        return;
+      }
       const button = event.target.closest("[data-search-index]");
       if (button) openSearchResult(button.dataset.searchIndex);
     });

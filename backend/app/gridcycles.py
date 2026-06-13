@@ -66,6 +66,7 @@ def gridcycles_new_payload(mode: str = "classic", difficulty: str = "medium", *,
         },
         "players": {},
         "occupied": {},
+        "fadingTrails": [],
         "round": 1,
         "winner": None,
         "scores": {},
@@ -73,6 +74,8 @@ def gridcycles_new_payload(mode: str = "classic", difficulty: str = "medium", *,
         "countdownUntil": 0,
         "startedAt": 0,
         "lastTick": 0,
+        "tick": 0,
+        "lagPauses": 0,
         "events": [],
     }
 
@@ -132,14 +135,86 @@ def gridcycles_add_bots(game: dict[str, Any], count: int = 1, difficulty: str = 
         add_gridcycles_bot(game, difficulty)
 
 
-def start_positions(grid_w: int, grid_h: int, marks: list[str]) -> dict[str, tuple[int, int, str]]:
-    presets = {
-        "A": (max(4, grid_w // 5), grid_h // 2, "right"),
-        "B": (min(grid_w - 5, grid_w - grid_w // 5), grid_h // 2, "left"),
-        "C": (grid_w // 2, max(4, grid_h // 5), "down"),
-        "D": (grid_w // 2, min(grid_h - 5, grid_h - grid_h // 5), "up"),
+def direction_to_furthest_wall(x: int, y: int, grid_w: int, grid_h: int) -> str:
+    distances = {
+        "left": x,
+        "right": grid_w - 1 - x,
+        "up": y,
+        "down": grid_h - 1 - y,
     }
-    return {mark: presets.get(mark, (grid_w // 2, grid_h // 2, "right")) for mark in marks}
+    return max(distances.items(), key=lambda item: item[1])[0]
+
+
+def start_positions(grid_w: int, grid_h: int, marks: list[str]) -> dict[str, tuple[int, int, str]]:
+    margin = 4
+    min_gap = 10
+    positions: dict[str, tuple[int, int, str]] = {}
+    placed: list[tuple[int, int]] = []
+    max_x = max(margin, grid_w - margin - 1)
+    max_y = max(margin, grid_h - margin - 1)
+    for mark in marks:
+        chosen: tuple[int, int] | None = None
+        for _ in range(600):
+            x = random.randint(margin, max_x)
+            y = random.randint(margin, max_y)
+            if all(abs(x - px) + abs(y - py) >= min_gap for px, py in placed):
+                chosen = (x, y)
+                break
+        if chosen is None:
+            # Small arenas should still start; fall back to deterministic corners.
+            fallback_index = len(placed) % 4
+            fallback = (
+                (margin, margin),
+                (max_x, max_y),
+                (max_x, margin),
+                (margin, max_y),
+            )[fallback_index]
+            chosen = fallback
+        x, y = chosen
+        placed.append(chosen)
+        positions[mark] = (x, y, direction_to_furthest_wall(x, y, grid_w, grid_h))
+    return positions
+
+
+def prune_fading_trails(payload: dict[str, Any], current_ms: int | None = None) -> None:
+    current_ms = current_ms or now_ms()
+    payload["fadingTrails"] = [
+        trail
+        for trail in list(payload.get("fadingTrails") or [])
+        if isinstance(trail, dict)
+        and current_ms - int(trail.get("startedAt") or 0) < int(trail.get("durationMs") or 2000) + 120
+    ]
+
+
+def release_crashed_trails(payload: dict[str, Any], crashed: set[str], current_ms: int) -> None:
+    if not crashed:
+        prune_fading_trails(payload, current_ms)
+        return
+    occupied = payload.setdefault("occupied", {})
+    players = payload.get("players") if isinstance(payload.get("players"), dict) else {}
+    fading = payload.setdefault("fadingTrails", [])
+    for mark in sorted(crashed):
+        cells: list[list[int]] = []
+        for key, owner in list(occupied.items()):
+            if owner != mark:
+                continue
+            try:
+                x_text, y_text = str(key).split(",", 1)
+                cells.append([int(x_text), int(y_text)])
+            except (TypeError, ValueError):
+                pass
+            occupied.pop(key, None)
+        if cells:
+            fading.append(
+                {
+                    "mark": mark,
+                    "color": (players.get(mark) or {}).get("color") or GRIDCYCLES_COLORS.get(mark, "#ffffff"),
+                    "startedAt": current_ms,
+                    "durationMs": 2000,
+                    "cells": cells,
+                }
+            )
+    prune_fading_trails(payload, current_ms)
 
 
 def gridcycles_start_round(game: dict[str, Any], countdown_ms: int = 3200) -> None:
@@ -173,12 +248,15 @@ def gridcycles_start_round(game: dict[str, Any], countdown_ms: int = 3200) -> No
         )
         occupied[f"{x},{y}"] = mark
     payload["occupied"] = occupied
+    payload["fadingTrails"] = []
     payload["winner"] = None
     payload["events"] = []
     payload["phase"] = "countdown"
     payload["countdownUntil"] = now_ms() + max(0, int(countdown_ms))
     payload["startedAt"] = 0
     payload["lastTick"] = payload["countdownUntil"]
+    payload["tick"] = 0
+    payload["lagPauses"] = 0
     game["status"] = "active"
     game["turn"] = "all"
     game["winner"] = ""
@@ -235,7 +313,18 @@ def choose_bot_direction(payload: dict[str, Any], mark: str, difficulty: str) ->
     current = str(state.get("dir") or "right")
     x = int(state.get("x") or 0)
     y = int(state.get("y") or 0)
-    lookahead = {"easy": 18, "medium": 45, "hard": 85, "expert": 130}.get(str(difficulty or "medium").lower(), 45)
+    level = str(difficulty or "medium").lower()
+    lookahead = {"easy": 16, "medium": 48, "hard": 100, "expert": 160}.get(level, 48)
+    aggression = {"easy": 0, "medium": 10, "hard": 28, "expert": 48}.get(level, 10)
+    mistake_rate = {"easy": 0.32, "medium": 0.12, "hard": 0.04, "expert": 0.015}.get(level, 0.12)
+    project_steps = {"easy": 2, "medium": 4, "hard": 7, "expert": 10}.get(level, 4)
+    human = (payload.get("players") or {}).get("A") or {}
+    human_dir = str(human.get("dir") or "right")
+    hdx, hdy = DIRS.get(human_dir, (0, 0))
+    projected_human = (
+        int(human.get("x") or 0) + hdx * project_steps,
+        int(human.get("y") or 0) + hdy * project_steps,
+    )
     choices = []
     for direction, (dx, dy) in DIRS.items():
         if direction == OPPOSITE.get(current):
@@ -243,14 +332,21 @@ def choose_bot_direction(payload: dict[str, Any], mark: str, difficulty: str) ->
         nx, ny = x + dx, y + dy
         score = flood_score(payload, (nx, ny), lookahead)
         if score >= 0:
-            bias = 0 if direction == current else random.randint(-4, 4)
-            choices.append((score + bias, direction))
+            distance = abs(nx - projected_human[0]) + abs(ny - projected_human[1])
+            pressure = max(0, 24 - distance) * aggression
+            lane_cut = 0
+            if aggression:
+                if dx and abs(ny - projected_human[1]) <= 2:
+                    lane_cut = int(aggression * 1.7)
+                elif dy and abs(nx - projected_human[0]) <= 2:
+                    lane_cut = int(aggression * 1.7)
+            turn_bias = 4 if direction == current else -2
+            noise = random.randint(-3, 3)
+            choices.append((score + pressure + lane_cut + turn_bias + noise, direction))
     if not choices:
         return current
     choices.sort(reverse=True)
-    if difficulty in {"hard", "expert"} and len(choices) > 1 and random.random() < 0.12:
-        return choices[1][1]
-    if difficulty == "easy" and len(choices) > 1 and random.random() < 0.32:
+    if len(choices) > 1 and random.random() < mistake_rate:
         return random.choice(choices[: min(3, len(choices))])[1]
     return choices[0][1]
 
@@ -333,6 +429,7 @@ def advance_one_tick(game: dict[str, Any]) -> None:
         if mark in crashed and isinstance(state, dict):
             state["alive"] = False
             state["crashedAt"] = current_ms
+    release_crashed_trails(payload, crashed, current_ms)
 
     for mark, (nx, ny, direction) in intents.items():
         state = players.get(mark)
@@ -358,9 +455,11 @@ def advance_one_tick(game: dict[str, Any]) -> None:
             for mark, state in players.items():
                 if isinstance(state, dict):
                     state["alive"] = False
+            release_crashed_trails(payload, set(players.keys()), current_ms)
             finish_round(game, set(players.keys()) - set(leaders))
         else:
             finish_round(game, crashed)
+    payload["tick"] = int(payload.get("tick") or 0) + 1
 
 
 def gridcycles_advance(game: dict[str, Any]) -> bool:
@@ -378,8 +477,17 @@ def gridcycles_advance(game: dict[str, Any]) -> bool:
     settings = payload.get("settings") if isinstance(payload.get("settings"), dict) else {}
     tick_ms = clamp_int(settings.get("tickMs"), 105, 55, 180)
     last_tick = int(payload.get("lastTick") or current)
-    if current - last_tick < tick_ms:
+    elapsed = current - last_tick
+    if elapsed < tick_ms:
         return changed
+    if elapsed > tick_ms * 5:
+        # HTTP polling can be delayed by browser GC, canvas stalls, proxy latency,
+        # or a busy Pi. GridCycles depends on precise visible movement, so a long
+        # request gap should pause the simulation instead of making a player jump
+        # several cells or crash against state they never saw.
+        payload["lastTick"] = current
+        payload["lagPauses"] = int(payload.get("lagPauses") or 0) + 1
+        return True
     # Do not catch up multiple grid moves after a slow browser frame or delayed
     # poll. A catch-up burst makes the bike appear frozen client-side while the
     # authoritative state keeps moving, which causes unfair invisible crashes.
@@ -419,12 +527,18 @@ def gridcycles_public_payload(game: dict[str, Any], player_id: str = "") -> dict
     payload = sync_players(game)
     if game.get("status") == "active":
         gridcycles_advance(game)
+    prune_fading_trails(payload)
     public_payload = {
         "phase": payload.get("phase") or "lobby",
         "settings": dict(payload.get("settings") or {}),
         "players": dict(payload.get("players") or {}),
         "occupied": dict(payload.get("occupied") or {}),
+        "fadingTrails": list(payload.get("fadingTrails") or []),
         "round": int(payload.get("round") or 1),
+        "tick": int(payload.get("tick") or 0),
+        "lastTick": int(payload.get("lastTick") or 0),
+        "serverTime": now_ms(),
+        "lagPauses": int(payload.get("lagPauses") or 0),
         "scores": dict(payload.get("scores") or {}),
         "winner": payload.get("winner"),
         "roundWinners": list(payload.get("roundWinners") or []),
