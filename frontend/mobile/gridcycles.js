@@ -1,5 +1,11 @@
 (() => {
   const apiUrl = "/mobile-games";
+  const audioPaths = {
+    background: "/mobile/assets/gridcycles/background.mp3",
+    crash: "/mobile/assets/gridcycles/crash.mp3",
+    start: "/mobile/assets/gridcycles/start.mp3",
+    roundOver: "/mobile/assets/gridcycles/round-over.mp3",
+  };
   const $ = (id) => document.getElementById(id);
   const canvas = $("gridCanvas");
   const ctx = canvas.getContext("2d", { alpha: false });
@@ -14,8 +20,18 @@
     lastInput: "",
     lastInputAt: 0,
     polling: null,
+    pollTimer: 0,
+    pollInFlight: false,
     raf: 0,
     swipeStart: null,
+    lastPlayers: {},
+    visualPlayers: {},
+    particles: [],
+    audioContext: null,
+    audioBuffers: {},
+    audioLoadPromise: null,
+    audioUnlocked: false,
+    bgAudio: null,
   };
 
   const els = {
@@ -80,10 +96,159 @@
   }
 
   function setGame(game, extra = {}) {
+    const previousPhase = phase();
+    captureCrashes(game);
+    updateVisualPlayers(game);
     state.game = game;
     state.mark = extra.mark || state.mark || (game?.players || []).find((player) => player.id === state.player?.id)?.mark || "";
     state.observer = !!extra.observer;
+    state.lastPlayers = { ...(game?.payload?.players || {}) };
     updateUi();
+    handleAudioTransition(previousPhase, phase());
+  }
+
+  function captureCrashes(nextGame) {
+    const nextPlayers = nextGame?.payload?.players || {};
+    for (const [mark, nextPlayer] of Object.entries(nextPlayers)) {
+      const previous = state.lastPlayers?.[mark];
+      if (previous?.alive !== false && nextPlayer?.alive === false) {
+        spawnCrash(nextPlayer.x ?? previous.x ?? 0, nextPlayer.y ?? previous.y ?? 0, nextPlayer.color || previous.color || "#fff");
+        playCue("crash", { volume: .72 });
+      }
+    }
+  }
+
+  function ensureAudioContext() {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return null;
+    if (!state.audioContext) state.audioContext = new AudioContextClass();
+    return state.audioContext;
+  }
+
+  async function unlockAudio() {
+    if (state.audioUnlocked) return;
+    state.audioUnlocked = true;
+    const context = ensureAudioContext();
+    if (context?.state === "suspended") await context.resume().catch(() => {});
+    if (!state.bgAudio) {
+      const audio = new Audio(audioPaths.background);
+      audio.loop = true;
+      audio.volume = .34;
+      audio.preload = "auto";
+      state.bgAudio = audio;
+    }
+    loadAudioBuffers().catch(() => {});
+    if (state.game && ["countdown", "running"].includes(phase())) startBackground();
+  }
+
+  async function loadAudioBuffers() {
+    const context = ensureAudioContext();
+    if (!context) return {};
+    if (Object.keys(state.audioBuffers).length) return state.audioBuffers;
+    if (state.audioLoadPromise) return state.audioLoadPromise;
+    state.audioLoadPromise = Promise.all(Object.entries(audioPaths)
+      .filter(([name]) => name !== "background")
+      .map(async ([name, path]) => {
+        const response = await fetch(path, { cache: "force-cache" });
+        if (!response.ok) return null;
+        const buffer = await response.arrayBuffer();
+        return [name, await context.decodeAudioData(buffer)];
+      }))
+      .then((entries) => {
+        state.audioBuffers = Object.fromEntries(entries.filter(Boolean));
+        return state.audioBuffers;
+      })
+      .catch(() => {
+        state.audioBuffers = {};
+        return state.audioBuffers;
+      });
+    return state.audioLoadPromise;
+  }
+
+  async function playCue(name, options = {}) {
+    if (!state.audioUnlocked) return;
+    const context = ensureAudioContext();
+    if (!context) return;
+    if (context.state === "suspended") await context.resume().catch(() => {});
+    const buffers = await loadAudioBuffers();
+    const buffer = buffers[name];
+    if (!buffer) return;
+    const source = context.createBufferSource();
+    const gain = context.createGain();
+    gain.gain.value = Number(options.volume ?? .55);
+    source.buffer = buffer;
+    source.connect(gain).connect(context.destination);
+    source.start();
+  }
+
+  function startBackground() {
+    if (!state.audioUnlocked || !state.bgAudio) return;
+    state.bgAudio.play().catch(() => {});
+  }
+
+  function stopBackground() {
+    if (!state.bgAudio) return;
+    state.bgAudio.pause();
+  }
+
+  function handleAudioTransition(previousPhase, nextPhase) {
+    if (previousPhase === nextPhase) return;
+    if (nextPhase === "countdown") {
+      playCue("start", { volume: .62 });
+      startBackground();
+    }
+    if (nextPhase === "roundOver" || nextPhase === "gameOver") {
+      playCue("roundOver", { volume: .58 });
+      stopBackground();
+    }
+    if (nextPhase === "running") startBackground();
+    if (nextPhase === "lobby") stopBackground();
+  }
+
+  function updateVisualPlayers(nextGame) {
+    const now = performance.now();
+    const players = nextGame?.payload?.players || {};
+    const tickMs = Number(nextGame?.payload?.settings?.tickMs || 105);
+    for (const [mark, player] of Object.entries(players)) {
+      if (!player?.alive) continue;
+      const prior = state.visualPlayers[mark];
+      const nextX = Number(player.x || 0);
+      const nextY = Number(player.y || 0);
+      if (!prior) {
+        state.visualPlayers[mark] = {
+          startX: nextX,
+          startY: nextY,
+          targetX: nextX,
+          targetY: nextY,
+          startAt: now,
+          duration: tickMs,
+        };
+        continue;
+      }
+      if (prior.targetX !== nextX || prior.targetY !== nextY) {
+        const current = interpolateVisual(prior, now);
+        state.visualPlayers[mark] = {
+          startX: current.x,
+          startY: current.y,
+          targetX: nextX,
+          targetY: nextY,
+          startAt: now,
+          duration: Math.max(55, Math.min(150, tickMs)),
+        };
+      }
+    }
+    for (const mark of Object.keys(state.visualPlayers)) {
+      if (!players[mark]?.alive) delete state.visualPlayers[mark];
+    }
+  }
+
+  function interpolateVisual(visual, now = performance.now()) {
+    const progress = Math.max(0, Math.min(1, (now - visual.startAt) / Math.max(1, visual.duration)));
+    const eased = 1 - Math.pow(1 - progress, 3);
+    return {
+      x: visual.startX + (visual.targetX - visual.startX) * eased,
+      y: visual.startY + (visual.targetY - visual.startY) * eased,
+    };
   }
 
   async function loadOpenGames() {
@@ -145,26 +310,36 @@
 
   async function pollState() {
     if (!state.game) return;
+    if (state.pollInFlight) return;
+    state.pollInFlight = true;
     try {
       const data = await post({ action: "state", gameId: state.game.id, ...playerPayload() });
       if (data.game) setGame(data.game);
     } catch (error) {
       showMessage(error.message);
+    } finally {
+      state.pollInFlight = false;
     }
   }
 
   function startPolling() {
     clearInterval(state.polling);
-    pollState();
-    state.polling = setInterval(pollState, 220);
+    clearTimeout(state.pollTimer);
+    const loop = async () => {
+      await pollState();
+      const fast = phase() === "running" || phase() === "countdown";
+      state.pollTimer = setTimeout(loop, fast ? 85 : 260);
+    };
+    loop();
   }
 
   function updateUi() {
     const game = state.game;
     const data = payload();
     const inGame = !!game;
+    const activePlay = inGame && ["running", "countdown"].includes(data.phase);
     els.lobby.hidden = inGame;
-    els.room.hidden = !inGame;
+    els.room.hidden = !inGame || activePlay;
     if (!inGame) {
       els.round.textContent = "1";
       els.status.textContent = "Lobby";
@@ -269,7 +444,26 @@
     drawBackground(w, h, cell, gridW, gridH);
     drawTrails(data, cell);
     drawHeads(data, cell);
+    drawParticles(cell);
     state.raf = requestAnimationFrame(render);
+  }
+
+  function spawnCrash(x, y, color) {
+    const now = performance.now();
+    for (let index = 0; index < 64; index += 1) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 2.4 + Math.random() * 8.4;
+      state.particles.push({
+        x: Number(x) + .5,
+        y: Number(y) + .5,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        size: .28 + Math.random() * .7,
+        color,
+        born: now,
+        life: 3000,
+      });
+    }
   }
 
   function drawBackground(w, h, cell, gridW, gridH) {
@@ -327,8 +521,10 @@
     Object.values(players).forEach((player) => {
       if (!player?.alive) return;
       const color = player.color || "#fff";
-      const cx = ox + (player.x + .5) * cell;
-      const cy = oy + (player.y + .5) * cell;
+      const visual = state.visualPlayers[player.mark];
+      const current = visual ? interpolateVisual(visual) : { x: Number(player.x || 0), y: Number(player.y || 0) };
+      const cx = ox + (current.x + .5) * cell;
+      const cy = oy + (current.y + .5) * cell;
       ctx.fillStyle = "#fff";
       ctx.shadowColor = color;
       ctx.shadowBlur = 18;
@@ -341,6 +537,30 @@
       ctx.fill();
       ctx.shadowBlur = 0;
     });
+  }
+
+  function drawParticles(cell) {
+    if (!state.particles.length) return;
+    const now = performance.now();
+    const ox = state.offsetX;
+    const oy = state.offsetY;
+    state.particles = state.particles.filter((particle) => {
+      const age = now - particle.born;
+      if (age > particle.life) return false;
+      const t = age / 1000;
+      const fade = 1 - age / particle.life;
+      const px = ox + (particle.x + particle.vx * t) * cell;
+      const py = oy + (particle.y + particle.vy * t) * cell;
+      const size = Math.max(2, particle.size * cell * (1 + t * .28));
+      ctx.globalAlpha = Math.max(0, fade);
+      ctx.fillStyle = particle.color;
+      ctx.shadowColor = particle.color;
+      ctx.shadowBlur = 12 * fade;
+      ctx.fillRect(px - size / 2, py - size / 2, size, size);
+      return true;
+    });
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
   }
 
   function sendDir(dir) {
@@ -397,7 +617,9 @@
     els.reset.addEventListener("click", () => post({ action: "reset", gameId: state.game?.id, ...playerPayload() }).then((data) => setGame(data.game)).catch((error) => showMessage(error.message)));
     els.close.addEventListener("click", () => {
       clearInterval(state.polling);
+      clearTimeout(state.pollTimer);
       state.game = null;
+      stopBackground();
       updateUi();
       loadOpenGames().catch((error) => showMessage(error.message));
     });
@@ -408,6 +630,9 @@
       });
     });
     window.addEventListener("keydown", handleKey, { passive: false });
+    window.addEventListener("keydown", () => unlockAudio().catch(() => {}), { once: true, passive: true });
+    document.addEventListener("pointerdown", () => unlockAudio().catch(() => {}), { once: true, passive: true });
+    document.addEventListener("touchstart", () => unlockAudio().catch(() => {}), { once: true, passive: true });
     canvas.addEventListener("pointerdown", startSwipe, { passive: false });
     canvas.addEventListener("pointerup", endSwipe, { passive: false });
     canvas.addEventListener("touchstart", startSwipe, { passive: false });

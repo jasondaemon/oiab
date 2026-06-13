@@ -9215,7 +9215,7 @@ PY
             "settingsPinTimeoutMinutes": max(0, min(120, settings_pin_timeout)),
             "hiddenAppIds": ["legacy-home", "legacy-admin", "https-settings", "service-manager", "audio-test", "minecraft"],
             "folders": [
-                {"id": "games", "title": "Games", "icon": "/maps/overland/overland-folder-games.svg", "protected": False, "appIds": ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "sinkhole-city", "canyon-crawler", "orbit-run", "blank-slate", "starts-ends", "dice-roller", "word-tile-arena", "connect-four", "burst", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "minecraft-map", "drums", "trivia", "tic-tac-toe", "license-plates"]},
+                {"id": "games", "title": "Games", "icon": "/maps/overland/overland-folder-games.svg", "protected": False, "appIds": ["scoreboard", "chess", "checkers", "minesweeper", "blockfall", "claimline", "sinkhole-city", "canyon-crawler", "orbit-run", "blank-slate", "starts-ends", "dice-roller", "gridcycles", "word-tile-arena", "connect-four", "burst", "battleship", "dots-and-boxes", "hangman", "word-grid", "pattern-match", "web-emulator", "minecraft-map", "drums", "trivia", "tic-tac-toe", "license-plates"]},
             ],
         }
 
