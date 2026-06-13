@@ -1,0 +1,2 @@
+# Reacquire USB GPS devices when their tty path changes after unplug/replug.
+ACTION=="add|remove", SUBSYSTEM=="tty", KERNEL=="ttyACM*|ttyUSB*", TAG+="systemd", ENV{SYSTEMD_WANTS}+="oiab-gps-reacquire.service"

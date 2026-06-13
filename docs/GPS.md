@@ -31,6 +31,26 @@ gpspipe -w -n 5
 curl http://localhost:8080/api/location/current
 ```
 
+## Host hotplug integration
+
+Raspberry Pi deployments should install the OIAB host GPS helper:
+
+```bash
+cd /srv/trailer/oiab
+sudo ./scripts/install-gps-host.sh
+```
+
+The helper:
+
+- installs `gpsd` and `gpsd-clients`
+- prefers stable `/dev/serial/by-id/*` paths over fragile `/dev/ttyACM0` or `/dev/ttyUSB0`
+- updates `/etc/default/gpsd` with the selected GPS receiver
+- restarts `gpsd` after USB GPS add/remove events
+- runs a periodic safety check every 60 seconds
+- exposes gpsd on TCP `2947` so the OIAB Docker container can read it through `host.docker.internal`
+
+This means unplugging and reconnecting the same USB GPS dongle should be reacquired automatically without restarting OIAB.
+
 ## Docker
 
 Docker deployment reads host `gpsd` by default:

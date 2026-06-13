@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+LOCK="/run/oiab-gps-reacquire.lock"
+STATE="/run/oiab-gps-device"
+GPSD_DEFAULT="/etc/default/gpsd"
+LOG_TAG="oiab-gps-reacquire"
+
+log() {
+  logger -t "$LOG_TAG" -- "$*"
+  printf '%s\n' "$*"
+}
+
+score_device() {
+  local dev="$1"
+  local props vendor model product score
+  props="$(udevadm info --query=property --name="$dev" 2>/dev/null || true)"
+  vendor="$(printf '%s\n' "$props" | awk -F= '$1 == "ID_VENDOR" || $1 == "ID_VENDOR_FROM_DATABASE" {print tolower($2); exit}')"
+  model="$(printf '%s\n' "$props" | awk -F= '$1 == "ID_MODEL" || $1 == "ID_MODEL_FROM_DATABASE" {print tolower($2); exit}')"
+  product="$(printf '%s\n' "$props" | awk -F= '$1 == "ID_USB_MODEL" || $1 == "ID_SERIAL" {print tolower($2); exit}')"
+  score=0
+  case "$dev" in
+    /dev/serial/by-id/*) score=$((score + 100));;
+    /dev/ttyACM*) score=$((score + 40));;
+    /dev/ttyUSB*) score=$((score + 30));;
+  esac
+  if printf '%s %s %s %s\n' "$dev" "$vendor" "$model" "$product" | grep -Eiq 'u-blox|ublox|gps|gnss|nmea'; then
+    score=$((score + 1000))
+  fi
+  printf '%05d %s\n' "$score" "$dev"
+}
+
+find_best_device() {
+  local candidates=()
+  local dev
+  while IFS= read -r dev; do
+    [[ -e "$dev" ]] || continue
+    candidates+=("$dev")
+  done < <(
+    find /dev/serial/by-id -maxdepth 1 -type l 2>/dev/null | sort || true
+    ls /dev/ttyACM* /dev/ttyUSB* 2>/dev/null | sort || true
+  )
+
+  [[ "${#candidates[@]}" -gt 0 ]] || return 1
+
+  for dev in "${candidates[@]}"; do
+    score_device "$dev"
+  done | sort -r | awk 'NR == 1 {$1=""; sub(/^ /, ""); print}'
+}
+
+write_default() {
+  local device="$1"
+  local tmp
+  tmp="$(mktemp)"
+  cat >"$tmp" <<GPSD
+START_DAEMON="true"
+USBAUTO="true"
+DEVICES="${device}"
+GPSD_OPTIONS="-n -G"
+GPSD_SOCKET="/var/run/gpsd.sock"
+GPSD
+  if [[ ! -f "$GPSD_DEFAULT" ]] || ! cmp -s "$tmp" "$GPSD_DEFAULT"; then
+    cp -a "$GPSD_DEFAULT" "${GPSD_DEFAULT}.bak.$(date +%Y%m%d-%H%M%S)" 2>/dev/null || true
+    install -m 0644 "$tmp" "$GPSD_DEFAULT"
+    rm -f "$tmp"
+    return 0
+  fi
+  rm -f "$tmp"
+  return 1
+}
+
+gpsd_has_device_data() {
+  timeout 5 gpspipe -w -n 3 2>/dev/null | grep -Eq '"class":"(DEVICES|TPV|SKY)"'
+}
+
+main() {
+  exec 9>"$LOCK"
+  flock -n 9 || exit 0
+
+  # USB serial device nodes and /dev/serial/by-id links can trail udev by a moment.
+  sleep "${OIAB_GPS_REACQUIRE_DELAY:-2}"
+
+  local device previous changed=0 restart_needed=0
+  if ! device="$(find_best_device)"; then
+    log "No GPS serial device currently detected."
+    rm -f "$STATE"
+    systemctl stop gpsd.service 2>/dev/null || true
+    exit 0
+  fi
+
+  previous="$(cat "$STATE" 2>/dev/null || true)"
+  if write_default "$device"; then
+    changed=1
+  fi
+  if [[ "$device" != "$previous" ]]; then
+    changed=1
+    printf '%s\n' "$device" >"$STATE"
+    log "GPS device selected: $device"
+  fi
+
+  if ! gpsd_has_device_data; then
+    restart_needed=1
+    log "gpsd did not return device data; restarting."
+  fi
+
+  if [[ "$changed" -eq 1 || "$restart_needed" -eq 1 ]]; then
+    systemctl restart gpsd.socket gpsd.service
+    log "gpsd restarted for $device"
+  else
+    log "gpsd already using $device"
+  fi
+}
+
+main "$@"

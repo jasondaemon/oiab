@@ -1,0 +1,7 @@
+[Unit]
+Description=OIAB GPS hotplug reacquire
+After=systemd-udevd.service gpsd.socket
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/oiab-gps-reacquire

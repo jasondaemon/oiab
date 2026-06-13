@@ -272,6 +272,14 @@ OIAB_GPSD_HOST=host.docker.internal
 OIAB_GPSD_PORT=2947
 ```
 
+Install the Raspberry Pi host GPS helper during setup:
+
+```bash
+sudo ./scripts/install-gps-host.sh
+```
+
+It keeps GPS reconnects resilient by using stable `/dev/serial/by-id` paths and restarting `gpsd` on USB add/remove events.
+
 Host checks:
 
 ```bash

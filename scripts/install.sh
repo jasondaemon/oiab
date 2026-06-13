@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DATA_DIR="${OIAB_DATA_DIR:-/data/oiab}"
 INSTALL_RASPAP="${OIAB_INSTALL_RASPAP:-true}"
+INSTALL_GPS="${OIAB_INSTALL_GPS:-true}"
 INSTALL_I2C_TOOLS="${OIAB_INSTALL_I2C_TOOLS:-true}"
 
 echo "Installing Overland In A Box base directories"
@@ -103,6 +104,13 @@ if [[ "$INSTALL_RASPAP" == "true" ]] && command -v apt-get >/dev/null 2>&1; then
   sudo "$ROOT/scripts/install-raspap-host.sh"
 else
   echo "Skipping RaspAP host integration (set OIAB_INSTALL_RASPAP=true to enable)."
+fi
+
+if [[ "$INSTALL_GPS" == "true" ]] && command -v apt-get >/dev/null 2>&1; then
+  echo "Installing GPS host integration"
+  sudo "$ROOT/scripts/install-gps-host.sh"
+else
+  echo "Skipping GPS host integration (set OIAB_INSTALL_GPS=true to enable)."
 fi
 
 echo "Base install prepared. Review config/oiab.env, then run scripts/dev.sh or install systemd/oiab-backend.service."
