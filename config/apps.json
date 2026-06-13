@@ -191,6 +191,14 @@
       "category": "Games"
     },
     {
+      "id": "gridcycles",
+      "title": "GridCycles",
+      "description": "2-4 player grid-cycle arena game with glowing trails, bots, and network rooms.",
+      "url": "/mobile/gridcycles.html",
+      "icon": "/maps/overland/overland-gridcycles.svg",
+      "category": "Games"
+    },
+    {
       "id": "word-tile-arena",
       "title": "Word Tile Arena",
       "description": "Crossword-style tile board game.",

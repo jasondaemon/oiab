@@ -979,6 +979,62 @@ input {
   overflow: auto;
 }
 
+.omv2-map-view-card {
+  width: min(520px, 100%);
+}
+
+.omv2-map-view-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.omv2-map-view-row {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, auto) minmax(0, 1fr) 3.5rem;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--om-border);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 12px;
+  color: var(--om-muted);
+  font-weight: 900;
+}
+
+.omv2-map-view-row input[type="range"] {
+  width: 100%;
+  accent-color: var(--om-green);
+}
+
+.omv2-map-view-row strong {
+  color: var(--om-text);
+  text-align: right;
+}
+
+.omv2-map-view-check {
+  justify-content: flex-start;
+  border-radius: 18px;
+  padding: 12px;
+}
+
+.omv2-map-view-check input {
+  width: 22px;
+  height: 22px;
+}
+
+.omv2-map-view-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.omv2-map-view-actions button {
+  min-width: 0;
+  border-radius: 16px;
+}
+
 .omv2-missing-card h1 {
   margin: 6px 0 12px;
   font-size: clamp(2rem, 5vw, 4rem);

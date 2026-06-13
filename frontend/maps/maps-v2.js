@@ -27,6 +27,7 @@
   const POI_ICON_STYLES = new Set(["outlined-glyph", "circle-marker", "google-circle"]);
   const FOLLOW_PITCH = 58;
   const FOLLOW_MIN_HEADING_SPEED_MPH = 1.2;
+  const TILE_INSPECTOR_FLAGS = ["inspect", "tile_inspector", "debug_tiles"];
   const EMPTY = { type: "FeatureCollection", features: [] };
   const WAYPOINT_TYPES = [
     ["waypoint", "Waypoint", "waypoint"],
@@ -577,6 +578,14 @@
     temperatureDebounce: null,
     temperaturePickMode: false,
   };
+
+  function urlFlagEnabled(names) {
+    const params = new URLSearchParams(window.location.search);
+    return names.some((name) => {
+      const value = String(params.get(name) || "").toLowerCase();
+      return value === "1" || value === "true" || value === "yes" || value === "on";
+    });
+  }
 
   function toast(message, error = false) {
     const node = $("toast");
@@ -3143,6 +3152,47 @@
     if (root) root.dataset.mapTheme = mapTheme();
   }
 
+  function normalizeBearing(value) {
+    const numberValue = Number(value);
+    if (!Number.isFinite(numberValue)) return 0;
+    return Math.round((((numberValue + 180) % 360) + 360) % 360 - 180);
+  }
+
+  function syncMapViewControls() {
+    if (!state.map) return;
+    const pitch = Math.round(state.map.getPitch());
+    const bearing = normalizeBearing(state.map.getBearing());
+    const pitchSlider = $("mapPitchSlider");
+    const bearingSlider = $("mapBearingSlider");
+    const buildingToggle = $("map3dBuildingsToggle");
+    if (pitchSlider) pitchSlider.value = String(pitch);
+    if (bearingSlider) bearingSlider.value = String(bearing);
+    if ($("mapPitchValue")) $("mapPitchValue").textContent = `${pitch}°`;
+    if ($("mapBearingValue")) $("mapBearingValue").textContent = `${bearing}°`;
+    if (buildingToggle) buildingToggle.checked = Boolean(state.show3dBuildings);
+  }
+
+  function updateMapCameraView(next = {}) {
+    if (!state.map) return;
+    const pitch = Number(next.pitch ?? state.map.getPitch());
+    const bearing = Number(next.bearing ?? state.map.getBearing());
+    state.map.jumpTo({
+      pitch: Math.max(0, Math.min(70, pitch)),
+      bearing: normalizeBearing(bearing),
+    });
+    saveMapView();
+    syncMapViewControls();
+  }
+
+  function openMapViewModal() {
+    syncMapViewControls();
+    $("mapViewModal").hidden = false;
+  }
+
+  function closeMapViewModal() {
+    $("mapViewModal").hidden = true;
+  }
+
   function collapseAttribution() {
     requestAnimationFrame(() => {
       document.querySelectorAll(".maplibregl-ctrl-attrib").forEach((node) => {
@@ -3191,6 +3241,7 @@
       applyFollowCamera(state.currentLocation, true);
     } else {
       state.map.easeTo({ pitch: 0, bearing: 0, duration: 500, essential: true });
+      syncMapViewControls();
     }
   }
 
@@ -3220,6 +3271,7 @@
       collapseAttribution();
       applyMapTheme();
       applyBuildingDisplayMode();
+      syncMapViewControls();
       await loadPoiImages();
       await loadOverlayImages();
       addMilitaryHatchLayer();
@@ -4464,7 +4516,7 @@
       state.addFromMap = false;
       state.inspectTile = false;
       $("addMapWaypoint").classList.remove("is-pending");
-      $("inspectTile").classList.remove("is-pending");
+      $("inspectTile")?.classList.remove("is-pending");
       $("overlaysPanel").hidden = true;
       toast("Tap the map for an NWS temperature forecast.");
     });
@@ -5648,7 +5700,7 @@
     $("offlineRegionToggle").addEventListener("click", () => {
       state.inspectTile = false;
       state.addFromMap = false;
-      $("inspectTile").classList.remove("is-pending");
+      $("inspectTile")?.classList.remove("is-pending");
       $("addMapWaypoint").classList.remove("is-pending");
       $("savedDataPanel").hidden = true;
       $("overlaysPanel").hidden = true;
@@ -5736,6 +5788,23 @@
     });
     $("legendToggle").addEventListener("click", openLegendModal);
     $("closeLegendModal").addEventListener("click", closeLegendModal);
+    $("mapViewToggle")?.addEventListener("click", openMapViewModal);
+    $("closeMapViewModal")?.addEventListener("click", closeMapViewModal);
+    $("mapPitchSlider")?.addEventListener("input", (event) => {
+      updateMapCameraView({ pitch: Number(event.target.value) });
+    });
+    $("mapBearingSlider")?.addEventListener("input", (event) => {
+      updateMapCameraView({ bearing: Number(event.target.value) });
+    });
+    $("map3dBuildingsToggle")?.addEventListener("change", (event) => {
+      state.show3dBuildings = Boolean(event.target.checked);
+      localStorage.setItem(MAP_3D_BUILDINGS_KEY, JSON.stringify(state.show3dBuildings));
+      applyBuildingDisplayMode();
+      syncMapViewControls();
+    });
+    $("mapNorthUp")?.addEventListener("click", () => updateMapCameraView({ bearing: 0 }));
+    $("mapDrivingTilt")?.addEventListener("click", () => updateMapCameraView({ pitch: FOLLOW_PITCH }));
+    $("mapResetView")?.addEventListener("click", () => updateMapCameraView({ pitch: 0, bearing: 0 }));
     $("trackDotButton").addEventListener("click", openTrackModeModal);
     $("closeTrackModeModal").addEventListener("click", closeTrackModeModal);
     $("closeTrackModeAction").addEventListener("click", closeTrackModeModal);
@@ -5769,14 +5838,21 @@
         toast(error.message || "Track stop failed.", true);
       }
     });
-    $("refreshData").addEventListener("click", () => { loadOverlandData(); pollLocation(); pollTrack(); });
-    $("inspectTile").addEventListener("click", () => {
-      state.inspectTile = !state.inspectTile;
-      state.addFromMap = false;
-      $("inspectTile").classList.toggle("is-pending", state.inspectTile);
-      $("addMapWaypoint").classList.remove("is-pending");
-      toast(state.inspectTile ? "Tile inspect mode on. Tap the gray block." : "Tile inspect mode off.");
-    });
+    const inspectButton = $("inspectTile");
+    const inspectorAllowed = urlFlagEnabled(TILE_INSPECTOR_FLAGS);
+    if (inspectButton) {
+      inspectButton.hidden = !inspectorAllowed;
+      inspectButton.disabled = !inspectorAllowed;
+      inspectButton.addEventListener("click", () => {
+        if (!inspectorAllowed) return;
+        state.inspectTile = !state.inspectTile;
+        state.addFromMap = false;
+        inspectButton.classList.toggle("is-pending", state.inspectTile);
+        $("mapCanvas").classList.toggle("is-inspecting", state.inspectTile);
+        $("addMapWaypoint").classList.remove("is-pending");
+        toast(state.inspectTile ? "Tile inspect mode on. Tap the gray block." : "Tile inspect mode off.");
+      });
+    }
     $("closeMapErrors")?.addEventListener("click", () => {
       state.mapErrorsDismissed = true;
       $("mapErrorPanel").hidden = true;

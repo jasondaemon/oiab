@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="GridCycles">
+  <defs>
+    <linearGradient id="bg" x1="18" y1="16" x2="110" y2="114" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#183b2a"/>
+      <stop offset="1" stop-color="#06150d"/>
+    </linearGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3.2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect x="10" y="10" width="108" height="108" rx="26" fill="url(#bg)" stroke="#7ee58b" stroke-width="4"/>
+  <path d="M28 34h72M28 54h72M28 74h72M28 94h72M34 28v72M54 28v72M74 28v72M94 28v72" fill="none" stroke="#dff7de" stroke-opacity=".18" stroke-width="2"/>
+  <path d="M30 92h32V50h30" fill="none" stroke="#67e8f9" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+  <path d="M98 34H66v36H42" fill="none" stroke="#ffd451" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+  <circle cx="62" cy="50" r="8" fill="#ecfeff" stroke="#67e8f9" stroke-width="4"/>
+  <circle cx="66" cy="70" r="8" fill="#fff8d6" stroke="#ffd451" stroke-width="4"/>
+</svg>

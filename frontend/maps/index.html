@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#102719">
   <title>Overland Maps v2</title>
   <link rel="stylesheet" href="./vendor/maplibre-gl.css?v=20260602a">
-  <link rel="stylesheet" href="./maps-v2.css?v=20260612d">
+  <link rel="stylesheet" href="./maps-v2.css?v=20260612e">
 </head>
 <body>
   <main id="mapRoot" class="omv2-shell">
@@ -75,13 +75,13 @@
       <button id="rightControlsCollapse" type="button" title="Collapse map controls">☰</button>
       <button id="savedDataToggle" type="button" title="Saved waypoints, tracks, and folders">▣</button>
       <button id="overlaysToggle" type="button" title="Map overlays">☰</button>
+      <button id="mapViewToggle" type="button" title="Map view options">◰</button>
       <button id="offlineRegionToggle" class="omv2-bbox-button" type="button" title="Draw offline cache region" aria-label="Draw offline cache region">
         <span class="omv2-bbox-button-box"></span>
         <span class="omv2-bbox-button-plus">＋</span>
       </button>
       <button id="legendToggle" type="button" title="Map legend">ⓘ</button>
-      <button id="refreshData" type="button" title="Refresh map data">↻</button>
-      <button id="inspectTile" type="button" title="Inspect PMTiles tile">?</button>
+      <button id="inspectTile" type="button" title="Inspect PMTiles tile" hidden>?</button>
     </section>
 
     <aside id="mapErrorPanel" class="omv2-panel omv2-errors" hidden>
@@ -231,6 +231,39 @@
       </div>
     </aside>
 
+    <aside id="mapViewModal" class="omv2-modal" hidden>
+      <div class="omv2-modal-card omv2-map-view-card">
+        <div class="omv2-panel-head">
+          <div>
+            <span class="eyebrow">Map View</span>
+            <strong>Camera and display</strong>
+          </div>
+          <button id="closeMapViewModal" type="button">×</button>
+        </div>
+        <p class="omv2-hint">Follow mode can temporarily override pitch and rotation while tracking your location.</p>
+        <div class="omv2-map-view-grid">
+          <label class="omv2-map-view-row">
+            <span>Tilt</span>
+            <input id="mapPitchSlider" type="range" min="0" max="70" step="1" value="0">
+            <strong id="mapPitchValue">0°</strong>
+          </label>
+          <label class="omv2-map-view-row">
+            <span>Rotation</span>
+            <input id="mapBearingSlider" type="range" min="-180" max="180" step="1" value="0">
+            <strong id="mapBearingValue">0°</strong>
+          </label>
+          <label class="omv2-check omv2-map-view-check">
+            <input id="map3dBuildingsToggle" type="checkbox"> 3D Buildings
+          </label>
+        </div>
+        <div class="omv2-map-view-actions">
+          <button id="mapNorthUp" type="button">North Up</button>
+          <button id="mapDrivingTilt" type="button">Driving Tilt</button>
+          <button id="mapResetView" type="button">Reset View</button>
+        </div>
+      </div>
+    </aside>
+
     <aside id="offlineRegionModal" class="omv2-modal" hidden>
       <form id="offlineRegionForm" class="omv2-modal-card omv2-edit-form">
         <div class="omv2-panel-head">
@@ -315,6 +348,6 @@
 
   <script src="./vendor/maplibre-gl.js?v=20260602a"></script>
   <script src="./vendor/pmtiles.js?v=20260602a"></script>
-  <script src="./maps-v2.js?v=20260612i"></script>
+  <script src="./maps-v2.js?v=20260612j"></script>
 </body>
 </html>

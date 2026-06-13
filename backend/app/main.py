@@ -38,6 +38,17 @@ from .config import REPO_ROOT, SETTINGS, Settings, ensure_data_layout
 from .games_db import GamesDB
 from .geopdf import delete_geopdf, import_geopdf_bytes, list_geopdfs, load_metadata as load_geopdf_metadata, process_geopdf, tile_path as geopdf_tile_path, update_geopdf, write_metadata as write_geopdf_metadata
 from .gps.gpsd import read_gpsd
+from .gridcycles import (
+    GRIDCYCLES_MARKS,
+    gridcycles_add_bots,
+    gridcycles_advance,
+    gridcycles_new_payload,
+    gridcycles_next_round,
+    gridcycles_public_payload,
+    gridcycles_reset_game,
+    gridcycles_set_input,
+    gridcycles_start_game,
+)
 from .services import docker_container_action, docker_containers, docker_socket_request, list_service_visibility, list_services, service_action
 from .storage import folders_from_places, read_json, read_places, save_waypoint
 
@@ -333,6 +344,7 @@ MOBILE_GAME_TITLES = {
     "word-grid": "Word Grid",
     "pattern-match": "Pattern Match",
     "burst": "Burst",
+    "gridcycles": "GridCycles",
 }
 MOBILE_GAME_PREFIXES = {
     "tic-tac-toe": "ttt",
@@ -354,6 +366,7 @@ MOBILE_GAME_PREFIXES = {
     "word-grid": "word",
     "pattern-match": "pat",
     "burst": "burst",
+    "gridcycles": "cycles",
 }
 MOBILE_GAME_MARKS = {
     "tic-tac-toe": ("X", "O"),
@@ -375,6 +388,7 @@ MOBILE_GAME_MARKS = {
     "word-grid": ("A", "B"),
     "pattern-match": ("A", "B"),
     "burst": ("A", "B", "C", "D", "E", "F"),
+    "gridcycles": GRIDCYCLES_MARKS,
 }
 
 CLAIMLINE_COLS = 64
@@ -2470,6 +2484,8 @@ def public_mobile_game(game: dict, player_id: str = "") -> dict:
         payload["payload"] = word_tile_public_payload(game, player_id)
     elif game_type == "burst":
         payload["payload"] = burst_public_payload(game, player_id)
+    elif game_type == "gridcycles":
+        payload["payload"] = gridcycles_public_payload(game, player_id)
     elif game_type == "sinkhole-city":
         payload["payload"] = game.get("payload") or {}
     elif game_type in {"blank-slate", "blockfall"}:
@@ -8230,6 +8246,13 @@ PY
             for mark, snapshot in states.items():
                 if isinstance(snapshot, dict):
                     scores.setdefault(str(mark), int(snapshot.get("score") or 0))
+        elif game_type == "gridcycles":
+            if isinstance(payload.get("scores"), dict):
+                scores.update({str(mark): int(value or 0) for mark, value in payload.get("scores", {}).items()})
+            states = payload.get("players") if isinstance(payload.get("players"), dict) else {}
+            for mark, snapshot in states.items():
+                if isinstance(snapshot, dict):
+                    scores.setdefault(str(mark), int(snapshot.get("distance") or 0))
         elif game_type == "hangman":
             guesser = str(payload.get("guesserMark") or "A")
             scores.setdefault(guesser, max(0, len(str(payload.get("word") or "")) - int(payload.get("wrong") or 0)))
@@ -8280,6 +8303,12 @@ PY
                     if game.get("status") != before_status:
                         changed = True
                         db.save_game(game)
+                if game.get("type") == "gridcycles" and game.get("status") == "active":
+                    if gridcycles_advance(game):
+                        changed = True
+                        if game.get("status") == "complete":
+                            self.persist_mobile_game_result(game)
+                        db.save_game(game)
                 public_games.append(public_mobile_game(game, form_value(payload, "playerId")))
             return self.send_json({"ok": True, "games": public_games, "activeCount": len(public_games)})
         if action == "create":
@@ -8302,7 +8331,7 @@ PY
             player_name = clean_player_name(form_value(payload, "playerName") or "Player")
             mark_a, mark_b = MOBILE_GAME_MARKS.get(game_type, ("A", "B"))[:2]
             players = [{"id": player_id, "name": player_name, "mark": mark_a}]
-            if mode == "cpu" and game_type not in {"claimline", "word-grid", "pattern-match"}:
+            if mode == "cpu" and game_type not in {"claimline", "word-grid", "pattern-match", "gridcycles"}:
                 players.append({"id": cpu_player_id(difficulty), "name": cpu_player_name(difficulty), "mark": mark_b})
             game = {
                 "id": game_id,
@@ -8370,6 +8399,37 @@ PY
                 game.update({"status": "waiting", "mode": "pvp", "turn": "P1", "payload": word_tile_new_payload()})
             elif game_type == "burst":
                 game.update({"status": "waiting", "mode": "pvp", "turn": "A", "payload": burst_new_payload()})
+            elif game_type == "gridcycles":
+                grid_mode = form_value(payload, "gridMode", "classic").lower()
+                if grid_mode not in {"classic", "timed", "kid"}:
+                    grid_mode = "classic"
+                try:
+                    rounds_to_win = max(1, min(9, int(form_value(payload, "roundsToWin", "3") or 3)))
+                except (TypeError, ValueError):
+                    rounds_to_win = 3
+                try:
+                    duration = max(30, min(300, int(form_value(payload, "duration", "90") or 90)))
+                except (TypeError, ValueError):
+                    duration = 90
+                game.update(
+                    {
+                        "status": "waiting",
+                        "turn": "all",
+                        "payload": gridcycles_new_payload(
+                            grid_mode,
+                            difficulty,
+                            kid_mode=grid_mode == "kid",
+                            rounds_to_win=rounds_to_win,
+                            duration=duration,
+                        ),
+                    }
+                )
+                if mode == "cpu":
+                    try:
+                        bot_count = max(1, min(3, int(form_value(payload, "botCount", "1") or 1)))
+                    except (TypeError, ValueError):
+                        bot_count = 1
+                    gridcycles_add_bots(game, bot_count, difficulty)
             elif game_type == "sinkhole-city":
                 variant = form_value(payload, "variant", "objects").lower()
                 if variant not in {"objects", "swallow"}:
@@ -8445,6 +8505,11 @@ PY
                                     return self.send_json({"ok": True, "game": public_mobile_game(game, player_id), "playerId": player_id, "mark": "", "observer": True, "games": [public_mobile_game(item, player_id) for item in games]})
                                 existing_marks = {item.get("mark") for item in game.get("players", []) if isinstance(item, dict)}
                                 mark = next((item for item in ("A", "B", "C", "D") if item not in existing_marks), "D")
+                            elif game.get("type") == "gridcycles":
+                                if len(game.get("players", [])) >= 4:
+                                    return self.send_json({"ok": True, "game": public_mobile_game(game, player_id), "playerId": player_id, "mark": "", "observer": True, "games": [public_mobile_game(item, player_id) for item in games]})
+                                existing_marks = {item.get("mark") for item in game.get("players", []) if isinstance(item, dict)}
+                                mark = next((item for item in GRIDCYCLES_MARKS if item not in existing_marks), "D")
                             elif len(game.get("players", [])) >= 2:
                                 return self.send_json({"ok": True, "game": public_mobile_game(game, player_id), "playerId": player_id, "mark": "", "observer": True, "games": [public_mobile_game(item, player_id) for item in games]})
                             elif game.get("type") == "chess":
@@ -8467,7 +8532,7 @@ PY
                                 ships = payload_state.setdefault("ships", {})
                                 ships[mark] = flatten_battleship_ship_groups(ship_groups[mark])
                                 payload_state.setdefault("shots", {}).setdefault(mark, [])
-                        if len(game.get("players", [])) >= 2 and game.get("status") == "waiting" and game.get("type") not in {"word-tile-arena", "starts-ends", "burst", "sinkhole-city"}:
+                        if len(game.get("players", [])) >= 2 and game.get("status") == "waiting" and game.get("type") not in {"word-tile-arena", "starts-ends", "burst", "sinkhole-city", "gridcycles"}:
                             game["status"] = "active"
                             if game.get("type") == "claimline":
                                 claimline_sync_status(game)
@@ -8490,6 +8555,12 @@ PY
                     claimline_advance(game)
                     touch_mobile_game(game)
                     db.save_game(game)
+                if game.get("type") == "gridcycles":
+                    if gridcycles_advance(game):
+                        touch_mobile_game(game)
+                        if game.get("status") == "complete":
+                            self.persist_mobile_game_result(game)
+                        db.save_game(game)
                 if game.get("type") == "checkers" and game.get("mode") == "cpu" and game.get("turn") == "black":
                     checkers_cpu_move(game)
                     touch_mobile_game(game)
@@ -8600,6 +8671,8 @@ PY
                 game["turn"] = "all"
                 game["mode"] = "pvp"
                 game["status"] = "waiting"
+            elif game.get("type") == "gridcycles":
+                gridcycles_reset_game(game)
             elif game.get("type") == "pattern-match":
                 game["payload"] = {"sequence": [secrets.randbelow(4)], "scores": {"A": 0}, "lastMove": None}
                 game["turn"] = "A"
@@ -8628,7 +8701,8 @@ PY
                     starts_ends_starting = game.get("type") == "starts-ends" and form_value(payload, "startsEndsAction", "guess").lower() == "start"
                     burst_starting = game.get("type") == "burst" and form_value(payload, "burstAction", "play").lower() == "start"
                     sinkhole_starting = game.get("type") == "sinkhole-city" and form_value(payload, "sinkholeAction", "snapshot").lower() == "start"
-                    if game.get("status") != "active" and not word_tile_starting and not starts_ends_starting and not burst_starting and not sinkhole_starting:
+                    gridcycles_starting = game.get("type") == "gridcycles" and form_value(payload, "gridcyclesAction", "input").lower() in {"start", "add-bot"}
+                    if game.get("status") != "active" and not word_tile_starting and not starts_ends_starting and not burst_starting and not sinkhole_starting and not gridcycles_starting:
                         return self.send_json({"ok": False, "error": "Waiting for a second player."}, status=400)
                     if game.get("type") == "checkers":
                         if player.get("mark") != game.get("turn"):
@@ -8765,6 +8839,26 @@ PY
                                 eaten = state_payload.setdefault("eaten", {})
                                 for item_id in eaten_ids[:80]:
                                     eaten[str(item_id)] = mark
+                    elif game.get("type") == "gridcycles":
+                        try:
+                            grid_action = form_value(payload, "gridcyclesAction", "input").lower()
+                            if grid_action == "start":
+                                if str(player.get("mark") or "") != "A":
+                                    raise ValueError("Only the host can start GridCycles.")
+                                gridcycles_start_game(game)
+                            elif grid_action == "next":
+                                if str(player.get("mark") or "") != "A":
+                                    raise ValueError("Only the host can start the next round.")
+                                gridcycles_next_round(game)
+                            elif grid_action == "add-bot":
+                                if str(player.get("mark") or "") != "A":
+                                    raise ValueError("Only the host can add bots.")
+                                gridcycles_add_bots(game, 1, game.get("difficulty", "medium"))
+                            else:
+                                gridcycles_set_input(game, player, form_value(payload, "dir"))
+                                gridcycles_advance(game)
+                        except ValueError as exc:
+                            return self.send_json({"ok": False, "error": str(exc)}, status=400)
                     elif game.get("type") == "pattern-match":
                         try:
                             pattern_apply_move(game, form_value(payload, "pattern"), str(player.get("mark")))
